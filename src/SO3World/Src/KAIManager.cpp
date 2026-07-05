@@ -179,7 +179,7 @@ BOOL KAIManager::LoadAITabFile()
 
         nRetCode = piAITabFile->GetInteger(nRow, "AIType", 0, &nAIType);
         (void)nRetCode; /*[endgame] tolerant*/
-        KGLOG_PROCESS_ERROR(nAIType >= 0);
+        if (nAIType == 0) continue; /* [drift 2.5.2] binary has no >=0 assert; skip AIType 0 rows, high-bit AI IDs are valid map keys */
 
         nRetCode = piAITabFile->GetString(nRow, "ScriptFile", "", szScriptPath, sizeof(szScriptPath));
         (void)nRetCode; /*[endgame] tolerant*/
