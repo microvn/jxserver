@@ -1714,6 +1714,7 @@ BOOL KSkillManager::LoadEventLine(ITabFile* piTabFile, int nLine)
         REGISTER_STR_TO_VALUE("BeOverHeal",         seBeOverHeal)
         REGISTER_STR_TO_VALUE("Miss",               seMiss)
         REGISTER_STR_TO_VALUE("BeMiss",             seBeMiss)
+        REGISTER_STR_TO_VALUE("Parry",              seParry)                 /* [drift 2.5.2] */
     DECLARE_STRING_MAP_END(KSKILL_EVENT_TYPE)
 
 

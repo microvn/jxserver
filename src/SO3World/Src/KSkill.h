@@ -891,6 +891,7 @@ enum KSKILL_EVENT_TYPE
     seBeOverHeal,
     seMiss,
     seBeMiss,
+    seParry,                    /* [drift 2.5.2] append =20 */
     seTotal
 };
 
