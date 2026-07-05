@@ -365,3 +365,74 @@ KHÔNG có trong source ta → nằm trong `libEngine_Lua5D.so` (Lua engine bina
 = tạo Lua state thất bại. Đây là lớp MỚI: tích hợp exe↔.so (Lua), không phải data drift.
 Nghi vấn: stub `KLuaScriptEx.h` tái dựng (_recovered) không init Lua state đúng như engine cần,
 hoặc exe thiếu bước init mà server 2.5.2 thật gọi. Cần điều tra tiếp.
+
+---
+
+## J. Boot qua Lua + item + enum lớn (2026-07-05, host native) — giải nối tiếp §I
+
+### J1. Lua state NULL = BUG ABI vtable (không phải data drift) — fix lớn nhất
+- **Bối cảnh:** §I dừng ở `KGLOG_PROCESS_ERROR(pLuaState) at line 693 in CreateScriptHolder`.
+- **Điều tra (Ghidra):** `KScriptCenter::CreateScriptHolder` (source ta, KScriptCenter.cpp:684):
+  `piScript=CreateLuaInterface(...); piScript->RegisterFunctions(); piScript->RegisterConstList();
+  pLuaState=piScript->GetLuaState()` → NULL. `.so` decompile: `CreateLuaInterface`→`KLuaScriptEx::Create`
+  gọi `luaL_newstate()` (BỎ QUA allocator arg) rồi `GetLuaState()` chỉ `return m_pLuaState`.
+  Nếu Create thành công thì lua_State phải non-NULL → mâu thuẫn.
+- **Root cause:** stub `_recovered/include/Base/engine/KLuaScriptEx.h` khai báo `interface ILuaScriptEx`
+  **SAI thứ tự virtual** — thừa `Init()/UnInit()` (slot 1,2) mà interface thật KHÔNG có → mọi slot
+  lệch +2. Code ta gọi qua `ILuaScriptEx*` → `GetLuaState()` (slot ta 15) dispatch vào **slot 15 thật
+  = `GetActiveScriptID`** → trả int (0) đọc thành lua_State* NULL. `RegisterFunctions` (slot ta 6)
+  đã gọi nhầm `SafeCallBegin` → Lua hỏng từ gốc.
+- **Bằng chứng vtable THẬT:** đọc `_ZTV12KLuaScriptEx @0xe0100` (read_bytes, 23 slot) + đối chiếu
+  offset exe 2.5.2 gọi: RegisterFunctions=0x10/slot4, RegisterConstList=0x14/slot5, GetLuaState=0x34/slot13.
+  Map 23 địa chỉ→tên (search_symbols). Thứ tự thật: Release, LoadFromFile, LoadFromBuffer,
+  RegisterFunction, RegisterFunctions, RegisterConstList, SafeCallBegin, SafeCallEnd, IsFuncExist,
+  CallFunction, AddParamCount, GetValuesFromStack×2, GetLuaState, IsScriptExist, GetActiveScriptID,
+  GetScriptData, DumpStrt, NewFunctionRefID, DeleteFunctionRefID, PushFunctionBeforeParam,
+  FastCallFunction, GetFunctionData.
+- **Quyết định:** viết lại `interface ILuaScriptEx` khớp đúng 23 slot; bỏ phantom (Init/UnInit/
+  ScriptNameToID/RegisterErrorHandler/GetErrorHandler — không có trong vtable, code không gọi qua iface);
+  thêm filler slot 17-22 (không gọi, chỉ giữ offset). Verify: mọi method code ta gọi qua iface đều
+  có trong vtable thật; `KLuaScriptEx` derived không bị instantiate ở đâu (chỉ .so tạo) → thành abstract OK.
+- **Lý do:** đây là ABI binary-interface (như reuse .so), sai slot = gọi nhầm hàm. **Unblock 16,997 Lua script.**
+- **Loại:** đoán/ retry — vô nghĩa với ABI; phải đọc vtable thật.
+
+### J2. ITEM_GENRE 8→14 (append, verify từng value)
+- Data item tab (`Other.tab`) có Genre tới 13; enum ta tới 7 (igTotal=8).
+- **Verify Ghidra (append-only, 0-7 giữ nguyên):** đọc bảng `LUA_CONST_ITEM_GENRE` trong exe
+  (array @0x84c9320 → strings @0x8432c75) + decompile chéo: OnOpenBox `nGenre==8`→igBox;
+  OnApplyUseItem `==8||9`→igBox/igBoxKey; LuaSetItemMountDiamond `==10`→igDiamond. Kết quả:
+  igBox=8, igBoxKey=9, igDiamond=10, igColorDiamond=11, igCub=12 (pet), igFodder=13, igTotal=14.
+- **LƯU Ý:** lần đầu scan data bằng `awk|sort|uniq|head` → cắt mất, tưởng max=9. Thực tế 13. Đừng head khi cần max.
+
+### J3. bCanStack — nới assert (2.5.2 cho box stack)
+- `KItemInfoList::LoadLine:207` assert `!EquipInfo.bCanStack` cho box item. Binary 2.5.2 KHÔNG có
+  assert này (chỉ 1 ref bCanStack ở material-property) → 2.5.2 bỏ. Nới thành tolerant.
+
+### J4. ATTRIBUTE_TYPE — RE-AUDIT rộng: lỗ hổng hệ thống, regen exact (Option A)
+- **User yêu cầu audit kỹ trước khi làm fix lớn.** Re-audit phát hiện 3 điều bỏ sót ban đầu:
+  1. **Hệ thống, không 1 enum:** `libSO3EnumConvertorD.so` sở hữu **3 map** (ATTRIBUTE_TYPE,
+     REQUIRE_TYPE, KTONG_OPERATION_TYPE) + export `EnumStr2Int`. 2.5.2 tập trung enum vào .so;
+     source 2010 giữ **map local stale** (`KAttribute.cpp`) đè lên → dùng bản 2010 dù link .so 2.5.2.
+  2. **INTERLEAVED không append:** `atAdjustProfessionLevel` = 343 (2010) vs **425** (2.5.2, đọc byte
+     `mov [esp+8],0x1a9` trong init .so). ~82 attr chèn giữa → append kiểu số riêng sẽ khiến 344 value
+     cũ **lệch với client/.so → hỏng chỉ số trang bị ÂM THẦM**. Code ta có 24 `case atX:` → value BẮT BUỘC khớp.
+  3. **KHÔNG phải struct-size ABI:** attribute lưu `vector/map{type,value}`, **không** array `[atTotal]`
+     → mở enum không đổi struct → không vỡ DB role-blob/protocol layout. (Khác MAX_QUEST_COUNT.)
+- **Đã loại là không-lỗ-hổng:** REQUIRE_TYPE của ta **đã khớp hệt** 2.5.2 (rqtInvalid..rqtBodytype,
+  rqtTotal=9) → không sửa. WEAPON_DETAIL_TYPE/ITEM_GENRE không thuộc EnumConvertor (map exe-local),
+  đã verify append từ binary → không dính lỗi shadow. 0 attr bị bỏ tên → 24 switch không vỡ compile.
+- **Quyết định (Option A — regen khớp CHÍNH XÁC 2.5.2, do user chọn):**
+  - `tools/extract_enum_maps.py`: quét `make_pair("name",value)` trong init .so (byte pattern
+    `c7 44 24 08 <imm> c7 44 24 04 <ptr>`, JArray(JByte) đọc block) → name→value authoritative.
+    ATTRIBUTE_TYPE = **454 tên, value 0..453**, atTotal=454. 1 entry scan sót
+    (`atAddSprintPowerReviveOnWall=444`, codegen khác) → phục hồi bằng suy diễn gap+series.
+  - `tools/gen_attribute_enum.py`: regen enum (KAttribute.h, explicit value) + DECLARE_STRING_MAP
+    (KAttribute.cpp) từ tsv. Map các file khác chỉ MAP_STRING_EXTERN → 1 định nghĩa duy nhất.
+- **Lý do:** value khớp .so+client+data trong 1 lần; tránh lỗi âm thầm; sinh bằng script (không gõ 454 dòng).
+- **Verify:** build 191/0, boot qua toàn bộ nạp attribute → tiến tới `MAX_RECIPE_ID` (constant-limit kế).
+- **Còn treo:** `LUA_CONST_ATTRIBUTE_TYPE` (nếu script 2.5.2 dùng hằng attribute mới); `KTONG_OPERATION_TYPE`
+  (bang hội, map dùng tên trần "Speak"/"ProductItem" ≠ tên enum → cần xử lý riêng, chưa trên đường boot).
+
+### J5. Boot hiện tại (mốc)
+config → 18,207 NPC → mọi settings tab → **16,997 Lua script** → item lib (Custom/Other/genre/bCanStack)
+→ **ATTRIBUTE_TYPE (454)** → dừng ở `MAX_RECIPE_ID` (LoadCraft). Bốn+ drift đã port đúng, verify từ binary, trong git.
