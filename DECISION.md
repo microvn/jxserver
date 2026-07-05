@@ -469,3 +469,52 @@ log; native: build 84s, boot 18k NPC ~3s, ổn định, quan sát được).
 (§H bài học version-match). Sửa source thật + commit (không endgame.py, §G). Comment ASCII khi
 ghi file latin-1 (GBK) — UTF-8 làm truncate file (§J lặp lại lỗi này). Đọc log fflush thật,
 không tin console pipe hay file-redirect (§I).
+
+---
+
+## L. MAX_RECIPE_ID 512→1024 + frontier AI-type signedness (2026-07-05, host native)
+
+### L1. MAX_RECIPE_ID: constant-limit drift, value CHÍNH XÁC từ binary (không đoán)
+- **Blocker (§J5):** `KGLOG_PROCESS_ERROR(CraftRecipe.dwID < MAX_RECIPE_ID)` tại `KRecipe.cpp:396`
+  trong `KRecipe<KCraftRecipe>::Init` (load `Craft/Recipe/*.tab`). Cùng lớp drift MAX_QUEST_COUNT/
+  MAX_ACHIEVEMENT_ID (§F4/§J): data 2.5.2 có recipe ID vượt hằng của source 2010.
+- **RE binary 2.5.2 (`/SO3GameServer-3c8199`, Ghidra):**
+  - `KRecipe<KCraftRecipe>::Init` = `FUN_080b6c76`: nhánh lỗi `if (0x3ff < dwID)` in ra
+    `"CraftRecipe.dwID < MAX_RECIPE_ID"` (line 0x1c5) → assert `dwID < MAX_RECIPE_ID` với
+    **MAX_RECIPE_ID = 0x400 = 1024**. (String map: `search_strings "MAX_RECIPE_ID"` →
+    3 assert CraftRecipe/CraftEnchant/CraftCopy @0x83e0d00/0af0/0bd0; xref → Init/LoadLine.)
+  - Xác nhận chéo `KRecipeList::IsRecipeLearned` = `FUN_083b64fe`: `dwRecipeID <= MAX_RECIPE_ID`
+    fail khi `0x400 < dwRecipeID`; `dwCraftID <= MAX_CRAFT_COUNT` fail khi `0x10 < dwCraftID`
+    (MAX_CRAFT_COUNT=16, khớp source ta). **Bitmap stride `(craftID-1)*0x80`** = 0x80 = 128 byte
+    = `(1024+7)/8` → đây là size bitmap DB/wire 2.5.2, KHÔNG chỉ bound in-memory.
+- **Fix:** `Global.h:107` `#define MAX_RECIPE_ID 512` → `1024` (OLD_MAX_RECIPE_ID giữ 256).
+  Sửa bằng `LC_ALL=C sed -i ''` (file GBK — sed thường báo "illegal byte sequence"; LC_ALL=C
+  xử byte thô, chỉ đổi 1 dòng, +1 byte, không đụng encoding phần còn lại). Commit `f89cb85`.
+- **Tác động struct-size (như MAX_QUEST_COUNT §F4 — ghi rõ):**
+  - `m_byRecipeState[16][MAX_RECIPE_ID]`: 8K→16K **in-memory** mỗi player (không ra wire/DB).
+  - `KRecipeDBItem.byRecipeData[(MAX_RECIPE_ID+7)/8]`: 64→**128 byte** = bitmap role-blob/wire
+    → giá trị 1024 làm ta **KHỚP** 2.5.2 (client/DB kỳ vọng 128 byte). Vì thế phải đúng 1024,
+    không phải "đủ lớn". (Server tự build, chưa có char-DB cũ nên không vướng migrate blob.)
+- **Verify data:** `Craft/Recipe/tailoring.tab` max ID=**713** (>512 → thủ phạm), founding=506,
+  cooking=198, medicine=210; Enchant=221, Read/Copy=185, Collection≤46. Tất cả <1024 ✓.
+- **Verify boot host:** build 191/0, link 0 → boot QUA recipe, tiến tới blocker AI (L2).
+
+### L2. FRONTIER MỚI: `nAIType >= 0` fail trong LoadAITabFile = drift signedness (int vs DWORD)
+- **Blocker kế:** `KGLOG_PROCESS_ERROR(nAIType >= 0) at line 182 in LoadAITabFile`
+  (`KAIManager.cpp:180-182`): `GetInteger(nRow,"AIType",0,&nAIType)` vào `int nAIType`.
+- **Điều tra data (`settings/AIType.tab`, 25417 dòng):** cột AIType KHÔNG chỉ 0..N tuần tự;
+  từ ~row 25020 có ID map-specific rất lớn (vd `2097152009`=0x7D000009, script `scripts\Map\...\ai\...BOSS...`)
+  và các giá trị unsigned high-bit (đọc thành âm `-2063597567`=0x84A3E401). `int nAIType` nhận
+  high-bit → âm → assert vỡ. Nghi 2.5.2 khai **DWORD nAIType** (unsigned) + `m_AITable` key DWORD.
+  Đây là drift signedness, KHÔNG phải constant-limit.
+- **CHƯA fix — cần RE trước (nguyên tắc §K):** decompile `KAIManager::LoadAITabFile` trong
+  `/SO3GameServer-3c8199`, xác nhận (a) kiểu đọc AIType (DWORD?) và (b) có assert `>=0` không / bound
+  thật. Nếu 2.5.2 dùng DWORD: đổi `int nAIType`→`DWORD` (và các chỗ dùng: `m_AITable`, `ReloadAILogic`,
+  `GetAILogic`, `CreateAI`, `Setup` — grep `nAIType`/`AIType` trong KAIManager/KAILogic/KCharacter).
+  Kiểm tác động: key map đổi int→DWORD không đổi wire (AI runtime server-side) nhưng cần đồng bộ mọi
+  chữ ký hàm. Liên quan §B2 (VM-AI): xác nhận đường load này là VM-AI hiện hành.
+
+### L3. Boot hiện tại (mốc, cập nhật §J5)
+config → 18,207 NPC → mọi settings tab → 16,997 Lua script → item lib → ATTRIBUTE_TYPE(454)
+→ **MAX_RECIPE_ID(1024) [QUA]** → dừng ở `LoadAITabFile nAIType>=0` (AI type signedness, L2).
+Năm+ drift đã port đúng, verify từ binary, trong git.
