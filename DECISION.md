@@ -335,3 +335,33 @@ theo content patch) nhưng KHÔNG phải chân lý cho enum/const content. → m
 verify trên binary 2.5.2 (`/SO3GameServer-3c8199` trong ghidra project), cross-check PDB.
 
 **Pilot hoàn chỉnh (chứng minh pipeline end-to-end trên đúng blocker):** xem §I.
+
+---
+
+## I. Pilot hoàn tất + migrate sang host x86 native + frontier mới: Lua state (2026-07-05)
+
+**Pilot WEAPON_DETAIL_TYPE + MAX_ACHIEVEMENT_ID = chứng minh pipeline end-to-end:**
+mỗi boot lộ blocker → decompile hàm-khung 2.5.2 (Ghidra) lấy giá trị CHÍNH XÁC → sửa source
+→ commit → rebuild → boot xa hơn. 2 fix (§H), giá trị verify từ binary, không đoán.
+
+**Nút thắt KHÔNG phải method mà là test-env:** OrbStack emulated-x86 trên mac bất ổn +
+chậm dưới flood 254k warning NpcTemplate (14 cột 2.5.2 đã bỏ × 18207 NPC, tolerant xử lý
+nhưng ồn). Mỗi boot mất vài phút, thất thường (đúng cảnh báo build.sh).
+
+**GIẢI: migrate sang host x86_64 Linux NATIVE** (Linode 172.105.112.239, AMD EPYC 6-core,
+Ubuntu 20.04, Docker 28, 102G trống). Layout giữ nguyên: `/root/jx3/{linux-build,镜像端/
+extracted/root}`. rsync source repo (19MB) + data thiết yếu (settings/scripts/.so/ini ~341MB,
+BỎ maps 3.8G/recorder 875M/logs). Image jx3build dựng lại từ Dockerfile (self-contained).
+Kết quả: **build 191/0 trong 84s, boot xử lý 18207 NPC trong ~3 GIÂY** (mac emulated: phút).
+Native = hết bất ổn, quan sát được. Chia việc: Ghidra RE ở mac (pyghidra-mcp), build+boot ở host.
+BÀI HỌC rsync: `--exclude 'SO3GameServer'` khớp CẢ thư mục `src/SO3GameServer/` → phải anchor
+`--exclude '/SO3GameServer'` (giống bug .gitignore §G).
+Đọc log THẬT ở `logs/SO3GameServer/<date>/*.log` (fflush từng dòng, authoritative) — KHÔNG
+tin console qua pipe (buffer, phân mảnh) hay file-redirect (server tắt console khi stdout≠tty).
+
+**Frontier mới (sau khi settings drift sạch):** boot vượt QUA mọi settings tab → dừng ở
+`KGLOG_PROCESS_ERROR(pLuaState) at line 693 in CreateScriptHolder`. `CreateScriptHolder`
+KHÔNG có trong source ta → nằm trong `libEngine_Lua5D.so` (Lua engine binary). pLuaState NULL
+= tạo Lua state thất bại. Đây là lớp MỚI: tích hợp exe↔.so (Lua), không phải data drift.
+Nghi vấn: stub `KLuaScriptEx.h` tái dựng (_recovered) không init Lua state đúng như engine cần,
+hoặc exe thiếu bước init mà server 2.5.2 thật gọi. Cần điều tra tiếp.
