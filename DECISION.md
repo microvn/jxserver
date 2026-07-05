@@ -43,3 +43,15 @@ build, boot, grep theo timestamp (reliable). KET QUA CHINH XAC:
   docker flaky) roi instrument real pin co che; (c) log GetSkillLevelData-fail o muc DEBUG thay ERROR.
 - KET LUAN: moi drift HE THONG fixed; residual = 4 script DATA off-by-one (tSkillData<MaxLevel), real
   tolerate qua co che chua pin (harness limit). Framework logic ta = real.
+
+### Q5. DONG DUT DIEM — data-fix 4 NPC skill, 2 log KHOP (2026-07-05)
+4 skill fail deu la NPC/BOSS skill phu ban (chi cast level 1 in-game): id838 天工坊_3号BOSS_震天甲士_冲击,
+id844 天工坊_3号BOSS_横扫, id855 天工坊_副本小怪_机甲龙_怒吼, id4413 南诏皇宫_陈和尚_肉毒地藏.
+MaxLevel template=20/21 nhung tSkillData literal chi 10/20 -> level >tSkillData = nil (13 dong).
+Level 2-20 cua NPC skill vo dung (boss chi cast lv1) -> data-fix an toan.
+FIX: tools/fix_npc_tskilldata.py extend tSkillData -> MaxLevel (copy pad), idempotent, chay tren deploy
+tree host (data khong trong git; tool trong git de tai lap sau re-extract).
+KET QUA: index-nil 13->0, skill-errors=0. **2 log KHOP: ours Failed-load 19 = real 19 (lech 0 ca 2 chieu),
+ca hai index-nil=0, Load game settings [OK], center-connect fail.** Khac biet con lai duy nhat = flood
+`]:Get` (NpcTemplate field tolerant best-effort) da loc, khong phai divergence chuc nang.
+GOAL DAT: moi drift he thong fixed + 4 data-quirk fixed -> log khop real toan bo noi dung nghia.
