@@ -436,3 +436,36 @@ hoặc exe thiếu bước init mà server 2.5.2 thật gọi. Cần điều tra
 ### J5. Boot hiện tại (mốc)
 config → 18,207 NPC → mọi settings tab → **16,997 Lua script** → item lib (Custom/Other/genre/bCanStack)
 → **ATTRIBUTE_TYPE (454)** → dừng ở `MAX_RECIPE_ID` (LoadCraft). Bốn+ drift đã port đúng, verify từ binary, trong git.
+
+---
+
+## K. QUYẾT ĐỊNH: build + boot trên host x86 native (playbook vận hành, 2026-07-05)
+
+**Quyết định:** môi trường build + boot-test CHÍNH THỨC = **host Linode x86_64 native**, KHÔNG
+dùng OrbStack emulated-x86 trên mac nữa. Lý do đầy đủ ở §I (emulation bất ổn + chậm dưới flood
+log; native: build 84s, boot 18k NPC ~3s, ổn định, quan sát được).
+
+**Phân vai (2 máy):**
+- **Mac** = source-of-truth git (`/Volumes/ExData/game/jx3/linux-build`) + Ghidra RE
+  (pyghidra-mcp `pyghidra-jx3`, binary 2.5.2 = `/SO3GameServer-3c8199`, .so EnumConvertor =
+  `/libSO3EnumConvertorD.so-7ad338`, Lua5 = `/libEngine_Lua5D.so-ebbc88`). SỬA SOURCE + COMMIT ở đây.
+- **Host** `root@172.105.112.239` = build + boot. Layout `/root/jx3/{linux-build, 镜像端/extracted/root}`
+  (data thiết yếu đã rsync: settings/scripts/center_scripts/.so/ini ~341MB; KHÔNG có maps/recorder).
+  Image `jx3build` đã dựng từ Dockerfile. `boottest.sh` sẵn ở `/root/jx3/`.
+
+**Vòng lặp fix (chuẩn):**
+1. Sửa source + `git commit` trên mac.
+2. Sync (từ `/Volumes/ExData/game/jx3`), rsync `linux-build/` → host, exclude ANCHOR `/`:
+   `rsync -az -e ssh --exclude 'obj/' --exclude 'shim/' --exclude '/Source/' --exclude '/libs/' --exclude '/SO3GameServer' --exclude '/ghidra-project/' --exclude '/logs/' --exclude '_deploy.log' --exclude '_build.log' --exclude '.DS_Store' linux-build/ root@172.105.112.239:/root/jx3/linux-build/`
+   (anchor `/` — nếu không, `--exclude 'SO3GameServer'` khớp cả thư mục `src/SO3GameServer/`, §I).
+3. Build + boot host (1 lệnh ssh):
+   `cd /root/jx3/linux-build && ./setup.sh >/dev/null 2>&1 && rm -rf SO3GameServer && ./build.sh 2>&1 | grep -E "COMPILE|link exit|BINARY|FAIL" && bash /root/jx3/boottest.sh 2>&1 | tail -18`
+   - `boottest.sh`: copy binary → `SO3GameServer_ours` trong deploy tree (KHÔNG đè binary 2.5.2 gốc),
+     localedef GBK, chạy `timeout 90` qua pipe, đọc ĐÚNG logfile run này
+     (`logs/SO3GameServer/<date>/*.log` mới hơn `/tmp/START`) lọc `grep -av "]:Get"`.
+4. Đọc blocker kế ở log → RE trên mac lấy giá trị đúng → lặp.
+
+**Nguyên tắc bất biến (mọi fix):** value/schema lấy từ **binary 2.5.2 qua Ghidra, KHÔNG đoán**
+(§H bài học version-match). Sửa source thật + commit (không endgame.py, §G). Comment ASCII khi
+ghi file latin-1 (GBK) — UTF-8 làm truncate file (§J lặp lại lỗi này). Đọc log fflush thật,
+không tin console pipe hay file-redirect (§I).
