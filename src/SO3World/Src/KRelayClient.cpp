@@ -3463,6 +3463,8 @@ BOOL KRelayClient::DoHandshakeRequest()
 	pHandshake->wProtocolID             = s2r_handshake_request;
     pHandshake->nGameWorldLowerVersion  = GAME_WORLD_LOWEST_VERSION;
     pHandshake->nGameWorldUpperVersion  = GAME_WORLD_CURRENT_VERSION;
+    pHandshake->nField10                = 0;              /*[drift 2.5.2] world+0x5f8, 0 on single-server 1st connect*/
+    pHandshake->nWorldIndex             = m_nWorldIndex;  /*[drift 2.5.2] m_+0x4ee4, 0 on 1st connect*/
 
     assert(g_pSO3World->m_piRecorderTools);
     pHandshake->nServerTime = g_pSO3World->m_piRecorderTools->GetTime();

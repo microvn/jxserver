@@ -19,8 +19,8 @@
 #include "KAuctionDef.h"
 #include "KMentorDef.h"
 
-#define  GAME_WORLD_CURRENT_VERSION 138
-#define  GAME_WORLD_LOWEST_VERSION  138
+#define  GAME_WORLD_CURRENT_VERSION 246 /*[drift 2.5.2] was 138; stock GS DoHandshakeRequest sends 0xf6=246*/
+#define  GAME_WORLD_LOWEST_VERSION  246
 
 enum GS_CLIENT_PROTOCOL
 {

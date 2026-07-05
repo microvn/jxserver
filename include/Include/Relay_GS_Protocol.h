@@ -368,10 +368,14 @@ enum KR2S_PROTOCOL
 
 // 上行协议结构定义
 
-struct S2R_HANDSHAKE_REQUEST : INTERNAL_PROTOCOL_HEADER
+/*[drift 2.5.2] standalone (no bReserved): WORD@0, ver@2/6, +2 fields@10/14, time@18 = 22B (stock FUN_080d601c)*/
+struct S2R_HANDSHAKE_REQUEST
 {
+    WORD    wProtocolID;
     int     nGameWorldLowerVersion;
     int     nGameWorldUpperVersion;
+    int     nField10;
+    int     nWorldIndex;
     time_t  nServerTime;
 };
 
