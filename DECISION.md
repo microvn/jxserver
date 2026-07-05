@@ -664,3 +664,31 @@ Sau GBK fix, dừng ở `KDropCenter::MapDropInit:542` mở `settings/DropList/1
 constant-limit (§M1, cạn) · enum name-set (§M4, 4 fix) · signedness (nAIType §L2) ·
 Lua-global-binding (GetEditorString/ScriptEnvInit §N, fix) · data/filename-encoding (§N2, fix +
 audit: 2328 file thật mất do collision, khôi phục) · **struct/subsystem-redesign (map-drop §N2c, mới)**.
+
+---
+
+## O. MỐC LỚN: "Load game settings [OK]" — hết pha nạp data, tới pha network/center (2026-07-05)
+
+Sau full GBK re-extract (§N2b, cả cây `root/` 7.1G/152559 file, U+FFFD=0, có maps) + tolerant
+map-drop (§N2c hướng B): boot **QUA TOÀN BỘ pha nạp data** → `Load game settings ... ... [OK]`.
+Server tiến sang pha MỚI: **kết nối center server** `192.168.200.105:5003` → [Failed]
+(`Connect:45 piSocket` → `KSocketConnation::Init:207` → Init:52). Đây là tầng **hạ tầng đa tiến
+trình** (§E: SO3GameCenter sở hữu MySQL, GameServer nối qua socket), KHÔNG phải version-drift.
+
+**Ý nghĩa:** mọi bức tường version-drift trên đường NẠP DATA đã vượt (config→NPC→settings→Lua→
+item→attribute→recipe→AI→skill→buff→drop→...→settings [OK]). Server tự-build 2010-source chạy
+data 2.5.2 tới tận pha networking.
+
+**Việc còn treo (không chặn "settings OK", cần cho chạy thật):**
+- **Hạ tầng center/DB (pha kế):** cần chạy SO3GameCenter + MySQL (config `relay_settings.ini`
+  `[MySQL]` DB=jx3_25, §E) và/hoặc trỏ center IP 192.168.200.105→localhost. Đây là bước "dựng cụm
+  3 tiến trình" (GameCenter/Gateway/GameServer), không phải sửa source.
+- **Non-fatal đã thấy:** `script_server.lua:1581 index global 'DIAMOND_SUB_TYPE' (nil)` (LUA_CONST
+  thiếu — cùng lớp LUA_CONST_ATTRIBUTE_TYPE §J4 "còn treo"; script_server.lua fail → có thể ảnh
+  hưởng runtime sau, chưa chặn settings). Vài script Map (HoroSystem/CheckTime/QiXi...) fail load —
+  runtime-map deps, non-fatal.
+- **map-drop port đúng (§N2c hướng A):** chưa làm; hiện skip → NPC trên map không rơi đồ.
+
+**Playbook (§K bổ sung):** data GBK PHẢI extract trên host Linux/ext4 (`7z x -so shougong.7z jjjx3.tar
+| tar xf - root`) — tar giữ nguyên byte GBK khớp .tab GBK. KHÔNG extract qua macOS/APFS (ép UTF-8 →
+GBK không hợp lệ → U+FFFD, mất file do collision). Host là nơi canonical của data tree.
