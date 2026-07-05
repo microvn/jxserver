@@ -878,3 +878,44 @@ hệt), (b) socket-connect wall §O vượt được khi center chạy (gateway 
 (c) blocker còn lại = center từ chối handshake GS ở :736, tái lập trên binary STOCK → hạng mục
 cụm/môi trường, KHÔNG phải version-drift source. Việc còn treo: RE center :736 (cần re-import Ghidra)
 HOẶC chạy trên host/VM CentOS 7 thật (không Docker shared-netns) như tutorial để loại biến môi trường.
+
+---
+
+## R2. AUDIT SÂU center-connect: hướng 1 (RE) + hướng 2 (env) — kết luận (2026-07-05)
+
+User yêu cầu audit cả 2 hướng còn treo ở §R. Kết quả DỨT KHOÁT:
+
+**HƯỚNG 1 — RE center `:736`: BỊ CHẶN CỨNG bởi OBFUSCATION (proven, không phải "chưa analyze").**
+- MCP import để center `Analyzed=false` (564 hàm). Chạy pyghidra standalone `tools/re_center_handshake.py`
+  analyze=True → 8029 hàm, NHƯNG decompile vẫn ra rác ("bad instruction data"/halt_baddata).
+- Bằng chứng obfuscation: `grep -a` trên SO3GameCenter tìm **0** occurrence các log-string CỦA CHÍNH NÓ:
+  `"Center server startup"`, `"[DB] Role data loading"`, `"at line %d in"`, `"KGameServer::ProcessNetwork"`,
+  `"GameWorld"` — dù runtime log in đầy đủ. `"KGameServer::ProcessNetwork"` chỉ xuất hiện trong FILE LOG
+  runtime; `"ProcessNetwork"` plaintext CHỈ có trong SO3GameServer (bản game, sạch). → center+gateway
+  **string-obfuscated** (decode lúc runtime), chỉ SO3GameServer để trần (cộng đồng mod được game-server,
+  KHÔNG mod được center). → **KHÔNG RE tĩnh được :736 nếu không deobfuscate** (ngoài phạm vi).
+
+**HƯỚNG 2 — môi trường Docker/netns: BỊ LOẠI (wire trace, tcpdump trong netns).**
+- OUR GS: TCP handshake OK → gửi length-prefix `0f000000`(=15) + body 15B `01 00`(protoID=1)`c0`(bReserved)
+  `8a000000`(ver=138)`8a000000`(ver=138)`67874a6a`(serverTime) → **center ACK đủ 19B RỒI gửi RST** =
+  **logic reject SAU khi đọc**, KHÔNG phải socket-recv fail. Gateway connect OK cùng netns → env ổn.
+- STOCK GS 2.5.2: TCP connect xong **tự gửi RST NGAY, không gửi handshake** (khác ta) — anomaly riêng
+  của binary stock (nghi socket-setup nghiêm ngặt hơn dưới kernel hiện đại), KHÔNG dùng để suy center.
+
+**ROOT CAUSE việc GS TA bị reject (binary-derived từ bản GS sạch, KHÔNG đoán):** drift protocol
+handshake relay 2010→2.5.2:
+- version **138→246** (stock `DoHandshakeRequest` FUN_080d601c ghi 0xf6 cả lower+upper).
+- header **3→2 byte**: ta `INTERNAL_PROTOCOL_HEADER={WORD wProtocolID; BYTE bReserved;}` (version ở
+  offset 3); stock ghi version ở offset **2** (không bReserved).
+- struct S2R_HANDSHAKE_REQUEST **+2 field** offset10=`*(g_pSO3World+0x5f8)`(nghi EyesIndex/ServerIndex),
+  offset14=`*(m_+0x4ee4)`(=m_nWorldIndex) → body **15→22 byte**.
+
+**FIX KHẢ THI nhưng RỦI RO CAO — chưa làm, để user quyết:** port đòi (a) version 246, (b) đổi
+framing header 3→2B ⇒ **blast radius LỚN** (mọi gói relay dùng INTERNAL_PROTOCOL_HEADER), (c) +2 field
+struct. ĐỐI CHỌI center KHÔNG verify được (obfuscated) — không thể confirm center nhận sau khi sửa,
++ stock GS cũng self-RST. Đây là whack-a-mole chống black-box, trái nguyên tắc "audit đúng root cause
+rồi mới fix". Đề xuất: chỉ port nếu chấp nhận rủi ro + test empiric nhiều vòng, HOẶC coi data-load
+parity (§Q) là mốc cuối khả thi cho build-from-source, connect-phase là hạng mục obfuscated-center.
+
+**Tài sản mới:** `tools/re_center_handshake.py` (pyghidra standalone analyze center), `tools/cluster.sh`
+(boot cụm), wire-trace method (nsenter tcpdump -Z root trong netns).
