@@ -1810,6 +1810,13 @@ BOOL KSkillManager::LoadWeaponMapSkillLine(ITabFile* piTabFile, int nLine)
         REGISTER_STR_TO_VALUE("wdtFist",                 wdtFist)
         REGISTER_STR_TO_VALUE("wdtDoubleWeapon",         wdtDoubleWeapon)
         REGISTER_STR_TO_VALUE("wdtPen",                  wdtPen)
+        REGISTER_STR_TO_VALUE("wdtSlingShot",            wdtSlingShot)
+        REGISTER_STR_TO_VALUE("wdtDart",                 wdtDart)
+        REGISTER_STR_TO_VALUE("wdtMachDart",             wdtMachDart)
+        REGISTER_STR_TO_VALUE("wdtBigSword",             wdtBigSword)
+        REGISTER_STR_TO_VALUE("wdtFlute",                wdtFlute)
+        REGISTER_STR_TO_VALUE("wdtBow",                  wdtBow)
+        REGISTER_STR_TO_VALUE("wdtKnife",                wdtKnife)
     DECLARE_STRING_MAP_END(WEAPON_DETAIL_TYPE)
     
     nRetCode = piTabFile->GetString(nLine, "WeaponType", "", szValue, sizeof(szValue));

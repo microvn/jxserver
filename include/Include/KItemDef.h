@@ -103,6 +103,10 @@ enum WEAPON_DETAIL_TYPE
     wdtSlingShot,       // ¶ÛÆ÷
     wdtDart,            // ÈñÆ÷
     wdtMachDart,        // »ú¹Ø°µÆ÷
+    wdtBigSword,        // Big sword  (2.5.2 add =9, Ghidra verified)
+    wdtFlute,           // Flute      (2.5.2 add =10)
+    wdtBow,             // Bow        (2.5.2 add =11)
+    wdtKnife,           // Knife      (2.5.2 add =12)
 
     wdtTotal
 };

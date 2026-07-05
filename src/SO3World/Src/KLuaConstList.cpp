@@ -91,6 +91,9 @@ KLuaConst LUA_CONST_WEAPON_DETAIL[] =
     {"SLING_SHOT",              wdtSlingShot},
     {"DART",                    wdtDart},
     {"MACH_DART",               wdtMachDart},
+    {"BIG_SWORD",               wdtBigSword},
+    {"FLUTE",                   wdtFlute},
+    {"KNIFE",                   wdtKnife},
     {"TOTAL",                   wdtTotal},
 
 
