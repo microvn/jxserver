@@ -644,6 +644,23 @@ trên CẢ mac lẫn host — do giải nén `手工端.7z` bằng công cụ ma
   (LUA_CONST_ATTRIBUTE_TYPE, §J4 "còn treo"); (b) blocker `MapDropInit:542` mở `settings/DropList/10`
   (path bị cắt tại byte GBK — nghi buffer/GetString truncate, đang điều tra).
 
-### N3. Tổng kết lớp drift (5 loại đã gặp)
+### N2c. FRONTIER KẾ: map-drop system THIẾT KẾ LẠI ở 2.5.2 (drift cấu trúc, chưa fix)
+Sau GBK fix, dừng ở `KDropCenter::MapDropInit:542` mở `settings/DropList/10` (fail).
+- **Điều tra:** `MapList.tab` cột `MapDrop` = "10","7","3"... (SỐ, không phải tên file). Source 2010
+  `MapDropInit` coi `pMapParams->szDropName` là filename → `settings/DropList/10` → không tồn tại
+  (archive không có DropList tên số; 110 dir đều tên GBK).
+- **RE 2.5.2 (FUN_082bf6be = MapDropInit):** hệ thống KHÁC HẲN — mở `settings/**MapDrop.tab**`
+  (ID, MapDrop1..8, DropType1..8). MapList.MapDrop = **MapDropID** → tra MapDrop.tab → mỗi slot
+  `MapDrop%d` là tên drop-list → `settings/DropList/<name>`, `DropType%d` = loại. Dùng struct
+  `m_mapMapDropID2MapDropTabItem`. `settings/MapDrop.tab` CÓ trong data (row 10 → MapDrop1=
+  "MapDrop\wanhua_gear_MapDrop.tab", DropType1=2).
+- **Bản chất:** 2.5.2 thêm tầng gián tiếp MapDropID (1 map-drop-set dùng lại cho nhiều map). Source
+  2010 chưa có tầng này → phải REIMPLEMENT MapDropInit (đọc MapDrop.tab, struct ID→slots, DropType
+  semantics). Drift CẤU TRÚC (như migration class-AI→VM-AI), không phải constant/enum/tên-file.
+- **Lựa chọn:** (A) port đúng theo 2.5.2 (đọc MapDrop.tab, dựng m_mapMapDropID2MapDropTabItem) — lớn;
+  (B) tolerant tạm (skip map-drop lỗi) để boot xa hơn xem blocker kế, port sau. Chờ user quyết.
+
+### N3. Tổng kết lớp drift (6 loại đã gặp)
 constant-limit (§M1, cạn) · enum name-set (§M4, 4 fix) · signedness (nAIType §L2) ·
-Lua-global-binding (GetEditorString/ScriptEnvInit §N, fix) · **data/filename-encoding (§N2, mới)**.
+Lua-global-binding (GetEditorString/ScriptEnvInit §N, fix) · data/filename-encoding (§N2, fix +
+audit: 2328 file thật mất do collision, khôi phục) · **struct/subsystem-redesign (map-drop §N2c, mới)**.
