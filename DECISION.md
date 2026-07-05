@@ -518,3 +518,53 @@ không tin console pipe hay file-redirect (§I).
 config → 18,207 NPC → mọi settings tab → 16,997 Lua script → item lib → ATTRIBUTE_TYPE(454)
 → **MAX_RECIPE_ID(1024) [QUA]** → dừng ở `LoadAITabFile nAIType>=0` (AI type signedness, L2).
 Năm+ drift đã port đúng, verify từ binary, trong git.
+
+---
+
+## M. AUDIT CHỦ ĐỘNG: quét drift TĨNH (không chờ boot) — 2026-07-05
+
+**Bối cảnh (ý user):** MAX_RECIPE_ID là constant-limit drift THỨ TƯ cùng khuôn (sau
+MAX_QUEST_COUNT/MAX_COOL_DOWN_COUNT/MAX_ACHIEVEMENT_ID). Thay vì chờ boot chạm từng cái →
+quét trước cả lớp. Câu hỏi 2: có cách phát hiện KHÔNG cần debug? Có — 3 kỹ thuật tĩnh.
+
+### M0. Ba kỹ thuật phát hiện drift KHÔNG cần boot
+1. **Binary-assert-literal diff (mạnh nhất cho constant-limit):** exe 2.5.2 nhúng SẴN text
+   mọi assert KGLOG (`search_strings "MAX_"` → vd `"CraftRecipe.dwID < MAX_RECIPE_ID"`), và
+   literal bound nằm ngay cạnh trong decompile (`if (0x3ff < dwID)`). So `#define` source vs
+   literal binary: source < binary ⇒ DRIFT chắc chắn (2.5.2 nâng limit, source stale, data vượt).
+2. **Data-max offline (không cần cả binary):** quét cột ID/level trong `.tab` (LC_ALL=C awk max)
+   so `#define`. data_max >= define ⇒ sẽ vỡ assert khi boot. Trả lời trực tiếp "boot có crash không".
+3. **Enum name-set diff:** map string->int (EnumConvertor .so + map exe-local) chứa tên value
+   authoritative 2.5.2; so tên/đếm với enum source. binary có tên source thiếu ⇒ `Str2Int=-1`
+   ⇒ blocker "Map string X failed" (đúng dạng ATTRIBUTE_TYPE §J4).
+
+### M1. KẾT QUẢ audit CONSTANT-LIMIT (kỹ thuật 1+2) — nhóm coi như ĐÃ CẠN
+Quét 198 `#define` limit trong source, giao với ~60 assert `MAX_*` trong binary. Bảng
+(source vs 2.5.2, đọc literal qua Ghidra hoặc data-max):
+- **4 drift THẬT — tất cả ĐÃ sửa:** MAX_QUEST_COUNT 16384(0x4000), MAX_COOL_DOWN_COUNT 1024(0x400),
+  MAX_ACHIEVEMENT_ID 4000, MAX_RECIPE_ID 1024(0x400).
+- **12 hằng boot-path KHỚP/AN TOÀN (không sửa):** MAX_TRACK_ID 2000=2000, MAX_MAP_ID 255=0xff,
+  MAX_BUFF_REPRESENT_ID 256=256, MAX_BUFF_DECAY_TYPE 16=16, MAX_DESIGNATION_FIX_ID 255=255,
+  MAX_READ_BOOK_ID 512=0x200 (bit9), MAX_READ_BOOK_SUB_ID 8=8 (bit3), PROFESSION_MAX_LEVEL 100=0x64
+  (`(nHeight-1)<0x65`), MAX_CRAFT_COUNT 16=0x10, MAX_SKILL_LEVEL 127=SCHAR_MAX (data max=127),
+  MAX_PROFESSION_COUNT 128 (profession.tab max=12), MAX_FORCE_COUNT 128 (data nhỏ).
+- **Kết luận:** lớp constant-limit gần như hết drift trên boot-path. Các blocker kế KHÔNG còn
+  thuộc lớp này (ID-space grow theo content = quest/achi/recipe/cooldown, đã xong).
+
+### M2. NHÓM RỦI RO KẾ (chưa quét hết) — enum name-set (đã drift 3 lần)
+24 enum có string-map trong source (load-by-name từ data = nhóm hay drift nhất):
+`ATTRIBUTE_TYPE, REQUIRE_TYPE, WEAPON_DETAIL_TYPE(=TYPE), ITEM_TABLE_TYPE, KTONG_OPERATION_TYPE,
+KBUFF_TYPE, KBUFF_PERSIST_ON_FIGHT/HORSE/TERRAIN, KBUFF_PERSIST_SHIELD_TYPE, KBUFF_REPRESENT_POS,
+KSKILL_CAST_MODE/CAST_EFFECT_TYPE/COMMON_ACTIVE_MODE/DAMAGE_TYPE/EFFECT_PLAY_TYPE/EVENT_TYPE/
+FUNCTION_TYPE/KIND_TYPE/WEAPON_REQUEST_TYPE, KEVENT_SKILL_CASTER_TARGET_TYPE,
+SKILL_HORSE_STATE_CONDITION` + ITEM_GENRE (exe-local array).
+- **Đã kiểm SẠCH:** ATTRIBUTE_TYPE(454 regen), REQUIRE_TYPE(9 khớp), WEAPON_DETAIL_TYPE(+4),
+  ITEM_GENRE(14). **~19 enum KSKILL_*/KBUFF_*/KEVENT_* CHƯA quét** — blocker enum kế (nếu có) ở đây.
+- **Cách quét (chưa chạy):** với mỗi enum, trích name-set 2.5.2 (EnumConvertor .so cho map .so;
+  byte-scan DECLARE_STRING_MAP static-init trong exe cho map exe-local — mở rộng
+  `tools/extract_enum_maps.py`) rồi so enum source. HOẶC offline: quét cột enum trong skill/buff tab
+  → tập distinct name → check có trong enum source. Skill/buff tab NẰM trên boot-path (sau AI).
+
+### M3. NHÓM signedness/struct (khó quét hàng loạt tĩnh)
+`nAIType` (§L2, blocker hiện tại) = int vs DWORD. Loại này cần so kiểu field từng cái, không có
+chữ-ký string như assert/enum → chỉ lộ khi RE per-field hoặc boot. Ít tái diễn hơn 2 lớp trên.
