@@ -623,6 +623,27 @@ trên CẢ mac lẫn host — do giải nén `手工端.7z` bằng công cụ ma
   Cần: 7z có codepage GBK, hoặc script đọc archive lấy raw filename bytes decode GBK. LỚN + tách biệt.
 - **Loại:** vấn đề ENVIRONMENT/DATA (giải nén sai encoding), KHÔNG phải version-drift source. Chờ user quyết.
 
+### N2b. FIX filename-encoding + AUDIT mất file (2026-07-05) — re-extract GBK trên host Linux
+- **Archive:** `download/手工端.7z` = `.7z` bọc `jjjx3.tar` (7.2GB). TAR lưu filename raw-bytes; entry
+  bên trong = **byte GBK ĐÚNG** (`\270\261\261\276BOSS` = B8B1 B1BE = 副本 GBK). Corruption cũ do
+  giải nén jjjx3.tar bằng tool macOS: APFS ép tên UTF-8 hợp lệ → byte GBK không hợp lệ → U+FFFD.
+- **KHÔNG extract được trên mac/APFS** (chỉ nhận tên UTF-8 hợp lệ) → phải extract trên **host Linux/ext4**.
+  Cài `p7zip-full` host, copy .7z (đặt tên ASCII `shougong.7z` — rsync macOS cũ + remote path GBK lỗi),
+  stream: `7z x -so shougong.7z jjjx3.tar | tar xf - root/scripts` (tar Linux giữ nguyên byte GBK).
+- **Swap:** `镜像端/extracted/root/{scripts,settings}` → `*_corrupt_bak`, thay bằng cây extract đúng.
+- **AUDIT mất file (user yêu cầu kiểm kỹ, so bằng md5 NỘI DUNG không phải tên):**
+  scripts 19245 file (18676 unique-content) vs corrupt 17091 (16632); settings 9262 vs 8940.
+  `comm` trên tập content-hash: **NEW\CORRUPT = 2048 (scripts) + 280 (settings) nội dung MẤT THẬT**;
+  CORRUPT\NEW = 4+1 file, **TẤT CẢ là `.DS_Store`** (rác macOS, non-DS_Store=0). → cây mới là superset
+  nội dung thật, không mất gì; corrupt mất 2328 file game.
+- **Cơ chế collision (chứng minh):** #U+FFFD = #byte-GBK = 2×#ký-tự-Hán → tên cùng số ký tự Hán +
+  cùng phần ASCII → CÙNG chuỗi U+FFFD → đè nhau (last-writer-wins). Bằng chứng: corrupt còn 1 dir
+  `<UFFFD×4>BOSS` (115 file) trong khi new có `副本BOSS`(126)+`25人副本BOSS`+... riêng biệt.
+- **Kết quả boot:** scripts fix → skill loading VƯỢT QUA (không còn abort skill id=2). settings fix →
+  DropList/锦囊 hết. Tiến tới: (a) non-fatal `LuaAddAttribute:53` attribute key ngoài range
+  (LUA_CONST_ATTRIBUTE_TYPE, §J4 "còn treo"); (b) blocker `MapDropInit:542` mở `settings/DropList/10`
+  (path bị cắt tại byte GBK — nghi buffer/GetString truncate, đang điều tra).
+
 ### N3. Tổng kết lớp drift (5 loại đã gặp)
 constant-limit (§M1, cạn) · enum name-set (§M4, 4 fix) · signedness (nAIType §L2) ·
 Lua-global-binding (GetEditorString/ScriptEnvInit §N, fix) · **data/filename-encoding (§N2, mới)**.
