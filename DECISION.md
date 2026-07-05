@@ -988,3 +988,39 @@ gồm cả chính nó). Đây là code TÁI DỰNG của ta (memory ghi "guess")
 **Ý NGHĨA:** connect-phase KHÔNG bị chặn bởi obfuscation nữa (đã đọc được center). Blocker mới =
 socket framing của lớp mạng tái dựng. Bước kế: đối chiếu framing engine thật (gateway wire + engine
 .so) rồi sửa kg_socket.cpp cho khớp. Tài sản: 3 tool RE + dump giải mã.
+
+---
+
+## R6. RE với 2 skill: reject ở tầng ACCEPT (không phải handshake) + framing fix (2026-07-06)
+
+Dùng skill reverse-engineering + malware-analysis đã cài. Kết quả lật toàn bộ giả thuyết trước.
+
+**strace (dynamic instrumentation) — bằng chứng cứng:** center xử lý kết nối GS:
+```
+accept(9=fd-5003) = 4
+setsockopt(4, SO_LINGER {l_onoff=1,l_linger=0})   -- abortive close -> RST
+close(4)                                           -- 278µs sau accept, KHÔNG hề recv/read
+```
+→ **Center reject GS ở TẦNG ACCEPT, chưa đọc 1 byte handshake.** Mọi việc version/struct/framing
+trước đó (§R3) đều SAI TẦNG (center không đọc tới đó). fd 9=5003 (GS listener) confirmed; gateway
+fd 5=9001 accept OK cùng IP.
+
+**Loại các nghi phạm (đọc RAM live + RE):**
+- accept-block flag `mgr+0x32c4` = **0** (không bị chặn; DB-reconnect-fail path FUN_081ecb60 không nổ).
+- slot0 free, `m_nNextGSID`=1 (chưa GS nào vào slot). MySQL 5 conn/151, 0 aborted.
+
+**RE bản GIẢI MÃ (dump) — luồng accept:** `ProcessNetwork(FUN_08080180)` event 0x800000 →
+`ProcessAcceptor(FUN_0807f1f0)`; nhưng reject thật ở TRƯỚC đó, trong socket-manager
+`FUN_081ffc4d` (accept wrapper): `fd=accept(); ret=FUN_081ff5ab(fd,filter,&ip,&port);
+if(ret!=1) close(fd);`. Validator `FUN_081ff5ab`→`FUN_081ff213` (peer-based, dùng info có sẵn
+lúc accept, KHÔNG recv) quyết định đóng. `FUN_081ff5ab` viết `*(data-2)=size+2` → **XÁC NHẬN
+framing = [uint16 LE total-incl-2B-header][payload]** (đúng kg_socket fix §R5).
+
+**FRAMING FIX (§R5, commit 65144c0):** kg_socket.cpp 4-byte-payload-len → 2-byte-total-incl-header.
+Đúng và cần (wire GS giờ khớp gateway `18 00`=24=2+22), NHƯNG chưa mở connect vì reject ở accept.
+
+**CÒN LẠI (pinpoint):** vì sao `FUN_081ff213` reject connection của GS ta (peer 192.168.200.105)
+trong khi gateway cùng IP OK. Khả năng: IP-filter theo listener (param_4 context), hoặc
+same-host/max-conn. Bước kế dứt điểm = **Frida hook FUN_081ff213/FUN_081ff5ab live** (skill
+reverse-engineering, frida_universal.js) xem return value + peer nó validate — hoặc decompile
+FUN_081ff213. Tài sản: dump giải mã + toàn bộ luồng accept đã map.
