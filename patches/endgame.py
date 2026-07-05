@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# ============================================================================
+# HISTORICAL / DO NOT RUN. Frozen into the git baseline commit.
+# These edits are ALREADY BAKED into the tracked source (src/, include/).
+# Source of truth is now git: fix = edit file + commit, not a patch here.
+# Kept only as a record of WHY each drift fix was made (see DECISION.md).
+# ============================================================================
 """
 Endgame patches — áp lên cây scaffold (src/ + include/) SAU khi setup.sh copy source.
 Chỉ vá 5 file SỐNG (xác nhận có trong binary server thật / có caller sống — xem DECISION.md §B2,§D).
