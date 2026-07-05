@@ -566,5 +566,38 @@ SKILL_HORSE_STATE_CONDITION` + ITEM_GENRE (exe-local array).
   → tập distinct name → check có trong enum source. Skill/buff tab NẰM trên boot-path (sau AI).
 
 ### M3. NHÓM signedness/struct (khó quét hàng loạt tĩnh)
-`nAIType` (§L2, blocker hiện tại) = int vs DWORD. Loại này cần so kiểu field từng cái, không có
+`nAIType` (§L2) = int vs DWORD. Loại này cần so kiểu field từng cái, không có
 chữ-ký string như assert/enum → chỉ lộ khi RE per-field hoặc boot. Ít tái diễn hơn 2 lớp trên.
+
+### M4. THỰC THI enum sweep (offline diff → RE value) — 4 drift sửa loạt, skill 0→6161
+Chạy offline diff: quét cột string trong skill/buff tab (data boot) vs tập string source map,
+BINDING chính xác từ `MAP_STRING_LOCAL` (KHÔNG đoán cột). Tìm được 4 drift THẬT:
+- **KSKILL_CAST_MODE (INTERLEAVE):** chèn scmTargetAngleSector=2, scmRectangle=3,
+  scmTargetAngleRectangle=4 sau scmSector=1 → dịch scmCasterArea..scmTeamArea +3. Value đọc từ
+  binary (make_pair byte-scan `c744 2408 <imm> c744 2404 <ptr>` @FUN_08169170): Sector=1..PartyArea=14.
+  Append sẽ gán SAI value mọi cast-mode cũ vs client → desync targeting. Fix = chèn 3 enumerator
+  (KSkill.h) + 3 REGISTER (KSkillManager.cpp).
+- **SKILL_HORSE_STATE_CONDITION (append):** shcIgnore=4, shcEquipSpecialHorse=5.
+- **KBUFF_PERSIST_SHIELD_TYPE (append):** pmsGlobalTherapyAbsorb=14 (@FUN_0826edec).
+- **KSKILL_EVENT_TYPE (append):** seParry=20 (SkillEvent.tab, @FUN_0816769e: Cast=1..BeMiss=19 khớp).
+- **BÀI HỌC phương pháp (2 lần suýt sai):** (1) so với **ENUM** (có Invalid=0 đầu), KHÔNG so với
+  string-map trần → nếu không sẽ đọc nhầm SHIELD thành interleave. (2) offline diff PHẢI dùng đúng
+  binding: skills.tab cột `FunctionType` KHÔNG được skill-loader map (chỉ buff map) → Blow/Fly/Heal
+  là FALSE POSITIVE, bỏ. Chỉ cột thật sự Str2Int mới tính.
+- **Kết quả boot:** build 191/0, `[AI] 25414 AI loaded` (nAIType OK), skill load **0 → 6161 skill
+  loaded** rồi dừng ở lớp MỚI (§N).
+
+---
+
+## N. FRONTIER MỚI: Lua-binding (GetEditorString nil) — 2026-07-05
+
+Sau khi 4 enum skill/buff sạch, skill load tới 6161 rồi dừng:
+`[Lua] scripts/Include/GlobalStrings.ls:10: attempt to call global 'GetEditorString' (a nil value)`
+→ script load fail → skill id=2 script fail → `LoadSkillDataFull:1358` → skill mgr Init fail.
+- **Bản chất:** lớp exe↔Lua **binding** (đăng ký hàm Lua global), KHÔNG phải data/enum/constant drift.
+  `GetEditorString` KHÔNG có trong source ta. "Editor" gợi ý hàm editor-tool (như KGodServer dead §E)
+  hoặc hàm exe 2.5.2 đăng ký mà build ta thiếu.
+- **Cần RE (chưa làm):** tìm trong exe 2.5.2 hàm nào đăng ký "GetEditorString" (search_strings +
+  RegisterFunction), xác định (a) hàm server thật cần port hay (b) editor-only vô hại có thể stub
+  trả rỗng. Liên quan §A8/§I (3-layer: Lua binding là bề mặt rủi ro version thật, không phải C++ logic).
+- **Lớp drift mới thứ 4** (sau constant-limit, enum, signedness): Lua-global-binding.
