@@ -48,3 +48,4 @@ Release_Client/
 
 # --- macOS ---
 .DS_Store
+_deploy.log
