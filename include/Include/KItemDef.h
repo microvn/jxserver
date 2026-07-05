@@ -69,6 +69,8 @@ enum ITEM_GENRE
     igBoxKey,           // Box key     (2.5.2 add =9, Ghidra OnApplyUseItem)
     igDiamond,          // Diamond     (2.5.2 add =10, Ghidra LuaSetItemMountDiamond)
     igColorDiamond,     // ColorDiamond(2.5.2 add =11)
+    igCub,              // Pet cub    (2.5.2 =12, exe LUA_CONST_ITEM_GENRE)
+    igFodder,           // Pet fodder (2.5.2 =13)
 
     igTotal
 };

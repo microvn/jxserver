@@ -53,6 +53,8 @@ KLuaConst LUA_CONST_ITEM_GENRE[] =
     {"BOX_KEY",                 igBoxKey},
     {"DIAMOND",                 igDiamond},
     {"COLOR_DIAMOND",           igColorDiamond},
+    {"CUB",                     igCub},
+    {"FODDER",                  igFodder},
 
     {"TOTAL",                   igTotal},
 
