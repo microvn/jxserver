@@ -826,3 +826,55 @@ KET QUA: index-nil 13->0, skill-errors=0. **2 log KHOP: ours Failed-load 19 = re
 ca hai index-nil=0, Load game settings [OK], center-connect fail.** Khac biet con lai duy nhat = flood
 `]:Get` (NpcTemplate field tolerant best-effort) da loc, khong phai divergence chuc nang.
 GOAL DAT: moi drift he thong fixed + 4 data-quirk fixed -> log khop real toan bo noi dung nghia.
+
+---
+
+## R. KIỂM CHỨNG center-connect: dựng cụm 3 tiến trình thật (2026-07-05)
+
+§O trước đây GIẢ ĐỊNH center-connect fail chỉ vì "center chưa chạy" (infra, không phải drift), chưa
+verify. Nay dựng cụm THẬT trên host để đối chiếu — closes cái gap connect user hỏi.
+
+**Hạ tầng dựng (script tái dùng `/root/jx3/cluster.sh up|down|status|logs`):**
+- MySQL 5.6 (docker `mysql:5.6`, root/123456, DB=jx3_25 auto-create, lower_case_table_names=1,
+  max_allowed_packet=20M) trong netns riêng. **Không có SQL dump trong leak** — center TỰ tạo 36 bảng
+  (role/account/mail/tong/auction/... — xác nhận qua SHOW TABLES). 教程.txt (手工端) cũng KHÔNG có
+  bước import .sql: chỉ cài mysql 5.6 + GRANT ALL, center bootstrap schema.
+- IP alias `192.168.200.105/32` trên `lo` của netns (config trỏ IP này); center/gateway/gameserver
+  share netns của mysql (`--network=container:jx3mysql`) → cùng thấy 127.0.0.1:3306 + 192.168.200.105.
+- image jx3build = CentOS 7 (khớp OS tutorial).
+
+**Kết quả (audit, không đoán):**
+1. **Center BOOT ĐẦY ĐỦ**: cần MySQL (gate cứng `KSO3GameCenter::Init:99 → KDBTools::Init:25`, thiếu
+   DB → exit ngay). Có MySQL → load DB → `Center server startup ... ... [OK]`, LISTEN `5003`+`9001`.
+   ZoneServer `127.0.0.1:9111` retry-fail (non-fatal, tutorial 手工端 cũng không ship ZoneServer).
+2. **Gateway → center: THÀNH CÔNG** — center log `Gateway connected from 192.168.200.105:51695`.
+   → hạ tầng (mysql/IP/netns/socket/handshake) OK; center làm được relay session.
+3. **GameServer → center: FAIL** ở center `KGLOG_PROCESS_ERROR(nRetCode) at line 736 in
+   KGameServer::ProcessNetwork()` → center đóng socket GS → GS `Game center lost` /
+   `Send:433 nRetCode!=1` / `DoHandshakeRequest:3471`. GS `[OK]` vs `[Failed]` chỉ là RACE giữa send
+   của GS và close của center; **GS KHÔNG BAO GIỜ nhận `r2s_handshake_respond`** (không có log
+   "Set world index"). Deterministic.
+4. **CONTROL DỨT KHOÁT: binary REAL `SO3GameServer` 2.5.2 gốc (cùng build Dec 14 2012 với center)
+   chạy MỘT MÌNH với center fresh CŨNG fail y hệt :736.** → **KHÔNG phải drift code ta rebuild.**
+5. Đã loại: gateway-present (test), IP alias vs 127.0.0.1 thuần (test, y hệt), DB server-registration
+   row (không có bảng nào loại này), ZoneServer (setup 手工端 hoạt động cũng không có), packing
+   (center 36197 strings, ELF thường không pack).
+
+**Drift protocol connect PHÁT HIỆN qua RE (binary-derived, chưa fix):**
+- Stock GS `DoHandshakeRequest` (FUN_080d601c): `wProtocolID=1`, `nGameWorldLowerVersion=0xf6=246`,
+  `nGameWorldUpperVersion=246`, buffer **0x16=22 byte** (2 field THÊM ở offset 10=`*(g_pSO3World+0x5f8)`
+  và 14=`*(this+0x4ee4)`, offset 18=recorder GetTime).
+- Source ta (`GS_Client_Protocol.h`): `GAME_WORLD_CURRENT_VERSION=138`, `LOWEST=138`,
+  `S2R_HANDSHAKE_REQUEST` ~14 byte (thiếu 2 field). → **drift version 138→246 + struct nở 14→22.**
+- CẢNH BÁO: fix version/struct này CHƯA chắc mở được session vì **stock GS (246, 22B) cũng bị :736**.
+  ProcessNetwork:736 khả năng là **lỗi tầng socket recv** (đối chiếu `KPlayerServer::ProcessNetwork:314`
+  trong GS binary = `KGLOG_PROCESS_ERROR(nRetCode)` từ select/recv, KHÔNG phải packet dispatch), không
+  phải version/size check → nghi nguyên nhân MÔI TRƯỜNG (binary 2012 32-bit dưới Docker/netns kernel
+  hiện đại) đặc thù kết nối GS, HOẶC center 镜像端 lệch build vs GS. Cần RE center để chốt — nhưng
+  pyghidra phân tích SO3GameCenter/SO3Gateway ra RÁC ("bad instruction data"), phải re-import mới RE được.
+
+**Ý NGHĨA cho §O:** gap connect đã VERIFY: (a) code connect ta rebuild KHÔNG phải blocker (real fail y
+hệt), (b) socket-connect wall §O vượt được khi center chạy (gateway connect OK, GS gửi handshake OK),
+(c) blocker còn lại = center từ chối handshake GS ở :736, tái lập trên binary STOCK → hạng mục
+cụm/môi trường, KHÔNG phải version-drift source. Việc còn treo: RE center :736 (cần re-import Ghidra)
+HOẶC chạy trên host/VM CentOS 7 thật (không Docker shared-netns) như tutorial để loại biến môi trường.
