@@ -57,49 +57,38 @@ typedef void (*LUA_ERROR_HANDLER)(const char*);
 
 interface ILuaScriptEx
 {
-	virtual void	Release() = 0;
+	// -----------------------------------------------------------------------
+	// vtable layout MUST match libEngine_Lua5D.so (Ghidra-verified, 23 slots).
+	// Do NOT reorder / insert / remove: our code calls these through
+	// ILuaScriptEx* and the compiler computes .so vtable offsets from here.
+	// -----------------------------------------------------------------------
+	virtual void	Release() = 0;                                                                       // 0
+	virtual DWORD	LoadFromFile(const char* pszFileName) = 0;                                           // 1
+	virtual BOOL	LoadFromBuffer(DWORD dwScriptID, const char* pszScriptName, const char* pszBuffer, DWORD dwSize) = 0; // 2
+	virtual BOOL	RegisterFunction(KLuaFunc &LuaFunc) = 0;                                             // 3
+	virtual BOOL	RegisterFunctions(KLuaFunc Funcs[], int nFuncCount = 0) = 0;                         // 4
+	virtual BOOL	RegisterConstList(KLuaConstList* pLuaConstList) = 0;                                 // 5
+	virtual void	SafeCallBegin(int* pIndex) = 0;                                                      // 6
+	virtual void	SafeCallEnd(int nIndex) = 0;                                                         // 7
+	virtual BOOL	IsFuncExist(DWORD dwScriptID, char* pszFuncName) = 0;                                // 8
+	virtual BOOL	CallFunction(DWORD dwScriptID, const char* pszFuncName, int nResults) = 0;           // 9
+	virtual void	AddParamCount() = 0;                                                                 // 10
+	virtual BOOL	GetValuesFromStack(char* pszFormat , ...) = 0;                                       // 11 (variadic)
+	virtual BOOL	GetValuesFromStack(char* pszFormat , va_list vlist) = 0;                             // 12 (va_list)
+	virtual lua_State*	GetLuaState(void) = 0;                                                           // 13
+	virtual BOOL		IsScriptExist(DWORD dwScriptID) = 0;                                              // 14
+	virtual DWORD		GetActiveScriptID() = 0;                                                         // 15
+	virtual KLuaScriptData* GetScriptData(DWORD dwScriptID) = 0;                                          // 16
+	// slots 17-22: exist in the .so vtable, never called by our code -> fillers
+	// so the slots above resolve to the correct offsets. Names mirror the .so.
+	virtual void	_vt17_DumpStrt() = 0;                                                                // 17
+	virtual void	_vt18_NewFunctionRefID() = 0;                                                        // 18
+	virtual void	_vt19_DeleteFunctionRefID() = 0;                                                     // 19
+	virtual void	_vt20_PushFunctionBeforeParam() = 0;                                                 // 20
+	virtual void	_vt21_FastCallFunction() = 0;                                                        // 21
+	virtual void	_vt22_GetFunctionData() = 0;                                                         // 22
 
-	virtual BOOL	Init(void) = 0;
-	virtual BOOL	UnInit(void) = 0;
-
-	//����
-	virtual DWORD	LoadFromFile(const char* pszFileName) = 0;
-	virtual BOOL	LoadFromBuffer(DWORD dwScriptID, const char* pszScriptName, const char* pszBuffer, DWORD dwSize) = 0;
-
-	//ע��C����,������
-	virtual BOOL	RegisterFunction(KLuaFunc &LuaFunc) = 0;
-	virtual BOOL	RegisterFunctions(KLuaFunc Funcs[], int nFuncCount = 0) = 0;
-	virtual BOOL	RegisterConstList(KLuaConstList* pLuaConstList) = 0;
-
-	//�������ýӿ�
-	virtual void	SafeCallBegin(int* pIndex) = 0;
-	virtual void	SafeCallEnd(int nIndex) = 0;
-	virtual BOOL	IsFuncExist(DWORD dwScriptID, char* pszFuncName) = 0;
-	virtual BOOL	CallFunction(DWORD dwScriptID, const char* pszFuncName, int nResults) = 0;
-	virtual void	AddParamCount() = 0;		//���Ӳ����ļ���
-	virtual BOOL	GetValuesFromStack(char* pszFormat , ...) = 0;
-	virtual BOOL	GetValuesFromStack(char* pszFormat , va_list vlist) = 0;
-	
-	//��ȡLuaState
-	virtual lua_State*	GetLuaState(void) = 0;
-
-	//���ű��Ƿ����
-	virtual BOOL		IsScriptExist(DWORD dwScriptID) = 0;
-
-	//��ȡ��ǰ����ִ�еĽű�
-	virtual DWORD		GetActiveScriptID() = 0;
-
-	//�����·����ȡ�ű�ID
-	virtual DWORD		ScriptNameToID(const char* pszName) = 0;
-
-	//��ȡKLuaScriptData
-	virtual KLuaScriptData* GetScriptData(DWORD dwScriptID) = 0;
-
-	//ע��ErrorHandler
-	virtual void				RegisterErrorHandler(LUA_ERROR_HANDLER pHandler) = 0;
-	virtual LUA_ERROR_HANDLER	GetErrorHandler() = 0;
-
-	template<class T> void PushValueToStack(T value);	
+	template<class T> void PushValueToStack(T value);
 };
 
 template<class T>
