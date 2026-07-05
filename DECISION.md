@@ -919,3 +919,33 @@ parity (§Q) là mốc cuối khả thi cho build-from-source, connect-phase là
 
 **Tài sản mới:** `tools/re_center_handshake.py` (pyghidra standalone analyze center), `tools/cluster.sh`
 (boot cụm), wire-trace method (nsenter tcpdump -Z root trong netns).
+
+---
+
+## R3. PORT handshake v246+2field: TEST empiric → NEGATIVE (2026-07-06)
+
+User yêu cầu port thử handshake v246 + 2 field xem center có nhận. Đã làm ĐÚNG binary-derived + test wire.
+
+**Port (commit c4bf2c3):** S2R_HANDSHAKE_REQUEST redefine standalone packed (bỏ INTERNAL_PROTOCOL_HEADER
+vì 2.5.2 để version ở offset 2, không bReserved): `WORD wProtocolID; int lower=246; int upper=246;
+int nField10; int nWorldIndex; time_t nServerTime;` = 22B. GAME_WORLD_CURRENT/LOWEST_VERSION 138→246.
+DoHandshakeRequest set nField10=0, nWorldIndex=m_nWorldIndex. Build 191/0 link 0.
+
+**Wire xác nhận gửi ĐÚNG:** length-prefix `16000000`=22 + body `0100 f6000000 f6000000 00000000 00000000
+<serverTime>` — khớp byte-perfect format stock GS (FUN_080d601c).
+
+**KẾT QUẢ: center VẪN RST ở :736.** Test tiếp version-range `[1, 0x7FFFFFFF]` (bao trùm MỌI version) →
+VẪN RST. → **LOẠI DỨT KHOÁT:** version (wide-range fail), size/struct (22B đúng format fail),
+encryption (gateway plaintext connect OK, relay không mã hóa), môi trường (gateway OK + wire = logic
+reject sau khi đọc). 
+
+Center chấp nhận handshake plaintext của **gateway** (class KGateway) nhưng từ chối handshake **GS**
+(class KGameServer::ProcessNetwork:736) bất kể nội dung/version/size. Cái center muốn nằm trong logic
+KGameServer **bị obfuscate** (§R2, un-RE-able). Cộng stock GS 2.5.2 tự-RST không gửi handshake →
+bằng chứng nghiêng về: **center 镜像端 không tương thích với GS ở cấu hình đơn-server này, HOẶC cần
+runtime-state (ZoneServer 9111 registration) không tái lập được**. 
+
+**KẾT LUẬN connect-phase:** không giải được từ source GS khi center bị obfuscate — mọi giả thuyết
+kiểm chứng được đã loại. Handshake giờ ĐÃ khớp real 2.5.2 (port đúng, giữ lại). Muốn đi tiếp BẮT BUỘC
+deobfuscate SO3GameCenter (ngoài phạm vi build-from-source) hoặc tìm bản center/GS đồng-version khác.
+**Mốc cuối khả thi cho build-from-source = data-load parity (§Q, "Load game settings [OK]" khớp real).**
