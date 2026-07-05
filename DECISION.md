@@ -295,3 +295,43 @@ source-of-truth trôi giữa leak + patch + working tree.
 "assembled từ leak thế nào" nằm ở `bootstrap-from-leak.sh` + baseline commit message; lý do
 từng fix nằm ở endgame.py + DECISION.md; thay đổi mới nằm ở git history. Port drift tiếp theo
 (enum `wdtBigSword`...) giờ là **sửa source thật + commit**, diff/blame được, không nhồi patch.
+
+---
+
+## H. Pipeline reverse-engineer diff 2010→2.5.2 — tài sản binary & bài học version (2026-07-05)
+
+**Câu hỏi user:** có cách export "word-by-word" so từng file, dùng Ghidra extract 2 exec
+theo tên file trong `src/SO3World/Src/*`, phân loại add/mod/del rồi port lên 2012?
+
+**Kiểm kê binary tìm được (find toàn collection):**
+| Binary | Nền | Version thực (theo CONTENT) | Symbol |
+|---|---|---|---|
+| SO3GameServer ta build | Linux ELF32 | từ source 2010 | đầy đủ (build ta) |
+| `镜像端/.../SO3GameServer` | Linux ELF | **2.5.2.4503 (data ta)** | STRIP, tự đặt tên qua assert |
+| `source/China3/SO3GameServerD.exe` + **`.pdb` 39MB** | Win VC80 Debug | nhánh KHÁC (ít weapon type hơn) | đầy đủ qua PDB |
+| `lv90/.../SO3GameServerD.exe` + .pdb | Win | nhánh khác/mới | đầy đủ qua PDB |
+
+SO3World static-link vào exe → mọi exe CHỨA toàn bộ hàm SO3World. Exe strings tự tài liệu
+hoá cực mạnh: **1840 tên `Class::Method`** từ macro assert `KGLOG_PROCESS_ERROR` (in
+`__FUNCTION__`), nên hàm tự-đặt-tên kể cả khi strip.
+
+**Sự thật về "word-by-word":** KHÔNG khả thi. Decompiler ra pseudo-C, không phải source;
+diff pseudo-C với C++ gốc là nhiễu (tên biến bịa, mất macro/comment, inline, control-flow
+compiler biến đổi). Cái KHẢ THI & đúng granularity add/mod/del:
+- **add/del = kiểm kê hàm/struct**: dump symbol → set `Class::Method`, gom theo class=file,
+  set-diff với source. `llvm-pdbutil dump -types/-symbols` (đã cài llvm 22) đọc PDB không cần
+  Windows; với binary strip Linux dùng Ghidra `search_symbols`/`list_xrefs`.
+- **struct/field diff**: PDB có layout struct đầy đủ → gốc của mọi field-missing/size drift.
+- **mod = logic từng hàm**: LLM đọc pseudo-C (đặt tên) + source, so NGỮ NGHĨA rồi port. Đắt →
+  làm có mục tiêu.
+
+**BÀI HỌC then chốt — version-match binary với DATA, không tin ngày file:**
+Pilot enum `WEAPON_DETAIL_TYPE` phơi bày: PDB China3/lv90 (ngày file 2014/2020) chỉ có **9**
+weapon type (giống 2010), KHÔNG có `wdtBigSword`. Nhưng data 2.5.2 (`WeaponType.tab`) dùng
+**13** loại (thêm BigSword/Bow/Flute/Knife). → **PDB là nhánh content KHÁC/CŨ hơn** data ta;
+ngày file chỉ là ngày đóng gói. **Ground-truth cho data 2.5.2 = binary Linux `镜像端`
+(strip) + Ghidra**, KHÔNG phải PDB. PDB vẫn quý cho phần CẤU TRÚC framework/struct (ít đổi
+theo content patch) nhưng KHÔNG phải chân lý cho enum/const content. → mọi port content phải
+verify trên binary 2.5.2 (`/SO3GameServer-3c8199` trong ghidra project), cross-check PDB.
+
+**Pilot hoàn chỉnh (chứng minh pipeline end-to-end trên đúng blocker):** xem §I.
