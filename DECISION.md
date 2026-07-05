@@ -734,3 +734,39 @@ file-scope); cần verify CallFunction("LuaEnvInit").
 3. Regen LUA_ATTRIBUTE_TYPE (342→454) từ binary LUA_CONST array (name UPPER_SNAKE→value), khớp C++ enum.
 4. Thêm LUA_CONST_DIAMOND_SUB_TYPE (đọc value GOLD/WOOD/WATER/... từ binary).
 5. (phụ) verify LuaEnvInit() được gọi; điều tra AI count 213.
+
+---
+
+## Q. LOG-PARITY: audit real-vs-ours + 7 fix để 2 log khớp (2026-07-05, goal)
+
+Chạy binary GỐC 2.5.2 cùng deploy tree, diff log. Cả hai đạt `Load game settings [OK]` → center-fail.
+Ban đầu ours 10785 dòng (ngập warning tolerant) vs real 56. Audit root-cause từng bug (không đoán),
+fix, đưa ours meaningful (lọc `]:Get`) về ~176; **Map-script fails KHỚP CHÍNH XÁC real (19=19, 0 lệch
+2 chiều)**; LuaAddAttribute/SetCheckCoolDown/... = 0.
+
+**7 fix (mỗi cái RE binary + đối chiếu JX3CalcBE repo user cấp):**
+1. **KSkill Lua binding (3 method)** — `SetCheckCoolDown`/`GetCheckCoolDownCount`/`ID` (category
+   "Check" cooldown, MAX_SKILL_CHECKONLY_COOL_DOWN_TIMER=3, RE FUN_08356b3e: idx a-1, m_dwCheckCoolDownID);
+   `AddSlowCheck{Self,Dest}OwnBuff` (biến thể "Own", vector riêng). ~1466 fail.
+2. **KSkill field (5)** — nHeight/nRectWidth/nProtectRadius (geometry Rect/Sector cast mode) +
+   nCostManaBasePercent/nCostEnergy. macro REGISTER_LUA_INTEGER thêm 'n' → lua name nHeight. ~400 fail.
+3. **LUA_ATTRIBUTE_TYPE regen 342→451** — script dùng attr-const thiếu → nil → AddAttribute(0) → out-range
+   (1376 fail). Trích array exe @0x084ca1a0 qua **tools/extract_lua_attr.py (pyghidra, không transcription)**;
+   tên UPPER_SNAKE không suy máy móc được (KiloNum≠KILONUM...) → lấy verbatim.
+4. **DIAMOND_SUB_TYPE** LUA_CONST (INVALID=-1..TOTAL=5, exe @0x084c9500). 1 fail.
+5. **LuaBindBuff 3→3/4/5 args** (RE FUN_08357882; opt arg4 bool/arg5 int). 63 fail.
+6. **SetSun/MoonSubsectionSkill** (RE FUN_0835645c: 4 args, MAX_SUN/MOON_POWER_VALUE=1). 11 fail.
+7. (map-drop §N2c tolerant-skip đã có).
+
+**Phương pháp học được:** hand-transcribe hex name-block SAI (CURRENT_ENERGY 49→51) → chuyển pyghidra
+standalone đọc thẳng array (reliable). so tên với ENUM không phải string-map trần. binding từ binary +
+JX3CalcBE verify, không đoán.
+
+**Residual (còn ours-only, non-fatal, boot vẫn [OK]):** 13 dòng `index a nil value` từ **4 BOSS skill
+script** = quirk DATA per-script: `天工坊_机甲龙` MaxLevel=**21** nhưng tSkillData chỉ **20** entry →
+tSkillData[21]=nil (off-by-one tab-vs-script); `南诏皇宫_枯荣大师_*` MaxLevel=2 nil khác. KHÔNG phải
+drift hệ thống — là bất nhất data trong 4 script (of 6161). Real binary xử lý (có thể cũng log ở file
+rotate khác — harness real bất ổn sau full-tree swap, không đo dứt điểm được). Boot outcome KHỚP real.
+
+**Kết luận:** mọi drift HỆ THỐNG (binding/const/enum/field/args) đã fix, log khớp real trên toàn bộ
+nội dung hệ thống + Map-fails y hệt. Còn 13 dòng edge-case data-quirk (4/6161 skill), non-fatal.
