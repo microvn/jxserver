@@ -597,7 +597,32 @@ Sau khi 4 enum skill/buff sạch, skill load tới 6161 rồi dừng:
 - **Bản chất:** lớp exe↔Lua **binding** (đăng ký hàm Lua global), KHÔNG phải data/enum/constant drift.
   `GetEditorString` KHÔNG có trong source ta. "Editor" gợi ý hàm editor-tool (như KGodServer dead §E)
   hoặc hàm exe 2.5.2 đăng ký mà build ta thiếu.
-- **Cần RE (chưa làm):** tìm trong exe 2.5.2 hàm nào đăng ký "GetEditorString" (search_strings +
-  RegisterFunction), xác định (a) hàm server thật cần port hay (b) editor-only vô hại có thể stub
-  trả rỗng. Liên quan §A8/§I (3-layer: Lua binding là bề mặt rủi ro version thật, không phải C++ logic).
-- **Lớp drift mới thứ 4** (sau constant-limit, enum, signedness): Lua-global-binding.
+- **RE kết quả:** `GetEditorString` KHÔNG phải C++ binding — nó là hàm LUA, định nghĩa file-scope
+  trong `scripts/LuaEnvInit/EditorExportedStrings/EditorStringHeader.li`, được nạp qua
+  `scripts/LuaEnvInit/LuaEnvInit.li` (Include chuỗi + hàm `LuaEnvInit()` append helper globals:
+  GetEditorString, String/Math/Player/Npc/Misc/SceneCustomValue/VersionControl/TongRaidQuest).
+- **Root cause:** exe 2.5.2 `KScriptCenter::Init` (FUN_08113e90) gọi `ScriptEnvInit("scripts")`
+  (FUN_081139bc) NGAY sau CreateScriptHolder, TRƯỚC search/load: load `LuaEnvInit\LuaEnvInit.li`
+  → IsFuncExist("LuaEnvInit") → CallFunction("LuaEnvInit"). Source ta THIẾU HẲN bước này → helper
+  globals không bao giờ nạp. `.li` không khớp `IsLuaFile` (chỉ lua/lh/ls) → LuaEnvInit.li không vào
+  bảng auto-load → phải load tường minh.
+- **FIX (làm rồi, commit):** thêm `KScriptCenter::ScriptEnvInit(const char*)` khớp 2.5.2 + gọi trong
+  `Init()` sau CreateScriptHolder. Verify boot: lỗi GetEditorString BIẾN MẤT. (LoadFromFile =
+  compile-only; execute xảy ra khi Include/CallFunction, nên ScriptEnvInit phải chạy trước skill exec.)
+
+### N2. FRONTIER KẾ (sau GetEditorString): filename GBK HỎNG khi giải nén — DATA, không phải code
+Sau ScriptEnvInit, skill vẫn dừng ở skill id=2 (script `npc\副本BOSS\空雾峰1号欠债.lua`), `IsScriptExist`
+false. Điều tra: **96% (16,485/17,091) file script có tên GBK bị hỏng thành U+FFFD (bytes EF BF BD)**
+trên CẢ mac lẫn host — do giải nén `手工端.7z` bằng công cụ macOS diễn giải tên GBK thành UTF-8 lỗi.
+- **Cơ chế:** skills.tab (nội dung GBK, ĐÚNG) trỏ path GBK; file trên đĩa mang tên U+FFFD → `g_FileNameHash`
+  của path-đúng ≠ hash path-hỏng → không tìm thấy → `IsScriptExist` false. Skill path-ASCII (TestSkill)
+  OK; skill path-GBK ĐẦU TIÊN (id=2) fail → abort (2.5.2 skill loader cũng strict, FUN_0816d346).
+- **Nội dung file CÒN NGUYÊN** (0 collision trên full-path → không đè mất) — chỉ TÊN sai. U+FFFD lossy →
+  không suy ngược tên gốc → PHẢI re-extract từ archive gốc với GBK filename decoding.
+- **Trở ngại tooling:** mac không có 7z; host chỉ có `unzip` (không 7z/convmv); archive 902MB ở mac.
+  Cần: 7z có codepage GBK, hoặc script đọc archive lấy raw filename bytes decode GBK. LỚN + tách biệt.
+- **Loại:** vấn đề ENVIRONMENT/DATA (giải nén sai encoding), KHÔNG phải version-drift source. Chờ user quyết.
+
+### N3. Tổng kết lớp drift (5 loại đã gặp)
+constant-limit (§M1, cạn) · enum name-set (§M4, 4 fix) · signedness (nAIType §L2) ·
+Lua-global-binding (GetEditorString/ScriptEnvInit §N, fix) · **data/filename-encoding (§N2, mới)**.
