@@ -539,7 +539,7 @@ BOOL KDropCenter::MapDropInit(void)
         szFileName[sizeof(szFileName) - 1] = '\0';
 
 		bRetCode = IndividualDropList.Init(szFileName);
-		KGLOG_PROCESS_ERROR(bRetCode);
+		if (!bRetCode) continue; /* [drift 2.5.2] map-drop redesigned: MapList.MapDrop is a MapDropID into settings/MapDrop.tab (MapDrop1..8/DropType1..8), NOT a filename. TODO: port MapDrop.tab indirection. Tolerant-skip for now. */
 
 		InsRet = m_mapMapID2DropList.insert(std::make_pair(it->first, DropList));
 		KGLOG_PROCESS_ERROR(InsRet.second);
