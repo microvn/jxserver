@@ -1024,3 +1024,28 @@ trong khi gateway cùng IP OK. Khả năng: IP-filter theo listener (param_4 con
 same-host/max-conn. Bước kế dứt điểm = **Frida hook FUN_081ff213/FUN_081ff5ab live** (skill
 reverse-engineering, frida_universal.js) xem return value + peer nó validate — hoặc decompile
 FUN_081ff213. Tài sản: dump giải mã + toàn bộ luồng accept đã map.
+
+---
+
+## R7. TÌM RA common lib THẬT (libcommon.a) — swap kg_socket tái dựng (2026-07-06)
+
+User: tìm kg_socket.cpp trong source. Kết quả: **.cpp KHÔNG tồn tại ở bất kỳ tree nào** (xác nhận), nhưng
+tree `JX3-AIO/JX3_Download/Jx3D-master/source/Base` CÓ common lib thật:
+- **`Base/lib/{debug,release}/libcommon.a`** — ELF **32-bit i386, debug_info, not stripped** (KHỚP build -m32).
+  Objects: KG_Socket.o, KG_Package.o, easycrypt.o, KG_Memory.o, Base64.o, CRC32.o, zport.o, KG_mbs.o, KSUnknown.o.
+- **Header đầy đủ** `include/common/`: kg_socket.h, kg_package.h, cipher.h, socket.h, ksg_encodedecode.h...
+- **`cipher.h`** = thuật toán encode, KHỚP 100% center: `CIPHER_PROTOCOL_TYPE=0x20`,
+  `NE_MAKEKEY(k)=(~byteswap(k)+0x2E6D2399)^0x2E6D23CF` (= biểu thức FUN_081ff213), `EASYCRYPT_MAKEKEY=~k`.
+
+**KG_Socket.o exports (cái recon ta THIẾU):** `KG_SocketStream::Send/Recv`, `KG_SocketAcceptor::Accept`,
+`_MakeSecurityKey(ENCODE_DECODE_MODE,...)`, `_SendSecurityKey`, `_RecvSecurityKey`,
+`_SetEncodeDecodeFunction`, `KG_SocketAcceptor::AcceptSecurity(ENCODE_DECODE_MODE)`. → tầng
+**trao-khóa-mã-hóa lúc accept** mà kg_socket.cpp tái dựng (pass-through NONE) bỏ qua = nguyên nhân
+center reject GS ở accept (§R6: FUN_081ff213 build ACCOUNT_BEGIN cipher handshake, gửi rồi client
+phải hoàn tất key exchange).
+
+**SWAP (đang làm):** thay `src/common_recon/kg_socket.cpp` (+ có thể kg_buffer/crc32_shim) bằng link
+`libcommon.a` thật. Cùng arch i386 + cùng header ABI (cùng tree Jx3D-master) → GS nói đúng giao thức
+socket + security-key → center chấp nhận. Xử lý: (1) trùng symbol KG_Memory/CRC32 (link chọn lọc
+KG_Socket.o+KG_Package.o hoặc bỏ shim), (2) chọn ENCODE_DECODE_MODE khớp listener center (mode 0-4).
+Transport 2009 ổn định; wire GS↔center (INTERNAL_PROTOCOL) ở SO3World riêng.

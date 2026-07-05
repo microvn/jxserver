@@ -59,14 +59,15 @@ for f in src/SO3GameServer/Main.cpp src/SO3GameServer/KSO3GameServer.cpp \
   b=$(basename "$f" .cpp)
   g++ $FLAGS "$f" -o obj/glue_"$b".o 2>/dev/null && ok=$((ok+1)) || { fail=$((fail+1)); echo "  FAIL glue $b"; }
 done
-for m in kg_buffer kg_socket crc32_shim; do
+# [R7] recon socket/buffer/crc32 REPLACED by real libs/libcommon.a (KG_Socket.o+KG_Package.o+KG_Memory.o)
+for m in crc32_shim; do
   g++ $FLAGS src/common_recon/$m.cpp -o obj/recon_$m.o 2>/dev/null && ok=$((ok+1)) || echo "  FAIL recon $m"
 done
 echo "=== COMPILE: ok=$ok fail=$fail  objects=$(ls obj/*.o 2>/dev/null | wc -l) ==="
 
 echo "=== LINK ==="
 # Xuất ra /work (= linux-build/ trên host, persistent) thay vì /tmp trong container.
-g++ -m32 obj/*.o -L libs -lEngine_Lua5D -lSO3EnumConvertorD -lSO3ItemHouseD \
+g++ -m32 obj/*.o libs/libcommon.a -L libs -lEngine_Lua5D -lSO3EnumConvertorD -lSO3ItemHouseD \
     -llzo2 -ldl -lpthread -o /work/SO3GameServer 2>/tmp/le
 echo "link exit=$?  undefined refs: $(grep -c "undefined reference" /tmp/le)"
 echo "--- distinct undefined symbols ---"

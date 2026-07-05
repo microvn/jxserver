@@ -30,7 +30,10 @@ IKG_SocketStream* KRecorderSocketClientNormal::Connect(const char cszIP[], int n
     
     assert(cszIP);
 
-    piSocketStream = Connector.Connect(cszIP, nPort);
+    /* [R7] real KG security handshake (ConnectSecurity) instead of plain Connect --
+       center's game-server listener does AcceptSecurity(KSG_ENCODE_DECODE); our recon
+       socket skipped this -> center rejected at accept. libcommon.a provides the real impl. */
+    piSocketStream = Connector.ConnectSecurity(cszIP, nPort, KSG_ENCODE_DECODE);
 	KGLOG_PROCESS_ERROR(piSocketStream);
 
 Exit0:
