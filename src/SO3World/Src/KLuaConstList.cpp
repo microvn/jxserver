@@ -49,6 +49,10 @@ KLuaConst LUA_CONST_ITEM_GENRE[] =
     {"DESIGNATION",             igDesignation}, // ³ÆºÅµÀ¾ß
     {"MOUNT_ITEM",              igMountItem},
 	{"ENCHANT_ITEM",            igEnchantItem},
+    {"BOX",                     igBox},
+    {"BOX_KEY",                 igBoxKey},
+    {"DIAMOND",                 igDiamond},
+    {"COLOR_DIAMOND",           igColorDiamond},
 
     {"TOTAL",                   igTotal},
 

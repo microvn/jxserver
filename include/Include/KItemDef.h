@@ -65,6 +65,10 @@ enum ITEM_GENRE
     igDesignation,      // 称号道具
     igMountItem,        // 镶嵌道具
     igEnchantItem,      // 附魔道具
+    igBox,              // Box/gift    (2.5.2 add =8, Ghidra OnOpenBox)
+    igBoxKey,           // Box key     (2.5.2 add =9, Ghidra OnApplyUseItem)
+    igDiamond,          // Diamond     (2.5.2 add =10, Ghidra LuaSetItemMountDiamond)
+    igColorDiamond,     // ColorDiamond(2.5.2 add =11)
 
     igTotal
 };
