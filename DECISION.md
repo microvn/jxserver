@@ -949,3 +949,42 @@ runtime-state (ZoneServer 9111 registration) không tái lập được**.
 kiểm chứng được đã loại. Handshake giờ ĐÃ khớp real 2.5.2 (port đúng, giữ lại). Muốn đi tiếp BẮT BUỘC
 deobfuscate SO3GameCenter (ngoài phạm vi build-from-source) hoặc tìm bản center/GS đồng-version khác.
 **Mốc cuối khả thi cho build-from-source = data-load parity (§Q, "Load game settings [OK]" khớp real).**
+
+---
+
+## R4. ĐỌC ĐƯỢC HỘP ĐEN: defeat packer qua runtime memory dump (2026-07-06)
+
+User hỏi "thực sự không có cách đọc hộp đen à". CÓ — và đã làm.
+
+**Xác nhận packer:** `readelf -l SO3GameCenter` → entry point 0x85f54ed nằm trong LOAD segment
+**RWE** (0x08583000-0x088ca000); LOAD đầu FileSiz 0x187 / MemSiz 0x39dcd9 (giải mã runtime); strings
+36197 gần như rác entropy-cao (`w|aq/v5I^`...); chỉ 186 symbol sạch (stub) vs GS 423. → custom packer
+(kiểu server TQ chặn sửa center). Static = hộp đen.
+
+**Đọc được:** packer BẮT BUỘC tự giải mã vào RAM để chạy. Bật center → dump `/proc/PID/mem` vùng
+0x08048000-0x088ca000 (`tools/dump_packed_process.py`) → toàn bộ code+string đã giải mã. Wrap thành
+ELF (`tools/wrap_dump_elf.py`, base 0x8048000) → Ghidra analyze (16195 hàm) → decompile sạch
+(`tools/re_center_dump.py`). Artifact: host `/root/jx3/SO3GameCenter.decrypted.bin` (8.9MB).
+Verify: tìm thấy `KGameServer::ProcessNetwork` @0x829c165, `OnHandshakeRequest` @0x829bc52,
+`at line %d in` @0x828e990 — tất cả plaintext trong dump.
+
+**RE handshake center (đã giải mã) — điều thực sự xảy ra:**
+- `KGameServer::OnHandshakeRequest` (FUN_0807ec9c): packet 2.5.2 = `lower@2, upper@6,
+  nResourceVersion@10 (MỚI), nWorldIndex/MapGroup@14, serverTime@18` = 22B (khớp port §R3 của ta).
+  **First-connect chỉ LƯU version, KHÔNG reject** (xác nhận version không phải nguyên nhân). Reject:
+  line 2017 (GetGSInfo null), 2048 (`MapGroup already used`, chỉ khi nWorldIndex≠0). Time-diff = warning.
+- `KGameServer::ProcessConnection` (FUN_080644e0, dispatcher): check wProtocolID>0 (line 1838),
+  <=0xbc (1839), uPakSize>=m_uProtocolSize (1842). >= chứ không ==.
+- `KGameServer::ProcessNetwork:736` (FUN_08080180): `KGLOG(nRetCode)` khi `FUN_082000c8` (socket
+  event poll: FUN_081ffebc + FUN_081fb764) trả 0. = **TRIỆU CHỨNG socket chết, không phải app reject.**
+
+**Root cause thu hẹp (đo runtime):** chạy GS ta → center log CHỈ có `:736`, TUYỆT ĐỐI không có dòng
+reject nào của ProcessConnection (1838/1842) hay OnHandshakeRequest (2017/2048). → **gói KHÔNG bị
+app-logic từ chối; kết nối chết ở TẦNG SOCKET của engine (FUN_082000c8 trả 0) TRƯỚC dispatcher.**
+→ nghi mismatch **framing tầng socket** giữa `kg_socket.cpp` TÁI DỰNG của ta (wire: length-prefix
+DWORD 4-byte, body-only, gửi tách) vs engine socket thật (gateway wire: WORD 2-byte length inline,
+gồm cả chính nó). Đây là code TÁI DỰNG của ta (memory ghi "guess"), **fixable** — không phải center.
+
+**Ý NGHĨA:** connect-phase KHÔNG bị chặn bởi obfuscation nữa (đã đọc được center). Blocker mới =
+socket framing của lớp mạng tái dựng. Bước kế: đối chiếu framing engine thật (gateway wire + engine
+.so) rồi sửa kg_socket.cpp cho khớp. Tài sản: 3 tool RE + dump giải mã.
