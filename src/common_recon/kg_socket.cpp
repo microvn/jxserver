@@ -1,8 +1,8 @@
 /* Reconstructed KG_Socket / KG_Packer layer (the `common` base networking lib
  * didn't leak; only the interface headers kg_socket.h / kg_package.h did).
- * Linux/POSIX + epoll implementation matching those interfaces. Framing is a
- * 4-byte little-endian length prefix (protocol-interop with the real client is a
- * separate validation; this makes the server LINK and self-consistently talk).
+ * Linux/POSIX + epoll implementation matching those interfaces. Framing =
+ * [uint16 LE total-length-incl-header][payload], matching the real KG engine wire
+ * (RE-derived from gateway<->center pcap, DECISION R5 — was a 4-byte guess before).
  * Encode/decode modes are treated as pass-through (NONE) for now. */
 #include "windows.h"
 #include "kg_socket.h"
@@ -46,15 +46,17 @@ public:
 
 	int CheckCanSend(const timeval *) { return 1; }
 
-	/* [len:4 LE][payload] */
+	/* [len:2 LE = payload+2 incl header][payload] -- real KG engine wire framing,
+	   RE-derived from gateway<->center pcap (07 00=7=2+5, 13 00=19=2+17; DECISION R5) */
 	int Send(IKG_Buffer *piBuffer)
 	{
 		if (!piBuffer) return -1;
 		unsigned uSize = piBuffer->GetSize();
-		unsigned char head[4] = {
-			(unsigned char)(uSize & 0xff), (unsigned char)((uSize >> 8) & 0xff),
-			(unsigned char)((uSize >> 16) & 0xff), (unsigned char)((uSize >> 24) & 0xff) };
-		if (_SendAll(head, 4) != 1) return -1;
+		unsigned uTotal = uSize + 2;               /* length field counts itself */
+		if (uTotal > 0xFFFF) return -1;            /* engine uses 16-bit frame length */
+		unsigned char head[2] = {
+			(unsigned char)(uTotal & 0xff), (unsigned char)((uTotal >> 8) & 0xff) };
+		if (_SendAll(head, 2) != 1) return -1;
 		if (uSize && _SendAll((unsigned char *)piBuffer->GetData(), uSize) != 1) return -1;
 		return 1;
 	}
@@ -65,11 +67,12 @@ public:
 	{
 		if (!ppiRetBuffer) return -1;
 		*ppiRetBuffer = NULL;
-		unsigned char head[4];
-		int n = _RecvAll(head, 4);
+		unsigned char head[2];
+		int n = _RecvAll(head, 2);
 		if (n <= 0) return n;            /* -2 again / -1 err / 0 closed */
-		unsigned uSize = (unsigned)head[0] | ((unsigned)head[1] << 8)
-		               | ((unsigned)head[2] << 16) | ((unsigned)head[3] << 24);
+		unsigned uTotal = (unsigned)head[0] | ((unsigned)head[1] << 8);
+		if (uTotal < 2) return -1;
+		unsigned uSize = uTotal - 2;     /* length counts itself */
 		if (uSize > MAX_PACKAGE) return -1;
 		IKG_Buffer *piBuffer = KG_MemoryCreateBuffer(uSize ? uSize : 1);
 		if (!piBuffer) return -1;
