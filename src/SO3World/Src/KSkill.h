@@ -129,6 +129,8 @@ enum SKILL_HORSE_STATE_CONDITION
     shcAny,
     shcHorse,
     shcNotHorse,
+    shcIgnore,                  /* [drift 2.5.2] append */
+    shcEquipSpecialHorse,
     shcTotal
 };
 
@@ -138,6 +140,9 @@ enum KSKILL_CAST_MODE
 {
     scmInvalid,
     scmSector,          // 扇形范围,扇心固定在自己
+    scmTargetAngleSector,       /* [drift 2.5.2] interleave: shifts scmCasterArea..scmTeamArea +3 */
+    scmRectangle,
+    scmTargetAngleRectangle,
     scmCasterArea,      // 以自己为中心的圆形区域
     scmTargetArea,      // 以目标为中心的圆形区域
     scmPointArea,

@@ -49,6 +49,7 @@ enum KBUFF_PERSIST_SHIELD_TYPE
     pmsNeutralAbsorb,
     pmsLunarAbsorb,
     pmsPoisonAbsorb,
+    pmsGlobalTherapyAbsorb,     /* [drift 2.5.2] append =14 */
 
     pmsTotal
 };

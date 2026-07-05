@@ -1395,10 +1395,15 @@ BOOL KSkillManager::TranslateTableInfo(KSKILL_BASE_INFO *pSkillBaseInfo,  const 
         REGISTER_STR_TO_VALUE("Any",            shcAny)
         REGISTER_STR_TO_VALUE("Horse",          shcHorse)
         REGISTER_STR_TO_VALUE("NotHorse",       shcNotHorse)
+        REGISTER_STR_TO_VALUE("Ignore",             shcIgnore)               /* [drift 2.5.2] */
+        REGISTER_STR_TO_VALUE("EquipSpecialHorse", shcEquipSpecialHorse)
     DECLARE_STRING_MAP_END(SKILL_HORSE_STATE_CONDITION)
 
     DECLARE_STRING_MAP_BEGIN(KSKILL_CAST_MODE)
         REGISTER_STR_TO_VALUE("Sector",         scmSector)
+        REGISTER_STR_TO_VALUE("TargetAngleSector",     scmTargetAngleSector)    /* [drift 2.5.2] */
+        REGISTER_STR_TO_VALUE("Rectangle",             scmRectangle)
+        REGISTER_STR_TO_VALUE("TargetAngleRectangle",  scmTargetAngleRectangle)
         REGISTER_STR_TO_VALUE("CasterArea",     scmCasterArea)
         REGISTER_STR_TO_VALUE("TargetArea",     scmTargetArea)
         REGISTER_STR_TO_VALUE("PointArea",      scmPointArea)

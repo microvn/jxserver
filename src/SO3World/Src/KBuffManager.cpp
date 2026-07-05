@@ -337,6 +337,7 @@ BOOL KBuffManager::LoadBuffInfo(const char* szTabFile)
         REGISTER_STR_TO_VALUE("NeutralAbsorb",  pmsNeutralAbsorb)
         REGISTER_STR_TO_VALUE("LunarAbsorb",    pmsLunarAbsorb)
         REGISTER_STR_TO_VALUE("PoisonAbsorb",   pmsPoisonAbsorb)
+        REGISTER_STR_TO_VALUE("GlobalTherapyAbsorb", pmsGlobalTherapyAbsorb)  /* [drift 2.5.2] */
     DECLARE_STRING_MAP_END(KBUFF_PERSIST_SHIELD_TYPE)
 
     DECLARE_STRING_MAP_BEGIN(KBUFF_PERSIST_ON_FIGHT)
