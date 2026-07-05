@@ -264,3 +264,34 @@ Binary link ≠ server chạy. Ba mốc runtime tách biệt:
 - Nếu cần chính xác hơn cho code chết đã stub (KNpcTeam) / hằng phỏng đoán: websearch pap2/Gitee/forum TQ version khớp. Nhưng đều là code KHÔNG chạy nên không chặn.
 
 **Dead set cuối = 19 file:** 14 class-AI cũ + KAI_Player + KMissile + KPathFinder + KTrackList + KAIParamTemplateList. Tất cả: vắng binary server thật + 0 caller sống (verify từng cái).
+
+---
+
+## G. Source vào git — bỏ pipeline patch-chồng-patch (2026-07-05)
+
+**Vấn đề (user chỉ ra):** `setup.sh` cũ mỗi lần chạy **xóa `src/ include/` rồi copy lại từ
+leak trees** (jx3dev-master, JX3-AIO, 镜像端), CUỐI cùng mới áp `patches/endgame.py`. Hệ quả:
+source-đã-sửa không tồn tại lâu dài ở đâu — nó là sản phẩm phụ sinh-rồi-bị-đè. Nên **mọi fix
+buộc phải nhồi vào `endgame.py`**. Càng port drift 2010→2012 thì file patch càng phình, và
+sớm muộn phải re-port ngược vào source. Đây **không phải tư duy phát triển phần mềm**.
+
+Bằng chứng mong manh gặp ngay khi kiểm tra: working tree lúc đó **không nhất quán** (21/54 file
+tolerant, header thiếu `MAX_QUEST_COUNT`, KNpcTeam chưa stub) dù binary đã build 191/0 — vì
+source-of-truth trôi giữa leak + patch + working tree.
+
+**Quyết định:** đóng băng cây source-đã-patch thành **git tree = source of truth**.
+- `git init` trong `linux-build/`. `.gitignore` bỏ: rác MSVC (`*.sdf/*.ncb/*.pch/*.ipch/*.pdb/
+  *.obj/*.tlog/*.cod/*.vsd` — chính chúng phình `src/` lên **357M**), `obj/ shim/ Source/`,
+  `libs/*.so`, binary, `ghidra-project/`. Track = **1596 file / 19MB** source thật.
+- **Baseline commit** = output của pipeline assembly cũ, đã baked toàn bộ endgame (6 fix +
+  969 tolerant/54 file + 2 const). Từ giờ **fix = sửa file + commit**, không qua endgame.py.
+- `setup.sh` viết gầy lại: chỉ chuẩn bị build-INPUT gitignore (copy 3 `.so` từ 镜像端, tạo
+  bridge symlink `Source/Common/*`, gen shim). **Bỏ copy-từ-leak, bỏ endgame.py.**
+- `bootstrap-from-leak.sh` = pipeline assembly cũ, giữ làm **provenance** (không chạy thường).
+- `patches/endgame.py` = gắn banner HISTORICAL/DO NOT RUN, giữ làm **record VÌ SAO** mỗi fix
+  (map sang §C/§F). Đã baked vào source.
+
+**Đánh đổi:** mất khả năng `setup.sh` refresh-từ-leak (cố ý — không còn muốn thế). Provenance
+"assembled từ leak thế nào" nằm ở `bootstrap-from-leak.sh` + baseline commit message; lý do
+từng fix nằm ở endgame.py + DECISION.md; thay đổi mới nằm ở git history. Port drift tiếp theo
+(enum `wdtBigSword`...) giờ là **sửa source thật + commit**, diff/blame được, không nhồi patch.
