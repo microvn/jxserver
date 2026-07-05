@@ -195,6 +195,11 @@ KSkill::KSkill(void)
 
     m_nDismountingRate                  = 0;
     m_nBaseThreat                       = 0;
+    m_nHeight                           = 0;   /* [drift 2.5.2] */
+    m_nRectWidth                        = 0;
+    m_nProtectRadius                    = 0;
+    m_nCostManaBasePercent              = 0;
+    m_nCostEnergy                       = 0;
 
     m_nDamageToLifeForParty             = 0;
     m_nDamageToManaForParty             = 0;
@@ -221,6 +226,8 @@ KSkill::KSkill(void)
     m_dwPublicCoolDownID = 0;
 
     memset(m_dwCoolDownID, 0, sizeof(m_dwCoolDownID));
+
+    memset(m_dwCheckCoolDownID, 0, sizeof(m_dwCheckCoolDownID));  /* [drift 2.5.2] */
 
     memset(m_nCoolDownAlter, 0 ,sizeof(m_nCoolDownAlter));
 

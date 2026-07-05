@@ -156,6 +156,54 @@ Exit0:
     return 1;
 }
 
+int KSkill::LuaAddSlowCheckSelfOwnBuff(Lua_State* L)
+{
+    BOOL                        bResult     = false;
+    int                         nTopIndex   = 0;
+    KSKILL_REQUIRE_BUFF_NODE    CheckBuff;
+
+    nTopIndex = Lua_GetTopIndex(L);
+    KGLOG_PROCESS_ERROR(nTopIndex == 5);
+
+    CheckBuff.dwBuffID          = (DWORD)Lua_ValueToNumber(L, 1);
+    CheckBuff.nStackNum         = (int)Lua_ValueToNumber(L, 2);
+    CheckBuff.eStackCompareFlag = (KBUFF_COMPARE_FLAG)(int)Lua_ValueToNumber(L, 3);
+    CheckBuff.nBuffLevel        = (int)Lua_ValueToNumber(L, 4);
+    CheckBuff.eLevelCompareFlag = (KBUFF_COMPARE_FLAG)(int)Lua_ValueToNumber(L, 5);
+
+    m_SelfOwnRequireBuffVector.push_back(CheckBuff);
+
+    bResult = true;
+Exit0:
+    Lua_PushBoolean(L, bResult);
+
+    return 1;
+}
+
+int KSkill::LuaAddSlowCheckDestOwnBuff(Lua_State* L)
+{
+    BOOL                        bResult     = false;
+    int                         nTopIndex   = 0;
+    KSKILL_REQUIRE_BUFF_NODE    CheckBuff;
+
+    nTopIndex = Lua_GetTopIndex(L);
+    KGLOG_PROCESS_ERROR(nTopIndex == 5);
+
+    CheckBuff.dwBuffID          = (DWORD)Lua_ValueToNumber(L, 1);
+    CheckBuff.nStackNum         = (int)Lua_ValueToNumber(L, 2);
+    CheckBuff.eStackCompareFlag = (KBUFF_COMPARE_FLAG)(int)Lua_ValueToNumber(L, 3);
+    CheckBuff.nBuffLevel        = (int)Lua_ValueToNumber(L, 4);
+    CheckBuff.eLevelCompareFlag = (KBUFF_COMPARE_FLAG)(int)Lua_ValueToNumber(L, 5);
+
+    m_DestOwnRequireBuffVector.push_back(CheckBuff);
+
+    bResult = true;
+Exit0:
+    Lua_PushBoolean(L, bResult);
+
+    return 1;
+}
+
 int KSkill::LuaBindBuff(Lua_State* L)
 {
     BOOL                bResult     = false;
@@ -316,6 +364,62 @@ int KSkill::LuaGetNormalCooldownID(Lua_State* L)
     KGLOG_PROCESS_ERROR(nCoolDownIndex < MAX_SKILL_COOL_DOWN_TIMER);
 
     dwCoolDownID = m_dwCoolDownID[nCoolDownIndex];
+
+    bResult = true;
+Exit0:
+    Lua_PushNumber(L, dwCoolDownID);
+    return 1;
+}
+
+int KSkill::LuaSetCheckCoolDown(Lua_State* L)
+{
+    BOOL                bResult          = false;
+    int                 nRetCode         = 0;
+    int                 nCoolDownIndex   = 0;
+    DWORD               dwCoolDownID     = 0;
+
+    KG_ASSERT_EXIT(L);
+    nRetCode = Lua_GetTopIndex(L);
+    KGLOG_PROCESS_ERROR(nRetCode == 2);
+
+    nCoolDownIndex           = (int)Lua_ValueToNumber(L, 1);
+    dwCoolDownID             = (DWORD)Lua_ValueToNumber(L, 2);
+
+    nCoolDownIndex--;
+    KGLOG_PROCESS_ERROR(nCoolDownIndex >= 0);
+    KGLOG_PROCESS_ERROR(nCoolDownIndex < MAX_SKILL_CHECKONLY_COOL_DOWN_TIMER);
+
+    m_dwCheckCoolDownID[nCoolDownIndex] = dwCoolDownID;
+
+    bResult = true;
+Exit0:
+    Lua_PushBoolean(L, bResult);
+    return 1;
+}
+
+int KSkill::LuaGetCheckCoolDownCount(Lua_State* L)
+{
+    Lua_PushNumber(L, MAX_SKILL_CHECKONLY_COOL_DOWN_TIMER);
+    return 1;
+}
+
+int KSkill::LuaGetCheckCoolDownID(Lua_State* L)
+{
+    BOOL                bResult          = false;
+    int                 nRetCode         = 0;
+    int                 nCoolDownIndex   = 0;
+    DWORD               dwCoolDownID     = 0;
+
+    KG_ASSERT_EXIT(L);
+    nRetCode = Lua_GetTopIndex(L);
+    KGLOG_PROCESS_ERROR(nRetCode == 1);
+
+    nCoolDownIndex           = (int)Lua_ValueToNumber(L, 1);
+    nCoolDownIndex--;
+    KGLOG_PROCESS_ERROR(nCoolDownIndex >= 0);
+    KGLOG_PROCESS_ERROR(nCoolDownIndex < MAX_SKILL_CHECKONLY_COOL_DOWN_TIMER);
+
+    dwCoolDownID = m_dwCheckCoolDownID[nCoolDownIndex];
 
     bResult = true;
 Exit0:
@@ -1072,6 +1176,11 @@ DEFINE_LUA_CLASS_BEGIN(KSkill)
     REGISTER_LUA_INTEGER(KSkill,             DismountingRate)
 
     REGISTER_LUA_INTEGER(KSkill,             BaseThreat)
+    REGISTER_LUA_INTEGER(KSkill,             Height)               /* [drift 2.5.2] */
+    REGISTER_LUA_INTEGER(KSkill,             RectWidth)
+    REGISTER_LUA_INTEGER(KSkill,             ProtectRadius)
+    REGISTER_LUA_INTEGER(KSkill,             CostManaBasePercent)
+    REGISTER_LUA_INTEGER(KSkill,             CostEnergy)
 
     REGISTER_LUA_INTEGER(KSkill,             ChainBranch)
     REGISTER_LUA_INTEGER(KSkill,             ChainDepth)
@@ -1087,6 +1196,8 @@ DEFINE_LUA_CLASS_BEGIN(KSkill)
 
     REGISTER_LUA_FUNC(KSkill,                AddSlowCheckSelfBuff)
     REGISTER_LUA_FUNC(KSkill,                AddSlowCheckDestBuff)
+    REGISTER_LUA_FUNC(KSkill,                AddSlowCheckSelfOwnBuff)  /* [drift 2.5.2] */
+    REGISTER_LUA_FUNC(KSkill,                AddSlowCheckDestOwnBuff)
 
     REGISTER_LUA_FUNC(KSkill,                AddAttribute)
     REGISTER_LUA_FUNC(KSkill,                GetAttribute)
@@ -1101,6 +1212,9 @@ DEFINE_LUA_CLASS_BEGIN(KSkill)
     REGISTER_LUA_FUNC(KSkill,                SetNormalCoolDown)
 	REGISTER_LUA_FUNC(KSkill,                GetNormalCooldownCount)
 	REGISTER_LUA_FUNC(KSkill,                GetNormalCooldownID)
+    REGISTER_LUA_FUNC(KSkill,                SetCheckCoolDown)         /* [drift 2.5.2] */
+    REGISTER_LUA_FUNC(KSkill,                GetCheckCoolDownCount)
+    REGISTER_LUA_FUNC(KSkill,                GetCheckCoolDownID)
 
     REGISTER_LUA_FUNC(KSkill,                SetSubsectionSkill)
 

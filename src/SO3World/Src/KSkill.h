@@ -30,6 +30,7 @@ class   KPlayer;
 class   KSkill;
 
 #define MAX_SKILL_COOL_DOWN_TIMER       3
+#define MAX_SKILL_CHECKONLY_COOL_DOWN_TIMER  3   /* [drift 2.5.2] check-only cooldown slots (binary: nCoolDownIndex < 3) */
 #define MAX_SKILL_BIND_BUFF_COUNT       4
 #define PHYSICS_AP_TO_DPS               10
 #define MAGIC_AP_TO_DPS                 12
@@ -649,10 +650,18 @@ public:
     typedef std::vector<KSKILL_REQUIRE_BUFF_NODE> KSKILL_REQUIRE_BUFF_VECTOR;
     KSKILL_REQUIRE_BUFF_VECTOR m_SelfRequireBuffVector;
     KSKILL_REQUIRE_BUFF_VECTOR m_DestRequireBuffVector;
+    KSKILL_REQUIRE_BUFF_VECTOR m_SelfOwnRequireBuffVector;  /* [drift 2.5.2] own-buff variants */
+    KSKILL_REQUIRE_BUFF_VECTOR m_DestOwnRequireBuffVector;
 
     DWORD               m_dwPublicCoolDownID;
     DWORD               m_dwCoolDownID[MAX_SKILL_COOL_DOWN_TIMER];
     int                 m_nCoolDownAlter[MAX_SKILL_COOL_DOWN_TIMER];
+    DWORD               m_dwCheckCoolDownID[MAX_SKILL_CHECKONLY_COOL_DOWN_TIMER];  /* [drift 2.5.2] */
+    int                 m_nHeight;              /* [drift 2.5.2] Rect/Sector cast geometry */
+    int                 m_nRectWidth;
+    int                 m_nProtectRadius;
+    int                 m_nCostManaBasePercent;
+    int                 m_nCostEnergy;
 
 public:
 
@@ -790,6 +799,11 @@ public:
 
     DECLARE_LUA_INTEGER(DismountingRate);
     DECLARE_LUA_INTEGER(BaseThreat);
+    DECLARE_LUA_INTEGER(Height);              /* [drift 2.5.2] */
+    DECLARE_LUA_INTEGER(RectWidth);
+    DECLARE_LUA_INTEGER(ProtectRadius);
+    DECLARE_LUA_INTEGER(CostManaBasePercent);
+    DECLARE_LUA_INTEGER(CostEnergy);
 
     DECLARE_LUA_INTEGER(ChainBranch);
     DECLARE_LUA_INTEGER(ChainDepth);
@@ -825,6 +839,11 @@ public:
     int LuaSetNormalCoolDown(Lua_State* L);
     int LuaGetNormalCooldownCount(Lua_State* L);
     int LuaGetNormalCooldownID(Lua_State* L);
+    int LuaSetCheckCoolDown(Lua_State* L);        /* [drift 2.5.2] */
+    int LuaGetCheckCoolDownCount(Lua_State* L);
+    int LuaGetCheckCoolDownID(Lua_State* L);
+    int LuaAddSlowCheckSelfOwnBuff(Lua_State* L);
+    int LuaAddSlowCheckDestOwnBuff(Lua_State* L);
 
     int LuaSetSubsectionSkill(Lua_State* L);
 
