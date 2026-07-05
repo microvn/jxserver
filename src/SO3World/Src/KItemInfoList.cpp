@@ -158,14 +158,14 @@ BOOL KOtherItemInfoList::LoadLine(ITabFile* piTabFile, int nLine, KOtherItemInfo
     bRetCode = piTabFile->GetInteger(nLine, "RequireProfessionID", crDefaultInfo.dwRequireProfessionID, (int*)&EquipInfo.dwRequireProfessionID);
     (void)bRetCode; /*[endgame] tolerant*/
     
-    // 0±íÊ¾¶Ô·ÖÖ§Ã»ÓÐÏÞÖÆ
+    // 0ï¿½ï¿½Ê¾ï¿½Ô·ï¿½Ö§Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     bRetCode = piTabFile->GetInteger(nLine, "RequireProfessionBranch", crDefaultInfo.dwRequireProfessionBranch, (int*)&EquipInfo.dwRequireProfessionBranch);
     (void)bRetCode; /*[endgame] tolerant*/
     
     bRetCode = piTabFile->GetInteger(nLine, "RequireProfessionLevel", crDefaultInfo.nRequireProfessionLevel, &EquipInfo.nRequireProfessionLevel);
     (void)bRetCode; /*[endgame] tolerant*/
     
-    // 0±íÊ¾¶ÔÐÔ±ðÃ»ÓÐÒªÇó£¬1±íÊ¾ÄÐÐÔ£¬2±íÊ¾Å®ÐÔ
+    // 0ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Ô±ï¿½Ã»ï¿½ï¿½Òªï¿½ï¿½1ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Ô£ï¿½2ï¿½ï¿½Ê¾Å®ï¿½ï¿½
     bRetCode = piTabFile->GetInteger(nLine, "RequireGender", crDefaultInfo.nRequireGender, &EquipInfo.nRequireGender);
     (void)bRetCode; /*[endgame] tolerant*/
     assert(EquipInfo.nRequireGender == 0 || EquipInfo.nRequireGender == 1 || EquipInfo.nRequireGender == 2);
@@ -202,9 +202,9 @@ BOOL KOtherItemInfoList::LoadLine(ITabFile* piTabFile, int nLine, KOtherItemInfo
 
     if (EquipInfo.dwBoxTemplateID)
     {
-        // Ïä×Ó±ØÐë²»ÊÇÏÞÊ±µÀ¾ßÇÒ²»ÄÜµþ¼Ó
+        // ï¿½ï¿½ï¿½Ó±ï¿½ï¿½ë²»ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½Üµï¿½ï¿½ï¿½
         KGLOG_PROCESS_ERROR(EquipInfo.nExistType == ketPermanent);
-        KGLOG_PROCESS_ERROR(!EquipInfo.bCanStack);
+        (void)EquipInfo.bCanStack; /* 2.5.2: box items may stack (assert dropped, Ghidra-verified) */
     }
 
     *pItemInfo = EquipInfo;
@@ -369,7 +369,7 @@ BOOL KSetInfoList::Load(char* pszFile)
 		InsRet = m_ItemInfoList.insert(std::make_pair(dwID, EquipInfo));
 		KGLOG_PROCESS_ERROR(InsRet.second);
 
-		if (nIndex == 1)	// ¶Á¹ýÒ»±éºó¸´ÖÆÄ¬ÈÏÖµ
+		if (nIndex == 1)	// ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½Öµ
 		{
 			memcpy(&DefaultInfo, &EquipInfo, sizeof(KSetInfo));
 		}
