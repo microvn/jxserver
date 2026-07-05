@@ -692,3 +692,45 @@ data 2.5.2 tới tận pha networking.
 **Playbook (§K bổ sung):** data GBK PHẢI extract trên host Linux/ext4 (`7z x -so shougong.7z jjjx3.tar
 | tar xf - root`) — tar giữ nguyên byte GBK khớp .tab GBK. KHÔNG extract qua macOS/APFS (ép UTF-8 →
 GBK không hợp lệ → U+FFFD, mất file do collision). Host là nơi canonical của data tree.
+
+---
+
+## P. AUDIT đối chiếu log THẬT vs bản ta — root cause để 2 log khớp (2026-07-05)
+
+Chạy binary GỐC 2.5.2 (`SO3GameServer`) cùng deploy tree, diff normalized với log bản ta.
+**Cả hai đạt `Load game settings [OK]` → cùng fail center-connect 192.168.200.105:5003** (đúng mốc,
+center chưa chạy). Binary thật log 56 dòng SẠCH; bản ta 10785 dòng (ngập warning tolerant). Binary
+thật CŨNG fail đúng các script Map (HoroSystem/CheckTime/QiXi...) → bình thường, không phải bug ta.
+
+**Blast radius THẬT (từ log, không đoán) — chỉ 8 symbol KSkill + 2 const:**
+| symbol | loại | #fail | root cause |
+|---|---|---|---|
+| SetCheckCoolDown | method | 1323 | 2.5.2 thêm category cooldown "Check" (MAX_SKILL_CHECKONLY_COOL_DOWN_TIMER, string có trong binary) song song Normal/Public; source 2010 thiếu |
+| AddSlowCheckDestOwnBuff | method | 141 | 2.5.2 thêm biến thể buff-check "Own" (buff do chính mình cast); ta chỉ có DestBuff/SelfBuff |
+| AddSlowCheckSelfOwnBuff | method | 2 | như trên |
+| nHeight / nRectWidth / nProtectRadius | field | 176/117/100 | field hình học cho cast-mode MỚI Rectangle/TargetAngleSector (đã thêm enum §M4); KSkill thiếu member+binding |
+| nCostManaBasePercent / nCostEnergy | field | 5/1 | field cost MỚI 2.5.2 |
+| LUA_ATTRIBUTE_TYPE (LuaAddAttribute out-range) | const | 1376 | array Lua-const KLuaConstList.cpp:533 chỉ 342 entry vs C++ enum 454 (§J4) → tên attr mới = nil → AddAttribute(0) → fail `>atInvalid`. Regen array từ binary (name→value) như §J4 |
+| DIAMOND_SUB_TYPE | const | 1 | LUA_CONST chưa đăng ký; script_server.lua:1581 dùng .GOLD/.WOOD/.WATER... |
+
+RE tên KSkill thật (@0x08451xxx): danh sách method 2.5.2 = ...AddCheckSelfLearntSkill,
+AddSlowCheckSelfOwnBuff, AddSlowCheckDestOwnBuff, AddSlowCheckSelfBuff, AddSlowCheckDestBuff,
+...SetPublicCoolDown, SetCheckCoolDown, GetCheckCoolDownCount, GetCheckCoolDownID, SetNormalCoolDown,
+GetNormalCooldownCount, GetNormalCooldownID... Chỉ 3 method + 5 field là bị script gọi & fail thật.
+
+**Khác biệt phụ (không chặn, chưa chốt):** AI count gốc 25627 vs ta 25414 (nAIType skip `==0` khác
+cách đếm gốc — cần RE lại LoadAITabFile count); scripts searched 19150 vs 19245 (+95, minor);
+binary thật log `Append [...]` của LuaEnvInit + `CPU in`/`VersionEx` + SkillManager timing — bản ta
+KHÔNG log Append → nghi `ScriptEnvInit` chưa thực gọi `LuaEnvInit()` (dù GetEditorString chạy nhờ
+file-scope); cần verify CallFunction("LuaEnvInit").
+
+**SOLUTION (chờ user double-check, có repo tham chiếu SetCheckCoolDown) — audit-then-fix:**
+1. Port 3 method KSkill (SetCheckCoolDown + GetCheckCoolDownCount/ID; AddSlowCheckDestOwnBuff/
+   SelfOwnBuff): thêm member (check-cooldown array + own-buff vector), method Lua, REGISTER_LUA_FUNC,
+   wire vào CheckCoolDown/require-buff runtime. RE `KSkill::LuaSetCheckCoolDown` (@0x08451700) +
+   AddSlowCheck* từ binary để impl ĐÚNG (không đoán).
+2. Thêm 5 field (nHeight/nRectWidth/nProtectRadius/nCostManaBasePercent/nCostEnergy): member KSkill +
+   REGISTER_LUA_INTEGER + đọc từ skill tab (SkillTableLine) như field cũ.
+3. Regen LUA_ATTRIBUTE_TYPE (342→454) từ binary LUA_CONST array (name UPPER_SNAKE→value), khớp C++ enum.
+4. Thêm LUA_CONST_DIAMOND_SUB_TYPE (đọc value GOLD/WOOD/WATER/... từ binary).
+5. (phụ) verify LuaEnvInit() được gọi; điều tra AI count 213.
