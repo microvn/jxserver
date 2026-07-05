@@ -215,7 +215,7 @@ int KSkill::LuaBindBuff(Lua_State* L)
     KBUFF_RECIPE_KEY    BuffRecipeKey;
 
     nRetCode = Lua_GetTopIndex(L);
-    KGLOG_PROCESS_ERROR(nRetCode == 3);
+    KGLOG_PROCESS_ERROR(nRetCode == 3 || nRetCode == 4 || nRetCode == 5);  /* [drift 2.5.2] BindBuff takes 3/4/5 args (opt arg4 bool, arg5 int); optionals ignored for now */
 
     nIndex  = (int)Lua_ValueToNumber(L, 1);
     dwID    = (DWORD)Lua_ValueToNumber(L, 2);
@@ -521,6 +521,82 @@ int KSkill::LuaGetBuff(Lua_State* L)
 	return pBuffInfo->LuaGetObj(L);
 Exit0:
 	return 0;
+}
+
+int KSkill::LuaSetSunSubsectionSkill(Lua_State* L)
+{
+    int     nResult         = false;
+    int     nRetCode        = false;
+    int     nBeginInterval  = 0;
+    int     nEndInterval    = 0;
+    DWORD   dwSkillID       = 0;
+    DWORD   dwSkillLevel    = 0;
+
+    nRetCode = Lua_GetTopIndex(L);
+    KGLOG_PROCESS_ERROR(nRetCode == 4);
+
+    nBeginInterval  = (int)Lua_ValueToNumber(L, 1);
+    nEndInterval    = (int)Lua_ValueToNumber(L, 2);
+    KGLOG_PROCESS_ERROR(nBeginInterval <= nEndInterval);
+    KGLOG_PROCESS_ERROR(nBeginInterval > 0);
+    KGLOG_PROCESS_ERROR(nEndInterval <= MAX_SUN_POWER_VALUE);
+
+    dwSkillID       = (DWORD)Lua_ValueToNumber(L, 3);
+    dwSkillLevel    = (DWORD)Lua_ValueToNumber(L, 4);
+
+    for (int i = nBeginInterval; i <= nEndInterval; i++)
+    {
+        KGLOG_PROCESS_ERROR(i > 0 && i <= MAX_SUN_POWER_VALUE);
+        m_SunSubsectionSkill[i - 1].dwSubSkillID    = dwSkillID;
+        m_SunSubsectionSkill[i - 1].dwSubSkillLevel = dwSkillLevel;
+    }
+
+    nResult = true;
+Exit0:
+    if (!nResult)
+    {
+        KGLogPrintf(KGLOG_ERR, "[Skill] SetSunSubsectionSkill Failed, SkillID = %d", m_pBaseInfo->dwSkillID);
+    }
+    Lua_PushBoolean(L, nResult);
+    return 1;
+}
+
+int KSkill::LuaSetMoonSubsectionSkill(Lua_State* L)
+{
+    int     nResult         = false;
+    int     nRetCode        = false;
+    int     nBeginInterval  = 0;
+    int     nEndInterval    = 0;
+    DWORD   dwSkillID       = 0;
+    DWORD   dwSkillLevel    = 0;
+
+    nRetCode = Lua_GetTopIndex(L);
+    KGLOG_PROCESS_ERROR(nRetCode == 4);
+
+    nBeginInterval  = (int)Lua_ValueToNumber(L, 1);
+    nEndInterval    = (int)Lua_ValueToNumber(L, 2);
+    KGLOG_PROCESS_ERROR(nBeginInterval <= nEndInterval);
+    KGLOG_PROCESS_ERROR(nBeginInterval > 0);
+    KGLOG_PROCESS_ERROR(nEndInterval <= MAX_MOON_POWER_VALUE);
+
+    dwSkillID       = (DWORD)Lua_ValueToNumber(L, 3);
+    dwSkillLevel    = (DWORD)Lua_ValueToNumber(L, 4);
+
+    for (int i = nBeginInterval; i <= nEndInterval; i++)
+    {
+        KGLOG_PROCESS_ERROR(i > 0 && i <= MAX_MOON_POWER_VALUE);
+        m_MoonSubsectionSkill[i - 1].dwSubSkillID    = dwSkillID;
+        m_MoonSubsectionSkill[i - 1].dwSubSkillLevel = dwSkillLevel;
+    }
+
+    nResult = true;
+Exit0:
+    if (!nResult)
+    {
+        KGLogPrintf(KGLOG_ERR, "[Skill] SetMoonSubsectionSkill Failed, SkillID = %d", m_pBaseInfo->dwSkillID);
+    }
+    Lua_PushBoolean(L, nResult);
+    return 1;
 }
 
 int KSkill::LuaSetSubsectionSkill(Lua_State* L)
@@ -1217,6 +1293,8 @@ DEFINE_LUA_CLASS_BEGIN(KSkill)
     REGISTER_LUA_FUNC(KSkill,                GetCheckCoolDownID)
 
     REGISTER_LUA_FUNC(KSkill,                SetSubsectionSkill)
+    REGISTER_LUA_FUNC(KSkill,                SetSunSubsectionSkill)   /* [drift 2.5.2] */
+    REGISTER_LUA_FUNC(KSkill,                SetMoonSubsectionSkill)
 
 #ifdef _CLIENT
     REGISTER_LUA_FUNC(KSkill,                UITestCast)

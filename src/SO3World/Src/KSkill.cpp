@@ -232,6 +232,8 @@ KSkill::KSkill(void)
     memset(m_nCoolDownAlter, 0 ,sizeof(m_nCoolDownAlter));
 
     memset(m_SubsectionSkill, 0, sizeof(m_SubsectionSkill));
+    memset(m_SunSubsectionSkill, 0, sizeof(m_SunSubsectionSkill));    /* [drift 2.5.2] */
+    memset(m_MoonSubsectionSkill, 0, sizeof(m_MoonSubsectionSkill));
 }
 
 KSkill::~KSkill(void)

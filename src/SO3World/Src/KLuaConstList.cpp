@@ -2425,12 +2425,26 @@ KLuaConst LUA_ITEM_EXIST_TYPE[] =
     {NULL,                  0}
 };
 
+/* [drift 2.5.2] DIAMOND_SUB_TYPE (from exe LUA array @0x084c9500) */
+KLuaConst LUA_DIAMOND_SUB_TYPE[] =
+{
+    {"INVALID",     -1},
+    {"GOLD",         0},
+    {"WOOD",         1},
+    {"WATER",        2},
+    {"FIRE",         3},
+    {"EARTH",        4},
+    {"TOTAL",        5},
+    {NULL,           0}
+};
+
 KLuaConstList g_LuaConstList[] =
 {
     {"GLOBAL",                      LUA_CONST_GLOBAL},
     {"PATROL",				        LUA_CONST_PATROL_REPEAT_STYLE},
     {"TARGET",				        LUA_CONST_TARGET_TYPE},
     {"ATTRIBUTE_TYPE",              LUA_ATTRIBUTE_TYPE},
+    {"DIAMOND_SUB_TYPE",            LUA_DIAMOND_SUB_TYPE},  /* [drift 2.5.2] */
     {"ATTRIBUTE_EFFECT_MODE",       LUA_ATTRIBUTE_EFFECT_MODE},
 	{"ITEM_TABLE_TYPE",			    LUA_CONST_ITEM_TABLE_TYPE},
     {"SKILL_EFFECT_TYPE",           LUA_SKILL_EFFECT_TYPE},

@@ -31,6 +31,8 @@ class   KSkill;
 
 #define MAX_SKILL_COOL_DOWN_TIMER       3
 #define MAX_SKILL_CHECKONLY_COOL_DOWN_TIMER  3   /* [drift 2.5.2] check-only cooldown slots (binary: nCoolDownIndex < 3) */
+#define MAX_SUN_POWER_VALUE   1   /* [drift 2.5.2] sun subsection slots (binary: i <= 1) */
+#define MAX_MOON_POWER_VALUE  1   /* [drift 2.5.2] moon subsection slots */
 #define MAX_SKILL_BIND_BUFF_COUNT       4
 #define PHYSICS_AP_TO_DPS               10
 #define MAGIC_AP_TO_DPS                 12
@@ -623,6 +625,8 @@ public:
     // 蓄气计相关
     BOOL                m_bIsAccumulate;
     KSKILL_ACCUMULATE   m_SubsectionSkill[MAX_ACCUMULATE_SUB_COUNT];
+    KSKILL_ACCUMULATE   m_SunSubsectionSkill[MAX_SUN_POWER_VALUE];    /* [drift 2.5.2] */
+    KSKILL_ACCUMULATE   m_MoonSubsectionSkill[MAX_MOON_POWER_VALUE];
 
     // 链状技能相关
     int                 m_nChainDepth;
@@ -846,6 +850,8 @@ public:
     int LuaAddSlowCheckDestOwnBuff(Lua_State* L);
 
     int LuaSetSubsectionSkill(Lua_State* L);
+    int LuaSetSunSubsectionSkill(Lua_State* L);   /* [drift 2.5.2] */
+    int LuaSetMoonSubsectionSkill(Lua_State* L);
 
 #ifdef _CLIENT
     int LuaUITestCast(Lua_State* L);
