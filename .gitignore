@@ -1,0 +1,50 @@
+# ============================================================================
+# JX3 linux-build — git tracks SOURCE ONLY (the fixed 2.5.2 port).
+# Everything below is a build INPUT (fetched), an OUTPUT (generated), or
+# leaked MSVC cruft that bloats src/ from a few MB to 357M.
+# NOTE: gitignore has NO inline comments — every pattern on its own line.
+# ============================================================================
+
+# --- build outputs / generated at build time ---
+obj/
+shim/
+Source/
+/SO3GameServer
+_build.log
+
+# --- binary build INPUTS (reused engine .so, copied from 镜像端 by setup.sh) ---
+libs/*.so
+
+# --- reverse-engineering / analysis artifacts (large, machine-local) ---
+ghidra-project/
+logs/
+_other/
+_packPAK_recovered/
+
+# --- leaked Visual Studio build cruft inside src/ (NOT source; bloats to 357M) ---
+*.sdf
+*.ncb
+*.pch
+*.pdb
+*.idb
+*.ipch
+*.obj
+*.tlog
+*.suo
+*.opensdf
+*.aps
+*.res
+*.user
+*.cod
+*.vsd
+ipch/
+.vs/
+Debug/
+Debug_Server/
+Debug_Client/
+Release/
+Release_Server/
+Release_Client/
+
+# --- macOS ---
+.DS_Store
