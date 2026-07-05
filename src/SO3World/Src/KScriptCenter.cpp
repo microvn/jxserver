@@ -41,6 +41,34 @@ KScriptCenter::~KScriptCenter(void)
     assert(m_piScript == NULL);
 }
 
+BOOL KScriptCenter::ScriptEnvInit(const char cszRootDir[])
+{
+    BOOL    bResult     = false;
+    BOOL    bRetCode    = false;
+    DWORD   dwScriptID  = 0;
+    char    szPath[MAX_PATH];
+
+    KGLOG_PROCESS_ERROR(m_piScript);
+
+    snprintf(szPath, sizeof(szPath), "%s\\LuaEnvInit\\LuaEnvInit.li", cszRootDir);
+    szPath[sizeof(szPath) - 1] = '\0';
+
+    dwScriptID = m_piScript->LoadFromFile(szPath);
+    KGLOG_PROCESS_ERROR(dwScriptID);
+
+    m_ScriptTable[dwScriptID] = szPath;
+
+    bRetCode = IsFuncExist(dwScriptID, "LuaEnvInit");
+    KGLOG_PROCESS_ERROR(bRetCode);
+
+    bRetCode = CallFunction(dwScriptID, "LuaEnvInit", 0);
+    KGLOG_PROCESS_ERROR(bRetCode);
+
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
 BOOL KScriptCenter::Init()
 {
     BOOL        bResult         = false;
@@ -48,6 +76,12 @@ BOOL KScriptCenter::Init()
 
     m_piScript = CreateScriptHolder();
     KGLOG_PROCESS_ERROR(m_piScript);
+
+    /* [drift 2.5.2] KScriptCenter::Init calls ScriptEnvInit here (after holder, before search):
+       loads LuaEnvInit.li + calls LuaEnvInit() to append GetEditorString + string/math/npc/misc
+       helper globals. .li is not picked up by IsLuaFile (lua/lh/ls only) so it must load explicitly. */
+    bRetCode = ScriptEnvInit(SCRIPT_DIR);
+    KGLOG_PROCESS_ERROR(bRetCode);
 
 #ifdef _SERVER
     KGLogPrintf(KGLOG_INFO, "Search for scripts files ... ...");

@@ -72,6 +72,7 @@ private:
 	BOOL            SearchForScriptList(const char cszDir[]);
 	const char*     GetScriptNameByID(DWORD dwScriptID);
 	BOOL            LoadScript(const char cszFileName[]);
+	BOOL            ScriptEnvInit(const char cszRootDir[]);   /* [drift 2.5.2] load LuaEnvInit.li + call LuaEnvInit() */
     ILuaScriptEx*   CreateScriptHolder();
 
     typedef KMemory::KAllocator<std::pair<DWORD, kstring> > KSCRIPT_TABLE_ALLOCTOR;
