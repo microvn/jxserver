@@ -306,6 +306,7 @@ public:
     //AutoCode:-发送协议函数结束-
 private:
 	void OnHandshakeRespond(BYTE* pbyData, size_t uDataLen);
+	void OnNoOpRespond(BYTE* pbyData, size_t uDataLen);  /*[R10 tier2] no-op stub*/
     void OnQuitNotify(BYTE* pbyData, size_t uDataLen);
 
 	void OnCreateMapNotify(BYTE* pbyData, size_t uDataLen);

@@ -1,5 +1,5 @@
 /************************************************************************/
-/* ÓÎÏ·ÊÀ½çÅäÖÃÎÄ¼þÁÐ±í					                                */
+/* ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ð±ï¿½					                                */
 /* Copyright : Kingsoft 2004										    */
 /* Author	 : Zhu Jianqiu												*/
 /* History	 :															*/
@@ -29,6 +29,8 @@
 #include "KGMList.h"
 #include "KAchievementInfoList.h"
 #include "KDesignationList.h"
+#include "KExterior.h"
+#include "KHairShop.h"
 #ifdef _CLIENT
 #include "../../Source/Common/SO3World/Src/KGameCardInfoList.h"
 #else
@@ -49,49 +51,49 @@ public:
 
 	KGWConstList		m_ConstList;
 
-	//µØÍ¼Ïà¹Ø²ÎÊý
+	//ï¿½ï¿½Í¼ï¿½ï¿½Ø²ï¿½ï¿½ï¿½
 	KMapListFile		m_MapListFile;
 
-	//ÈÎÎñÉè¶¨±í
+	//ï¿½ï¿½ï¿½ï¿½ï¿½è¶¨ï¿½ï¿½
 	KQuestInfoList		m_QuestInfoList;
 
-	//NpcÄ£°å±í
+	//NpcÄ£ï¿½ï¿½ï¿½
 	KNpcTemplateList	m_NpcTemplateList;
-	//DoodadÄ£°å±í
+	//DoodadÄ£ï¿½ï¿½ï¿½
 	KDoodadTemplateList m_DoodadTemplateList;
 
-	//Npc·ÖÀà±í
+	//Npcï¿½ï¿½ï¿½ï¿½ï¿½
 	KNpcClassList		m_NpcClassList;
 
-	//Doodad·ÖÀà±í
+	//Doodadï¿½ï¿½ï¿½ï¿½ï¿½
 	KDoodadClassList	m_DoodadClassList;
 
-	//Ñ²ÂßÂ·¾¶±í
+	//Ñ²ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½
 	KPatrolPathList		m_PatrolPathList;
 
-	//Íæ¼ÒÉý¼¶Êý¾Ý±í
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý±ï¿½
 	KLevelUpList		m_LevelUpList;
 
     KCoolDownList       m_CoolDownList;
 
     KWeaponTypeList     m_WeaponTypeList;
 
-	//ÕóÓª¹ØÏµ±í
+	//ï¿½ï¿½Óªï¿½ï¿½Ïµï¿½ï¿½
 	KRelationList		m_RelationCampList;
 
-	//ÊÆÁ¦¹ØÏµ±í
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½
 	KRelationList		m_RelationForceList;
 
-	//Ä¬ÈÏÊÆÁ¦Õ½¶·¿ª¹ØÓëÉùÍû
+	//Ä¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	KFightFlagList		m_ForceDefaultList;
 
-	//ÉùÍûµÈ¼¶¾­Ñé±í
+	//ï¿½ï¿½ï¿½ï¿½ï¿½È¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	KReputationLimit	m_ReputeLimit;
 
-	//±íÇéÏµÍ³
+	//ï¿½ï¿½ï¿½ï¿½ÏµÍ³
 	KCharacterActionList m_CharacterActionList;
 
-	//NpcËµ»°
+	//NpcËµï¿½ï¿½
 	KSmartDialogList	m_SmartDialogList;
 
 #ifdef _SERVER
@@ -104,6 +106,9 @@ public:
     KAchievementInfoList m_AchievementInfoList;
 
     KDesignationList    m_DesignationList;
+
+    KExterior           m_Exterior;
+    KHairShop           m_HairShop;
 
     KGameCardInfoList   m_GameCardInfoList;
 };

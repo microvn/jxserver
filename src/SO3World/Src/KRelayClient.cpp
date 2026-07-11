@@ -36,138 +36,185 @@ KRelayClient::KRelayClient(void)
     memset(m_uProtocolSize, 0, sizeof(m_uProtocolSize));
 
     // ------------------ 协议注册 --------------------------------------------------------------------
-    REGISTER_INTERNAL_FUNC(r2s_handshake_respond, &KRelayClient::OnHandshakeRespond, sizeof(R2S_HANDSHAKE_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_quit_notify, &KRelayClient::OnQuitNotify, sizeof(R2S_QUIT_NOTIFY));
-    REGISTER_INTERNAL_FUNC(r2s_confirm_player_login_respond, &KRelayClient::OnConfirmPlayerLoginRespond, sizeof(R2S_CONFIRM_PLAYER_LOGIN_RESPOND));
-
-    REGISTER_INTERNAL_FUNC(r2s_create_map_notify, &KRelayClient::OnCreateMapNotify, sizeof(R2S_CREATE_MAP_NOTIFY));
-    REGISTER_INTERNAL_FUNC(r2s_finish_create_map_notify, &KRelayClient::OnFinishCreateMapNotify, sizeof(R2S_FINISH_CREATE_MAP_NOTIFY));
-    REGISTER_INTERNAL_FUNC(r2s_delete_map_notify, &KRelayClient::OnDeleteMapNotify, sizeof(R2S_DELETE_MAP_NOTIFY));
-
-    REGISTER_INTERNAL_FUNC(r2s_player_login_request, &KRelayClient::OnPlayerLoginRequest, sizeof(R2S_PLAYER_LOGIN_REQUEST));
-    REGISTER_INTERNAL_FUNC(r2s_search_map_respond, &KRelayClient::OnSearchMapRespond, sizeof(R2S_SEARCH_MAP_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_transfer_player_request, &KRelayClient::OnTransferPlayerRequest, sizeof(R2S_TRANSFER_PLAYER_REQUEST));
-    REGISTER_INTERNAL_FUNC(r2s_transfer_player_respond, &KRelayClient::OnTransferPlayerRespond, sizeof(R2S_TRANSFER_PLAYER_RESPOND));
-
-    REGISTER_INTERNAL_FUNC(r2s_kick_account_notify, &KRelayClient::OnKickAccountNotify, sizeof(R2S_KICK_ACCOUNT_NOTIFY));
-
-    REGISTER_INTERNAL_FUNC(r2s_invite_player_join_team_request, &KRelayClient::OnInvitePlayerJoinTeamRequest, sizeof(R2S_INVITE_PLAYER_JOIN_TEAM_REQUEST));
-    REGISTER_INTERNAL_FUNC(r2s_apply_join_team_request, &KRelayClient::OnApplyJoinTeamRequest, sizeof(R2S_APPLY_JOIN_TEAM_REQUEST));
-    REGISTER_INTERNAL_FUNC(r2s_team_create_notify, &KRelayClient::OnTeamCreateNotify, sizeof(R2S_TEAM_CREATE_NOTIFY));
-    REGISTER_INTERNAL_FUNC(r2s_team_add_member_notify, &KRelayClient::OnTeamAddMemberNotify, sizeof(R2S_TEAM_ADD_MEMBER_NOTIFY));
-    REGISTER_INTERNAL_FUNC(r2s_team_del_member_notify, &KRelayClient::OnTeamDelMemberNotify, sizeof(R2S_TEAM_DEL_MEMBER_NOTIFY));
-    REGISTER_INTERNAL_FUNC(r2s_team_disband_notify, &KRelayClient::OnTeamDisbandNotify, sizeof(R2S_TEAM_DISBAND_NOTIFY));
-    REGISTER_INTERNAL_FUNC(r2s_team_change_authority_notify, &KRelayClient::OnTeamChangeAuthorityNotify, sizeof(R2S_TEAM_CHANGE_AUTHORITY_NOTIFY));
-    REGISTER_INTERNAL_FUNC(r2s_team_set_loot_mode_notify, &KRelayClient::OnTeamSetLootModeNotify, sizeof(R2S_TEAM_SET_LOOT_MODE_NOTIFY));
-    REGISTER_INTERNAL_FUNC(r2s_party_message_notify, &KRelayClient::OnTeamMessageNotify, sizeof(R2S_PARTY_MESSAGE_NOTIFY));
-    REGISTER_INTERNAL_FUNC(r2s_team_set_formation_leader_notify, &KRelayClient::OnSetFormationLeaderNotify, sizeof(R2S_TEAM_SET_FORMATION_LEADER_NOTIFY));
-
-    REGISTER_INTERNAL_FUNC(r2s_sync_team_member_online_flag, &KRelayClient::OnSyncTeamMemberOnlineFlag, sizeof(R2S_SYNC_TEAM_MEMBER_ONLINE_FLAG));
-    REGISTER_INTERNAL_FUNC(r2s_sync_team_member_max_lmr, &KRelayClient::OnTeamSyncMemberMaxLMR, sizeof(R2S_SYNC_TEAM_MEMBER_MAX_LMR));
-    REGISTER_INTERNAL_FUNC(r2s_sync_team_member_current_lmr, &KRelayClient::OnTeamSyncMemberCurrentLMR, sizeof(R2S_SYNC_TEAM_MEMBER_CURRENT_LMR));
-    REGISTER_INTERNAL_FUNC(r2s_sync_team_member_misc, &KRelayClient::OnTeamSyncMemberMisc, sizeof(R2S_SYNC_TEAM_MEMBER_MISC));
-    REGISTER_INTERNAL_FUNC(r2s_sync_team_member_position, &KRelayClient::OnTeamSyncMemberPosition, sizeof(R2S_SYNC_TEAM_MEMBER_POSITION));
-    REGISTER_INTERNAL_FUNC(r2s_team_set_mark_respond, &KRelayClient::OnTeamSetMarkRespond, sizeof(R2S_TEAM_SET_MARK_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_team_camp_change, &KRelayClient::OnTeamCampChange, sizeof(R2S_TEAM_CAMP_CHANGE));
-    REGISTER_INTERNAL_FUNC(r2s_team_level_up_raid_notify, &KRelayClient::OnTeamLevelUpRaidNotify, sizeof(R2S_TEAM_LEVEL_UP_RAID_NOTIFY));
-    REGISTER_INTERNAL_FUNC(r2s_team_change_member_group_notify, &KRelayClient::OnTeamChangeMemberGroupNotify, sizeof(R2S_TEAM_CHANGE_MEMBER_GROUP_NOTIFY));
-
-    REGISTER_INTERNAL_FUNC(r2s_player_talk_error, &KRelayClient::OnPlayerTalkError, sizeof(R2S_PLAYER_TALK_ERROR));
-    REGISTER_INTERNAL_FUNC(r2s_player_talk_whisper_success_respond, &KRelayClient::OnPlayerTalkWhisperSuccessRespond, sizeof(R2S_PLAYER_TALK_WHISPER_SUCCESS_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_talk_message, &KRelayClient::OnTalkMessage, sizeof(R2S_TALK_MESSAGE));
-
-    REGISTER_INTERNAL_FUNC(r2s_apply_fellowship_data_respond, &KRelayClient::OnApplyFellowshipDataRespond, sizeof(R2S_APPLY_FELLOWSHIP_DATA_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_add_fellowship_respond, &KRelayClient::OnAddFellowshipRespond, sizeof(R2S_ADD_FELLOWSHIP_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_get_fellowship_name_respond, &KRelayClient::OnGetFellowshipNameRespond, sizeof(R2S_GET_FELLOWSHIP_NAME_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_sync_fellowship_mapid, &KRelayClient::OnSyncFellowshipMapID, sizeof(R2S_SYNC_FELLOWSHIP_MAPID));
-    REGISTER_INTERNAL_FUNC(r2s_sync_fellowship_player_level, &KRelayClient::OnSyncFellowshipPlayerLevel, sizeof(R2S_SYNC_FELLOWSHIP_PLAYER_LEVEL));
-    REGISTER_INTERNAL_FUNC(r2s_sync_fellowship_player_forceid, &KRelayClient::OnSyncFellowshipPlayerForceID, sizeof(R2S_SYNC_FELLOWSHIP_PLAYER_FORCEID));
-    REGISTER_INTERNAL_FUNC(r2s_add_fellowship_notify, &KRelayClient::OnAddFellowshipNotify, sizeof(R2S_ADD_FELLOWSHIP_NOTIFY));
-
-    REGISTER_INTERNAL_FUNC(r2s_send_mail_respond, &KRelayClient::OnSendMailRespond, sizeof(R2S_SEND_MAIL_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_get_maillist_respond, &KRelayClient::OnGetMailListRespond, sizeof(R2S_GET_MAILLIST_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_sync_mail_content, &KRelayClient::OnSyncMailContent, sizeof(R2S_SYNC_MAIL_CONTENT));
-    REGISTER_INTERNAL_FUNC(r2s_give_mail_money_to_player, &KRelayClient::OnGiveMailMoneyToPlayer, sizeof(R2S_GIVE_MAIL_MONEY_TO_PLAYER));
-    REGISTER_INTERNAL_FUNC(r2s_give_mail_item_to_player, &KRelayClient::OnGiveMailItemToPlayer, sizeof(R2S_GIVE_MAIL_ITEM_TO_PLAYER));
-    REGISTER_INTERNAL_FUNC(r2s_new_mail_notify, &KRelayClient::OnNewMailNotify, sizeof(R2S_NEW_MAIL_NOTIFY));
-    REGISTER_INTERNAL_FUNC(r2s_mail_general_respond, &KRelayClient::OnMailGeneralRespond, sizeof(R2S_MAIL_GENERAL_RESPOND));
-    
-    REGISTER_INTERNAL_FUNC(r2s_sync_mid_map_mark, &KRelayClient::OnSyncMidMapMark, sizeof(R2S_SYNC_MID_MAP_MARK));
-    REGISTER_INTERNAL_FUNC(r2s_map_copy_do_clear_player_prepare, &KRelayClient::OnMapCopyDoClearPlayerPrepare, sizeof(R2S_MAP_COPY_DO_CLEAR_PLAYER_PREPARE));
-    REGISTER_INTERNAL_FUNC(r2s_map_copy_do_clear_player, &KRelayClient::OnMapCopyDoClearPlayer, sizeof(R2S_MAP_COPY_DO_CLEAR_PLAYER));
-    REGISTER_INTERNAL_FUNC(r2s_set_map_copy_owner, &KRelayClient::OnSetMapCopyOwner, sizeof(R2S_SET_MAP_COPY_OWNER));
-    REGISTER_INTERNAL_FUNC(r2s_sync_road_track_info, &KRelayClient::OnSyncRoadTrackInfo, sizeof(R2S_SYNC_ROAD_TRACK_INFO));
-    REGISTER_INTERNAL_FUNC(r2s_save_role_data_respond, &KRelayClient::OnSaveRoleDataRespond, sizeof(R2S_SAVE_ROLE_DATA_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_sync_role_data, &KRelayClient::OnSyncRoleData, sizeof(R2S_SYNC_ROLE_DATA));
-    REGISTER_INTERNAL_FUNC(r2s_load_role_data, &KRelayClient::OnLoadRoleData, sizeof(R2S_LOAD_ROLE_DATA));
-    REGISTER_INTERNAL_FUNC(r2s_gm_command, &KRelayClient::OnGmCommand, sizeof(R2S_GM_COMMAND));
-
-    REGISTER_INTERNAL_FUNC(r2s_join_battle_field_queue_respond, &KRelayClient::OnJoinBattleFieldQueueRespond, sizeof(R2S_JOIN_BATTLE_FIELD_QUEUE_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_leave_battle_field_queue_respond, &KRelayClient::OnLeaveBattleFieldQueueRespond, sizeof(R2S_LEAVE_BATTLE_FIELD_QUEUE_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_battle_field_notify, &KRelayClient::OnBattleFieldNotify, sizeof(R2S_BATTLE_FIELD_NOTIFY));
+    REGISTER_INTERNAL_FUNC(r2s_handshake_respond, &KRelayClient::OnHandshakeRespond, 18);
+    REGISTER_INTERNAL_FUNC(r2s_quit_notify, &KRelayClient::OnNoOpRespond, 6);
+    REGISTER_INTERNAL_FUNC(r2s_create_map_notify, &KRelayClient::OnCreateMapNotify, 22);
+    REGISTER_INTERNAL_FUNC(r2s_finish_create_map_notify, &KRelayClient::OnFinishCreateMapNotify, 6);
+    REGISTER_INTERNAL_FUNC(r2s_delete_map_notify, &KRelayClient::OnDeleteMapNotify, 10);
+    REGISTER_INTERNAL_FUNC(r2s_player_login_request, &KRelayClient::OnPlayerLoginRequest, 302);
+    REGISTER_INTERNAL_FUNC(r2s_search_map_respond, &KRelayClient::OnSearchMapRespond, 46);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_8, &KRelayClient::OnNoOpRespond, 30);
+    REGISTER_INTERNAL_FUNC(r2s_transfer_player_request, &KRelayClient::OnTransferPlayerRequest, 323);
+    REGISTER_INTERNAL_FUNC(r2s_transfer_player_respond, &KRelayClient::OnTransferPlayerRespond, 36);
+    REGISTER_INTERNAL_FUNC(r2s_confirm_player_login_respond, &KRelayClient::OnConfirmPlayerLoginRespond, 10);
+    REGISTER_INTERNAL_FUNC(r2s_kick_account_notify, &KRelayClient::OnNoOpRespond, 14);
+    REGISTER_INTERNAL_FUNC(r2s_invite_player_join_team_request, &KRelayClient::OnNoOpRespond, 6);
+    REGISTER_INTERNAL_FUNC(r2s_apply_join_team_request, &KRelayClient::OnNoOpRespond, 45);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_15, &KRelayClient::OnNoOpRespond, 53);
+    REGISTER_INTERNAL_FUNC(r2s_team_create_notify, &KRelayClient::OnTeamCreateNotify, 104);
+    REGISTER_INTERNAL_FUNC(r2s_team_add_member_notify, &KRelayClient::OnTeamAddMemberNotify, 46);
+    REGISTER_INTERNAL_FUNC(r2s_team_del_member_notify, &KRelayClient::OnTeamDelMemberNotify, 14);
+    REGISTER_INTERNAL_FUNC(r2s_team_change_authority_notify, &KRelayClient::OnTeamChangeAuthorityNotify, 11);
+    REGISTER_INTERNAL_FUNC(r2s_team_set_loot_mode_notify, &KRelayClient::OnTeamSetLootModeNotify, 14);
+    REGISTER_INTERNAL_FUNC(r2s_team_disband_notify, &KRelayClient::OnTeamDisbandNotify, 6);
+    REGISTER_INTERNAL_FUNC(r2s_sync_team_member_online_flag, &KRelayClient::OnSyncTeamMemberOnlineFlag, 14);
+    REGISTER_INTERNAL_FUNC(r2s_sync_team_member_max_lmr, &KRelayClient::OnNoOpRespond, 34);
+    REGISTER_INTERNAL_FUNC(r2s_sync_team_member_current_lmr, &KRelayClient::OnNoOpRespond, 16);
+    REGISTER_INTERNAL_FUNC(r2s_sync_team_member_misc, &KRelayClient::OnNoOpRespond, 26);
+    REGISTER_INTERNAL_FUNC(r2s_sync_team_member_position, &KRelayClient::OnNoOpRespond, 26);
+    REGISTER_INTERNAL_FUNC(r2s_party_message_notify, &KRelayClient::OnTeamMessageNotify, 10);
+    REGISTER_INTERNAL_FUNC(r2s_team_set_formation_leader_notify, &KRelayClient::OnSetFormationLeaderNotify, 14);
+    REGISTER_INTERNAL_FUNC(r2s_team_set_mark_respond, &KRelayClient::OnNoOpRespond, 14);
+    REGISTER_INTERNAL_FUNC(r2s_team_camp_change, &KRelayClient::OnTeamCampChange, 7);
+    REGISTER_INTERNAL_FUNC(r2s_team_level_up_raid_notify, &KRelayClient::OnTeamLevelUpRaidNotify, 10);
+    REGISTER_INTERNAL_FUNC(r2s_team_change_member_group_notify, &KRelayClient::OnTeamChangeMemberGroupNotify, 22);
+    REGISTER_INTERNAL_FUNC(r2s_player_talk_error, &KRelayClient::OnPlayerTalkError, 10);
+    REGISTER_INTERNAL_FUNC(r2s_player_talk_whisper_success_respond, &KRelayClient::OnNoOpRespond, 10);
+    REGISTER_INTERNAL_FUNC(r2s_talk_message, &KRelayClient::OnNoOpRespond, 75);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_36, &KRelayClient::OnNoOpRespond, 75);
+    REGISTER_INTERNAL_FUNC(r2s_apply_fellowship_data_respond, &KRelayClient::OnApplyFellowshipDataRespond, 6);
+    REGISTER_INTERNAL_FUNC(r2s_add_fellowship_respond, &KRelayClient::OnNoOpRespond, 43);
+    REGISTER_INTERNAL_FUNC(r2s_get_fellowship_name_respond, &KRelayClient::OnNoOpRespond, 7);
+    REGISTER_INTERNAL_FUNC(r2s_sync_fellowship_mapid, &KRelayClient::OnNoOpRespond, 11);
+    REGISTER_INTERNAL_FUNC(r2s_sync_fellowship_player_level, &KRelayClient::OnNoOpRespond, 8);
+    REGISTER_INTERNAL_FUNC(r2s_sync_fellowship_player_forceid, &KRelayClient::OnNoOpRespond, 7);
+    REGISTER_INTERNAL_FUNC(r2s_add_fellowship_notify, &KRelayClient::OnNoOpRespond, 7);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_44, &KRelayClient::OnNoOpRespond, 46);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_45, &KRelayClient::OnNoOpRespond, 6);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_46, &KRelayClient::OnNoOpRespond, 10);
+    REGISTER_INTERNAL_FUNC(r2s_send_mail_respond, &KRelayClient::OnSendMailRespond, 40);
+    REGISTER_INTERNAL_FUNC(r2s_get_maillist_respond, &KRelayClient::OnNoOpRespond, 10);
+    REGISTER_INTERNAL_FUNC(r2s_sync_mail_content, &KRelayClient::OnSyncMailContent, 11);
+    REGISTER_INTERNAL_FUNC(r2s_give_mail_money_to_player, &KRelayClient::OnGiveMailMoneyToPlayer, 47);
+    REGISTER_INTERNAL_FUNC(r2s_give_mail_item_to_player, &KRelayClient::OnGiveMailItemToPlayer, 54);
+    REGISTER_INTERNAL_FUNC(r2s_new_mail_notify, &KRelayClient::OnNoOpRespond, 118);
+    REGISTER_INTERNAL_FUNC(r2s_mail_general_respond, &KRelayClient::OnNoOpRespond, 11);
+    REGISTER_INTERNAL_FUNC(r2s_sync_mid_map_mark, &KRelayClient::OnNoOpRespond, 58);
+    REGISTER_INTERNAL_FUNC(r2s_map_copy_do_clear_player_prepare, &KRelayClient::OnMapCopyDoClearPlayerPrepare, 18);
+    REGISTER_INTERNAL_FUNC(r2s_map_copy_do_clear_player, &KRelayClient::OnMapCopyDoClearPlayer, 10);
+    REGISTER_INTERNAL_FUNC(r2s_set_map_copy_owner, &KRelayClient::OnSetMapCopyOwner, 14);
+    REGISTER_INTERNAL_FUNC(r2s_sync_road_track_info, &KRelayClient::OnSyncRoadTrackInfo, 8);
+    REGISTER_INTERNAL_FUNC(r2s_save_role_data_respond, &KRelayClient::OnSaveRoleDataRespond, 14);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_60, &KRelayClient::OnNoOpRespond, 14);
+    REGISTER_INTERNAL_FUNC(r2s_sync_role_data, &KRelayClient::OnSyncRoleData, 10);
+    REGISTER_INTERNAL_FUNC(r2s_load_role_data, &KRelayClient::OnLoadRoleData, 14);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_63, &KRelayClient::OnNoOpRespond, 10);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_64, &KRelayClient::OnNoOpRespond, 14);
+    REGISTER_INTERNAL_FUNC(r2s_gm_command, &KRelayClient::OnGmCommand, 38);
+    REGISTER_INTERNAL_FUNC(r2s_join_battle_field_queue_respond, &KRelayClient::OnNoOpRespond, 50);
+    REGISTER_INTERNAL_FUNC(r2s_leave_battle_field_queue_respond, &KRelayClient::OnNoOpRespond, 14);
+    REGISTER_INTERNAL_FUNC(r2s_battle_field_notify, &KRelayClient::OnNoOpRespond, 38);
+    REGISTER_INTERNAL_FUNC(r2s_accept_join_battle_field_respond, &KRelayClient::OnAcceptJoinBattleFieldRespond, 50);
+    REGISTER_INTERNAL_FUNC(r2s_leave_battle_field_respond, &KRelayClient::OnLeaveBattleFieldRespond, 10);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_71, &KRelayClient::OnNoOpRespond, 46);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_72, &KRelayClient::OnNoOpRespond, 10);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_73, &KRelayClient::OnNoOpRespond, 46);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_74, &KRelayClient::OnNoOpRespond, 6);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_75, &KRelayClient::OnNoOpRespond, 30);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_76, &KRelayClient::OnNoOpRespond, 6);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_77, &KRelayClient::OnNoOpRespond, 6);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_78, &KRelayClient::OnNoOpRespond, 46);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_79, &KRelayClient::OnNoOpRespond, 6);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_80, &KRelayClient::OnNoOpRespond, 50);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_81, &KRelayClient::OnNoOpRespond, 10);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_82, &KRelayClient::OnNoOpRespond, 46);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_83, &KRelayClient::OnNoOpRespond, 10);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_84, &KRelayClient::OnNoOpRespond, 126);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_85, &KRelayClient::OnNoOpRespond, 38);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_86, &KRelayClient::OnNoOpRespond, 22);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_87, &KRelayClient::OnNoOpRespond, 54);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_88, &KRelayClient::OnNoOpRespond, 94);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_89, &KRelayClient::OnNoOpRespond, 26);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_90, &KRelayClient::OnNoOpRespond, 154);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_91, &KRelayClient::OnNoOpRespond, 74);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_92, &KRelayClient::OnNoOpRespond, 54);
+    REGISTER_INTERNAL_FUNC(r2s_sync_pq, &KRelayClient::OnBroadcastSyncPQ, 60);
+    REGISTER_INTERNAL_FUNC(r2s_delete_pq, &KRelayClient::OnBroadcastDeletePQ, 6);
+    REGISTER_INTERNAL_FUNC(r2s_pq_value_change, &KRelayClient::OnBroadcastPQValueChange, 14);
+    REGISTER_INTERNAL_FUNC(r2s_pq_finish, &KRelayClient::OnBroadcastPQFinish, 10);
+    REGISTER_INTERNAL_FUNC(r2s_sync_camp_info, &KRelayClient::OnNoOpRespond, 106);
+    REGISTER_INTERNAL_FUNC(r2s_apply_set_camp_respond, &KRelayClient::OnApplySetCampRespond, 8);
+    REGISTER_INTERNAL_FUNC(r2s_sync_tong_member_info, &KRelayClient::OnNoOpRespond, 18);
+    REGISTER_INTERNAL_FUNC(r2s_delete_tong_member_notify, &KRelayClient::OnNoOpRespond, 107);
+    REGISTER_INTERNAL_FUNC(r2s_apply_tong_info_respond, &KRelayClient::OnNoOpRespond, 14);
+    REGISTER_INTERNAL_FUNC(r2s_update_tong_client_data_version, &KRelayClient::OnNoOpRespond, 7);
+    REGISTER_INTERNAL_FUNC(r2s_invite_player_join_tong_request, &KRelayClient::OnNoOpRespond, 15);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_104, &KRelayClient::OnNoOpRespond, 10);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_105, &KRelayClient::OnNoOpRespond, 78);
+    REGISTER_INTERNAL_FUNC(r2s_change_player_tong_notify, &KRelayClient::OnChangePlayerTongNotify, 43);
+    REGISTER_INTERNAL_FUNC(r2s_tong_broadcast_message, &KRelayClient::OnBroadcastTongMessage, 11);
+    REGISTER_INTERNAL_FUNC(r2s_get_tong_description_respond, &KRelayClient::OnNoOpRespond, 42);
+    REGISTER_INTERNAL_FUNC(r2s_sync_tong_online_message, &KRelayClient::OnSyncTongOnlineMessage, 7);
+    REGISTER_INTERNAL_FUNC(r2s_apply_open_tong_repertpry_respond, &KRelayClient::OnApplyOpenTongRepertoryRespond, 40);
+    REGISTER_INTERNAL_FUNC(r2s_sync_tong_repertory_page_respond, &KRelayClient::OnNoOpRespond, 13);
+    REGISTER_INTERNAL_FUNC(r2s_take_tong_repertory_item_respond, &KRelayClient::OnTakeTongRepertoryItemRespond, 9);
+    REGISTER_INTERNAL_FUNC(r2s_put_tong_repertory_item_respond, &KRelayClient::OnNoOpRespond, 9);
+    REGISTER_INTERNAL_FUNC(r2s_apply_stack_tong_repertory_item_respond, &KRelayClient::OnNoOpRespond, 13);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_115, &KRelayClient::OnNoOpRespond, 15);
+    REGISTER_INTERNAL_FUNC(r2s_get_tong_salary_respond, &KRelayClient::OnGetTongSalaryRespond, 10);
+    REGISTER_INTERNAL_FUNC(r2s_sync_tong_history_respond, &KRelayClient::OnSyncTongHistoryRespond, 12);
+    REGISTER_INTERNAL_FUNC(r2s_auction_lookup_respond, &KRelayClient::OnNoOpRespond, 6);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_119, &KRelayClient::OnNoOpRespond, 2);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_120, &KRelayClient::OnNoOpRespond, 30);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_121, &KRelayClient::OnNoOpRespond, 15);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_122, &KRelayClient::OnNoOpRespond, 11);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_123, &KRelayClient::OnNoOpRespond, 6);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_124, &KRelayClient::OnNoOpRespond, 8);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_125, &KRelayClient::OnNoOpRespond, 16);
+    REGISTER_INTERNAL_FUNC(r2s_auction_bid_respond, &KRelayClient::OnAuctionBidRespond, 19);
+    REGISTER_INTERNAL_FUNC(r2s_auction_sell_respond, &KRelayClient::OnAuctionSellRespond, 23);
+    REGISTER_INTERNAL_FUNC(r2s_auction_cancel_respond, &KRelayClient::OnNoOpRespond, 7);
+    REGISTER_INTERNAL_FUNC(r2s_auction_message_notify, &KRelayClient::OnNoOpRespond, 75);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_130, &KRelayClient::OnNoOpRespond, 18);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_131, &KRelayClient::OnNoOpRespond, 15);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_132, &KRelayClient::OnNoOpRespond, 23);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_133, &KRelayClient::OnNoOpRespond, 11);
+    REGISTER_INTERNAL_FUNC(r2s_remote_lua_call, &KRelayClient::OnRemoteLuaCall, 38);
+    REGISTER_INTERNAL_FUNC(r2s_achievement_global_announce_respond, &KRelayClient::OnNoOpRespond, 38);
+    REGISTER_INTERNAL_FUNC(r2s_designation_global_announce_respond, &KRelayClient::OnNoOpRespond, 42);
+    REGISTER_INTERNAL_FUNC(r2s_sync_global_system_value, &KRelayClient::OnNoOpRespond, 18);
+    REGISTER_INTERNAL_FUNC(r2s_query_stat_id_respond, &KRelayClient::OnNoOpRespond, 134);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_139, &KRelayClient::OnNoOpRespond, 19);
+    REGISTER_INTERNAL_FUNC(r2s_change_ext_point_respond, &KRelayClient::OnChangeExtPointRespond, 18);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_141, &KRelayClient::OnNoOpRespond, 26);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_142, &KRelayClient::OnNoOpRespond, 14);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_143, &KRelayClient::OnNoOpRespond, 15);
+    REGISTER_INTERNAL_FUNC(r2s_set_charge_flag_respond, &KRelayClient::OnSetChargeFlagRespond, 14);
+    REGISTER_INTERNAL_FUNC(r2s_sync_zone_charge_flag, &KRelayClient::OnNoOpRespond, 6);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_146, &KRelayClient::OnNoOpRespond, 18);
+    REGISTER_INTERNAL_FUNC(r2s_active_present_code_respond, &KRelayClient::OnActivePresentCodeRespond, 46);
+    REGISTER_INTERNAL_FUNC(r2s_apex_protocol, &KRelayClient::OnNoOpRespond, 0);
+    REGISTER_INTERNAL_FUNC(r2s_set_farmer_limit_flag_request, &KRelayClient::OnNoOpRespond, 10);
+    REGISTER_INTERNAL_FUNC(r2s_game_card_sell_respond, &KRelayClient::OnNoOpRespond, 3);
+    REGISTER_INTERNAL_FUNC(r2s_game_card_buy_respond, &KRelayClient::OnNoOpRespond, 7);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_152, &KRelayClient::OnNoOpRespond, 2);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_153, &KRelayClient::OnNoOpRespond, 7);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_154, &KRelayClient::OnNoOpRespond, 11);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_155, &KRelayClient::OnNoOpRespond, 19);
+    REGISTER_INTERNAL_FUNC(r2s_game_card_lookup_respond, &KRelayClient::OnGameCardLookupRespond, 12);
+    REGISTER_INTERNAL_FUNC(r2s_game_card_cancel_respond, &KRelayClient::OnGameCardCancelRespond, 13);
+    REGISTER_INTERNAL_FUNC(r2s_sync_mentor_data, &KRelayClient::OnNoOpRespond, 11);
+    REGISTER_INTERNAL_FUNC(r2s_delete_mentor_record, &KRelayClient::OnNoOpRespond, 15);
+    REGISTER_INTERNAL_FUNC(r2s_update_mentor_record, &KRelayClient::OnNoOpRespond, 38);
+    REGISTER_INTERNAL_FUNC(r2s_seek_mentor_yell, &KRelayClient::OnNoOpRespond, 34);
+    REGISTER_INTERNAL_FUNC(r2s_seek_apprentice_yell, &KRelayClient::OnNoOpRespond, 6);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_163, &KRelayClient::OnNoOpRespond, 6);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_164, &KRelayClient::OnNoOpRespond, 10);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_165, &KRelayClient::OnNoOpRespond, 10);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_166, &KRelayClient::OnNoOpRespond, 19);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_167, &KRelayClient::OnNoOpRespond, 15);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_168, &KRelayClient::OnNoOpRespond, 69);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_169, &KRelayClient::OnNoOpRespond, 70);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_170, &KRelayClient::OnNoOpRespond, 8);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_171, &KRelayClient::OnNoOpRespond, 6);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_172, &KRelayClient::OnNoOpRespond, 10);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_173, &KRelayClient::OnNoOpRespond, 58);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_174, &KRelayClient::OnNoOpRespond, 2);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_175, &KRelayClient::OnNoOpRespond, 22);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_176, &KRelayClient::OnNoOpRespond, 6);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_177, &KRelayClient::OnNoOpRespond, 10);
     REGISTER_INTERNAL_FUNC(r2s_sync_battle_field_list, &KRelayClient::OnSyncBattleFieldList, sizeof(R2S_SYNC_BATTLE_FIELD_LIST));
-    REGISTER_INTERNAL_FUNC(r2s_accept_join_battle_field_respond, &KRelayClient::OnAcceptJoinBattleFieldRespond, sizeof(R2S_ACCEPT_JOIN_BATTLE_FIELD_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_leave_battle_field_respond, &KRelayClient::OnLeaveBattleFieldRespond, sizeof(R2S_LEAVE_BATTLE_FIELD_RESPOND));
-
-    REGISTER_INTERNAL_FUNC(r2s_sync_camp_info, &KRelayClient::OnSyncCampInfo, sizeof(R2S_SYNC_CAMP_INFO));
-    REGISTER_INTERNAL_FUNC(r2s_apply_set_camp_respond, &KRelayClient::OnApplySetCampRespond, sizeof(R2S_APPLY_SET_CAMP_RESPOND));
-
-    REGISTER_INTERNAL_FUNC(r2s_sync_pq, &KRelayClient::OnBroadcastSyncPQ, sizeof(R2S_SYNC_PQ));
-    REGISTER_INTERNAL_FUNC(r2s_delete_pq, &KRelayClient::OnBroadcastDeletePQ, sizeof(R2S_DELETE_PQ));
-    REGISTER_INTERNAL_FUNC(r2s_pq_value_change, &KRelayClient::OnBroadcastPQValueChange, sizeof(R2S_PQ_VALUE_CHANGE));
-    REGISTER_INTERNAL_FUNC(r2s_pq_finish, &KRelayClient::OnBroadcastPQFinish, sizeof(R2S_PQ_FINISH));
-
-    REGISTER_INTERNAL_FUNC(r2s_apply_tong_info_respond, &KRelayClient::OnApplyTongInfoRespond, sizeof(R2S_APPLY_TONG_INFO_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_sync_tong_member_info, &KRelayClient::OnSyncTongMemberInfo, sizeof(R2S_SYNC_TONG_MEMBER_INFO));
-    REGISTER_INTERNAL_FUNC(r2s_delete_tong_member_notify, &KRelayClient::OnDeleteTongMemberNotify, sizeof(R2S_DELETE_TONG_MEMBER_NOTIFY));
-    REGISTER_INTERNAL_FUNC(r2s_sync_tong_repertory_page_respond, &KRelayClient::OnSyncTongRepertoryPageRespond, sizeof(R2S_SYNC_TONG_REPERTORY_PAGE_RESPOND));
-
-    REGISTER_INTERNAL_FUNC(r2s_update_tong_client_data_version, &KRelayClient::OnUpdateTongClientDataVersion, sizeof(R2S_UPDATE_TONG_CLIENT_DATA_VERSION));
-    REGISTER_INTERNAL_FUNC(r2s_invite_player_join_tong_request, &KRelayClient::OnInvitePlayerJoinTongRequest, sizeof(R2S_INVITE_PLAYER_JOIN_TONG_REQUEST));
-    REGISTER_INTERNAL_FUNC(r2s_change_player_tong_notify, &KRelayClient::OnChangePlayerTongNotify, sizeof(R2S_CHANGE_PLAYER_TONG_NOTIFY));
-    REGISTER_INTERNAL_FUNC(r2s_tong_broadcast_message, &KRelayClient::OnBroadcastTongMessage, sizeof(R2S_TONG_BROADCAST_MESSAGE));
-    REGISTER_INTERNAL_FUNC(r2s_get_tong_description_respond, &KRelayClient::OnGetTongDescriptionRespond, sizeof(R2S_GET_TONG_DESCRIPTION_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_sync_tong_online_message, &KRelayClient::OnSyncTongOnlineMessage, sizeof(R2S_SYNC_TONG_ONLINE_MESSAGE));
-
     REGISTER_INTERNAL_FUNC(r2s_take_tong_repertory_item_to_pos_respond,  &KRelayClient::OnTakeTongRepertoryItemToPosRespond, sizeof(R2S_TAKE_TONG_REPERTORY_ITEM_TO_POS_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_take_tong_repertory_item_respond,  &KRelayClient::OnTakeTongRepertoryItemRespond, sizeof(R2S_TAKE_TONG_REPERTORY_ITEM_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_put_tong_repertory_item_respond, &KRelayClient::OnPutTongRepertoryItemRespond, sizeof(R2S_PUT_TONG_REPERTORY_ITEM_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_apply_stack_tong_repertory_item_respond, &KRelayClient::OnApplyStackTongRepertoryItemRespond, sizeof(R2S_APPLY_STACK_TONG_REPERTORY_ITEM_RESPOND))
-    REGISTER_INTERNAL_FUNC(r2s_apply_open_tong_repertpry_respond, &KRelayClient::OnApplyOpenTongRepertoryRespond, sizeof(R2S_APPLY_OPEN_TONG_REPERTPRY_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_get_tong_salary_respond, &KRelayClient::OnGetTongSalaryRespond, sizeof(R2S_GET_TONG_SALARY_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_sync_tong_history_respond, &KRelayClient::OnSyncTongHistoryRespond, sizeof(R2S_SYNC_TONG_HISTORY_RESPOND));
-
-    REGISTER_INTERNAL_FUNC(r2s_auction_lookup_respond, &KRelayClient::OnAuctionLookupRespond, sizeof(R2S_AUCTION_LOOKUP_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_auction_bid_respond, &KRelayClient::OnAuctionBidRespond, sizeof(R2S_AUCTION_BID_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_auction_sell_respond, &KRelayClient::OnAuctionSellRespond, sizeof(R2S_AUCTION_SELL_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_auction_cancel_respond, &KRelayClient::OnAuctionCancelRespond, sizeof(R2S_AUCTION_CANCEL_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_auction_message_notify, &KRelayClient::OnAuctionMessageNotify, sizeof(R2S_AUCTION_MESSAGE_NOTIFY));
-
-    REGISTER_INTERNAL_FUNC(r2s_remote_lua_call, &KRelayClient::OnRemoteLuaCall, sizeof(R2S_REMOTE_LUA_CALL));
-
-    REGISTER_INTERNAL_FUNC(r2s_achievement_global_announce_respond, &KRelayClient::OnAchievementGlobalAnnounceRespond, sizeof(R2S_ACHIEVEMENT_GLOBAL_ANNOUNCE_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_designation_global_announce_respond, &KRelayClient::OnDesignationGlobalAnnounceRespond, sizeof(R2S_DESIGNATION_GLOBAL_ANNOUNCE_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_sync_global_system_value, &KRelayClient::OnSyncGlobalSystemValue, sizeof(R2S_SYNC_GLOBAL_SYSTEM_VALUE));
-    REGISTER_INTERNAL_FUNC(r2s_query_stat_id_respond, &KRelayClient::OnQueryStatIDRespond, sizeof(R2S_QUERY_STAT_ID_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_change_ext_point_respond, &KRelayClient::OnChangeExtPointRespond, sizeof(R2S_CHANGE_EXT_POINT_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_set_charge_flag_respond, &KRelayClient::OnSetChargeFlagRespond, sizeof(R2S_SET_CHARGE_FLAG_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_sync_zone_charge_flag, &KRelayClient::OnSyncZoneChargeFlag, sizeof(R2S_SYNC_ZONE_CHARGE_FLAG));
-    REGISTER_INTERNAL_FUNC(r2s_active_present_code_respond, &KRelayClient::OnActivePresentCodeRespond, sizeof(R2S_ACTIVE_PRESENT_CODE_RESPOND));
-    
-    REGISTER_INTERNAL_FUNC(r2s_apex_protocol, &KRelayClient::OnApexProtocol, sizeof(R2S_APEX_PROTOCOL));
-
-    REGISTER_INTERNAL_FUNC(r2s_set_farmer_limit_flag_request, &KRelayClient::OnSetFarmerLimitFlagRequest, sizeof(R2S_SET_FARMER_LIMIT_FLAG_REQUEST));
-
-    REGISTER_INTERNAL_FUNC(r2s_game_card_sell_respond, &KRelayClient::OnGameCardSellRespond, sizeof(R2S_GAME_CARD_SELL_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_game_card_buy_respond, &KRelayClient::OnGameCardBuyRespond, sizeof(R2S_GAME_CARD_BUY_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_game_card_lookup_respond, &KRelayClient::OnGameCardLookupRespond, sizeof(R2S_GAME_CARD_LOOKUP_RESPOND));
-    REGISTER_INTERNAL_FUNC(r2s_game_card_cancel_respond, &KRelayClient::OnGameCardCancelRespond, sizeof(R2S_GAME_CARD_CANCEL_RESPOND));
-    
-    REGISTER_INTERNAL_FUNC(r2s_sync_mentor_data, &KRelayClient::OnSyncMentorData, sizeof(R2S_SYNC_MENTOR_DATA));
-    REGISTER_INTERNAL_FUNC(r2s_delete_mentor_record, &KRelayClient::OnDeleteMentorRecord, sizeof(R2S_DELETE_MENTOR_RECORD));
-    REGISTER_INTERNAL_FUNC(r2s_update_mentor_record, &KRelayClient::OnUpdateMentorRecord, sizeof(R2S_UPDATE_MENTOR_RECORD));
-    REGISTER_INTERNAL_FUNC(r2s_seek_mentor_yell, &KRelayClient::OnSeekMentorYell, sizeof(R2S_SEEK_MENTOR_YELL));
-    REGISTER_INTERNAL_FUNC(r2s_seek_apprentice_yell, &KRelayClient::OnSeekApprenticeYell, sizeof(R2S_SEEK_APPRENTICE_YELL));
     //AutoCode:注册协议
 }
 
@@ -444,6 +491,15 @@ Exit0:
 	return bResult;
 }
 
+/*[R10 tier2] no-op handler: consume-and-ignore protocols the 2010 GS has no logic for.
+  Registered with the exact v246 size so ProcessPackage frames the packet and survives
+  (feature-drift ceiling: these v246 subsystems have no 2010 handler). */
+void KRelayClient::OnNoOpRespond(BYTE* pbyData, size_t uDataLen)
+{
+    KG_USE_ARGUMENT(pbyData);
+    KG_USE_ARGUMENT(uDataLen);
+}
+
 void KRelayClient::OnHandshakeRespond(BYTE* pbyData, size_t uDataLen)
 {
 	BOOL                    bRetCode   = false;
@@ -455,6 +511,7 @@ void KRelayClient::OnHandshakeRespond(BYTE* pbyData, size_t uDataLen)
     g_pSO3World->m_dwStartTime = g_pSO3World->m_piRecorderTools->GetTickCount();;
     g_pSO3World->m_nStartLoop  = pHandshake->nStartFrame;
     g_pSO3World->m_nGameLoop   = pHandshake->nStartFrame;
+    g_pSO3World->m_bFastBootMode = pHandshake->nFastBootMode;
 
     m_nWorldIndex = pHandshake->nWorldIndex;
 

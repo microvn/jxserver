@@ -480,7 +480,7 @@ BOOL KScriptCenter::IsScriptExist(const char cszScriptName[])
 	return IsScriptExist(dwScriptID);
 }
 
-// 获取当前正在被调用的脚本
+// 锟斤拷取锟斤拷前锟斤拷锟节憋拷锟斤拷锟矫的脚憋拷
 DWORD KScriptCenter::GetActiveScriptID()
 {
 	assert(m_piScript);
@@ -775,6 +775,7 @@ ILuaScriptEx* KScriptCenter::CreateScriptHolder()
     Luna<KScriptServer>::Register(pLuaState);
     Luna<KGlobalSystemValueCache>::Register(pLuaState);
     Luna<KMentorCache>::Register(pLuaState);
+    Luna<KHairShop>::Register(pLuaState);
 #endif
     Luna<KTarget>::Register(pLuaState);
 

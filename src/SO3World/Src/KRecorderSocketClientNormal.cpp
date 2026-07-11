@@ -27,13 +27,16 @@ IKG_SocketStream* KRecorderSocketClientNormal::Connect(const char cszIP[], int n
 {
     IKG_SocketStream*   piSocketStream = NULL;
     KG_SocketConnector  Connector;
-    
+
     assert(cszIP);
 
-    /* [R7] real KG security handshake (ConnectSecurity) instead of plain Connect --
-       center's game-server listener does AcceptSecurity(KSG_ENCODE_DECODE); our recon
-       socket skipped this -> center rejected at accept. libcommon.a provides the real impl. */
-    piSocketStream = Connector.ConnectSecurity(cszIP, nPort, KSG_ENCODE_DECODE);
+    /* [R8] plain Connect (NO security handshake). RE of libcommon.a proved the
+       center's GS listener runs KG_SocketServerAcceptor with ENCODE_DECODE_MODE_NONE
+       (_WaitProcessAccept -> _SendSecurityKey(mode) which is a no-op for mode -1, and
+       the center sends zero bytes on accept). The earlier ConnectSecurity path (R7)
+       was the wrong layer: brute-forcing all 5 modes RST-ed identically. The real
+       reject is the center's app-level S2R_HANDSHAKE_REQUEST handler. */
+    piSocketStream = Connector.Connect(cszIP, nPort);
 	KGLOG_PROCESS_ERROR(piSocketStream);
 
 Exit0:

@@ -1049,3 +1049,67 @@ phải hoàn tất key exchange).
 socket + security-key → center chấp nhận. Xử lý: (1) trùng symbol KG_Memory/CRC32 (link chọn lọc
 KG_Socket.o+KG_Package.o hoặc bỏ shim), (2) chọn ENCODE_DECODE_MODE khớp listener center (mode 0-4).
 Transport 2009 ổn định; wire GS↔center (INTERNAL_PROTOCOL) ở SO3World riêng.
+
+## R9. ROOT CAUSE center-connect: SO_RCVBUFFORCE cần CAP_NET_ADMIN — ĐÃ THÔNG (2026-07-06)
+
+**Kết luận dứt điểm: blocker center-connect KHÔNG phải handshake/version/framing/security.**
+Toàn bộ hướng §R3/§R6/§R7 (port handshake v246, ENCODE_DECODE mode, ConnectSecurity/libcommon
+security-key) là SAI TẦNG. Bằng chứng RE + strace:
+
+1. **RE libcommon.a (i386, debug, chính lib center dùng):**
+   - `KG_SocketConnector::ConnectSecurity` gọi `_RecvSecurityKey` (CLIENT nhận key), KHÔNG gọi
+     `_SendSecurityKey` → tức SERVER gửi key trước, client nhận. Lật ngược giả thuyết "GS gửi trước".
+   - `KG_SocketServerAcceptor::_WaitProcessAccept` (acceptor async center) = `accept()` ->
+     `_SendSecurityKey(mode)` -> ... Với `mode = KSG_ENCODE_DECODE_NONE(-1)`, `_SendSecurityKey`
+     return ngay (`cmp [ebp+8],0xffffffff; je return`) — KHÔNG gửi byte nào.
+   - `_RecvSecurityKey` discriminator: mode0->key 42B (byte0=0x20, NE_MAKEKEY hằng 0x2e6d23cf/
+     0x2e6d2399 khớp cipher.h), mode1->32B, mode2/3->42B.
+   - Brute-force cả 5 mode (-1..3) qua env `JX3_GS_ENCMODE` (1 rebuild): TẤT CẢ RST y hệt → mode
+     không phải vấn đề; center listener chạy mode NONE (không security).
+
+2. **`:736` (KGameServer::ProcessNetwork socketpoll=0) = NHIỄU idle-poll**, xuất hiện CẢ khi không
+   có GS. Kết luận cũ "stock 2.5.2 cũng bị :736 -> không phải rebuild ta" là SAI (dựa trên nhiễu).
+   Stock GS cũng KHÔNG phải baseline: nó chạy Record mode (`KRecorderSocketClientRecord::Connect`
+   line 45 fail, piSocket null) -> gửi 0 byte. OURS đi XA HƠN stock (TCP+handshake OK).
+
+3. **strace center lúc GS connect (bằng chứng quyết định), fd 4:**
+   ```
+   accept(9,{GS}) = 4
+   setsockopt(4, SO_RCVBUFFORCE, [6291456]) = -1 EPERM (Operation not permitted)   <- FAIL
+   setsockopt(4, SO_LINGER, {l_onoff=1,l_linger=0}) = 0
+   close(4)   -> RST (do SO_LINGER)
+   ```
+   KHÔNG recv, KHÔNG send. Center accept xong ép buffer nhận 6MB bằng `SO_RCVBUFFORCE` (cần
+   CAP_NET_ADMIN) -> EPERM -> accept-validator coi là lỗi -> SO_LINGER{1,0}+close -> RST.
+   Linux gửi RST (không FIN) vì close socket còn data chưa đọc + SO_LINGER=0.
+
+**FIX (tools/cluster.sh):** thêm `--cap-add=NET_ADMIN` vào `run()` (center/gateway/gameserver).
+Capability là per-container, KHÔNG kế thừa qua `--network=container:` netns; trước chỉ jx3mysql có.
+
+**KẾT QUẢ (verified):**
+- Center: `GS 1 connected from ...:37981, WorldIndex = 1` -> `Append map 名剑(01,1) to GS 1`.
+- GS: `Connect to center server ... [OK]` -> `Game server startup ... [OK]`.
+- Blocker connect (chặn qua nhiều session) = GIẢI QUYẾT.
+
+**Ground-truth v246 `KGameServer::OnHandshakeRequest` (decompile, base 0x08048000):**
+struct S2R_HANDSHAKE_REQUEST khớp offset ta gửi (param_2+2 lower, +6 upper, +0xa nResourceVersion
+[=nField10], +0xe MapGroup [=nWorldIndex], +0x12 serverTime). Handshake ĐẦU chỉ LƯU version (không
+check tuyệt đối); version chỉ so ở lần sau; MapGroup=0 -> skip; time-diff chỉ warn. Reject đầu tiên
+là `pGSInfo==0` (line 0x7e1) — nhưng thực tế RST xảy ra ở acceptor TRƯỚC dispatch (SO_RCVBUFFORCE).
+
+## R10. PHA MỚI: drift protocol Relay<->GS (enum r2s_/s2r_ + struct size) 2010 vs v246
+
+Sau khi connect OK, lộ drift tầng protocol INTERNAL (Relay_GS):
+- GS: `pHeader->wProtocolID < r2s_protocol_end at line 366 in ProcessPackage` (center gửi protocol
+  ID ngoài range enum r2s_ của source 2010) + world index rác (Set world index = 234881024 =
+  0x0E000000, đáng lẽ 1 -> lệch offset R2S_HANDSHAKE_RESPOND) + fail OnCreateMapNotify/
+  DoCreateMapRespond/OnSetChargeFlagRespond.
+- Center: `uPakSize >= m_uProtocolSize[wProtocolID] at line 1842 in ProcessConnection` (package GS
+  gửi sai size) -> `GS 1 disconnected !`.
+Đây là cùng loại version-drift đã xử lý (ATTRIBUTE_TYPE/skill enum...) nhưng ở enum+struct
+Relay_GS_Protocol.h / GS_Client_Protocol.h. Phương pháp: RE v246 (center + libSO3*) lấy enum
+r2s_/s2r_ + m_uProtocolSize table + struct offset, align header source. Nguồn tham chiếu center-side:
+src/SO3World/Test/TestProject/KRoleSLTest/SO3GameCenter/KGameServer.cpp (2010, đọc logic handler).
+
+**Cleanup:** KRecorderSocketClientNormal::Connect revert về plain Connect (bỏ ConnectSecurity R7/R8);
+giữ libcommon.a (cung cấp KG_SocketConnector::Connect + KG framing thật). §R8 env JX3_GS_ENCMODE bỏ.

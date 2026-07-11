@@ -1,9 +1,9 @@
 /************************************************************************/
-/* ÓÎÏ··þÎñÆ÷Óë¿Í»§¶ËµÄÁ¬½Ó                                             */
+/* ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½                                             */
 /* Copyright : Kingsoft 2005										    */
 /* Author	 : Zhu Jianqiu												*/
 /* Modify	 : Spe														*/
-/* Remark	 : ²»ÒªËæÒâÐÞ¸Ä·Ö¸ôÇø¿éµÄ×¢ÊÍ£¬ÔÚ×Ô¶¯Éú³É´úÂëµÄºêÖÐÐèÒªÊ¹ÓÃ */
+/* Remark	 : ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½Þ¸Ä·Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¢ï¿½Í£ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½É´ï¿½ï¿½ï¿½Äºï¿½ï¿½ï¿½ï¿½ï¿½ÒªÊ¹ï¿½ï¿½ */
 /* History	 :															*/
 /*		2005.01.26	Create												*/
 /************************************************************************/
@@ -18,6 +18,7 @@
 #include <vector>
 #include "IServer.h"
 #include "KConnectionData.h"
+#include "KExteriorDef.h"
 #include "GS_Client_Protocol.h"
 #include "KRecorderFactory.h"
 
@@ -142,37 +143,37 @@ private:
 	BOOL CheckPackage(BYTE* pbyData, size_t uDataLen);
 
 public:
-	// ·µ»ØÓ¦´ðÐÅÏ¢
+	// ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½Ï¢
 	BOOL DoMessageNotify(int nConnIndex, int nType, int nCode, const void* pvData = NULL, size_t uDataLen = 0);
-	// Í¬²½Íæ¼ÒÊý¾Ý
+	// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	BOOL DoSyncPlayerBaseInfo(int nConnIndex, KPlayer* pPlayer);
-	// Í¬²½ÈÎÎñÊý¾Ý
+	// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	BOOL DoSyncQuestData(int nConnIndex, DWORD dwDestPlayerID, BYTE* pbyData, size_t uDataLen, BYTE byDataType);
-	// Í¨Öª¿Í»§¶Ë×Ô¶¯¶ÏÏßÌßºÅ
+	// Í¨Öªï¿½Í»ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ßºï¿½
 	BOOL DoAccountKickout(int nConnIndex);
-	// Í¨Öª¿Í»§¶ËÇÐ»»·þÎñÆ÷
+	// Í¨Öªï¿½Í»ï¿½ï¿½ï¿½ï¿½Ð»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	BOOL DoSwitchGS(int nConnIndex, DWORD dwPlayerID, GUID& Guid, DWORD dwIPAddr, WORD wPort);
-	// Í¨Öª¿Í»§¶Ë»»µØÍ¼
+	// Í¨Öªï¿½Í»ï¿½ï¿½Ë»ï¿½ï¿½ï¿½Í¼
     BOOL DoSwitchMap(KPlayer* pPlayer, DWORD dwMapID, int nCopyIndex, int nX, int nY, int nZ);
 
-    // ---------------- Player, NPC, Doodad µÄ³öÏÖ/ÏûÊ§Í¬²½ --------------------------
-    // Í¬²½Ä³¸öPlayerµ½µ¥¸ö¿Í»§¶ËÍæ¼Ò
+    // ---------------- Player, NPC, Doodad ï¿½Ä³ï¿½ï¿½ï¿½/ï¿½ï¿½Ê§Í¬ï¿½ï¿½ --------------------------
+    // Í¬ï¿½ï¿½Ä³ï¿½ï¿½Playerï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     BOOL DoSyncNewPlayer(int nConnIndex, KPlayer* pPlayer);
 
-    // Í¬²½Ä³¸öNPCµ½µ¥¸ö¿Í»§¶ËÍæ¼Ò
+    // Í¬ï¿½ï¿½Ä³ï¿½ï¿½NPCï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     BOOL DoSyncNewNpc(int nConnIndex, KNpc* pNpc);
 
-    // Í¬²½Ä³¸ödoodadµ½Ä³¸ö¿Í»§¶ËÍæ¼Ò
+    // Í¬ï¿½ï¿½Ä³ï¿½ï¿½doodadï¿½ï¿½Ä³ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     BOOL DoSyncNewDoodad(int nConnIndex, KDoodad* pDoodad);
     
-	// ¹ã²¥DoodadµÄ×´Ì¬Í¬²½
+	// ï¿½ã²¥Doodadï¿½ï¿½×´Ì¬Í¬ï¿½ï¿½
 	BOOL DoSyncDoodadState(KDoodad* pDoodad);
-	// Í¨Öª¿Í»§¶ËÄ³¸ö½ÇÉ«±»ÒÆ³ýÁË
+	// Í¨Öªï¿½Í»ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½Æ³ï¿½ï¿½ï¿½
 	BOOL DoRemoveCharacter(KCharacter* pCharacter, BOOL bKilled);
-    // ÒÆ³ýDoodad
+    // ï¿½Æ³ï¿½Doodad
     BOOL DoRemoveDoodad(KDoodad* pDoodad);
     
-    // ----------------- ÒÆ¶¯Í¬²½ --------------------------------------------
+    // ----------------- ï¿½Æ¶ï¿½Í¬ï¿½ï¿½ --------------------------------------------
     BOOL DoSyncMoveCtrl(KPlayer* pPlayer);
     BOOL DoSyncMoveParam(KCharacter* pCharacter);
     BOOL DoAdjustPlayerMove(KPlayer* pPlayer);
@@ -182,19 +183,19 @@ public:
 
     // ------------------------------------------------------------------------------
 
-	// ½ÇÉ«½»»¥¶¯×÷Í¬²½
+	// ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½
 	BOOL DoCharacterAction(KCharacter* pCharacter, DWORD dwCharacterID, DWORD dwAction);
-	// ½ÇÉ«×ªÏòÍ¬²½
+	// ï¿½ï¿½É«×ªï¿½ï¿½Í¬ï¿½ï¿½
 	BOOL DoCharacterTurn(KCharacter* pCharacter, BOOL bForceTurn, BOOL bTurnImmediately);
 
     BOOL DoOverTimeAction(KCharacter* pCharacter, int nActionType, DWORD dwActionID, int nDirection, int nDurationFrame);
 
-	// ·¢ËÍÍæ¼ÒÏÔÊ¾Êý¾Ý
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
 	BOOL DoPlayerDisplayData(DWORD dwPlayerID, DWORD dwCheckSum, int nConnIndex);
-	// ·¢ËÍNpcÏÔÊ¾Êý¾Ý
+	// ï¿½ï¿½ï¿½ï¿½Npcï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
 	BOOL DoNpcDisplayData(DWORD dwNpcID, DWORD dwCheckSum, int nConnIndex);
 
-	// Í¬²½µ±Ç°¾­ÑéÖµ,Ð­ÖúÈÎÎñ¾­Ñé,Ë«±¶¾­ÑéµÈÊýÖµ
+	// Í¬ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½Öµ,Ð­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,Ë«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 	BOOL DoSyncExperience(KPlayer* pPlayer, int nDeltaExp);
 
     BOOL DoPlayerLevelUp(KPlayer* pPlayer);
@@ -228,16 +229,16 @@ public:
         struct KSKILL_CALCULATE_RESULT *pSkillResult, DWORD dwBulletID
     );
 
-    // Ã¿¸ô¶ÎÊ±¼ä,¼ì²éPlayerµÄÄ¿±êµÄBuffListÊÇ·ñ±ä»¯,Èç¹û±ä»¯,ÔòÍ¬²½Ä¿±êµÄÕû¸öList
+    // Ã¿ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½,ï¿½ï¿½ï¿½Playerï¿½ï¿½Ä¿ï¿½ï¿½ï¿½BuffListï¿½Ç·ï¿½ä»¯,ï¿½ï¿½ï¿½ï¿½ä»¯,ï¿½ï¿½Í¬ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½List
     BOOL DoSyncTargetBuffList(KPlayer* pPlayer);
     BOOL DoSyncTargetTargetBuffList(KPlayer* pPlayer);
 
-    // Í¬²½Íæ¼ÒËùÑ¡Ä¿±êµôÂäËùÊôµÄÐÅÏ¢
+    // Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
     BOOL DoSyncTargetDropID(KPlayer* pPlayer);
 
-    // Í¬²½Íæ¼Ò×Ô¼ºµÄBuff list(Ä¿Ç°Ó¦ÓÃÔÚµÇÂ½µÄÊ±ºò)
+    // Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½Buff list(Ä¿Ç°Ó¦ï¿½ï¿½ï¿½Úµï¿½Â½ï¿½ï¿½Ê±ï¿½ï¿½)
 	BOOL DoSyncBuffList(KPlayer* pPlayer, KPlayer* pDstPlayer);
-    // Íæ¼Ò×Ô¼ºµÄBuff±ä»¯Ê±,ÏòÕû¸ö¶ÓÎéÍ¬²½(µ¥¸öBuff)
+    // ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½Buffï¿½ä»¯Ê±,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½Buff)
     BOOL DoSyncBuffSingle(
         KCharacter* pCharacter, int nIndex,
         DWORD dwBuffID, int nLevel, DWORD dwRecipeKey[],
@@ -252,10 +253,10 @@ public:
 
     BOOL DoSyncSheathState(KCharacter* pCharacter);
 
-    // ---------------- ÊýÖµÍ¬²½ -------------------------------------
+    // ---------------- ï¿½ï¿½ÖµÍ¬ï¿½ï¿½ -------------------------------------
 
-    // ²Î¿¼ÎÄµµ: ÈËÎïÊýÖµÍ¬²½¸ÅÒª.txt
-    // L,M,S, ·Ö±ðÊÇLife, Mana, StaminaµÄÊ××ÖÄ¸
+    // ï¿½Î¿ï¿½ï¿½Äµï¿½: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÖµÍ¬ï¿½ï¿½ï¿½ï¿½Òª.txt
+    // L,M,S, ï¿½Ö±ï¿½ï¿½ï¿½Life, Mana, Staminaï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸
 
     BOOL DoSyncSelfMaxLMRS(KPlayer* pPlayer);
     BOOL DoSyncSelfCurrentLMRS(KPlayer* pPlayer);
@@ -277,34 +278,34 @@ public:
 
     // ----------------- party about --------------------------------
 
-    // Íæ¼ÒµÇÂ½·þÎñÆ÷Ê±Í¬²½¶ÓÎéÊý¾Ý
+    // ï¿½ï¿½Òµï¿½Â½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     BOOL DoLoginTeamSync(KPlayer* pPlayer);
-    // Í¬²½Íæ¼ÒËùÔÚ¶ÓÎéµÄ»ù±¾ÐÅÏ¢
+    // Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¶ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
     BOOL DoSyncTeamBaseInfo(DWORD dwTeamID, KPlayer* pPlayer, BOOL bAddTeamMemberFlag = false);
-    // ½«×é¶ÓÑûÇë·¢ËÍµ½Ä¿±êÍæ¼Ò
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë·¢ï¿½Íµï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½
     BOOL DoInvitePlayerJoinTeamRequest(DWORD dwInviteDst, const char cszInviteSrc[]);
-    // ½«Relay×ª·¢¹ýÀ´µÄÈë¶ÓÉêÇë,·¢ËÍµ½¶Ó³¤¿Í»§¶Ë
+    // ï¿½ï¿½Relay×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½Íµï¿½ï¿½Ó³ï¿½ï¿½Í»ï¿½ï¿½ï¿½
     BOOL DoApplyJoinTeamRequest(DWORD dwLeader, const char cszApplySrc[]);
-    // ¶ÓÎéÐÂÌí³ÉÔ±µÄÍ¨Öª
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½ï¿½Í¨Öª
     BOOL DoTeamAddMemberNotify(DWORD dwTeamID, int nGroupIndex, DWORD dwMemberID);
-    // xxxÀë¿ª¶ÓÎéµÄÍ¨Öª
+    // xxxï¿½ë¿ªï¿½ï¿½ï¿½ï¿½ï¿½Í¨Öª
     BOOL DoTeamDelMemberNotify(DWORD dwTeamID, int nGroupIndex, DWORD dwMemberID);
     BOOL DoTeamChangeAuthorityNotify(DWORD dwTeamID, KTEAM_AUTHORITY_TYPE eType, DWORD dwTargetID);
     BOOL DoTeamSetLootModeNotify(DWORD dwTeamID, int nLootMode, int nRollQuality);
     
     BOOL DoTeamSetFormationLeaderNotify(DWORD dwTeamID, int nGroupIndex, DWORD dwNewFormationLeader);
 
-    // ¶ÓÎé½âÉ¢Í¨Öª
+    // ï¿½ï¿½ï¿½ï¿½ï¿½É¢Í¨Öª
     BOOL DoTeamDisbandNotify(DWORD dwTeamID);
-    // Í¬²½³ÉÔ±ÔÚÏß×´Ì¬µÄ¸Ä±ä
+    // Í¬ï¿½ï¿½ï¿½ï¿½Ô±ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½Ä¸Ä±ï¿½
     BOOL DoSyncTeamMemberOnlineFlag(DWORD dwTeamID, DWORD dwMemberID, BOOL bOnlineFlag);
-    // Í¬²½Íæ¼Ò×´Ì¬ÐÅÏ¢
+    // Í¬ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½Ï¢
     BOOL DoSyncPlayerStateInfo(KPlayer* pPlayer);
 
-    // ¶ÓÎé±ê¼Ç
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     BOOL DoTeamSetMarkRespond(DWORD dwTeamID, int nMarkType, DWORD dwTargetID);
 
-    // ×é¶ÓÕóÓª·¢Éú±ä»¯
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Óªï¿½ï¿½ï¿½ï¿½ï¿½ä»¯
     BOOL DoTeamCampChange(DWORD dwTeamID, KCAMP eCamp);
 
     BOOL DoTeamLevelUpRaidNotify(DWORD dwTeamID, int nGroupNum);
@@ -330,86 +331,89 @@ public:
     BOOL DoTradingComplete(int nConnIndex, BOOL bComplete);
     // ------------------------------------------------------------
 
-	// Í¬²½½ðÇ®ÊýÁ¿
+	// Í¬ï¿½ï¿½ï¿½ï¿½Ç®ï¿½ï¿½ï¿½ï¿½
 	BOOL DoSyncMoney(int nConnIndex, int nMoney, BOOL bShowMsg);
     BOOL DoSyncContribution(int nConnIndex, int nContribution);
-	// Í¬²½µÀ¾ßÊý¾Ý
+	// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	BOOL DoSyncItemData(int nConnIndex, DWORD dwPlayerID, KItem* pItem, DWORD dwBox, DWORD dwX);
-	// Í¬²½µÀ¾ßÉ¾³ý
+	// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½
 	BOOL DoSyncItemDestroy(int nConnIndex, DWORD dwOwnerID, DWORD dwBox, DWORD dwX);
-	// ½»»»×°±¸
+	// ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½
 	BOOL DoExchangeItem(int nConnIndex, DWORD dwBox1, DWORD dwX1, DWORD dwBox2, DWORD dwX2, DWORD dwAmount);
-	// ¸üÐÂÎïÆ·ÊýÁ¿»òÄÍ¾Ã
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¾ï¿½
 	BOOL DoUpdateItemAmount(int nConnIndex, DWORD dwBox, DWORD dwX, int nAmount);
-    // Íæ¼Ò»»×°¹ã²¥
+    // ï¿½ï¿½Ò»ï¿½×°ï¿½ã²¥
     BOOL DoSyncEquipRepresent(KPlayer* pPlayer, int nIndex, DWORD dwRepresentID);
-	// Í¬²½µÀ¾ß»ñµÃµÄÏûÏ¢
+    // sync exterior (wai-guan) box contents + apply-flag to the owning client
+    BOOL DoSyncExteriorBoxData(KPlayer* pPlayer, size_t uCount, const KEXTERIOR_ITEM* pItems);
+    BOOL DoSyncApplyExteriorFlag(KPlayer* pPlayer, DWORD dwApplyFlag);
+	// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ß»ï¿½Ãµï¿½ï¿½ï¿½Ï¢
 	BOOL DoAddItemNotify(KPlayer* pAddItemPlayer, DWORD dwItemID, int nCount, int nDestConnIndex = -1);
     
-	// Ñ§Ï°Éú»î¼¼ÄÜ
+	// Ñ§Ï°ï¿½ï¿½ï¿½î¼¼ï¿½ï¿½
 	BOOL DoLearnProfessionNotify(int nConnIndex, DWORD dwProfessionID);
-	// Ñ§Ï°Éú»î¼¼ÄÜ·ÖÖ§
+	// Ñ§Ï°ï¿½ï¿½ï¿½î¼¼ï¿½Ü·ï¿½Ö§
 	BOOL DoLearnBranchNotify(int nConnIndex, DWORD dwProfessionID, DWORD dwBranchID);
-	// ÒÅÍü¼¼ÄÜ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	BOOL DoForgetProfessionNotify(int nConnIndex, DWORD dwProfessionID);
-	// Ôö¼ÓÉú»î¼¼ÄÜ¾­Ñé
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½î¼¼ï¿½Ü¾ï¿½ï¿½ï¿½
 	BOOL DoAddProfessionProficiency(int nConnIndex, DWORD dwProfessionID, DWORD dwExp);
-    // Í¬²½Éú»î¼¼ÄÜ±»ÆäËûÒòËØÓ°ÏìµÄµ÷ÕûµÈ¼¶
+    // Í¬ï¿½ï¿½ï¿½ï¿½ï¿½î¼¼ï¿½Ü±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó°ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½È¼ï¿½
     BOOL DoSyncProfessionAdjustLevel(int nConnIndex, DWORD dwProfessionID, DWORD dwAdjustLevel);
-	// ÉèÖÃÉú»î¼¼ÄÜ×î´óµÈ¼¶
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½î¼¼ï¿½ï¿½ï¿½ï¿½ï¿½È¼ï¿½
 	BOOL DoSetMaxProfessionLevelNotify(int nConnIndex, DWORD dwProfessionID, DWORD dwLevel);
-	// Í¬²½¸üÐÂÍæ¼ÒÉú»î¼¼ÄÜ
+	// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½î¼¼ï¿½ï¿½
 	BOOL DoUpdatePlayerProfession(
         int nConnIndex, DWORD dwProfessionID, DWORD dwMaxLevel, 
 		DWORD dwCurrentLevel, DWORD dwCurrentProficiency, DWORD dwBranchID
     );
 
-	// Ñ§Ï°Åä·½
+	// Ñ§Ï°ï¿½ä·½
 	BOOL DoLearnRecipeNotify(int nConnIndex, DWORD dwCraftID, DWORD dwRecipeID);
-	// ÒÅÍüÅä·½
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ä·½
 	BOOL DoForgetRecipeNotify(int nConnIndex, DWORD dwCraftID);
-	// Í¬²½Åä·½ÁÐ±í
+	// Í¬ï¿½ï¿½ï¿½ä·½ï¿½Ð±ï¿½
 	BOOL DoSyncRecipeState(int nConnIndex, BYTE* pbyData, size_t uDataLen, int nVersion);
 
-	// ´ò¿ªÒ»¸ö¿Í»§¶Ë´°¿Ú
+	// ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Í»ï¿½ï¿½Ë´ï¿½ï¿½ï¿½
 	BOOL DoOpenWindow(DWORD dwIndex, TARGET_TYPE eTarget, DWORD dwTargetID, const char* pcszText, int nConnIndex);
 
-	// Í¬²½Åä·½µÄÊ¹ÓÃ
+	// Í¬ï¿½ï¿½ï¿½ä·½ï¿½ï¿½Ê¹ï¿½ï¿½
 	BOOL DoStartUseRecipe(KPlayer* pPlayer, DWORD dwCraftID, DWORD dwRecipeID, KTarget &rTarget);
 
-	// ½ÓÊÜÈÎÎñ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	BOOL DoAcceptQuest(int nQuestIndex, DWORD dwQuestID, int nConnIndex, BOOL bDailyQuest = false);
-	// Íê³ÉÈÎÎñ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	BOOL DoFinishQuest(DWORD dwQuestID, int nConnIndex, BOOL bForceFinished);
-	// È¡ÏûÈÎÎñ
+	// È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	BOOL DoCancelQuest(int nQuestIndex, int nConnIndex);
-	// Çå³ýÈÎÎñ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	BOOL DoClearQuest(int nConnIndex, DWORD dwQuestID);
-	// ¹²ÏíÈÎÎñ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	BOOL DoShareQuest(KPlayer* pDstPlayer, KPlayer* pPlayer, DWORD dwQuestID);
-	// Í¬²½ÈÎÎñ±äÁ¿
+	// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	BOOL DoSyncQuestValue(int nQuestIndex, int nConnIndex);
-	// Í¬²½¿ªÊ¼Ð¡¶ÓÈÎÎñ
+	// Í¬ï¿½ï¿½ï¿½ï¿½Ê¼Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	BOOL DoStartEscortQuest(int nConnIndex, DWORD dwStartPlayerID, DWORD dwQuestID);
 
-	// Í¬²½Ê°È¡ÁÐ±í
+	// Í¬ï¿½ï¿½Ê°È¡ï¿½Ð±ï¿½
 	BOOL DoSyncLootList(KPlayer* pPlayer, KDoodad* pDoodad);
 
 	BOOL DoRollItemMessage(int nDestConnIndex, KPlayer* pRoller, int nRollPoint, DWORD dwDoodadID, DWORD dwItemID);
 
-	// ´ò¿ªÊ°È¡Ãæ°å
+	// ï¿½ï¿½Ê°È¡ï¿½ï¿½ï¿½
 	BOOL DoOpenLootList(int nConnIndex, KPlayer *pPlayer, KDoodad *pDoodad);
 
-	// Í¬²½Õ½¶·¿ª¹Ø
+	// Í¬ï¿½ï¿½Õ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	BOOL DoSyncFightFlag(int nConnIndex, DWORD dwForceID, BOOL bFight);
 
-	// Í¬²½ÉùÍû
+	// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	BOOL DoSyncRepute(int nConnIndex, DWORD dwForceID, int nLevel, int nRepute, int nDiffValue);
-	// Í¬²½ËùÓÐÊÆÁ¦Õ½¶·¿ª¹Ø
+	// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	BOOL DoSyncFightflagList(int nConnIndex, int nCount, KPlayer* pPlayer);
-	// Í¬²½ËùÓÐµÄÊÆÁ¦ÉùÍû
+	// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	BOOL DoSyncReputeList(int nConnIndex, int nCount, KPlayer* pPlayer);
-	// Í¬²½ÉùÍûÐÞ¸Ä±ê¼Ç
+	// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¸Ä±ï¿½ï¿½
 	BOOL DoShowReputation(int nConnIndex, DWORD dwForceID, BOOL bLoginLoading);
 
     BOOL DoCharacterOpen(KCharacter *pCharacter, KDoodad* pDoodad);
@@ -418,25 +422,25 @@ public:
     BOOL DoFinishLoot(KPlayer* pPlayer, KDoodad* pDoodad);
 	BOOL DoBeginRollItem(int nConnIndex, KItem* pItem, KDoodad* pDoodad, int nLeftRollFrame);
 
-	// Í¬²½¶¨ÖÆµÄÓÃ»§ÏûÏ¢
+	// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ï¢
 	BOOL DoCustomOTAction(
         KPlayer* pPlayer, int nType, BOOL bIsBreakable, int nFrame, int nTargetType, 
         DWORD dwTargetID, DWORD dwScriptID, const char* pszActionName
     );
 
-	// Ìí¼Ó³ðºÞ
+	// ï¿½ï¿½ï¿½Ó³ï¿½ï¿½
 	BOOL DoModifyThreat(int nConnIndex, DWORD dwCharacterID);
 
-	// ÐÞ¸Ä±»³ðºÞ
+	// ï¿½Þ¸Ä±ï¿½ï¿½ï¿½ï¿½
 	BOOL DoModifyThreaten(int nConnIndex, DWORD dwCharacterID);
 
-	// Çå³ý³ðºÞ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	BOOL DoClearThreat(int nConnIndex, DWORD dwCharacterID);
 
-	// Çå³ý±»³ðºÞ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	BOOL DoClearThreaten(int nConnIndex, DWORD dwCharacterID);
 
-    // ÁÄÌìÏûÏ¢
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
     BOOL DoTalkMessage(
         int nMsgType, 
         DWORD dwTalkerID, const char cszTalker[], 
@@ -447,7 +451,7 @@ public:
 
     BOOL DoSceneMessage(KScene* pScene, const char* pszMessage);
 
-	// ¾«Á¦ÌåÁ¦
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	BOOL DoSyncSelfCurrentST(KPlayer* pPlayer);
 
 	// 
@@ -462,23 +466,23 @@ public:
 
 	BOOL DoSetForce(KCharacter* pCharacter);
 	
-    // -------------------- ÓÊ¼þÏµÍ³ ----------------------------------->
+    // -------------------- ï¿½Ê¼ï¿½ÏµÍ³ ----------------------------------->
     BOOL DoSendMailRespond(int nConnIndex, int nRespondID, int nResult);
     BOOL DoGetMailListRespond(int nConnIndex, KMailListInfo* pMailListInfo, int nMailCount);
     BOOL DoNewMailNotify(int nConnIndex, KMailListInfo* pMailListInfo);
     BOOL DoSyncMailContent(DWORD dwPlayerID, DWORD dwMailID, int nResult, KMailContent* pContent);
     BOOL DoMailGeneralRespond(DWORD dwPlayerID, DWORD dwMailID, int nResult);
-    // <------------------- ÓÊ¼þÏµÍ³ ------------------------------------
+    // <------------------- ï¿½Ê¼ï¿½ÏµÍ³ ------------------------------------
 
 	// --------------------- PK About ----------------------------------->
 	BOOL DoSyncPKState(int nConnIndex, KPlayer* pPlayer, int nEndFrame = 0, BOOL bRefuseDuelFlag = false);
     BOOL DoBroadcastPKState(KPlayer* pPlayer);
 	BOOL DoWinDuelBroadcast(DWORD dwWinnerID, DWORD dwLosserID);
 
-	// ´ò¿ªÅä·½Êé
+	// ï¿½ï¿½ï¿½ä·½ï¿½ï¿½
 	BOOL DoOpenRecipeBook(int nConnIndex, DWORD dwRecipeBookItemID);
 
-	// ´ò¿ªÔÄ¶ÁÓÃÊé
+	// ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½
 	BOOL DoOpenBook(int nConnIndex, DWORD dwBox, DWORD dwX);
 
 	BOOL DoSyncUserPreferences(int nConnIndex, int nOffset, int nLength, BYTE* pbyData);
@@ -504,7 +508,7 @@ public:
 
     BOOL DoSyncHorseFlag(KPlayer* pPlayer);
 
-    // ---------------------- ½»Í¨Ïà¹Ø --------------------------------
+    // ---------------------- ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ --------------------------------
     BOOL DoRoadTrackForceRespond(int nConnIndex);
     BOOL DoSyncRouteNodeOpenList(int nConnIndex, int nCount, int* pnNodeList);
     
@@ -535,7 +539,7 @@ public:
     BOOL DoSyncCampInfo(KPlayer* pPlayer);
     BOOL DoSyncCurrentPrestige(KPlayer* pPlayer);
     
-    // ---------------------- °ï»áÏà¹Ø --------------------------------
+    // ---------------------- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ --------------------------------
     BOOL DoSyncTongMemberInfo(DWORD dwPlayerID, const KTongMemberInfo& crTongMember);
     BOOL DoTongDeleteMemberNotify(DWORD dwPlayerID, DWORD dwMemberID);
     BOOL DoApplyTongInfoRespond(DWORD dwPlayerID, BYTE byRespondType, BYTE* pbyRespondData, size_t uDataLen);
@@ -554,7 +558,7 @@ public:
     BOOL DoSyncTongHistoryRespond(int nConnIndex, BYTE byType, DWORD dwStartIndex, int nCount, BYTE byData[], size_t uDataLen);
     //-----------------------------------------------------------------
      
-    // ---------------------- ¼ÄÂôÐÐÏà¹Ø --------------------------------
+    // ---------------------- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ --------------------------------
     BOOL DoAuctionLookupRespond(DWORD dwPlayerID, BYTE byRespondID, BYTE byCode, KAUCTION_PAGE_HEAD* pPage);
     BOOL DoAuctionBidRespond(DWORD dwPlayerID, BYTE byCode);
     BOOL DoAuctionSellRespond(DWORD dwPlayerID, BYTE byCode);
@@ -617,45 +621,45 @@ public:
 
     BOOL DoCharacterThreatRankListRespond(int nConnIndex, DWORD dwThreatListOwerID, int nRankCount, S2C_CHARACTER_THREAT_RANKLIST::_THREAT_RANK_LIST* pRankList);
 
-    //AutoCode:-·¢ËÍÐ­Òéº¯Êý½áÊø-
+    //AutoCode:-ï¿½ï¿½ï¿½ï¿½Ð­ï¿½éº¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-
 
 private:
-	// ÇëÇóÍæ¼ÒÊý¾Ý
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	void OnHandshakeRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
-	// ¿Í»§¶Ë¼ÓÔØ×ÊÔ´Íê±Ï,ÇëÇó½øÈë³¡¾°
+	// ï¿½Í»ï¿½ï¿½Ë¼ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë³¡ï¿½ï¿½
 	void OnApplyEnterScene(char* pData, size_t nSize, int nConnIndex, int nFrame);
-	// Íæ¼ÒµÇ³ö
+	// ï¿½ï¿½ÒµÇ³ï¿½
 	void OnPlayerLogout(char* pData, size_t nSize, int nConnIndex, int nFrame);
-    // ÉÏÐÐPing
+    // ï¿½ï¿½ï¿½ï¿½Ping
     void OnPingSignal(char* pData, size_t nSize, int nConnIndex, int nFrame);
 
     void OnMoveCtrl(char* pData, size_t nSize, int nConnIndex, int nFrame);
     void OnApplyMoveAdjust(char* pData, size_t nSize, int nConnIndex, int nFrame);
-    // ½ÇÉ«Õ¾Á¢Ö¸Áî
+    // ï¿½ï¿½É«Õ¾ï¿½ï¿½Ö¸ï¿½ï¿½
 	void OnCharacterStand(char* pData, size_t nSize, int nConnIndex, int nFrame);
-	// ½ÇÉ«×ß¶¯Ö¸Áî
+	// ï¿½ï¿½É«ï¿½ß¶ï¿½Ö¸ï¿½ï¿½
 	void OnCharacterWalk(char* pData, size_t nSize, int nConnIndex, int nFrame);
-	// ½ÇÉ«ÅÜ¶¯Ö¸Áî
+	// ï¿½ï¿½É«ï¿½Ü¶ï¿½Ö¸ï¿½ï¿½
 	void OnCharacterRun(char* pData, size_t nSize, int nConnIndex, int nFrame);
-	// ½ÇÉ«ÓÎÓ¾Ö¸Áî
+	// ï¿½ï¿½É«ï¿½ï¿½Ó¾Ö¸ï¿½ï¿½
 	void OnCharacterSwim(char* pData, size_t nSize, int nConnIndex, int nFrame);
-	// ½ÇÉ«ÌøÔ¾Ö¸Áî
+	// ï¿½ï¿½É«ï¿½ï¿½Ô¾Ö¸ï¿½ï¿½
 	void OnCharacterJump(char* pData, size_t nSize, int nConnIndex, int nFrame);
-	// ½ÇÉ«×øÏÂÖ¸Áî
+	// ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
 	void OnCharacterSit(char* pData, size_t nSize, int nConnIndex, int nFrame);
-	// ½ÇÉ«×ªÏòÖ¸Áî
+	// ï¿½ï¿½É«×ªï¿½ï¿½Ö¸ï¿½ï¿½
 	void OnSyncDirection(char* pData, size_t nSize, int nConnIndex, int nFrame);
 
-    // ÖÐ¶ÏÍæ¼Òµ±Ç°ÐÐÎª
+    // ï¿½Ð¶ï¿½ï¿½ï¿½Òµï¿½Ç°ï¿½ï¿½Îª
     void OnStopCurrentAction(char* pData, size_t nSize, int nConnIndex, int nFrame);
-    // ½ÇÉ«ÊÍ·Å¼¼ÄÜÖ¸Áî
+    // ï¿½ï¿½É«ï¿½Í·Å¼ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
 	void OnCharacterSkill(char* pData, size_t nSize, int nConnIndex, int nFrame);
-	// ½ÇÉ«½»»¥¶¯×÷Ö¸Áî
+	// ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
 	void OnCharacterAction(char* pData, size_t nSize, int nConnIndex, int nFrame);
 
-	// Íæ¼ÒÏÔÊ¾Êý¾Ý
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
 	void OnApplyPlayerDisplayData(char* pData, size_t nSize, int nConnIndex, int nFrame);
-	// ÉêÇëµÍÆµÄ¿±êºÍ¶ÓÓÑÊý¾Ý
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ÆµÄ¿ï¿½ï¿½Í¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	void OnApplyLoFreqData(char* pData, size_t nSize, int nConnIndex, int nFrame);
 
     void OnMountKungfu(char* pData, size_t nSize, int nConnIndex, int nFrame);
@@ -670,15 +674,15 @@ private:
 
     // ---------------------- party about ---------------------->
 
-    //ÑûÇëÄ³Íæ¼Ò×é¶Ó
+    //ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     void OnInviteJoinTeamRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
-    //×é¶ÓÑûÇëÓ¦´ð
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½
     void OnInviteJoinTeamRespond(char* pData, size_t nSize, int nConnIndex, int nFrame);
-    //ÉêÇë¼ÓÈëxxxµÄ¶ÓÎé
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xxxï¿½Ä¶ï¿½ï¿½ï¿½
     void OnApplyJoinTeamRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
-    //¶ÔxxxÈë¶ÓÉùÇëµÄÓ¦´ð
+    //ï¿½ï¿½xxxï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½
     void OnApplyJoinTeamRespond(char* pData, size_t nSize, int nConnIndex, int nFrame);
-    //¶ÓÎéÉ¾³ý³ÉÔ±: Àë¶Ó»òÕßÌßÈË
+    //ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½Ô±: ï¿½ï¿½Ó»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     void OnTeamDelMemberRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
     void OnTeamChangeAuthorityRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
     
@@ -687,10 +691,10 @@ private:
     
     void OnTeamSetFormationLeader(char* pData, size_t nSize, int nConnIndex, int nFrame);
 
-    // ·¢ËÍÐ¡µØÍ¼ÉÏµÄ±ê¼Ç¸ø¶ÓÓÑ
+    // ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½Í¼ï¿½ÏµÄ±ï¿½Ç¸ï¿½ï¿½ï¿½ï¿½ï¿½
     void OnTeamMemberNotifySignpost(char* pData, size_t nSize, int nConnIndex, int nFrame);
 
-    // ÊÕµ½Ð¡¶Ó±ê¼Ç
+    // ï¿½Õµï¿½Ð¡ï¿½Ó±ï¿½ï¿½
     void OnTeamSetMarkRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
 
     void OnTeamLevelUpRaidRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
@@ -698,18 +702,18 @@ private:
 
     // <---------------------- party about ----------------------
 
-	//½ÓÊÜÈÎÎñ
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	void OnAcceptQuest(char* pData, size_t nSize, int nConnIndex, int nFrame);
-	//Íê³ÉÈÎÎñ
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	void OnFinishQuest(char* pData, size_t nSize, int nConnIndex, int nFrame);
-	//È¡ÏûÈÎÎñ
+	//È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	void OnCancelQuest(char* pData, size_t nSize, int nConnIndex, int nFrame);
-	// ¹²ÏíÈÎÎñ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	void OnShareQuest(char* pData, size_t nSize, int nConnIndex, int nFrame);
-	//½ÓÊÜ»¤ËÍÈÎÎñ
+	//ï¿½ï¿½ï¿½Ü»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	void OnAcceptEscortQuest(char* pData, size_t nSize, int nConnIndex, int nFrame);
 
-	//GmÖ¸Áî
+	//GmÖ¸ï¿½ï¿½
 	void OnGmCommand(char* pData, size_t nSize, int nConnIndex, int nFrame);
 
     // ---------------------- shop about ---------------------->
@@ -718,7 +722,7 @@ private:
     void OnShopBuyRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
     void OnShopSellRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
     void OnShopRepairRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
-    // ÇëÇó¹º»Ø»Ø¹ºÁÐ±íÀïµÄÒ»ÑùÎïÆ·
+    // ï¿½ï¿½ï¿½ó¹º»Ø»Ø¹ï¿½ï¿½Ð±ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Æ·
     void OnSoldListBuyRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
     // <---------------------- shop about ----------------------
 
@@ -750,11 +754,11 @@ private:
 	void OnDistributeItem(char* pData, size_t nSize, int nConnIndex, int nFrame);
 
     // ---------------------- talk about ---------------------->
-    // ÁÄÌì
+    // ï¿½ï¿½ï¿½ï¿½
     void OnTalkMessage(char* pData, size_t nSize, int nConnIndex, int nFrame);
 
 
-    // ---------------------- ºÃÓÑÏµÍ³ ----------------------->
+    // ---------------------- ï¿½ï¿½ï¿½ï¿½ÏµÍ³ ----------------------->
     void OnGetFellowshipListRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
     void OnAddFellowshipRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
     void OnDelFellowshipRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
@@ -764,9 +768,9 @@ private:
     void OnSetFellowshipRemarkRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
     void OnSetFellowshipGroupRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
 
-    // <--------------------- ºÃÓÑÏµÍ³ -----------------------
+    // <--------------------- ï¿½ï¿½ï¿½ï¿½ÏµÍ³ -----------------------
 
-    // ---------------------- ÓÊ¼þÏµÍ³ ----------------------->
+    // ---------------------- ï¿½Ê¼ï¿½ÏµÍ³ ----------------------->
     void OnSendMailRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
     void OnGetMaillistRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
     void OnQueryMailContent(char* pData, size_t nSize, int nConnIndex, int nFrame);
@@ -776,7 +780,7 @@ private:
     void OnDeleteMail(char* pData, size_t nSize, int nConnIndex, int nFrame);
     void OnReturnMail(char* pData, size_t nSize, int nConnIndex, int nFrame);
     
-    // <--------------------- ÓÊ¼þÏµÍ³ -----------------------
+    // <--------------------- ï¿½Ê¼ï¿½ÏµÍ³ -----------------------
 
 	void OnApplyPKOperate(char* pData, size_t nSize, int nConnIndex, int nFrame);
 	void OnSyncUserPreferences(char* pData, size_t nSize, int nConnIndex, int nFrame);
@@ -795,11 +799,11 @@ private:
     void OnPeekOtherPlayerBook(char* pData, size_t nSize, int nConnIndex, int nFrame);
     void OnPeekOtherPlayerQuest(char* pData, size_t nSize, int nConnIndex, int nFrame);
 
-    // ------------------------- ½»Í¨Ïà¹Ø -----------------------------------
+    // ------------------------- ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ -----------------------------------
     void OnRoadTrackStartOut(char* pData, size_t nSize, int nConnIndex, int nFrame);
     void OnRoadTrackForceRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
 
-    // ------------------------- ¾­ÂöÏà¹Ø -----------------------------------
+    // ------------------------- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -----------------------------------
     void OnOpenVenation(char* pData, size_t nSize, int nConnIndex, int nFrame);
 
     void OnSendGmMessage(char* pData, size_t nSize, int nConnIndex, int nFrame);
@@ -811,7 +815,7 @@ private:
     void OnGetBattleFieldList(char* pData, size_t nSize, int nConnIndex, int nFrame);
     void OnLeaveBattleField(char* pData, size_t nSize, int nConnIndex, int nFrame);
     
-    // ------------------------- °ï»áÏà¹Ø -----------------------------------
+    // ------------------------- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -----------------------------------
     void OnApplyTongRosterRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
     void OnApplyTongInfoRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
     void OnApplyTongRepertoryPageRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
@@ -843,7 +847,7 @@ private:
     void OnApplyBattleFieldStatistics(char* pData, size_t nSize, int nConnIndex, int nFrame);
     void OnSetHeroFlag(char* pData, size_t nSize, int nConnIndex, int nFrame);
 
-    // ------------------------- ¼ÄÂôÐÐÏà¹Ø -----------------------------------
+    // ------------------------- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -----------------------------------
     void OnAuctionLookupRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
     void OnAuctionBidRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
     void OnAuctionSellRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
@@ -858,15 +862,15 @@ private:
     void OnQueryProductIdentity(char* pData, size_t nSize, int nConnIndex, int nFrame);
     void OnSetCurrentDesignationRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
 
-    // ------------------------- ¹Û²ìµãÏà¹Ø -----------------------------------
+    // ------------------------- ï¿½Û²ï¿½ï¿½ï¿½ï¿½ï¿½ -----------------------------------
     void OnCreateViewPointRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
     void OnRemoveViewPointRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
     void OnMoveViewPointRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
 
-    // ------------------------- ·´Íâ¹Ò´¦Àí -----------------------------------
+    // ------------------------- ï¿½ï¿½ï¿½ï¿½Ò´ï¿½ï¿½ï¿½ -----------------------------------
     void OnApexProtocol(char* pData, size_t nSize, int nConnIndex, int nFrame);
 
-    // ------------------------- ÔÂ¿¨¼ÄÊÛ -----------------------------------
+    // ------------------------- ï¿½Â¿ï¿½ï¿½ï¿½ï¿½ï¿½ -----------------------------------
     void OnGameCardSellRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
     void OnGameCardBuyRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
     void OnGameCardLookupRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
@@ -874,7 +878,7 @@ private:
 
     void OnApplyCharacterThreatRankList(char* pData, size_t nSize, int nConnIndex, int nFrame);
 
-    //AutoCode:-´¦ÀíÐ­Òéº¯Êý½áÊø-
+    //AutoCode:-ï¿½ï¿½ï¿½ï¿½Ð­ï¿½éº¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-
 
 private:
     void TeamBroadcast(DWORD dwTeamID, void* pvData, size_t uSize);
@@ -891,10 +895,10 @@ struct KBroadcastFunc
 	void*	        m_pvData;			
 	size_t	        m_uSize;			
 	int	            m_nMaxSyncCount;
-    DWORD           m_dwExcept;         // ¹ã²¥Ê±ÅÅ³ýÕâ¸öIDµÄÍæ¼Ò
-    KSceneObject*   m_pCenterObject;    // ÒÔ´Ë¶ÔÏóÎªÖÐÐÄÀ´¼ÆËã¾àÀë
-    int             m_nRange;           // ¾àÀëÔÚ´Ë·¶Î§ÄÚ²Å¹ã²¥(µ¥Î»µã),³ý·Ç¸ÃÖµÎª0
-    DWORD           m_dwExclusive;      // ¹ã²¥Ê±,Ö»ÊÇÐÎÊ½ÉÏµÄ¹ã²¥,ÆäÊµÖ»·¢¸øÕâ¸öIDµÄÍæ¼Ò
+    DWORD           m_dwExcept;         // ï¿½ã²¥Ê±ï¿½Å³ï¿½ï¿½ï¿½ï¿½IDï¿½ï¿½ï¿½ï¿½ï¿½
+    KSceneObject*   m_pCenterObject;    // ï¿½Ô´Ë¶ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    int             m_nRange;           // ï¿½ï¿½ï¿½ï¿½ï¿½Ú´Ë·ï¿½Î§ï¿½Ú²Å¹ã²¥(ï¿½ï¿½Î»ï¿½ï¿½),ï¿½ï¿½ï¿½Ç¸ï¿½ÖµÎª0
+    DWORD           m_dwExclusive;      // ï¿½ã²¥Ê±,Ö»ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ÏµÄ¹ã²¥,ï¿½ï¿½ÊµÖ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½IDï¿½ï¿½ï¿½ï¿½ï¿½
 };
 
 struct KBroadcastBeHitFunc
@@ -904,8 +908,8 @@ struct KBroadcastBeHitFunc
 	void*	        m_pvData;
 	size_t	        m_uSize;
 	int	            m_nMaxSyncCount;
-    KPlayer*        m_pExceptSrc;       // ¹ã²¥Ê±ÅÅ³ýÕâ¸öÍæ¼Ò¼°Æä¶ÓÓÑ
-    KPlayer*        m_pExceptDst;       // ¹ã²¥Ê±ÅÅ³ýÕâ¸öÍæ¼Ò¼°Æä¶ÓÓÑ
+    KPlayer*        m_pExceptSrc;       // ï¿½ã²¥Ê±ï¿½Å³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    KPlayer*        m_pExceptDst;       // ï¿½ã²¥Ê±ï¿½Å³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 };
 
 struct KBroadcastTalkFunc
@@ -915,9 +919,9 @@ struct KBroadcastTalkFunc
     void*	        m_pvData;
     size_t	        m_uSize;
     int	            m_nMaxSyncCount;
-    DWORD           m_dwTalkerID;       // Ëµ»°ÈË£¬¹ã²¥Ê±ÅÅ³ý½«´ËÈËÁÐÈëºÚÃûµ¥µÄÈË¡£
-    KSceneObject*   m_pCenterObject;    // ÒÔ´Ë¶ÔÏóÎªÖÐÐÄÀ´¼ÆËã¾àÀë
-    int             m_nRange;           // ¾àÀëÔÚ´Ë·¶Î§ÄÚ²Å¹ã²¥(µ¥Î»µã),³ý·Ç¸ÃÖµÎª0
+    DWORD           m_dwTalkerID;       // Ëµï¿½ï¿½ï¿½Ë£ï¿½ï¿½ã²¥Ê±ï¿½Å³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¡ï¿½
+    KSceneObject*   m_pCenterObject;    // ï¿½Ô´Ë¶ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    int             m_nRange;           // ï¿½ï¿½ï¿½ï¿½ï¿½Ú´Ë·ï¿½Î§ï¿½Ú²Å¹ã²¥(ï¿½ï¿½Î»ï¿½ï¿½),ï¿½ï¿½ï¿½Ç¸ï¿½ÖµÎª0
     DWORD           m_dwExclusive;
 };
 

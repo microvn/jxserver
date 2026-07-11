@@ -1,9 +1,9 @@
 /************************************************************************/
-/* GSºÍ¿Í»§¶ËÖ®¼äÐ­Òé¶¨Òå					                            */
+/* GSï¿½Í¿Í»ï¿½ï¿½ï¿½Ö®ï¿½ï¿½Ð­ï¿½é¶¨ï¿½ï¿½					                            */
 /* Copyright : Kingsoft 2005										    */
 /* Author	 : Zhu Jianqiu												*/
 /* Modify	 : Spe														*/
-/* Remark	 : ²»ÒªËæÒâÐÞ¸Ä·Ö¸ôÇø¿éµÄ×¢ÊÍ£¬ÔÚ×Ô¶¯Éú³É´úÂëµÄºêÖÐÐèÒªÊ¹ÓÃ */
+/* Remark	 : ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½Þ¸Ä·Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¢ï¿½Í£ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½É´ï¿½ï¿½ï¿½Äºï¿½ï¿½ï¿½ï¿½ï¿½ÒªÊ¹ï¿½ï¿½ */
 /* History	 :															*/
 /*		2005.01.27	Create												*/
 /************************************************************************/
@@ -26,49 +26,49 @@ enum GS_CLIENT_PROTOCOL
 {
     gs_client_connection_begin = 0,
 
-    s2c_message_notify,			    // Í¨ÖªÏûÏ¢
-    s2c_frame_signal,				// Ö¡Í¬²½
-    s2c_ping_signal,                // ÏÂÐÐpingÐÅºÅ
+    s2c_message_notify,			    // Í¨Öªï¿½ï¿½Ï¢
+    s2c_frame_signal,				// Ö¡Í¬ï¿½ï¿½
+    s2c_ping_signal,                // ï¿½ï¿½ï¿½ï¿½pingï¿½Åºï¿½
 
-    // µÇÂ½£¦¿ç·þ£¦ÌßºÅµÄÏà¹ØÐ­Òé
-    s2c_sync_player_base_info,	    // µÇÂ¼Ê±Í¬²½Íæ¼ÒÊý¾Ý
-    s2c_sync_quest_data,            // µÇÂ½Ê±Í¬²½ÈÎÎñ
+    // ï¿½ï¿½Â½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ßºÅµï¿½ï¿½ï¿½ï¿½Ð­ï¿½ï¿½
+    s2c_sync_player_base_info,	    // ï¿½ï¿½Â¼Ê±Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    s2c_sync_quest_data,            // ï¿½ï¿½Â½Ê±Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    s2c_account_kickout,            // ÌßºÅÍ¨Öª
-    s2c_switch_gs,			        // ¿ç·þÍ¨Öª
-    s2c_switch_map,                 // »»µØÍ¼Í¨Öª
+    s2c_account_kickout,            // ï¿½ßºï¿½Í¨Öª
+    s2c_switch_gs,			        // ï¿½ï¿½ï¿½Í¨Öª
+    s2c_switch_map,                 // ï¿½ï¿½ï¿½ï¿½Í¼Í¨Öª
 
-    s2c_sync_new_player,	        // Í¨Öª¿Í»§¶Ë: Ò»¸öÍæ¼Ò½øÈëRegionÁË
-    s2c_sync_new_npc,	            // Í¨Öª¿Í»§¶Ë: Ò»¸önpc½øÈëRegionÁË
-    s2c_sync_new_doodad,            // Í¨Öª¿Í»§¶Ë: Ò»¸öÐÂµÄDoodad½øÈëRegion
+    s2c_sync_new_player,	        // Í¨Öªï¿½Í»ï¿½ï¿½ï¿½: Ò»ï¿½ï¿½ï¿½ï¿½Ò½ï¿½ï¿½ï¿½Regionï¿½ï¿½
+    s2c_sync_new_npc,	            // Í¨Öªï¿½Í»ï¿½ï¿½ï¿½: Ò»ï¿½ï¿½npcï¿½ï¿½ï¿½ï¿½Regionï¿½ï¿½
+    s2c_sync_new_doodad,            // Í¨Öªï¿½Í»ï¿½ï¿½ï¿½: Ò»ï¿½ï¿½ï¿½Âµï¿½Doodadï¿½ï¿½ï¿½ï¿½Region
 
-    s2c_move_character,				// ÒÆ¶¯½ÇÉ«µÄÎ»ÖÃ
-    s2c_remove_character,			// ´Ó³¡¾°ÖÐÒÆ³ý½ÇÉ«
+    s2c_move_character,				// ï¿½Æ¶ï¿½ï¿½ï¿½É«ï¿½ï¿½Î»ï¿½ï¿½
+    s2c_remove_character,			// ï¿½Ó³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ³ï¿½ï¿½ï¿½É«
     s2c_remove_doodad,
 
-    s2c_sync_doodad_state,			// Doodad×´Ì¬Í¬²½
+    s2c_sync_doodad_state,			// Doodad×´Ì¬Í¬ï¿½ï¿½
 
-    s2c_player_display_data,		// Íæ¼ÒÏÔÊ¾Êý¾Ý
+    s2c_player_display_data,		// ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
 
-    s2c_sync_experience,            // ¾­ÑéÖµÍ¬²½
-    s2c_player_level_up,            // Íæ¼ÒÉý¼¶Ê±µÄ¹ã²¥ÏûÏ¢
-    s2c_common_health,              // ÆÕÍ¨ÉËº¦»òÕßÔöÒæ,±ÈÈçË¤ÉËÖ®ÀàµÄ
+    s2c_sync_experience,            // ï¿½ï¿½ï¿½ï¿½ÖµÍ¬ï¿½ï¿½
+    s2c_player_level_up,            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ä¹ã²¥ï¿½ï¿½Ï¢
+    s2c_common_health,              // ï¿½ï¿½Í¨ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½Ë¤ï¿½ï¿½Ö®ï¿½ï¿½ï¿½
 
-    // ½ÇÉ«ÒÆ¶¯Í¬²½
+    // ï¿½ï¿½É«ï¿½Æ¶ï¿½Í¬ï¿½ï¿½
     s2c_sync_move_ctrl,
-    s2c_sync_move_param,            // ²ÎÊýÍ¬²½,Ð£Õý¿Í»§¶ËÍæ¼ÒµÄÒÆ¶¯²ÎÊý,¹ã²¥
-    s2c_adjust_player_move,         // Í¬²½Ð£Õý,Ð£Õý¿Í»§¶ËÍæ¼ÒµÄÒÆ¶¯×´Ì¬Óë²ÎÊý,½ö¿Í»§¶ËÍæ¼Ò
-    s2c_sync_move_state,            // ¿Í»§¶Ë·¢³öÒÆ¶¯Ö¸ÁîµÄÊ±ºò,Èç¹û·þÎñ¶Ë·¢ÏÖ×ø±ê²»¶Ô,ÔòÍ¨Öª¿Í»§¶ËÐÞÕý
-    s2c_character_action,			// ½ÇÉ«½»»¥¶¯×÷µÄÍ¬²½Êý¾Ý°ü
-    s2c_character_death,			// ½ÇÉ«ËÀÍöµÄÍ¬²½Êý¾Ý°ü
+    s2c_sync_move_param,            // ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½,Ð£ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½Òµï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ã²¥
+    s2c_adjust_player_move,         // Í¬ï¿½ï¿½Ð£ï¿½ï¿½,Ð£ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½Òµï¿½ï¿½Æ¶ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    s2c_sync_move_state,            // ï¿½Í»ï¿½ï¿½Ë·ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½Ö¸ï¿½ï¿½ï¿½Ê±ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê²»ï¿½ï¿½,ï¿½ï¿½Í¨Öªï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    s2c_character_action,			// ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Ý°ï¿½
+    s2c_character_death,			// ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Ý°ï¿½
     s2c_over_time_action,
     
     // ------------- skill about protocol -------------------
-    s2c_sync_skill_data,			//µÇÂ¼»òÕßÑ§Ï°ÐÂ¼¼ÄÜÊ±Í¬²½¼¼ÄÜÊý¾Ý
+    s2c_sync_skill_data,			//ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½Ñ§Ï°ï¿½Â¼ï¿½ï¿½ï¿½Ê±Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     s2c_sync_skill_recipe,
     s2c_skill_prepare,
     s2c_skill_cast,
-    s2c_sync_common_skill_auto_cast_state, // ÐÂÊÖ¼¼ÄÜ×Ô¶¯ÊÍ·Å×´Ì¬
+    s2c_sync_common_skill_auto_cast_state, // ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½Í·ï¿½×´Ì¬
     s2c_reset_cooldown,
     s2c_skill_chain_effect,
     s2c_skill_effect_result,
@@ -80,7 +80,7 @@ enum GS_CLIENT_PROTOCOL
     s2c_skill_beat_back,
     s2c_sync_sheath_state,
 
-    // ------------- ÊýÖµÍ¬²½ -----------------------------
+    // ------------- ï¿½ï¿½ÖµÍ¬ï¿½ï¿½ -----------------------------
 
     s2c_sync_self_max_lmrs,
     s2c_sync_self_current_lmrs,
@@ -98,14 +98,14 @@ enum GS_CLIENT_PROTOCOL
     s2c_sync_player_team_base_info,
     s2c_invite_join_team_request,     
     s2c_apply_join_team_request,
-    s2c_team_add_member_notify,        // Í¨Öª¶ÓÎéËùÓÐ³ÉÔ±"Ä³ÈË¼ÓÈëÁËÎÒÃÇµÄ¶ÓÎé"
+    s2c_team_add_member_notify,        // Í¨Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð³ï¿½Ô±"Ä³ï¿½Ë¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÇµÄ¶ï¿½ï¿½ï¿½"
     s2c_team_del_member_notify,
     s2c_team_change_authority_notify,
     s2c_team_set_loot_mode_notify,
     s2c_team_set_formation_leader_notify,
     s2c_team_disband_notify,
     s2c_sync_team_member_online_flag,
-    s2c_team_member_signpost_notify,   // Í¨Öª¶ÓÓÑÐ¡µØÍ¼ÉÏµÄ±ê¼Ç
+    s2c_team_member_signpost_notify,   // Í¨Öªï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½Í¼ï¿½ÏµÄ±ï¿½ï¿½
     s2c_team_set_mark_respond,
     s2c_team_camp_change,
     s2c_team_level_up_raid_notify,
@@ -124,61 +124,61 @@ enum GS_CLIENT_PROTOCOL
     s2c_trading_complete,
     // <------------- Trading about ------------------
 
-    s2c_sync_money,					//Í¬²½½ðÇ®ÊýÁ¿
-    s2c_sync_contribution,          //Í¬²½¹±Ï×Öµ
-    s2c_sync_item_data,				//Í¬²½µÀ¾ßÊý¾Ý
-    s2c_sync_item_destroy,			//Í¬²½µÀ¾ßÉ¾³ý
-    s2c_exchange_item,				//½»»»×°±¸
-    s2c_update_item_amount,			//¸üÐÂÎïÆ·ÊýÁ¿»òÄÍ¾Ã
-    s2c_sync_equip_represent,       //»»×°¹ã²¥
+    s2c_sync_money,					//Í¬ï¿½ï¿½ï¿½ï¿½Ç®ï¿½ï¿½ï¿½ï¿½
+    s2c_sync_contribution,          //Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
+    s2c_sync_item_data,				//Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    s2c_sync_item_destroy,			//Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½
+    s2c_exchange_item,				//ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½
+    s2c_update_item_amount,			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¾ï¿½
+    s2c_sync_equip_represent,       //ï¿½ï¿½×°ï¿½ã²¥
 	s2c_add_item_notify,
 
-    s2c_learn_profession_notify,	//Ñ§Ï°Éú»î¼¼ÄÜ
-	s2c_learn_branch_notify,		//Ñ§Ï°Éú»î¼¼ÄÜ·ÖÖ§
-    s2c_forget_profession_notify,		//ÒÅÍü¼¼ÄÜ
+    s2c_learn_profession_notify,	//Ñ§Ï°ï¿½ï¿½ï¿½î¼¼ï¿½ï¿½
+	s2c_learn_branch_notify,		//Ñ§Ï°ï¿½ï¿½ï¿½î¼¼ï¿½Ü·ï¿½Ö§
+    s2c_forget_profession_notify,		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    s2c_add_profession_proficiency,		//Ôö¼ÓÉú»î¼¼ÄÜ¾­Ñé
-    s2c_set_max_profession_level_notify,//ÉèÖÃÉú»î¼¼ÄÜ×î´óµÈ¼¶
-    s2c_sync_profession_adjust_level,   // Í¬²½Éú»î¼¼ÄÜÒòÆäËûÒòËØ¸Ä±äµÄµ÷ÕûµÈ¼¶
-    s2c_update_player_profession,		//Í¬²½¸üÐÂÍæ¼ÒÉú»î¼¼ÄÜ
+    s2c_add_profession_proficiency,		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½î¼¼ï¿½Ü¾ï¿½ï¿½ï¿½
+    s2c_set_max_profession_level_notify,//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½î¼¼ï¿½ï¿½ï¿½ï¿½ï¿½È¼ï¿½
+    s2c_sync_profession_adjust_level,   // Í¬ï¿½ï¿½ï¿½ï¿½ï¿½î¼¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¸Ä±ï¿½Äµï¿½ï¿½ï¿½ï¿½È¼ï¿½
+    s2c_update_player_profession,		//Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½î¼¼ï¿½ï¿½
 
 	s2c_learn_recipe_notify,
 	s2c_forget_recipe_notify,
 	s2c_sync_recipe_state,
 
-    s2c_open_window,				// ´ò¿ªÒ»¸ö¿Í»§¶Ë´°¿Ú
+    s2c_open_window,				// ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Í»ï¿½ï¿½Ë´ï¿½ï¿½ï¿½
 
-    s2c_start_use_recipe,			// Í¬²½Åä·½µÄÊ¹ÓÃ
+    s2c_start_use_recipe,			// Í¬ï¿½ï¿½ï¿½ä·½ï¿½ï¿½Ê¹ï¿½ï¿½
 
-    s2c_accept_quest,				// Í¨Öª¿Í»§¶Ë½ÓÊÜÈÎÎñ
-    s2c_finish_quest,				// Í¨Öª¿Í»§¶ËÍê³ÉÈÎÎñ
-    s2c_cancel_quest,				// Í¨Öª¿Í»§¶ËÈ¡ÏûÈÎÎñ
-    s2c_clear_quest,                // Í¨Öª¿Í»§¶ËÇå³ýÈÎÎñ×´Ì¬
-    s2c_share_quest,				// ¹²ÏíÈÎÎñ
-    s2c_sync_quest_value,			// Í¬²½ÈÎÎñ±äÁ¿
+    s2c_accept_quest,				// Í¨Öªï¿½Í»ï¿½ï¿½Ë½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    s2c_finish_quest,				// Í¨Öªï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    s2c_cancel_quest,				// Í¨Öªï¿½Í»ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    s2c_clear_quest,                // Í¨Öªï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬
+    s2c_share_quest,				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    s2c_sync_quest_value,			// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	s2c_start_escort_quest,
 
-    s2c_sync_loot_list,				// Í¬²½Ê°È¡ÁÐ±í
-    s2c_roll_item_message,			// ÖÀ÷»×ÓÐÅÏ¢
-    s2c_open_loot_list,				// ´ò¿ªÊ°È¡Ãæ°å
-	s2c_sync_fight_flag,			// Í¬²½Õ½¶·¿ª¹Ø
-	s2c_sync_repute,				// Í¬²½ÉùÍû
-	s2c_sync_fightflag_list,		// Í¬²½ËùÓÐÊÆÁ¦Õ½¶·¿ª¹Ø
-	s2c_sync_repute_list,			// Í¬²½ËùÓÐµÄÊÆÁ¦ÉùÍû
+    s2c_sync_loot_list,				// Í¬ï¿½ï¿½Ê°È¡ï¿½Ð±ï¿½
+    s2c_roll_item_message,			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
+    s2c_open_loot_list,				// ï¿½ï¿½Ê°È¡ï¿½ï¿½ï¿½
+	s2c_sync_fight_flag,			// Í¬ï¿½ï¿½Õ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	s2c_sync_repute,				// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	s2c_sync_fightflag_list,		// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	s2c_sync_repute_list,			// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	s2c_show_reputation,			
 	s2c_sync_repute_update,
 	s2c_character_open,				
-    s2c_distribute_item_message,    // ·ÖÅäÕß·ÖÅäÎïÆ·
-	s2c_finish_loot,				// ½áÊøÊ°È¡
+    s2c_distribute_item_message,    // ï¿½ï¿½ï¿½ï¿½ï¿½ß·ï¿½ï¿½ï¿½ï¿½ï¿½Æ·
+	s2c_finish_loot,				// ï¿½ï¿½ï¿½ï¿½Ê°È¡
 	s2c_begin_roll_item,			// start roll
-	s2c_custom_OTAction,			// Í¬²½¶¨ÖÆµÄÓÃ»§ÏûÏ¢
+	s2c_custom_OTAction,			// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ï¢
 
-	s2c_modify_threat,				// Ìí¼Ó³ðºÞ
-	s2c_modify_threaten,			// ÐÞ¸Ä±»³ðºÞ
-	s2c_clear_threat,				// Çå³ý³ðºÞ
-	s2c_clear_threaten,				// Çå³ý±»³ðºÞ
+	s2c_modify_threat,				// ï¿½ï¿½ï¿½Ó³ï¿½ï¿½
+	s2c_modify_threaten,			// ï¿½Þ¸Ä±ï¿½ï¿½ï¿½ï¿½
+	s2c_clear_threat,				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	s2c_clear_threaten,				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     s2c_talk_message,               //
-	s2c_sync_self_current_st,	    // Í¬²½¾«Á¦
+	s2c_sync_self_current_st,	    // Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     
 	s2c_doodad_loot_over,			//
 
@@ -206,12 +206,12 @@ enum GS_CLIENT_PROTOCOL
 	s2c_sync_npc_dialog_flag,	
 	s2c_sync_role_data_over,
 	s2c_sync_enable_bank_package,
-	s2c_update_map_mark,			//µØÍ¼±ê¼Ç
+	s2c_update_map_mark,			//ï¿½ï¿½Í¼ï¿½ï¿½ï¿½
 	s2c_sync_mid_map_mark,
 	s2c_play_sound,
 	s2c_play_mini_game,
 
-    s2c_sync_horse_flag,            // Í¬²½ÆïÂí±êÖ¾
+    s2c_sync_horse_flag,            // Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾
     s2c_road_track_force_respond,
     s2c_sync_route_node_open_list,
     s2c_sync_player_state_info,
@@ -243,7 +243,7 @@ enum GS_CLIENT_PROTOCOL
     s2c_sync_camp_info,
     s2c_sync_current_prestige,
 
-    // -------------- °ï»áÏà¹Ø ------------------>
+    // -------------- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ------------------>
     s2c_sync_tong_member_info,
     s2c_delete_tong_member_notify,
     s2c_apply_tong_info_respond,
@@ -260,7 +260,7 @@ enum GS_CLIENT_PROTOCOL
     s2c_apply_open_tong_repertory_respond,
     s2c_sync_tong_history_respond,
 
-    // -------------- ¼ÄÂôÐÐÏà¹Ø ------------------>
+    // -------------- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ------------------>
     s2c_auction_lookup_respond,
     s2c_auction_bid_respond,
     s2c_auction_sell_respond,
@@ -323,7 +323,10 @@ enum GS_CLIENT_PROTOCOL
 
     s2c_sync_camp_flag,
 
-    s2c_character_threat_ranklist_respond, 
+    s2c_character_threat_ranklist_respond,
+
+    s2c_sync_exterior_box_data,             // exterior (wai-guan) box contents -> owner
+    s2c_sync_apply_exterior_flag,           // exterior apply-flag -> owner
 
 	gs_client_connection_end
 };
@@ -334,26 +337,26 @@ enum CLIENT_GS_PROTOCOL
 {
     client_gs_connection_begin = 0,
 
-    c2s_handshake_request,			// µÇÂ¼Ê±ÇëÇóÍæ¼ÒÊý¾Ý
-    c2s_apply_enter_scene,			// ¿Í»§¶Ë¼ÓÔØ×ÊÔ´Íê±Ï,ÇëÇó½øÈë³¡¾°
-    c2s_player_logout,				// Íæ¼ÒµÇ³ö
-    c2s_ping_signal,                // ÉÏÐÐpingÐÅºÅ
+    c2s_handshake_request,			// ï¿½ï¿½Â¼Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    c2s_apply_enter_scene,			// ï¿½Í»ï¿½ï¿½Ë¼ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë³¡ï¿½ï¿½
+    c2s_player_logout,				// ï¿½ï¿½ÒµÇ³ï¿½
+    c2s_ping_signal,                // ï¿½ï¿½ï¿½ï¿½pingï¿½Åºï¿½
 
     c2s_move_ctrl,
     c2s_apply_move_adjust,
-    c2s_character_stand,            // ½ÇÉ«Õ¾Á¢µÄÉÏ´«Ö¸Áî
-    c2s_character_jump,				// ½ÇÉ«ÌøÔ¾µÄÉÏ´«Ö¸Áî
-    c2s_character_sit,				// ½ÇÉ«×øÏÂµÄÉÏ´«Ö¸Áî
-    c2s_sync_direction,             // ³¯Ïò/¸©ÑöÍ¬²½
+    c2s_character_stand,            // ï¿½ï¿½É«Õ¾ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½Ö¸ï¿½ï¿½
+    c2s_character_jump,				// ï¿½ï¿½É«ï¿½ï¿½Ô¾ï¿½ï¿½ï¿½Ï´ï¿½Ö¸ï¿½ï¿½
+    c2s_character_sit,				// ï¿½ï¿½É«ï¿½ï¿½ï¿½Âµï¿½ï¿½Ï´ï¿½Ö¸ï¿½ï¿½
+    c2s_sync_direction,             // ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½
 
-    c2s_character_action,			// ½ÇÉ«½»»¥¶¯×÷µÄÉÏ´«Ö¸Áî
+    c2s_character_action,			// ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½Ö¸ï¿½ï¿½
 
-    c2s_apply_player_display_data,	// Íæ¼ÒÏÔÊ¾Êý¾Ý
+    c2s_apply_player_display_data,	// ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
 
-    c2s_stop_current_action,        // ÖÐ¶ÏÍæ¼Òµ±Ç°ÕýÔÚ½øÐÐµÄÐÐÎª
+    c2s_stop_current_action,        // ï¿½Ð¶ï¿½ï¿½ï¿½Òµï¿½Ç°ï¿½ï¿½ï¿½Ú½ï¿½ï¿½Ðµï¿½ï¿½ï¿½Îª
 
     // ------------ skill about protocol ------------->
-    c2s_character_skill,			//½ÇÉ«¹¥»÷µÄÉÏ´«Ö¸Áî
+    c2s_character_skill,			//ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½Ö¸ï¿½ï¿½
     c2s_mount_kungfu,
     c2s_cancel_buff,
     c2s_set_sheath_state,
@@ -370,20 +373,20 @@ enum CLIENT_GS_PROTOCOL
     c2s_team_set_distribute_mode_request,
 	c2s_team_set_roll_quality_request,
     c2s_team_set_formation_leader_request,
-    c2s_team_member_notify_signpost_request,   // Ïò¶ÓÓÑ·¢ËÍÐ¡µØÍ¼ÉÏµÄ±ê¼Ç
+    c2s_team_member_notify_signpost_request,   // ï¿½ï¿½ï¿½ï¿½Ñ·ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½Í¼ï¿½ÏµÄ±ï¿½ï¿½
     c2s_team_set_mark_request,
     c2s_team_level_up_raid_request,
     c2s_team_change_member_group_request,
 
-    //ÈÎÎñÏà¹ØÐ­Òé
-    c2s_accept_quest,				//½ÓÊÜÈÎÎñ
-    c2s_cancel_quest,				//È¡ÏûÈÎÎñ
-    c2s_finish_quest,				//Íê³ÉÈÎÎñ
-    c2s_share_quest,				//¹²ÏíÈÎÎñ
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð­ï¿½ï¿½
+    c2s_accept_quest,				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    c2s_cancel_quest,				//È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    c2s_finish_quest,				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    c2s_share_quest,				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-	c2s_accept_escort_quest,		//½ÓÊÜ»¤ËÍÈÎÎñ
+	c2s_accept_escort_quest,		//ï¿½ï¿½ï¿½Ü»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    //GMÖ¸ÁîÉÏ´«Ð­Òé
+    //GMÖ¸ï¿½ï¿½ï¿½Ï´ï¿½Ð­ï¿½ï¿½
     c2s_gm_command,
 
     // ------------- shop about protocol ------------->
@@ -404,25 +407,25 @@ enum CLIENT_GS_PROTOCOL
 
     // ----------------------------------------------
     c2s_request_target,
-    c2s_apply_exchange_item,		//ÉêÇë½»»»×°±¸
-    c2s_apply_use_item,				//ÉêÇëÊ¹ÓÃµÀ¾ß
+    c2s_apply_exchange_item,		//ï¿½ï¿½ï¿½ë½»ï¿½ï¿½×°ï¿½ï¿½
+    c2s_apply_use_item,				//ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½Ãµï¿½ï¿½ï¿½
 
-    c2s_window_select,				//Ñ¡Ôñ´°¿ÚÑ¡Ïî
+    c2s_window_select,				//Ñ¡ï¿½ñ´°¿ï¿½Ñ¡ï¿½ï¿½
 
-    c2s_cast_profession_skill,			//Åä·½Ê¹ÓÃÐ­Òé
+    c2s_cast_profession_skill,			//ï¿½ä·½Ê¹ï¿½ï¿½Ð­ï¿½ï¿½
 
     c2s_loot_item,			
     c2s_roll_item,			
 
-    c2s_apply_loot_list,			//ÉêÇëÊ°È¡ÁÐ±í
-    c2s_character_open,				//´ò¿ª
+    c2s_apply_loot_list,			//ï¿½ï¿½ï¿½ï¿½Ê°È¡ï¿½Ð±ï¿½
+    c2s_character_open,				//ï¿½ï¿½
 
-	c2s_apply_fight_flag,			//¸Ä±äÕ½¶·¿ª¹Ø
+	c2s_apply_fight_flag,			//ï¿½Ä±ï¿½Õ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-	c2s_finish_loot,				//½áÊøÊ°È¡
-	c2s_loot_money,					//Ê°È¡½ðÇ®
-	c2s_change_pk_mode,				//¸Ä±äPK×´Ì¬
-	c2s_distribute_item,		    //·ÖÅäÕß·ÖÅäÎïÆ·
+	c2s_finish_loot,				//ï¿½ï¿½ï¿½ï¿½Ê°È¡
+	c2s_loot_money,					//Ê°È¡ï¿½ï¿½Ç®
+	c2s_change_pk_mode,				//ï¿½Ä±ï¿½PK×´Ì¬
+	c2s_distribute_item,		    //ï¿½ï¿½ï¿½ï¿½ï¿½ß·ï¿½ï¿½ï¿½ï¿½ï¿½Æ·
 
     c2s_talk_message,
 
@@ -446,7 +449,7 @@ enum CLIENT_GS_PROTOCOL
 
 	c2s_apply_pk_operate,
 
-	c2s_sync_user_preferences,		//Í¬²½Íæ¼Ò½ÇÉ«½çÃæÅäÖÃÐÅÏ¢µÄÐÞ¸Ä
+	c2s_sync_user_preferences,		//Í¬ï¿½ï¿½ï¿½ï¿½Ò½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½Þ¸ï¿½
 
 	c2s_set_bank_opened_flag,
 	c2s_enable_bank_package,
@@ -542,12 +545,12 @@ enum CLIENT_GS_PROTOCOL
 };
 // Client 2 GS Protocol End
 
-//Ð­Òé½á¹¹¶¨Òå
+//Ð­ï¿½ï¿½á¹¹ï¿½ï¿½ï¿½ï¿½
 #pragma	pack(1)
 
 //GS 2 Client Struct Begin
 
-// ºÃ¸Ð¶ÈÐÅÏ¢½á¹¹£¬Í¨¹ýS2C_MESSAGE_NOTIFYÏÂÐÐÖÁ¿Í»§¶Ë
+// ï¿½Ã¸Ð¶ï¿½ï¿½ï¿½Ï¢ï¿½á¹¹ï¿½ï¿½Í¨ï¿½ï¿½S2C_MESSAGE_NOTIFYï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½
 struct KMESSAGE_ATTRACTION
 {
     char  szAlliedPlayerName[_NAME_LEN];
@@ -561,7 +564,7 @@ struct KSOLD_ITEM_INFO
     int   nPriceAfterTax;
 };
 
-// ÏûÏ¢Í¨Öª
+// ï¿½ï¿½Ï¢Í¨Öª
 struct S2C_MESSAGE_NOTIFY : UNDEFINED_SIZE_DOWNWARDS_HEADER
 {
     BYTE    byType;
@@ -569,7 +572,7 @@ struct S2C_MESSAGE_NOTIFY : UNDEFINED_SIZE_DOWNWARDS_HEADER
     BYTE    byData[0];
 };
 
-// µÇÂ¼Ê±Í¬²½Íæ¼Ò»ù±¾ÐÅÏ¢
+// ï¿½ï¿½Â¼Ê±Í¬ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 struct S2C_SYNC_PLAYER_BASE_INFO : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD	dwPlayerID;
@@ -620,7 +623,7 @@ struct S2C_SWITCH_MAP : DOWNWARDS_PROTOCOL_HEADER
     int     nBattleFieldSide;
 };
 
-// Í¬²½ÐÂ½øÈëµÄÍæ¼Òµ½¿Í»§¶Ë
+// Í¬ï¿½ï¿½ï¿½Â½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òµï¿½ï¿½Í»ï¿½ï¿½ï¿½
 struct S2C_SYNC_NEW_PLAYER : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD	    dwID;
@@ -634,17 +637,17 @@ struct S2C_SYNC_NEW_PLAYER : DOWNWARDS_PROTOCOL_HEADER
     uint64_t    uPosX               : MAX_X_COORDINATE_BIT;	        // 17 bits
     uint64_t    uPosY               : MAX_Y_COORDINATE_BIT;         // 17 bits
     uint64_t    uPosZ               : MAX_Z_POINT_BIT_NUM;          // 22 bits
-    uint64_t    uFightState         : 1;                            // Õ½¶·×´Ì¬
-    uint64_t    uSheathFlag         : 1;                            // °Î½£×´Ì¬
+    uint64_t    uFightState         : 1;                            // Õ½ï¿½ï¿½×´Ì¬
+    uint64_t    uSheathFlag         : 1;                            // ï¿½Î½ï¿½×´Ì¬
     uint64_t    uPK                 : 1;
     // <-- 64 bits ---
 
-    uint64_t    uConvergenceSpeed   : MAX_VELOCITY_XY_BIT_NUM;      // ÎÈÌ¬ËÙ¶È 7 bits
+    uint64_t    uConvergenceSpeed   : MAX_VELOCITY_XY_BIT_NUM;      // ï¿½ï¿½Ì¬ï¿½Ù¶ï¿½ 7 bits
     uint64_t    uDirectionXY        : DIRECTION_BIT_NUM;            // 8 bits
     int64_t     nVelocityZ          : MAX_VELOCITY_Z_BIT_NUM;       // 12 bits
-    uint64_t    uDestX              : MAX_X_COORDINATE_BIT;	        // 17 bits, AutoMoveÄ£Ê½ÏÂ,±íÊ¾TrackID
-    uint64_t    uDestY              : MAX_Y_COORDINATE_BIT;	        // 17 bits, AutoMoveÄ£Ê½ÏÂ,±íÊ¾Frame
-    uint64_t    uOnHorse            : 1;                            // ÊÇ·ñÔÚÂíÉÏ 
+    uint64_t    uDestX              : MAX_X_COORDINATE_BIT;	        // 17 bits, AutoMoveÄ£Ê½ï¿½ï¿½,ï¿½ï¿½Ê¾TrackID
+    uint64_t    uDestY              : MAX_Y_COORDINATE_BIT;	        // 17 bits, AutoMoveÄ£Ê½ï¿½ï¿½,ï¿½ï¿½Ê¾Frame
+    uint64_t    uOnHorse            : 1;                            // ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
     uint64_t    uTryPathState       : 1;
     uint64_t    uTryPathSide        : 1;
     // <-- 64 bits ---
@@ -665,7 +668,7 @@ struct S2C_SYNC_NEW_PLAYER : DOWNWARDS_PROTOCOL_HEADER
     uint8_t     uCampFlag           : 1;  
 };
 
-// Í¬²½ÐÂ½øÈëµÄNPCµ½¿Í»§¶Ë
+// Í¬ï¿½ï¿½ï¿½Â½ï¿½ï¿½ï¿½ï¿½NPCï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½
 struct S2C_SYNC_NEW_NPC : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD	    dwID;
@@ -682,13 +685,13 @@ struct S2C_SYNC_NEW_NPC : DOWNWARDS_PROTOCOL_HEADER
     uint64_t    uPosX               : MAX_X_COORDINATE_BIT;	        // 17 bits
     uint64_t    uPosY               : MAX_Y_COORDINATE_BIT;         // 17 bits
     uint64_t    uPosZ               : MAX_Z_POINT_BIT_NUM;          // 22 bits
-    uint64_t    uFightState         : 1;                            // Õ½¶·×´Ì¬
-    uint64_t    uSheathFlag         : 1;                            // °Î½£×´Ì¬
+    uint64_t    uFightState         : 1;                            // Õ½ï¿½ï¿½×´Ì¬
+    uint64_t    uSheathFlag         : 1;                            // ï¿½Î½ï¿½×´Ì¬
     uint64_t    uTryPathState       : 1;
     // <-- 64 bits ---
 
     uint64_t    uVelocityXY         : MAX_ZOOM_VELOCITY_BIT_NUM;    // 11 bits
-    uint64_t    uConvergenceSpeed   : MAX_VELOCITY_XY_BIT_NUM;      // ÎÈÌ¬ËÙ¶È 7 bits
+    uint64_t    uConvergenceSpeed   : MAX_VELOCITY_XY_BIT_NUM;      // ï¿½ï¿½Ì¬ï¿½Ù¶ï¿½ 7 bits
     int64_t     nVelocityZ          : MAX_VELOCITY_Z_BIT_NUM;       // 12 bits
     uint64_t    uDestX              : MAX_X_COORDINATE_BIT;	        // 17 bits
     uint64_t    uDestY              : MAX_Y_COORDINATE_BIT;	        // 17 bits
@@ -702,7 +705,7 @@ struct S2C_SYNC_NEW_NPC : DOWNWARDS_PROTOCOL_HEADER
     // <-- 16 bits ---
 };
 
-// Í¬²½ÐÂ½øÈëµÄDoodadµ½¿Í»§¶Ë
+// Í¬ï¿½ï¿½ï¿½Â½ï¿½ï¿½ï¿½ï¿½Doodadï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½
 struct S2C_SYNC_NEW_DOODAD : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD		dwID;
@@ -719,25 +722,25 @@ struct S2C_SYNC_NEW_DOODAD : DOWNWARDS_PROTOCOL_HEADER
     uint64_t    uPosX               : MAX_X_COORDINATE_BIT;	        // 17 bits
     uint64_t    uPosY               : MAX_Y_COORDINATE_BIT;         // 17 bits
     uint64_t    uPosZ               : MAX_Z_POINT_BIT_NUM;          // 22 bits
-    uint64_t    uReserve            : 8;                            // ¶ÔÆë
+    uint64_t    uReserve            : 8;                            // ï¿½ï¿½ï¿½ï¿½
     // <-- 64 bits ---
 };
 
 
-// ´Ó³¡¾°ÖÐÒÆ³ý½ÇÉ«
+// ï¿½Ó³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ³ï¿½ï¿½ï¿½É«
 struct S2C_REMOVE_CHARACTER : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD   dwCharacterID;
 	BOOL    bKilled;
 };
 
-// ´Ó³¡¾°ÖÐÒÆ³ýDoodad
+// ï¿½Ó³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ³ï¿½Doodad
 struct S2C_REMOVE_DOODAD : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD   dwID;
 };
 
-// Doodad×´Ì¬Í¬²½
+// Doodad×´Ì¬Í¬ï¿½ï¿½
 struct S2C_SYNC_DOODAD_STATE : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD   dwID;
@@ -745,7 +748,7 @@ struct S2C_SYNC_DOODAD_STATE : DOWNWARDS_PROTOCOL_HEADER
     bool    bObstacleState;
 };
 
-// ¿ØÖÆÍ¬²½
+// ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½
 struct S2C_SYNC_MOVE_CTRL : DOWNWARDS_PROTOCOL_HEADER 
 {
     DWORD       dwID;
@@ -776,7 +779,7 @@ struct S2C_SYNC_MOVE_CTRL : DOWNWARDS_PROTOCOL_HEADER
     // <-- 58 bits --
 };
 
-// ²ÎÊýÍ¬²½
+// ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½
 struct S2C_SYNC_MOVE_PARAM : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD       dwID;
@@ -796,17 +799,17 @@ struct S2C_SYNC_MOVE_PARAM : DOWNWARDS_PROTOCOL_HEADER
     uint64_t    uVelocityXY         : MAX_ZOOM_VELOCITY_BIT_NUM;    // 11  bits
     uint64_t    uRunSpeed           : MAX_VELOCITY_XY_BIT_NUM;      // 7 bits
     int64_t     nVelocityZ          : MAX_VELOCITY_Z_BIT_NUM;       // 12 bits
-    uint64_t    uDestX              : MAX_X_COORDINATE_BIT;	        // 17 bits, AutoMoveÄ£Ê½ÏÂ,±íÊ¾TrackID
-    uint64_t    uDestY              : MAX_Y_COORDINATE_BIT;	        // 17 bits, AutoMoveÄ£Ê½ÏÂ,±íÊ¾Frame
+    uint64_t    uDestX              : MAX_X_COORDINATE_BIT;	        // 17 bits, AutoMoveÄ£Ê½ï¿½ï¿½,ï¿½ï¿½Ê¾TrackID
+    uint64_t    uDestY              : MAX_Y_COORDINATE_BIT;	        // 17 bits, AutoMoveÄ£Ê½ï¿½ï¿½,ï¿½ï¿½Ê¾Frame
     // <-- 64 bits ---
 
-    uint32_t    uConvergenceSpeed   : MAX_VELOCITY_XY_BIT_NUM;      // ÎÈÌ¬ËÙ¶È 7 bits
+    uint32_t    uConvergenceSpeed   : MAX_VELOCITY_XY_BIT_NUM;      // ï¿½ï¿½Ì¬ï¿½Ù¶ï¿½ 7 bits
     uint32_t    uDirectionXY        : DIRECTION_BIT_NUM;            // 8 bits
     uint32_t    uCurrentGravity     : MAX_GRAVITY_BIT_NUM;          // 5 bits
     // <-- 21 bits ---
 };
 
-// Í¬²½ÐÞÕý
+// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct S2C_ADJUST_PLAYER_MOVE : DOWNWARDS_PROTOCOL_HEADER
 {
     int         nMoveCount;
@@ -828,17 +831,17 @@ struct S2C_ADJUST_PLAYER_MOVE : DOWNWARDS_PROTOCOL_HEADER
     uint64_t    uVelocityXY         : MAX_ZOOM_VELOCITY_BIT_NUM;    // 11  bits
     uint64_t    uRunSpeed           : MAX_VELOCITY_XY_BIT_NUM;      // 7 bits
     int64_t     nVelocityZ          : MAX_VELOCITY_Z_BIT_NUM;       // 12 bits
-    uint64_t    uDestX              : MAX_X_COORDINATE_BIT;	        // 17 bits, AutoMoveÄ£Ê½ÏÂ,±íÊ¾TrackID
-    uint64_t    uDestY              : MAX_Y_COORDINATE_BIT;	        // 17 bits, AutoMoveÄ£Ê½ÏÂ,±íÊ¾Frame
+    uint64_t    uDestX              : MAX_X_COORDINATE_BIT;	        // 17 bits, AutoMoveÄ£Ê½ï¿½ï¿½,ï¿½ï¿½Ê¾TrackID
+    uint64_t    uDestY              : MAX_Y_COORDINATE_BIT;	        // 17 bits, AutoMoveÄ£Ê½ï¿½ï¿½,ï¿½ï¿½Ê¾Frame
     // <-- 64 bits ---
 
-    uint32_t    uConvergenceSpeed   : MAX_VELOCITY_XY_BIT_NUM;      // ÎÈÌ¬ËÙ¶È 7 bits
+    uint32_t    uConvergenceSpeed   : MAX_VELOCITY_XY_BIT_NUM;      // ï¿½ï¿½Ì¬ï¿½Ù¶ï¿½ 7 bits
     uint32_t    uDirectionXY        : DIRECTION_BIT_NUM;            // 8 bits
     uint32_t    uCurrentGravity     : MAX_GRAVITY_BIT_NUM;          // 5 bits
     // <-- 21 bits ---
 };
 
-// ×´Ì¬Í¬²½
+// ×´Ì¬Í¬ï¿½ï¿½
 struct S2C_SYNC_MOVE_STATE : DOWNWARDS_PROTOCOL_HEADER 
 {
     DWORD       dwID;
@@ -868,7 +871,7 @@ struct S2C_SYNC_MOVE_STATE : DOWNWARDS_PROTOCOL_HEADER
     // <-- 11 bits --
 };
 
-// ½ÇÉ«ËÀÍöµÄÍ¬²½Êý¾Ý°ü
+// ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Ý°ï¿½
 struct S2C_CHARACTER_DEATH : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD	    dwCharacterID;
@@ -880,7 +883,7 @@ struct S2C_CHARACTER_DEATH : DOWNWARDS_PROTOCOL_HEADER
     // <-- 64 bit
 };
 
-// ÒÆ¶¯½ÇÉ«Î»ÖÃ
+// ï¿½Æ¶ï¿½ï¿½ï¿½É«Î»ï¿½ï¿½
 struct S2C_MOVE_CHARACTER : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD	    dwID;
@@ -896,7 +899,7 @@ struct S2C_MOVE_CHARACTER : DOWNWARDS_PROTOCOL_HEADER
     BYTE        bIgnoreBlock;
 };
 
-// ½ÇÉ«½»»¥¶¯×÷µÄÍ¬²½Êý¾Ý°ü
+// ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Ý°ï¿½
 struct S2C_CHARACTER_ACTION : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD   dwSrcCharacterID;
@@ -913,7 +916,7 @@ struct S2C_OVER_TIME_ACTION : DOWNWARDS_PROTOCOL_HEADER
     WORD    wDurationFrame;
 };
 
-// Íæ¼ÒÏÔÊ¾Êý¾Ý
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
 struct S2C_PLAYER_DISPLAY_DATA : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD	    dwPlayerID;
@@ -973,7 +976,7 @@ struct S2C_PLAYER_DISPLAY_DATA : DOWNWARDS_PROTOCOL_HEADER
     // <--- 32 bits--
 };
 
-// »ñÈ¡¾­ÑéÖµ
+// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Öµ
 struct S2C_SYNC_EXPERIENCE : DOWNWARDS_PROTOCOL_HEADER
 {
     int nCurrentExp;
@@ -1004,7 +1007,7 @@ struct S2C_PING_SIGNAL : DOWNWARDS_PROTOCOL_HEADER
 
 // ------------------ skill about protocol ----------------->
 
-//Í¬²½¼¼ÄÜÊý¾Ý,bySkillLevelÎª0ÒâÎ¶×ÅÕâ¸ö¼¼ÄÜÃ»ÓÐÁË(Forget)
+//Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,bySkillLevelÎª0ï¿½ï¿½Î¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½(Forget)
 struct S2C_SYNC_SKILL_DATA : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD	dwSkillID;
@@ -1029,8 +1032,8 @@ struct S2C_SKILL_PREPARE : DOWNWARDS_PROTOCOL_HEADER
     DWORD	dwSkillID;
     BYTE	bySkillLevel;
     int     nPrepareFrame;
-    BYTE    byTargetType;		    //TARGET_TYPEÀàÐÍ
-    int	    nParam1;			    //Èç¹ûTargetType²»ÊÇ×ø±ê£¬ÔòÕâÀï±íÊ¾½ÇÉ«ID
+    BYTE    byTargetType;		    //TARGET_TYPEï¿½ï¿½ï¿½ï¿½
+    int	    nParam1;			    //ï¿½ï¿½ï¿½TargetTypeï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½É«ID
     int	    nParam2;
     int	    nParam3;
 };
@@ -1040,11 +1043,11 @@ struct S2C_SKILL_CAST : DOWNWARDS_PROTOCOL_HEADER
     DWORD   dwCharacterID;
     DWORD   dwSkillID;
     BYTE    bySkillLevel;
-    DWORD   dwBulletID;           //¸Ã¼¼ÄÜËù²úÉúµÄ×Óµ¯ID    
+    DWORD   dwBulletID;           //ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ID    
     bool    bSubCast;
     BYTE    byFaceDirection;
-    BYTE    byTargetType;		    //TARGET_TYPEÀàÐÍ
-    int     nParam1;			    //Èç¹ûTargetType²»ÊÇ×ø±ê£¬ÔòÕâÀï±íÊ¾½ÇÉ«ID
+    BYTE    byTargetType;		    //TARGET_TYPEï¿½ï¿½ï¿½ï¿½
+    int     nParam1;			    //ï¿½ï¿½ï¿½TargetTypeï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½É«ID
     int     nParam2;
     int	    nParam3;
 };
@@ -1071,20 +1074,20 @@ struct S2C_SKILL_CHAIN_EFFECT : UNDEFINED_SIZE_DOWNWARDS_HEADER
     DWORD   dwCharacterID[0];
 };
 
-// ¼¼ÄÜ´ò¶Ï,ÖÕÖ¹,°üÀ¨Ò÷³ªµÄÖÕÖ¹,Í¨µÀ¼¼µÄÖÕÖ¹
+// ï¿½ï¿½ï¿½Ü´ï¿½ï¿½,ï¿½ï¿½Ö¹,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¹,Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¹
 struct S2C_SKILL_BREAK :  DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD dwCharacterID;
 };
 
-// Ò÷³ª´òÍË
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct  S2C_PREPARE_BACK : DOWNWARDS_PROTOCOL_HEADER
 {
 };
 
 struct S2C_SKILL_EFFECT_RESULT : UNDEFINED_SIZE_DOWNWARDS_HEADER
 {
-    DWORD dwSkillSrc;   // ¼¼ÄÜ·¢³öÕßµÄID
+    DWORD dwSkillSrc;   // ï¿½ï¿½ï¿½Ü·ï¿½ï¿½ï¿½ï¿½ßµï¿½ID
     DWORD dwSkillDst;
     DWORD dwBulletID;
 
@@ -1113,7 +1116,7 @@ struct S2C_SKILL_EFFECT_RESULT : UNDEFINED_SIZE_DOWNWARDS_HEADER
     BYTE  bParry                : 1;
     BYTE  bInsight              : 1;
 
-    BYTE  byReserve            : 1;    // ¶ÔÆë
+    BYTE  byReserve            : 1;    // ï¿½ï¿½ï¿½ï¿½
     // <--- 8 bits--
 
     DWORD dwBuffID;
@@ -1165,7 +1168,7 @@ struct S2C_SYNC_BEHIT_REPRESENT: UNDEFINED_SIZE_DOWNWARDS_HEADER
     int bParry              : 1;
     int bInsight            : 1;
 
-    int nReserve            : 11;   // ¶ÔÆë
+    int nReserve            : 11;   // ï¿½ï¿½ï¿½ï¿½
     // <-- 32 bits ---
 };
 
@@ -1212,7 +1215,7 @@ struct S2C_SYNC_SHEATH_STATE :  DOWNWARDS_PROTOCOL_HEADER
     bool  bSheathFlag;
 };
 
-// ------------------  ÈËÎïÊýÖµÍ¬²½ -----------------------------
+// ------------------  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÖµÍ¬ï¿½ï¿½ -----------------------------
 
 struct S2C_SYNC_SELF_MAX_LMRS : DOWNWARDS_PROTOCOL_HEADER
 {
@@ -1234,7 +1237,7 @@ struct S2C_SYNC_SELF_WEAK_INFO : DOWNWARDS_PROTOCOL_HEADER
     BYTE byMiddle   : 2;
     BYTE byLower    : 2;
 
-    BYTE byReserve  : 2;    //¶ÔÆë
+    BYTE byReserve  : 2;    //ï¿½ï¿½ï¿½ï¿½
     // <--- 8 bits--
 };
 
@@ -1261,7 +1264,7 @@ struct S2C_SYNC_SELECT_CHARACTER_WEAK_INFO : DOWNWARDS_PROTOCOL_HEADER
     BYTE    byMiddle    : 2;
     BYTE    byLower     : 2;
 
-    BYTE    byReserve   : 2;    //¶ÔÆë
+    BYTE    byReserve   : 2;    //ï¿½ï¿½ï¿½ï¿½
     // <--- 8 bits--
 };
 
@@ -1322,7 +1325,7 @@ struct S2C_BROADCAST_PLAYER_SCHOOL_ID : DOWNWARDS_PROTOCOL_HEADER
 
 // ------------------ party about protocol ------------------>
 
-// Íæ¼ÒµÇÂ½·þÎñÆ÷Ê±Í¬²½¶ÓÎé»ù±¾ÐÅÏ¢
+// ï¿½ï¿½Òµï¿½Â½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 struct S2C_SYNC_PLAYER_TEAM_BASE_INFO : UNDEFINED_SIZE_DOWNWARDS_HEADER
 {
     BOOL  bSystem;
@@ -1362,19 +1365,19 @@ struct S2C_SYNC_PLAYER_TEAM_BASE_INFO : UNDEFINED_SIZE_DOWNWARDS_HEADER
     } MemberInfo[0];
 };
 
-// xxxÑûÇëÄã×é¶Ó
+// xxxï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct S2C_INVITE_JOIN_TEAM_REQUEST : DOWNWARDS_PROTOCOL_HEADER
 {
-    char  szInviteSrc[_NAME_LEN]; // ·¢³ö×é¶ÓÇëÇóµÄÍæ¼Ò
+    char  szInviteSrc[_NAME_LEN]; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 };
 
-// xxxÉêÇë¼ÓÈëxxxµÄ¶ÓÎé
+// xxxï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xxxï¿½Ä¶ï¿½ï¿½ï¿½
 struct S2C_APPLY_JOIN_TEAM_REQUEST : DOWNWARDS_PROTOCOL_HEADER
 {
-    char  szApplySrc[_NAME_LEN]; // ·¢³öÈë¶ÓÉêÇëµÄÍæ¼Ò
+    char  szApplySrc[_NAME_LEN]; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 };
 
-// Èç¹ûAÍæ¼Ò¸Õ¸Õ¼ÓÈëÄ³¶ÓÎé,Í¨Öª¶ÓÎéÀïÃæµÄËùÓÐ³ÉÔ±"AµÄ¼ÓÈëÁË¶ÓÎé"
+// ï¿½ï¿½ï¿½Aï¿½ï¿½Ò¸Õ¸Õ¼ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½,Í¨Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð³ï¿½Ô±"Aï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Ë¶ï¿½ï¿½ï¿½"
 struct S2C_TEAM_ADD_MEMBER_NOTIFY : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD           dwTeamID;
@@ -1383,7 +1386,7 @@ struct S2C_TEAM_ADD_MEMBER_NOTIFY : DOWNWARDS_PROTOCOL_HEADER
     char            szMemberName[_NAME_LEN];
 };
 
-// Í¨Öª¿Í»§¶ËxxxÀë¿ªxxxµÄ¶ÓÎé
+// Í¨Öªï¿½Í»ï¿½ï¿½ï¿½xxxï¿½ë¿ªxxxï¿½Ä¶ï¿½ï¿½ï¿½
 struct S2C_TEAM_DEL_MEMBER_NOTIFY : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD dwTeamID;
@@ -1468,7 +1471,7 @@ struct S2C_OPEN_SHOP_NOTIFY : DOWNWARDS_PROTOCOL_HEADER
     DWORD   dwShopTemplateID;
 };
 
-// Í¬²½ÉÌµê¸ñ×ÓÐÅÏ¢
+// Í¬ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 struct S2C_UPDATE_SHOP_ITEM : UNDEFINED_SIZE_DOWNWARDS_HEADER
 {
     DWORD   dwShopID;
@@ -1506,7 +1509,7 @@ struct S2C_SYNC_TRADING_ITEM_DATA : UNDEFINED_SIZE_DOWNWARDS_HEADER
     BYTE    byBoxIndex;
     BYTE    byPosIndex;
     BYTE    byGridIndex;
-    BYTE    byStackNum;     // ÎïÆ·µþ¼ÓÊýÁ¿»òÄÍ¾Ã¶È
+    BYTE    byStackNum;     // ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¾Ã¶ï¿½
     int     nKey;
     char    szBuff[0];
 };
@@ -1523,20 +1526,20 @@ struct S2C_TRADING_COMPLETE : DOWNWARDS_PROTOCOL_HEADER
     bool bComplete;
 };
 
-// Í¬²½½ðÇ®ÊýÁ¿
+// Í¬ï¿½ï¿½ï¿½ï¿½Ç®ï¿½ï¿½ï¿½ï¿½
 struct S2C_SYNC_MONEY : DOWNWARDS_PROTOCOL_HEADER
 {
     int						nMoney;
 	BOOL					bShowMsg;
 };
 
-// Í¬²½¹±Ï×Öµ
+// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 struct S2C_SYNC_CONTRIBUTION : DOWNWARDS_PROTOCOL_HEADER
 {   
     int                     nContribution;
 };
 
-// Í¬²½µÀ¾ßÊý¾Ý
+// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct S2C_SYNC_ITEM_DATA : UNDEFINED_SIZE_DOWNWARDS_HEADER
 {
     DWORD                   dwPlayerID;
@@ -1546,7 +1549,7 @@ struct S2C_SYNC_ITEM_DATA : UNDEFINED_SIZE_DOWNWARDS_HEADER
     BYTE					byBuff[0];
 };
 
-// Í¬²½µÀ¾ßÉ¾³ý
+// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½
 struct S2C_SYNC_ITEM_DESTROY : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD                   dwOwnerID;
@@ -1555,7 +1558,7 @@ struct S2C_SYNC_ITEM_DESTROY : DOWNWARDS_PROTOCOL_HEADER
 };
 
 
-// ½»»»×°±¸
+// ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½
 struct S2C_EXCHANGE_ITEM : DOWNWARDS_PROTOCOL_HEADER
 {
     BYTE					byBox1;
@@ -1565,12 +1568,27 @@ struct S2C_EXCHANGE_ITEM : DOWNWARDS_PROTOCOL_HEADER
 	WORD					wAmount;
 };
 
-// »»×°¹ã²¥
+// ï¿½ï¿½×°ï¿½ã²¥
 struct S2C_SYNC_EQUIP_REPRESENT : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD dwPlayerID;
     BYTE  byIndex;
     WORD  wRepresentID;
+};
+
+// Exterior box contents -> owning client. Variable length: wCount 7-byte
+// KEXTERIOR_SYNC_ITEM items in byData. (v246 wire = protocol 0x11a; here it is
+// a 2010-native byProtocolID packet carrying the same per-item payload.)
+struct S2C_SYNC_EXTERIOR_BOX_DATA : UNDEFINED_SIZE_DOWNWARDS_HEADER
+{
+    WORD  wCount;
+    BYTE  byData[0];        // wCount x KEXTERIOR_SYNC_ITEM (7B each)
+};
+
+// Exterior apply-flag -> owning client (v246 wire = protocol 0x121).
+struct S2C_SYNC_APPLY_EXTERIOR_FLAG : DOWNWARDS_PROTOCOL_HEADER
+{
+    DWORD dwApplyFlag;
 };
 
 struct S2C_ADD_ITEM_NOTIFY : DOWNWARDS_PROTOCOL_HEADER
@@ -1581,7 +1599,7 @@ struct S2C_ADD_ITEM_NOTIFY : DOWNWARDS_PROTOCOL_HEADER
 };
 
 
-// ¸üÐÂÎïÆ·ÊýÁ¿»òÄÍ¾Ã
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¾ï¿½
 struct S2C_UPDATE_ITEM_AMOUNT : DOWNWARDS_PROTOCOL_HEADER
 {
     BYTE byBox;
@@ -1590,7 +1608,7 @@ struct S2C_UPDATE_ITEM_AMOUNT : DOWNWARDS_PROTOCOL_HEADER
 };
 
 
-// Ñ§Ï°Éú»î¼¼ÄÜ
+// Ñ§Ï°ï¿½ï¿½ï¿½î¼¼ï¿½ï¿½
 struct S2C_LEARN_PROFESSION_NOTIFY : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD dwProfessionID;
@@ -1602,13 +1620,13 @@ struct S2C_LEARN_BRANCH_NOTIFY : DOWNWARDS_PROTOCOL_HEADER
 	DWORD dwBranchID;
 };
 
-// ÒÅÍü¼¼ÄÜ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct S2C_FORGET_PROFESSION_NOTIFY : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD dwProfessionID;
 };
 
-// Ôö¼ÓÉú»î¼¼ÄÜ¾­Ñé
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½î¼¼ï¿½Ü¾ï¿½ï¿½ï¿½
 struct S2C_ADD_PROFESSION_PROFICIENCY : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD dwProfessionID;
@@ -1616,21 +1634,21 @@ struct S2C_ADD_PROFESSION_PROFICIENCY : DOWNWARDS_PROTOCOL_HEADER
 };
 
 
-// ÉèÖÃÉú»î¼¼ÄÜµÈ¼¶
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½î¼¼ï¿½ÜµÈ¼ï¿½
 struct S2C_SET_MAX_PROFESSION_LEVEL_NOTIFY : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD dwProfessionID;
     DWORD dwLevel;
 };
 
-// Í¬²½Éú»î¼¼ÄÜÒòÆäËûÒòËØÐÞ¸ÄµÄµ÷ÕûµÈ¼¶
+// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½î¼¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¸ÄµÄµï¿½ï¿½ï¿½ï¿½È¼ï¿½
 struct S2C_SYNC_PROFESSION_ADJUST_LEVEL : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD dwProfessionID;
     DWORD dwAdjustLevel;
 };
 
-// Í¬²½¸üÐÂÍæ¼ÒÉú»î¼¼ÄÜ
+// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½î¼¼ï¿½ï¿½
 struct S2C_UPDATE_PLAYER_PROFESSION : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD dwProfessionID;
@@ -1657,17 +1675,17 @@ struct S2C_SYNC_RECIPE_STATE : UNDEFINED_SIZE_DOWNWARDS_HEADER
 	BYTE  byData[0];
 };
 
-// ´ò¿ªÒ»¸ö¿Í»§¶Ë´°¿Ú
+// ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Í»ï¿½ï¿½Ë´ï¿½ï¿½ï¿½
 struct S2C_OPEN_WINDOW : UNDEFINED_SIZE_DOWNWARDS_HEADER
 {
-    DWORD	dwIndex;			//Á÷Ë®ºÅ
-	DWORD	dwTargetType;		//Ä¿±êÀàÐÍ Doodad? Npc?
-	DWORD	dwTargetID;			//Ä¿±êID
+    DWORD	dwIndex;			//ï¿½ï¿½Ë®ï¿½ï¿½
+	DWORD	dwTargetType;		//Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Doodad? Npc?
+	DWORD	dwTargetID;			//Ä¿ï¿½ï¿½ID
     char	szText[0];
 };
 
 
-// Í¬²½Åä·½µÄÊ¹ÓÃ
+// Í¬ï¿½ï¿½ï¿½ä·½ï¿½ï¿½Ê¹ï¿½ï¿½
 struct S2C_START_USE_RECIPE : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD	dwPlayerID;
@@ -1678,7 +1696,7 @@ struct S2C_START_USE_RECIPE : DOWNWARDS_PROTOCOL_HEADER
     int		nParam2;
 };
 
-// Í¨Öª¿Í»§¶Ë½ÓÊÜÈÎÎñ
+// Í¨Öªï¿½Í»ï¿½ï¿½Ë½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct S2C_ACCEPT_QUEST : DOWNWARDS_PROTOCOL_HEADER
 {
     int     nQuestIndex;
@@ -1686,33 +1704,33 @@ struct S2C_ACCEPT_QUEST : DOWNWARDS_PROTOCOL_HEADER
     BYTE    byDailyQuest;
 };
 
-// Í¨Öª¿Í»§¶ËÍê³ÉÈÎÎñ
+// Í¨Öªï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct S2C_FINISH_QUEST : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD	dwQuestID;
 	BOOL	bForce;
 };
 
-// Í¨Öª¿Í»§¶ËÈ¡ÏûÈÎÎñ
+// Í¨Öªï¿½Í»ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct S2C_CANCEL_QUEST : DOWNWARDS_PROTOCOL_HEADER
 {
     int		nQuestIndex;
 };
 
-// Í¨Öª¿Í»§¶ËÇå³ýÈÎÎñ×´Ì¬
+// Í¨Öªï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬
 struct S2C_CLEAR_QUEST : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD   dwQuestID;
 };
 
-// ¹²ÏíÈÎÎñ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct S2C_SHARE_QUEST : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD	dwSrcPlayerID;
     DWORD	dwQuestID;
 };
 
-// Í¬²½ÈÎÎñ±äÁ¿
+// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct S2C_SYNC_QUEST_VALUE : DOWNWARDS_PROTOCOL_HEADER
 {
     BYTE	byQuestIndex;
@@ -1722,7 +1740,7 @@ struct S2C_SYNC_QUEST_VALUE : DOWNWARDS_PROTOCOL_HEADER
 };
 
 
-// Í¬²½Ê°È¡ÁÐ±í
+// Í¬ï¿½ï¿½Ê°È¡ï¿½Ð±ï¿½
 struct LOOT_ITEM 
 {
     DWORD dwItemID;
@@ -1738,7 +1756,7 @@ struct S2C_SYNC_LOOT_LIST : UNDEFINED_SIZE_DOWNWARDS_HEADER
 	DWORD       dwLooterIDList[0];
 };
 
-// ÖÀ÷»×ÓÐÅÏ¢
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 struct S2C_ROLL_ITEM_MESSAGE : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD	dwPlayerID;
@@ -1747,7 +1765,7 @@ struct S2C_ROLL_ITEM_MESSAGE : DOWNWARDS_PROTOCOL_HEADER
     int		nRollPoint;
 };
 
-// ´ò¿ªÊ°È¡Ãæ°å
+// ï¿½ï¿½Ê°È¡ï¿½ï¿½ï¿½
 struct S2C_OPEN_LOOT_LIST : DOWNWARDS_PROTOCOL_HEADER
 {
     DWORD dwPlayerID;
@@ -1755,14 +1773,14 @@ struct S2C_OPEN_LOOT_LIST : DOWNWARDS_PROTOCOL_HEADER
 };
 
 
-// Í¬²½Õ½¶·¿ª¹Ø
+// Í¬ï¿½ï¿½Õ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct S2C_SYNC_FIGHT_FLAG : DOWNWARDS_PROTOCOL_HEADER
 {
 	BYTE byForceID;
 	BYTE byOpen;
 };
 
-// Í¬²½ÉùÍû
+// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct S2C_SYNC_REPUTE : DOWNWARDS_PROTOCOL_HEADER
 {
 	BYTE byForceID;
@@ -1772,7 +1790,7 @@ struct S2C_SYNC_REPUTE : DOWNWARDS_PROTOCOL_HEADER
 };
 
 
-// Í¬²½ËùÓÐÊÆÁ¦Õ½¶·¿ª¹Ø
+// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct S2C_SYNC_FIGHTFLAG_LIST : UNDEFINED_SIZE_DOWNWARDS_HEADER
 {
 	BYTE	byFightFlagCount;
@@ -1780,7 +1798,7 @@ struct S2C_SYNC_FIGHTFLAG_LIST : UNDEFINED_SIZE_DOWNWARDS_HEADER
 };
 
 
-// Í¬²½ËùÓÐµÄÊÆÁ¦ÉùÍû
+// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct S2C_SYNC_REPUTE_LIST : UNDEFINED_SIZE_DOWNWARDS_HEADER
 {
 	BYTE			byForceCount;
@@ -1806,7 +1824,7 @@ struct S2C_CHARACTER_OPEN : DOWNWARDS_PROTOCOL_HEADER
 };
 
 
-// ×é¶Ó¹ã²¥½ðÇ®µÄÊ°È¡
+// ï¿½ï¿½Ó¹ã²¥ï¿½ï¿½Ç®ï¿½ï¿½Ê°È¡
 struct S2C_LOOT_MONEY_MESSAGE : DOWNWARDS_PROTOCOL_HEADER
 {
 	DWORD dwPlayerID;
@@ -1820,7 +1838,7 @@ struct S2C_DISTRIBUTE_ITEM_MESSAGE : DOWNWARDS_PROTOCOL_HEADER
     DWORD dwItemID;
 };
 
-// ½áÊøÊ°È¡
+// ï¿½ï¿½ï¿½ï¿½Ê°È¡
 struct S2C_FINISH_LOOT : DOWNWARDS_PROTOCOL_HEADER
 {
 	DWORD dwPlayerID;
@@ -1834,7 +1852,7 @@ struct S2C_BEGIN_ROLL_ITEM : DOWNWARDS_PROTOCOL_HEADER
     WORD  wLeftRollFrame;
 };
 
-// Í¬²½¶¨ÖÆµÄÓÃ»§ÏûÏ¢
+// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ï¢
 struct S2C_CUSTOM_OTACTION : DOWNWARDS_PROTOCOL_HEADER
 {
 	DWORD dwPlayerID;
@@ -1847,35 +1865,35 @@ struct S2C_CUSTOM_OTACTION : DOWNWARDS_PROTOCOL_HEADER
 	char szActionName[CUSTOM_OTACTION_NAME_LEN];
 };
 
-// Í¬²½¿ªÊ¼Ð¡¶ÓÈÎÎñ
+// Í¬ï¿½ï¿½ï¿½ï¿½Ê¼Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct S2C_START_ESCORT_QUEST : DOWNWARDS_PROTOCOL_HEADER
 {
 	DWORD dwStartPlayerID;
 	DWORD dwQuestID;
 };
 
-// Ìí¼Ó³ðºÞ
+// ï¿½ï¿½ï¿½Ó³ï¿½ï¿½
 struct S2C_MODIFY_THREAT : DOWNWARDS_PROTOCOL_HEADER
 {
 	DWORD dwCharacterID;
 };
 
 
-// ÐÞ¸Ä±»³ðºÞ
+// ï¿½Þ¸Ä±ï¿½ï¿½ï¿½ï¿½
 struct S2C_MODIFY_THREATEN : DOWNWARDS_PROTOCOL_HEADER
 {
 	DWORD dwCharacterID;
 };
 
 
-// Çå³ý³ðºÞ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct S2C_CLEAR_THREAT : DOWNWARDS_PROTOCOL_HEADER
 {
 	DWORD dwCharacterID;
 };
 
 
-// Çå³ý±»³ðºÞ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct S2C_CLEAR_THREATEN : DOWNWARDS_PROTOCOL_HEADER
 {
 	DWORD dwCharacterID;
@@ -1885,11 +1903,11 @@ struct S2C_TALK_MESSAGE : UNDEFINED_SIZE_DOWNWARDS_HEADER
 {
     BYTE    byMsgType;
     DWORD   dwTalkerID;
-    // ×¢Òâ,ÎªÁË¼õÉÙÁÄÌìµÄ´ø¿íÕ¼ÓÃ,byTalkDataÀïÃæ»¹°üÀ¨ÁË±ä³¤µÄÃû×Ö
+    // ×¢ï¿½ï¿½,Îªï¿½Ë¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½Õ¼ï¿½ï¿½,byTalkDataï¿½ï¿½ï¿½æ»¹ï¿½ï¿½ï¿½ï¿½ï¿½Ë±ä³¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     BYTE    byTalkData[0];
 };
 
-// ¾«Á¦ÌåÁ¦
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct S2C_SYNC_SELF_CURRENT_ST : DOWNWARDS_PROTOCOL_HEADER
 {
 	int nCurrentStamina;
@@ -1901,7 +1919,7 @@ struct S2C_DOODAD_LOOT_OVER : DOWNWARDS_PROTOCOL_HEADER
 {
 	DWORD dwDoodadID;
 };
-// ºÃÓÑÁÐ±íÏà¹Ø
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½ï¿½
 struct S2C_SYNC_FELLOWSHIP_LIST : UNDEFINED_SIZE_DOWNWARDS_HEADER
 {
     BYTE    byType;
@@ -2491,7 +2509,7 @@ struct S2C_USE_ITEM_PREPARE : DOWNWARDS_PROTOCOL_HEADER
     char    szText[USE_ITEM_PROGRESS_NAME_LEN];
 };
 
-// ¹Û²ìµãÏà¹Ø
+// ï¿½Û²ï¿½ï¿½ï¿½ï¿½ï¿½
 struct S2C_CREATE_VIEW_POINT_RESPOND : DOWNWARDS_PROTOCOL_HEADER
 {
     int     nRegionX;
@@ -2618,7 +2636,7 @@ struct C2S_APPLY_ENTER_SCENE : UPWARDS_PROTOCOL_HEADER
     time_t nSceneTimeStamp;
 };
 
-// Íæ¼ÒµÇ³ö
+// ï¿½ï¿½ÒµÇ³ï¿½
 struct C2S_PLAYER_LOGOUT : UPWARDS_PROTOCOL_HEADER
 {
 };
@@ -2671,14 +2689,14 @@ struct C2S_SYNC_DIRECTION : UPWARDS_PROTOCOL_HEADER
     KMOVE_CRITICAL_PARAM    Param;
 };
 
-// Íæ¼ÒµÄ½»»¥¶¯×÷ÉÏ´«Ö¸Áî
+// ï¿½ï¿½ÒµÄ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½Ö¸ï¿½ï¿½
 struct C2S_CHARACTER_ACTION : UPWARDS_PROTOCOL_HEADER
 {
     DWORD	dwCharacterID;
     DWORD	dwAction;
 };
 
-// Íæ¼ÒÏÔÊ¾Êý¾Ý
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
 struct C2S_APPLY_PLAYER_DISPLAY_DATA : UPWARDS_PROTOCOL_HEADER
 {
     DWORD	dwPlayerID;
@@ -2692,14 +2710,14 @@ struct C2S_STOP_CURRENT_ACTION : UPWARDS_PROTOCOL_HEADER
 
 // ------------------ skill about protocol ----------------->
 
-//½ÇÉ«¹¥»÷ÉÏ´«Ö¸Áî
+//ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½Ö¸ï¿½ï¿½
 struct C2S_CHARACTER_SKILL : UPWARDS_PROTOCOL_HEADER
 {
-    DWORD	dwSkillID;			//¼¼ÄÜID
-    BYTE	bySkillLevel;		//¼¼ÄÜµÈ¼¶
+    DWORD	dwSkillID;			//ï¿½ï¿½ï¿½ï¿½ID
+    BYTE	bySkillLevel;		//ï¿½ï¿½ï¿½ÜµÈ¼ï¿½
     BYTE	byTargetType;
-    int		nParam1;	        //µ±TARGET_TYPEÀàÐÍÊÇ×ø±êÊ±,×ø±êÖµÎª(nParam1, nParam2, nParam3)
-    int		nParam2;            //µ±ÀàÐÍÎªxxIDÊ±,nParam1ÎªIDÖµ,nParam2Ã»ÒâÒå
+    int		nParam1;	        //ï¿½ï¿½TARGET_TYPEï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±,ï¿½ï¿½ï¿½ï¿½ÖµÎª(nParam1, nParam2, nParam3)
+    int		nParam2;            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎªxxIDÊ±,nParam1ÎªIDÖµ,nParam2Ã»ï¿½ï¿½ï¿½ï¿½
     int     nParam3;
 };
 
@@ -2734,29 +2752,29 @@ struct C2S_SET_HIDE_HAT_FLAG : UPWARDS_PROTOCOL_HEADER
 
 // ----------------- party about protocol ----------------->
 
-// xxxÑûÇëxxx×é¶Ó
+// xxxï¿½ï¿½ï¿½ï¿½xxxï¿½ï¿½ï¿½
 struct C2S_INVITE_JOIN_TEAM_REQUEST : UPWARDS_PROTOCOL_HEADER
 {
-    char szInvitedPlayer[_NAME_LEN]; // ÑûÇë¸ÃÍæ¼Ò×é¶Ó
+    char szInvitedPlayer[_NAME_LEN]; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 };
 
-// xxxÉêÇë¼ÓÈëxxxµÄ¶ÓÎé
+// xxxï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xxxï¿½Ä¶ï¿½ï¿½ï¿½
 struct C2S_APPLY_JOIN_TEAM_REQUEST : UPWARDS_PROTOCOL_HEADER
 {
-    char  szApplyDst[_NAME_LEN]; // ÉêÇë¼ÓÈëÕâ¸öÍæ¼ÒµÄ¶ÓÎé
+    char  szApplyDst[_NAME_LEN]; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒµÄ¶ï¿½ï¿½ï¿½
 };
 
-// ¿Í»§¶ËÊÕµ½×é¶ÓÑûÇëºóµÄÓ¦´ð
+// ï¿½Í»ï¿½ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½
 struct C2S_INVITE_JOIN_TEAM_RESPOND : UPWARDS_PROTOCOL_HEADER
 {
-    char  szInviteSrc[_NAME_LEN]; // ·¢³ö×é¶ÓÇëÇóµÄÍæ¼Ò    
+    char  szInviteSrc[_NAME_LEN]; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½    
     BOOL  bAgreeFlag;
 };
 
-// ¿Í»§¶Ë(¶Ó³¤)ÊÕµ½Èë¶ÓÉêÇëºóµÄÓ¦´ð
+// ï¿½Í»ï¿½ï¿½ï¿½(ï¿½Ó³ï¿½)ï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½
 struct C2S_APPLY_JOIN_TEAM_RESPOND : UPWARDS_PROTOCOL_HEADER
 {
-    char  szApplySrc[_NAME_LEN]; // ·¢³öÈë¶ÓÉêÇëµÄÍæ¼Ò
+    char  szApplySrc[_NAME_LEN]; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     BOOL  bAgreeFlag;
 };
 
@@ -2812,7 +2830,7 @@ struct C2S_TEAM_CHANGE_MEMBER_GROUP_REQUEST : UPWARDS_PROTOCOL_HEADER
 
 // <----------------- party about protocol -----------------
 
-// ½ÓÊÜÈÎÎñ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct C2S_ACCEPT_QUEST : UPWARDS_PROTOCOL_HEADER
 {
     BYTE	byTargetType;
@@ -2820,7 +2838,7 @@ struct C2S_ACCEPT_QUEST : UPWARDS_PROTOCOL_HEADER
     DWORD	dwQuestID;
 };
 
-//Íê³ÉÈÎÎñ
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct C2S_FINISH_QUEST : UPWARDS_PROTOCOL_HEADER
 {
     DWORD	dwQuestID;
@@ -2830,13 +2848,13 @@ struct C2S_FINISH_QUEST : UPWARDS_PROTOCOL_HEADER
     int		nPresentChoice2;
 };
 
-//È¡ÏûÈÎÎñ
+//È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct C2S_CANCEL_QUEST : UPWARDS_PROTOCOL_HEADER
 {
     int		nQuestIndex;
 };
 
-// ¹²ÏíÈÎÎñ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct C2S_SHARE_QUEST : UPWARDS_PROTOCOL_HEADER
 {
     int		nQuestIndex;
@@ -2848,7 +2866,7 @@ struct C2S_ACCEPT_ESCORT_QUEST : UPWARDS_PROTOCOL_HEADER
 	DWORD dwQuestID;
 };
 
-//GMÖ¸Áî
+//GMÖ¸ï¿½ï¿½
 struct C2S_GM_COMMAND : UNDEFINED_SIZE_UPWARDS_HEADER
 {
     char	szGmCommand[0];
@@ -2857,8 +2875,8 @@ struct C2S_GM_COMMAND : UNDEFINED_SIZE_UPWARDS_HEADER
 // ----------------- shop about protocol ----------------->
 
 
-// ÇëÇóÍ¬²½ÉÌµêÎïÆ·ÁÐ±í£¬×¢Òâ£¬µ±·þÎñ¶Ë·µ»ØÉÌµê»ù±¾ÐÅÏ¢µÄÊ±ºò£¬¿Í»§¶Ë¾Í¿ÉÒÔ´ò¿ªÉÌµê½çÃæÁË£¬ºóÃæÍ¬²½ÎïÆ·ÊÇ
-// Ò»¼þÒ»¼þµÄÍ¬²½µÄ£¬²¢²»´æÔÚÒ»¸ö±êÖ¾Ëµ¡°ÎïÆ·Í¬²½Íê±Ï¡±
+// ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½Æ·ï¿½Ð±ï¿½ï¿½ï¿½×¢ï¿½â£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë·ï¿½ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Ê±ï¿½ò£¬¿Í»ï¿½ï¿½Ë¾Í¿ï¿½ï¿½Ô´ï¿½ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½
+// Ò»ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ö¾Ëµï¿½ï¿½ï¿½ï¿½Æ·Í¬ï¿½ï¿½ï¿½ï¿½Ï¡ï¿½
 
 struct C2S_OPEN_SHOP_REQUEST : UPWARDS_PROTOCOL_HEADER
 {
@@ -2899,7 +2917,7 @@ struct C2S_SHOP_SELL_REQUEST : UPWARDS_PROTOCOL_HEADER
 struct C2S_SHOP_REPAIR_REQUEST : UPWARDS_PROTOCOL_HEADER
 {
     DWORD dwShopID;
-    DWORD dwItemID;     // µ±¸ÃÖµÎªERROR_ID(0)Ê±,´ú±íÐÞÀíÉíÉÏºÍ°ü°üÀïËùÓÐµÄ×°±¸
+    DWORD dwItemID;     // ï¿½ï¿½ï¿½ï¿½ÖµÎªERROR_ID(0)Ê±,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÏºÍ°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½×°ï¿½ï¿½
     int   nCost;
     DWORD dwBoxIndex;
     DWORD dwPosIndex;
@@ -2953,11 +2971,11 @@ struct C2S_TRADING_CONFIRM : UPWARDS_PROTOCOL_HEADER
 struct C2S_REQUEST_TARGET : UPWARDS_PROTOCOL_HEADER
 {
     BYTE    byTargetType;
-    DWORD   dwTargetID;   // TargetÖ»ÄÜÊÇPlayer, NPC, Doodad.
+    DWORD   dwTargetID;   // TargetÖ»ï¿½ï¿½ï¿½ï¿½Player, NPC, Doodad.
 };
 
 
-// ÉêÇë½»»»×°±¸
+// ï¿½ï¿½ï¿½ë½»ï¿½ï¿½×°ï¿½ï¿½
 struct C2S_APPLY_EXCHANGE_ITEM : UPWARDS_PROTOCOL_HEADER
 {
     BYTE	byBox1;
@@ -2968,7 +2986,7 @@ struct C2S_APPLY_EXCHANGE_ITEM : UPWARDS_PROTOCOL_HEADER
 };
 
 
-// Ñ¡Ôñ´°¿ÚÑ¡Ïî
+// Ñ¡ï¿½ñ´°¿ï¿½Ñ¡ï¿½ï¿½
 struct C2S_WINDOW_SELECT : UPWARDS_PROTOCOL_HEADER
 {
     DWORD	dwIndex;
@@ -2976,7 +2994,7 @@ struct C2S_WINDOW_SELECT : UPWARDS_PROTOCOL_HEADER
 };
 
 
-// Åä·½Ê¹ÓÃÐ­Òé
+// ï¿½ä·½Ê¹ï¿½ï¿½Ð­ï¿½ï¿½
 struct C2S_CAST_PROFESSION_SKILL : UPWARDS_PROTOCOL_HEADER
 {
 	DWORD	dwCraftID;
@@ -3000,32 +3018,32 @@ struct C2S_ROLL_ITEM : UPWARDS_PROTOCOL_HEADER
     BOOL	bCancel;
 };
 
-// ÉêÇëÊ°È¡ÁÐ±í
+// ï¿½ï¿½ï¿½ï¿½Ê°È¡ï¿½Ð±ï¿½
 struct C2S_APPLY_LOOT_LIST : UPWARDS_PROTOCOL_HEADER
 {
     DWORD	dwDoodadID;
 };
 
 
-// ´ò¿ª
+// ï¿½ï¿½
 struct C2S_CHARACTER_OPEN : UPWARDS_PROTOCOL_HEADER
 {
     DWORD	dwDoodadID;
 };
 
-// ÉêÇëÊ¹ÓÃµÀ¾ß
+// ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½Ãµï¿½ï¿½ï¿½
 struct C2S_APPLY_USE_ITEM : UPWARDS_PROTOCOL_HEADER
 {
     BYTE	byBox;
     BYTE	byX;
     BYTE	byTargetType;
-    int	    nParam1;			    //Èç¹ûTargetType²»ÊÇ×ø±ê£¬ÔòÕâÀï±íÊ¾ID
+    int	    nParam1;			    //ï¿½ï¿½ï¿½TargetTypeï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ID
     int	    nParam2;
     int		nParam3;
 };
 
 
-// ¸Ä±äÕ½¶·¿ª¹Ø
+// ï¿½Ä±ï¿½Õ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct C2S_APPLY_FIGHT_FLAG : UPWARDS_PROTOCOL_HEADER
 {
 	BYTE	byForceID;
@@ -3033,26 +3051,26 @@ struct C2S_APPLY_FIGHT_FLAG : UPWARDS_PROTOCOL_HEADER
 };
 
 
-// ½áÊøÊ°È¡
+// ï¿½ï¿½ï¿½ï¿½Ê°È¡
 struct C2S_FINISH_LOOT : UPWARDS_PROTOCOL_HEADER
 {
 	DWORD dwDoodadID;
 };
 
 
-// Ê°È¡½ðÇ®
+// Ê°È¡ï¿½ï¿½Ç®
 struct C2S_LOOT_MONEY : UPWARDS_PROTOCOL_HEADER
 {
 	DWORD dwDoodadID;
 };
 
-// ¸Ä±äPK×´Ì¬
+// ï¿½Ä±ï¿½PK×´Ì¬
 struct C2S_CHANGE_PK_MODE : UPWARDS_PROTOCOL_HEADER
 {
 	BYTE byPKMode;
 };
 
-// ·ÖÅäÎïÆ·
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·
 struct C2S_DISTRIBUTE_ITEM : UPWARDS_PROTOCOL_HEADER
 {
 	DWORD dwDoodadID;
@@ -3067,7 +3085,7 @@ struct C2S_TALK_MESSAGE : UNDEFINED_SIZE_UPWARDS_HEADER
     BYTE  byTalkData[0];
 };
 
-// ºÃÓÑÁÐ±íÏà¹Ø
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½ï¿½
 struct C2S_GET_FELLOWSHIP_LIST_REQUEST : UPWARDS_PROTOCOL_HEADER
 {
     BYTE    byType; // 1: Friend, 2: Foe, 3: BlackList
@@ -3120,11 +3138,11 @@ struct C2S_SEND_MAIL_REQUEST : UNDEFINED_SIZE_UPWARDS_HEADER
     char        szDstName[_NAME_LEN];
     char        szTitle[_NAME_LEN];
     int         nMoney;
-    BYTE        byBox[KMAIL_MAX_ITEM_COUNT];        // ÓÊ¼ÄÎïÆ·ËùÔÚµÄ°ü¹ü
-    BYTE        byX[KMAIL_MAX_ITEM_COUNT];          // ÓÊ¼ÄÎïÆ·ËùÔÚ°ü¹üÀïµÄÎ»ÖÃ
-    int         nItemPrice[KMAIL_MAX_ITEM_COUNT];   // »õµ½¸¶¿îµÄ¼Û¸ñ
+    BYTE        byBox[KMAIL_MAX_ITEM_COUNT];        // ï¿½Ê¼ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ÚµÄ°ï¿½ï¿½ï¿½
+    BYTE        byX[KMAIL_MAX_ITEM_COUNT];          // ï¿½Ê¼ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½Ú°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
+    int         nItemPrice[KMAIL_MAX_ITEM_COUNT];   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼Û¸ï¿½
     WORD        wTextLen;     
-    char        szText[0];                          // ÐÅ¼þÎÄ±¾ÄÚÈÝ
+    char        szText[0];                          // ï¿½Å¼ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½
 };
 
 struct C2S_GET_MAILLIST_REQUEST : UPWARDS_PROTOCOL_HEADER
@@ -3282,7 +3300,7 @@ struct C2S_LEAVE_BATTLE_FIELD : UPWARDS_PROTOCOL_HEADER
 {
 };
 
-// °ï»áÏà¹Ø
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 struct C2S_APPLY_TONG_ROSTER_REQUEST : UNDEFINED_SIZE_UPWARDS_HEADER
 {
@@ -3440,7 +3458,7 @@ struct C2S_SET_HERO_FLAG : UPWARDS_PROTOCOL_HEADER
     BYTE byHeroFlag;
 };
 
-// ¼ÄÂôÐÐÏà¹Ø
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct C2S_AUCTION_LOOKUP_REQUEST : UPWARDS_PROTOCOL_HEADER 
 {
     DWORD                   dwNpcID;
@@ -3506,7 +3524,7 @@ struct C2S_SET_CURRENT_DESIGNATION_REQUEST : UPWARDS_PROTOCOL_HEADER
     BYTE byDisplayFlag;
 };
 
-// ¹Û²ìµãÏà¹Ø
+// ï¿½Û²ï¿½ï¿½ï¿½ï¿½ï¿½
 struct C2S_CREATE_VIEW_POINT_REQUEST : UPWARDS_PROTOCOL_HEADER
 {
     int nX;

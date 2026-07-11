@@ -26,14 +26,14 @@
 
 namespace KScriptFuncList
 {
-	//²âÊÔº¯Êý
+	//ï¿½ï¿½ï¿½Ôºï¿½ï¿½ï¿½
 	int LuaTest(Lua_State* L)
 	{
 		return 0;
 	}
 
 	/************************************************************************/
-	/* ·þÎñ¶ËºÍ¿Í»§¶Ë¹«¹²½Å±¾º¯Êý                                           */
+	/* ï¿½ï¿½ï¿½ï¿½ËºÍ¿Í»ï¿½ï¿½Ë¹ï¿½ï¿½ï¿½ï¿½Å±ï¿½ï¿½ï¿½ï¿½ï¿½                                           */
 	/************************************************************************/
     
     int LuaGetCurrentTime(Lua_State* L)
@@ -2002,7 +2002,7 @@ Exit0:
 
 	int LuaResetGameworld(Lua_State* L)
 	{
-		// TODO: ÖØÖÃÓÎÏ·Âß¼­
+		// TODO: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ß¼ï¿½
 
         g_PlayerClient.Disconnect();
         g_pSO3World->m_TeamClient.Reset();
@@ -2155,7 +2155,7 @@ int LuaSendSystemMail(Lua_State* L)
         pMail->ItemDesc[0].bAcquired = false;
         pMail->ItemDesc[0].byDataLen = (BYTE)uItemDataLen;
         // pMail->ItemDesc[0].nPrice    = nItemPrice;
-        // »õµ½¸¶¿î¹¦ÄÜÔÝ²»¿ª·Å
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½î¹¦ï¿½ï¿½ï¿½Ý²ï¿½ï¿½ï¿½ï¿½ï¿½
         pMail->ItemDesc[0].nPrice    = 0;
 
         memcpy(pMail->byData + uTextLen, byItemData, uItemDataLen);
@@ -3134,8 +3134,8 @@ int LuaCalculateTrackCost(Lua_State* L)
 
     bResult = true;
 Exit0:
-    Lua_PushBoolean(L, bResult);    // ÊÇ·ñÓÐ½á¹û
-    Lua_PushNumber(L, nCost);       // ½á¹ûÊÇÊ²Ã´
+    Lua_PushBoolean(L, bResult);    // ï¿½Ç·ï¿½ï¿½Ð½ï¿½ï¿½
+    Lua_PushNumber(L, nCost);       // ï¿½ï¿½ï¿½ï¿½ï¿½Ê²Ã´
     return 2;
 }
 
@@ -3996,7 +3996,7 @@ int LuaAddCampScore(Lua_State* L)
     nAddCampScore = (int)Lua_ValueToNumber(L, 2);
     KGLOG_PROCESS_ERROR(nAddCampScore > 0);
     
-    if (nCamp == cEvil) // Õý·½¼Ó·Ö£¬·´·½¼õ·Ö
+    if (nCamp == cEvil) // ï¿½ï¿½ï¿½ï¿½ï¿½Ó·Ö£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         nAddCampScore = -nAddCampScore;
     }
@@ -4176,6 +4176,19 @@ int LuaGetMentorCache(Lua_State* L)
     KGLOG_PROCESS_ERROR(nTopIndex == 0);
 
     nResult = g_pSO3World->m_MentorCache.LuaGetObj(L);
+Exit0:
+    return nResult;
+}
+
+int LuaGetHairShop(Lua_State* L)
+{
+    int nResult   = 0;
+    int nTopIndex = 0;
+
+    nTopIndex = Lua_GetTopIndex(L);
+    KGLOG_PROCESS_ERROR(nTopIndex == 0);
+
+    nResult = g_pSO3World->m_Settings.m_HairShop.LuaGetObj(L);
 Exit0:
     return nResult;
 }
@@ -5031,6 +5044,7 @@ Exit0:
         {"GetPQ",                   LuaGetPQ},
         {"GetPQByTemplate",         LuaGetPQByTemplate},
         {"GetMentorCache",          LuaGetMentorCache},
+        {"GetHairShop",             LuaGetHairShop},
 #endif
 
 #ifdef _CLIENT

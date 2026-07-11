@@ -1,5 +1,5 @@
 /************************************************************************/
-/* ½£Èý½ÇÉ«Êý¾Ý½á¹¹¶¨Òå			                                        */
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½Ý½á¹¹ï¿½ï¿½ï¿½ï¿½			                                        */
 /* Copyright : Kingsoft 2005										    */
 /* Author	 : Zhu Jianqiu												*/
 /************************************************************************/
@@ -37,13 +37,15 @@ enum ROLE_DATA_BLOCK_TYPE
     rbtRandData,
     rbtAntiFarmerData,
     rbtMentorData,
+    rbtExteriorData,
+    rbtHairBoxData,
 
 	rbtTotal
 };
 
 #pragma	pack(1)
 
-// -----½ÇÉ«»ù±¾ÐÅÏ¢¶¨Òå------
+// -----ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½------
 
 struct KROLE_POSITION_DB
 {
@@ -87,7 +89,7 @@ struct KROLE_LIST_INFO
     time_t              nDeleteTime;
 };
 
-// -----½ÇÉ«À©Õ¹Êý¾Ý¶¨Òå------
+// -----ï¿½ï¿½É«ï¿½ï¿½Õ¹ï¿½ï¿½ï¿½Ý¶ï¿½ï¿½ï¿½------
 
 struct KRoleDataHeader
 {
@@ -103,7 +105,7 @@ struct KRoleBlockHeader
     DWORD   dwLen;
 };
 
-// ½ÇÉ«ÊôÐÔÊý¾Ý
+// ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct KROLE_STATE_INFO
 {
     BYTE    byMoveState;
@@ -125,7 +127,7 @@ struct KROLE_STATE_INFO
     WORD    wReserved;
 
     BYTE    byPKState;
-    WORD    wCloseSlayLeftTime; // µ¥Î»£ºÃë
+    WORD    wCloseSlayLeftTime; // ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½
 
     WORD    wLeftReviveFrame;
     time_t  nLastSituReviveTime;
@@ -135,11 +137,11 @@ struct KROLE_STATE_INFO
     WORD    wCurrentKillPoint;
     int     nReserved0;
 
-    int     nCurrentPrestige; // ÍþÍû
+    int     nCurrentPrestige; // ï¿½ï¿½ï¿½ï¿½
     time_t  nBanTime;
-    int     nContribution;    // ¹±Ï×Öµ
+    int     nContribution;    // ï¿½ï¿½ï¿½ï¿½Öµ
     int     nMaxLevel;
-    BOOL    bHideHat;         // ÊÇ·ñÒþ²ØÃ±×Ó
+    BOOL    bHideHat;         // ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½Ã±ï¿½ï¿½
 
     BYTE    byTalkWorldDailyCount;
     BYTE    byTalkForceDailyCount;
@@ -171,7 +173,7 @@ struct KDB_ROLE_GENERATOR_PARAM
     KUSER_ROLE_GENERATOR_PARAM UserParam;
 };
 
-// ½»Í¨µã´æµ½½á¹¹
+// ï¿½ï¿½Í¨ï¿½ï¿½æµ½ï¿½á¹¹
 struct KROLE_ROAD_INFO
 {
     int nOpenNodeCount;

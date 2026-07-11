@@ -26,6 +26,7 @@ BOOL KWorldSettings::Init(void)
     BOOL bNpcTeamListInitFlag           = false;
     BOOL bAchievementInfoListFlag       = false;
     BOOL bDesignationListInitFlag       = false;
+    BOOL bExteriorInitFlag              = false;
     BOOL bGameCardInfoListInitFlag      = false;
 
 	bRetCode = m_ConstList.Init();
@@ -113,6 +114,13 @@ BOOL KWorldSettings::Init(void)
     KGLOG_PROCESS_ERROR(bRetCode);
     bDesignationListInitFlag = true;
 
+    bRetCode = m_Exterior.Init();
+    KGLOG_PROCESS_ERROR(bRetCode);
+    bExteriorInitFlag = true;
+
+    bRetCode = m_HairShop.Init();
+    KGLOG_PROCESS_ERROR(bRetCode);
+
     bRetCode = m_GameCardInfoList.Init();
     //KGLOG_PROCESS_ERROR(bRetCode);
     //bGameCardInfoListInitFlag = true;
@@ -125,6 +133,12 @@ Exit0:
         {
             m_GameCardInfoList.UnInit();
             bGameCardInfoListInitFlag = false;
+        }
+
+        if (bExteriorInitFlag)
+        {
+            m_Exterior.UnInit();
+            bExteriorInitFlag = false;
         }
 
         if (bDesignationListInitFlag)
@@ -252,6 +266,7 @@ BOOL KWorldSettings::UnInit(void)
 	m_ConstList.UnInit();
 	m_AchievementInfoList.UnInit();
     m_DesignationList.UnInit();
+    m_Exterior.UnInit();
     m_GameCardInfoList.UnInit();
 
 	return true;

@@ -1,5 +1,5 @@
 /************************************************************************/
-/* Íæ¼Ò			                                                        */
+/* ï¿½ï¿½ï¿½			                                                        */
 /* Copyright : Kingsoft 2005										    */
 /* Author	 : Zhu Jianqiu												*/
 /* History	 :															*/
@@ -31,6 +31,8 @@
 #include "KCustomData.h"
 #include "KAchievement.h"
 #include "KDesignation.h"
+#include "KExteriorBox.h"
+#include "KHairBox.h"
 #include "KProbability.h"
 
 #ifdef _SERVER
@@ -49,21 +51,21 @@ class S2C_PLAYER_DISPLAY_DATA;
 
 enum GAME_STATUS
 {
-	gsInvalid = 0,			    // ÎÞÐ§×´Ì¬
+	gsInvalid = 0,			    // ï¿½ï¿½Ð§×´Ì¬
 
-	gsWaitForConnect,			// ÕýÔÚµÈ´ý¿Í»§¶ËµÄÁ¬½Ó
-	gsWaitForPermit,		    // µÇÂ½Ê±ÕýÔÚµÈ´ýGCµÄÈ·ÈÏ
-    gsWaitForRoleData,		    // µÇÂ¼Ê±ÕýÔÚµÈ´ýGoddessµÄ»Ø°ü
-    gsWaitForLoginLoading,      // µÇÂ¼(»ò¿ç·þ)Á÷³ÌÖÐµÈ´ý¿Í»§¶ËÔØÈë
-	gsWaitForNewMapLoading,     // ÇÐ»»µØÍ¼¹ý³ÌÖÐµÈ´ý¿Í»§¶ËÔØÈë
+	gsWaitForConnect,			// ï¿½ï¿½ï¿½ÚµÈ´ï¿½ï¿½Í»ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½
+	gsWaitForPermit,		    // ï¿½ï¿½Â½Ê±ï¿½ï¿½ï¿½ÚµÈ´ï¿½GCï¿½ï¿½È·ï¿½ï¿½
+    gsWaitForRoleData,		    // ï¿½ï¿½Â¼Ê±ï¿½ï¿½ï¿½ÚµÈ´ï¿½Goddessï¿½Ä»Ø°ï¿½
+    gsWaitForLoginLoading,      // ï¿½ï¿½Â¼(ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½ï¿½ÐµÈ´ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	gsWaitForNewMapLoading,     // ï¿½Ð»ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½ÐµÈ´ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-	gsPlaying,				    // ÕýÔÚÓÎÏ·ÖÐ
+	gsPlaying,				    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½
 
-	gsSearchMap,			    // ÕýÔÚËÑË÷µØÍ¼,²»Ò»¶¨ÐèÒª¿ç·þ
-    gsWaitForTransmissionSave,  // ±£´æÊý¾Ý×¼±¸¿ç·þ
-	gsWaitForTransmissionGuid,	// ¿ç·þÊ±ÕýÔÚµÈ´ýÄ¿±ê·þÎñÆ÷·µ»ØGUID
+	gsSearchMap,			    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼,ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½
+    gsWaitForTransmissionSave,  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¼ï¿½ï¿½ï¿½ï¿½ï¿½
+	gsWaitForTransmissionGuid,	// ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ÚµÈ´ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½GUID
 
-	gsDeleting,				    // ¿Í»§¶Ë¶ÏÏßÒýÆðµÄÑÓÊ±µÇ³ö
+	gsDeleting,				    // ï¿½Í»ï¿½ï¿½Ë¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ç³ï¿½
 
 	gsTotal
 };
@@ -81,9 +83,9 @@ enum PREEMPTIVE_ATTACK
 struct KWindowSelectList
 {
 	KTarget			Target;
-	DWORD			dwScriptID;		//½Å±¾ID
-	DWORD			dwIndex;		//Á÷Ë®ºÅ
-	int				nFuncCount;		//º¯Êý¸öÊý
+	DWORD			dwScriptID;		//ï¿½Å±ï¿½ID
+	DWORD			dwIndex;		//ï¿½ï¿½Ë®ï¿½ï¿½
+	int				nFuncCount;		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	DWORD			dwMapID;
 	int			    nMapCopyIndex;
 	int				nX;
@@ -96,18 +98,18 @@ struct KWindowSelectList
 
 struct KPLAYER_REVIVE_CTRL 
 {
-    int     nNextCheckReviveFrame;  // ·þÎñÆ÷ÏÂ´Î¼ì²é¸´»îÌõ¼þµÄÊ±¼ä
-    int     nReviveFrame;           // ¸´»îµ¹¼ÆÊ±£¬»á±»Í¬²½¸ø½çÃæ
+    int     nNextCheckReviveFrame;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â´Î¼ï¿½é¸´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+    int     nReviveFrame;           // ï¿½ï¿½ï¿½îµ¹ï¿½ï¿½Ê±ï¿½ï¿½ï¿½á±»Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     BOOL    bReviveInSitu;
     BOOL    bReviveInAltar;
     BOOL    bReviveByPlayer;
 
-    time_t  nLastSituReviveTime;    // ÉÏ´ÎÔ­µØ¸´»îÊ±¼ä
-    int     nSituReviveCount;       // Ô­µØ¸´»î¼ÆÊýÆ÷, ÓÃÓÚ¼ÆËãÍæ¼ÒËÀÍö³Í·£Ê±¼ä
+    time_t  nLastSituReviveTime;    // ï¿½Ï´ï¿½Ô­ï¿½Ø¸ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+    int     nSituReviveCount;       // Ô­ï¿½Ø¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½Ê±ï¿½ï¿½
     int     nMessageID;
 
-    DWORD   dwReviver;                 // ±»Íæ¼ÒA¸´»îµÄÊ±ºò,Õâ¸ö±íÊ¾AµÄID,ÏÂÃæXYZÊÇAµÄ×ø±ê
+    DWORD   dwReviver;                 // ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾Aï¿½ï¿½ID,ï¿½ï¿½ï¿½ï¿½XYZï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     int     nX;                        
     int     nY;
     int     nZ;
@@ -115,18 +117,18 @@ struct KPLAYER_REVIVE_CTRL
     int     nReviveMana;
 };
 
-// Íæ¼Ò½Óµ½ËÀÍöÍ¨ÖªºóµÄÓ¦´ðÂë
+// ï¿½ï¿½Ò½Óµï¿½ï¿½ï¿½ï¿½ï¿½Í¨Öªï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
 enum KDEATH_RESPOND_CODE
 {
     drcInvalid,
-    drcReviveInSitu,        // Ô­µØ¸´»î
-    drcReviveByPlayer,      // ±»Íæ¼Ò¸´»î
-    drcReviveInAltar,       // ¸´»îµã¸´»î
-    drcCancelReviveByPlayer,// È¡Ïû±»Íæ¼Ò¸´»î
+    drcReviveInSitu,        // Ô­ï¿½Ø¸ï¿½ï¿½ï¿½
+    drcReviveByPlayer,      // ï¿½ï¿½ï¿½ï¿½Ò¸ï¿½ï¿½ï¿½
+    drcReviveInAltar,       // ï¿½ï¿½ï¿½ï¿½ã¸´ï¿½ï¿½
+    drcCancelReviveByPlayer,// È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¸ï¿½ï¿½ï¿½
     drcTotal
 };
 
-// ÁÄÌìÍ¬²½ÎïÆ·ÐÅÏ¢
+// ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½Ï¢
 struct TALK_SYNC_ITEM
 {
     unsigned uDataSize;
@@ -199,21 +201,21 @@ struct KSHARE_QUEST_RESULT
 
 struct KMOVE_CTRL 
 {
-    BOOL bDisable;      // ½ûÖ¹Íæ¼Ò×÷Ö÷¶¯¿ØÖÆ
-    BOOL bMove;         // ÊÇ·ñÔÚÒÆ¶¯
-    BOOL bWalk;         // ÊÇ·ñÔÚWalk(·ñÔòÊÇRun,»òÕßSwim)
-    int  nDirection8;   // ÒÆ¶¯µÄ·½Ïò,Ïà¶ÔFace direction,Ö»ÓÐ8¸ö·½ÏòÊýÖµ[0,7]
-    int  nTurn;         // 0, ²»×ª,1,Ë³×ª,-1·´×ª
-    int  nMoveCount;    // ¿Í»§¶ËÒÆ¶¯²Ù×÷¼ÆÊýÆ÷
+    BOOL bDisable;      // ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    BOOL bMove;         // ï¿½Ç·ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½
+    BOOL bWalk;         // ï¿½Ç·ï¿½ï¿½ï¿½Walk(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Run,ï¿½ï¿½ï¿½ï¿½Swim)
+    int  nDirection8;   // ï¿½Æ¶ï¿½ï¿½Ä·ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½Face direction,Ö»ï¿½ï¿½8ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ[0,7]
+    int  nTurn;         // 0, ï¿½ï¿½×ª,1,Ë³×ª,-1ï¿½ï¿½×ª
+    int  nMoveCount;    // ï¿½Í»ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     BOOL bUpdate;
 };
 
-// ¹Û²ìµã
+// ï¿½Û²ï¿½ï¿½
 struct KVIEW_POINT : KNode
 {
-    KPlayer*    pPlayer;    		// ¹Û²ìµãÓµÓÐÕß
-    KRegion*    pRegion;    		// ¹Û²ìµãËùÔÚRegion
-    int         nDisappearFrame;	// ÏûÊ§Ö¡Êý
+    KPlayer*    pPlayer;    		// ï¿½Û²ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½
+    KRegion*    pRegion;    		// ï¿½Û²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Region
+    int         nDisappearFrame;	// ï¿½ï¿½Ê§Ö¡ï¿½ï¿½
 };
 
 void DumpData(char* szFileName, BYTE* pbyData, size_t uDataLen);
@@ -241,35 +243,35 @@ public:
 	int					m_nConnIndex;
     char                m_szClientIP[_NAME_LEN];
 	char				m_szAccount[_NAME_LEN];
-	tagExtPointInfo		m_ExtPointInfo;         // À©Õ¹µã
-    BOOL                m_bExtPointLock;        // À©Õ¹µã²Ù×÷Ëø
-    int                 m_nLastExtPointIndex;   // ÉÏÒ»´Î²Ù×÷À©Õ¹µãË÷Òý
-    short               m_nLastExtPointValue;   // ÉÏÒ»´Î²Ù×÷À©Õ¹µãÖµ
-    time_t              m_nEndTimeOfFee;        // ÊÕ·Ñ×Ü½ØÖ¹Ê±¼ä
-    time_t              m_nNoFeeTime;           // ·¢ÏÖÍæ¼ÒÓà¶î²»×ãµÄÊ±¼ä
+	tagExtPointInfo		m_ExtPointInfo;         // ï¿½ï¿½Õ¹ï¿½ï¿½
+    BOOL                m_bExtPointLock;        // ï¿½ï¿½Õ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    int                 m_nLastExtPointIndex;   // ï¿½ï¿½Ò»ï¿½Î²ï¿½ï¿½ï¿½ï¿½ï¿½Õ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    short               m_nLastExtPointValue;   // ï¿½ï¿½Ò»ï¿½Î²ï¿½ï¿½ï¿½ï¿½ï¿½Õ¹ï¿½ï¿½Öµ
+    time_t              m_nEndTimeOfFee;        // ï¿½Õ·ï¿½ï¿½Ü½ï¿½Ö¹Ê±ï¿½ï¿½
+    time_t              m_nNoFeeTime;           // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½î²»ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
     int                 m_nLastClientFrame;
     int                 m_nNextSaveFrame;
-	DWORD				m_dwRoundRollCount;  // Íæ¼ÒÂÖÁ÷Ê°È¡µÄ¼ÆÊýÆ÷
+	DWORD				m_dwRoundRollCount;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê°È¡ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½
 
 	time_t				m_nLastSaveTime; 
     time_t              m_nLastLoginTime;
     time_t              m_nCurrentLoginTime;
-    int64_t             m_nTotalGameFrame; // ×ÜÔÚÏßÖ¡Êý
+    int64_t             m_nTotalGameFrame; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¡ï¿½ï¿½
     time_t              m_nCreateTime;
 
 	KCustomData<128>    m_CustomData;
 
 	KScriptTimerList<KPlayer, 16>		m_ScriptTimerList;
     
-    // ±íÊ¾Íæ¼Ò½«±»´«ËÍµ½ÉÏÒ»¸öÈë¿ÚµãµÄÊ±¼ä£¬Îª0±íÊ¾²»Ðè´«ËÍ
+    // ï¿½ï¿½Ê¾ï¿½ï¿½Ò½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½Ê±ï¿½ä£¬Îª0ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½è´«ï¿½ï¿½
     time_t              m_nBanishTime;
     KROLE_POSITION      m_LastEntry;
 #endif
 
-    BOOL                m_bChargeFlag;          // Íæ¼ÒÊÕ·Ñ×´Ì¬ false:Ãâ·Ñ true:ÊÕ·Ñ
-    int                 m_nCoin;                // Íæ¼ÒµÄ½ð±Ò(Ôª±¦)
-    BOOL                m_bFreeLimitFlag;       // Íæ¼ÒÊÇ·ñÒòÎªÃâ·Ñ¶øÊÕµ½ÏÞÖÆ
-    BOOL                m_bFarmerLimit;         // ÊÇ·ñÊÜµ½·´´òÇ®µôÂäÏÞÖÆ
+    BOOL                m_bChargeFlag;          // ï¿½ï¿½ï¿½ï¿½Õ·ï¿½×´Ì¬ false:ï¿½ï¿½ï¿½ true:ï¿½Õ·ï¿½
+    int                 m_nCoin;                // ï¿½ï¿½ÒµÄ½ï¿½ï¿½(Ôªï¿½ï¿½)
+    BOOL                m_bFreeLimitFlag;       // ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Îªï¿½ï¿½Ñ¶ï¿½ï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½
+    BOOL                m_bFarmerLimit;         // ï¿½Ç·ï¿½ï¿½Üµï¿½ï¿½ï¿½ï¿½ï¿½Ç®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 #if defined(_CLIENT)
     char                m_szTongName[_NAME_LEN];
@@ -289,25 +291,29 @@ public:
 	KProfessionList		m_ProfessionList;
 	KRecipeList			m_RecipeList;
 
-	// Íæ¼ÒµÄCooldown¼ÆÊ±Æ÷±í
+	// ï¿½ï¿½Òµï¿½Cooldownï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
 	KCDTimerList		m_TimerList;
-	// µÀ¾ßÏà¹Ø
-	KItemList			m_ItemList;			//Íæ¼ÒµÄµÀ¾ß¼¯ºÏ£¬×°±¸µÄ¡¢µÀ¾ßÀ¸µÄ¡¢Ïä×ÓÀïµÄ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	KItemList			m_ItemList;			//ï¿½ï¿½ÒµÄµï¿½ï¿½ß¼ï¿½ï¿½Ï£ï¿½×°ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-	// ÉùÍûÏà¹Ø
-	KReputation			m_ReputeList;		//ÊÆÁ¦ÉùÍû
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	KReputation			m_ReputeList;		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-	KPKController		m_PK;				//PKÏà¹ØµÄ¿ª¹Ø
+	KPKController		m_PK;				//PKï¿½ï¿½ØµÄ¿ï¿½ï¿½ï¿½
 
-	KWindowSelectList	m_SelectList;		//Ñ¡Ôñ»Øµ÷º¯ÊýÁÐ±í
+	KWindowSelectList	m_SelectList;		//Ñ¡ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
 
-	KUserPreferences	m_UserPreferences;	//  Íæ¼Ò½çÃæÊý¾Ý´æÅÌ
+	KUserPreferences	m_UserPreferences;	//  ï¿½ï¿½Ò½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý´ï¿½ï¿½ï¿½
 
-	KBookList			m_BookList;			//  Íæ¼ÒµÄ¶ÁÊé½ø¶È
+	KBookList			m_BookList;			//  ï¿½ï¿½ÒµÄ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    KDesignation        m_Designation;      // Íæ¼ÒµÄ³ÆºÅ
+    KDesignation        m_Designation;      // ï¿½ï¿½ÒµÄ³Æºï¿½
 
-    // Íæ¼ÒËùÊô¶ÓÎéµÄID
+    KExteriorBox        m_ExteriorBox;          // exterior (wai-guan) wardrobe
+    KHairBox            m_HairBox;              // hair (fa-xing) inventory
+    DWORD               m_dwApplyExteriorFlag;  // bit0-4 = per-slot applied; bit0x80 = master apply-on
+
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ID
     DWORD               m_dwSystemTeamID;
     DWORD               m_dwTeamID;
 
@@ -316,78 +322,78 @@ public:
     int GetCurrentTeamGroupIndex();
 
 #ifdef _SERVER
-    int                 m_nExpPercent;          // É±¹Öºó»ñµÃ¾­ÑéÖµµÄÏµÊý
-    int                 m_nReputationPercent;   // É±¹Öºó»ñµÃÉùÍûÖµµÄÏµÊý
+    int                 m_nExpPercent;          // É±ï¿½Öºï¿½ï¿½Ã¾ï¿½ï¿½ï¿½Öµï¿½ï¿½Ïµï¿½ï¿½
+    int                 m_nReputationPercent;   // É±ï¿½Öºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Ïµï¿½ï¿½
 #endif
 	
-	int	                m_nExperience;			// ½ÇÉ«¾­Ñé
+	int	                m_nExperience;			// ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½
 	
-	DWORD				m_dwBankNpcID;          // ´ò¿ªÒøÐÐµÄNpc
-    DWORD               m_dwTongRepertoryNpcID; // ´ò¿ª°ï»á²Ö¿âµÄNpc
+	DWORD				m_dwBankNpcID;          // ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½Npc
+    DWORD               m_dwTongRepertoryNpcID; // ï¿½ò¿ª°ï¿½ï¿½Ö¿ï¿½ï¿½Npc
 
     KTradingBox*        m_pTradingBox;           
-    DWORD               m_dwTradingInviteDst;   // ½»Ò×ÑûÇëµÄÄ¿±êÍæ¼Ò
-    DWORD               m_dwTradingInviteSrc;   // ·¢Æð½»Ò×µÄÍæ¼Ò
+    DWORD               m_dwTradingInviteDst;   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½
+    DWORD               m_dwTradingInviteSrc;   // ï¿½ï¿½ï¿½ï¿½ï¿½×µï¿½ï¿½ï¿½ï¿½
     
-    BOOL                m_bOnHorse;             // ÊÇ·ñ´¦ÓÚÆïÂí×´Ì¬
-	// ÈËÎï×°±¸±íÏÖ
+    BOOL                m_bOnHorse;             // ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬
+	// ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     WORD				m_wRepresentId[perRepresentCount];
-    DWORD               m_dwRepresentIdLock;    // µÍperRepresentCountÎ»ÓÃÓÚËø¶¨ÈËÎï±íÏÖ
+    DWORD               m_dwRepresentIdLock;    // ï¿½ï¿½perRepresentCountÎ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    DWORD               m_dwSchoolID;           // ÓÃÓÚ´æ´¢×°±¸ÄÚ¹¦µÄÃÅÅÉ£¬À´×öÒ»ÏµÁÐµÄ±íÏÖÅÐ¶Ï
+    DWORD               m_dwSchoolID;           // ï¿½ï¿½ï¿½Ú´æ´¢×°ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É£ï¿½ï¿½ï¿½ï¿½ï¿½Ò»Ïµï¿½ÐµÄ±ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
     
-    // ----------------- ¼¼ÄÜÏà¹Ø ---------------------------->
-    BOOL				m_bOnPracticeRoom;          // ÊÇ·ñÔÚÁ·¹¦·¿
+    // ----------------- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ---------------------------->
+    BOOL				m_bOnPracticeRoom;          // ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     KSkillRecipeList    m_SkillRecipeList;
 
-    // ----------------- ÐÞÎªÏà¹Ø -------------------------------->
-    int                 m_nCurrentTrainValue;       // ÐÞÎª
-    int                 m_nMaxTrainValue;           // ×î´óÐÞÎªÖµ
-    int                 m_nUsedTrainValue;          // ÒÑ¾­³åÈë¾­ÂöµÄÐÞÎªÖµ
+    // ----------------- ï¿½ï¿½Îªï¿½ï¿½ï¿½ -------------------------------->
+    int                 m_nCurrentTrainValue;       // ï¿½ï¿½Îª
+    int                 m_nMaxTrainValue;           // ï¿½ï¿½ï¿½ï¿½ï¿½ÎªÖµ
+    int                 m_nUsedTrainValue;          // ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ë¾­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎªÖµ
 #ifdef _SERVER
-    int                 m_nAddTrainTimeInToday;     // ½ñÌìÒÑ¾­¼ÓµÄÐÞÎªµÄÊ±¼ä
+    int                 m_nAddTrainTimeInToday;     // ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½Óµï¿½ï¿½ï¿½Îªï¿½ï¿½Ê±ï¿½ï¿½
 #endif
 
-    // ----------------- ³É¾ÍÏà¹Ø -------------------------------->
+    // ----------------- ï¿½É¾ï¿½ï¿½ï¿½ï¿½ -------------------------------->
     KAchievement        m_Achievement;
 
-    // ----------------- ´òÍ¨½îÂöµÄ³É¹¦ÂÊ ------------------------>
-    int                 m_nBaseVenationCof;         // »ù´¡Ïµ
-    int                 m_nPhysicsVenationCof;      // Íâ¹¦Ïµ
-    int                 m_nMagicVenationCof;        // ÄÚ¹¦Ïµ
-    int                 m_nAssistVenationCof;       // ¸¨ÖúÏµ
+    // ----------------- ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½Ä³É¹ï¿½ï¿½ï¿½ ------------------------>
+    int                 m_nBaseVenationCof;         // ï¿½ï¿½ï¿½ï¿½Ïµ
+    int                 m_nPhysicsVenationCof;      // ï¿½â¹¦Ïµ
+    int                 m_nMagicVenationCof;        // ï¿½Ú¹ï¿½Ïµ
+    int                 m_nAssistVenationCof;       // ï¿½ï¿½ï¿½ï¿½Ïµ
 
 #ifdef _SERVER
-    // ----------------- BUFFË¥¼õÏà¹Ø ------------------------>
+    // ----------------- BUFFË¥ï¿½ï¿½ï¿½ï¿½ï¿½ ------------------------>
     int                 m_nBuffDecayCount[MAX_BUFF_DECAY_TYPE];
     int                 m_nBuffDecayNextFrame[MAX_BUFF_DECAY_TYPE];
 #endif //_SERVER
 
 #ifdef _CLIENT
-	// ----------------- Ð¡µØÍ¼À×´ï -------------------------->
-	MINIMAP_RADAR_TYPE	m_eRadarType;				//À×´ïÀàÐÍ
-	int					m_nRadarParam;				//À×´ï²ÎÊý
+	// ----------------- Ð¡ï¿½ï¿½Í¼ï¿½×´ï¿½ -------------------------->
+	MINIMAP_RADAR_TYPE	m_eRadarType;				//ï¿½×´ï¿½ï¿½ï¿½ï¿½ï¿½
+	int					m_nRadarParam;				//ï¿½×´ï¿½ï¿½ï¿½ï¿½
 #endif
 
     typedef std::vector<int /* nRouteNode */> KOPEN_ROUTE_NODE_VECTOER;
 
     KOPEN_ROUTE_NODE_VECTOER m_OpenRouteNodeList;
     
-    // Íæ¼Ò·ÃÎÊ³¡¾°µÄ¼ÇÂ¼
+    // ï¿½ï¿½Ò·ï¿½ï¿½Ê³ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½Â¼
     KCustomData<MAX_MAP_ID_DATA_SIZE> m_SceneVisitRecord;
     
-    //  ------------ É±ÆøÖµÏà¹Ø ----------------------------------->
-    int     m_nCurrentKillPoint;        // É±ÆøÖµ, ×î´óÖµ²»ÄÜ³¬¹ý65536
+    //  ------------ É±ï¿½ï¿½Öµï¿½ï¿½ï¿½ ----------------------------------->
+    int     m_nCurrentKillPoint;        // É±ï¿½ï¿½Öµ, ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Ü³ï¿½ï¿½ï¿½65536
 #ifdef _SERVER
-    time_t  m_nNextKillPointReduceTime; // ÏÂÒ»´ÎÉ±ÆøÖµË¥¼õµÄÊ±¼ä
-    BOOL    m_bAbradeEquipmentDouble;   // ±³°üÖÐºÍÉíÉÏµÄ×°±¸¿ÛË«±¶ÄÍ¾Ã
-    BOOL    m_bAbradeEquipmentAll;      // ±³°üÖÐºÍÉíÉÏµÄ×°±¸¿Û¹âÄÍ¾Ã
-    BOOL    m_bAttackByGuard;           // ±»ÎÀ±øNPC¹¥»÷
+    time_t  m_nNextKillPointReduceTime; // ï¿½ï¿½Ò»ï¿½ï¿½É±ï¿½ï¿½ÖµË¥ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+    BOOL    m_bAbradeEquipmentDouble;   // ï¿½ï¿½ï¿½ï¿½ï¿½Ðºï¿½ï¿½ï¿½ï¿½Ïµï¿½×°ï¿½ï¿½ï¿½ï¿½Ë«ï¿½ï¿½ï¿½Í¾ï¿½
+    BOOL    m_bAbradeEquipmentAll;      // ï¿½ï¿½ï¿½ï¿½ï¿½Ðºï¿½ï¿½ï¿½ï¿½Ïµï¿½×°ï¿½ï¿½ï¿½Û¹ï¿½ï¿½Í¾ï¿½
+    BOOL    m_bAttackByGuard;           // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½NPCï¿½ï¿½ï¿½ï¿½
 #endif
-    BOOL    m_bOnlyReviveInSitu;        // ¶ÔÓÚÄÜÔ­µØ¸´»îµÄ³¡¾°£¬Ö»ÄÜÔ­µØ¸´»î    
-    BOOL    m_bCannotDialogWithNPC;     // ²»ÄÜÓëNPC¶Ô»°
-    BOOL    m_bRedName;                 // ºìÃû
+    BOOL    m_bOnlyReviveInSitu;        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô­ï¿½Ø¸ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Ô­ï¿½Ø¸ï¿½ï¿½ï¿½    
+    BOOL    m_bCannotDialogWithNPC;     // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½NPCï¿½Ô»ï¿½
+    BOOL    m_bRedName;                 // ï¿½ï¿½ï¿½ï¿½
     //  ------------------------------------------------------------>
     DWORD   m_dwTongID;
     int     m_nContribution;
@@ -401,7 +407,7 @@ public:
     int     m_nTalkCampDailyCount;
 #endif
 
-    // -------------- ÈËÎïÊôÐÔ¼Ó³É --------------------------------->
+    // -------------- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼Ó³ï¿½ --------------------------------->
     int     m_nVitalityToParryValueCof;
     int     m_nVitalityToMaxLifeCof;
     int     m_nVitalityToPhysicsAttackPowerCof;
@@ -434,7 +440,7 @@ public:
 
 #ifdef _SERVER
 public:
-    // ÊÓÒ°Í¬²½Ïà¹Ø
+    // ï¿½ï¿½Ò°Í¬ï¿½ï¿½ï¿½ï¿½ï¿½
     BOOL IsInViewRangeByPlayer(KRegion* pRegion);
     BOOL IsInViewRangeByViewPoint(KRegion* pRegion);
     void SyncObjectView();
@@ -463,7 +469,7 @@ public:
 #endif
 
 public:
-    // ¹Û²ìµã
+    // ï¿½Û²ï¿½ï¿½
 #ifdef _SERVER
     KVIEW_POINT         m_ViewPoint;
 #else
@@ -497,15 +503,15 @@ public:
     BOOL    SaveRoadOpenNode(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
     BOOL    SaveHeroData(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
     BOOL    SavePosition();
-    // µ÷ÓÃÕâ¸öº¯ÊýÖ®Ç°Ó¦¸ÃÈ·±£m_SavePosition±»ÕýÈ·µÄÉèÖÃ(±ÈÈçÍ¨¹ýSavePosition)
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö®Ç°Ó¦ï¿½ï¿½È·ï¿½ï¿½m_SavePositionï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½SavePosition)
     BOOL    SaveBaseInfo(KRoleBaseInfo* pBaseInfo);
     BOOL    LoadBaseInfo(KRoleBaseInfo* pBaseInfo);
 
-    // ±£´æ½ÇÉ«Êý¾Ý,»òÕßÔÚLoadÊ±,ÏÈÒª°ÑÍæ¼ÒµÄÎ»ÖÃÐÅÏ¢±£´æµ½Õâ¸ö½á¹¹ÀïÃæ,ÒòÎª¹ý³ÌÖÐ
-    // ÐèÒª·ÃÎÊµÄScene,CellµÈÖ¸Õë¿ÉÄÜÎª¿Õ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½LoadÊ±,ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½Òµï¿½Î»ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½æµ½ï¿½ï¿½ï¿½ï¿½á¹¹ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    // ï¿½ï¿½Òªï¿½ï¿½ï¿½Êµï¿½Scene,Cellï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½
 	KROLE_POSITION m_SavePosition;
 
-    // ÎªÑÓ³Ùµ÷ÓÃ SwitchMap ±£´æ²ÎÊý
+    // Îªï¿½Ó³Ùµï¿½ï¿½ï¿½ SwitchMap ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     KROLE_POSITION m_DelayedSwitchMapParam;
 
     void    SwitchMap(DWORD dwMapID, int nCopyIndex, int nX, int nY, int nZ);
@@ -520,7 +526,7 @@ public:
 
 #ifdef _SERVER
 	BOOL	CallDeathScript(DWORD dwKiller);
-	void	ReplenishAttribute();		// »Ö¸´ÊôÐÔ,Ö÷ÒªÊÇÍæ¼Ò×¨ÓÐµÄ¾«ÆøÉñµÈ
+	void	ReplenishAttribute();		// ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½×¨ï¿½ÐµÄ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 #endif	//_SERVER
 
 	void AddExp(int nExpIncrement);
@@ -546,12 +552,12 @@ public:
     BOOL IsInRaid();
     
 #ifdef _CLIENT
-    // ¸Ãº¯Êý×÷ÓÃ: µ±¿Í»§¶ËÍæ¼Òµ±Ç°Ã»ÓÐÄ¿±ê, ²¢ÇÒÒ»¸öNpc»òPlayerÊÔÍ¼¶ÔÆäÊÍ·ÅÒ»¸öÓÐº¦¼¼ÄÜÊ±,
-    // ¿Í»§¶ËÍæ¼Ò¾Í»á°Ñµ±Ç°Ä¿±êÇÐ»»µ½ÊÔÍ¼¹¥»÷ËûµÄNpc»òPlayer
+    // ï¿½Ãºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½Òµï¿½Ç°Ã»ï¿½ï¿½Ä¿ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Npcï¿½ï¿½Playerï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½Ò»ï¿½ï¿½ï¿½Ðºï¿½ï¿½ï¿½ï¿½ï¿½Ê±,
+    // ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½Ò¾Í»ï¿½Ñµï¿½Ç°Ä¿ï¿½ï¿½ï¿½Ð»ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Npcï¿½ï¿½Player
     BOOL SwitchSelectTarget(DWORD dwSkillSrcID);
 #endif
 
-	//------------------------ Éú»î¼¼ÄÜ ------------------------------->
+	//------------------------ ï¿½ï¿½ï¿½î¼¼ï¿½ï¿½ ------------------------------->
 	int	m_nCurrentStamina;
     int m_nCurrentThew;
     
@@ -573,12 +579,12 @@ public:
 
 	CRAFT_RESULT_CODE CanCastProfessionSkill(DWORD dwCraftID, DWORD dwRecipeID, DWORD dwRBookItemID, KTarget& Target);
 	CRAFT_RESULT_CODE CastProfessionSkill(DWORD dwCraftID, DWORD dwRecipeID, DWORD dwRBookItemID, KTarget& Target);
-	//<----------------------- Éú»î¼¼ÄÜ --------------------------------
+	//<----------------------- ï¿½ï¿½ï¿½î¼¼ï¿½ï¿½ --------------------------------
 
 #ifdef _CLIENT
     BOOL CanFinishQuestOnNpc(KNpc* pNpc);
     BOOL CanFinishTheQuestOnNpc(DWORD dwQuestID, KNpc* pNpc);
-    QUEST_DIFFICULTY_LEVEL GetQuestDiffcultyLevel(DWORD dwQuestID); // È¡µÃÈÎÎñµÄÄÑÒ×¶È
+    QUEST_DIFFICULTY_LEVEL GetQuestDiffcultyLevel(DWORD dwQuestID); // È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¶ï¿½
 #endif
 
 #ifdef _CLIENT
@@ -596,20 +602,20 @@ private:
 public:
     int GetCDValue(DWORD dwCooldownID);
 
-    // Îä¹¦×°±¸µ÷ÓÃÁ÷³Ì: Client->LuaMountKungfu->server->MountKungfu->Client->MountKungfu .
+    // ï¿½ä¹¦×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: Client->LuaMountKungfu->server->MountKungfu->Client->MountKungfu .
     BOOL    MountKungfu(DWORD dwID, DWORD dwLevel);
     BOOL    UmountKungfu();
 #if defined _CLIENT
 	int IsEquiped(KCustomEquipInfo *pInfo);
 #endif
 
-    // ----------- Î»ÖÃÒÆ¶¯µÄÀúÊ·¼ÇÂ¼ ------------------
+    // ----------- Î»ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½Ê·ï¿½ï¿½Â¼ ------------------
 #if defined(_SERVER)
 
-    // ×¢Òâ: Ê²Ã´²ÎÊý²»ÄÜ·ÅÔÚÕâ¸ö"ÀúÊ·¼ÇÂ¼"ÀïÃæ?
-    // ·ÅÔÚÀúÊ·¼ÇÂ¼ÀïÃæµÄ²ÎÊý¾ÍÒâÎ¶×Å»á·¢Éú»á¹ö,ÄÇÃ´ÏÔÈ»:
-    // ----¶ÔÓÚÄ³¸ö²ÎÊýX,Èç¹û´Ó1000Ö¡»Ø¹öµ½990Ö¡ºó,ËüÔÚ1000Ö¡Ê±µÄÊýÖµÒÔºó»á´Ó´Ë¶ªÊ§»òÕß·¢Éú´íÎóµÄ,¾Í²»ÄÜ»Ø¹ö
-    // ----±ÈÈç: ·²ÊÇ»á±»¼¼ÄÜBuffÐÞ¸Ä(°üÀ¨¼ä½ÓÐÞ¸Ä)µÄ¶«Î÷,¶¼ÊÇ²»ÄÜ·ÅÔÚÕâÀïÃæ»Ø¹öµÄ,°üÀ¨±ÈÈçm_nMaxLife, m_nRunSpeedµÈµÈ...
+    // ×¢ï¿½ï¿½: Ê²Ã´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"ï¿½ï¿½Ê·ï¿½ï¿½Â¼"ï¿½ï¿½ï¿½ï¿½?
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê·ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½Ä²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¶ï¿½Å»á·¢ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½Ã´ï¿½ï¿½È»:
+    // ----ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½X,ï¿½ï¿½ï¿½ï¿½ï¿½1000Ö¡ï¿½Ø¹ï¿½ï¿½ï¿½990Ö¡ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½1000Ö¡Ê±ï¿½ï¿½ï¿½ï¿½Öµï¿½Ôºï¿½ï¿½Ó´Ë¶ï¿½Ê§ï¿½ï¿½ï¿½ß·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½Í²ï¿½ï¿½Ü»Ø¹ï¿½
+    // ----ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½Ç»á±»ï¿½ï¿½ï¿½ï¿½Buffï¿½Þ¸ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¸ï¿½)ï¿½Ä¶ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½Ç²ï¿½ï¿½Ü·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¹ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½m_nMaxLife, m_nRunSpeedï¿½Èµï¿½...
 
     KPOSITION_RECORD    m_PositionRecord[MAX_POSITION_RECORD];
 	int                 m_nVirtualFrame;   
@@ -620,7 +626,7 @@ public:
 #endif
 
 #ifdef _SERVER
-    // ×ÔÉíÊýÖµÉÏ´ÎÍ¬²½Öµ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½Ï´ï¿½Í¬ï¿½ï¿½Öµ
 	int		m_nLastSyncSelfMaxLife;
     int		m_nLastSyncSelfMaxMana;  
     int     m_nLastSyncSelfMaxRage;
@@ -633,7 +639,7 @@ public:
     int     m_nLastSyncSelfUpperWeak;
     int     m_nLastSyncSelfMiddleWeak;
     int     m_nLastSyncSelfLowerWeak;
-	// Ä¿±êÊýÖµµÄÉÏÒ»´ÎÍ¬²½Öµ
+	// Ä¿ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Í¬ï¿½ï¿½Öµ
 	int		m_nLastSyncTargetMaxLife;
 	int		m_nLastSyncTargetMaxMana; 
     int     m_nLastSyncTargetMaxRage;
@@ -650,7 +656,7 @@ public:
     int		m_nLastSyncTargetTargetLifePercent;
     int		m_nLastSyncTargetTargetManaPercent; 
     int		m_nLastSyncTargetTargetRagePercent; 
-    // Í¬³¡¾°¶ÓÓÑÉÏÒ»´ÎÍ¬²½ÊýÖµ
+    // Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½Öµ
     int     m_nLastSyncLocalTeamLifePercent;
     int     m_nLastSyncLocalTeamManaPercent;
     int     m_nLastSyncLocalTeamRagePercent;
@@ -658,7 +664,7 @@ public:
     int     m_nLastSyncLocalTeamMemberMapCopyIndex;
     int     m_nLastSyncLocalTeamMemberPosX;
     int     m_nLastSyncLocalTeamMemberPosY;
-    // ¿ç·þÍ¬²½Êý¾ÝµÄÉÏÒ»´ÎÍ¬²½ÊýÖµ
+    // ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Ýµï¿½ï¿½ï¿½Ò»ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½Öµ
     int     m_nLastSyncGlobalTeamLifePercent;
     int     m_nLastSyncGlobalTeamManaPercent;
     int     m_nLastSyncGlobalTeamRagePercent;
@@ -666,10 +672,10 @@ public:
     int     m_nLastSyncGlobalTeamMemberMapCopyIndex;
     int     m_nLastSyncGlobalTeamMemberPosX;
     int     m_nLastSyncGlobalTeamMemberPosY;
-    // Ä¿±êÉÏ´ÎBuffÍ¬²½
+    // Ä¿ï¿½ï¿½ï¿½Ï´ï¿½BuffÍ¬ï¿½ï¿½
     DWORD	m_dwTargetBuffCRC;
     DWORD	m_dwTargetTargetBuffCRC;
-    // Ä¿±êÉÏ´ÎµôÂäËùÊôÕß
+    // Ä¿ï¿½ï¿½ï¿½Ï´Îµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     DWORD   m_dwTargetDropID;
 
     void DoCycleSynchronous();
@@ -693,7 +699,7 @@ public:
     int   m_nMentorFormationEffectLevel;
 #endif
 
-    BOOL IsFormationLeader(); // ÕóÑÛ
+    BOOL IsFormationLeader(); // ï¿½ï¿½ï¿½ï¿½
 #ifdef _SERVER
     BOOL CanSetFormationLeader();
 
@@ -708,18 +714,18 @@ public:
 #endif
 
     BOOL CanAddFoe();
-    BOOL IsFoe(DWORD dwDestPlayerID); // ÊÇ·ñÔÚÎÒµÄ³ðÈËÁÐ±íÀï
+    BOOL IsFoe(DWORD dwDestPlayerID); // ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ÒµÄ³ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½
 
-// ÕóÓª----------------------------------->
+// ï¿½ï¿½Óª----------------------------------->
 public:
     KCAMP   m_eCamp;
-    BOOL    m_bCampFlag;        //  ÕóÓª¿ª¹Ø
-    time_t  m_nCloseCampFlagTime; // ÕóÓª¿ª¹Ø¹Ø±ÕµÄÊ±¼ä
+    BOOL    m_bCampFlag;        //  ï¿½ï¿½Óªï¿½ï¿½ï¿½ï¿½
+    time_t  m_nCloseCampFlagTime; // ï¿½ï¿½Óªï¿½ï¿½ï¿½Ø¹Ø±Õµï¿½Ê±ï¿½ï¿½
 
     int getCloseCampFlagTime(){return (int)m_nCloseCampFlagTime;}
     void setCloseCampFlagTime(int nCloseCampFlagTime){ m_nCloseCampFlagTime = (time_t)nCloseCampFlagTime;}
     
-    int     m_nCurrentPrestige; //  ÍþÍûÖµ
+    int     m_nCurrentPrestige; //  ï¿½ï¿½ï¿½ï¿½Öµ
     int     m_nKilledCount;
     time_t  m_nNextResetKilledCountTime;
 
@@ -741,9 +747,9 @@ private:
     int GetDiffLevelPercent(int nKillerLevel);
     void CheckReduceKillPoint();
 #endif
-// <----------------------------------ÕóÓª
+// <----------------------------------ï¿½ï¿½Óª
 
-// Ó¢ÐÛ¸±±¾----------------------------------->
+// Ó¢ï¿½Û¸ï¿½ï¿½ï¿½----------------------------------->
 public:
     BOOL m_bHeroFlag;
 
@@ -753,15 +759,15 @@ public:
 #ifdef _SERVER
     KCustomData<MAX_MAP_ID_DATA_SIZE> m_HeroMapCopyOpenFlag;
 #endif
-// <-----------------------------------Ó¢ÐÛ¸±±¾
+// <-----------------------------------Ó¢ï¿½Û¸ï¿½ï¿½ï¿½
    
-// À©Õ¹µã²Ù×÷
+// ï¿½ï¿½Õ¹ï¿½ï¿½ï¿½ï¿½ï¿½
 public:
 #ifdef _SERVER
     BOOL SetExtPoint(int nIndex, short nChangeValue);
 #endif
 
-// ÐÞÕý¸ÅÂÊ----------------------------------->
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½----------------------------------->
 #ifdef _SERVER
 public:
     BOOL SaveRandData(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
@@ -778,9 +784,9 @@ private:
     KProbability<uint64_t, 1024, 32>            m_VenationRand;
 
 public:
-    BOOL AddCoin(int nDeltaCoin);   // ÐÞ¸Ä½ð±Ò
+    BOOL AddCoin(int nDeltaCoin);   // ï¿½Þ¸Ä½ï¿½ï¿½
 #endif
-// <-----------------------------------ÐÞÕý¸ÅÂÊ
+// <-----------------------------------ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 private:
     void UpdateFreeLimitFlag();
@@ -794,12 +800,12 @@ public:
 
     void OpenBox(TItemPos& Pos);
 
-    void AddStaminaAndThew();   // ÔÚÏß»Ø¸´¾«Á¦ÌåÁ¦
+    void AddStaminaAndThew();   // ï¿½ï¿½ï¿½ß»Ø¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     BOOL CanOpenTongRepertory();
 #endif
 
-// Ê¦Í½Ïà¹Ø
+// Ê¦Í½ï¿½ï¿½ï¿½
 public:
     int     m_nMaxApprenticeNum;
     int     m_nAcquiredMentorValue;
@@ -926,7 +932,28 @@ public:
 #ifdef _SERVER
     int LuaSetRepresentID(Lua_State* L);
 #endif
-	
+
+    // ---- exterior (wai-guan) script bindings ----
+    int LuaApplyExterior(Lua_State* L);
+    int LuaUnApplyExterior(Lua_State* L);
+    int LuaIsApplyExterior(Lua_State* L);
+    int LuaAddExterior(Lua_State* L);
+    int LuaAddExteriorSetCount(Lua_State* L);
+    int LuaGetCurrentExteriorSetID(Lua_State* L);
+    int LuaSetCurrentExteriorSetID(Lua_State* L);
+    int LuaGetExteriorSet(Lua_State* L);
+    int LuaSetExteriorSet(Lua_State* L);
+    int LuaDeleteExterior(Lua_State* L);
+    int LuaGetExteriorFreeCount(Lua_State* L);
+    int LuaAddExteriorFreeCount(Lua_State* L);
+    int LuaSetExteriorFreeCount(Lua_State* L);
+    int LuaGetExteriorInfo(Lua_State* L);
+    int LuaGetExteriorSuitInfo(Lua_State* L);
+    int LuaGetExteriorShopPrice(Lua_State* L);
+    int LuaGetExteriorIndex(Lua_State* L);
+    int LuaGetSuitAchievementID(Lua_State* L);
+    int LuaCanAchieveExterior(Lua_State* L);
+
 	int LuaGetBoxType(Lua_State* L);
 	int LuaGetBoxSize(Lua_State* L);
 	int LuaGetContainType(Lua_State* L);
@@ -935,14 +962,14 @@ public:
 	int LuaOpenBank(Lua_State* L);
 	int LuaCloseBank(Lua_State* L);
 
-	int LuaGetEquipPos(Lua_State* L);	//»ñÈ¡×°±¸¿ÉÒÔ×°±¸µÄµØ·½£¬²»ÄÜ×°±¸·µ»Ønil
+	int LuaGetEquipPos(Lua_State* L);	//ï¿½ï¿½È¡×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½ï¿½ÄµØ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½nil
 	int LuaGetFreeRoom(Lua_State* L);
 	int LuaGetFreeRoomSize(Lua_State* L);
     int LuaGetBoxFreeRoomSize(Lua_State* L);
 	int LuaGetFreeRoomInPackage(Lua_State* L);
 	int LuaGetStackRoomInPackage(Lua_State* L);
 	int LuaGetStackRoomInBank(Lua_State* L);
-	int LuaSatisfyRequire(Lua_State* L);	//ÊÇ·ñÂú×ã×°±¸ÐèÇó
+	int LuaSatisfyRequire(Lua_State* L);	//ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     
     int LuaGetItemAmountInAllPackages(Lua_State* L);
 	int LuaGetItemAmount(Lua_State* L);
@@ -982,15 +1009,15 @@ public:
 	int LuaSetQuestBitValue(Lua_State* L);
 	int LuaGetQuestBitValue(Lua_State* L);
 
-	// ÉèÖÃÉ±NpcÊýÁ¿
+	// ï¿½ï¿½ï¿½ï¿½É±Npcï¿½ï¿½ï¿½ï¿½
 	int LuaSetKillNpcCount(Lua_State* L);
-	// ¶ÁÈ¡É±NpcÊýÁ¿
+	// ï¿½ï¿½È¡É±Npcï¿½ï¿½ï¿½ï¿½
 	int LuaGetKillNpcCount(Lua_State* L);
-	// ¶ÁÈ¡ÈÎÎñÊ£ÓàÊ±¼ä
+	// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Ê£ï¿½ï¿½Ê±ï¿½ï¿½
 	int LuaGetQuestLastTime(Lua_State* L);
-	// ÉèÖÃÈÎÎñÊ§°Ü±ê¼Ç
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½Ü±ï¿½ï¿½
 	int LuaSetQuestFailedFlag(Lua_State* L);
-	// ¶ÁÈ¡ÈÎÎñÊ§°Ü±ê¼Ç
+	// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Ê§ï¿½Ü±ï¿½ï¿½
 	int LuaGetQuestFailedFlag(Lua_State* L);
 
 	int LuaAcceptQuest(Lua_State* L);
@@ -1150,7 +1177,7 @@ public:
 	int LuaAddReputation(Lua_State* L);
 	int LuaOpenReputation(Lua_State* L);
 
-	// ¼ÆÊ±Æ÷
+	// ï¿½ï¿½Ê±ï¿½ï¿½
 	int LuaSetTimer(Lua_State* L);
 	int LuaStopTimer(Lua_State* L);
 	int LuaRestartTimer(Lua_State* L);
@@ -1199,7 +1226,7 @@ public:
     //-----------------------------------------
 
 
-    //--- ºÃÓÑ --------------------------------
+    //--- ï¿½ï¿½ï¿½ï¿½ --------------------------------
     int LuaAddFellowship(Lua_State* L);
     int LuaDelFellowship(Lua_State* L);
     int LuaAddFellowshipGroup(Lua_State* L);
@@ -1243,13 +1270,13 @@ public:
 	int LuaMapTest(Lua_State* L);
 	int LuaGetSelectCharacter(Lua_State* L);
     int LuaGetSelectDoodad(Lua_State* L);
-	int LuaAddMapMark(Lua_State* L);	//Ð¡µØÍ¼±ê¼Ç,ÎÊÂ·¹¦ÄÜÓÃ
+	int LuaAddMapMark(Lua_State* L);	//Ð¡ï¿½ï¿½Í¼ï¿½ï¿½ï¿½,ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	int LuaRevive(Lua_State* L);
 	int LuaPlaySound(Lua_State* L);
 	int LuaPlayMiniGame(Lua_State* L);
 	int LuaSendMessageNotify(Lua_State* L);
 #endif
-	int LuaSyncMidMapMark(Lua_State* L);	//ÖÐµØÍ¼±ê¼Ç,Í¬²½Íæ¼Ò×Ô¼ºÔÚµØÍ¼ÉÏ×öµÄ±ê¼Ç
+	int LuaSyncMidMapMark(Lua_State* L);	//ï¿½Ðµï¿½Í¼ï¿½ï¿½ï¿½,Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½Úµï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½
 
 	//------------- PK ----------------------->
 	int LuaCanApplyDuel(Lua_State* L);
@@ -1283,20 +1310,20 @@ public:
     int LuaCanMountItem(Lua_State* L);
     int LuaCanUnMountItem(Lua_State* L);
     
-    //------------- ½»Í¨ ----------------------->
+    //------------- ï¿½ï¿½Í¨ ----------------------->
 #ifdef _SERVER
     int LuaOpenRouteNode(Lua_State* L);
 #endif
     int LuaIsOpenRouteNode(Lua_State* L);
 	//<------------------------------------------
 
-    // ------------- ÐÞÎªÏà¹Ø -------------------->
+    // ------------- ï¿½ï¿½Îªï¿½ï¿½ï¿½ -------------------->
     int LuaAddTrain(Lua_State* L);
     int LuaAddTrainNoLimit(Lua_State* L);
     int LuaSetMaxTrain(Lua_State* L);
     // <-------------------------------------------
 
-    // ----------------- ³É¾ÍÏà¹Ø ---------------->
+    // ----------------- ï¿½É¾ï¿½ï¿½ï¿½ï¿½ ---------------->
     int LuaIsAchievementAcquired(Lua_State* L);
 #ifdef _SERVER
     int LuaAcquireAchievement(Lua_State* L);
@@ -1331,12 +1358,12 @@ public:
 
 #ifdef _CLIENT
     int LuaGetCurrentDesignation(Lua_State* L);
-	//ÉèÖÃµ±Ç°³ÆºÅµÄ×Ö·û´®£¬Ê¹ÓÃcharacterµÄsztitle£¬·½±ã±íÏÖÂß¼­Í³Ò»µ÷ÓÃ
+	//ï¿½ï¿½ï¿½Ãµï¿½Ç°ï¿½ÆºÅµï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½characterï¿½ï¿½sztitleï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½Í³Ò»ï¿½ï¿½ï¿½ï¿½
 	int LuaSetDesignationContent(Lua_State* L);
 #endif
 
 #ifdef _CLIENT
-    // ------------- ¾­Âö ----------------------->
+    // ------------- ï¿½ï¿½ï¿½ï¿½ ----------------------->
     int LuaOpenVenation(Lua_State* L);
     // <------------------------------------------
 #endif
@@ -1396,19 +1423,19 @@ public:
 	int LuaIsVenationSuccess(Lua_State* L);
 #endif
 
-// À©Õ¹µã²Ù×÷
+// ï¿½ï¿½Õ¹ï¿½ï¿½ï¿½ï¿½ï¿½
 #ifdef _SERVER
     int LuaGetExtPoint(Lua_State* L);
     int LuaSetExtPoint(Lua_State* L);
 
-// ¼¤»îÀñÆ·¿¨
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½
     int LuaActivePresentCode(Lua_State* L);
 
     int LuaGetChargeFlag(Lua_State* L);
 
     int LuaIsGM(Lua_State* L);
 
-// Ê¦Í½Ïà¹Ø
+// Ê¦Í½ï¿½ï¿½ï¿½
     int LuaAddMaxApprenticeNum(Lua_State* L);
 #endif
 

@@ -106,6 +106,7 @@ BOOL KPlayer::Init(void)
     BOOL bProfessionListInitFlag    = false;
     BOOL bRecipeListInitFlag        = false;
     BOOL bDesignationFlag           = false;
+    BOOL bExteriorBoxFlag           = false;
     BOOL bQuestRandInitFlag         = false;
     BOOL bVenationRandInitFlag      = false;
 
@@ -140,6 +141,13 @@ BOOL KPlayer::Init(void)
     bRetCode = m_Designation.Init(this);
     KGLOG_PROCESS_ERROR(bRetCode);
     bDesignationFlag = true;
+
+    bRetCode = m_ExteriorBox.Init(this);
+    KGLOG_PROCESS_ERROR(bRetCode);
+    bExteriorBoxFlag = true;
+
+    bRetCode = m_HairBox.Init(this);
+    KGLOG_PROCESS_ERROR(bRetCode);
 
 	m_eKind                 = ckPlayer;
 
@@ -247,6 +255,7 @@ BOOL KPlayer::Init(void)
 
 	memset(m_wRepresentId, 0, sizeof(m_wRepresentId));
     m_dwRepresentIdLock = 0;
+    m_dwApplyExteriorFlag = 0;
 
     m_dwSchoolID = 0;
 
@@ -435,6 +444,12 @@ Exit0:
         }
 #endif
         
+        if (bExteriorBoxFlag)
+        {
+            m_ExteriorBox.UnInit();
+            bExteriorBoxFlag = false;
+        }
+
         if(bDesignationFlag)
         {
             m_Designation.UnInit();
@@ -521,7 +536,7 @@ void KPlayer::UnInit(void)
 
 	m_ScriptTimerList.UnInit();
 
-    if (m_ViewPoint.pRegion != NULL)    // ¹Û²ìµãÒÆ³ý
+    if (m_ViewPoint.pRegion != NULL)    // ï¿½Û²ï¿½ï¿½ï¿½Æ³ï¿½
     {
         m_ViewPoint.Remove();
         m_ViewPoint.pPlayer = NULL;
@@ -560,6 +575,7 @@ void KPlayer::UnInit(void)
 	m_RecipeList.UnInit();
 	m_ProfessionList.UnInit();    
     m_Designation.UnInit();
+    m_ExteriorBox.UnInit();
     m_PK.UnInit();
 	m_BookList.UnInit();
 	m_UserPreferences.UnInit();
@@ -627,13 +643,13 @@ BOOL KPlayer::Activate(void)
     }
 #endif
 
-	// ÒøÐÐ×´Ì¬µÄ¼ì²â
+	// ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½Ä¼ï¿½ï¿½
 	if (m_dwBankNpcID && m_pCell)
 	{
 		KNpc* pNpc = g_pSO3World->m_NpcSet.GetObj(m_dwBankNpcID);
 		if (pNpc)
 		{
-			//¼ì²é¾àÀë,³¬¹ýÁË¾Í¹Ø±ÕÒøÐÐ
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Ë¾Í¹Ø±ï¿½ï¿½ï¿½ï¿½ï¿½
             bRetCode = g_InRange(this, pNpc, COMMON_PLAYER_OPERATION_DISTANCE);
 			if (!bRetCode)
 			{
@@ -649,10 +665,10 @@ BOOL KPlayer::Activate(void)
 	}
 
 #ifdef _SERVER
-	// ÈÎÎñÖ÷Ñ­»·£¬¼ì²âÏÞÊ±ÈÎÎñ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
 	m_QuestList.Activate();
 
-	// ¶¨Ê±Æ÷Ñ­»·
+	// ï¿½ï¿½Ê±ï¿½ï¿½Ñ­ï¿½ï¿½
 	m_ScriptTimerList.Activate();
 
     if ((g_pSO3World->m_nGameLoop - m_dwID) % (GAME_FPS * 10) == 0)
@@ -687,7 +703,7 @@ BOOL KPlayer::Activate(void)
     MAKE_IN_RANGE(m_nCurrentStamina, 0, m_nMaxStamina);
     MAKE_IN_RANGE(m_nCurrentThew, 0, m_nMaxThew);
 
-    // m_pSceneÖ¸ÕëÎª¿Õ±íÊ¾×Ô¼º±»É¾³ýÁË
+    // m_pSceneÖ¸ï¿½ï¿½Îªï¿½Õ±ï¿½Ê¾ï¿½Ô¼ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½
     KG_PROCESS_ERROR(m_pScene);
 
 #ifdef _CLIENT
@@ -725,9 +741,9 @@ BOOL KPlayer::Activate(void)
             }
             else
             {
-                // ÎªÊ²Ã´ÊÇÅÐ¶ÏOwnerÔÚ²»ÔÚÎÒµÄ¶ÓÎéÀïÃæ,¶ø²»ÊÇÅÐ¶Ï"ÎÒÔÚ²»ÔÚOwnerµÄ¶ÓÎéÀïÃæ"ÄØ?
-                // ÕâÊÇÒòÎªOwner¿ÉÄÜÔÝÊ±²»ÔÚ±¾·þÎñÆ÷
-                // "ÎÒ²»ÔÚOwnerµÄ¶ÓÎéÀïÃæ" µÈÐ§ÓÚ "Owner²»ÔÚÎÒµÄ¶ÓÎéÀïÃæ"
+                // ÎªÊ²Ã´ï¿½ï¿½ï¿½Ð¶ï¿½Ownerï¿½Ú²ï¿½ï¿½ï¿½ï¿½ÒµÄ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½"ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½Ownerï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"ï¿½ï¿½?
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎªOwnerï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ú±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                // "ï¿½Ò²ï¿½ï¿½ï¿½Ownerï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" ï¿½ï¿½Ð§ï¿½ï¿½ "Ownerï¿½ï¿½ï¿½ï¿½ï¿½ÒµÄ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
                 bRetCode = g_pSO3World->m_TeamServer.IsPlayerInTeam(m_dwTeamID, dwSceneOwner);
                 if (!bRetCode)
                 {
@@ -834,7 +850,7 @@ BOOL KPlayer::Activate(void)
 #ifdef _SERVER
      ProcessAntiFarmer();
      
-     // ÔÚÏßÇé¿öÏÂÃ¿12·ÖÖÓ»Ø¸´0.2%¾«Á¦&ÌåÁ¦£¨Ã¿Ð¡Ê±»Ø¸´1%£©
+     // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¿12ï¿½ï¿½ï¿½Ó»Ø¸ï¿½0.2%ï¿½ï¿½ï¿½ï¿½&ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¿Ð¡Ê±ï¿½Ø¸ï¿½1%ï¿½ï¿½
      if ((g_pSO3World->m_nGameLoop - m_dwID) % (GAME_FPS * 12 * 60) == 0)
      {
         AddStaminaAndThew();
@@ -884,7 +900,7 @@ BOOL KPlayer::OpenDoodad(KDoodad* pDoodad)
 
     nOpenFrames = pDoodad->GetOpenFrame(this);
     bRetCode    = DoPickPrepare(pDoodad, nOpenFrames);
-    KG_PROCESS_SUCCESS(!bRetCode); // Îªfalse±íÊ¾OTAction²»ÄÜ¸²¸Ç,Ö±½Ó·µ»Ø
+    KG_PROCESS_SUCCESS(!bRetCode); // Îªfalseï¿½ï¿½Ê¾OTActionï¿½ï¿½ï¿½Ü¸ï¿½ï¿½ï¿½,Ö±ï¿½Ó·ï¿½ï¿½ï¿½
 
 #ifdef _SERVER
     if (nOpenFrames > 0 && m_bOnHorse)
@@ -1146,7 +1162,7 @@ Exit0:
 
 void KPlayer::SyncObjectView()
 {
-    int nCount = 0;     // ¶ÔÃ¿¸öÑ­»·Í¬²½µÄ¶ÔÏó¸öÊý×öÏÞÖÆ
+    int nCount = 0;     // ï¿½ï¿½Ã¿ï¿½ï¿½Ñ­ï¿½ï¿½Í¬ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     assert(m_pScene);
     assert(m_pRegion);
@@ -1245,15 +1261,15 @@ void KPlayer::RegisterViewObjectByPlayer(KRegion* pFromRegion, KRegion* pToRegio
     assert(m_pScene);
     assert(pToRegion);
 
-    m_pScene->SetViewObjectRegisterFlag(pToRegion, true);       // 1. ½«ÐÂRegion¼°ÆäÁÚ½ÓRegion±ê¼ÇÎªtrue
-    m_pScene->SetViewObjectRegisterFlag(pFromRegion, false);    // 2. ½«¾ÉRegion¼°ÆäÁÚ½ÓRegion±ê¼ÇÎªfalse,ÐÂ¾ÉÊÓÒ°µÄ½»¼¯»á±»¸²¸ÇÎªfalse
+    m_pScene->SetViewObjectRegisterFlag(pToRegion, true);       // 1. ï¿½ï¿½ï¿½ï¿½Regionï¿½ï¿½ï¿½ï¿½ï¿½Ú½ï¿½Regionï¿½ï¿½ï¿½Îªtrue
+    m_pScene->SetViewObjectRegisterFlag(pFromRegion, false);    // 2. ï¿½ï¿½ï¿½ï¿½Regionï¿½ï¿½ï¿½ï¿½ï¿½Ú½ï¿½Regionï¿½ï¿½ï¿½Îªfalse,ï¿½Â¾ï¿½ï¿½ï¿½Ò°ï¿½Ä½ï¿½ï¿½ï¿½ï¿½á±»ï¿½ï¿½ï¿½ï¿½Îªfalse
 
-    m_pScene->RegisterPlayerToArea(this, pToRegion);            // ½«ÎÒ×¢²áµ½ÐÂRegionµÄËùÓÐViewPoint»òplayerÍ¬²½±íÖÐ
+    m_pScene->RegisterPlayerToArea(this, pToRegion);            // ï¿½ï¿½ï¿½ï¿½×¢ï¿½áµ½ï¿½ï¿½Regionï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ViewPointï¿½ï¿½playerÍ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     if (m_ViewPoint.pRegion)
-        m_pScene->SetViewObjectRegisterFlag(m_ViewPoint.pRegion, false);    // ½«ViewPointRegion¼°ÆäÁÚ½ÓRegion±ê¼ÇÎªfalse
+        m_pScene->SetViewObjectRegisterFlag(m_ViewPoint.pRegion, false);    // ï¿½ï¿½ViewPointRegionï¿½ï¿½ï¿½ï¿½ï¿½Ú½ï¿½Regionï¿½ï¿½ï¿½Îªfalse
 
-    m_pScene->RegisterAreaObjectToPlayer(this, pToRegion);        // ½«È«ÐÂRegionµÄËùÓÐplayer, doodad, npc×¢²áµ½ÎÒµÄÍ¬²½±íÖÐ
+    m_pScene->RegisterAreaObjectToPlayer(this, pToRegion);        // ï¿½ï¿½È«ï¿½ï¿½Regionï¿½ï¿½ï¿½ï¿½ï¿½ï¿½player, doodad, npc×¢ï¿½áµ½ï¿½Òµï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     return;
 }
@@ -1264,10 +1280,10 @@ void KPlayer::RegisterViewObjectByViewPoint(KRegion* pFromRegion, KRegion* pToRe
     assert(pToRegion);
     assert(m_ViewPoint.pRegion);
 
-    m_pScene->SetViewObjectRegisterFlag(pToRegion, true);       // 1. ½«ÐÂRegion¼°ÆäÁÚ½ÓRegion±ê¼ÇÎªtrue
-    m_pScene->SetViewObjectRegisterFlag(pFromRegion, false);    // 2. ½«¾ÉRegion¼°ÆäÁÚ½ÓRegion±ê¼ÇÎªfalse,ÐÂ¾ÉÊÓÒ°µÄ½»¼¯»á±»¸²¸ÇÎªfalse
-    m_pScene->SetViewObjectRegisterFlag(m_pRegion, false);      // 3. ½«playerËùÔÚRegion¼°ÆäÁÚ½ÓRegion±ê¼ÇÎªfalse,ÐÂ¾ÉÊÓÒ°µÄ½»¼¯»á±»¸²¸ÇÎªfalse
-    m_pScene->RegisterAreaObjectToPlayer(this, pToRegion);      // ½«È«ÐÂRegionµÄËùÓÐplayer, doodad, npc×¢²áµ½ÎÒµÄÍ¬²½±íÖÐ
+    m_pScene->SetViewObjectRegisterFlag(pToRegion, true);       // 1. ï¿½ï¿½ï¿½ï¿½Regionï¿½ï¿½ï¿½ï¿½ï¿½Ú½ï¿½Regionï¿½ï¿½ï¿½Îªtrue
+    m_pScene->SetViewObjectRegisterFlag(pFromRegion, false);    // 2. ï¿½ï¿½ï¿½ï¿½Regionï¿½ï¿½ï¿½ï¿½ï¿½Ú½ï¿½Regionï¿½ï¿½ï¿½Îªfalse,ï¿½Â¾ï¿½ï¿½ï¿½Ò°ï¿½Ä½ï¿½ï¿½ï¿½ï¿½á±»ï¿½ï¿½ï¿½ï¿½Îªfalse
+    m_pScene->SetViewObjectRegisterFlag(m_pRegion, false);      // 3. ï¿½ï¿½playerï¿½ï¿½ï¿½ï¿½Regionï¿½ï¿½ï¿½ï¿½ï¿½Ú½ï¿½Regionï¿½ï¿½ï¿½Îªfalse,ï¿½Â¾ï¿½ï¿½ï¿½Ò°ï¿½Ä½ï¿½ï¿½ï¿½ï¿½á±»ï¿½ï¿½ï¿½ï¿½Îªfalse
+    m_pScene->RegisterAreaObjectToPlayer(this, pToRegion);      // ï¿½ï¿½È«ï¿½ï¿½Regionï¿½ï¿½ï¿½ï¿½ï¿½ï¿½player, doodad, npc×¢ï¿½áµ½ï¿½Òµï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     return;
 }
@@ -1373,7 +1389,7 @@ void KPlayer::AddExp(int nExpIncrement)
 
     KG_PROCESS_ERROR(nExpIncrement > 0);
     
-	// Èç¹û´ïµ½×î¸ßµÈ¼¶£¬Ôò²»ÔÊÐí¼Ó¾­Ñé
+	// ï¿½ï¿½ï¿½ï¿½ïµ½ï¿½ï¿½ßµÈ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¾ï¿½ï¿½ï¿½
 	KG_PROCESS_ERROR(m_nLevel < m_nMaxLevel);
 
 	m_nExperience += nExpIncrement;
@@ -1501,7 +1517,7 @@ void KPlayer::SetLevel(int nLevel)
         CallAttributeFunction(atRunSpeedBase, false, pLevelUpData->nRunSpeed, 0);
         CallAttributeFunction(atJumpSpeedBase, false, pLevelUpData->nJumpSpeed, 0);
 
-        // ------------ ÊôÐÔ»Ø¸´ ----------------------------
+        // ------------ ï¿½ï¿½ï¿½Ô»Ø¸ï¿½ ----------------------------
         CallAttributeFunction(atLifeReplenish, false, pLevelUpData->nLifeReplenish, 0);
         CallAttributeFunction(atLifeReplenishPercent, false, pLevelUpData->nLifeReplenishPercent, 0);
         CallAttributeFunction(atLifeReplenishExt, false, pLevelUpData->nLifeReplenishExt, 0);
@@ -1509,17 +1525,17 @@ void KPlayer::SetLevel(int nLevel)
         CallAttributeFunction(atManaReplenishPercent, false, pLevelUpData->nManaReplenishPercent, 0);
         CallAttributeFunction(atManaReplenishExt, false, pLevelUpData->nManaReplenishExt, 0);
 
-        // ------------- ¼¼ÄÜÃüÖÐÖµ -----------------------------
+        // ------------- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ -----------------------------
         CallAttributeFunction(atPhysicsHitBaseRate, false, pLevelUpData->nHitBase, 0);
         CallAttributeFunction(atSolarHitBaseRate, false, pLevelUpData->nHitBase, 0);
         CallAttributeFunction(atNeutralHitBaseRate, false, pLevelUpData->nHitBase, 0);
         CallAttributeFunction(atLunarHitBaseRate, false, pLevelUpData->nHitBase, 0);
         CallAttributeFunction(atPoisonHitBaseRate, false, pLevelUpData->nHitBase, 0);
 
-        // ------------- ÕÐ¼Ü¼¸ÂÊ -----------------------------
+        // ------------- ï¿½Ð¼Ü¼ï¿½ï¿½ï¿½ -----------------------------
         CallAttributeFunction(atParryBaseRate, false, pLevelUpData->nParryBaseRate, 0);
 
-        // ------------- ¼¼ÄÜ±©»÷Öµ -----------------------------
+        // ------------- ï¿½ï¿½ï¿½Ü±ï¿½ï¿½ï¿½Öµ -----------------------------
         CallAttributeFunction(atPhysicsCriticalStrike, false, pLevelUpData->nPhysicsCriticalStrike, 0);
         CallAttributeFunction(atSolarCriticalStrike, false, pLevelUpData->nSolarCriticalStrike, 0);
         CallAttributeFunction(atNeutralCriticalStrike, false, pLevelUpData->nNeutralCriticalStrike, 0);
@@ -1545,7 +1561,7 @@ void KPlayer::SetLevel(int nLevel)
     CallAttributeFunction(atRunSpeedBase, true, pLevelUpData->nRunSpeed, 0);
     CallAttributeFunction(atJumpSpeedBase, true, pLevelUpData->nJumpSpeed, 0);
 
-    // ------------ ÊôÐÔ»Ø¸´ ----------------------------
+    // ------------ ï¿½ï¿½ï¿½Ô»Ø¸ï¿½ ----------------------------
     CallAttributeFunction(atLifeReplenish, true, pLevelUpData->nLifeReplenish, 0);
     CallAttributeFunction(atLifeReplenishPercent, true, pLevelUpData->nLifeReplenishPercent, 0);
     CallAttributeFunction(atLifeReplenishExt, true, pLevelUpData->nLifeReplenishExt, 0);
@@ -1553,14 +1569,14 @@ void KPlayer::SetLevel(int nLevel)
     CallAttributeFunction(atManaReplenishPercent, true, pLevelUpData->nManaReplenishPercent, 0);
     CallAttributeFunction(atManaReplenishExt, true, pLevelUpData->nManaReplenishExt, 0);
 
-    // ------------- ¼¼ÄÜÃüÖÐÖµ -------------------------
+    // ------------- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ -------------------------
     CallAttributeFunction(atPhysicsHitBaseRate, true, pLevelUpData->nHitBase, 0);
     CallAttributeFunction(atSolarHitBaseRate, true, pLevelUpData->nHitBase, 0);
     CallAttributeFunction(atNeutralHitBaseRate, true, pLevelUpData->nHitBase, 0);
     CallAttributeFunction(atLunarHitBaseRate, true, pLevelUpData->nHitBase, 0);
     CallAttributeFunction(atPoisonHitBaseRate, true, pLevelUpData->nHitBase, 0);
 
-    // ------------- ÕÐ¼Ü¼¸ÂÊ -----------------------------
+    // ------------- ï¿½Ð¼Ü¼ï¿½ï¿½ï¿½ -----------------------------
     CallAttributeFunction(atParryBaseRate, true, pLevelUpData->nParryBaseRate, 0);
 
     // --------------------------------------------------
@@ -1827,33 +1843,33 @@ BOOL KPlayer::Load(BYTE* pbyData, size_t uDataLen)
 
     UpdateFreeLimitFlag();
 
-    // ¼ÓÔØÍê ExtRoleData Ö®ºóÔÙ´¦Àí
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ExtRoleData Ö®ï¿½ï¿½ï¿½Ù´ï¿½ï¿½ï¿½
     if (nNewDay != nOldDay)
     {
         bRetCode = RefreshDailyVariable((int)(nNewDay - nOldDay));
         KGLOG_CHECK_ERROR(bRetCode);
     }
 
-    // ÏòCenter¸üÐÂ ×î´óÍ½µÜÊý
+    // ï¿½ï¿½Centerï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í½ï¿½ï¿½ï¿½ï¿½
     g_RelayClient.DoUpdateMaxApprenticeNum(m_dwID, m_nMaxApprenticeNum);
 
-    // Í¬²½ChargeFlag
+    // Í¬ï¿½ï¿½ChargeFlag
     g_PlayerServer.DoSyncFreeLimitFlagInfo(this);
 
-    // Í¬²½×´Ì¬
+    // Í¬ï¿½ï¿½×´Ì¬
     g_PlayerServer.DoSyncPlayerStateInfo(this);
     
     g_PlayerServer.DoSyncKillPoint(this);
 
     g_pSO3World->m_FellowshipMgr.LoadFellowshipData(m_dwID);
 
-    // Ïò¿Í»§¶ËÍ¬²½ÆäËùÊô¶ÓÎéÊý¾Ý
+    // ï¿½ï¿½Í»ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     g_PlayerServer.DoLoginTeamSync(this);
 
-    // BuffÍ¬²½:
+    // BuffÍ¬ï¿½ï¿½:
     g_PlayerServer.DoSyncBuffList(this, this);
 
-    // Í¬²½³¡¾°·ÃÎÊ¼ÇÂ¼
+    // Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½Â¼
     g_PlayerServer.DoSyncVisitMapInfo(this);
 
     if (!m_OpenRouteNodeList.empty())
@@ -2013,6 +2029,16 @@ BOOL KPlayer::LoadExtRoleData(BYTE* pbyData, size_t uDataLen)
 
         case rbtDesignationData:
             bRetCode = m_Designation.Load(pbyOffset, pBlock->dwLen);
+            KGLOG_PROCESS_ERROR(bRetCode);
+            break;
+
+        case rbtExteriorData:
+            bRetCode = m_ExteriorBox.Load(pbyOffset, pBlock->dwLen);
+            KGLOG_PROCESS_ERROR(bRetCode);
+            break;
+
+        case rbtHairBoxData:
+            bRetCode = m_HairBox.Load(pbyOffset, pBlock->dwLen);
             KGLOG_PROCESS_ERROR(bRetCode);
             break;
 
@@ -2335,6 +2361,8 @@ BOOL KPlayer::Save(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize)
     SAVE_ROLE_BLOCK(SaveRandData, rbtRandData, 0);
     SAVE_ROLE_BLOCK(m_Achievement.Save, rbtAchievementData, 0);
     SAVE_ROLE_BLOCK(m_Designation.Save, rbtDesignationData, 0);
+    SAVE_ROLE_BLOCK(m_ExteriorBox.Save, rbtExteriorData, 0);
+    SAVE_ROLE_BLOCK(m_HairBox.Save, rbtHairBoxData, 0);
     SAVE_ROLE_BLOCK(m_AntiFarmer.Save, rbtAntiFarmerData, 0);
     SAVE_ROLE_BLOCK(SaveMentorData, rbtMentorData, 0);
 
@@ -2429,7 +2457,7 @@ BOOL KPlayer::LoadBaseInfo(KRoleBaseInfo* pBaseInfo)
     MAKE_IN_RANGE(pBaseInfo->CurrentPos.nY, 0, nMaxY);
     MAKE_IN_RANGE(pBaseInfo->CurrentPos.nZ, 0, MAX_Z_POINT);
 
-    // Íæ¼ÒµÇÂ¼¹ý³ÌÖÐ,LoadµÄÊ±ºò,»¹Ã»ÓÐÕæÕýµÄ°ÑÍæ¼ÒÌí¼Óµ½³¡¾°ÖÐÈ¥,µ½¿Í»§¶ËAckDataµÄÊ±ºò²Å»áÕæÕýÌí¼Ó
+    // ï¿½ï¿½Òµï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,Loadï¿½ï¿½Ê±ï¿½ï¿½,ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¥,ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½AckDataï¿½ï¿½Ê±ï¿½ï¿½Å»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     m_SavePosition.dwMapID          = pBaseInfo->CurrentPos.dwMapID;
     m_SavePosition.nMapCopyIndex    = pBaseInfo->CurrentPos.nMapCopyIndex;
     m_SavePosition.nX               = pBaseInfo->CurrentPos.nX;
@@ -2482,11 +2510,11 @@ BOOL KPlayer::RealSwitchMap(DWORD dwMapID, int nCopyIndex, int nX, int nY, int n
 
     KGLOG_PROCESS_ERROR(m_eGameStatus == gsPlaying);
 
-    // ÕâÀï½«Ô­À´µÄÎ»ÖÃ¼ÇÂ¼ÏÂÀ´,Search mapÊ§°ÜµÄ»°»¹ÒªÓÃÕâ¸ö¼ÇÂ¼À´»Ö¸´Ô­À´µÄÎ»ÖÃ
+    // ï¿½ï¿½ï¿½ï½«Ô­ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ã¼ï¿½Â¼ï¿½ï¿½ï¿½ï¿½,Search mapÊ§ï¿½ÜµÄ»ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½Ö¸ï¿½Ô­ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
     bRetCode = SavePosition();
     KGLOG_PROCESS_ERROR(bRetCode);
 
-    // Í£Ö¹ÒÆ¶¯£¬·ñÔò»áµ¼ÖÂ¿Í»§¶ËºÍ·þÎñÆ÷×´Ì¬²»Ò»ÖÂ¡£
+    // Í£Ö¹ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½áµ¼ï¿½Â¿Í»ï¿½ï¿½ËºÍ·ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½Ò»ï¿½Â¡ï¿½
     if (m_eMoveState != cmsOnDeath && m_eMoveState != cmsOnAutoFly)
     {
         m_nConvergenceSpeed = 0;
@@ -2506,7 +2534,7 @@ BOOL KPlayer::RealSwitchMap(DWORD dwMapID, int nCopyIndex, int nX, int nY, int n
 
     m_eGameStatus = gsSearchMap;
 
-    m_nBanishTime = 0; // µ¹¼ÆÊ±½áÊø£»»òÕßÍæ¼ÒÔÚµ¹¼ÆÊ±ÄÚÖ÷¶¯Àë¿ª¸±±¾£¬ÕâÊ±ºò½áÊøµ¹¼ÆÊ±
+    m_nBanishTime = 0; // ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë¿ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±
 
     bResult = true;
 Exit0:
@@ -2888,7 +2916,7 @@ CRAFT_RESULT_CODE KPlayer::CanCastProfessionSkill(DWORD dwCraftID, DWORD dwRecip
 Exit0:
 	if (nResult != crcSuccess)
 	{
-		//³ö´íÊ±Í¨Öª½çÃæ
+		//ï¿½ï¿½ï¿½ï¿½Ê±Í¨Öªï¿½ï¿½ï¿½ï¿½
 #ifdef _SERVER
 		KCraftCastState CraftCastState;
 		CraftCastState.dwCraftID    = dwCraftID;
@@ -2965,7 +2993,7 @@ CRAFT_RESULT_CODE KPlayer::CastProfessionSkill(DWORD dwCraftID, DWORD dwRecipeID
 #else
     if (m_dwID == g_pSO3World->m_dwClientPlayerID)
     {
-	    //Í¨ÖªUIÊÂ¼þ,¿ªÊ¼×ß½ø¶È
+	    //Í¨ÖªUIï¿½Â¼ï¿½,ï¿½ï¿½Ê¼ï¿½ß½ï¿½ï¿½ï¿½
         if (g_pGameWorldUIHandler)
         {
             KUIEventRecipeProgress UIParam;
@@ -2995,7 +3023,7 @@ int KPlayer::GetCDValue(DWORD dwCooldownID)
     nResult = g_pSO3World->m_Settings.m_CoolDownList.GetCoolDownValue(dwCooldownID);
     //KG_ASSERT_EXIT(nDuration > 0);
 
-    // TODO: ²éÍæ¼ÒÌì¸³,Ä³Ð©Ìì¸³¿ÉÒÔ¼õÉÙÄ³Ð©Cool downÊ±¼ä
+    // TODO: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì¸³,Ä³Ð©ï¿½ì¸³ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½Ä³Ð©Cool downÊ±ï¿½ï¿½
     // ... ...
     
     return nResult;
@@ -3203,7 +3231,7 @@ QUEST_DIFFICULTY_LEVEL KPlayer::GetQuestDiffcultyLevel(DWORD dwQuestID)
     pQuestInfo = g_pSO3World->m_Settings.m_QuestInfoList.GetQuestInfo(dwQuestID);
     KGLOG_PROCESS_ERROR(pQuestInfo);
     
-    if (pQuestInfo->byLevel == 0) // ÄÑ¶ÈµÈ¼¶Îª0µÄÈÎÎñ£¬×ÜÊÇÏÔÊ¾»ÆÉ«
+    if (pQuestInfo->byLevel == 0) // ï¿½Ñ¶ÈµÈ¼ï¿½Îª0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½É«
     {
         nResult = qdlProperLevel;
         goto Exit0;
@@ -3254,7 +3282,7 @@ BOOL KPlayer::CopyTalkData(DWORD dwTalkerID, size_t uSize, BYTE* pbyData)
 
     s_bFilterTalkText = false;
     if (dwTalkerID)
-        s_bFilterTalkText = IS_PLAYER(dwTalkerID); // Ö»ÓÐÍæ¼ÒµÄÁÄÌìÐÅÏ¢ÐèÒª¹ýÂË
+        s_bFilterTalkText = IS_PLAYER(dwTalkerID); // Ö»ï¿½ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½
 
     bResult = true;
 Exit0:
@@ -3372,7 +3400,7 @@ int KPlayer::GetPlayerRelation(KPlayer* pTarget)
         pSelfCell = m_pRegion->GetLowestObstacle(m_nXCell, m_nYCell);
         pTargetCell = pTarget->m_pRegion->GetLowestObstacle(m_nXCell, m_nYCell);
 
-        if (pSelfCell && pTargetCell && pSelfCell->m_BaseInfo.dwRest || pTargetCell->m_BaseInfo.dwRest) // ÓÐÈËÔÚÐÝÏ¢Çø·µ»ØÖÐÁ¢
+        if (pSelfCell && pTargetCell && pSelfCell->m_BaseInfo.dwRest || pTargetCell->m_BaseInfo.dwRest) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         {
             nRelation |= sortNeutrality; 
 	        nRelation &= ~sortAlly;
@@ -3543,7 +3571,7 @@ BOOL KPlayer::ReverseFrame(int nFrame)
 
     bResult = true;
 Exit0:
-    // ·¢ÉúÒ»´Î»Ø¹öÒÔºó,ÀúÊ·¼ÇÂ¼¼´¿É×÷·Ï,²»»áÔÙ»Ø¹öµ½ÕâÖ®Ç°
+    // ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Î»Ø¹ï¿½ï¿½Ôºï¿½,ï¿½ï¿½Ê·ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Ù»Ø¹ï¿½ï¿½ï¿½ï¿½ï¿½Ö®Ç°
     m_nRecordCount = 0;
     return bResult;
 }
@@ -3569,7 +3597,7 @@ BOOL KPlayer::CheckMoveAdjust(int nClientFrame, const KMOVE_CRITICAL_PARAM& crPa
     KG_PROCESS_ERROR(m_nY == crParam.nY);
     KG_PROCESS_ERROR(m_nZ == crParam.nZ);
 
-    bResult = false; // ·µ»Øfalse±íÊ¾ÎÞÐëÐÞÕý
+    bResult = false; // ï¿½ï¿½ï¿½ï¿½falseï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 Exit0:
     return bResult;
 }
@@ -3580,121 +3608,121 @@ void KPlayer::DoCycleSynchronous()
 {
     int nFrame = g_pSO3World->m_nGameLoop - (int)m_dwID;
 
-    // Ïò×Ô¼ºÍ¬²½×î´óÑªÁ¿
+    // ï¿½ï¿½ï¿½Ô¼ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Ñªï¿½ï¿½
     if (nFrame % 5 == 0)
     {
         g_PlayerServer.DoSyncSelfMaxLMRS(this);
     }
 
-    // Ïò×Ô¼ºÍ¬²½µ±Ç°ÑªÁ¿
+    // ï¿½ï¿½ï¿½Ô¼ï¿½Í¬ï¿½ï¿½ï¿½ï¿½Ç°Ñªï¿½ï¿½
     if (nFrame % 3 == 0)
     {
         g_PlayerServer.DoSyncSelfCurrentLMRS(this);
     }
 
-    // Ïò×Ô¼ºÍ¬²½µ±Ç°ÆÆÕÀ
+    // ï¿½ï¿½ï¿½Ô¼ï¿½Í¬ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½
     if (nFrame % 5 == 0)
     {
         g_PlayerServer.DoSyncSelfWeakInfo(this);
     }
 
-    // Ïò×Ô¼ºÍ¬²½Ä¿±êµÄ×î´óÑªÁ¿
+    // ï¿½ï¿½ï¿½Ô¼ï¿½Í¬ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñªï¿½ï¿½
     if (nFrame % 8 == 0)
     {
         g_PlayerServer.DoSyncTargetMaxLMR(this);
     }
 
-    // Ïò×Ô¼ºÍ¬²½Ä¿±êµÄµ±Ç°ÑªÁ¿
+    // ï¿½ï¿½ï¿½Ô¼ï¿½Í¬ï¿½ï¿½Ä¿ï¿½ï¿½Äµï¿½Ç°Ñªï¿½ï¿½
     if (nFrame % 4 == 0)
     {
         g_PlayerServer.DoSyncTargetCurrentLMR(this);
     }
 
-    // Ïò×Ô¼ºÍ¬²½Ä¿±êµÄµ±Ç°ÆÆÕÀ
+    // ï¿½ï¿½ï¿½Ô¼ï¿½Í¬ï¿½ï¿½Ä¿ï¿½ï¿½Äµï¿½Ç°ï¿½ï¿½ï¿½ï¿½
     if (nFrame % 4 == 0)
     {
         g_PlayerServer.DoSyncTargetWeakInfo(this);
     }
 
-    // Í¬²½Íæ¼ÒÑ¡ÔñÄ¿±êµÄBuff list
+    // Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½Buff list
     if (nFrame % GAME_FPS == 0)
     {
         g_PlayerServer.DoSyncTargetBuffList(this);
     }
 
-    // Í¬²½Íæ¼ÒÑ¡ÔñÄ¿±êµôÂäËùÊô
+    // Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     if (nFrame % GAME_FPS == 0)
     {
         g_PlayerServer.DoSyncTargetDropID(this);
     }
 
-    // Í¬²½Íæ¼ÒÑ¡ÔñµÄÄ¿±êµÄÄ¿±êµÄ×î´óÑªÁ¿
+    // Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñªï¿½ï¿½
     if (nFrame % GAME_FPS == 0)
     {
         g_PlayerServer.DoSyncTargetTargetMaxLMR(this);
     }
 
-    // Í¬²½Íæ¼ÒÑ¡ÔñµÄÄ¿±êµÄÄ¿±êµÄµ±Ç°ÑªÁ¿
+    // Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½Äµï¿½Ç°Ñªï¿½ï¿½
     if (nFrame % 8 == 0)
     {
         g_PlayerServer.DoSyncTargetTargetCurrentLMR(this);
     }
 
-    // Í¬²½Íæ¼ÒÑ¡ÔñµÄÄ¿±êµÄÄ¿±êµÄBuff List
+    // Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½Buff List
     if (nFrame % GAME_FPS == 0)
     {
         g_PlayerServer.DoSyncTargetTargetBuffList(this);
     }
 
-    // È«¾ÖÍ¬²½¶ÓÓÑ×î´óÑªÁ¿µÈ
+    // È«ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñªï¿½ï¿½ï¿½ï¿½
     if (nFrame % GAME_FPS == 0)
     {
 	    g_RelayClient.DoTeamSyncMemberMaxLMR(this);
     }
 
-    // ¿ç·þÍ¬²½¶ÓÓÑµ±Ç°ÑªÁ¿µÈ
+    // ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Ñµï¿½Ç°Ñªï¿½ï¿½ï¿½ï¿½
     if (nFrame % GAME_FPS == 0)
     {
 	    g_RelayClient.DoTeamSyncMemberCurrentLMR(this);
     }
 
-    // Í¬²½¸½½ü¶ÓÓÑµ±Ç°ÉúÃü,×¢Òâ,Õâ¸öÍ¬²½µÄÆµÂÊ»á±»¿ç·þÍ¬²½¸²¸Ç
+    // Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñµï¿½Ç°ï¿½ï¿½ï¿½ï¿½,×¢ï¿½ï¿½,ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½Æµï¿½Ê»á±»ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     if (nFrame % 7 == 0)
     {
 	    g_PlayerServer.DoSyncTeamMemberCurrentLMRLocal(this);
     }
 
-    // ¿ç·þÍ¬²½¶ÓÓÑµ±Ç°Î»ÖÃ
+    // ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Ñµï¿½Ç°Î»ï¿½ï¿½
     if (nFrame % (GAME_FPS * 2) == 0)
     {
 	    g_RelayClient.DoSyncTeamMemberPosition(this);
     }
 
-    // ±¾µØÍ¬²½¶ÓÓÑµ±Ç°Î»ÖÃ,×¢Òâ,Õâ¸öÍ¬²½µÄÆµÂÊ»á±»¿ç·þÍ¬²½¸²¸Ç
+    // ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Ñµï¿½Ç°Î»ï¿½ï¿½,×¢ï¿½ï¿½,ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½Æµï¿½Ê»á±»ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     if (nFrame % GAME_FPS == 0)
     {
 	    g_PlayerServer.DoSyncTeamMemberPositionLocal(this);
     }
 
-    // È«¾ÖÍ¬²½¶ÓÓÑÔÓÏî²ÎÊý
+    // È«ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     if (nFrame % (2 * GAME_FPS) == 0)
     {
 	    g_RelayClient.DoTeamSyncMemberMisc(this);
     }
 
-    // ÏòÖÜÎ§¹ã²¥µ±Ç°ÑªÁ¿
+    // ï¿½ï¿½ï¿½ï¿½Î§ï¿½ã²¥ï¿½ï¿½Ç°Ñªï¿½ï¿½
     if (nFrame % GAME_FPS == 0)
     {
         g_PlayerServer.DoBroadcastCharacterLife(this);
     }
 
-    // Í¬²½¾«Á¦ÌåÁ¦
+    // Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     if (nFrame % GAME_FPS == 0)
     {
 	    g_PlayerServer.DoSyncSelfCurrentST(this);
     }
 
-    // Í¬²½ÕóÓªÐÅÏ¢
+    // Í¬ï¿½ï¿½ï¿½ï¿½Óªï¿½ï¿½Ï¢
     if (nFrame % (GAME_FPS * 30) == 0)
     {
         g_PlayerServer.DoSyncCampInfo(this);
@@ -3786,10 +3814,10 @@ BOOL KPlayer::AddTrain(int nTrain)
 
     if (nTrain >= 0)
     {
-        m_nCurrentTrainValue = min(m_nMaxTrainValue, m_nCurrentTrainValue); // ÊÇ·ñ³¬¹ýÉÏÏÞ
-        m_nCurrentTrainValue = max(m_nCurrentTrainValue, nOldTrainValue);   // ÒÑ¾­³¬¹ýÉÏÏÞµÄ£¬Ö»ÊÇ²»Ôö¼Ó
+        m_nCurrentTrainValue = min(m_nMaxTrainValue, m_nCurrentTrainValue); // ï¿½Ç·ñ³¬¹ï¿½ï¿½ï¿½ï¿½ï¿½
+        m_nCurrentTrainValue = max(m_nCurrentTrainValue, nOldTrainValue);   // ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÞµÄ£ï¿½Ö»ï¿½Ç²ï¿½ï¿½ï¿½ï¿½ï¿½
     }
-    // else ÆäËûÇé¿ö²»×ö´¦Àí¡£
+    // else ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     g_LogClient.LogTrainvalueChange(m_nCurrentTrainValue - nOldTrainValue, m_szAccount, m_szName);
 
@@ -3958,7 +3986,7 @@ BOOL KPlayer::SyncFormationCoefficient()
     KTeam*  pTeam    = NULL;
     DWORD   dwTeamID = GetCurrentTeamID();
 
-    KG_PROCESS_SUCCESS(dwTeamID == ERROR_ID); // Ã»ÓÐ¶ÓÎé¾Í²»ÓÃÍ¬²½ÁË
+    KG_PROCESS_SUCCESS(dwTeamID == ERROR_ID); // Ã»ï¿½Ð¶ï¿½ï¿½ï¿½Í²ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½
 
     pTeam = g_pSO3World->m_TeamServer.GetTeam(dwTeamID);
     if (!pTeam)
@@ -4185,7 +4213,7 @@ BOOL KPlayer::SetCamp(KCAMP eNewCamp)
 		    KPlayer* pClientPlayer = (KPlayer*)this;
 		    KGLOG_PROCESS_ERROR(pClientPlayer);
 
-            pClientPlayer->m_QuestList.UpdateNpcQuestMark(-1); // ¸üÐÂÈÎÎñÖÜÎ§NpcµÄÈÎÎñ±ê¼Ç
+            pClientPlayer->m_QuestList.UpdateNpcQuestMark(-1); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î§Npcï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             
             g_pGameWorldUIHandler->OnUpdateAllRelation();
             g_pGameWorldRepresentHandler->OnCharacterUpdateAllRelation();
@@ -4287,7 +4315,7 @@ BOOL KPlayer::AddPrestige(int nAddPrestige)
         nAddPrestige = (int)(nAddPrestige * llPrestigePercent / KILO_NUM);
 
         KG_PROCESS_SUCCESS(m_nCurrentPrestige >= g_pSO3World->m_Settings.m_ConstList.nMaxPrestige);
-        KGLOG_PROCESS_ERROR(m_nCurrentPrestige < (m_nCurrentPrestige + nAddPrestige)); // ·ÀÖ¹ÉÏÒç
+        KGLOG_PROCESS_ERROR(m_nCurrentPrestige < (m_nCurrentPrestige + nAddPrestige)); // ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½
 
         if (m_nCurrentPrestige + nAddPrestige > g_pSO3World->m_Settings.m_ConstList.nMaxPrestige)
         {
@@ -4299,7 +4327,7 @@ BOOL KPlayer::AddPrestige(int nAddPrestige)
     m_nCurrentPrestige += nAddPrestige;
     if (m_nCurrentPrestige < 0)
     {
-        m_nCurrentPrestige = 0; // ÍþÍûÖµ·Ç¸º
+        m_nCurrentPrestige = 0; // ï¿½ï¿½ï¿½ï¿½Öµï¿½Ç¸ï¿½
     }
 
 Exit1:
@@ -4339,7 +4367,7 @@ void KPlayer::ProcessCampPK(DWORD dwKillerID)
         }
     }
 
-    KG_PROCESS_ERROR(eMyCamp != cNeutral); // ÖÐÁ¢ÕóÓª²»×ö´¦Àí
+    KG_PROCESS_ERROR(eMyCamp != cNeutral); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     
     cpThreatNode = m_SimpThreatList.GetFirstThreat(thtMainThreat);
     KG_PROCESS_ERROR(cpThreatNode);
@@ -4356,7 +4384,7 @@ void KPlayer::ProcessCampPK(DWORD dwKillerID)
     
     uKillerCount = vecAllKillerID.size();
     
-    // ´¦ÀíÏàÍ¬ÕóÓªµÄ³Í·£
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½Óªï¿½Ä³Í·ï¿½
     if (m_pScene->m_nType != emtDungeon && m_pScene->m_nType != emtBattleField)
     {
         for (size_t i = 0; i < uKillerCount; ++i)
@@ -4388,7 +4416,7 @@ void KPlayer::ProcessCampPK(DWORD dwKillerID)
     MAKE_IN_RANGE(nKillCountIndex, 0, MAX_KILL_COUNT - 1);
     nKilledCountPercent = pConstList->nKilledCountPercent[nKillCountIndex];
 
-    // ¸øKiller¼ÓÍþÍû
+    // ï¿½ï¿½Killerï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     if (pKiller->m_eCamp != eMyCamp)
     {
         if (uKillerCount == 1)
@@ -4420,7 +4448,7 @@ void KPlayer::ProcessCampPK(DWORD dwKillerID)
         g_pSO3World->m_StatDataServer.UpdatePrestigeStat(pKiller, nAddPrestige, "KILL");
     }
     
-    // ¸øÍ¬²½·¶Î§ÄÚµÄÐ¡¶Ó¶ÓÓÑ¼ÓÍþÍû
+    // ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½Î§ï¿½Úµï¿½Ð¡ï¿½Ó¶ï¿½ï¿½Ñ¼ï¿½ï¿½ï¿½ï¿½ï¿½
     dwTeamID = pKiller->GetCurrentTeamID();
     if (dwTeamID != ERROR_ID && pKiller->m_eCamp != eMyCamp)
     {
@@ -4474,7 +4502,7 @@ void KPlayer::ProcessCampPK(DWORD dwKillerID)
         }
     }
     
-    // ¸øAssistKiller¼ÓÍþÍû,¿ÉÄÜÍ¬Ê±Ò²ÊÇ¶ÓÓÑ
+    // ï¿½ï¿½AssistKillerï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½Í¬Ê±Ò²ï¿½Ç¶ï¿½ï¿½ï¿½
     for (size_t i = 0; i < uKillerCount; ++i)
     {
         KPlayer* pPlayer = vecAllKillerID[i];
@@ -4499,7 +4527,7 @@ void KPlayer::ProcessCampPK(DWORD dwKillerID)
         g_pSO3World->m_StatDataServer.UpdatePrestigeStat(pPlayer, nAddPrestige, "KILL");
     }
     
-    // ËÀÍö¿ÛÍþÍû
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     if (pKiller->m_eCamp != cNeutral && pKiller->m_eCamp != eMyCamp)
     {
         if (m_pScene->m_nType != emtBattleField)

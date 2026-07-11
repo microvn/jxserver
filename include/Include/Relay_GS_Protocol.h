@@ -202,163 +202,185 @@ enum KS2R_PROTOCOL
 enum KR2S_PROTOCOL
 {
 	r2s_protocol_begin = 0,
-
-	r2s_handshake_respond,
-    r2s_quit_notify,
-	r2s_create_map_notify,
-    r2s_finish_create_map_notify,
-	r2s_delete_map_notify,
-    
-    r2s_player_login_request,
-	r2s_search_map_respond,
-    r2s_transfer_player_request,    
-    r2s_transfer_player_respond,
-    r2s_confirm_player_login_respond,
-
-	r2s_kick_account_notify,
-
-    // ------------- 组队相关协议 --------------------------------	
-	r2s_invite_player_join_team_request,
-    r2s_apply_join_team_request,
-    r2s_team_create_notify,
-    r2s_team_add_member_notify,
-    r2s_team_del_member_notify,
-    r2s_team_change_authority_notify,
-    r2s_team_set_loot_mode_notify,
-    r2s_team_disband_notify,
-    r2s_sync_team_member_online_flag,
-    r2s_sync_team_member_max_lmr,
-    r2s_sync_team_member_current_lmr,
-    r2s_sync_team_member_misc,
-    r2s_sync_team_member_position,
-    r2s_party_message_notify,
-    r2s_team_set_formation_leader_notify,
-    r2s_team_set_mark_respond,
-    r2s_team_camp_change,
-    r2s_team_level_up_raid_notify,
-    r2s_team_change_member_group_notify,
-
-    // ---------------- 聊天相关 --------------------------------------
-    r2s_player_talk_error,
-    r2s_player_talk_whisper_success_respond, 
-    r2s_talk_message,
-
-    // ---------------- 好友相关 --------------------------------------
-    r2s_apply_fellowship_data_respond,
-    r2s_add_fellowship_respond, 
-    r2s_get_fellowship_name_respond, 
-    r2s_sync_fellowship_mapid, 
-    r2s_sync_fellowship_player_level, 
-    r2s_sync_fellowship_player_forceid, 
-    r2s_add_fellowship_notify,
-
-    // ---------------- 邮件系统 --------------------------------------
-    r2s_send_mail_respond,
-    r2s_get_maillist_respond,
-    r2s_sync_mail_content,
-    r2s_give_mail_money_to_player,
-    r2s_give_mail_item_to_player,
-    r2s_new_mail_notify,
-    r2s_mail_general_respond,
-    // ----------------------------------------------------------------
-
-	r2s_sync_mid_map_mark,
-    
-    // ---------------- 副本相关 ---------------------------------------
-    r2s_map_copy_do_clear_player_prepare,
-    r2s_map_copy_do_clear_player,
-    r2s_set_map_copy_owner,
-
-    // ---------------- 交通相关 ---------------------------------------
-    r2s_sync_road_track_info,
-    
-    // --------------------- 角色操作相关 -----------------------------
-    r2s_save_role_data_respond,
-    
-    r2s_sync_role_data,
-    r2s_load_role_data,
-
-    r2s_gm_command,
-
-    r2s_join_battle_field_queue_respond,
-    r2s_leave_battle_field_queue_respond,
-
-    r2s_battle_field_notify,
-
-    r2s_sync_battle_field_list,
-    r2s_accept_join_battle_field_respond,
-
-    r2s_leave_battle_field_respond,
-
-    r2s_sync_pq,
-    r2s_delete_pq,
-    r2s_pq_value_change,
-    r2s_pq_finish,
-    
-    r2s_sync_camp_info,
-    r2s_apply_set_camp_respond,
-
-    // ---------------------   帮会相关   -----------------------------
-    r2s_sync_tong_member_info,
-    r2s_delete_tong_member_notify,
-    r2s_apply_tong_info_respond,
-    r2s_update_tong_client_data_version,
-
-    r2s_invite_player_join_tong_request,
-
-    r2s_change_player_tong_notify,
-    r2s_tong_broadcast_message,
-    r2s_get_tong_description_respond,
-    r2s_sync_tong_online_message,
-
-    r2s_apply_open_tong_repertpry_respond,
-    r2s_sync_tong_repertory_page_respond,
-
-    r2s_take_tong_repertory_item_to_pos_respond,
-    r2s_take_tong_repertory_item_respond,
-    r2s_put_tong_repertory_item_respond,
-    r2s_apply_stack_tong_repertory_item_respond,
-
-    r2s_get_tong_salary_respond,
-
-    r2s_sync_tong_history_respond,
-    // ---------------------   寄卖行相关   -----------------------------
-    r2s_auction_lookup_respond,
-    r2s_auction_bid_respond,
-    r2s_auction_sell_respond,
-    r2s_auction_cancel_respond,
-    r2s_auction_message_notify,
-
-    r2s_remote_lua_call,
-
-    r2s_achievement_global_announce_respond,
-
-    r2s_designation_global_announce_respond,
-
-    r2s_sync_global_system_value,
-
-    r2s_query_stat_id_respond,
-    
-    r2s_change_ext_point_respond,
-    r2s_set_charge_flag_respond,
-    r2s_sync_zone_charge_flag,
-    r2s_active_present_code_respond,
-
-    r2s_apex_protocol,
-
-    r2s_set_farmer_limit_flag_request,
-
-    r2s_game_card_sell_respond,
-    r2s_game_card_buy_respond,
-    r2s_game_card_lookup_respond,
-    r2s_game_card_cancel_respond,
-
-    r2s_sync_mentor_data,
-    r2s_delete_mentor_record,
-    r2s_update_mentor_record,
-    r2s_seek_mentor_yell,
-    r2s_seek_apprentice_yell,
-
+	r2s_handshake_respond,	// v246 id=1 size=18 [src]
+	r2s_quit_notify,	// v246 id=2 size=6 [src-unplaced] noop
+	r2s_create_map_notify,	// v246 id=3 size=22 [src]
+	r2s_finish_create_map_notify,	// v246 id=4 size=6 [src]
+	r2s_delete_map_notify,	// v246 id=5 size=10 [src]
+	r2s_player_login_request,	// v246 id=6 size=302 [src]
+	r2s_search_map_respond,	// v246 id=7 size=46 [src]
+	r2s_v246_unused_8,	// v246 id=8 size=30 [new] noop
+	r2s_transfer_player_request,	// v246 id=9 size=323 [src]
+	r2s_transfer_player_respond,	// v246 id=10 size=36 [src]
+	r2s_confirm_player_login_respond,	// v246 id=11 size=10 [src]
+	r2s_kick_account_notify,	// v246 id=12 size=14 [src-unplaced] noop
+	r2s_invite_player_join_team_request,	// v246 id=13 size=6 [src-unplaced] noop
+	r2s_apply_join_team_request,	// v246 id=14 size=45 [src-unplaced] noop
+	r2s_v246_unused_15,	// v246 id=15 size=53 [new] noop
+	r2s_team_create_notify,	// v246 id=16 size=104 [src]
+	r2s_team_add_member_notify,	// v246 id=17 size=46 [src]
+	r2s_team_del_member_notify,	// v246 id=18 size=14 [src]
+	r2s_team_change_authority_notify,	// v246 id=19 size=11 [src]
+	r2s_team_set_loot_mode_notify,	// v246 id=20 size=14 [src]
+	r2s_team_disband_notify,	// v246 id=21 size=6 [src]
+	r2s_sync_team_member_online_flag,	// v246 id=22 size=14 [src]
+	r2s_sync_team_member_max_lmr,	// v246 id=23 size=34 [src-unplaced] noop
+	r2s_sync_team_member_current_lmr,	// v246 id=24 size=16 [src-unplaced] noop
+	r2s_sync_team_member_misc,	// v246 id=25 size=26 [src-unplaced] noop
+	r2s_sync_team_member_position,	// v246 id=26 size=26 [src-unplaced] noop
+	r2s_party_message_notify,	// v246 id=27 size=10 [src]
+	r2s_team_set_formation_leader_notify,	// v246 id=28 size=14 [src]
+	r2s_team_set_mark_respond,	// v246 id=29 size=14 [src-unplaced] noop
+	r2s_team_camp_change,	// v246 id=30 size=7 [src]
+	r2s_team_level_up_raid_notify,	// v246 id=31 size=10 [src]
+	r2s_team_change_member_group_notify,	// v246 id=32 size=22 [src]
+	r2s_player_talk_error,	// v246 id=33 size=10 [src]
+	r2s_player_talk_whisper_success_respond,	// v246 id=34 size=10 [src-unplaced] noop
+	r2s_talk_message,	// v246 id=35 size=75 [src-unplaced] noop
+	r2s_v246_unused_36,	// v246 id=36 size=75 [new] noop
+	r2s_apply_fellowship_data_respond,	// v246 id=37 size=6 [src]
+	r2s_add_fellowship_respond,	// v246 id=38 size=43 [src-unplaced] noop
+	r2s_get_fellowship_name_respond,	// v246 id=39 size=7 [src-unplaced] noop
+	r2s_sync_fellowship_mapid,	// v246 id=40 size=11 [src-unplaced] noop
+	r2s_sync_fellowship_player_level,	// v246 id=41 size=8 [src-unplaced] noop
+	r2s_sync_fellowship_player_forceid,	// v246 id=42 size=7 [src-unplaced] noop
+	r2s_add_fellowship_notify,	// v246 id=43 size=7 [src-unplaced] noop
+	r2s_v246_unused_44,	// v246 id=44 size=46 [new] noop
+	r2s_v246_unused_45,	// v246 id=45 size=6 [new] noop
+	r2s_v246_unused_46,	// v246 id=46 size=10 [new] noop
+	r2s_send_mail_respond,	// v246 id=47 size=40 [src]
+	r2s_get_maillist_respond,	// v246 id=48 size=10 [src-unplaced] noop
+	r2s_sync_mail_content,	// v246 id=49 size=11 [src]
+	r2s_give_mail_money_to_player,	// v246 id=50 size=47 [src]
+	r2s_give_mail_item_to_player,	// v246 id=51 size=54 [src]
+	r2s_new_mail_notify,	// v246 id=52 size=118 [src-unplaced] noop
+	r2s_mail_general_respond,	// v246 id=53 size=11 [src-unplaced] noop
+	r2s_sync_mid_map_mark,	// v246 id=54 size=58 [src-unplaced] noop
+	r2s_map_copy_do_clear_player_prepare,	// v246 id=55 size=18 [src]
+	r2s_map_copy_do_clear_player,	// v246 id=56 size=10 [src]
+	r2s_set_map_copy_owner,	// v246 id=57 size=14 [src]
+	r2s_sync_road_track_info,	// v246 id=58 size=8 [src]
+	r2s_save_role_data_respond,	// v246 id=59 size=14 [src]
+	r2s_v246_unused_60,	// v246 id=60 size=14 [new] noop
+	r2s_sync_role_data,	// v246 id=61 size=10 [src]
+	r2s_load_role_data,	// v246 id=62 size=14 [src]
+	r2s_v246_unused_63,	// v246 id=63 size=10 [new] noop
+	r2s_v246_unused_64,	// v246 id=64 size=14 [new] noop
+	r2s_gm_command,	// v246 id=65 size=38 [src]
+	r2s_join_battle_field_queue_respond,	// v246 id=66 size=50 [src-unplaced] noop
+	r2s_leave_battle_field_queue_respond,	// v246 id=67 size=14 [src-unplaced] noop
+	r2s_battle_field_notify,	// v246 id=68 size=38 [src-unplaced] noop
+	r2s_accept_join_battle_field_respond,	// v246 id=69 size=50 [src]
+	r2s_leave_battle_field_respond,	// v246 id=70 size=10 [src]
+	r2s_v246_unused_71,	// v246 id=71 size=46 [new] noop
+	r2s_v246_unused_72,	// v246 id=72 size=10 [new] noop
+	r2s_v246_unused_73,	// v246 id=73 size=46 [new] noop
+	r2s_v246_unused_74,	// v246 id=74 size=6 [new] noop
+	r2s_v246_unused_75,	// v246 id=75 size=30 [new] noop
+	r2s_v246_unused_76,	// v246 id=76 size=6 [new] noop
+	r2s_v246_unused_77,	// v246 id=77 size=6 [new] noop
+	r2s_v246_unused_78,	// v246 id=78 size=46 [new] noop
+	r2s_v246_unused_79,	// v246 id=79 size=6 [new] noop
+	r2s_v246_unused_80,	// v246 id=80 size=50 [new] noop
+	r2s_v246_unused_81,	// v246 id=81 size=10 [new] noop
+	r2s_v246_unused_82,	// v246 id=82 size=46 [new] noop
+	r2s_v246_unused_83,	// v246 id=83 size=10 [new] noop
+	r2s_v246_unused_84,	// v246 id=84 size=126 [new] noop
+	r2s_v246_unused_85,	// v246 id=85 size=38 [new] noop
+	r2s_v246_unused_86,	// v246 id=86 size=22 [new] noop
+	r2s_v246_unused_87,	// v246 id=87 size=54 [new] noop
+	r2s_v246_unused_88,	// v246 id=88 size=94 [new] noop
+	r2s_v246_unused_89,	// v246 id=89 size=26 [new] noop
+	r2s_v246_unused_90,	// v246 id=90 size=154 [new] noop
+	r2s_v246_unused_91,	// v246 id=91 size=74 [new] noop
+	r2s_v246_unused_92,	// v246 id=92 size=54 [new] noop
+	r2s_sync_pq,	// v246 id=93 size=60 [src]
+	r2s_delete_pq,	// v246 id=94 size=6 [src]
+	r2s_pq_value_change,	// v246 id=95 size=14 [src]
+	r2s_pq_finish,	// v246 id=96 size=10 [src]
+	r2s_sync_camp_info,	// v246 id=97 size=106 [src-unplaced] noop
+	r2s_apply_set_camp_respond,	// v246 id=98 size=8 [src]
+	r2s_sync_tong_member_info,	// v246 id=99 size=18 [src-unplaced] noop
+	r2s_delete_tong_member_notify,	// v246 id=100 size=107 [src-unplaced] noop
+	r2s_apply_tong_info_respond,	// v246 id=101 size=14 [src-unplaced] noop
+	r2s_update_tong_client_data_version,	// v246 id=102 size=7 [src-unplaced] noop
+	r2s_invite_player_join_tong_request,	// v246 id=103 size=15 [src-unplaced] noop
+	r2s_v246_unused_104,	// v246 id=104 size=10 [new] noop
+	r2s_v246_unused_105,	// v246 id=105 size=78 [new] noop
+	r2s_change_player_tong_notify,	// v246 id=106 size=43 [src]
+	r2s_tong_broadcast_message,	// v246 id=107 size=11 [src]
+	r2s_get_tong_description_respond,	// v246 id=108 size=42 [src-unplaced] noop
+	r2s_sync_tong_online_message,	// v246 id=109 size=7 [src]
+	r2s_apply_open_tong_repertpry_respond,	// v246 id=110 size=40 [src]
+	r2s_sync_tong_repertory_page_respond,	// v246 id=111 size=13 [src-unplaced] noop
+	r2s_take_tong_repertory_item_respond,	// v246 id=112 size=9 [src]
+	r2s_put_tong_repertory_item_respond,	// v246 id=113 size=9 [src-unplaced] noop
+	r2s_apply_stack_tong_repertory_item_respond,	// v246 id=114 size=13 [src-unplaced] noop
+	r2s_v246_unused_115,	// v246 id=115 size=15 [new] noop
+	r2s_get_tong_salary_respond,	// v246 id=116 size=10 [src]
+	r2s_sync_tong_history_respond,	// v246 id=117 size=12 [src]
+	r2s_auction_lookup_respond,	// v246 id=118 size=6 [src-unplaced] noop
+	r2s_v246_unused_119,	// v246 id=119 size=2 [new] noop
+	r2s_v246_unused_120,	// v246 id=120 size=30 [new] noop
+	r2s_v246_unused_121,	// v246 id=121 size=15 [new] noop
+	r2s_v246_unused_122,	// v246 id=122 size=11 [new] noop
+	r2s_v246_unused_123,	// v246 id=123 size=6 [new] noop
+	r2s_v246_unused_124,	// v246 id=124 size=8 [new] noop
+	r2s_v246_unused_125,	// v246 id=125 size=16 [new] noop
+	r2s_auction_bid_respond,	// v246 id=126 size=19 [src]
+	r2s_auction_sell_respond,	// v246 id=127 size=23 [src]
+	r2s_auction_cancel_respond,	// v246 id=128 size=7 [src-unplaced] noop
+	r2s_auction_message_notify,	// v246 id=129 size=75 [src-unplaced] noop
+	r2s_v246_unused_130,	// v246 id=130 size=18 [new] noop
+	r2s_v246_unused_131,	// v246 id=131 size=15 [new] noop
+	r2s_v246_unused_132,	// v246 id=132 size=23 [new] noop
+	r2s_v246_unused_133,	// v246 id=133 size=11 [new] noop
+	r2s_remote_lua_call,	// v246 id=134 size=38 [src]
+	r2s_achievement_global_announce_respond,	// v246 id=135 size=38 [src-unplaced] noop
+	r2s_designation_global_announce_respond,	// v246 id=136 size=42 [src-unplaced] noop
+	r2s_sync_global_system_value,	// v246 id=137 size=18 [src-unplaced] noop
+	r2s_query_stat_id_respond,	// v246 id=138 size=134 [src-unplaced] noop
+	r2s_v246_unused_139,	// v246 id=139 size=19 [new] noop
+	r2s_change_ext_point_respond,	// v246 id=140 size=18 [src]
+	r2s_v246_unused_141,	// v246 id=141 size=26 [new] noop
+	r2s_v246_unused_142,	// v246 id=142 size=14 [new] noop
+	r2s_v246_unused_143,	// v246 id=143 size=15 [new] noop
+	r2s_set_charge_flag_respond,	// v246 id=144 size=14 [src]
+	r2s_sync_zone_charge_flag,	// v246 id=145 size=6 [src-unplaced] noop
+	r2s_v246_unused_146,	// v246 id=146 size=18 [new] noop
+	r2s_active_present_code_respond,	// v246 id=147 size=46 [src]
+	r2s_apex_protocol,	// v246 id=148 size=0 [src-unplaced] noop
+	r2s_set_farmer_limit_flag_request,	// v246 id=149 size=10 [src-unplaced] noop
+	r2s_game_card_sell_respond,	// v246 id=150 size=3 [src-unplaced] noop
+	r2s_game_card_buy_respond,	// v246 id=151 size=7 [src-unplaced] noop
+	r2s_v246_unused_152,	// v246 id=152 size=2 [new] noop
+	r2s_v246_unused_153,	// v246 id=153 size=7 [new] noop
+	r2s_v246_unused_154,	// v246 id=154 size=11 [new] noop
+	r2s_v246_unused_155,	// v246 id=155 size=19 [new] noop
+	r2s_game_card_lookup_respond,	// v246 id=156 size=12 [src]
+	r2s_game_card_cancel_respond,	// v246 id=157 size=13 [src]
+	r2s_sync_mentor_data,	// v246 id=158 size=11 [src-unplaced] noop
+	r2s_delete_mentor_record,	// v246 id=159 size=15 [src-unplaced] noop
+	r2s_update_mentor_record,	// v246 id=160 size=38 [src-unplaced] noop
+	r2s_seek_mentor_yell,	// v246 id=161 size=34 [src-unplaced] noop
+	r2s_seek_apprentice_yell,	// v246 id=162 size=6 [src-unplaced] noop
+	r2s_v246_unused_163,	// v246 id=163 size=6 [new] noop
+	r2s_v246_unused_164,	// v246 id=164 size=10 [new] noop
+	r2s_v246_unused_165,	// v246 id=165 size=10 [new] noop
+	r2s_v246_unused_166,	// v246 id=166 size=19 [new] noop
+	r2s_v246_unused_167,	// v246 id=167 size=15 [new] noop
+	r2s_v246_unused_168,	// v246 id=168 size=69 [new] noop
+	r2s_v246_unused_169,	// v246 id=169 size=70 [new] noop
+	r2s_v246_unused_170,	// v246 id=170 size=8 [new] noop
+	r2s_v246_unused_171,	// v246 id=171 size=6 [new] noop
+	r2s_v246_unused_172,	// v246 id=172 size=10 [new] noop
+	r2s_v246_unused_173,	// v246 id=173 size=58 [new] noop
+	r2s_v246_unused_174,	// v246 id=174 size=2 [new] noop
+	r2s_v246_unused_175,	// v246 id=175 size=22 [new] noop
+	r2s_v246_unused_176,	// v246 id=176 size=6 [new] noop
+	r2s_v246_unused_177,	// v246 id=177 size=10 [new] noop
+	r2s_sync_battle_field_list,	// orphan (2010, no v246 slot) id=178
+	r2s_take_tong_repertory_item_to_pos_respond,	// orphan (2010, no v246 slot) id=179
 	r2s_protocol_end
 };
 
@@ -391,6 +413,7 @@ struct S2R_UPDATE_PERFORMANCE : INTERNAL_PROTOCOL_HEADER
     int     nPlayerCount;
     int     nConnectionCount;
     size_t  uNetworkFlux;
+    int     nGSResourceVer;  /*[R10 s2r] +4B: v246 grew this struct*/
 };
 
 struct S2R_CREATE_MAP_RESPOND : INTERNAL_PROTOCOL_HEADER
@@ -428,6 +451,7 @@ struct S2R_SEARCH_MAP_REQUEST : INTERNAL_PROTOCOL_HEADER
     int         nPosX;
     int         nPosY;
     int         nPosZ;
+    int     nField246;  /*[R10 s2r] +4B: v246 grew this struct*/
 };
 
 // 玩家跨服务器,源服务器发出跨服请求(附带角色基本数据)
@@ -1294,11 +1318,14 @@ struct S2R_ADD_MENTOR_VALUE_REQUEST : INTERNAL_PROTOCOL_HEADER
 
 // ---------------------- 下行协议结构定义 ---------------------------------------
 
-struct R2S_HANDSHAKE_RESPOND : INTERNAL_PROTOCOL_HEADER
+/*[cce58b6 GLM] standalone packed: WORD@0, worldIndex@2, baseTime@6, startFrame@10, fastBoot@14 = 18B (stock FUN_080d3872)*/
+struct R2S_HANDSHAKE_RESPOND
 {
-	int     nWorldIndex;
+    WORD    wProtocolID;
+    int     nWorldIndex;
     time_t  nBaseTime;
     int     nStartFrame;
+    int     nFastBootMode;
 };
 
 struct R2S_QUIT_NOTIFY : INTERNAL_PROTOCOL_HEADER

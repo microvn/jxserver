@@ -213,7 +213,7 @@ KPlayerServer::KPlayerServer(void)
 
     REGISTER_EXTERNAL_FUNC(c2s_apply_character_threat_ranklist, &KPlayerServer::OnApplyCharacterThreatRankList, sizeof(C2S_APPLY_CHARACTER_THREAT_RANKLIST));
 
-    //AutoCode:×¢²áÐ­Òé
+    //AutoCode:×¢ï¿½ï¿½Ð­ï¿½ï¿½
 }
 
 KPlayerServer::~KPlayerServer(void)
@@ -222,7 +222,7 @@ KPlayerServer::~KPlayerServer(void)
 }
 
 
-// ·µ»ØÓ¦´ðÐÅÏ¢
+// ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½Ï¢
 BOOL KPlayerServer::DoMessageNotify(int nConnIndex, int nType, int nCode, const void* pvData, size_t uDataLen)
 {
     BOOL                    bResult         = false;
@@ -250,7 +250,7 @@ Exit0:
 	return bResult;
 }
 
-// Í¬²½Íæ¼ÒÊý¾Ý
+// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 BOOL KPlayerServer::DoSyncPlayerBaseInfo(int nConnIndex, KPlayer* pPlayer)
 {
     BOOL                        bResult  = false;
@@ -328,7 +328,7 @@ Exit0:
     return bResult;
 }
 
-// Í¨Öª¿Í»§¶ËÇÐ»»·þÎñÆ÷
+// Í¨Öªï¿½Í»ï¿½ï¿½ï¿½ï¿½Ð»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 BOOL KPlayerServer::DoSwitchGS(int nConnIndex, DWORD dwPlayerID, GUID& Guid, DWORD dwIPAddr, WORD wPort)
 {
     BOOL                    bResult             = false;
@@ -429,7 +429,7 @@ BOOL KPlayerServer::DoSyncNewPlayer(int nConnIndex, KPlayer* pPlayer)
     Pak.uWaterFlyAbility     = (pPlayer->m_nWaterFlyAbility > 0);
     Pak.uCampFlag            = (BYTE)pPlayer->m_bCampFlag;
 
-    // AutoMoveÄ£Ê½ÏÂ,Ò»Ð©²ÎÊý¾ßÓÐÌØÊâº¬Òå,±»ÖØÐÂ½âÊÍ
+    // AutoMoveÄ£Ê½ï¿½ï¿½,Ò»Ð©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½âº¬ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Â½ï¿½ï¿½ï¿½
     if (pPlayer->m_eMoveState == cmsOnAutoFly)
     {
         KTRACK* pTrack  = g_pSO3World->m_RoadManager.GetTrackInfo(pPlayer->m_nCurrentTrack);
@@ -550,7 +550,7 @@ Exit0:
 	return bResult;
 }
 
-// ¹ã²¥DoodadµÄ×´Ì¬Í¬²½
+// ï¿½ã²¥Doodadï¿½ï¿½×´Ì¬Í¬ï¿½ï¿½
 BOOL KPlayerServer::DoSyncDoodadState(KDoodad* pDoodad)
 {
     BOOL                    bResult         = false;
@@ -814,7 +814,7 @@ Exit0:
     return bResult;
 }
 
-// ½ÇÉ«ËÀÍöÖ¸ÁîÍ¬²½
+// ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½Í¬ï¿½ï¿½
 BOOL KPlayerServer::DoCharacterDeath(KCharacter* pCharacter, DWORD dwKillerID)
 {
     BOOL                bResult         = false;
@@ -848,7 +848,7 @@ Exit0:
     return bResult;
 }
 
-// ÒÆ¶¯½ÇÉ«µÄÎ»ÖÃ
+// ï¿½Æ¶ï¿½ï¿½ï¿½É«ï¿½ï¿½Î»ï¿½ï¿½
 BOOL KPlayerServer::DoMoveCharacter(KCharacter* pCharacter, int nX, int nY, int nZ, BOOL bIgnoreBlock)
 {
     BOOL                bResult     = false;
@@ -950,7 +950,7 @@ Exit0:
     return nResult;
 }
 
-// ·¢ËÍÍæ¼ÒÏÔÊ¾Êý¾Ý
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
 BOOL KPlayerServer::DoPlayerDisplayData(DWORD dwPlayerID, DWORD dwCheckSum, int nConnIndex)
 {
     BOOL                    bResult             = false;
@@ -1022,7 +1022,7 @@ Exit0:
 	return bResult;
 }
 
-// »ñµÃ¾­ÑéÖµ
+// ï¿½ï¿½Ã¾ï¿½ï¿½ï¿½Öµ
 BOOL KPlayerServer::DoSyncExperience(KPlayer* pPlayer, int nDeltaExp)
 {
     BOOL                bResult         = false;
@@ -1442,7 +1442,7 @@ BOOL KPlayerServer::DoSkillEffectResult(
     dwPakSize = (DWORD)sizeof(S2C_SKILL_EFFECT_RESULT) + (DWORD)sizeof(S2C_SKILL_EFFECT_RESULT::KSKILL_RESULT) * nItemCount;
 
     pPak->wSize = (WORD)dwPakSize;
-    // ¼¼ÄÜÃüÖÐ½á¹ûÍ¬²½¸øsrc, dst¼°Æä¸÷×ÔµÄÍ¬Ò»³¡¾°ÖÐµÄ¶ÓÓÑ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½src, dstï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôµï¿½Í¬Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ÐµÄ¶ï¿½ï¿½ï¿½
 
     if (pSkillSrc && IS_PLAYER(pSkillSrc->m_dwID))
     {
@@ -1455,7 +1455,7 @@ BOOL KPlayerServer::DoSkillEffectResult(
 
         dwTeamID = pPlayerSrc->GetCurrentTeamID();
 
-        // ¶ÓÓÑÍ¬²½
+        // ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½
         pTeam = g_pSO3World->m_TeamServer.GetTeam(dwTeamID);
         if (pTeam)
         {
@@ -1478,11 +1478,11 @@ BOOL KPlayerServer::DoSkillEffectResult(
 
         if (dwDstTeamID == ERROR_ID)
         {
-            // Èç¹ûËû²¢Ã»ÓÐ×é¶Ó£¬ÔòÖ»¸øËû×Ô¼ºÍ¬²½¼´¿É
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ó£ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             bRetCode = Send(pPlayerDst->m_nConnIndex, m_byTempData, dwPakSize);
             //KGLOG_CHECK_ERROR(nRetCode);
         }
-        else // Ëû×é¶ÓÁË£¬ÔòÍ¬²½¸øËûµÄÕû¸ö¶ÓÎé£¬°üÀ¨Ëû×Ô¼º
+        else // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½
         {
             BOOL bInSameTeamWithSkillSrc = false;
 
@@ -1490,14 +1490,14 @@ BOOL KPlayerServer::DoSkillEffectResult(
             {
                 pPlayerSrc = (KPlayer*)pSkillSrc;
                 DWORD dwSrcTeamID = pPlayerSrc->GetCurrentTeamID();
-                // ¿´ËûºÍpPlayerSrcÊÇ·ñÔÚÍ¬Ò»¸ö¶ÓÎéÀïÃæ
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½pPlayerSrcï¿½Ç·ï¿½ï¿½ï¿½Í¬Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 bInSameTeamWithSkillSrc = (dwSrcTeamID == dwDstTeamID);
             }
-            // pSkillSrcÊÇNpc£¬µ±È»²»¿ÉÄÜÓëËûÔÚÍ¬Ò»¸ö¶ÓÎé
+            // pSkillSrcï¿½ï¿½Npcï¿½ï¿½ï¿½ï¿½È»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
             if (!bInSameTeamWithSkillSrc)
             {
-                // Èç¹û²»ÔÚÍ¬Ò»¸ö¶ÓÎéÀïÃæ£¬Ôò¸øËùÓÐÍ¬³¡¾°ÖÐµÄ¶ÓÔ±¹ã²¥
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ÐµÄ¶ï¿½Ô±ï¿½ã²¥
                 KTeam* pTeam = g_pSO3World->m_TeamServer.GetTeam(dwDstTeamID);
                 if (pTeam)
                 {
@@ -1511,7 +1511,7 @@ BOOL KPlayerServer::DoSkillEffectResult(
                     g_pSO3World->m_TeamServer.Traverse(Func);
                 }
             }
-            // else: ÔÚÍ¬Ò»¸ö¶ÓÎéÀïÃæµÄ»°,ÉÏÃæÒÑ¾­·¢ËÍ¹ýÁË,²»ÓÃÔÙ´Î·¢ËÍ
+            // else: ï¿½ï¿½Í¬Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½Í¹ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Ù´Î·ï¿½ï¿½ï¿½
         }
     }
 
@@ -1911,7 +1911,7 @@ Exit0:
     return nResult;
 }
 
-// ---------------- ÊýÖµÍ¬²½ -------------------------------------
+// ---------------- ï¿½ï¿½ÖµÍ¬ï¿½ï¿½ -------------------------------------
 
 BOOL KPlayerServer::DoSyncSelfMaxLMRS(KPlayer* pPlayer)
 {
@@ -2071,7 +2071,7 @@ BOOL KPlayerServer::DoSyncTargetCurrentLMR(KPlayer* pPlayer)
 
         if (pTarget->m_eMoveState != cmsOnDeath && nLifePercent * pTarget->m_nMaxLife / UCHAR_MAX <= 0)
         {
-            // ÌØÊâ´¦Àí,Ò»Ãæ¿Í»§¶Ë¿´µ½Ò»¸öÑªÁ¿Îª0È´Ã»ËÀµÄNPC
+            // ï¿½ï¿½ï¿½â´¦ï¿½ï¿½,Ò»ï¿½ï¿½Í»ï¿½ï¿½Ë¿ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ñªï¿½ï¿½Îª0È´Ã»ï¿½ï¿½ï¿½ï¿½NPC
             nLifePercent = UCHAR_MAX / pTarget->m_nMaxLife;
             if (nLifePercent * pTarget->m_nMaxLife < UCHAR_MAX)
             {
@@ -2240,7 +2240,7 @@ BOOL KPlayerServer::DoSyncTargetTargetCurrentLMR(KPlayer* pPlayer)
 
         if (pTargetTarget->m_eMoveState != cmsOnDeath && nLifePercent * pTargetTarget->m_nMaxLife / UCHAR_MAX <= 0)
         {
-            // ÌØÊâ´¦Àí,Ò»Ãæ¿Í»§¶Ë¿´µ½Ò»¸öÑªÁ¿Îª0È´Ã»ËÀµÄNPC
+            // ï¿½ï¿½ï¿½â´¦ï¿½ï¿½,Ò»ï¿½ï¿½Í»ï¿½ï¿½Ë¿ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ñªï¿½ï¿½Îª0È´Ã»ï¿½ï¿½ï¿½ï¿½NPC
             nLifePercent = UCHAR_MAX / pTargetTarget->m_nMaxLife;
             if (nLifePercent * pTargetTarget->m_nMaxLife < UCHAR_MAX)
             {
@@ -2529,7 +2529,7 @@ BOOL KPlayerServer::DoBroadcastCharacterLife(KCharacter* pCharacter)
 
         if (pCharacter->m_eMoveState != cmsOnDeath && nLifePercent * pCharacter->m_nMaxLife / UCHAR_MAX <= 0)
         {
-            // ÌØÊâ´¦Àí,ÒÔÃâ¿Í»§¶Ë¿´µ½Ò»¸öÑªÁ¿Îª0È´Ã»ËÀµÄNPC
+            // ï¿½ï¿½ï¿½â´¦ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½Ë¿ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ñªï¿½ï¿½Îª0È´Ã»ï¿½ï¿½ï¿½ï¿½NPC
             nLifePercent = UCHAR_MAX / pCharacter->m_nMaxLife;
             if (nLifePercent * pCharacter->m_nMaxLife < UCHAR_MAX)
             {
@@ -2814,9 +2814,9 @@ BOOL KPlayerServer::DoTeamDelMemberNotify(DWORD dwTeamID, int nGroupIndex, DWORD
     {
         Send(pPlayer->m_nConnIndex, &TeamDelMemberNotify, sizeof(TeamDelMemberNotify));
     }
-    //else: Íæ¼Ò¿ÉÄÜ²»ÔÚ±¾·þÎñÆ÷ÉÏ
+    //else: ï¿½ï¿½Ò¿ï¿½ï¿½Ü²ï¿½ï¿½Ú±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    // ÎªÊ²Ã´²»°ÑÉÏÃæµÄÕâ¸öSendÄÉÈëÏÂÃæµÄÑ­»·? ÒòÎªÕâ¸öÍæ¼Ò¿ÉÄÜÒÑ¾­´ÓÁÐ±íÖÐÉ¾³ýÁË,Ñ­»·¾Í±éÀú²»µ½Õâ¸öÍæ¼Ò.
+    // ÎªÊ²Ã´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Sendï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½? ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½Ò¿ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½,Ñ­ï¿½ï¿½ï¿½Í±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 
     Func.m_dwTeamID     = dwTeamID;
     Func.m_dwExceptID   = dwMemberID;
@@ -2841,8 +2841,8 @@ BOOL KPlayerServer::DoTeamChangeAuthorityNotify(DWORD dwTeamID, KTEAM_AUTHORITY_
     Notify.byType         = (BYTE)eType;
     Notify.dwNewID        = dwTargetID;
 
-    // Öð¸öÍ¨Öª¸÷¸ö¶ÓÔ±£¬×¢: ¶ÓÔ±¿ÉÄÜ¼È²»ÔÚÐÂ¶Ó³¤¸½½ü£¬Ò²²»ÔÚ¾É¶Ó³¤¸½½ü
-    // ¿Í»§¶ËµÄ "xxx³ÉÎª¶Ó³¤"µÄÏûÏ¢ÊÇÕâÀïÍ¨ÖªµÄ£¬¶øÉÏÃæÖ÷ÒªÊÇÉèÖÃ¶Ó³¤µÄ±êÆì
+    // ï¿½ï¿½ï¿½Í¨Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½ï¿½×¢: ï¿½ï¿½Ô±ï¿½ï¿½ï¿½Ü¼È²ï¿½ï¿½ï¿½ï¿½Â¶Ó³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½Ú¾É¶Ó³ï¿½ï¿½ï¿½ï¿½ï¿½
+    // ï¿½Í»ï¿½ï¿½Ëµï¿½ "xxxï¿½ï¿½Îªï¿½Ó³ï¿½"ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨Öªï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½Ã¶Ó³ï¿½ï¿½Ä±ï¿½ï¿½ï¿½
     Func.m_dwTeamID = dwTeamID;
     Func.m_pvData   = (void*)&Notify;
     Func.m_uSize    = sizeof(Notify);
@@ -3214,7 +3214,7 @@ Exit0:
     return nResult;
 }
 
-// Í¨Öª¿Í»§¶ËÄ³¸ö½ÇÉ«±»ÒÆ³ýÁË
+// Í¨Öªï¿½Í»ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½Æ³ï¿½ï¿½ï¿½
 BOOL KPlayerServer::DoRemoveCharacter(KCharacter* pCharacter, BOOL bKilled)
 {
     BOOL                    bResult         = false;
@@ -3319,7 +3319,7 @@ Exit0:
     return bResult;
 }
 
-// Í¬²½µÀ¾ßÊý¾Ý
+// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 BOOL KPlayerServer::DoSyncItemData(int nConnIndex, DWORD dwPlayerID, KItem* pItem, DWORD dwBox, DWORD dwX)
 {
     BOOL                bRetCode        = false;
@@ -3353,7 +3353,7 @@ Exit0:
     return bResult;
 }
 
-// Í¬²½µÀ¾ßÉ¾³ý
+// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½
 BOOL KPlayerServer::DoSyncItemDestroy(int nConnIndex, DWORD dwOwnerID, DWORD dwBox, DWORD dwX)
 {
     BOOL                    bRetCode = false;
@@ -3375,7 +3375,7 @@ Exit0:
 	return bResult;
 }
 
-// ½»»»×°±¸
+// ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½
 BOOL KPlayerServer::DoExchangeItem(int nConnIndex, DWORD dwBox1, DWORD dwX1, DWORD dwBox2, DWORD dwX2, DWORD dwAmount)
 {
     BOOL                bRetCode = false;
@@ -3423,7 +3423,64 @@ Exit0:
     return bResult;
 }
 
-// Í¬²½µÀ¾ß»ñµÃµÄÏûÏ¢
+// Sync exterior box contents to the owning client (player-private).
+BOOL KPlayerServer::DoSyncExteriorBoxData(KPlayer* pPlayer, size_t uCount, const KEXTERIOR_ITEM* pItems)
+{
+    BOOL                        bResult   = false;
+    BOOL                        bRetCode  = false;
+    S2C_SYNC_EXTERIOR_BOX_DATA* pPak      = (S2C_SYNC_EXTERIOR_BOX_DATA*)m_byTempData;
+    KEXTERIOR_SYNC_ITEM*        pDst      = NULL;
+    size_t                      uPakSize  = 0;
+    size_t                      i         = 0;
+
+    assert(pPlayer);
+    KG_PROCESS_ERROR(uCount == 0 || pItems);
+
+    uPakSize = sizeof(S2C_SYNC_EXTERIOR_BOX_DATA) + uCount * sizeof(KEXTERIOR_SYNC_ITEM);
+    KG_PROCESS_ERROR(uPakSize <= MAX_EXTERNAL_PACKAGE_SIZE);
+
+    pPak->byProtocolID = s2c_sync_exterior_box_data;
+    pPak->wCount       = (WORD)uCount;
+
+    pDst = (KEXTERIOR_SYNC_ITEM*)pPak->byData;
+    for (i = 0; i < uCount; i++)
+    {
+        pDst[i].wID          = (WORD)pItems[i].dwID;
+        pDst[i].byFlag       = (BYTE)pItems[i].nFlag;
+        pDst[i].dwExpireTime = (DWORD)pItems[i].nExpireTime;
+    }
+
+    pPak->wSize = (WORD)uPakSize;
+
+    bRetCode = Send(pPlayer->m_nConnIndex, m_byTempData, uPakSize);
+    KG_PROCESS_ERROR(bRetCode);
+
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
+// Sync exterior apply-flag to the owning client.
+BOOL KPlayerServer::DoSyncApplyExteriorFlag(KPlayer* pPlayer, DWORD dwApplyFlag)
+{
+    BOOL                         bResult  = false;
+    BOOL                         bRetCode = false;
+    S2C_SYNC_APPLY_EXTERIOR_FLAG Pak;
+
+    assert(pPlayer);
+
+    Pak.byProtocolID = s2c_sync_apply_exterior_flag;
+    Pak.dwApplyFlag  = dwApplyFlag;
+
+    bRetCode = Send(pPlayer->m_nConnIndex, &Pak, sizeof(Pak));
+    KG_PROCESS_ERROR(bRetCode);
+
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
+// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ß»ï¿½Ãµï¿½ï¿½ï¿½Ï¢
 BOOL KPlayerServer::DoAddItemNotify(KPlayer* pAddItemPlayer, DWORD dwItemID, int nCount, int nDestConnIndex)
 {
     BOOL                bResult     = false;
@@ -3452,7 +3509,7 @@ Exit0:
 	return bResult;
 }
 
-// ¸üÐÂÎïÆ·ÊýÁ¿»òÄÍ¾Ã
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¾ï¿½
 BOOL KPlayerServer::DoUpdateItemAmount(int nConnIndex, DWORD dwBox, DWORD dwX, int nAmount)
 {
     BOOL                    bResult  = false;
@@ -3473,7 +3530,7 @@ Exit0:
 }
 
 
-// Ñ§Ï°Éú»î¼¼ÄÜ
+// Ñ§Ï°ï¿½ï¿½ï¿½î¼¼ï¿½ï¿½
 BOOL KPlayerServer::DoLearnProfessionNotify(int nConnIndex, DWORD dwProfessionID)
 {
     BOOL                        bResult  = false;
@@ -3509,7 +3566,7 @@ Exit0:
     return bResult;
 }
 
-// ÒÅÍü¼¼ÄÜ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 BOOL KPlayerServer::DoForgetProfessionNotify(int nConnIndex, DWORD dwProfessionID)
 {
     BOOL                         bResult  = false;
@@ -3527,7 +3584,7 @@ Exit0:
     return bResult;
 }
 
-// Ôö¼ÓÉú»î¼¼ÄÜ¾­Ñé
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½î¼¼ï¿½Ü¾ï¿½ï¿½ï¿½
 BOOL KPlayerServer::DoAddProfessionProficiency(int nConnIndex, DWORD dwProfessionID, DWORD dwExp)
 {
     BOOL                            bResult  = false;
@@ -3546,7 +3603,7 @@ Exit0:
     return bResult;
 }
 
-// ÉèÖÃÉú»î¼¼ÄÜ×î´óµÈ¼¶
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½î¼¼ï¿½ï¿½ï¿½ï¿½ï¿½È¼ï¿½
 BOOL KPlayerServer::DoSetMaxProfessionLevelNotify(int nConnIndex, DWORD dwProfessionID, DWORD dwLevel)
 {
     BOOL                                bResult  = false;
@@ -3583,7 +3640,7 @@ Exit0:
     return bResult;
 }
 
-// Í¬²½¸üÐÂÍæ¼ÒÉú»î¼¼ÄÜ
+// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½î¼¼ï¿½ï¿½
 BOOL KPlayerServer::DoUpdatePlayerProfession(int nConnIndex, DWORD dwProfessionID, DWORD dwMaxLevel, 
 											 DWORD dwCurrentLevel, DWORD dwCurrentProficiency, DWORD dwBranchID)
 {
@@ -3606,7 +3663,7 @@ Exit0:
     return bResult;
 }
 
-// Ñ§Ï°Åä·½
+// Ñ§Ï°ï¿½ä·½
 BOOL KPlayerServer::DoLearnRecipeNotify(int nConnIndex, DWORD dwCraftID, DWORD dwRecipeID)
 {
     BOOL                    bResult  = false;
@@ -3625,7 +3682,7 @@ Exit0:
     return bResult;
 }
 
-// ÒÅÍüÅä·½
+// ï¿½ï¿½ï¿½ï¿½ï¿½ä·½
 BOOL KPlayerServer::DoForgetRecipeNotify(int nConnIndex, DWORD dwCraftID)
 {
     BOOL                        bResult         = false;
@@ -3643,7 +3700,7 @@ Exit0:
 	return bResult;
 }
 
-// Í¬²½Åä·½ÁÐ±í
+// Í¬ï¿½ï¿½ï¿½ä·½ï¿½Ð±ï¿½
 BOOL KPlayerServer::DoSyncRecipeState(int nConnIndex, BYTE* pbyData, size_t uDataLen, int nVersion)
 {
     BOOL                    bResult             = false;
@@ -3668,7 +3725,7 @@ Exit0:
 	return bResult;
 }
 
-// ´ò¿ªÒ»¸ö¿Í»§¶Ë´°¿Ú
+// ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Í»ï¿½ï¿½Ë´ï¿½ï¿½ï¿½
 BOOL KPlayerServer::DoOpenWindow(DWORD dwIndex, TARGET_TYPE eTarget, DWORD dwTargetID, const char* pcszText, int nConnIndex)
 {
     BOOL                bResult     = false;
@@ -3696,7 +3753,7 @@ Exit0:
 	return bResult;
 }
 
-// Í¬²½Åä·½µÄÊ¹ÓÃ
+// Í¬ï¿½ï¿½ï¿½ä·½ï¿½ï¿½Ê¹ï¿½ï¿½
 BOOL KPlayerServer::DoStartUseRecipe(KPlayer* pPlayer, DWORD dwCraftID, DWORD dwRecipeID, KTarget& rTarget)
 {
     BOOL                    bResult         = false;
@@ -3767,7 +3824,7 @@ Exit0:
     return bResult;
 }
 
-// Í¨Öª¿Í»§¶Ë½ÓÊÜÈÎÎñ
+// Í¨Öªï¿½Í»ï¿½ï¿½Ë½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 BOOL KPlayerServer::DoAcceptQuest(int nQuestIndex, DWORD dwQuestID, int nConnIndex, BOOL bDailyQuest)
 {
     BOOL                bResult  = false;
@@ -3787,7 +3844,7 @@ Exit0:
     return bResult;	
 }
 
-// Íê³ÉÈÎÎñ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 BOOL KPlayerServer::DoFinishQuest(DWORD dwQuestID, int nConnIndex, BOOL bForceFinished)
 {
     BOOL bResult  = false;
@@ -3806,7 +3863,7 @@ Exit0:
     return bResult;
 }
 
-// Í¨Öª¿Í»§¶ËÈ¡ÏûÈÎÎñ
+// Í¨Öªï¿½Í»ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 BOOL KPlayerServer::DoCancelQuest(int nQuestIndex, int nConnIndex)
 {
     BOOL             bResult        = false;
@@ -3865,7 +3922,7 @@ Exit0:
     return bResult;
 }
 
-// Í¬²½ÈÎÎñ±äÁ¿
+// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 BOOL KPlayerServer::DoSyncQuestValue(int nQuestIndex, int nConnIndex)
 {
     BOOL                    bResult          = false;
@@ -4057,7 +4114,7 @@ Exit0:
     return bResult;
 }
 
-// Í¬²½ÉùÍû
+// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 BOOL KPlayerServer::DoSyncRepute(int nConnIndex, DWORD dwForceID, int nLevel, int nRepute, int nDiffValue)
 {
 	BOOL                bResult       = false;
@@ -4077,7 +4134,7 @@ Exit0:
     return bResult;
 }
 
-// Í¬²½ËùÓÐÊÆÁ¦Õ½¶·¿ª¹Ø
+// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 BOOL KPlayerServer::DoSyncFightflagList(int nConnIndex, int nCount, KPlayer* pPlayer)
 {
 	BOOL              bResult       = false;
@@ -4107,7 +4164,7 @@ Exit0:
     return bResult;
 }
 
-// Í¬²½ËùÓÐµÄÊÆÁ¦ÉùÍû
+// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 BOOL KPlayerServer::DoSyncReputeList(int nConnIndex, int nCount, KPlayer* pPlayer)
 {
     BOOL                    bResult         = false;
@@ -4139,7 +4196,7 @@ Exit0:
 	return bResult;
 }
 
-// Í¬²½ÉùÍûÐÞ¸Ä±ê¼Ç
+// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¸Ä±ï¿½ï¿½
 BOOL KPlayerServer::DoShowReputation(int nConnIndex, DWORD dwForceID, BOOL bLoginLoading)
 {
 	BOOL                    bResult             = false;
@@ -4159,7 +4216,7 @@ Exit0:
     return bResult;
 }
 
-// Í¬²½Ê°È¡¶¯×÷
+// Í¬ï¿½ï¿½Ê°È¡ï¿½ï¿½ï¿½ï¿½
 BOOL KPlayerServer::DoCharacterOpen(KCharacter *pCharacter, KDoodad *pDoodad)
 {
     BOOL                    bResult         = false;
@@ -4252,7 +4309,7 @@ Exit0:
     return bResult;
 }
 
-// Í¬²½¶¨ÖÆµÄÓÃ»§ÏûÏ¢
+// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ï¢
 BOOL KPlayerServer::DoCustomOTAction(
     KPlayer* pPlayer, int nType, BOOL bIsBreakable, int nFrame, 
     int nTargetType, DWORD dwTargetID, DWORD dwScriptID, const char* pszActionName
@@ -4291,7 +4348,7 @@ Exit0:
     return bResult;
 }
 
-// Ìí¼Ó³ðºÞ
+// ï¿½ï¿½ï¿½Ó³ï¿½ï¿½
 BOOL KPlayerServer::DoModifyThreat(int nConnIndex, DWORD dwCharacterID)
 {
 	BOOL                    bResult         = false;
@@ -4310,7 +4367,7 @@ Exit0:
 	return bResult;
 }
 
-// ÐÞ¸Ä±»³ðºÞ
+// ï¿½Þ¸Ä±ï¿½ï¿½ï¿½ï¿½
 BOOL KPlayerServer::DoModifyThreaten(int nConnIndex, DWORD dwCharacterID)
 {
 	BOOL                bResult       = false;
@@ -4328,7 +4385,7 @@ Exit0:
     return bResult;
 }
 
-// Çå³ý³ðºÞ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 BOOL KPlayerServer::DoClearThreat(int nConnIndex, DWORD dwCharacterID)
 {
 	BOOL              bResult       = false;
@@ -4347,7 +4404,7 @@ Exit0:
     return bResult;
 }
 
-// Çå³ý±»³ðºÞ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 BOOL KPlayerServer::DoClearThreaten(int nConnIndex, DWORD dwCharacterID)
 {
 	BOOL               bResult       = false;
@@ -4598,7 +4655,7 @@ BOOL KPlayerServer::DoTalkMessage(
             KGLOG_PROCESS_ERROR(dwTalkerID);
             KGLOG_PROCESS_ERROR(dwReceiverID);
 
-            // ½ÓÊÕÈËÔÚËµ»°ÈËµÄºÚÃûµ¥ÖÐ
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½ËµÄºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             pBlackNode = g_pSO3World->m_FellowshipMgr.GetBlackListNode(dwTalkerID, dwReceiverID);
             if (pBlackNode)
             {
@@ -4606,7 +4663,7 @@ BOOL KPlayerServer::DoTalkMessage(
                 goto Exit1;
             }
 
-            // Ëµ»°ÈËÔÚ½ÓÊÕÈËµÄºÚÃûµ¥ÖÐ
+            // Ëµï¿½ï¿½ï¿½ï¿½ï¿½Ú½ï¿½ï¿½ï¿½ï¿½ËµÄºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             pBlackNode = g_pSO3World->m_FellowshipMgr.GetBlackListNode(dwReceiverID, dwTalkerID);
             if (pBlackNode)
             {
@@ -4625,7 +4682,7 @@ BOOL KPlayerServer::DoTalkMessage(
             memcpy(pTalkMsg->byTalkData + 2, cszTalker, uNameLen);
             memcpy(pTalkMsg->byTalkData + 2 + uNameLen, pbyTalkData, uDataLen);
             pTalkMsg->wSize = (WORD)uPakSize;
-            pTalkMsg->byTalkData[0] = false; // ±íÊ¾ÊÇ·ñEchoÏûÏ¢
+            pTalkMsg->byTalkData[0] = false; // ï¿½ï¿½Ê¾ï¿½Ç·ï¿½Echoï¿½ï¿½Ï¢
 
             Send(pReceiver->m_nConnIndex, pTalkMsg, uPakSize);
 
@@ -4652,7 +4709,7 @@ BOOL KPlayerServer::DoTalkMessage(
                 memcpy(pTalkMsg->byTalkData + 2, cszTalker, uNameLen);
                 memcpy(pTalkMsg->byTalkData + 2 + uNameLen, pbyTalkData, uDataLen);
                 pTalkMsg->wSize = (WORD)uPakSize;
-                pTalkMsg->byTalkData[0] = false; // ±íÊ¾ÊÇ·ñEchoÏûÏ¢
+                pTalkMsg->byTalkData[0] = false; // ï¿½ï¿½Ê¾ï¿½Ç·ï¿½Echoï¿½ï¿½Ï¢
 
                 Send(pReceiver->m_nConnIndex, pTalkMsg, uPakSize);
             }
@@ -4912,7 +4969,7 @@ BOOL KPlayerServer::DoSyncFellowshipList(DWORD dwPlayerID, int nCount, KG_FELLOW
 
     nSendMax = (MAX_EXTERNAL_PACKAGE_SIZE - sizeof(S2C_SYNC_FELLOWSHIP_LIST)) / sizeof(KG_FELLOWSHIP_ALL_GS);
 
-    while (nCount > 0) // ·Ö°ü·¢ËÍ¿Í»§¶Ë
+    while (nCount > 0) // ï¿½Ö°ï¿½ï¿½ï¿½ï¿½Í¿Í»ï¿½ï¿½ï¿½
     {
         nSendCount = nCount >= nSendMax ? nSendMax : nCount;
         nCount -= nSendCount;
@@ -4976,7 +5033,7 @@ BOOL KPlayerServer::DoSyncFoeList(DWORD dwPlayerID, int nCount, KG_FOE_ALL_GS* p
 
     nSendMax = (MAX_EXTERNAL_PACKAGE_SIZE - sizeof(S2C_SYNC_FELLOWSHIP_LIST)) / sizeof(KG_FOE_ALL_GS);
 
-    while (nCount > 0) // ·Ö°ü·¢ËÍ¿Í»§¶Ë
+    while (nCount > 0) // ï¿½Ö°ï¿½ï¿½ï¿½ï¿½Í¿Í»ï¿½ï¿½ï¿½
     {
         nSendCount = nCount >= nSendMax ? nSendMax : nCount;
         nCount -= nSendCount;
@@ -5034,7 +5091,7 @@ BOOL KPlayerServer::DoSyncBlackList(DWORD dwPlayerID, int nCount, KG_BLACK_LIST_
 
     nSendMax = (MAX_EXTERNAL_PACKAGE_SIZE - sizeof(S2C_SYNC_FELLOWSHIP_LIST)) / sizeof(KG_BLACK_LIST_ALL_GS);
 
-    while (nCount > 0) // ·Ö°ü·¢ËÍ¿Í»§¶Ë
+    while (nCount > 0) // ï¿½Ö°ï¿½ï¿½ï¿½ï¿½Í¿Í»ï¿½ï¿½ï¿½
     {
         nSendCount = nCount >= nSendMax ? nSendMax : nCount;
         nCount -= nSendCount;
@@ -5126,24 +5183,24 @@ BOOL KPlayerServer::DoNpcTalkToPlayer(KNpc* pNpc, DWORD dwDialogID, NPC_TALK_ACT
 	switch(eTalkType)
 	{
 	case trWhisper:
-		// ÃÜÓï
+		// ï¿½ï¿½ï¿½ï¿½
 		bRetCode = Send(pPlayer->m_nConnIndex, (void*)&(NpcTalkToPlayer), sizeof(NpcTalkToPlayer));
 		KG_PROCESS_ERROR(bRetCode);
 		break;
 	case trNearby:
-		// ½üÁÄ
+		// ï¿½ï¿½ï¿½ï¿½
 		BroadcastFunc.m_pvData          = &NpcTalkToPlayer;
 		BroadcastFunc.m_uSize           = sizeof(NpcTalkToPlayer);
         BroadcastFunc.m_dwExclusive     = pNpc->m_dwOwner;
 		BroadcastFunc.m_pCenterObject   = pNpc;
-		BroadcastFunc.m_nRange          = CELL_LENGTH * 2 * 12; // ²ß»®Ö¸¶¨·¶Î§
+		BroadcastFunc.m_nRange          = CELL_LENGTH * 2 * 12; // ï¿½ß»ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½Î§
 
         pScene = pNpc->m_pScene;
         pScene->Broadcast(pNpc->m_pRegion, BroadcastFunc);
 
 		break;
 	case trSence:
-		// ³¡¾°º°»°
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 	    break;
 	default:
@@ -7527,7 +7584,7 @@ Exit0:
     return bResult;
 }
 
-//AutoCode:-·¢ËÍÐ­Òéº¯Êý½áÊø-
+//AutoCode:-ï¿½ï¿½ï¿½ï¿½Ð­ï¿½éº¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-
 
 void KPlayerServer::OnHandshakeRequest(char* pData, size_t nSize, int nConnIndex, int nFrame)
 {
@@ -7629,7 +7686,7 @@ Exit0:
 	return;
 }
 
-// Íæ¼ÒµÇ³ö
+// ï¿½ï¿½ÒµÇ³ï¿½
 void KPlayerServer::OnPlayerLogout(char* pData, size_t nSize, int nConnIndex, int nFrame)
 {
 	C2S_PLAYER_LOGOUT*  pPlayerLogout   = (C2S_PLAYER_LOGOUT*)pData;
@@ -7673,7 +7730,7 @@ void KPlayerServer::OnMoveCtrl(char* pData, size_t nSize, int nConnIndex, int nF
     pPlayer->m_MoveCtrl.nTurn       = pMoveCtrl->nTurn;
     pPlayer->m_MoveCtrl.bUpdate     = true;
 
-    // ·ÀÖ¹¿Í»§¶Ë´«Èë·Ç·¨²ÎÊýµ¼ÖÂÍ¬²½³ö´í(È¡Î»Óò)
+    // ï¿½ï¿½Ö¹ï¿½Í»ï¿½ï¿½Ë´ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(È¡Î»ï¿½ï¿½)
     MAKE_IN_RANGE(pPlayer->m_MoveCtrl.nDirection8, 0, 7);
     MAKE_IN_RANGE(pPlayer->m_MoveCtrl.nTurn, -1, 1);
 
@@ -7778,7 +7835,7 @@ Exit0:
     return;
 }
 
-// ½ÇÉ«×ªÏò
+// ï¿½ï¿½É«×ªï¿½ï¿½
 void KPlayerServer::OnSyncDirection(char* pData, size_t nSize, int nConnIndex, int nFrame)
 {
 	BOOL                bAdjust         = false;   
@@ -7793,7 +7850,7 @@ void KPlayerServer::OnSyncDirection(char* pData, size_t nSize, int nConnIndex, i
 	pPlayer->TurnTo(pPak->byFaceDirection, false);
     pPlayer->PitchTo(pPak->byPitchDirection, false);
     
-    // ´ò¶Ï¼¼ÄÜ×Ô¶¯³¯Ïò
+    // ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½
     pPlayer->m_bAutoTurnFlag = false;
 
     pPlayer->m_MoveCtrl.nMoveCount = pPak->nMoveCount;
@@ -7878,7 +7935,7 @@ Exit0:
     return;
 }
 
-// ½ÇÉ«¹¥»÷Ö¸Áî
+// ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
 void KPlayerServer::OnCharacterSkill(char* pData, size_t nSize, int nConnIndex, int nFrame)
 {
 	int                     nResult         = srcFailed;
@@ -7889,7 +7946,7 @@ void KPlayerServer::OnCharacterSkill(char* pData, size_t nSize, int nConnIndex, 
 
 	assert(pPlayer);
 
-    // Õâ¶Î´úÂëÊÇÓÃÀ´¼õÇá·Å³å´ÌµÈ¼¼ÄÜÊ±"³¶"µÄÎÊÌâµÄ
+    // ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å³ï¿½ÌµÈ¼ï¿½ï¿½ï¿½Ê±"ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     if (pPlayer->m_nVirtualFrame > nFrame)
     {
         pPlayer->ReverseFrame(pPlayer->m_nVirtualFrame - nFrame);
@@ -7935,7 +7992,7 @@ void KPlayerServer::OnCharacterSkill(char* pData, size_t nSize, int nConnIndex, 
         pSkill = SkillRecipePointer.SetRecipeKey(RecipeKey);
         KGLOG_PROCESS_ERROR(pSkill);
 
-        // ÆÕÍ¨¹¥»÷¶ÔÎäÆ÷µÄÐèÇó²»¿ÉÄÜÊÇ"ÈÎÒâ"
+        // ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó²»¿ï¿½ï¿½ï¿½ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½"
         KGLOG_PROCESS_ERROR(pSkill->m_pBaseInfo->dwWeaponRequest > 0);
 
         nWeaponGenre = g_pSO3World->m_Settings.m_WeaponTypeList.GetWeaponGenre(pSkill->m_pBaseInfo->dwWeaponRequest);
@@ -7967,7 +8024,7 @@ void KPlayerServer::OnCharacterSkill(char* pData, size_t nSize, int nConnIndex, 
         goto Exit1;
     }
 
-	// ·þÎñÆ÷Òª·¢µÄ¼¼ÄÜ¶¼ÊÇºÏ·¨µÄ£¬Íâ¹ÒÖ»ÄÜÍ¨¹ýÐ­ÒéÓ°Ïì£¬ËùÒÔÖ»ÔÚÕâ¶ù¼ì²é¡£
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ü¶ï¿½ï¿½ÇºÏ·ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Í¨ï¿½ï¿½Ð­ï¿½ï¿½Ó°ï¿½ì£¬ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é¡£
     nRetCode = g_pSO3World->m_SkillManager.IsInstinct(pCharacterSkill->dwSkillID, pCharacterSkill->bySkillLevel);
     if (!nRetCode)
     {
@@ -8010,7 +8067,7 @@ Exit0:
 	return;
 }
 
-// ½ÇÉ«½»»¥¶¯×÷
+// ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void KPlayerServer::OnCharacterAction(char* pData, size_t nSize, int nConnIndex, int nFrame)
 {
 	BOOL                    bRetCode            = false;
@@ -8028,7 +8085,7 @@ Exit0:
 }
 
 
-// Íæ¼ÒÏÔÊ¾Êý¾Ý
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
 void KPlayerServer::OnApplyPlayerDisplayData(char* pData, size_t nSize, int nConnIndex, int nFrame)
 {
 	C2S_APPLY_PLAYER_DISPLAY_DATA* pApplyPlayerDisplayData = (C2S_APPLY_PLAYER_DISPLAY_DATA*)pData;
@@ -8054,13 +8111,13 @@ void KPlayerServer::OnMountKungfu(char* pData, size_t nSize, int nConnIndex, int
     pOldMountKungfu = g_pSO3World->m_SkillManager.GetSkill_K(
         pPlayer->m_SkillList.m_dwMountKungfuID, pPlayer->m_SkillList.m_dwMountKungfuLevel
     );
-    // ÕâÀïpOldMountKungfuÎª¿ÕÊÇÕý³£Á÷³Ì£¬Ê¹ÓÃÖ®Ç°±ØÐë×¢Òâ!
+    // ï¿½ï¿½ï¿½ï¿½pOldMountKungfuÎªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì£ï¿½Ê¹ï¿½ï¿½Ö®Ç°ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½!
 
-    if (pPak->dwID == INVALID_SKILL_ID) // Èç¹ûÊÇÐ¶ÏÂÄÚ¹¦Á÷³Ì
+    if (pPak->dwID == INVALID_SKILL_ID) // ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         int nDuration = 0;
 
-        KGLOG_PROCESS_ERROR(pOldMountKungfu); // Ã»ÓÐÄÚ¹¦µÄÊ±ºòÐ¶ÏÂÄÚ¹¦£¬ÊÇ²»¿ÉÄÜµÄ¡£
+        KGLOG_PROCESS_ERROR(pOldMountKungfu); // Ã»ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½ï¿½ï¿½Ç²ï¿½ï¿½ï¿½ï¿½ÜµÄ¡ï¿½
 
         nDuration = pPlayer->GetCDValue(pOldMountKungfu->m_dwCoolDownID[OTHER_SCHOOL_KUNGFU_CD_INDEX]);
         nDuration += pOldMountKungfu->m_nCoolDownAlter[OTHER_SCHOOL_KUNGFU_CD_INDEX];
@@ -8162,7 +8219,7 @@ void KPlayerServer::OnSetSheathState(char* pData, size_t nSize, int nConnIndex, 
     KPlayer*              pPlayer    = GetPlayerByConnection(nConnIndex);
 
     KGLOG_PROCESS_ERROR(pPlayer);
-    // Õ½¶·×´Ì¬²»ÔÊÐíÍæ¼Ò²å°ÎÎäÆ÷
+    // Õ½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     KG_PROCESS_ERROR(!pPlayer->m_bFightState);
 
     pPlayer->m_bSheathFlag = pPak->bSheathFlag;
@@ -8264,7 +8321,7 @@ void KPlayerServer::OnApplyJoinTeamRequest(char* pData, size_t nSize, int nConnI
 	pPlayerSrc = GetPlayerByConnection(nConnIndex);
     KGLOG_PROCESS_ERROR(pPlayerSrc);
 
-    // ½»¸øRelayÈ¥´¦Àí
+    // ï¿½ï¿½ï¿½ï¿½RelayÈ¥ï¿½ï¿½ï¿½ï¿½
     g_RelayClient.DoApplyJoinTeamRequest(pPlayerSrc->m_dwID, pApplyJoinTeam->szApplyDst);
 Exit0:
     return;
@@ -8324,7 +8381,7 @@ void KPlayerServer::OnTeamChangeAuthorityRequest(char* pData, size_t nSize, int 
 	pPlayer = GetPlayerByConnection(nConnIndex);
     KGLOG_PROCESS_ERROR(pPlayer);
 
-    // ×¢: ÒÆ½»µÄÄ¿±êÍæ¼ÒµÄ×´Ì¬µÄÕýÈ·ÐÔRelay»áºË×¼µÄ
+    // ×¢: ï¿½Æ½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½Òµï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½Relayï¿½ï¿½ï¿½×¼ï¿½ï¿½
 
     dwTeamID = pPlayer->GetCurrentTeamID();
 
@@ -8355,7 +8412,7 @@ void KPlayerServer::OnTeamSetLootMode(char* pData, size_t nSize, int nConnIndex,
     KGLOG_PROCESS_ERROR(pTeam);
     KG_PROCESS_ERROR(!pTeam->bSystem);
 
-    KGLOG_PROCESS_ERROR(pPlayer->m_dwID == pTeam->dwAuthority[tatDistribute]); //Ö»ÓÐ·ÖÅäÕß²ÅÄÜÐÞ¸Ä·ÖÅäÄ£Ê½
+    KGLOG_PROCESS_ERROR(pPlayer->m_dwID == pTeam->dwAuthority[tatDistribute]); //Ö»ï¿½Ð·ï¿½ï¿½ï¿½ï¿½ß²ï¿½ï¿½ï¿½ï¿½Þ¸Ä·ï¿½ï¿½ï¿½Ä£Ê½
 
     bRetCode = g_RelayClient.DoTeamSetLootModeRequest(pPlayer->m_dwTeamID, pPlayer->m_dwID, pRequest->nLootMode);
     KGLOG_PROCESS_ERROR(bRetCode);
@@ -8378,7 +8435,7 @@ void KPlayerServer::OnTeamSetRollQuality(char* pData, size_t nSize, int nConnInd
     KGLOG_PROCESS_ERROR(pTeam);
     KG_PROCESS_ERROR(!pTeam->bSystem);
 
-    KGLOG_PROCESS_ERROR(pPlayer->m_dwID == pTeam->dwAuthority[tatDistribute]); //Ö»ÓÐ·ÖÅäÕß²ÅÄÜÐÞ¸Ä·ÖÅäÄ£Ê½
+    KGLOG_PROCESS_ERROR(pPlayer->m_dwID == pTeam->dwAuthority[tatDistribute]); //Ö»ï¿½Ð·ï¿½ï¿½ï¿½ï¿½ß²ï¿½ï¿½ï¿½ï¿½Þ¸Ä·ï¿½ï¿½ï¿½Ä£Ê½
 
 	g_RelayClient.DoTeamSetRollQualityRequest(pPlayer->m_dwTeamID, pPlayer->m_dwID, pRequest->nRollQuality);
 
@@ -8467,7 +8524,7 @@ void KPlayerServer::OnTeamMemberNotifySignpost(char* pData, size_t nSize, int nC
                 continue;
             }
 
-            // Ö»·¢¸øÔÚÍ¬Ò»µØÍ¼ÄÚµÄ¶ÓÓÑ
+            // Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬Ò»ï¿½ï¿½Í¼ï¿½ÚµÄ¶ï¿½ï¿½ï¿½
             if (pPlayer->m_pScene != pMemberPlayer->m_pScene)
             {
                 continue;
@@ -8555,7 +8612,7 @@ Exit0:
     return;
 }
 
-// ½ÓÊÜÈÎÎñ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void KPlayerServer::OnAcceptQuest(char* pData, size_t nSize, int nConnIndex, int nFrame)
 {
     int               nResult       = qrcFailed;
@@ -8597,7 +8654,7 @@ Exit0:
 	return;
 }
 
-//Íê³ÉÈÎÎñ
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void KPlayerServer::OnFinishQuest(char* pData, size_t nSize, int nConnIndex, int nFrame)
 {
     int                 nResult         = qrcFailed;
@@ -8633,7 +8690,7 @@ Exit0:
 	return;
 }
 
-//È¡ÏûÈÎÎñ
+//È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void KPlayerServer::OnCancelQuest(char* pData, size_t nSize, int nConnIndex, int nFrame)
 {
 	QUEST_RESULT_CODE   nRetCode        = qrcFailed;
@@ -8673,7 +8730,7 @@ Exit0:
 	return;
 }
 
-// ½ÓÊÜ»¤ËÍÈÎÎñ
+// ï¿½ï¿½ï¿½Ü»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void KPlayerServer::OnAcceptEscortQuest(char* pData, size_t nSize, int nConnIndex, int nFrame)
 {
     int						 nResult			= false;
@@ -8884,16 +8941,16 @@ void KPlayerServer::OnShopSellRequest(char* pData, size_t nSize, int nConnIndex,
     pShop = g_pSO3World->m_ShopCenter.GetShopInfo(pRequest->dwShopID);
     KGLOG_PROCESS_ERROR(pShop);
     
-    // ÊÇ·ñÔÚÍ¬¸ö³¡¾°
+    // ï¿½Ç·ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     pNpc = pShop->m_pNpc;
     KGLOG_PROCESS_ERROR(pNpc);
     KGLOG_PROCESS_ERROR(pPlayer->m_pScene == pNpc->m_pScene);
 
-    // ¾àÀë
+    // ï¿½ï¿½ï¿½ï¿½
     nRetCode = g_InRange(pPlayer, pNpc, COMMON_PLAYER_OPERATION_DISTANCE);
     KG_PROCESS_ERROR(nRetCode);
 
-    // Íæ¼ÒÓëNPCµÄ¹ØÏµ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½NPCï¿½Ä¹ï¿½Ïµ
     nRelation = pPlayer->GetNpcRelation(pNpc);
     KGLOG_PROCESS_ERROR(!(nRelation & sortEnemy));
   
@@ -9031,7 +9088,7 @@ void KPlayerServer::OnTradingInviteRequest(char* pData, size_t nSize, int nConnI
     KG_PROCESS_ERROR(pInviteSrc->m_eGameStatus == gsPlaying);
     KG_PROCESS_ERROR_RET_CODE(pInviteSrc->m_eMoveState != cmsOnDeath, trcYouDead);
 
-    // ½»Ò×·¢ÆðÈË²»Ó¦´¦ÓÚ½»Ò××´Ì¬
+    // ï¿½ï¿½ï¿½×·ï¿½ï¿½ï¿½ï¿½Ë²ï¿½Ó¦ï¿½ï¿½ï¿½Ú½ï¿½ï¿½ï¿½×´Ì¬
     KG_PROCESS_ERROR_RET_CODE(!pInviteSrc->m_pTradingBox, trcYouBusy);
     
     pInviteDst = g_pSO3World->m_PlayerSet.GetObj(pRequest->dwInviteDst);
@@ -9041,19 +9098,19 @@ void KPlayerServer::OnTradingInviteRequest(char* pData, size_t nSize, int nConnI
     
     KG_PROCESS_ERROR(pInviteSrc != pInviteDst);
 
-    // ±»ÑûÇëÈË²»Ó¦´¦ÓÚ½»Ò××´Ì¬
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë²ï¿½Ó¦ï¿½ï¿½ï¿½Ú½ï¿½ï¿½ï¿½×´Ì¬
     KG_PROCESS_ERROR_RET_CODE((!pInviteDst->m_pTradingBox), trcTargetBusy);
 
-    // »ò±»ÑûÇë½»Ò××´Ì¬
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ë½»ï¿½ï¿½×´Ì¬
     KG_PROCESS_ERROR_RET_CODE(pInviteDst->m_dwTradingInviteSrc == ERROR_ID, trcTargetBusy);
 
-    // »òÑûÇë½»Ò××´Ì¬
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ë½»ï¿½ï¿½×´Ì¬
     KG_PROCESS_ERROR_RET_CODE(pInviteDst->m_dwTradingInviteDst == ERROR_ID, trcTargetBusy);
     
     nRelation = pInviteSrc->GetPlayerRelation(pInviteDst);
     KG_PROCESS_ERROR_RET_CODE(!(nRelation & sortEnemy), trcInvalidTarget);
 
-    // ½»Ò×Î»ÖÃ¼ì²â
+    // ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ã¼ï¿½ï¿½
     KG_PROCESS_ERROR(pInviteSrc->m_pScene == pInviteDst->m_pScene);
 
     nRetCode = g_InRange(pInviteSrc, pInviteDst, COMMON_PLAYER_OPERATION_DISTANCE);
@@ -9108,7 +9165,7 @@ void KPlayerServer::OnTradingInviteRespond(char* pData, size_t nSize, int nConnI
         goto Exit1;
     }
     
-    // ºË¶Ô¸Ã½»Ò×ÊÇ·ñ»¹ÓÐÐ§
+    // ï¿½Ë¶Ô¸Ã½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ð§
     KG_PROCESS_ERROR_RET_CODE(pInviteSrc->m_dwTradingInviteDst == pInviteDst->m_dwID, trcInvalidInvite);
     pInviteSrc->m_dwTradingInviteDst = ERROR_ID;
 
@@ -9121,7 +9178,7 @@ void KPlayerServer::OnTradingInviteRespond(char* pData, size_t nSize, int nConnI
     nRelation = pInviteSrc->GetPlayerRelation(pInviteDst);
     KG_PROCESS_ERROR_RET_CODE(!(nRelation & sortEnemy), trcInvalidTarget);
 
-    // ½»Ò×Î»ÖÃ¼ì²â
+    // ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ã¼ï¿½ï¿½
     KG_PROCESS_ERROR(pInviteSrc->m_pScene == pInviteDst->m_pScene);
 
     nRetCode = g_InRange(pInviteSrc, pInviteDst, COMMON_PLAYER_OPERATION_DISTANCE);
@@ -9309,7 +9366,7 @@ void KPlayerServer::OnTradingConfirm(char* pData, size_t nSize, int nConnIndex, 
     KG_PROCESS_ERROR_RET_CODE(pOther->m_pTradingBox, trcInvalid);
 
     assert(pOther->m_pTradingBox->GetOtherSide() == pPlayer);
-    // È¡Ïû½»Ò×
+    // È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     if (!pTradingConfirm->bConfirm)
     {
         pPlayer->m_pTradingBox->Cancel();
@@ -9340,11 +9397,11 @@ void KPlayerServer::OnTradingConfirm(char* pData, size_t nSize, int nConnIndex, 
     nRelation = pPlayer->GetPlayerRelation(pOther);
     KG_PROCESS_ERROR_RET_CODE(!(nRelation & sortEnemy), trcInvalidTarget);
     
-    // ºË¶Ô¿´µ½µÄÎïÆ·ÊÇ·ñÕýÈ·
+    // ï¿½Ë¶Ô¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½Ç·ï¿½ï¿½ï¿½È·
     nKey = pOther->m_pTradingBox->GetKey();
     KG_PROCESS_SUCCESS(nKey != pTradingConfirm->nKey);
     
-    // ½»Ò×Î»ÖÃ¼ì²â
+    // ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ã¼ï¿½ï¿½
     KG_PROCESS_ERROR_RET_CODE(pPlayer->m_pScene == pOther->m_pScene, trcTooFar);
 
     nRetCode = g_InRange(pPlayer, pOther, COMMON_PLAYER_OPERATION_DISTANCE);
@@ -9379,7 +9436,7 @@ Exit0:
 
 // <-------------------------- Trading ----------------------------
 
-// ÉêÇë½»»»×°±¸
+// ï¿½ï¿½ï¿½ë½»ï¿½ï¿½×°ï¿½ï¿½
 void KPlayerServer::OnApplyExchangeItem(char* pData, size_t nSize, int nConnIndex, int nFrame)
 {
     ITEM_RESULT_CODE            nResult             = ircInvalid;
@@ -9483,7 +9540,7 @@ void KPlayerServer::OnRequestTarget(char* pData, size_t nSize, int nConnIndex, i
 			bRetCode = pPlayer->m_SelectTarget.ClearTarget();
             KGLOG_PROCESS_ERROR(bRetCode);
 
-            // Ó¦²ß»®ÒªÇó£¬È¡ÏûÄ¿±êÑ¡ÔñµÄÍ¬Ê±È¡Ïû×Ô¶¯¹¥»÷¡£
+            // Ó¦ï¿½ß»ï¿½Òªï¿½ï¿½È¡ï¿½ï¿½Ä¿ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½Í¬Ê±È¡ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             pPlayer->DoAutoCastSkillIdle();
 		}
 		break;
@@ -9539,7 +9596,7 @@ Exit0:
     return;
 }
 
-// Ñ¡Ôñ´°¿ÚÑ¡Ïî
+// Ñ¡ï¿½ñ´°¿ï¿½Ñ¡ï¿½ï¿½
 void KPlayerServer::OnWindowSelect(char* pData, size_t nSize, int nConnIndex, int nFrame)
 {
 	BOOL                bRetCode        = false;
@@ -9853,7 +9910,7 @@ Exit0:
 	return;
 }
 
-// ¸Ä±äÕ½¶·¿ª¹Ø
+// ï¿½Ä±ï¿½Õ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void KPlayerServer::OnApplyFightFlag(char* pData, size_t nSize, int nConnIndex, int nFrame)
 {
 	C2S_APPLY_FIGHT_FLAG*   pApplyFightFlag = (C2S_APPLY_FIGHT_FLAG*)pData;
@@ -9871,7 +9928,7 @@ void KPlayerServer::OnApplyFightFlag(char* pData, size_t nSize, int nConnIndex, 
 	return;
 }
 
-// ½áÊøÊ°È¡
+// ï¿½ï¿½ï¿½ï¿½Ê°È¡
 void KPlayerServer::OnFinishLoot(char* pData, size_t nSize, int nConnIndex, int nFrame)
 {
 	BOOL                bRetCode        = false;
@@ -10215,14 +10272,14 @@ void KPlayerServer::OnTalkMessage(char* pData, size_t nSize, int nConnIndex, int
 
     uTalkDataLen = nSize - sizeof(C2S_TALK_MESSAGE);
 
-    // ¼ì²éÊÇ·ñ±»½ûÑÔ
+    // ï¿½ï¿½ï¿½ï¿½Ç·ñ±»½ï¿½ï¿½ï¿½
     if (pPlayer->m_nBanTime > g_pSO3World->m_nCurrentTime)
     {
         g_PlayerServer.DoMessageNotify(pPlayer->m_nConnIndex, ectTalkErrorCode, TALK_ERROR_E_BAN);
         goto Exit0;
     }
 
-    // ¼ì²éÊÕ·Ñ×´Ì¬
+    // ï¿½ï¿½ï¿½ï¿½Õ·ï¿½×´Ì¬
     switch (pTalkMsg->byMsgType)
     {
     case trWorld:
@@ -10243,7 +10300,7 @@ void KPlayerServer::OnTalkMessage(char* pData, size_t nSize, int nConnIndex, int
         break;
     }
 
-    // ¼ì²éCool Down
+    // ï¿½ï¿½ï¿½Cool Down
     switch(pTalkMsg->byMsgType)
     {
     case trSence:
@@ -10284,7 +10341,7 @@ void KPlayerServer::OnTalkMessage(char* pData, size_t nSize, int nConnIndex, int
         pPlayer->m_TimerList.ResetTimer(nCoolDownID, nDuration);
     }
 
-    // ¼ì²éÁÄÌì´ÎÊýÏÞÖÆ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     pLevelUpData = g_pSO3World->m_Settings.m_LevelUpList.GetLevelUpData(pPlayer->m_eRoleType, pPlayer->m_nLevel);
     KGLOG_PROCESS_ERROR(pLevelUpData);
 
@@ -10324,7 +10381,7 @@ void KPlayerServer::OnTalkMessage(char* pData, size_t nSize, int nConnIndex, int
         break;
     }
 
-    // ÁÄÌìÏûÏ¢×ª·¢
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢×ªï¿½ï¿½
     switch (pTalkMsg->byMsgType)
     {
     case trSence:
@@ -10427,7 +10484,7 @@ void KPlayerServer::OnTalkMessage(char* pData, size_t nSize, int nConnIndex, int
             memcpy(pEchoMsg->byTalkData + 2 + uNameLen, pTalkMsg->byTalkData, uTalkDataLen);
 
             pEchoMsg->wSize = (WORD)uPakSize;
-            pEchoMsg->byTalkData[0] = true; // ±íÊ¾ÊÇ·ñEchoÏûÏ¢
+            pEchoMsg->byTalkData[0] = true; // ï¿½ï¿½Ê¾ï¿½Ç·ï¿½Echoï¿½ï¿½Ï¢
 
             Send(pPlayer->m_nConnIndex, pEchoMsg, uPakSize);
         }
@@ -10437,7 +10494,7 @@ void KPlayerServer::OnTalkMessage(char* pData, size_t nSize, int nConnIndex, int
         break;
     }
 
-    // ÁÄÌìÍ³¼ÆºÍ¼ÇÂ¼
+    // ï¿½ï¿½ï¿½ï¿½Í³ï¿½ÆºÍ¼ï¿½Â¼
     switch (pTalkMsg->byMsgType)
     {
     case trSence:
@@ -10877,18 +10934,18 @@ void KPlayerServer::OnSendMailRequest(char* pData, size_t nSize, int nConnIndex,
     pRequest->szDstName[sizeof(pRequest->szDstName) - 1] = '\0';
     pRequest->szTitle[sizeof(pRequest->szTitle) - 1] = '\0';
 
-    if (pPlayer->m_bFreeLimitFlag)                                  // ÊÕ·ÑÍæ¼Ò²ÅÄÜÓÃÓÊ¼þ¹¦ÄÜ
+    if (pPlayer->m_bFreeLimitFlag)                                  // ï¿½Õ·ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         DoMessageNotify(nConnIndex, ectChargeLimitCode, cltMail);
         goto Exit0;
     }
 
     KGLOG_PROCESS_ERROR(nSize == sizeof(C2S_SEND_MAIL_REQUEST) + pRequest->wTextLen);
-    KGLOG_PROCESS_ERROR(pRequest->wTextLen > 0); // ¿Õ×Ö·û´®Ò²ÓÐ1¸ö×Ö½Ú
+    KGLOG_PROCESS_ERROR(pRequest->wTextLen > 0); // ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½Ò²ï¿½ï¿½1ï¿½ï¿½ï¿½Ö½ï¿½
     KGLOG_PROCESS_ERROR(pRequest->wTextLen <= MAX_MAIL_TEXT_LEN);
     pRequest->szText[pRequest->wTextLen - 1] = '\0';
 
-    if (STR_CASE_CMP(pPlayer->m_szName, pRequest->szDstName) == 0)  // ²»ÄÜ¸ø×Ô¼º·¢ÓÊ¼þ
+    if (STR_CASE_CMP(pPlayer->m_szName, pRequest->szDstName) == 0)  // ï¿½ï¿½ï¿½Ü¸ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½
     {
         DoSendMailRespond(nConnIndex, nRequestID, mrcDstNotSelf);
         goto Exit0;
@@ -10899,7 +10956,7 @@ void KPlayerServer::OnSendMailRequest(char* pData, size_t nSize, int nConnIndex,
         nDelayTime = max(nDelayTime, g_pSO3World->m_Settings.m_ConstList.nMailDelaySecondOnText);
     }
 
-    // ¼ì²é½ðÇ®
+    // ï¿½ï¿½ï¿½ï¿½Ç®
     KGLOG_PROCESS_ERROR(pRequest->nMoney >= 0);
     nPlayerMoney = pPlayer->m_ItemList.GetMoney();
     KGLOG_PROCESS_ERROR(nPlayerMoney - KMAIL_COST >= pRequest->nMoney);
@@ -10909,7 +10966,7 @@ void KPlayerServer::OnSendMailRequest(char* pData, size_t nSize, int nConnIndex,
         nDelayTime = max(nDelayTime, g_pSO3World->m_Settings.m_ConstList.nMailDelaySecondOnMoney);
     }
 
-    // ¼ì²éµÀ¾ß
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     for (int i = 0; i < KMAIL_MAX_ITEM_COUNT; i++)
     {
         int nBoxType =  ibInvalid;
@@ -10957,7 +11014,7 @@ void KPlayerServer::OnSendMailRequest(char* pData, size_t nSize, int nConnIndex,
     pbyOffset += pMail->wTextLen;
     uMailLen  += pMail->wTextLen;
 
-    // È¡µÀ¾ß
+    // È¡ï¿½ï¿½ï¿½ï¿½
     for (int i = 0; i < KMAIL_MAX_ITEM_COUNT; i++)
     {
         pMail->ItemDesc[i].bAcquired = false;
@@ -10977,7 +11034,7 @@ void KPlayerServer::OnSendMailRequest(char* pData, size_t nSize, int nConnIndex,
         uMailLen  += uItemDataLen;
 
         pMail->ItemDesc[i].byDataLen = (BYTE)uItemDataLen;
-        //TODO: »õµ½¸¶¿î¹¦ÄÜÉÐÎ´¿ª·Å
+        //TODO: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½î¹¦ï¿½ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½
         //pMail->ItemDesc[i].nPrice    = pRequest->nItemPrice[i];
         pMail->ItemDesc[i].nPrice    = 0;
 
@@ -10993,7 +11050,7 @@ void KPlayerServer::OnSendMailRequest(char* pData, size_t nSize, int nConnIndex,
         pItem = NULL;
     }
 
-    // ¿ÛÇ®
+    // ï¿½ï¿½Ç®
     pMail->nMoney = pRequest->nMoney;
     bRetCode = pPlayer->m_ItemList.AddMoney(-(pRequest->nMoney + KMAIL_COST));
     assert(bRetCode);
@@ -11230,7 +11287,7 @@ void KPlayerServer::OnSetBankOpenedFlag(char* pData, size_t nSize, int nConnInde
 	    KG_PROCESS_ERROR(pNpc);
 	    KG_PROCESS_ERROR(pNpc->m_pScene);
 
-	    //±ØÐëÊÇÓÐÒøÐÐ¹¦ÄÜµÄNpc
+	    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¹ï¿½ï¿½Üµï¿½Npc
 	    KG_PROCESS_ERROR(pNpc->m_bBank);
 
 	    pPlayer->m_dwBankNpcID = pNpc->m_dwID;
@@ -11933,7 +11990,7 @@ void KPlayerServer::OnSaveMoneyInTongRequest(char* pData, size_t nSize, int nCon
 
     nSaveMoney = pRequest->nMoney;
 
-    // ´æÈë°ï»áµÄ×Ê½ðÊÇÒÔÒøÎª×îÐ¡µ¥Î»µÄ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Ð¡ï¿½ï¿½Î»ï¿½ï¿½
     KGLOG_PROCESS_ERROR(nSaveMoney >= MONEY_CONVERSION_SILVER_RATE);
     KGLOG_PROCESS_ERROR(nSaveMoney % MONEY_CONVERSION_SILVER_RATE == 0);
     
@@ -12349,7 +12406,7 @@ void KPlayerServer::OnAuctionBidRequest(char* pData, size_t nSize, int nConnInde
 
     KGLOG_PROCESS_ERROR(pPlayer->m_ItemList.m_nMoney >= pRequest->nPrice);
 
-    // ÏÈ¿ÛÇ®
+    // ï¿½È¿ï¿½Ç®
     bRetCode = pPlayer->m_ItemList.AddMoney(-pRequest->nPrice, false);
     KGLOG_PROCESS_ERROR(bRetCode);
 
@@ -12411,10 +12468,10 @@ void KPlayerServer::OnAuctionSellRequest(char* pData, size_t nSize, int nConnInd
     KGLOG_PROCESS_ERROR(pItem->m_pItemInfo->nExistType == ketPermanent);
     KGLOG_PROCESS_ERROR(pItem->m_Common.nGenre != igBook);
 
-    // ¼ÆËãÅÄÂôÊ±¼ä
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
     nLeftTime = (int)pRequest->byLeftHour * 3600;
 
-    // ¼ÆËã±£¹Ü·Ñ(Âôµê¼ÛµÄ40% Ã¿12Ð¡Ê±)£¬±£¹Ü·ÑÖÁÉÙ10Í­£¬Ð¡ÓÚ10Í­µÄËã10Í­
+    // ï¿½ï¿½ï¿½ã±£ï¿½Ü·ï¿½(ï¿½ï¿½ï¿½ï¿½Ûµï¿½40% Ã¿12Ð¡Ê±)ï¿½ï¿½ï¿½ï¿½ï¿½Ü·ï¿½ï¿½ï¿½ï¿½ï¿½10Í­ï¿½ï¿½Ð¡ï¿½ï¿½10Í­ï¿½ï¿½ï¿½ï¿½10Í­
     nPrice = pItem->GetPrice();
     nStackNum = pItem->GetStackNum();
     nCustodyCharges = (int)pRequest->byLeftHour * nPrice * nStackNum / 30;
@@ -12436,7 +12493,7 @@ void KPlayerServer::OnAuctionSellRequest(char* pData, size_t nSize, int nConnInd
     nRequireLevel   = pItem->GetRequireLevel();
     nQuality        = pItem->m_GenParam.nQuality;
 
-    // ¿ÛÇ®
+    // ï¿½ï¿½Ç®
     bRetCode = pPlayer->m_ItemList.AddMoney(-nCustodyCharges, false);
     KGLOG_PROCESS_ERROR(bRetCode);
 
@@ -12651,7 +12708,7 @@ void KPlayerServer::OnCreateViewPointRequest(char* pData, size_t nSize, int nCon
     pRegion = pPlayer->m_pScene->GetRegionByPoint(pRequest->nX, pRequest->nY);
     KGLOG_PROCESS_ERROR(pRegion);
 
-    KGLOG_PROCESS_ERROR(pPlayer->m_ViewPoint.pRegion == NULL);  // µ±Ç°ÎÞ¹Û²ìµã
+    KGLOG_PROCESS_ERROR(pPlayer->m_ViewPoint.pRegion == NULL);  // ï¿½ï¿½Ç°ï¿½Þ¹Û²ï¿½ï¿½
     
     pPlayer->m_ViewPoint.pRegion = pRegion;
     pPlayer->m_ViewPoint.nDisappearFrame = g_pSO3World->m_nGameLoop + nFrame;
@@ -12661,7 +12718,7 @@ void KPlayerServer::OnCreateViewPointRequest(char* pData, size_t nSize, int nCon
     DoCreateViewPointRespond(pPlayer);
 
     pPlayer->m_pScene->ValidateRegions(pRegion->m_nRegionX, pRegion->m_nRegionY);
-    pPlayer->RegisterViewObjectByViewPoint(NULL, pRegion);     // ½«pRegionÀïµÄ¶«Î÷×¢²áµ½playerÍ¬²½ÁÐ±íÖÐ
+    pPlayer->RegisterViewObjectByViewPoint(NULL, pRegion);     // ï¿½ï¿½pRegionï¿½ï¿½Ä¶ï¿½ï¿½ï¿½×¢ï¿½áµ½playerÍ¬ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½
 
 Exit0:
     return;
@@ -12900,6 +12957,6 @@ Exit0:
     return;
 }
 
-//AutoCode:-´¦ÀíÐ­Òéº¯Êý½áÊø-
+//AutoCode:-ï¿½ï¿½ï¿½ï¿½Ð­ï¿½éº¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-
 
 #endif	//_SERVER

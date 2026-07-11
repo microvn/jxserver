@@ -206,7 +206,7 @@ int KPlayer::LuaExchangeItem(Lua_State* L)
 	KGLOG_PROCESS_ERROR(eRetCode == ircSuccess);
 #else
     KG_PROCESS_ERROR(dwSrcBox != dwDestBox || dwSrcX != dwDestX);
-	KGLOG_PROCESS_ERROR(dwDestBox != ibInvalid); // Õâ¸öÊÇÉ¾³ýÎïÆ·¡£
+	KGLOG_PROCESS_ERROR(dwDestBox != ibInvalid); // ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½
 
 	g_PlayerClient.DoApplyExchangeItem(dwSrcBox, dwSrcX, dwDestBox, dwDestX, dwAmount);
 #endif
@@ -247,7 +247,7 @@ Exit0:
 	return 1;
 }
 
-//»ñÈ¡¼¤»îµÄÒøÐÐ±³°ü¸ñ×ÓÊý
+//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 int	KPlayer::LuaGetBankPackageCount(Lua_State* L)
 {
 	int nBankPackageCount = 0;
@@ -371,6 +371,339 @@ Exit0:
 	return 0;
 }
 #endif
+
+//------------------------------------------------------------------------
+// [PORT-8] exterior (wai-guan) script bindings.
+//------------------------------------------------------------------------
+int KPlayer::LuaApplyExterior(Lua_State* L)
+{
+    KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 0);
+    m_ExteriorBox.ApplyAllExterior();
+Exit0:
+    Lua_PushBoolean(L, true);
+    return 1;
+}
+
+int KPlayer::LuaUnApplyExterior(Lua_State* L)
+{
+    KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 0);
+    m_ExteriorBox.UnApplyAllExterior();
+Exit0:
+    Lua_PushBoolean(L, true);
+    return 1;
+}
+
+int KPlayer::LuaIsApplyExterior(Lua_State* L)
+{
+    BOOL bApplied = false;
+    KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 0);
+    bApplied = (m_dwApplyExteriorFlag & 0x80) != 0;
+Exit0:
+    Lua_PushBoolean(L, bApplied);
+    return 1;
+}
+
+int KPlayer::LuaAddExterior(Lua_State* L)
+{
+    BOOL  bResult    = false;
+    DWORD dwID       = 0;
+    int   nTimeType  = 0;
+    int   nPayType   = 0;
+    int   nBuySource = 0;
+
+    KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 4);
+    dwID       = (DWORD)Lua_ValueToNumber(L, 1);
+    nTimeType  = (int)Lua_ValueToNumber(L, 2);
+    nPayType   = (int)Lua_ValueToNumber(L, 3);
+    nBuySource = (int)Lua_ValueToNumber(L, 4);
+
+    bResult = g_pSO3World->m_Settings.m_Exterior.AddExterior(this, dwID, nTimeType, nPayType, nBuySource);
+Exit0:
+    Lua_PushBoolean(L, bResult);
+    return 1;
+}
+
+int KPlayer::LuaAddExteriorSetCount(Lua_State* L)
+{
+    int nCount = 0;
+    int i      = 0;
+
+    KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 1);
+    nCount = (int)Lua_ValueToNumber(L, 1);
+    KGLOG_PROCESS_ERROR(nCount > 0);
+
+    for (i = 0; i < nCount; i++)
+        m_ExteriorBox.AddExteriorSet();
+Exit0:
+    return 0;
+}
+
+int KPlayer::LuaGetCurrentExteriorSetID(Lua_State* L)
+{
+    Lua_PushNumber(L, m_ExteriorBox.GetCurrentSetID());
+    return 1;
+}
+
+int KPlayer::LuaSetCurrentExteriorSetID(Lua_State* L)
+{
+    BOOL bResult = false;
+    int  nSetIdx = 0;
+
+    KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 1);
+    nSetIdx = (int)Lua_ValueToNumber(L, 1);
+    bResult = m_ExteriorBox.SetCurrentSetID((size_t)nSetIdx);
+Exit0:
+    Lua_PushBoolean(L, bResult);
+    return 1;
+}
+
+int KPlayer::LuaGetExteriorSet(Lua_State* L)
+{
+    int                 nSetIdx = 0;
+    int                 nSlot   = 0;
+    KEXTERIOR_SET_INFO* pSet    = NULL;
+
+    KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 1);
+    nSetIdx = (int)Lua_ValueToNumber(L, 1);
+    pSet = m_ExteriorBox.GetExteriorSet((size_t)nSetIdx);
+    KGLOG_PROCESS_ERROR(pSet);
+
+    lua_newtable(L);
+    for (nSlot = 0; nSlot < MAX_EXTERIOR_SLOT; nSlot++)
+    {
+        Lua_PushNumber(L, nSlot);
+        Lua_PushNumber(L, pSet->dwExteriorID[nSlot]);
+        Lua_SetTable(L, -3);
+    }
+    return 1;
+Exit0:
+    return 0;
+}
+
+int KPlayer::LuaSetExteriorSet(Lua_State* L)
+{
+    int   nSetIdx = 0;
+    int   nSlot   = 0;
+    DWORD dwID    = 0;
+
+    KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 2);
+    nSetIdx = (int)Lua_ValueToNumber(L, 1);
+
+    for (nSlot = 0; nSlot < MAX_EXTERIOR_SLOT; nSlot++)
+    {
+        Lua_PushNumber(L, nSlot);
+        Lua_GetTable(L, 2);                     // arg2 table[nSlot] -> top
+        dwID = (DWORD)Lua_ValueToNumber(L, -1);
+        m_ExteriorBox.SetExterior((size_t)nSetIdx, nSlot, dwID);   // best-effort per slot
+    }
+Exit0:
+    Lua_PushBoolean(L, true);
+    return 1;
+}
+
+int KPlayer::LuaDeleteExterior(Lua_State* L)
+{
+    BOOL  bResult = false;
+    DWORD dwID    = 0;
+
+    KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 1);
+    dwID = (DWORD)Lua_ValueToNumber(L, 1);
+    bResult = m_ExteriorBox.Delete(dwID);
+Exit0:
+    Lua_PushBoolean(L, bResult);
+    return 1;
+}
+
+int KPlayer::LuaGetExteriorFreeCount(Lua_State* L)
+{
+    Lua_PushNumber(L, m_ExteriorBox.GetExteriorFreeCount());
+    return 1;
+}
+
+// forward config queries to the singleton KExterior (KWorldSettings::m_Exterior)
+#define EXT_SETF(tbl, key, val) do { \
+        Lua_PushString(L, (key)); Lua_PushNumber(L, (double)(val)); Lua_SetTable(L, (tbl)); \
+    } while (0)
+
+int KPlayer::LuaGetExteriorInfo(Lua_State* L)
+{
+    DWORD           dwID   = 0;
+    KEXTERIOR_INFO* pInfo  = NULL;
+    int             nTable = 0;
+    int             t = 0, p = 0;
+
+    KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 1);
+    dwID = (DWORD)Lua_ValueToNumber(L, 1);
+    pInfo = g_pSO3World->m_Settings.m_Exterior.GetExteriorInfo(dwID);
+    KGLOG_PROCESS_ERROR(pInfo);
+
+    lua_newtable(L);
+    nTable = Lua_GetTopIndex(L);
+    EXT_SETF(nTable, "nExteriorID",   dwID);
+    EXT_SETF(nTable, "nForceID",      pInfo->nForceID);
+    EXT_SETF(nTable, "nGenre",        pInfo->nGenre);
+    EXT_SETF(nTable, "nSet",          pInfo->nSet);
+    EXT_SETF(nTable, "nSubType",      pInfo->nSubType);
+    EXT_SETF(nTable, "nRepresentID",  pInfo->nRepresentID);
+    EXT_SETF(nTable, "nColorID",      pInfo->nColorID);
+    EXT_SETF(nTable, "nLimitType",    pInfo->nLimitType);
+    EXT_SETF(nTable, "nIconID",       pInfo->nIconID);
+    EXT_SETF(nTable, "nRepresentID1", pInfo->nRepresentID1);
+    for (t = 0; t < ettTotal; t++)
+        for (p = 0; p < epctTotal; p++)
+        {
+            char szKey[24];
+            snprintf(szKey, sizeof(szKey), "nPrice_%d_%d", t, p);
+            EXT_SETF(nTable, szKey, pInfo->nPrice[t][p]);
+        }
+    return 1;
+Exit0:
+    return 0;
+}
+
+int KPlayer::LuaGetExteriorSuitInfo(Lua_State* L)
+{
+    DWORD                dwSuitID = 0;
+    KEXTERIOR_SUIT_INFO* pSuit    = NULL;
+    int                  nTable   = 0;
+
+    KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 1);
+    dwSuitID = (DWORD)Lua_ValueToNumber(L, 1);
+    pSuit = g_pSO3World->m_Settings.m_Exterior.GetExteriorSuitInfo(dwSuitID);
+    KGLOG_PROCESS_ERROR(pSuit);
+
+    lua_newtable(L);
+    nTable = Lua_GetTopIndex(L);
+    EXT_SETF(nTable, "nSuitID",        dwSuitID);
+    EXT_SETF(nTable, "nChest",         pSuit->nChest);
+    EXT_SETF(nTable, "nHelm",          pSuit->nHelm);
+    EXT_SETF(nTable, "nWaist",         pSuit->nWaist);
+    EXT_SETF(nTable, "nBoots",         pSuit->nBoots);
+    EXT_SETF(nTable, "nBangle",        pSuit->nBangle);
+    EXT_SETF(nTable, "nAchievementID", pSuit->nAchievementID);
+    EXT_SETF(nTable, "bNeedPermanent", pSuit->bNeedPermanent);
+    return 1;
+Exit0:
+    return 0;
+}
+
+int KPlayer::LuaGetExteriorShopPrice(Lua_State* L)
+{
+    DWORD                 dwID    = 0;
+    KEXTERIOR_SHOP_PRICE* pPrice  = NULL;
+    int                   nTable  = 0;
+    int                   t = 0, p = 0;
+
+    KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 1);
+    dwID = (DWORD)Lua_ValueToNumber(L, 1);
+    pPrice = g_pSO3World->m_Settings.m_Exterior.GetExteriorShopPrice(dwID);
+    KGLOG_PROCESS_ERROR(pPrice);
+
+    lua_newtable(L);
+    nTable = Lua_GetTopIndex(L);
+    EXT_SETF(nTable, "nExteriorID", dwID);
+    EXT_SETF(nTable, "nLimitType",  pPrice->nLimitType);
+    for (t = 0; t < ettTotal; t++)
+        for (p = 0; p < epctTotal; p++)
+        {
+            char szKey[24];
+            snprintf(szKey, sizeof(szKey), "nPrice_%d_%d", t, p);
+            EXT_SETF(nTable, szKey, pPrice->nPrice[t][p]);
+        }
+    return 1;
+Exit0:
+    return 0;
+}
+
+int KPlayer::LuaGetExteriorIndex(Lua_State* L)
+{
+    DWORD nSubType = 0, nRepresentID = 0, nColorID = 0, nForceID = 0, dwID = 0;
+
+    KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 4);
+    nSubType     = (DWORD)Lua_ValueToNumber(L, 1);
+    nRepresentID = (DWORD)Lua_ValueToNumber(L, 2);
+    nColorID     = (DWORD)Lua_ValueToNumber(L, 3);
+    nForceID     = (DWORD)Lua_ValueToNumber(L, 4);
+    dwID = g_pSO3World->m_Settings.m_Exterior.GetExteriorIndex(nSubType, nRepresentID, nColorID, nForceID);
+Exit0:
+    Lua_PushNumber(L, dwID);
+    return 1;
+}
+
+int KPlayer::LuaGetSuitAchievementID(Lua_State* L)
+{
+    DWORD                dwSuitID = 0;
+    int                  nAchievementID = -1;
+    KEXTERIOR_SUIT_INFO* pSuit = NULL;
+
+    KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 1);
+    dwSuitID = (DWORD)Lua_ValueToNumber(L, 1);
+    pSuit = g_pSO3World->m_Settings.m_Exterior.GetExteriorSuitInfo(dwSuitID);
+    KGLOG_PROCESS_ERROR(pSuit);
+    nAchievementID = pSuit->nAchievementID;
+Exit0:
+    Lua_PushNumber(L, nAchievementID);
+    return 1;
+}
+
+int KPlayer::LuaCanAchieveExterior(Lua_State* L)
+{
+    BOOL                 bResult  = false;
+    DWORD                dwSuitID = 0;
+    KEXTERIOR_SUIT_INFO* pSuit    = NULL;
+    DWORD                pieces[5];
+    int                  i = 0;
+
+    KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 1);
+    dwSuitID = (DWORD)Lua_ValueToNumber(L, 1);
+    pSuit = g_pSO3World->m_Settings.m_Exterior.GetExteriorSuitInfo(dwSuitID);
+    KGLOG_PROCESS_ERROR(pSuit);
+
+    pieces[0] = pSuit->nChest; pieces[1] = pSuit->nHelm; pieces[2] = pSuit->nWaist;
+    pieces[3] = pSuit->nBoots; pieces[4] = pSuit->nBangle;
+
+    // achievable when every non-zero piece of the suit is owned
+    bResult = true;
+    for (i = 0; i < 5; i++)
+    {
+        if (pieces[i] != 0 && m_ExteriorBox.GetExteriorItem(pieces[i]) == NULL)
+        {
+            bResult = false;
+            break;
+        }
+    }
+Exit0:
+    Lua_PushBoolean(L, bResult);
+    return 1;
+}
+
+#undef EXT_SETF
+
+int KPlayer::LuaAddExteriorFreeCount(Lua_State* L)
+{
+    BOOL bResult = false;
+    int  nCount  = 0;
+
+    KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 1);
+    nCount = (int)Lua_ValueToNumber(L, 1);
+    bResult = m_ExteriorBox.AddExteriorFreeCount(nCount);
+Exit0:
+    Lua_PushBoolean(L, bResult);
+    return 1;
+}
+
+int KPlayer::LuaSetExteriorFreeCount(Lua_State* L)
+{
+    BOOL bResult = false;
+    int  nCount  = 0;
+
+    KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 1);
+    nCount = (int)Lua_ValueToNumber(L, 1);
+    bResult = m_ExteriorBox.SetExteriorFreeCount(nCount);
+Exit0:
+    Lua_PushBoolean(L, bResult);
+    return 1;
+}
 
 int KPlayer::LuaGetItem(Lua_State* L)
 {
@@ -647,7 +980,7 @@ int KPlayer::LuaAddItem(Lua_State* L)
     if (nBookRecipeID > 0)
     {
         KGLOG_PROCESS_ERROR(pItem->m_Common.nGenre == igBook);
-        pItem->m_nCurrentDurability = nBookRecipeID; // ÊéÓÃÄÍ¾Ã¶ÈÀ´±íÊ¾Ä³Ò»±¾Êé
+        pItem->m_nCurrentDurability = nBookRecipeID; // ï¿½ï¿½ï¿½ï¿½ï¿½Í¾Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾Ä³Ò»ï¿½ï¿½ï¿½ï¿½
     }
 
     g_LogClient.GetItemLogInfo(pItem, &ItemLogInfo);
@@ -809,7 +1142,7 @@ int KPlayer::LuaOpenWindow(Lua_State* L)
     TARGET_TYPE  eTargetType = ttInvalid;
     const char*  pcszText    = NULL;
 
-    //¼ì²â²ÎÊý¸öÊý
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     int nParamCount = Lua_GetTopIndex(L);
     KGLOG_PROCESS_ERROR(nParamCount <= (MAX_WINDOW_SELECT_COUNT + 3));
 
@@ -926,7 +1259,7 @@ int KPlayer::LuaAddStamina(Lua_State* L)
 
     nAddStamina = (int)Lua_ValueToNumber(L, 1);
 
-    // Ãâ·ÑÍæ¼Ò½«²»»ñµÃ¾«Á¦ÌåÁ¦
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Ò½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     if (m_bFreeLimitFlag)
     {
         goto Exit0;
@@ -954,7 +1287,7 @@ int KPlayer::LuaAddThew(Lua_State* L)
 
     nAddThew = (int)Lua_ValueToNumber(L, 1);
 
-    // Ãâ·ÑÍæ¼Ò½«²»»ñµÃ¾«Á¦ÌåÁ¦
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Ò½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     if (m_bFreeLimitFlag && nAddThew >= 0)
     {
         goto Exit0;
@@ -1001,7 +1334,7 @@ int KPlayer::LuaOpenBook(Lua_State* L)
         UIParam.dwBookID = dwBookID;
         UIParam.dwSubID = dwSubID;
         UIParam.dwItemID = pBook->m_dwID;
-        UIParam.dwRecipeID = pBook->m_nCurrentDurability; // µÀ¾ßµÄÄÍ¾ÃÓÃÀ´ÃèÊö¾ßÌåÊÇÄÄ±¾Êé
+        UIParam.dwRecipeID = pBook->m_nCurrentDurability; // ï¿½ï¿½ï¿½ßµï¿½ï¿½Í¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½
         g_pGameWorldUIHandler->OnOpenBook(UIParam);
     }
 
@@ -1430,7 +1763,7 @@ Exit0:
 	return 1;
 }
 
-// »ñÈ¡Ò»¸öProfessionÖÐËùÓÐµÄRecipe
+// ï¿½ï¿½È¡Ò»ï¿½ï¿½Professionï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½Recipe
 int KPlayer::LuaGetRecipe(Lua_State* L)
 {
 	BOOL	bRetCode		= false;
@@ -1730,10 +2063,10 @@ int KPlayer::LuaAddSkillExp(Lua_State* L)
     DWORD   dwSkillID   = 0;
     DWORD   dwAddExp    = 0;
 
-	//¼ì²â²ÎÊý¸öÊý
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 2);
 
-	//»ñÈ¡ÊäÈë²ÎÊý
+	//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	dwSkillID = (DWORD)Lua_ValueToNumber(L, 1);
     dwAddExp  = (DWORD)Lua_ValueToNumber(L, 2);
 
@@ -1764,7 +2097,7 @@ Exit0:
 
 #endif	//_SERVER
 
-//¼ì²âµ±Ç°Íæ¼ÒÊÇ·ñ¿ÉÒÔ½ÓÊÜÖ¸¶¨ÈÎÎñ
+//ï¿½ï¿½âµ±Ç°ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 #if defined(_SERVER)
 int KPlayer::LuaCanAcceptQuest(Lua_State* L)
 {
@@ -1776,10 +2109,10 @@ int KPlayer::LuaCanAcceptQuest(Lua_State* L)
     KQuestInfo* pQuestInfo  = NULL;
     KTarget     Target;
 
-	//¼ì²â²ÎÊý¸öÊý
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 3);
 
-	//»ñÈ¡ÊäÈë²ÎÊý
+	//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	eTargetType = (TARGET_TYPE)(int)Lua_ValueToNumber(L, 1);
 	dwTargetID  = (DWORD)Lua_ValueToNumber(L, 2);
 	dwQuestID   = (DWORD)Lua_ValueToNumber(L, 3);
@@ -1794,7 +2127,7 @@ int KPlayer::LuaCanAcceptQuest(Lua_State* L)
 
 Exit0:
 
-	//·µ»ØÖµÑ¹Õ»
+	//ï¿½ï¿½ï¿½ï¿½ÖµÑ¹Õ»
 	Lua_PushBoolean(L, bResult);
 	return 1;
 }
@@ -1810,10 +2143,10 @@ int KPlayer::LuaCanAcceptQuest(Lua_State* L)
 	QUEST_RESULT_CODE nResult = qrcInvalid;
 	KTarget Target;
 
-	//¼ì²â²ÎÊý¸öÊý
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 3);
 
-	//»ñÈ¡ÊäÈë²ÎÊý
+	//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	dwQuestID   =	(DWORD)Lua_ValueToNumber(L, 1);
 	eTargetType =	(TARGET_TYPE)(int)Lua_ValueToNumber(L, 2);
 	dwTargetID  =	(DWORD)Lua_ValueToNumber(L, 3);
@@ -1828,7 +2161,7 @@ int KPlayer::LuaCanAcceptQuest(Lua_State* L)
 
 Exit0:
 
-	//·µ»ØÖµÑ¹Õ»
+	//ï¿½ï¿½ï¿½ï¿½ÖµÑ¹Õ»
 	Lua_PushNumber(L, nResult);
 	return 1;
 }
@@ -1905,7 +2238,7 @@ Exit0:
 	return 1;
 }
 
-//½ÓÊÜÈÎÎñ
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 int KPlayer::LuaAcceptQuest(Lua_State* L)
 {
 	BOOL        bRetCode        = false;
@@ -2112,7 +2445,7 @@ int KPlayer::LuaForceFinishQuest(Lua_State* L)
 
 	dwQuestID = (DWORD)Lua_ValueToNumber(L, 1);
 
-	bRetCode = m_QuestList.Finish(dwQuestID, target, 0, 4, true); //target±¾ÉíÃ»ÓÐÓÃµ½,ËùÒÔ²»ÓÃ³õÊ¼»¯
+	bRetCode = m_QuestList.Finish(dwQuestID, target, 0, 4, true); //targetï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ãµï¿½,ï¿½ï¿½ï¿½Ô²ï¿½ï¿½Ã³ï¿½Ê¼ï¿½ï¿½
 	KG_PROCESS_ERROR(bRetCode == qrcSuccess);
 
 	bResult = true;
@@ -3413,31 +3746,31 @@ int KPlayer::LuaSatisfyRequire(Lua_State* L)
 	switch(nAttributeID)
 	{
 	case rqtFaction:
-		// ÃÅÅÉÊÇ·ñÏàÍ¬
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Í¬
 		//KG_PROCESS_ERROR();
 		break;
 	case rqtStrength:
-		// Á¦Á¿ÊÇ·ñ¸ßÓÚ»òµÈÓÚ×°±¸ÒªÇó
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ú»ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½Òªï¿½ï¿½
 		KG_PROCESS_ERROR(m_nCurrentStrength >= nValue1);
 		break;
 	case rqtAgility:
-		// Ãô½ÝÊÇ·ñ¸ßÓÚ»òµÈÓÚ×°±¸ÒªÇó
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ú»ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½Òªï¿½ï¿½
 		KG_PROCESS_ERROR(m_nCurrentAgility >= nValue1);
 		break;
 	case rqtSpirit:
-		// ¸ù¹ÇÊÇ·ñ¸ßÓÚ»òµÈÓÚ×°±¸ÒªÇó
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ú»ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½Òªï¿½ï¿½
 		KG_PROCESS_ERROR(m_nCurrentSpirit >= nValue1);
 		break;
 	case rqtVitality:
-		// ÌåÖÊÊÇ·ñ¸ßÓÚ»òµÈÓÚ×°±¸ÒªÇó
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ú»ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½Òªï¿½ï¿½
 		KG_PROCESS_ERROR(m_nCurrentVitality >= nValue1);
 		break;
 	case rqtLevel:
-		// µÈ¼¶ÊÇ·ñ¸ßÓÚ»òµÈÓÚ×°±¸ÒªÇó
+		// ï¿½È¼ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ú»ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½Òªï¿½ï¿½
 		KG_PROCESS_ERROR(m_nLevel >= nValue1);
 		break;
     case rqtGender:
-        // ÐÔ±ðÊÇ·ñ·ûºÏ×°±¸ÐèÇó
+        // ï¿½Ô±ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         KG_PROCESS_ERROR(nValue1 == 0 || m_eGender == nValue1);
         break;
 	default:
@@ -3456,7 +3789,7 @@ int KPlayer::LuaWindowSelect(Lua_State* L)
 {
 	BOOL bRetCode = false;
 
-	//¼ì²â²ÎÊý¸öÊý
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 2);
 
 	DWORD dwIndex = (DWORD)Lua_ValueToNumber(L, 1);
@@ -3624,7 +3957,7 @@ int KPlayer::LuaGetItemCDProgress(Lua_State* L)
 	}
     
 Exit0:
-	// Èç¹ûnLeftCooldown, nTotalCooldown¶¼Îª0, ±íÊ¾ÒÑ¾­µ½Ê±¼äÁË.
+	// ï¿½ï¿½ï¿½nLeftCooldown, nTotalCooldownï¿½ï¿½Îª0, ï¿½ï¿½Ê¾ï¿½Ñ¾ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½.
 	Lua_PushBoolean(L, bIsCooldown);
 	Lua_PushNumber(L, nLeftCooldown);
 	Lua_PushNumber(L, nTotalCooldown);
@@ -3654,11 +3987,11 @@ int KPlayer::LuaGetSkillCDProgress(Lua_State* L)
     pSkill = g_pSO3World->m_SkillManager.GetSkill_RAW(dwSkillID, dwSkillLevel);
     KG_PROCESS_ERROR(pSkill);
 
-	KG_PROCESS_ERROR(!pSkill->m_pBaseInfo->bIsPassiveSkill); //±»¶¯¼¼ÄÜ²»ÏÔÊ¾CD
+	KG_PROCESS_ERROR(!pSkill->m_pBaseInfo->bIsPassiveSkill); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü²ï¿½ï¿½ï¿½Ê¾CD
 
-    if (pSkill->m_pBaseInfo->bIsMountable) // Èç¹ûÊÇÄÚ¹¦£¬ÔòCDµÄ¹æÔòÌØÊâ´¦Àí
+    if (pSkill->m_pBaseInfo->bIsMountable) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½ï¿½ï¿½ï¿½CDï¿½Ä¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â´¦ï¿½ï¿½
     {
-        DWORD   dwCooldownID    = pSkill->m_dwCoolDownID[OTHER_SCHOOL_KUNGFU_CD_INDEX]; // ºÍ²ß»®¹æ¶¨£¬µÚ2ºÅCD¼ÆÊ±Æ÷ÓÃ×÷ÃÅÅÉÄÚ£¬3ºÅÓÃ×÷ÃÅÅÉ¼ä
+        DWORD   dwCooldownID    = pSkill->m_dwCoolDownID[OTHER_SCHOOL_KUNGFU_CD_INDEX]; // ï¿½Í²ß»ï¿½ï¿½æ¶¨ï¿½ï¿½ï¿½ï¿½2ï¿½ï¿½CDï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¼ï¿½
         int     nTimerEnd       = 0;
         int     nTimerInterval  = 0;
         KSkill* pKongfu         = NULL;
@@ -3670,8 +4003,8 @@ int KPlayer::LuaGetSkillCDProgress(Lua_State* L)
             );
         }
 
-        // ÕâÀïpKongfu¿ÉÄÜÎª¿Õ£¬ÔÚÃ»ÓÐ×°±¸ÄÚ¹¦µÄÊ±ºò
-        // Ã»ÓÐ×°±¸»òÕß²»Í¬ÃÅÅÉÖ®¼äµÄ£¬ÈÏÎªÊÇ¿çÃÅÅÉ
+        // ï¿½ï¿½ï¿½ï¿½pKongfuï¿½ï¿½ï¿½ï¿½Îªï¿½Õ£ï¿½ï¿½ï¿½Ã»ï¿½ï¿½×°ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+        // Ã»ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½ß²ï¿½Í¬ï¿½ï¿½ï¿½ï¿½Ö®ï¿½ï¿½Ä£ï¿½ï¿½ï¿½Îªï¿½Ç¿ï¿½ï¿½ï¿½ï¿½ï¿½
         if (pKongfu && pKongfu->m_pBaseInfo->dwBelongSchool == pSkill->m_pBaseInfo->dwBelongSchool)
         {
             dwCooldownID = pSkill->m_dwCoolDownID[SAME_SCHOOL_KUNGFU_CD_INDEX];
@@ -3729,7 +4062,7 @@ int KPlayer::LuaGetSkillCDProgress(Lua_State* L)
     }
 Exit0:
 
-    // Èç¹ûnLeftCooldown, nTotalCooldown¶¼Îª0, ±íÊ¾ÒÑ¾­µ½Ê±¼äÁË.
+    // ï¿½ï¿½ï¿½nLeftCooldown, nTotalCooldownï¿½ï¿½Îª0, ï¿½ï¿½Ê¾ï¿½Ñ¾ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½.
     Lua_PushBoolean(L, bIsCooldownSkill);
     Lua_PushNumber(L, nLeftCooldown);
     Lua_PushNumber(L, nTotalCooldown);
@@ -3781,7 +4114,7 @@ int KPlayer::LuaGetCDLeft(Lua_State* L)
 
     dwCooldownID = (DWORD)Lua_ValueToNumber(L, 1);
 
-    // Get Ê§°Ü±íÃ÷Õâ¸öCooldownÒÑ¾­¹ýÁË
+    // Get Ê§ï¿½Ü±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Cooldownï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½
     nRetCode = m_TimerList.GetTimerData(dwCooldownID, nTotalCooldown, nTimerEnd);
     KG_PROCESS_ERROR(nRetCode);
 
@@ -4063,7 +4396,7 @@ int KPlayer::LuaMountKungfu(Lua_State* L)
 #ifdef _SERVER
 	if (m_SkillList.m_dwMountKungfuID != INVALID_SKILL_ID)
 	{
-        // Èç¹ûÔ­±¾ÒÑ¾­×°±¸ÁËÒ»¸öÎä¹¦,ÔòÏÈ°ÑËüÐ¶ÔØ
+        // ï¿½ï¿½ï¿½Ô­ï¿½ï¿½ï¿½Ñ¾ï¿½×°ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ä¹¦,ï¿½ï¿½ï¿½È°ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½
         nRetCode = UmountKungfu();
         KGLOG_PROCESS_ERROR(nRetCode);
 	}
@@ -4820,7 +5153,7 @@ int KPlayer::LuaOnCloseLootWindow(Lua_State* L)
 
         if (g_pGameWorldRepresentHandler)
         {
-            // Èç¹ûÌø¹ýÕâ¸ö¶¯×÷£¬ºóÃæµÄend¶¯×÷»á²¥·ÅÊ§°Ü¡£Íæ¼Ò»áÒ»Ö±´¦ÓÚprepare¶¯×÷
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½endï¿½ï¿½ï¿½ï¿½ï¿½á²¥ï¿½ï¿½Ê§ï¿½Ü¡ï¿½ï¿½ï¿½Ò»ï¿½Ò»Ö±ï¿½ï¿½ï¿½ï¿½prepareï¿½ï¿½ï¿½ï¿½
             g_pGameWorldRepresentHandler->OnCharacterBeginPickDoodad(this, pDoodad);
         }
     }
@@ -4968,7 +5301,7 @@ int KPlayer::LuaStopCurrentAction(Lua_State* L)
     KGLOG_PROCESS_ERROR(m_dwID == g_pSO3World->m_dwClientPlayerID);
 
     if (
-        (m_OTActionParam.eActionType != otActionIdle && m_OTActionParam.eActionType != otActionPicking) || // otActionPicking²»Í¨¹ýEscÀ´´ò¶Ï
+        (m_OTActionParam.eActionType != otActionIdle && m_OTActionParam.eActionType != otActionPicking) || // otActionPickingï¿½ï¿½Í¨ï¿½ï¿½Escï¿½ï¿½ï¿½ï¿½ï¿½
         (m_AutoCastSkillParam.SkillRecipePointer.GetPointer())
     )
     {
@@ -4999,7 +5332,7 @@ int KPlayer::LuaSetPartyLootMode(Lua_State* L)
 	KGLOG_PROCESS_ERROR(nLootMode > ilmInvalid && nLootMode < ilmTotal);
 	KGLOG_PROCESS_ERROR(nRollQuality >= 0);
 
-	KGLOG_PROCESS_ERROR(m_dwTeamID != ERROR_ID); // System Team²»ÄÜÉèÖÃ£¬ËùÒÔÖ»ÄÜÉèÖÃÆÕÍ¨¶ÓÎé
+	KGLOG_PROCESS_ERROR(m_dwTeamID != ERROR_ID); // System Teamï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½
 
 	g_RelayClient.DoTeamSetLootModeRequest(m_dwTeamID, m_dwID, nLootMode);
 	g_RelayClient.DoTeamSetRollQualityRequest(m_dwTeamID, m_dwID, nRollQuality);
@@ -5088,7 +5421,7 @@ int KPlayer::LuaSearchForAllies(Lua_State* L)
 
 	AISearchCharacter(Tactic);
 
-	//°´¾àÀëÅÅÐò
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	sort(Tactic.m_Result.begin(), Tactic.m_Result.end(), g_CompByDistance);
 
 	nSize = (DWORD)Tactic.m_Result.size();
@@ -5133,7 +5466,7 @@ int KPlayer::LuaSearchForEnemy(Lua_State* L)
 
 	AISearchCharacter(Tactic);
 
-	//°´¾àÀëÅÅÐò
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	sort(Tactic.m_Result.begin(), Tactic.m_Result.end(), g_CompByDistance);
 
 	nSize = (int)Tactic.m_Result.size();
@@ -5156,7 +5489,7 @@ Exit0:
 	return 2;
 }
 
-//--------------------ÉùÍû-----------------------
+//--------------------ï¿½ï¿½ï¿½ï¿½-----------------------
 #ifdef _SERVER
 int KPlayer::LuaSetReputation(Lua_State* L)
 {
@@ -5401,7 +5734,7 @@ int KPlayer::LuaDoCustomOTAction(Lua_State* L)
 	{
 	case ttInvalid:
 	case ttNoTarget:
-		Target.ClearTarget(); // ÖÃ³ÉÃ»ÓÐÄ¿±ê
+		Target.ClearTarget(); // ï¿½Ã³ï¿½Ã»ï¿½ï¿½Ä¿ï¿½ï¿½
 		break;
 	case ttNpc:
 	case ttPlayer:
@@ -5414,11 +5747,11 @@ int KPlayer::LuaDoCustomOTAction(Lua_State* L)
 	    break;
 	}
 
-	if (nType == 0) // ·ÇÍ¨µÀ¼¼ÄÜ
+	if (nType == 0) // ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	{
 		nRetCode = DoCustomOTActionPrepare(bIsBreakable, nFrame, Target, dwScriptID);
 	}
-	else // Í¨µÀ¼¼
+	else // Í¨ï¿½ï¿½ï¿½ï¿½
 	{
 		nRetCode = DoCustomOTActionChannel(bIsBreakable, nFrame, Target, dwScriptID);
 	}
@@ -6725,7 +7058,7 @@ int KPlayer::LuaTalk(Lua_State* L)
         break;
     }
 
-    if (nCoolDownID && !m_TimerList.CheckTimer(nCoolDownID))  // ³¡¾°ÁÄÌì¼ì²âCD
+    if (nCoolDownID && !m_TimerList.CheckTimer(nCoolDownID))  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½CD
     {
         if (g_pGameWorldUIHandler)
         {
@@ -6840,7 +7173,7 @@ Exit0:
     return 1;
 }
 
-//////////////////// ºÃÓÑÏà¹Ø½Å±¾½Ó¿Ú ////////////////////////////////////
+//////////////////// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø½Å±ï¿½ï¿½Ó¿ï¿½ ////////////////////////////////////
 int KPlayer::LuaDelFellowship(Lua_State* L)
 {
     int             nResult             = rrcFailed;
@@ -7905,7 +8238,7 @@ int KPlayer::LuaGetFellowshipGroupInfo(Lua_State* L)
 
     for (int i = 0; i < it->second.nGroupCount; i++)
     {
-        strncpy(szGroupName, it->second.szGroupName[i], sizeof(szGroupName));// ºÃÓÑ·Ö×éÃû×Ö
+        strncpy(szGroupName, it->second.szGroupName[i], sizeof(szGroupName));// ï¿½ï¿½ï¿½Ñ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         szGroupName[sizeof(szGroupName) - sizeof('\0')] = '\0';
 
 		if (szGroupName[0])
@@ -8364,7 +8697,7 @@ Exit0:
 }
 #endif
 
-//ÖÐµØÍ¼±ê¼Ç,Í¬²½Íæ¼Ò×Ô¼ºÔÚµØÍ¼ÉÏ×öµÄ±ê¼Ç
+//ï¿½Ðµï¿½Í¼ï¿½ï¿½ï¿½,Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½Úµï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½
 int KPlayer::LuaSyncMidMapMark(Lua_State* L)	
 {
     BOOL    bResult     = false;
@@ -10398,12 +10731,12 @@ int KPlayer::LuaPreemptiveAttack(Lua_State* L)
     cpThreatNode = m_SimpThreatList.FindThreat(pTarget);
     if (cpThreatNode)
     {
-        // ÎÒºÞ¶Ô·½
+        // ï¿½ÒºÞ¶Ô·ï¿½
         nResult = cpThreatNode->bPrimacord ? paTarget : paSelf;
     }
     else
     {
-        // ¶Ô·½ºÞÎÒ
+        // ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½
         cpSelfNode = pTarget->m_SimpThreatList.FindThreat(this);
         KG_PROCESS_ERROR(cpSelfNode);
 
@@ -10665,7 +10998,7 @@ Exit0:
 //////////////////////////////////////////////////////////////////////////
 
 DEFINE_LUA_CLASS_BEGIN(KPlayer)
-	//×¢²áÊôÐÔ
+	//×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	REGISTER_LUA_DWORD_READONLY(KBaseObject, ID)
 
 	REGISTER_LUA_INTEGER_READONLY(KSceneObject, X)
@@ -10718,7 +11051,7 @@ DEFINE_LUA_CLASS_BEGIN(KPlayer)
     REGISTER_LUA_INTEGER_READONLY(KPlayer, MagicVenationCof)
     REGISTER_LUA_INTEGER_READONLY(KPlayer, AssistVenationCof)
 
-    // ------------------ ÒÆ¶¯Ïà¹Ø ---------------------------->
+    // ------------------ ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ ---------------------------->
     REGISTER_LUA_ENUM_READONLY(KCharacter, MoveState)
 
 	REGISTER_LUA_INTEGER_READONLY(KCharacter, VelocityXY)
@@ -10752,7 +11085,7 @@ DEFINE_LUA_CLASS_BEGIN(KPlayer)
 
     REGISTER_LUA_INTEGER_READONLY(KCharacter, WaterFlyAbility)
 
-    // ------------------- Ç±ÄÜ ------------------------------->
+    // ------------------- Ç±ï¿½ï¿½ ------------------------------->
 	REGISTER_LUA_INTEGER(KCharacter, CurrentStrength)
     REGISTER_LUA_INTEGER(KCharacter, StrengthBase)
     REGISTER_LUA_INTEGER(KCharacter, StrengthBasePercentAdd)
@@ -10769,7 +11102,7 @@ DEFINE_LUA_CLASS_BEGIN(KPlayer)
     REGISTER_LUA_INTEGER(KCharacter, SpunkBase)
     REGISTER_LUA_INTEGER(KCharacter, SpunkBasePercentAdd)
 
-    // ------------------- ÉúÃü ------------------------------->
+    // ------------------- ï¿½ï¿½ï¿½ï¿½ ------------------------------->
 	REGISTER_LUA_INTEGER(KCharacter, CurrentLife)
 	REGISTER_LUA_INTEGER(KCharacter, MaxLife)
     REGISTER_LUA_INTEGER(KCharacter, MaxLifeBase)
@@ -10780,12 +11113,12 @@ DEFINE_LUA_CLASS_BEGIN(KPlayer)
     REGISTER_LUA_INTEGER(KCharacter, LifeReplenishCoefficient)
     REGISTER_LUA_INTEGER(KCharacter, LifeReplenishExt)
 
-    // ------------------- ÆÆÕÀ ------------------------------->
+    // ------------------- ï¿½ï¿½ï¿½ï¿½ ------------------------------->
     REGISTER_LUA_INTEGER(KCharacter, UpperWeakLevel)
     REGISTER_LUA_INTEGER(KCharacter, MiddleWeakLevel)
     REGISTER_LUA_INTEGER(KCharacter, LowerWeakLevel)
 
-    // ------------------- ÄÚÁ¦ ------------------------------->
+    // ------------------- ï¿½ï¿½ï¿½ï¿½ ------------------------------->
 	REGISTER_LUA_INTEGER(KCharacter, CurrentMana)
 	REGISTER_LUA_INTEGER(KCharacter, MaxMana)
     REGISTER_LUA_INTEGER(KCharacter, MaxManaBase)
@@ -10796,12 +11129,12 @@ DEFINE_LUA_CLASS_BEGIN(KPlayer)
     REGISTER_LUA_INTEGER(KCharacter, ManaReplenishCoefficient)
     REGISTER_LUA_INTEGER(KCharacter, ManaReplenishExt)
 
-    // -------------------- Å­Æø ------------------------------>
+    // -------------------- Å­ï¿½ï¿½ ------------------------------>
     REGISTER_LUA_INTEGER(KCharacter, CurrentRage)
     REGISTER_LUA_INTEGER(KCharacter, MaxRage)
     REGISTER_LUA_INTEGER(KCharacter, RageReplenish)
 
-    // -------------------- Õ½¶·ÔÓÏî -------------------------->
+    // -------------------- Õ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -------------------------->
 	REGISTER_LUA_INTEGER(KCharacter, Dodge)
     REGISTER_LUA_INTEGER(KCharacter, DodgeBaseRate)
     REGISTER_LUA_INTEGER(KCharacter, ParryBaseRate)
@@ -10829,7 +11162,7 @@ DEFINE_LUA_CLASS_BEGIN(KPlayer)
     REGISTER_LUA_INTEGER(KCharacter, MountingRate)
     REGISTER_LUA_INTEGER_READONLY(KCharacter, AccumulateValue)
 
-    // -------------------- Íâ¹¦ ----------------------------->
+    // -------------------- ï¿½â¹¦ ----------------------------->
     REGISTER_LUA_INTEGER(KCharacter, PhysicsAttackPower)
     REGISTER_LUA_INTEGER(KCharacter, SkillPhysicsDamageRand)
     REGISTER_LUA_INTEGER(KCharacter, PhysicsHitValue)
@@ -10852,7 +11185,7 @@ DEFINE_LUA_CLASS_BEGIN(KPlayer)
 	REGISTER_LUA_INTEGER(KCharacter, RangeWeaponDamageBase)
 	REGISTER_LUA_INTEGER(KCharacter, RangeWeaponDamageRand)
 
-    // -------------------- ÑôÐÔÄÚ¹¦ ----------------------------->
+    // -------------------- ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ ----------------------------->
     REGISTER_LUA_INTEGER(KCharacter, SolarAttackPower)
     REGISTER_LUA_INTEGER(KCharacter, SolarHitValue)
     REGISTER_LUA_INTEGER(KCharacter, SolarHitBaseRate)
@@ -10869,7 +11202,7 @@ DEFINE_LUA_CLASS_BEGIN(KPlayer)
     REGISTER_LUA_INTEGER(KCharacter, SolarDamageAbsorb)     
     REGISTER_LUA_INTEGER(KCharacter, SolarDamageManaShield)
 
-    // -------------------- ÖÐÐÔÄÚ¹¦ ----------------------------->
+    // -------------------- ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ ----------------------------->
     REGISTER_LUA_INTEGER(KCharacter, NeutralAttackPower)
     REGISTER_LUA_INTEGER(KCharacter, NeutralHitValue)
     REGISTER_LUA_INTEGER(KCharacter, NeutralHitBaseRate)
@@ -10886,7 +11219,7 @@ DEFINE_LUA_CLASS_BEGIN(KPlayer)
     REGISTER_LUA_INTEGER(KCharacter, NeutralDamageAbsorb)  
     REGISTER_LUA_INTEGER(KCharacter, NeutralDamageManaShield)
 
-    // -------------------- ÒõÐÔÄÚ¹¦ ----------------------------->
+    // -------------------- ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ ----------------------------->
     REGISTER_LUA_INTEGER(KCharacter, LunarAttackPower)
     REGISTER_LUA_INTEGER(KCharacter, LunarHitValue)
     REGISTER_LUA_INTEGER(KCharacter, LunarHitBaseRate)
@@ -10903,7 +11236,7 @@ DEFINE_LUA_CLASS_BEGIN(KPlayer)
     REGISTER_LUA_INTEGER(KCharacter, LunarDamageAbsorb)     
     REGISTER_LUA_INTEGER(KCharacter, LunarDamageManaShield) 
 
-    // -------------------- ¶¾ÐÔ --------------------------------->
+    // -------------------- ï¿½ï¿½ï¿½ï¿½ --------------------------------->
     REGISTER_LUA_INTEGER(KCharacter, PoisonAttackPower)
     REGISTER_LUA_INTEGER(KCharacter, PoisonHitValue)
     REGISTER_LUA_INTEGER(KCharacter, PoisonHitBaseRate)
@@ -10920,11 +11253,11 @@ DEFINE_LUA_CLASS_BEGIN(KPlayer)
     REGISTER_LUA_INTEGER(KCharacter, PoisonDamageAbsorb)     
     REGISTER_LUA_INTEGER(KCharacter, PoisonDamageManaShield) 
 
-    // -------------------- ÖÎÁÆ --------------------------------->
+    // -------------------- ï¿½ï¿½ï¿½ï¿½ --------------------------------->
     REGISTER_LUA_INTEGER(KCharacter, TherapyPower)
     REGISTER_LUA_INTEGER(KCharacter, SkillTherapy)
     
-    // ------------------- ÐÂÊÖ¼¼ÄÜÓÐ¹Ø -------------------------->
+    // ------------------- ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½ï¿½Ð¹ï¿½ -------------------------->
     REGISTER_LUA_INTEGER(KCharacter, NoneWeaponAttackSpeedBase)
 
     REGISTER_LUA_INTEGER(KCharacter, MeleeWeaponAttackSpeed)
@@ -11003,7 +11336,7 @@ DEFINE_LUA_CLASS_BEGIN(KPlayer)
     REGISTER_LUA_TIME(KPlayer, LastEvokeMentorTime)
     REGISTER_LUA_INTEGER(KPlayer, EvokeMentorCount)
     
-	//×¢²áº¯Êý
+	//×¢ï¿½áº¯ï¿½ï¿½
     REGISTER_LUA_FUNC(KCharacter, AutoFly)
     REGISTER_LUA_FUNC(KCharacter, SetModelID)
 
@@ -11063,6 +11396,20 @@ DEFINE_LUA_CLASS_BEGIN(KPlayer)
 #ifdef _SERVER
     REGISTER_LUA_FUNC(KPlayer, SetRepresentID)
 #endif
+
+    REGISTER_LUA_FUNC(KPlayer, ApplyExterior)
+    REGISTER_LUA_FUNC(KPlayer, UnApplyExterior)
+    REGISTER_LUA_FUNC(KPlayer, IsApplyExterior)
+    REGISTER_LUA_FUNC(KPlayer, AddExterior)
+    REGISTER_LUA_FUNC(KPlayer, AddExteriorSetCount)
+    REGISTER_LUA_FUNC(KPlayer, GetCurrentExteriorSetID)
+    REGISTER_LUA_FUNC(KPlayer, SetCurrentExteriorSetID)
+    REGISTER_LUA_FUNC(KPlayer, GetExteriorSet)
+    REGISTER_LUA_FUNC(KPlayer, SetExteriorSet)
+    REGISTER_LUA_FUNC(KPlayer, DeleteExterior)
+    REGISTER_LUA_FUNC(KPlayer, GetExteriorFreeCount)
+    REGISTER_LUA_FUNC(KPlayer, AddExteriorFreeCount)
+    REGISTER_LUA_FUNC(KPlayer, SetExteriorFreeCount)
 
 	REGISTER_LUA_FUNC(KPlayer, EnableBankPackage)
 	REGISTER_LUA_FUNC(KPlayer, GetBankPackageCount)
@@ -11332,7 +11679,7 @@ DEFINE_LUA_CLASS_BEGIN(KPlayer)
 #endif
     REGISTER_LUA_FUNC(KPlayer, IsInParty)
 
-    //--- ºÃÓÑ --------------------------------
+    //--- ï¿½ï¿½ï¿½ï¿½ --------------------------------
     REGISTER_LUA_FUNC(KPlayer, AddFellowship)
     REGISTER_LUA_FUNC(KPlayer, DelFellowship)
     REGISTER_LUA_FUNC(KPlayer, CanAddFoe)
