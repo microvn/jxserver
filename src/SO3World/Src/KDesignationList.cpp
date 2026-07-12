@@ -76,6 +76,11 @@ BOOL KDesignationList::LoadPrefixInfo()
     {
         int         nID             = 0;
         int         nAnnounceType   = 0;
+        int         nCoolDownID     = 0;
+        int         nOwnDuration    = 0;
+        int         nBuffID         = 0;
+        int         nBuffLevel      = 0;
+        int         nType           = 0;
         KPrefixInfo Info;
 
         nRetCode = piTabFile->GetInteger(nLine, "ID", 0, &nID);
@@ -85,7 +90,28 @@ BOOL KDesignationList::LoadPrefixInfo()
         nRetCode = piTabFile->GetInteger(nLine, "AnnounceType", 1, &nAnnounceType);
         (void)nRetCode; /*[endgame] tolerant*/
         KGLOG_PROCESS_ERROR(nAnnounceType > datInvalid && nAnnounceType < datTotal);
-        Info.byAnnounceType = (BYTE)nAnnounceType;
+        Info.nAnnounceType = nAnnounceType;
+
+        // v2.5 new columns (blank in this leak's data -> default 0 = feature dormant)
+        nRetCode = piTabFile->GetInteger(nLine, "CoolDownID", 0, &nCoolDownID);
+        (void)nRetCode; /*[endgame] tolerant*/
+        Info.dwCoolDownID = (DWORD)nCoolDownID;
+
+        nRetCode = piTabFile->GetInteger(nLine, "OwnDuration", 0, &nOwnDuration);
+        (void)nRetCode; /*[endgame] tolerant*/
+        Info.nOwnDuration = nOwnDuration;
+
+        nRetCode = piTabFile->GetInteger(nLine, "BuffID", 0, &nBuffID);
+        (void)nRetCode; /*[endgame] tolerant*/
+        Info.dwBuffID = (DWORD)nBuffID;
+
+        nRetCode = piTabFile->GetInteger(nLine, "BuffLevel", 0, &nBuffLevel);
+        (void)nRetCode; /*[endgame] tolerant*/
+        Info.nBuffLevel = nBuffLevel;
+
+        nRetCode = piTabFile->GetInteger(nLine, "Type", 0, &nType);
+        (void)nRetCode; /*[endgame] tolerant*/
+        Info.nType = nType;
 
         m_PrefixList[nID] = Info;
     }
@@ -123,6 +149,10 @@ BOOL KDesignationList::LoadPostfixInfo()
     {
         int             nID             = 0;
         int             nAnnounceType   = 0;
+        int             nCoolDownID     = 0;
+        int             nOwnDuration    = 0;
+        int             nBuffID         = 0;
+        int             nBuffLevel      = 0;
         KPostfixInfo    Info;
 
         nRetCode = piTabFile->GetInteger(nLine, "ID", 0, &nID);
@@ -132,7 +162,24 @@ BOOL KDesignationList::LoadPostfixInfo()
         nRetCode = piTabFile->GetInteger(nLine, "AnnounceType", 0, &nAnnounceType);
         (void)nRetCode; /*[endgame] tolerant*/
         KGLOG_PROCESS_ERROR(nAnnounceType > datInvalid && nAnnounceType < datTotal);
-        Info.byAnnounceType = (BYTE)nAnnounceType;
+        Info.nAnnounceType = nAnnounceType;
+
+        // v2.5 new columns (blank in this leak's data -> default 0 = feature dormant)
+        nRetCode = piTabFile->GetInteger(nLine, "CoolDownID", 0, &nCoolDownID);
+        (void)nRetCode; /*[endgame] tolerant*/
+        Info.dwCoolDownID = (DWORD)nCoolDownID;
+
+        nRetCode = piTabFile->GetInteger(nLine, "OwnDuration", 0, &nOwnDuration);
+        (void)nRetCode; /*[endgame] tolerant*/
+        Info.nOwnDuration = nOwnDuration;
+
+        nRetCode = piTabFile->GetInteger(nLine, "BuffID", 0, &nBuffID);
+        (void)nRetCode; /*[endgame] tolerant*/
+        Info.dwBuffID = (DWORD)nBuffID;
+
+        nRetCode = piTabFile->GetInteger(nLine, "BuffLevel", 0, &nBuffLevel);
+        (void)nRetCode; /*[endgame] tolerant*/
+        Info.nBuffLevel = nBuffLevel;
 
         m_PostfixList[nID] = Info;
     }

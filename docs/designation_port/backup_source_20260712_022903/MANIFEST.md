@@ -7,3 +7,10 @@ Files a KDesignation drift-port will touch (copied read-only, pre-port):
 - include/Include/KRoleDBDataDef.h (rbtDesignationData — NOT touched, already present)
 
 NOTE: KLuaPlayer.cpp, KPlayer.cpp, KPlayerServer.{h,cpp} also edited on real port; back up at port time (large files).
+
+## Added at port-time (slice 5+):
+- include/Include/SO3Result.h (ectDesignationNotifyCode=31)
+- src/SO3World/Src/KPlayer.cpp (m_bDisplayFlag rename + Activate wire)
+- src/SO3World/Src/KLuaPlayer.cpp (Lua bindings)
+- src/SO3World/Src/KPlayerServer.cpp (m_bDisplayFlag rename)
+- src/SO3World/Src/KPlayerClient.cpp (m_bDisplayFlag rename)

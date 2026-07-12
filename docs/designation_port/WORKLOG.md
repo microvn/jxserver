@@ -179,3 +179,55 @@ GetDesignation{Byname,Generation}.
 `LuaGetDesignationPrefixEndTime/PostfixEndTime`, `LuaSetDesignationBynameDisplayFlag`.
 **Renamed:** `LuaGetDesignationDisplayFlag`→`LuaGetDesignationBynameDisplayFlag`.
 **Removed in v2.5 (3):** `LuaSetCurrentDesignation`, `LuaGetCurrentDesignation`, `LuaSetDesignationContent`.
+
+---
+
+## [PORT-1..9] Port complete (2026-07-12) — build ok=199 fail=0, boot settings-[OK] every slice
+
+Ported bottom-up per PORT_DESIGN slice order. Each slice: oracle-mirror (local) + build host
++ boot no-regression. git revert point = 5bdf4bc.
+
+- **[PORT-1] Config struct+loaders.** KPrefixInfo 24B (nType@0x14) / KPostfixInfo 20B; both
+  loaders read 5 new columns (CoolDownID/OwnDuration/BuffID/BuffLevel[/Type]) tolerant, keeping
+  the AnnounceType validation. `byAnnounceType`->`nAnnounceType` (widened). Oracle: sizeof 24/20,
+  offsetof(nType)==0x14. Loader column order re-verified vs LoadPrefixInfo 081d49f6.
+- **[PORT-2] Fields+rename.** Added m_bAllowBroadcastAnnounceFix(=TRUE), m_Prefix/PostfixEndTimeTable
+  (std::map<int,time_t>), m_bCurrentIndependent; renamed m_bDisplayFlag->m_bBynameDisplay +
+  byDisplayFlag->byBynameDisplay. Rename ripple beyond KDesignation: KPlayer.cpp:1331,
+  KPlayerServer.cpp:982, KPlayerClient.cpp:12786, KLuaPlayer.cpp:10508/10551 (packet-struct
+  `byDisplayFlag` at KPlayerServer:12686/KPlayerClient:3945 left untouched — different field).
+- **[PORT-3] DB serialize (HIGH RISK).** Added SaveEndTimeInfo/LoadEndTimeInfo (byte layout
+  re-verified vs 081ce64e/081ce386). Save: emit block only if a map is non-empty. Load: relaxed
+  tail check `==DESIGNATIONFIX_DATA_SIZE`->`>=`, then `if(uLeftSize!=0) LoadEndTimeInfo; require==0`.
+  Guards: sizeof(KDesignationDB)==8, sizeof(time_t)==4 (PASSED on build => wire model correct).
+  Oracle roundtrip 4/4: empty->72B(==2010 blob), timed->89B, old-blob load, postfix-only->79B.
+- **[PORT-4] Acquire timed.** AcquirePrefix(int,time_t=0) (081cec1c): endtime==0 permanent
+  (skip-if-owned, auto-expiry if nOwnDuration), endtime!=0 explicit (assert dur!=0 & >now, cap
+  min(endtime,now+dur), dedup). AcquirePostfix(int) (081cea26): 1-arg, skip-if-owned, auto-expiry.
+  Both gate announce on m_bAllowBroadcastAnnounceFix. Default-arg preserves KAchievement/KItemList/
+  Lua callers. Oracle 12/12 branch cases.
+- **[PORT-5] Equip family.** SetCurrentPrefix/Postfix (buff via m_BuffList.CallBuff + nType cache),
+  CanEquipPrefix/Postfix (equip gates + independent rule), Equip/UnEquip (CanEquip->SetCurrent->
+  ResetCD->DoSync ; UnEquip CD-gate via m_TimerList.CheckTimer + DelSingleBuff), ResetPrefix/
+  PostfixCDTime (m_Settings.m_CoolDownList.GetCoolDownValue -> m_TimerList.ResetTimer),
+  SetBynameDisplayFlag, GetPrefix/PostfixEndTime. All reuse 2010 mechanisms (no v246 offset
+  transcription). Added ectDesignationNotifyCode=31 to SO3Result.h (DWARF ERROR_CODE_TYPE=31,
+  verified only self-referenced ectTotal — safe append). Buff/CD data blank in leak => dormant.
+- **[PORT-6/7] Activate + Remove.** Activate() (081cf920): erase-during-iteration prune of expired
+  end-times -> Remove{Prefix,Postfix}. Wired into KPlayer::Activate under the existing 10s throttle
+  (staggered by m_dwID) — dormant no-op with current data. Remove{Prefix,Postfix} rewritten
+  (081cf75c/081cf3f6): if owned & equipped -> ClearTimer(dwCoolDownID) then UnEquip (clears CD to
+  bypass the unequip CD-gate) -> SetBit(false) -> DoRemoveDesignation.
+- **[PORT-8] Lua.** 7 new (Equip/UnEquip Prefix/Postfix, Get Prefix/PostfixEndTime [push-or-nil],
+  SetDesignationBynameDisplayFlag) + rename alias GetDesignationBynameDisplayFlag (old
+  GetDesignationDisplayFlag kept). All registered. Kiểu (c) KPlayer method. The 3 v2.5-removed
+  bindings (SetCurrentDesignation/GetCurrentDesignation/SetDesignationContent) KEPT for back-compat.
+- **[PORT-9] Coverage-diff.** v246 surface = 31; ours = 29 matched + dtor + SetCurrentDesignation.
+  Gap B-A: only LoadCurrentDesignation (**folded into Load** — direct field-set + non-fatal
+  independent-flag reconstruction, chosen over routing through SetCurrentPrefix so a since-removed
+  prefix can't brick character load; observationally identical for dormant buff/nType data).
+  Gap A-B: SetCurrentDesignation (2010-kept, back-compat). **forgotten = 0.**
+
+DEFER / DATA-GAP: buff/cooldown/duration/Type columns are blank in this leak's .tab -> the timed,
+buff-on-equip, cooldown-gated-unequip, and independent-prefix paths ship complete but DORMANT.
+The ectDesignationNotifyCode client message requires a v246 client to render (version-gap).

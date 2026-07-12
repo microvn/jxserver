@@ -1,7 +1,7 @@
 #ifndef _SO3_RESULT_H_
 #define _SO3_RESULT_H_
 
-// ´íÎó·µ»ØÖµ·ÖÀà
+// ï¿½ï¿½ï¿½ó·µ»ï¿½Öµï¿½ï¿½ï¿½ï¿½
 enum ERROR_CODE_TYPE
 {
 	ectInvalid = 0,
@@ -36,11 +36,12 @@ enum ERROR_CODE_TYPE
     ectFellowshipAttractionFallOff,
     ectCampResultCode,
     ectChargeLimitCode,
+    ectDesignationNotifyCode = 31,  // v2.5 (DWARF ERROR_CODE_TYPE=31); designation equip/CD feedback
 
 	ectTotal
 };
 
-// Ìí¼ÓµÀ¾ßµÄ´íÎóÌáÊ¾
+// ï¿½ï¿½ï¿½Óµï¿½ï¿½ßµÄ´ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
 enum ADD_ITEM_RESULT_CODE
 {
 	aircInvalid = 0,
@@ -48,58 +49,58 @@ enum ADD_ITEM_RESULT_CODE
 	aircSuccess,
 	aircFailed,
 
-	aircNotEnoughFreeRoom,	// Ã»ÓÐ×ã¹»µÄ±³°ü¿Õ¼ä			
-	aircItemAmountLimited,	// ÄãÎÞ·¨»ñµÃ¸ü¶àµÄ´ËÀàÎïÆ·
-    aircCannotPutThatPlace, // ²»ÄÜ·ÅÔÚ¸ÃÎ»ÖÃ
+	aircNotEnoughFreeRoom,	// Ã»ï¿½ï¿½ï¿½ã¹»ï¿½Ä±ï¿½ï¿½ï¿½ï¿½Õ¼ï¿½			
+	aircItemAmountLimited,	// ï¿½ï¿½ï¿½Þ·ï¿½ï¿½ï¿½Ã¸ï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½Æ·
+    aircCannotPutThatPlace, // ï¿½ï¿½ï¿½Ü·ï¿½ï¿½Ú¸ï¿½Î»ï¿½ï¿½
 
 	aircTotal
 };
 
-// ¼¼ÄÜÏà¹ØµÄ´íÎó·µ»ØÖµ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ØµÄ´ï¿½ï¿½ó·µ»ï¿½Öµ
 enum SKILL_RESULT_CODE
 {
 	srcInvalid = 0,
 
-	srcSuccess,             // ³É¹¦
-	srcFailed,              // Ê§°Ü£¬Î´¶¨ÒåÔ­Òò
+	srcSuccess,             // ï¿½É¹ï¿½
+	srcFailed,              // Ê§ï¿½Ü£ï¿½Î´ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½
 
-    srcInvalidCastMode,     // ÊÍ·Å·½Ê½²»¶Ô
-	srcNotEnoughLife,		// ÑªÁ¿²»×ã
-	srcNotEnoughMana,		// ÄÚÁ¦²»×ã
-    srcNotEnoughRage,       // Å­Æø²»×ã
-	srcNotEnoughStamina,	// ÌåÁ¦²»×ã
-	srcNotEnoughItem,		// µÀ¾ß²»×ã
-    srcNotEnoughAmmo,       // µ¯Ò©²»×ã
-	srcSkillNotReady,		// ¼¼ÄÜCDÊ±¼äÎ´µ½
-    srcInvalidSkill,        // ÎÞÐ§µÄ¼¼ÄÜ
-    srcInvalidTarget,       // ÎÞÐ§µÄÄ¿±ê
-    srcNoTarget,            // Ã»ÓÐÄ¿±ê
-    srcNeedTarget,          // ÐèÒªÖ¸¶¨Ò»¸öÄ¿±ê
-    srcTooCloseTarget,      // Ä¿±êÌ«½ü
-	srcTooFarTarget,		// Ä¿±êÌ«Ô¶
-    srcOutOfAngle,          // Ä¿±ê½Ç¶È²»¶Ô
-    srcTargetInvisible,     // Ä¿±ê²»ÔÚÊÓÏß·¶Î§ÄÚ
-    srcWeaponError,         // ÎäÆ÷²»Æ¥Åä
-    srcWeaponDestroy,       // ÎäÆ÷ÒÑËð»µ(ÄÍ¾Ã¶ÈÎª0)
-    srcAmmoError,           // µ¯Ò©ÓëÎäÆ÷²»Æ¥Åä
-    srcNotEquitAmmo,        // Ã»ÓÐ×°±¸µ¯Ò©
-    srcMountError,          // Ã»ÓÐ×°±¸¶ÔÓ¦µÄÎä¹¦
-    srcInOTAction,          // Õý´¦ÓÚÆäËûOTActionÐÐÎª
-    srcOnSilence,           // Õý´¦ÓÚ½ûÑÔ×´Ì¬
-    srcNotFormationLeader,  // ²»ÊÇÕóÑÛ£¬²»ÄÜÊÍ·ÅÕó·¨
-    srcNotEnoughMember,     // ×é³ÉÕó·¨µÄ³ÉÔ±²»×ã
-    srcNotStartAccumulate,  // Ã»ÓÐ¿ªÊ¼ÐîÆø
-    srcBuffError,           // Ã»ÓÐËùÐèÒªµÄBuff
-    srcNotInFight,          // ²»ÄÜÔÚÕ½¶·ÖÐ
-    srcMoveStateError,      // ÒÆ¶¯×´Ì¬´íÎó
-    srcErrorByHorse,        // ÉÏÏÂÂíµÄ×´Ì¬³ö´í
-    srcBuffInvalid,         // Äã×÷ÓÃµÄBUFF²»´æÔÚ
-    srcForceEffect,         // ¸üÇ¿´óµÄÐ§¹ûÔÚ×÷ÓÃÖÐ
-    srcBuffImmunity,        // ÄãµÄBUFF±»ÃâÒßÁË
-    srcTargetLifeError,     // Ä¿±êÑªÁ¿²»Âú×ã
-    srcSelfLifeError,     // ×ÔÉíÑªÁ¿²»Âú×ã
+    srcInvalidCastMode,     // ï¿½Í·Å·ï¿½Ê½ï¿½ï¿½ï¿½ï¿½
+	srcNotEnoughLife,		// Ñªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	srcNotEnoughMana,		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    srcNotEnoughRage,       // Å­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	srcNotEnoughStamina,	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	srcNotEnoughItem,		// ï¿½ï¿½ï¿½ß²ï¿½ï¿½ï¿½
+    srcNotEnoughAmmo,       // ï¿½ï¿½Ò©ï¿½ï¿½ï¿½ï¿½
+	srcSkillNotReady,		// ï¿½ï¿½ï¿½ï¿½CDÊ±ï¿½ï¿½Î´ï¿½ï¿½
+    srcInvalidSkill,        // ï¿½ï¿½Ð§ï¿½Ä¼ï¿½ï¿½ï¿½
+    srcInvalidTarget,       // ï¿½ï¿½Ð§ï¿½ï¿½Ä¿ï¿½ï¿½
+    srcNoTarget,            // Ã»ï¿½ï¿½Ä¿ï¿½ï¿½
+    srcNeedTarget,          // ï¿½ï¿½ÒªÖ¸ï¿½ï¿½Ò»ï¿½ï¿½Ä¿ï¿½ï¿½
+    srcTooCloseTarget,      // Ä¿ï¿½ï¿½Ì«ï¿½ï¿½
+	srcTooFarTarget,		// Ä¿ï¿½ï¿½Ì«Ô¶
+    srcOutOfAngle,          // Ä¿ï¿½ï¿½Ç¶È²ï¿½ï¿½ï¿½
+    srcTargetInvisible,     // Ä¿ï¿½ê²»ï¿½ï¿½ï¿½ï¿½ï¿½ß·ï¿½Î§ï¿½ï¿½
+    srcWeaponError,         // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½
+    srcWeaponDestroy,       // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½Í¾Ã¶ï¿½Îª0)
+    srcAmmoError,           // ï¿½ï¿½Ò©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½
+    srcNotEquitAmmo,        // Ã»ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½Ò©
+    srcMountError,          // Ã»ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ä¹¦
+    srcInOTAction,          // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½OTActionï¿½ï¿½Îª
+    srcOnSilence,           // ï¿½ï¿½ï¿½ï¿½ï¿½Ú½ï¿½ï¿½ï¿½×´Ì¬
+    srcNotFormationLeader,  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Û£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½ï¿½ï¿½
+    srcNotEnoughMember,     // ï¿½ï¿½ï¿½ï¿½ó·¨µÄ³ï¿½Ô±ï¿½ï¿½ï¿½ï¿½
+    srcNotStartAccumulate,  // Ã»ï¿½Ð¿ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½
+    srcBuffError,           // Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Buff
+    srcNotInFight,          // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ½ï¿½ï¿½ï¿½ï¿½
+    srcMoveStateError,      // ï¿½Æ¶ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½
+    srcErrorByHorse,        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½
+    srcBuffInvalid,         // ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½BUFFï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    srcForceEffect,         // ï¿½ï¿½Ç¿ï¿½ï¿½ï¿½Ð§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    srcBuffImmunity,        // ï¿½ï¿½ï¿½BUFFï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    srcTargetLifeError,     // Ä¿ï¿½ï¿½Ñªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    srcSelfLifeError,     // ï¿½ï¿½ï¿½ï¿½Ñªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     srcDstMoveStateError,
-    srcNotTeam,            // Ã»ÓÐ×é¶Ó
+    srcNotTeam,            // Ã»ï¿½ï¿½ï¿½ï¿½ï¿½
     srcMapBan,
 
 	srcTotal
@@ -109,15 +110,15 @@ enum LOOT_ITEM_RESULT_CODE
 {
 	lircInvalid = 0,
 
-	lircSuccess,            // ³É¹¦
-	lircFailed,             // Ê§°Ü£¬Î´¶¨ÒåÔ­Òò
+	lircSuccess,            // ï¿½É¹ï¿½
+	lircFailed,             // Ê§ï¿½Ü£ï¿½Î´ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½
 
-	lircInventoryIsFull,	// ±³°üÒÑÂú
-	lircNotExistLootItem,	// ÒªÊ°È¡µÄÎïÆ·²»´æÔÚ
-	lircAddLootItemFailed,	// Ê°È¡µÄÎïÆ·ÎÞ·¨·ÅÈë±³°ü
-	lircNoLootTarget,		// ÎÞÊ°È¡Ä¿±êDoodad
-	lircTooFarToLoot,		// Ì«Ô¶¶ø²»ÄÜÊ°È¡
-	lircOverItemLimit,		// ³¬¹ýÐ¯´øÉÏÏÞ
+	lircInventoryIsFull,	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	lircNotExistLootItem,	// ÒªÊ°È¡ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	lircAddLootItemFailed,	// Ê°È¡ï¿½ï¿½ï¿½ï¿½Æ·ï¿½Þ·ï¿½ï¿½ï¿½ï¿½ë±³ï¿½ï¿½
+	lircNoLootTarget,		// ï¿½ï¿½Ê°È¡Ä¿ï¿½ï¿½Doodad
+	lircTooFarToLoot,		// Ì«Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê°È¡
+	lircOverItemLimit,		// ï¿½ï¿½ï¿½ï¿½Ð¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 	lircTotal
 };
@@ -129,60 +130,60 @@ enum QUEST_RESULT_CODE
 	qrcSuccess,
 	qrcFailed,
 
-	qrcErrorQuestIndex,					//´íÎóµÄÈÎÎñË÷Òý
-	qrcErrorQuestID,					//´íÎóµÄÈÎÎñID
-	qrcQuestListFull,					//ÈÎÎñÁÐ±íÒÑÂú
-	qrcErrorQuestState,					//´íÎóµÄÈÎÎñ×´Ì¬
-	qrcAlreadyAcceptQuest,				//ÒÑ¾­½ÓÊÜÁËÈÎÎñ
-	qrcAlreadyFinishedQuest,			//ÒÑ¾­Íê³ÉÁËÈÎÎñ
-	qrcCannotFindQuest,					//ÈÎÎñÅäÖÃ±íÖÐÕÒ²»µ½Ö¸¶¨µÄÈÎÎñ
-	qrcTooLowLevel,						//½ÇÉ«µÈ¼¶Ì«µÍ
-	qrcTooHighLevel,					//½ÇÉ«µÈ¼¶Ì«¸ß
-	qrcErrorGender,						//½ÇÉ«ÐÔ±ð²»·ûºÏÒªÇó
-	qrcErrorRoleType,					//½ÇÉ«ÌåÐÍ²»¶Ô
-	qrcErrorForceID,					//½ÇÉ«ÃÅÅÉ²»¶Ô
-	qrcCooldown,						//Cooldown¼ÆÊ±Æ÷Î´µ½Ê±¼ä
-	qrcPrequestUnfinished,				//Ç°ÖÃÈÎÎñÃ»Íê³É
-	qrcErrorItemCount,					//´íÎóµÄÈÎÎñÎïÆ·ÊýÁ¿
-	qrcErrorKillNpcCount,				//´íÎóµÄÉ±¹ÖÊýÁ¿
-	qrcTooLongTime,						//×öÈÎÎñÊ±¼ä³¬¹ýÏÞÖÆ
-	qrcErrorTaskValue,					//´íÎóµÄÈÎÎñ±äÁ¿ÊýÖµ
-	qrcAssistQuestListFull,				//Ð­ÖúÈÎÎñÁÐ±í´íÎó
-	qrcErrorAssistQuestIndex,			//´íÎóµÄÐ­ÖúÈÎÎñÐòºÅ
-	qrcErrorStartNpcTarget,				//Ä¿±êNpcÉíÉÏ²»ÄÜ½Ó¸ÃÈÎÎñ
-	qrcErrorStartDoodadTarget,			//Ä¿±êDoodadÉíÉÏ²»ÄÜ½Ó¸ÃÈÎÎñ
-	qrcErrorEndNpcTarget,				//Ä¿±êNpcÉíÉÏ²»ÄÜ½»¸ÃÈÎÎñ
-	qrcErrorEndDoodadTarget,			//Ä¿±êDoodadÉíÉÏ²»ÄÜ½»¸ÃÈÎÎñ
-	qrcNoStartQuestItem,				//Ã»ÓÐÈÎÎñÆðÊ¼µÀ¾ß
-	qrcNoEndQuestItem,					//Ã»ÓÐ½áÊøÆðÊ¼µÀ¾ß
-	qrcTooEarlyTime,					//½ÓÈÎÎñÊ±¼äÌ«Ôç
-	qrcTooLateTime,						//½ÓÈÎÎñÊ±¼äÌ«Íí
-	qrcTooLowSkillLevel,				//Îä¹¦¼¼ÄÜµÈ¼¶Ì«µÍ
-	qrcTooLowLifeLevel,					//Éú»î¼¼ÄÜµÈ¼¶Ì«µÍ
-	qrcErrorGenerateItem,				//Éú³ÉÈÎÎñ½±ÀøÎïÆ·Ê§°Ü
-	qrcAddItemFailed,					//Ìí¼ÓÈÎÎñ½±ÀøÎïÆ·Ê§°Ü
-	qrcAddMoneyFailed,					//Ìí¼Ó½ðÇ®Ê§°Ü
-	qrcAddReputationFailed,				//Ìí¼ÓÉùÍûÊ§°Ü
-	qrcNotEnoughStartItem,				//½ÓÈÎÎñµÀ¾ß²»×ã
-	qrcNotEnoughFreeRoom,				//±³°ü¿Õ¼ä²»×ã
-	qrcErrorMap,						//´íÎóµÄµØÍ¼
-	qrcUnfinishedQuest,					//Î´Íê³ÉÈÎÎñ£¬²»ÄÜÐ­Öú
-	qrcCannotFindQuestInDestPlayer,		//ÎÞ·¨ÔÚÄ¿±êÍæ¼ÒÉíÉÏÕÒµ½ÐèÒªÐ­ÖúµÄÈÎÎñ
-	qrcNeedAccept,						//±ØÐëÏÈ½ÓÈÎÎñ²ÅÄÜ½»
-	qrcNoNeedAccept,					//²»ÓÃ½Ó¾ÍÄÜ½»µÄÈÎÎñ
-	qrcQuestFailed,						//´ËÈÎÎñÒÑÊ§°Ü
-	qrcAddSkillFailed,					//Ìí¼Ó¼¼ÄÜÊ§°Ü
-	qrcNotEnoughMoney,					//½ðÇ®²»×ã
-    qrcMoneyLimit,                      //Ç®ÒÑ¾­´ïµ½ÉÏÏÞ
-    qrcErrorRepute,                     //ÉùÍû²»Âú×ã
-    qrcAddPresentItemFailed,            //ÎÞ·¨½±ÀøÈÎÎñÍê³ÉµÀ¾ß
-    qrcDailyQuestFull,                  //Ã¿ÈÕÈÎÎñÒÑÂú
-    qrcEscortQuestIsRunning,            //ÆäËûÈËÕýÔÚ×öÕâ¸ö»¤ËÍÈÎÎñ
-    qrcErrorCamp,                       //ÕóÓª²»¶Ô
-    qrcQuestEndBookNotMemorized,        //±ØÐëÔÄ¶ÁÕûÌ×Êé
+	qrcErrorQuestIndex,					//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	qrcErrorQuestID,					//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ID
+	qrcQuestListFull,					//ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½ï¿½ï¿½
+	qrcErrorQuestState,					//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬
+	qrcAlreadyAcceptQuest,				//ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	qrcAlreadyFinishedQuest,			//ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	qrcCannotFindQuest,					//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã±ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	qrcTooLowLevel,						//ï¿½ï¿½É«ï¿½È¼ï¿½Ì«ï¿½ï¿½
+	qrcTooHighLevel,					//ï¿½ï¿½É«ï¿½È¼ï¿½Ì«ï¿½ï¿½
+	qrcErrorGender,						//ï¿½ï¿½É«ï¿½Ô±ð²»·ï¿½ï¿½ï¿½Òªï¿½ï¿½
+	qrcErrorRoleType,					//ï¿½ï¿½É«ï¿½ï¿½ï¿½Í²ï¿½ï¿½ï¿½
+	qrcErrorForceID,					//ï¿½ï¿½É«ï¿½ï¿½ï¿½É²ï¿½ï¿½ï¿½
+	qrcCooldown,						//Cooldownï¿½ï¿½Ê±ï¿½ï¿½Î´ï¿½ï¿½Ê±ï¿½ï¿½
+	qrcPrequestUnfinished,				//Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½
+	qrcErrorItemCount,					//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½
+	qrcErrorKillNpcCount,				//ï¿½ï¿½ï¿½ï¿½ï¿½É±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	qrcTooLongTime,						//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä³¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	qrcErrorTaskValue,					//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
+	qrcAssistQuestListFull,				//Ð­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½ï¿½ï¿½
+	qrcErrorAssistQuestIndex,			//ï¿½ï¿½ï¿½ï¿½ï¿½Ð­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	qrcErrorStartNpcTarget,				//Ä¿ï¿½ï¿½Npcï¿½ï¿½ï¿½Ï²ï¿½ï¿½Ü½Ó¸ï¿½ï¿½ï¿½ï¿½ï¿½
+	qrcErrorStartDoodadTarget,			//Ä¿ï¿½ï¿½Doodadï¿½ï¿½ï¿½Ï²ï¿½ï¿½Ü½Ó¸ï¿½ï¿½ï¿½ï¿½ï¿½
+	qrcErrorEndNpcTarget,				//Ä¿ï¿½ï¿½Npcï¿½ï¿½ï¿½Ï²ï¿½ï¿½Ü½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	qrcErrorEndDoodadTarget,			//Ä¿ï¿½ï¿½Doodadï¿½ï¿½ï¿½Ï²ï¿½ï¿½Ü½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	qrcNoStartQuestItem,				//Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½
+	qrcNoEndQuestItem,					//Ã»ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½
+	qrcTooEarlyTime,					//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Ì«ï¿½ï¿½
+	qrcTooLateTime,						//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Ì«ï¿½ï¿½
+	qrcTooLowSkillLevel,				//ï¿½ä¹¦ï¿½ï¿½ï¿½ÜµÈ¼ï¿½Ì«ï¿½ï¿½
+	qrcTooLowLifeLevel,					//ï¿½ï¿½ï¿½î¼¼ï¿½ÜµÈ¼ï¿½Ì«ï¿½ï¿½
+	qrcErrorGenerateItem,				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·Ê§ï¿½ï¿½
+	qrcAddItemFailed,					//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·Ê§ï¿½ï¿½
+	qrcAddMoneyFailed,					//ï¿½ï¿½ï¿½Ó½ï¿½Ç®Ê§ï¿½ï¿½
+	qrcAddReputationFailed,				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½
+	qrcNotEnoughStartItem,				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß²ï¿½ï¿½ï¿½
+	qrcNotEnoughFreeRoom,				//ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼ä²»ï¿½ï¿½
+	qrcErrorMap,						//ï¿½ï¿½ï¿½ï¿½Äµï¿½Í¼
+	qrcUnfinishedQuest,					//Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ñ£¬²ï¿½ï¿½ï¿½Ð­ï¿½ï¿½
+	qrcCannotFindQuestInDestPlayer,		//ï¿½Þ·ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½ÒªÐ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	qrcNeedAccept,						//ï¿½ï¿½ï¿½ï¿½ï¿½È½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü½ï¿½
+	qrcNoNeedAccept,					//ï¿½ï¿½ï¿½Ã½Ó¾ï¿½ï¿½Ü½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	qrcQuestFailed,						//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½
+	qrcAddSkillFailed,					//ï¿½ï¿½ï¿½Ó¼ï¿½ï¿½ï¿½Ê§ï¿½ï¿½
+	qrcNotEnoughMoney,					//ï¿½ï¿½Ç®ï¿½ï¿½ï¿½ï¿½
+    qrcMoneyLimit,                      //Ç®ï¿½Ñ¾ï¿½ï¿½ïµ½ï¿½ï¿½ï¿½ï¿½
+    qrcErrorRepute,                     //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    qrcAddPresentItemFailed,            //ï¿½Þ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Éµï¿½ï¿½ï¿½
+    qrcDailyQuestFull,                  //Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    qrcEscortQuestIsRunning,            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    qrcErrorCamp,                       //ï¿½ï¿½Óªï¿½ï¿½ï¿½ï¿½
+    qrcQuestEndBookNotMemorized,        //ï¿½ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     qrcChargeLimit,
-    qrcRequireApprentice,               //ÐèÇóÊÇÍ½µÜ
-    qrcTooManyQuestOfferItem,           //ÈÎÎñ·¢·ÅµÀ¾ß³¬¹ýÓµÓÐÏÞÖÆ
+    qrcRequireApprentice,               //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í½ï¿½ï¿½
+    qrcTooManyQuestOfferItem,           //ï¿½ï¿½ï¿½ñ·¢·Åµï¿½ï¿½ß³ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 	qrcTotal
 };
@@ -194,33 +195,33 @@ enum ITEM_RESULT_CODE
 	ircSuccess,
 	ircFailed,
 
-	ircItemNotExist,					// ÎïÆ·²»´æÔÚ
-	ircNotEnoughDurability,				// ÄÍ¾Ã¶È²»×ã»òµþ¼ÓÊýÁ¿²»×ã
-	ircErrorEquipPlace,					// ×°±¸ÎïÆ·À¸Î»ÖÃ´íÎó
-    ircForceError,                      // ÃÅÅÉ²»¶Ô
-	ircTooLowAgility,					// Ãô½ÝÌ«µÍ,²»ÄÜ×°±¸
-	ircTooLowStrength,					// Á¦Á¿Ì«µÍ,²»ÄÜ×°±¸
-	ircTooLowSpirit,					// ¸ù¹ÇÌ«µÍ,²»ÄÜ×°±¸
-	ircTooLowVitality,					// ÌåÖÊÌ«µÍ,²»ÄÜ×°±¸
-	ircTooLowLevel,						// µÈ¼¶Ì«µÍ,²»ÄÜ×°±¸
-	ircTooLowDurability,				// ÄÍ¾Ã¶ÈÎªÁã,²»ÄÜ×°±¸
-	ircCannotEquip,						// ÎïÆ·²»¿É±»×°±¸
-	ircCannotPutToThatPlace,			// ÎïÆ·ÎÞ·¨·ÅÖÃµ½ÄÇ¸öÎ»ÖÃ	
-	ircCannotDisablePackage,			// ±³°üÄÚÓÐ¶«Î÷ÎÞ·¨Ð¶ÏÂ
-	ircPackageNotEnoughSize,			// ±³°ü´óÐ¡²»×ã
-	ircPackageErrorType,				// ±³°üÀàÐÍ²»·û
-	ircPlayerIsDead,					// ËÀÍö×´Ì¬²»ÄÜ½øÐÐÕâ¸ö²Ù×÷
-	ircBankPackageDisabled,				// ÒøÐÐ±³°üÃ»ÓÐ¼¤»î,²»ÄÜÍùÉÏ·Å±³°ü
-    ircEquipedPackageCannotDestroy,     // ÒÑ¾­×°±¸ÉÏµÄ±³°ü²»ÄÜ´Ý»Ù
-    ircBinded,                          // ÎïÆ·ÒÑ¾­°ó¶¨
-    ircCannotDestroy,                   // ¸ÃÎïÆ·²»ÄÜ±»´Ý»Ù
-    ircGenderError,                     // ÐÔ±ð²»·ûºÏ
-    ircPlayerInFight,                   // Õ½¶·ÖÐ²»ÄÜÇÐ»»
-    ircOnHorse,                         // ÆïÂíµÄÊ±ºò²»ÄÜÄÃÏÂÂí
-    ircCampCannotEquip,                 // µ±Ç°ËùÔÚÕóÓª²»ÄÜ×°±¸¸ÃÎïÆ·
-    ircRequireProfession,               // ÐèÒªÑ§Ï°Ä³Éú»î¼¼ÄÜ
-    ircRequireProfessionBranch,         // ÐèÒªÑ§Ï°Ä³Éú»î¼¼ÄÜ·ÖÖ§
-    ircProfessionLevelTooLow,           // Éú»î¼¼ÄÜµÈ¼¶Ì«µÍ
+	ircItemNotExist,					// ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	ircNotEnoughDurability,				// ï¿½Í¾Ã¶È²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	ircErrorEquipPlace,					// ×°ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½Î»ï¿½Ã´ï¿½ï¿½ï¿½
+    ircForceError,                      // ï¿½ï¿½ï¿½É²ï¿½ï¿½ï¿½
+	ircTooLowAgility,					// ï¿½ï¿½ï¿½ï¿½Ì«ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½
+	ircTooLowStrength,					// ï¿½ï¿½ï¿½ï¿½Ì«ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½
+	ircTooLowSpirit,					// ï¿½ï¿½ï¿½ï¿½Ì«ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½
+	ircTooLowVitality,					// ï¿½ï¿½ï¿½ï¿½Ì«ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½
+	ircTooLowLevel,						// ï¿½È¼ï¿½Ì«ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½
+	ircTooLowDurability,				// ï¿½Í¾Ã¶ï¿½Îªï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½
+	ircCannotEquip,						// ï¿½ï¿½Æ·ï¿½ï¿½ï¿½É±ï¿½×°ï¿½ï¿½
+	ircCannotPutToThatPlace,			// ï¿½ï¿½Æ·ï¿½Þ·ï¿½ï¿½ï¿½ï¿½Ãµï¿½ï¿½Ç¸ï¿½Î»ï¿½ï¿½	
+	ircCannotDisablePackage,			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½Þ·ï¿½Ð¶ï¿½ï¿½
+	ircPackageNotEnoughSize,			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½
+	ircPackageErrorType,				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í²ï¿½ï¿½ï¿½
+	ircPlayerIsDead,					// ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½Ü½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	ircBankPackageDisabled,				// ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½Ã»ï¿½Ð¼ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·Å±ï¿½ï¿½ï¿½
+    ircEquipedPackageCannotDestroy,     // ï¿½Ñ¾ï¿½×°ï¿½ï¿½ï¿½ÏµÄ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü´Ý»ï¿½
+    ircBinded,                          // ï¿½ï¿½Æ·ï¿½Ñ¾ï¿½ï¿½ï¿½
+    ircCannotDestroy,                   // ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½Ü±ï¿½ï¿½Ý»ï¿½
+    ircGenderError,                     // ï¿½Ô±ð²»·ï¿½ï¿½ï¿½
+    ircPlayerInFight,                   // Õ½ï¿½ï¿½ï¿½Ð²ï¿½ï¿½ï¿½ï¿½Ð»ï¿½
+    ircOnHorse,                         // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    ircCampCannotEquip,                 // ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óªï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·
+    ircRequireProfession,               // ï¿½ï¿½ÒªÑ§Ï°Ä³ï¿½ï¿½ï¿½î¼¼ï¿½ï¿½
+    ircRequireProfessionBranch,         // ï¿½ï¿½ÒªÑ§Ï°Ä³ï¿½ï¿½ï¿½î¼¼ï¿½Ü·ï¿½Ö§
+    ircProfessionLevelTooLow,           // ï¿½ï¿½ï¿½î¼¼ï¿½ÜµÈ¼ï¿½Ì«ï¿½ï¿½
 
 	ircTotal
 };
@@ -232,26 +233,26 @@ enum USE_ITEM_RESULT_CODE
 	uircSuccess,
 	uircFailed,
     
-    uircItemNotExist,                    // ÎïÆ·²»´æÔÚ   
-    uircCannotUseItem,                   // ÎïÆ·²»ÄÜÊ¹ÓÃ
-    uircNotEnoughDurability,             // ÄÍ¾Ã¶È²»¹»
-    uircNotReady,                        // ÎïÆ·»¹Ã»×¼±¸ºÃ
-    uircUseInPackage,					 // ÔÚ±³°üÖÐ²ÅÄÜÊ¹ÓÃ
-	uircUseWhenEquipped,				 // ×°±¸ÉÏ²ÅÄÜÊ¹ÓÃ¸ÃÎïÆ·
-    uircTooLowLevel,                     // µÈ¼¶Ì«µÍ
-    uircRequireProfession,               // ÐèÒªÑ§Ï°Ä³Éú»î¼¼ÄÜ
-    uircRequireProfessionBranch,         // ÐèÒªÑ§Ï°Ä³Éú»î¼¼ÄÜ·ÖÖ§
-    uircProfessionLevelTooLow,           // Éú»î¼¼ÄÜµÈ¼¶Ì«µÍ
-    uircOnHorse,                         // ÕýÔÚÆïÂí
-    uircInFight,                         // ÕýÔÚÕ½¶·
-    uircRequireMale,                     // ÄÐÈË²ÅÄÜÊ¹ÓÃ
-    uircRequireFeMale,                   // Å®ÈË²ÅÄÜÊ¹ÓÃ
-    uircCampCannotUse,                   // ½ÇÉ«ËùÔÚÕóÓª²»ÄÜÊ¹ÓÃ
-    uircCannotCastSkill,                 // ²»ÄÜÊÍ·ÅÎïÆ·ÉÏµÄ¼¼ÄÜ
-    uircCastSkillFailed,                 // ÊÍ·ÅÊ§°Ü
-    uircCostItemDurabilityFailed,        // ÏûºÄÄÍ¾Ã¶ÈÊ§°Ü
-    uircForceError,                      // ÃÅÅÉ²»¶Ô
-    uircAleardHaveDesignation,           // ÒÑ¾­»ñµÃ¸Ã³ÆºÅ
+    uircItemNotExist,                    // ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½   
+    uircCannotUseItem,                   // ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½
+    uircNotEnoughDurability,             // ï¿½Í¾Ã¶È²ï¿½ï¿½ï¿½
+    uircNotReady,                        // ï¿½ï¿½Æ·ï¿½ï¿½Ã»×¼ï¿½ï¿½ï¿½ï¿½
+    uircUseInPackage,					 // ï¿½Ú±ï¿½ï¿½ï¿½ï¿½Ð²ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½
+	uircUseWhenEquipped,				 // ×°ï¿½ï¿½ï¿½Ï²ï¿½ï¿½ï¿½Ê¹ï¿½Ã¸ï¿½ï¿½ï¿½Æ·
+    uircTooLowLevel,                     // ï¿½È¼ï¿½Ì«ï¿½ï¿½
+    uircRequireProfession,               // ï¿½ï¿½ÒªÑ§Ï°Ä³ï¿½ï¿½ï¿½î¼¼ï¿½ï¿½
+    uircRequireProfessionBranch,         // ï¿½ï¿½ÒªÑ§Ï°Ä³ï¿½ï¿½ï¿½î¼¼ï¿½Ü·ï¿½Ö§
+    uircProfessionLevelTooLow,           // ï¿½ï¿½ï¿½î¼¼ï¿½ÜµÈ¼ï¿½Ì«ï¿½ï¿½
+    uircOnHorse,                         // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    uircInFight,                         // ï¿½ï¿½ï¿½ï¿½Õ½ï¿½ï¿½
+    uircRequireMale,                     // ï¿½ï¿½ï¿½Ë²ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½
+    uircRequireFeMale,                   // Å®ï¿½Ë²ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½
+    uircCampCannotUse,                   // ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óªï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½
+    uircCannotCastSkill,                 // ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½ï¿½ï¿½Æ·ï¿½ÏµÄ¼ï¿½ï¿½ï¿½
+    uircCastSkillFailed,                 // ï¿½Í·ï¿½Ê§ï¿½ï¿½
+    uircCostItemDurabilityFailed,        // ï¿½ï¿½ï¿½ï¿½ï¿½Í¾Ã¶ï¿½Ê§ï¿½ï¿½
+    uircForceError,                      // ï¿½ï¿½ï¿½É²ï¿½ï¿½ï¿½
+    uircAleardHaveDesignation,           // ï¿½Ñ¾ï¿½ï¿½ï¿½Ã¸Ã³Æºï¿½
 
 	uircTotal
 };
@@ -270,14 +271,14 @@ enum PARTY_NOTIFY_CODE
     epncPlayerNotOnline,
     epncDestTeamIsFull,
     epncYourTeamIsFull,
-    epncInvitationOutOfDate,  // ÑûÇëÒÑ¾­¹ýÆÚ
-    epncApplicationOutOfDate, // ÉêÇëÒÑ¾­¹ýÆÚ
+    epncInvitationOutOfDate,  // ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½
+    epncApplicationOutOfDate, // ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½
     epncTeamCreated,
     epncTeamJoined,
-    epncInvitationDone,       // ÄãÏòXXX·¢³öÑûÇë
-    epncApplicationDone,      // ÄãÏòXXX·¢³öÉêÇë
-    epncInvitationReject,     // Äã¾Ü¾øÁËXXXµÄÑûÇë
-    epncApplicationReject,    // Äã¾Ü¾øÁËXXXµÄÉêÇë
+    epncInvitationDone,       // ï¿½ï¿½ï¿½ï¿½XXXï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    epncApplicationDone,      // ï¿½ï¿½ï¿½ï¿½XXXï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    epncInvitationReject,     // ï¿½ï¿½Ü¾ï¿½ï¿½ï¿½XXXï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    epncApplicationReject,    // ï¿½ï¿½Ü¾ï¿½ï¿½ï¿½XXXï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     epncCampError,
     epncTotal
 };
@@ -285,33 +286,33 @@ enum PARTY_NOTIFY_CODE
 enum SHOP_SYSTEM_RESPOND_CODE
 {
     ssrcInvalid = 0,
-    ssrcSellSuccess,                    // ³öÊÛ³É¹¦
-    ssrcBuySuccess,                     // ¹ºÂò³É¹¦
-    ssrcRepairSuccess,                  // ÐÞÀí³É¹¦
-    ssrcSellFailed,                     // ³öÊÛÊ§°Ü
-    ssrcBuyFailed,                      // ¹ºÂòÊ§°Ü
-    ssrcRepairFailed,                   // ÐÞÀí³É¹¦
+    ssrcSellSuccess,                    // ï¿½ï¿½ï¿½Û³É¹ï¿½
+    ssrcBuySuccess,                     // ï¿½ï¿½ï¿½ï¿½É¹ï¿½
+    ssrcRepairSuccess,                  // ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½
+    ssrcSellFailed,                     // ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½
+    ssrcBuyFailed,                      // ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½
+    ssrcRepairFailed,                   // ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½
 
-    ssrcTooFarAway,                     // ¾àÀëÌ«Ô¶ÁË
-    ssrcNotEnoughMoney,                 // ½ðÇ®²»×ã
-    ssrcNotEnoughPrestige,              // ÍþÍûµãÊý²»×ã
-    ssrcNotEnoughContribution,          // ¹±Ï×µãÊý²»×ã
-    ssrcAchievementRecordError,         // ÓÎÏ·Íê³É¶È²»¹»
-    ssrcNotEnoughAchievementPoint,      // ³É¾ÍµãÊý²»×ã
-    ssrcNotEnoughRepate,                // ÉùÍû²»×ã
-    ssrcNotEnoughRank,                  // ³ÆºÅ²»´ïÒªÇó
-    ssrcItemSoldOut,                    // ÉÌµê¸ÃÎïÆ·ÂôÍêÁË
-    ssrcBagFull,                        // ±³°üÒÑÂú
-    ssrcItemExistLimit,                 // ÎïÆ·ÓµÓÐÏÞÖÆ
-    ssrcItemNotNeedRepair,              // ÎïÆ·²»ÐèÐÞÀí
-    ssrcNoneItemNeedRepair,             // Ã»ÓÐÎïÆ·¿ÉÒÔÐÞÀí
-    ssrcCanNotSell,                     // ²»ÄÜ³öÊÛ¸Ä¸ÃÎïÆ·
-    ssrcItemHadLimit,                   // ÎïÆ·ÓµÓÐ´ïµ½ÉÏÏÞ
-    ssrcItemModifiedWhileBuy,           // ÔÚÄã·¢³ö¹ºÂòÇëÇóµÄÕâ¶ÎÊ±¼äÄÚ£¬¸ÃÀ¸ÎïÆ··¢ÉúÁË±ä»¯
-    ssrcYouDeath,                       // Äã¹ÒÁË
-    ssrcItemBroken,                     // ¸ÃÎïÆ·ÄÍ¾Ã¶ÈÌ«µÍ£¬ÎÞ·¨³öÊÛ¡£
-    ssrcItemNotInPackage,               // ÎïÆ·²»ÔÚ±³°üÖÐ¡£
-    ssrcNotEnoughItem,                  // ÐèÒªµÄµÀ¾ß²»×ã
+    ssrcTooFarAway,                     // ï¿½ï¿½ï¿½ï¿½Ì«Ô¶ï¿½ï¿½
+    ssrcNotEnoughMoney,                 // ï¿½ï¿½Ç®ï¿½ï¿½ï¿½ï¿½
+    ssrcNotEnoughPrestige,              // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    ssrcNotEnoughContribution,          // ï¿½ï¿½ï¿½×µï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    ssrcAchievementRecordError,         // ï¿½ï¿½Ï·ï¿½ï¿½É¶È²ï¿½ï¿½ï¿½
+    ssrcNotEnoughAchievementPoint,      // ï¿½É¾Íµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    ssrcNotEnoughRepate,                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    ssrcNotEnoughRank,                  // ï¿½ÆºÅ²ï¿½ï¿½ï¿½Òªï¿½ï¿½
+    ssrcItemSoldOut,                    // ï¿½Ìµï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    ssrcBagFull,                        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    ssrcItemExistLimit,                 // ï¿½ï¿½Æ·Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    ssrcItemNotNeedRepair,              // ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    ssrcNoneItemNeedRepair,             // Ã»ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    ssrcCanNotSell,                     // ï¿½ï¿½ï¿½Ü³ï¿½ï¿½Û¸Ä¸ï¿½ï¿½ï¿½Æ·
+    ssrcItemHadLimit,                   // ï¿½ï¿½Æ·Óµï¿½Ð´ïµ½ï¿½ï¿½ï¿½ï¿½
+    ssrcItemModifiedWhileBuy,           // ï¿½ï¿½ï¿½ã·¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ú£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½Ë±ä»¯
+    ssrcYouDeath,                       // ï¿½ï¿½ï¿½ï¿½ï¿½
+    ssrcItemBroken,                     // ï¿½ï¿½ï¿½ï¿½Æ·ï¿½Í¾Ã¶ï¿½Ì«ï¿½Í£ï¿½ï¿½Þ·ï¿½ï¿½ï¿½ï¿½Û¡ï¿½
+    ssrcItemNotInPackage,               // ï¿½ï¿½Æ·ï¿½ï¿½ï¿½Ú±ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½
+    ssrcNotEnoughItem,                  // ï¿½ï¿½Òªï¿½Äµï¿½ï¿½ß²ï¿½ï¿½ï¿½
 
     ssrcTotal
 };
@@ -323,21 +324,21 @@ enum TRADING_RESULT_CODE
     trcFailed,                  
 
     trcInvalidTarget,
-    trcInvalidInvite,           // ½»Ò×ÑûÇëÒÑ¹ýÆÚ
-    trcRefuseInvite,            // Ä¿±ê¾Ü¾øÑûÇë
-    trcTargetNotInGame,         // ÑûÇëµÄÄ¿±ê²»ÔÚÓÎÏ·ÖÐ
-    trcTargetBusy,              // Ä¿±êÕýÔÚÃ¦
-    trcYouBusy,                 // ÄãÕýÔÚÃ¦±ðµÄÊÂÇé
-    trcTooFar,                  // ¾àÀëÌ«Ô¶ÁË
-    trcTradingCancel,           // ½»Ò×È¡Ïû
-    trcTradingCanceled,         // ½»Ò×±»È¡Ïû
-    trcItemBeBound,             // ÎïÆ·ÒÑ°ó¶¨
-    trcNotEnoughMoney,          // Ã»ÓÐ×ã¹»µÄ½ðÇ®
-    trcNotEnoughFreeRoom,       // Ã»ÓÐ×ã¹»µÄ¿Õ¼ä    
-    trcItemExistAmountLimit,    // ÎïÆ·ÓµÓÐ³¬¹ýÉÏÏÞ
-    trcYouDead,                 // Íæ¼ÒÒÑ¾­ËÀÍö
-    trcItemNotInPackage,        // Ö»ÓÐ±³°üÄÚµÄÎïÆ·¿ÉÒÔ½»Ò×
-    trcTargetDead,              // Ä¿±êÒÑ¾­ËÀÍö
+    trcInvalidInvite,           // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½
+    trcRefuseInvite,            // Ä¿ï¿½ï¿½Ü¾ï¿½ï¿½ï¿½ï¿½ï¿½
+    trcTargetNotInGame,         // ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ê²»ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½
+    trcTargetBusy,              // Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¦
+    trcYouBusy,                 // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    trcTooFar,                  // ï¿½ï¿½ï¿½ï¿½Ì«Ô¶ï¿½ï¿½
+    trcTradingCancel,           // ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½
+    trcTradingCanceled,         // ï¿½ï¿½ï¿½×±ï¿½È¡ï¿½ï¿½
+    trcItemBeBound,             // ï¿½ï¿½Æ·ï¿½Ñ°ï¿½
+    trcNotEnoughMoney,          // Ã»ï¿½ï¿½ï¿½ã¹»ï¿½Ä½ï¿½Ç®
+    trcNotEnoughFreeRoom,       // Ã»ï¿½ï¿½ï¿½ã¹»ï¿½Ä¿Õ¼ï¿½    
+    trcItemExistAmountLimit,    // ï¿½ï¿½Æ·Óµï¿½Ð³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    trcYouDead,                 // ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½
+    trcItemNotInPackage,        // Ö»ï¿½Ð±ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½
+    trcTargetDead,              // Ä¿ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½
 
     trcTotal
 };
@@ -346,28 +347,28 @@ enum CRAFT_RESULT_CODE
 {
 	crcInvalid = 0,
 
-	crcSuccess,                 // ³É¹¦
-	crcFailed,                  // Ê§°Ü£¬Î´¶¨ÒåÔ­Òò
+	crcSuccess,                 // ï¿½É¹ï¿½
+	crcFailed,                  // Ê§ï¿½Ü£ï¿½Î´ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½
 
-	crcNotEnoughStamina,	    // ¾«Á¦²»×ã
-	crcNotEnoughThew,	        // ÌåÁ¦²»×ã
-    crcNotEnoughItem,		    // µÀ¾ß²»×ã
-	crcSkillNotReady,		    // ¼¼ÄÜCDÊ±¼äÎ´µ½
-	crcWeaponError,             // ÎäÆ÷²»Æ¥Åä
-	crcTooLowProfessionLevel,   // Éú»î¼¼ÄÜµÈ¼¶Ì«µÍ
-    crcTooLowExtProfessionLevel,// À©Õ¹Éú»î¼¼ÄÜµÈ¼¶Ì«µÍ
-	crcAddItemFailed,			// Ìí¼ÓµÀ¾ßÊ§°Ü
-	crcInventoryIsFull,		    // ±³°üÒÑÂú
-	crcProfessionNotLearned,    // ¼¼ÄÜÎ´Ñ§Ï°
-    crcExtProfessionNotLearned, // À©Õ¹¼¼ÄÜÎ´Ñ§Ï°
-	crcErrorTool,			    // Ã»ÓÐÏà¹Ø¹¤¾ß
-	crcBookIsAlreadyMemorized,	// Êé¼®ÒÑ¾­±»¼ÇÒäÁË
-	crcRequireDoodad,			// ÐèÇóÖÜÎ§ÓÐ¹¤×÷ÓÃµÄDoodad
-    crcItemTypeError,           // Ä¿±êÎïÆ·ÀàÐÍ²»¶Ô
-    crcBookCannotBeCopy,        // ¸ÃÊé²»ÄÜ±»³­Â¼
-    crcDoingOTAction,           // ÕýÔÚ×öÆäËûµÄ¶¯×÷
-    crcMoveStateError,          // µ±Ç°×´Ì¬ÎÞ·¨×öÕâ¸ö²Ù×÷
-    crcTooLowLevel,             // Íæ¼ÒµÈ¼¶Ì«µÍ
+	crcNotEnoughStamina,	    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	crcNotEnoughThew,	        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    crcNotEnoughItem,		    // ï¿½ï¿½ï¿½ß²ï¿½ï¿½ï¿½
+	crcSkillNotReady,		    // ï¿½ï¿½ï¿½ï¿½CDÊ±ï¿½ï¿½Î´ï¿½ï¿½
+	crcWeaponError,             // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½
+	crcTooLowProfessionLevel,   // ï¿½ï¿½ï¿½î¼¼ï¿½ÜµÈ¼ï¿½Ì«ï¿½ï¿½
+    crcTooLowExtProfessionLevel,// ï¿½ï¿½Õ¹ï¿½ï¿½ï¿½î¼¼ï¿½ÜµÈ¼ï¿½Ì«ï¿½ï¿½
+	crcAddItemFailed,			// ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½Ê§ï¿½ï¿½
+	crcInventoryIsFull,		    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	crcProfessionNotLearned,    // ï¿½ï¿½ï¿½ï¿½Î´Ñ§Ï°
+    crcExtProfessionNotLearned, // ï¿½ï¿½Õ¹ï¿½ï¿½ï¿½ï¿½Î´Ñ§Ï°
+	crcErrorTool,			    // Ã»ï¿½ï¿½ï¿½ï¿½Ø¹ï¿½ï¿½ï¿½
+	crcBookIsAlreadyMemorized,	// ï¿½é¼®ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	crcRequireDoodad,			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î§ï¿½Ð¹ï¿½ï¿½ï¿½ï¿½Ãµï¿½Doodad
+    crcItemTypeError,           // Ä¿ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½Í²ï¿½ï¿½ï¿½
+    crcBookCannotBeCopy,        // ï¿½ï¿½ï¿½é²»ï¿½Ü±ï¿½ï¿½ï¿½Â¼
+    crcDoingOTAction,           // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½
+    crcMoveStateError,          // ï¿½ï¿½Ç°×´Ì¬ï¿½Þ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    crcTooLowLevel,             // ï¿½ï¿½ÒµÈ¼ï¿½Ì«ï¿½ï¿½
 
 	crcTotal
 };
@@ -376,36 +377,36 @@ enum PLAYER_FELLOWSHIP_RESPOND_CODE
 {
     rrcInvalid = 0,
 
-    rrcSuccess,                 // ³É¹¦¡£
+    rrcSuccess,                 // ï¿½É¹ï¿½ï¿½ï¿½
 
-    rrcSuccessAdd,              // Ìí¼Ó¹ØÏµ³É¹¦
+    rrcSuccessAdd,              // ï¿½ï¿½ï¿½Ó¹ï¿½Ïµï¿½É¹ï¿½
     rrcSuccessAddFoe, 
     rrcSuccessAddBlackList, 
 
-    rrcFailed,                  // Ê§°Ü£¬Î´¶¨Òå¡£
+    rrcFailed,                  // Ê§ï¿½Ü£ï¿½Î´ï¿½ï¿½ï¿½å¡£
 
-    rrcInvalidName,             // ÎÞÐ§µÄÍæ¼ÒÃû×Ö¡£
-    rrcAddSelf,                 // Ìí¼Ó×Ô¼ºÎªºÃÓÑ
-    rrcFellowshipListFull,      // ºÃÓÑÁÐ±íÒÑÂú¡£
-    rrcFoeListFull,             // ³ðÈËÁÐ±íÒÑÂú¡£
-    rrcBlackListFull,           // ºÚÃûµ¥ÁÐ±íÒÑÂú¡£
-    rrcFellowshipExists,        // Ö¸¶¨µÄºÃÓÑÒÑ¾­´æÔÚ¡£
+    rrcInvalidName,             // ï¿½ï¿½Ð§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¡ï¿½
+    rrcAddSelf,                 // ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½Îªï¿½ï¿½ï¿½ï¿½
+    rrcFellowshipListFull,      // ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    rrcFoeListFull,             // ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    rrcBlackListFull,           // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    rrcFellowshipExists,        // Ö¸ï¿½ï¿½ï¿½Äºï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½Ú¡ï¿½
     rrcFoeExists, 
     rrcBlackListExists, 
-    rrcFellowshipNotFound,      // Ö¸¶¨µÄºÃÓÑ²»´æÔÚ¡£
+    rrcFellowshipNotFound,      // Ö¸ï¿½ï¿½ï¿½Äºï¿½ï¿½Ñ²ï¿½ï¿½ï¿½ï¿½Ú¡ï¿½
     rrcFoeNotFound, 
     rrcBlackListNotFound,
 
-    rrcInvalidGroupName,        // ÎÞÐ§µÄ·Ö×éÃû×Ö¡£
-    rrcInvalidRemark,           // ÎÞÐ§µÄ±¸×¢¡£
-    rrcFellowshipGroupFull,     // ºÃÓÑ·Ö×éÒÑÂú¡£
-    rrcFellowshipGroupNotFound, // Ö¸¶¨µÄ×é²»´æÔÚ¡£
+    rrcInvalidGroupName,        // ï¿½ï¿½Ð§ï¿½Ä·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¡ï¿½
+    rrcInvalidRemark,           // ï¿½ï¿½Ð§ï¿½Ä±ï¿½×¢ï¿½ï¿½
+    rrcFellowshipGroupFull,     // ï¿½ï¿½ï¿½Ñ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    rrcFellowshipGroupNotFound, // Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½é²»ï¿½ï¿½ï¿½Ú¡ï¿½
 
-    rrcInFight,                 // Õ½¶·×´Ì¬²»ÄÜ²Ù×÷³ðÈË¡£
+    rrcInFight,                 // Õ½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½Ü²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¡ï¿½
 
-    rrcBeAddFriend,             // ±»¼ÓÈëºÃÓÑ
-    rrcBeAddFoe,                // ±»¼ÓÈë³ðÈË
-    rrcBeAddBlackList,          // ±»¼ÓÈëºÚÃûµ¥
+    rrcBeAddFriend,             // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    rrcBeAddFoe,                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    rrcBeAddBlackList,          // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     rrcTotal
 };
@@ -414,10 +415,10 @@ enum PEEK_OTHER_PLAYER_RESPOND_CODE
 {
     prcInvalid = 0,
 
-    prcSuccess,                 // ³É¹¦
-    prcFailed,                  // Ê§°Ü£¬Î´¶¨Òå´íÎó
-    prcCanNotFindPlayer,        // Ê§°Ü£¬ÕÒ²»µ½Ö¸¶¨Íæ¼Ò
-    prcTooFar,                  // ¾àÀëÌ«Ô¶
+    prcSuccess,                 // ï¿½É¹ï¿½
+    prcFailed,                  // Ê§ï¿½Ü£ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    prcCanNotFindPlayer,        // Ê§ï¿½Ü£ï¿½ï¿½Ò²ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½
+    prcTooFar,                  // ï¿½ï¿½ï¿½ï¿½Ì«Ô¶
 
     prcTotal
 };
@@ -426,16 +427,16 @@ enum PK_RESULT_CODE
 {
 	pkrcInvalid = 0,
 
-	pkrcSuccess,				// ³É¹¦
-	pkrcFailed,					// Î´Öª´íÎó
+	pkrcSuccess,				// ï¿½É¹ï¿½
+	pkrcFailed,					// Î´Öªï¿½ï¿½ï¿½ï¿½
 
 	pkrcApplyDuelFailed,
     pkrcTargetIsDueling,
-    pkrcInSameTeam,            // ÔÚÍ¬Ò»¸ö¶ÓÎéÀïÃæ²»ÄÜPK
-    pkrcOutofRange,             // ²»ÔÚ¾àÀë·¶Î§ÄÚ
+    pkrcInSameTeam,            // ï¿½ï¿½Í¬Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ²»ï¿½ï¿½PK
+    pkrcOutofRange,             // ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½ë·¶Î§ï¿½ï¿½
 	pkrcApplySlayFailed,
-    pkrcLevelTooLow,            // ¼¶±ðÌ«µÍ
-    pkrcPKNotReady,             // CDÖÐ
+    pkrcLevelTooLow,            // ï¿½ï¿½ï¿½ï¿½Ì«ï¿½ï¿½
+    pkrcPKNotReady,             // CDï¿½ï¿½
 
 	pkrcTotal
 };

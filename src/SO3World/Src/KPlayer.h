@@ -1354,7 +1354,15 @@ public:
     int LuaRemoveDesignationPrefix(Lua_State* L);
     int LuaRemoveDesignationPostfix(Lua_State* L);
     int LuaSetGeneration(Lua_State* L);
-	
+
+    // v2.5 NEW designation bindings
+    int LuaEquipDesignationPrefix(Lua_State* L);
+    int LuaEquipDesignationPostfix(Lua_State* L);
+    int LuaUnEquipDesignationPrefix(Lua_State* L);
+    int LuaUnEquipDesignationPostfix(Lua_State* L);
+    int LuaGetDesignationPrefixEndTime(Lua_State* L);
+    int LuaGetDesignationPostfixEndTime(Lua_State* L);
+    int LuaSetDesignationBynameDisplayFlag(Lua_State* L);
 #endif
 
 	int LuaGetAcquiredDesignationCount(Lua_State* L);
@@ -1364,6 +1372,7 @@ public:
     int LuaGetDesignationGeneration(Lua_State* L);
     int LuaGetDesignationByname(Lua_State* L);
     int LuaGetDesignationDisplayFlag(Lua_State* L);
+    int LuaGetDesignationBynameDisplayFlag(Lua_State* L);  // v2.5 rename (old kept as alias)
 
 #ifdef _CLIENT
     int LuaGetCurrentDesignation(Lua_State* L);

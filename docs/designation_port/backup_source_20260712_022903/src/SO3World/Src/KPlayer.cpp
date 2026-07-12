@@ -681,10 +681,6 @@ BOOL KPlayer::Activate(void)
     if ((g_pSO3World->m_nGameLoop - m_dwID) % (GAME_FPS * 10) == 0)
     {
         SyncFormationCoefficient();
-
-        // v2.5: prune expired timed designations (low-frequency; a no-op while no
-        // timed designation is granted, which is the case with the current .tab data).
-        m_Designation.Activate();
     }
 #endif //_SERVER
 

@@ -10510,124 +10510,6 @@ int KPlayer::LuaGetDesignationDisplayFlag(Lua_State* L)
     return 1;
 }
 
-// v2.5 rename of GetDesignationDisplayFlag. Both names kept: new for v2.5 scripts,
-// old registered as an alias so existing 2010 content does not break.
-int KPlayer::LuaGetDesignationBynameDisplayFlag(Lua_State* L)
-{
-    Lua_PushBoolean(L, m_Designation.m_bBynameDisplay);
-
-    return 1;
-}
-
-#ifdef _SERVER
-// v2.5 NEW: equip/unequip prefix & postfix (own vs wear), byname-display toggle, end-time query.
-int KPlayer::LuaEquipDesignationPrefix(Lua_State* L)
-{
-    BOOL bRetCode   = false;
-    int  nPrefix    = 0;
-    int  nTopIndex  = Lua_GetTopIndex(L);
-
-    KGLOG_PROCESS_ERROR(nTopIndex == 1);
-    nPrefix = (int)Lua_ValueToNumber(L, 1);
-
-    KGLOG_PROCESS_ERROR(nPrefix != 0);
-
-    bRetCode = m_Designation.EquipPrefix(nPrefix);
-    KGLOG_PROCESS_ERROR(bRetCode);
-
-Exit0:
-    return 0;
-}
-
-int KPlayer::LuaEquipDesignationPostfix(Lua_State* L)
-{
-    BOOL bRetCode   = false;
-    int  nPostfix   = 0;
-    int  nTopIndex  = Lua_GetTopIndex(L);
-
-    KGLOG_PROCESS_ERROR(nTopIndex == 1);
-    nPostfix = (int)Lua_ValueToNumber(L, 1);
-
-    KGLOG_PROCESS_ERROR(nPostfix != 0);
-
-    bRetCode = m_Designation.EquipPostfix(nPostfix);
-    KGLOG_PROCESS_ERROR(bRetCode);
-
-Exit0:
-    return 0;
-}
-
-int KPlayer::LuaUnEquipDesignationPrefix(Lua_State* L)
-{
-    m_Designation.UnEquipPrefix();
-
-    return 0;
-}
-
-int KPlayer::LuaUnEquipDesignationPostfix(Lua_State* L)
-{
-    m_Designation.UnEquipPostfix();
-
-    return 0;
-}
-
-int KPlayer::LuaGetDesignationPrefixEndTime(Lua_State* L)
-{
-    BOOL bRetCode   = false;
-    int  nPrefix    = 0;
-    int  nEndTime   = 0;
-    int  nTopIndex  = Lua_GetTopIndex(L);
-
-    KGLOG_PROCESS_ERROR(nTopIndex == 1);
-    nPrefix = (int)Lua_ValueToNumber(L, 1);
-
-    bRetCode = m_Designation.GetPrefixEndTime(nPrefix, &nEndTime);
-    KGLOG_PROCESS_ERROR(bRetCode);
-
-    Lua_PushNumber(L, nEndTime);
-    return 1;
-
-Exit0:
-    return 0;   // not acquired -> nil
-}
-
-int KPlayer::LuaGetDesignationPostfixEndTime(Lua_State* L)
-{
-    BOOL bRetCode   = false;
-    int  nPostfix   = 0;
-    int  nEndTime   = 0;
-    int  nTopIndex  = Lua_GetTopIndex(L);
-
-    KGLOG_PROCESS_ERROR(nTopIndex == 1);
-    nPostfix = (int)Lua_ValueToNumber(L, 1);
-
-    bRetCode = m_Designation.GetPostfixEndTime(nPostfix, &nEndTime);
-    KGLOG_PROCESS_ERROR(bRetCode);
-
-    Lua_PushNumber(L, nEndTime);
-    return 1;
-
-Exit0:
-    return 0;   // not acquired -> nil
-}
-
-int KPlayer::LuaSetDesignationBynameDisplayFlag(Lua_State* L)
-{
-    BOOL bRetCode   = false;
-    int  nFlag      = 0;
-    int  nTopIndex  = Lua_GetTopIndex(L);
-
-    KGLOG_PROCESS_ERROR(nTopIndex == 1);
-    nFlag = (int)Lua_ValueToNumber(L, 1);
-
-    bRetCode = m_Designation.SetBynameDisplayFlag(nFlag);
-    KGLOG_PROCESS_ERROR(bRetCode);
-
-Exit0:
-    return 0;
-}
-#endif // _SERVER
-
 int KPlayer::LuaGetAcquiredDesignationCount(Lua_State* L)
 {
 	int nCount = 0;
@@ -12084,15 +11966,6 @@ DEFINE_LUA_CLASS_BEGIN(KPlayer)
     REGISTER_LUA_FUNC(KPlayer, RemoveDesignationPrefix)
     REGISTER_LUA_FUNC(KPlayer, RemoveDesignationPostfix)
     REGISTER_LUA_FUNC(KPlayer, SetGeneration)
-
-    // v2.5 NEW designation bindings
-    REGISTER_LUA_FUNC(KPlayer, EquipDesignationPrefix)
-    REGISTER_LUA_FUNC(KPlayer, EquipDesignationPostfix)
-    REGISTER_LUA_FUNC(KPlayer, UnEquipDesignationPrefix)
-    REGISTER_LUA_FUNC(KPlayer, UnEquipDesignationPostfix)
-    REGISTER_LUA_FUNC(KPlayer, GetDesignationPrefixEndTime)
-    REGISTER_LUA_FUNC(KPlayer, GetDesignationPostfixEndTime)
-    REGISTER_LUA_FUNC(KPlayer, SetDesignationBynameDisplayFlag)
 #endif
 
     REGISTER_LUA_FUNC(KPlayer, GetAcquiredDesignationCount)
@@ -12102,7 +11975,6 @@ DEFINE_LUA_CLASS_BEGIN(KPlayer)
     REGISTER_LUA_FUNC(KPlayer, GetDesignationGeneration)
     REGISTER_LUA_FUNC(KPlayer, GetDesignationByname)
     REGISTER_LUA_FUNC(KPlayer, GetDesignationDisplayFlag)
-    REGISTER_LUA_FUNC(KPlayer, GetDesignationBynameDisplayFlag)  // v2.5 rename (alias)
 
 #ifdef _CLIENT
     REGISTER_LUA_FUNC(KPlayer, GetCurrentDesignation)
