@@ -45,7 +45,6 @@
 #include "../../Source/Common/SO3World/Src/KGlobalSystemValueCache.h"
 #include "../../Source/Common/SO3World/Src/KTeamServer.h"
 #include "../../Source/Common/SO3World/Src/KStatDataServer.h"
-#include "../../Source/Common/SO3World/Src/KRankListServer.h"
 #include "../../Source/Common/SO3World/Src/KApexClient.h"
 #include "../../Source/Common/SO3World/Src/KGameCardClient.h"
 #include "../../Source/Common/SO3World/Src/KMailClient.h"
@@ -224,7 +223,6 @@ public:
     KTransmissionList                   m_TransmissionList;
     KGlobalSystemValueCache             m_GlobalSystemValueCache;
     KStatDataServer                     m_StatDataServer;
-    KRankListServer                     m_RankListServer;   // v2.5 NEW: single-dungeon score leaderboard
 #endif
 
 #ifdef _CLIENT

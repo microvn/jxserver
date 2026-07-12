@@ -10626,21 +10626,6 @@ int KPlayer::LuaSetDesignationBynameDisplayFlag(Lua_State* L)
 Exit0:
     return 0;
 }
-
-// v2.5 (v246 08314218): push the calling player's single-dungeon rank in their own force
-// (0 = not ranked / invalid force). Force 9 (丐帮) is unplayable in this build -> never ranked.
-int KPlayer::LuaGetSingleDungeonScoreRankPos(Lua_State* L)
-{
-    int nPos = 0;
-
-    if (m_dwForceID > 0 && m_dwForceID <= PLAYER_FORCE_MAX_COUNT)
-    {
-        nPos = g_pSO3World->m_RankListServer.GetSingleDungeonRankListPos(m_dwForceID, m_dwID);
-    }
-
-    Lua_PushNumber(L, nPos);
-    return 1;
-}
 #endif // _SERVER
 
 int KPlayer::LuaGetAcquiredDesignationCount(Lua_State* L)
@@ -12108,9 +12093,6 @@ DEFINE_LUA_CLASS_BEGIN(KPlayer)
     REGISTER_LUA_FUNC(KPlayer, GetDesignationPrefixEndTime)
     REGISTER_LUA_FUNC(KPlayer, GetDesignationPostfixEndTime)
     REGISTER_LUA_FUNC(KPlayer, SetDesignationBynameDisplayFlag)
-
-    // v2.5 NEW: single-dungeon score rank query
-    REGISTER_LUA_FUNC(KPlayer, GetSingleDungeonScoreRankPos)
 #endif
 
     REGISTER_LUA_FUNC(KPlayer, GetAcquiredDesignationCount)

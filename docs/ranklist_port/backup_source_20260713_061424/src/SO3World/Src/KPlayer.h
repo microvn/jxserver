@@ -1363,9 +1363,6 @@ public:
     int LuaGetDesignationPrefixEndTime(Lua_State* L);
     int LuaGetDesignationPostfixEndTime(Lua_State* L);
     int LuaSetDesignationBynameDisplayFlag(Lua_State* L);
-
-    // v2.5 NEW: query the calling player's single-dungeon score rank within their force.
-    int LuaGetSingleDungeonScoreRankPos(Lua_State* L);
 #endif
 
 	int LuaGetAcquiredDesignationCount(Lua_State* L);

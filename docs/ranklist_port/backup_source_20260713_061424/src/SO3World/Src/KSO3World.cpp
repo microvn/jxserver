@@ -260,11 +260,6 @@ BOOL KSO3World::Init(IRecorderFactory* piFactory)
     bRetCode = m_StatDataServer.Init();
     KGLOG_PROCESS_ERROR(bRetCode);
     bStatDataServerInitFlag = true;
-
-    // v2.5 NEW: single-dungeon score leaderboard. Init is infallible (memset only) and last
-    // in the chain, so no rollback flag is needed; UnInit runs from KSO3World::UnInit.
-    bRetCode = m_RankListServer.Init();
-    KGLOG_PROCESS_ERROR(bRetCode);
 #endif
 
     m_NpcSet.SetPrefix(NPC_ID_PREFIX);
@@ -465,7 +460,6 @@ void KSO3World::UnInit(void)
         m_nPlayerTalkLogFileDay = 0;
     }
 
-    m_RankListServer.UnInit();
     m_StatDataServer.UnInit();
     m_TransmissionList.UnInit();
 #endif
