@@ -10995,6 +10995,40 @@ Exit0:
     return 1;
 }
 #endif
+
+#ifdef _SERVER
+// Mini-avatar (小玩伴): expose the per-player box object + a guarded "wear" setter.
+int KPlayer::LuaGetMiniAvatarMgr(Lua_State* L)
+{
+    int nResult   = 0;
+    int nTopIndex = 0;
+    nTopIndex = Lua_GetTopIndex(L);
+    KGLOG_PROCESS_ERROR(nTopIndex == 0);
+    nResult = m_MiniAvatar.LuaGetObj(L);
+Exit0:
+    return nResult;
+}
+
+int KPlayer::LuaSetMiniAvatar(Lua_State* L)
+{
+    int   bResult   = false;
+    int   nTopIndex = 0;
+    DWORD dwID      = 0;
+    nTopIndex = Lua_GetTopIndex(L);
+    KGLOG_PROCESS_ERROR(nTopIndex == 1);
+    dwID = (DWORD)Lua_ValueToNumber(L, 1);
+    if (dwID != 0)
+    {
+        KGLOG_PROCESS_ERROR(dwID <= 0xFFFF);
+        KGLOG_PROCESS_ERROR(m_MiniAvatar.IsAcquired(dwID));   // must own it to wear it
+    }
+    m_dwMiniAvatarID = dwID;
+    bResult = true;
+Exit0:
+    Lua_PushBoolean(L, bResult);
+    return 1;
+}
+#endif
 //////////////////////////////////////////////////////////////////////////
 
 DEFINE_LUA_CLASS_BEGIN(KPlayer)
@@ -11366,6 +11400,10 @@ DEFINE_LUA_CLASS_BEGIN(KPlayer)
 
 	REGISTER_LUA_FUNC(KPlayer, GetItem)
 	REGISTER_LUA_FUNC(KPlayer, DelItem)
+#ifdef _SERVER
+	REGISTER_LUA_FUNC(KPlayer, GetMiniAvatarMgr)
+	REGISTER_LUA_FUNC(KPlayer, SetMiniAvatar)
+#endif
 	REGISTER_LUA_FUNC(KPlayer, GetItemByIndex)
 	REGISTER_LUA_FUNC(KPlayer, GetEquipItem)
 	REGISTER_LUA_FUNC(KPlayer, GetEquipSetItemCount)

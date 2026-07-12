@@ -31,6 +31,7 @@
 #include "KDesignationList.h"
 #include "KExterior.h"
 #include "KHairShop.h"
+#include "KMiniAvatarSettings.h"
 #ifdef _CLIENT
 #include "../../Source/Common/SO3World/Src/KGameCardInfoList.h"
 #else
@@ -109,6 +110,7 @@ public:
 
     KExterior           m_Exterior;
     KHairShop           m_HairShop;
+    KMiniAvatarSettings m_MiniAvatarSettings;
 
     KGameCardInfoList   m_GameCardInfoList;
 };

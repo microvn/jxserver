@@ -39,7 +39,6 @@ enum ROLE_DATA_BLOCK_TYPE
     rbtMentorData,
     rbtExteriorData,
     rbtHairBoxData,
-    rbtMiniAvatarData,
 
 	rbtTotal
 };

@@ -33,6 +33,7 @@
 #include "KDesignation.h"
 #include "KExteriorBox.h"
 #include "KHairBox.h"
+#include "KMiniAvatar.h"
 #include "KProbability.h"
 
 #ifdef _SERVER
@@ -311,6 +312,8 @@ public:
 
     KExteriorBox        m_ExteriorBox;          // exterior (wai-guan) wardrobe
     KHairBox            m_HairBox;              // hair (fa-xing) inventory
+    KMiniAvatar         m_MiniAvatar;           // mini-avatar (xiao-wan-ban) collection
+    DWORD               m_dwMiniAvatarID;       // currently worn mini-avatar id (0 = none)
     DWORD               m_dwApplyExteriorFlag;  // bit0-4 = per-slot applied; bit0x80 = master apply-on
 
     // ������������ID
@@ -895,6 +898,8 @@ public:
     
 	int LuaGetItem(Lua_State* L);
 	int LuaDelItem(Lua_State* L);
+	int LuaGetMiniAvatarMgr(Lua_State* L);      // push m_MiniAvatar box userdata
+	int LuaSetMiniAvatar(Lua_State* L);         // wear an owned mini-avatar (guarded)
 
 	int LuaGetItemByIndex(Lua_State* L);
 	int LuaGetEquipItem(Lua_State* L);

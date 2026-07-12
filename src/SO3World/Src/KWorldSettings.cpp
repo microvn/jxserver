@@ -121,6 +121,9 @@ BOOL KWorldSettings::Init(void)
     bRetCode = m_HairShop.Init();
     KGLOG_PROCESS_ERROR(bRetCode);
 
+    bRetCode = m_MiniAvatarSettings.Init();
+    KGLOG_PROCESS_ERROR(bRetCode);
+
     bRetCode = m_GameCardInfoList.Init();
     //KGLOG_PROCESS_ERROR(bRetCode);
     //bGameCardInfoListInitFlag = true;
