@@ -153,6 +153,9 @@ BOOL KPlayer::Init(void)
     KGLOG_PROCESS_ERROR(bRetCode);
     m_dwMiniAvatarID = 0;
 
+    bRetCode = m_RegressionData.Init(this);
+    KGLOG_PROCESS_ERROR(bRetCode);
+
 	m_eKind                 = ckPlayer;
 
     memset(&m_MoveCtrl, 0, sizeof(m_MoveCtrl));
@@ -2051,6 +2054,11 @@ BOOL KPlayer::LoadExtRoleData(BYTE* pbyData, size_t uDataLen)
             KGLOG_PROCESS_ERROR(bRetCode);
             break;
 
+        case rbtRegressionData:
+            bRetCode = m_RegressionData.Load(pbyOffset, pBlock->dwLen);
+            KGLOG_PROCESS_ERROR(bRetCode);
+            break;
+
         case rbtRandData:
             bRetCode = LoadRandData(pbyOffset, pBlock->dwLen);
             KGLOG_PROCESS_ERROR(bRetCode);
@@ -2373,6 +2381,7 @@ BOOL KPlayer::Save(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize)
     SAVE_ROLE_BLOCK(m_ExteriorBox.Save, rbtExteriorData, 0);
     SAVE_ROLE_BLOCK(m_HairBox.Save, rbtHairBoxData, 0);
     SAVE_ROLE_BLOCK(m_MiniAvatar.Save, rbtMiniAvatarData, 0);
+    SAVE_ROLE_BLOCK(m_RegressionData.Save, rbtRegressionData, 0);
     SAVE_ROLE_BLOCK(m_AntiFarmer.Save, rbtAntiFarmerData, 0);
     SAVE_ROLE_BLOCK(SaveMentorData, rbtMentorData, 0);
 

@@ -11028,6 +11028,25 @@ Exit0:
     Lua_PushBoolean(L, bResult);
     return 1;
 }
+
+// Returning-player (回归) read getters. Compute/claim deferred (see docs/regression_port).
+int KPlayer::LuaGetRegressionGradeID(Lua_State* L)
+{
+    int nTopIndex = Lua_GetTopIndex(L);
+    KGLOG_PROCESS_ERROR(nTopIndex == 0);
+    Lua_PushNumber(L, (double)m_RegressionData.GetGradeID());
+Exit0:
+    return 1;
+}
+
+int KPlayer::LuaGetRegressionDailyCount(Lua_State* L)
+{
+    int nTopIndex = Lua_GetTopIndex(L);
+    KGLOG_PROCESS_ERROR(nTopIndex == 0);
+    Lua_PushNumber(L, (double)m_RegressionData.GetDailyCount());
+Exit0:
+    return 1;
+}
 #endif
 //////////////////////////////////////////////////////////////////////////
 
@@ -11403,6 +11422,8 @@ DEFINE_LUA_CLASS_BEGIN(KPlayer)
 #ifdef _SERVER
 	REGISTER_LUA_FUNC(KPlayer, GetMiniAvatarMgr)
 	REGISTER_LUA_FUNC(KPlayer, SetMiniAvatar)
+	REGISTER_LUA_FUNC(KPlayer, GetRegressionGradeID)
+	REGISTER_LUA_FUNC(KPlayer, GetRegressionDailyCount)
 #endif
 	REGISTER_LUA_FUNC(KPlayer, GetItemByIndex)
 	REGISTER_LUA_FUNC(KPlayer, GetEquipItem)

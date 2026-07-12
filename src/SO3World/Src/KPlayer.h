@@ -34,6 +34,7 @@
 #include "KExteriorBox.h"
 #include "KHairBox.h"
 #include "KMiniAvatar.h"
+#include "KRegressionPlayerData.h"
 #include "KProbability.h"
 
 #ifdef _SERVER
@@ -314,6 +315,7 @@ public:
     KHairBox            m_HairBox;              // hair (fa-xing) inventory
     KMiniAvatar         m_MiniAvatar;           // mini-avatar (xiao-wan-ban) collection
     DWORD               m_dwMiniAvatarID;       // currently worn mini-avatar id (0 = none)
+    KRegressionPlayerData m_RegressionData;     // returning-player (hui-gui) state
     DWORD               m_dwApplyExteriorFlag;  // bit0-4 = per-slot applied; bit0x80 = master apply-on
 
     // ������������ID
@@ -900,6 +902,8 @@ public:
 	int LuaDelItem(Lua_State* L);
 	int LuaGetMiniAvatarMgr(Lua_State* L);      // push m_MiniAvatar box userdata
 	int LuaSetMiniAvatar(Lua_State* L);         // wear an owned mini-avatar (guarded)
+	int LuaGetRegressionGradeID(Lua_State* L);  // returning-player current grade
+	int LuaGetRegressionDailyCount(Lua_State* L);
 
 	int LuaGetItemByIndex(Lua_State* L);
 	int LuaGetEquipItem(Lua_State* L);

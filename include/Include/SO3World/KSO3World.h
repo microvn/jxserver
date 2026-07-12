@@ -1,11 +1,11 @@
 /************************************************************************/
-/* ½£ÈýÓÎÏ·ÊÀ½ç							                                */
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½							                                */
 /* Copyright : Kingsoft 2004										    */
 /* Author	 : Zhu Jianqiu												*/
 /* History	 :															*/
 /*		2004.12.31	Create												*/
 /* Comment	 :															*/
-/*		°üÀ¨ËùÓÐµÄÈ«¾ÖÊý¾ÝµÄÉùÃ÷£¬ºÍµØÍ¼µÄ¼¯ºÏ							*/
+/*		ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½Ýµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½Í¼ï¿½Ä¼ï¿½ï¿½ï¿½							*/
 /************************************************************************/
 #ifndef _KSO3WORLD_H_
 #define _KSO3WORLD_H_
@@ -27,7 +27,7 @@
 #include "KProfessionManager.h"
 #include "KRoadManager.h"
 #include "KDropCenter.h"
-// ÏÂÃæÈý¸öincludeÔ´×Ô¾ÉµÄObjectManager
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½includeÔ´ï¿½Ô¾Éµï¿½ObjectManager
 #include "../../Source/Common/SO3World/Src/KDoodad.h"
 #include "../../Source/Common/SO3World/Src/KNpc.h"
 #include "KSkillManager.h"
@@ -49,6 +49,7 @@
 #include "../../Source/Common/SO3World/Src/KGameCardClient.h"
 #include "../../Source/Common/SO3World/Src/KMailClient.h"
 #include "../../Source/Common/SO3World/Src/KMentorCache.h"
+#include "../../Source/Common/SO3World/Src/KRegressionManager.h"
 #include "../../Source/Common/SO3World/Src/KMentorClient.h"
 
 class KScene;
@@ -99,12 +100,12 @@ public:
 
 	BOOL DeleteScene(KScene* pScene);
 
-    // dwMapCopyIndexÎª0±íÊ¾ÈÎÒâCopy,Ö»ÒªMapID¶Ô¼´¿É
+    // dwMapCopyIndexÎª0ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Copy,Ö»ÒªMapIDï¿½Ô¼ï¿½ï¿½ï¿½
 	KScene* GetScene(DWORD dwMapID, int nMapCopyIndex);
 
 	KNpc*   NewNpc(DWORD dwNpcID = ERROR_ID);
 	BOOL    DeleteNpc(KNpc* pNpc, BOOL bKilled = false);
-	//ÏòÓÎÏ·ÊÀ½çÄÚÌí¼ÓNpc£¬¸ÃNpcµÄÊý¾Ý±ØÐëÒÑ¾­¹¹½¨Íê³É
+	//ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Npcï¿½ï¿½ï¿½ï¿½Npcï¿½ï¿½ï¿½ï¿½ï¿½Ý±ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	BOOL    AddNpc(KNpc* pNpc, KScene* pScene, int nX, int nY, int nZ);
 	BOOL    RemoveNpc(KNpc* pNpc, BOOL bKilled = false);
 
@@ -128,8 +129,8 @@ public:
 
 public:
 	int									m_nGameLoop;
-    time_t                              m_nBaseTime;    // »ù×¼Ê±¼ä,Ö¸µÚ0Ö¡µÄÊ±¼ä
-    DWORD                               m_dwStartTime;  // ÆðÊ¼Ê±¼ä,Ö¸±¾SubWorld¿ªÊ¼ÔËÐÐµÄÊ±¼ä
+    time_t                              m_nBaseTime;    // ï¿½ï¿½×¼Ê±ï¿½ï¿½,Ö¸ï¿½ï¿½0Ö¡ï¿½ï¿½Ê±ï¿½ï¿½
+    DWORD                               m_dwStartTime;  // ï¿½ï¿½Ê¼Ê±ï¿½ï¿½,Ö¸ï¿½ï¿½SubWorldï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Ðµï¿½Ê±ï¿½ï¿½
     int                                 m_nStartLoop;
 	time_t								m_nCurrentTime;	
     KWORLD_MODE                         m_eWorldMode;
@@ -232,6 +233,7 @@ public:
 
 #ifdef _SERVER
     KMentorCache                        m_MentorCache;
+    KRegressionManager                  m_RegressionManager;
 #else
     KMentorClient                       m_MentorClient;
 #endif
@@ -267,7 +269,7 @@ struct KGetSceneFunc
 	BOOL operator()(DWORD dwID, KScene* pScene);
 	DWORD		m_dwMapID;
 	int		    m_nMapCopyIndex;
-	KScene*		m_pScene; // ·µ»ØÖµ
+	KScene*		m_pScene; // ï¿½ï¿½ï¿½ï¿½Öµ
 };
 
 struct KDeleteSceneFunc

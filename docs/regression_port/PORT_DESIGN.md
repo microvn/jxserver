@@ -43,14 +43,14 @@ LoadRegression: read account 22B then player 46B; tolerate trailing reserved.
 Packet DoSyncRegressionPlayerData(id, gradeID, dailyCount, mark[8]) = **DEFER** (stub no-op).
 
 ## §4 Port order (bé -> to), each slice + verify
-1. **Config structs + constants** (KRegressionManager.h/KRegressionPlayerData.h).
+[x] 1. **Config structs + constants** (KRegressionManager.h/KRegressionPlayerData.h).
    Verify: oracle-mirror static_assert sizeof (0x34,0x28,0x60,0x20,0x1c) + block sizes 22/46.
-2. **Manager helpers** IsWork/IsCrossDays/GetRegressionFinishedTime/GetRewardGradeID/GetRewardInfo/
+[x] 2. **Manager helpers** IsWork/IsCrossDays/GetRegressionFinishedTime/GetRewardGradeID/GetRewardInfo/
    GetRewardItemInfo. Verify: oracle-mirror the arithmetic (dayAlign, grade scan) vs WORKLOG [RE-5].
-3. **Manager LoadConstList/LoadRegressionReward/CheckRegressionReward/Init**.
+[x] 3. **Manager LoadConstList/LoadRegressionReward/CheckRegressionReward/Init**.
    Verify: build + boot -> still "Load game settings ... [OK]" (Init in KSO3World::Init chain; needs
    settings/RegressionReward.tab present, else Init fails -> guard/ship a minimal .tab).
-4. **PlayerData fields + Init + Get* + GetItemMark + Save/LoadRegression**.
+[x] 4. **PlayerData fields + Init + Get* + GetItemMark + Save/LoadRegression**.
    Verify: oracle-mirror Save->Load roundtrip byte-exact (68B block).
 5. **Calculate** + hook in KPlayer login path (reuse m_nLastLoginTime/m_nCurrentLoginTime).
    Verify: build + boot; oracle-mirror the branch table vs [RE-7].

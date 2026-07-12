@@ -40,6 +40,7 @@ enum ROLE_DATA_BLOCK_TYPE
     rbtExteriorData,
     rbtHairBoxData,
     rbtMiniAvatarData,
+    rbtRegressionData,
 
 	rbtTotal
 };

@@ -190,6 +190,9 @@ BOOL KSO3World::Init(IRecorderFactory* piFactory)
 	KGLOG_PROCESS_ERROR(bRetCode);
     bSettingsInitFlag = true;
 
+	bRetCode = m_RegressionManager.Init();
+	KGLOG_PROCESS_ERROR(bRetCode);
+
 	bRetCode = m_ScriptCenter.Init();
 	KGLOG_PROCESS_ERROR(bRetCode);
     bScriptCenterInitFlag = true;
@@ -1038,7 +1041,7 @@ Exit0:
 	return bResult;
 }
 
-BOOL KSO3World::RemoveNpc(KNpc* pNpc, BOOL bKilled /* = false    ÎªÕæ±íÊ¾±»É±²¢ÇÒÉú³ÉÊ¬Ìå,²»Òª½¥ÒþÐ§¹û*/)
+BOOL KSO3World::RemoveNpc(KNpc* pNpc, BOOL bKilled /* = false    Îªï¿½ï¿½ï¿½Ê¾ï¿½ï¿½É±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¬ï¿½ï¿½,ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½*/)
 {
     BOOL bResult  = false;
 	BOOL bRetCode = false;
@@ -1289,7 +1292,7 @@ BOOL KSO3World::DelPlayer(KPlayer* pPlayer)
 	return true;
 }
 
-// ÏòÓÎÏ·ÊÀ½çÖÐÌí¼ÓÒ»¸öÐÂÍæ¼Ò
+// ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 BOOL KSO3World::AddPlayer(KPlayer* pPlayer, KScene* pScene, int nX, int nY, int nZ)
 {
     BOOL bResult  = false;
@@ -1357,7 +1360,7 @@ Exit0:
 
 BOOL KGetSceneFunc::operator()(DWORD dwID, KScene* pScene)
 {
-    // CopyIDÎª0±íÊ¾ÈÎÒâCopy,Ö»ÒªMapID¶Ô¼´¿É
+    // CopyIDÎª0ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Copy,Ö»ÒªMapIDï¿½Ô¼ï¿½ï¿½ï¿½
 	if (pScene->m_dwMapID == m_dwMapID && (pScene->m_nCopyIndex == m_nMapCopyIndex || m_nMapCopyIndex == 0))
 	{
 		m_pScene = pScene;
@@ -1390,7 +1393,7 @@ BOOL KTraversePlayerFunc::operator()(DWORD dwID, KPlayer* pPlayer)
 	switch (pPlayer->m_eGameStatus)
 	{
 	case gsWaitForConnect:
-		// µÈ´ýµÇÂ½µ¹¼ÆÊ±
+		// ï¿½È´ï¿½ï¿½ï¿½Â½ï¿½ï¿½ï¿½ï¿½Ê±
 		if (pPlayer->m_nTimer++ >= LOGIN_TIMEOUT)
         {
             KGLogPrintf(
@@ -1403,7 +1406,7 @@ BOOL KTraversePlayerFunc::operator()(DWORD dwID, KPlayer* pPlayer)
 
 	case gsWaitForPermit:
 	case gsWaitForRoleData:
-		// µÈ´ýµÇÂ½µ¹¼ÆÊ±
+		// ï¿½È´ï¿½ï¿½ï¿½Â½ï¿½ï¿½ï¿½ï¿½Ê±
 		if (pPlayer->m_nTimer++ >= LOGIN_TIMEOUT)
 		{
             KGLogPrintf(
@@ -1419,12 +1422,12 @@ BOOL KTraversePlayerFunc::operator()(DWORD dwID, KPlayer* pPlayer)
         break;
 
 	case gsDeleting:
-		// µôÏßµ¹¼ÆÊ±
+		// ï¿½ï¿½ï¿½ßµï¿½ï¿½ï¿½Ê±
 		if (pPlayer->m_nTimer++ >= LOGOUT_WAITING_TIME || !pPlayer->m_bFightState)
 		{
             pPlayer->SavePosition();
 
-            // ÕâÀïÖ®ËùÒÔµ÷RemovePlayerÊÇÎªÁËÔÚSaveÖ®Ç°´¥·¢Trap(Èç¹ûÓÐµÄ»°),Trap¿ÉÄÜ»áÉæ¼°´æÅÌ½ÇÉ«Êý¾Ý
+            // ï¿½ï¿½ï¿½ï¿½Ö®ï¿½ï¿½ï¿½Ôµï¿½RemovePlayerï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½SaveÖ®Ç°ï¿½ï¿½ï¿½ï¿½Trap(ï¿½ï¿½ï¿½ï¿½ÐµÄ»ï¿½),Trapï¿½ï¿½ï¿½Ü»ï¿½ï¿½æ¼°ï¿½ï¿½ï¿½Ì½ï¿½É«ï¿½ï¿½ï¿½ï¿½
             g_pSO3World->RemovePlayer(pPlayer);
 
 	        g_RelayClient.SaveRoleData(pPlayer);
@@ -1451,7 +1454,7 @@ BOOL KTraversePlayerFunc::operator()(DWORD dwID, KPlayer* pPlayer)
             BOOL bChargeCondition = (
                 (pPlayer->m_nLevel >= rConstList.nFreeMaxLevel) ||
                 (g_pSO3World->m_nCurrentTime >= pPlayer->m_nCreateTime + rConstList.nFreeDurationTime) ||
-                (pPlayer->m_ExtPointInfo.nExtPoint[0] > 0)  // 0ºÅÀ©Õ¹µã±íÊ¾Ô¤³äÖµ
+                (pPlayer->m_ExtPointInfo.nExtPoint[0] > 0)  // 0ï¿½ï¿½ï¿½ï¿½Õ¹ï¿½ï¿½ï¿½Ê¾Ô¤ï¿½ï¿½Öµ
             );
 
             if (bChargeCondition)

@@ -206,3 +206,27 @@ Actual item granting lives in Lua; C++ only invokes + reads bool return. (Buy/gr
     tItemTab={ per item: dwItemType, dwItemIndex, nItemCount, bCanHave, bUsed }, bAllUsed}.
    bCanHave gated by dailyCount and VIP flag (player+0xcc8); bUsed from ItemMark bits;
    dwKungFuID from player current kungfu (player+0x53e8).
+
+## [PORT-1..4] DONE (core) — config + persist + getters
+- KRegressionManager.h/.cpp: 4 config struct (KRewardItem 0x60 pinned), LoadConstList (ini
+  [REGRESSION], StartTime 6-int→mktime), LoadRegressionReward (nested map grade→kungfu→item),
+  CheckRegressionReward, helpers (IsCrossDays/GetRegressionFinishedTime/GetRewardGradeID/GetReward*).
+- KRegressionPlayerData.h/.cpp: fields + Init + GetGradeID/GetDailyCount/GetItemMark + Save/Load
+  (68B block = account 22B + player 46B, gộp 2 v246 chunk).
+- WIRE: KSO3World member m_RegressionManager + Init in KSO3World::Init chain (after m_Settings);
+  KRoleDBDataDef rbtRegressionData; KPlayer embed m_RegressionData + Init + role-block save/load;
+  KLuaPlayer 2 getter (GetRegressionGradeID/DailyCount) + register.
+- VERIFY: oracle layout (KRewardItem 0x60) + Save/Load 68B roundtrip PASS; build **ok=199**;
+  boot **settings-OK** (after fixing a mis-read assert — see below).
+- BUG caught by boot: CheckRegressionReward had `ItemMap.size()<=8` (mis-read from RE) but ItemMap
+  is keyed by KUNGFU and real data has >8 kungfu/grade → dropped that check (8-cap is on daily items,
+  array-bounded, not kungfu count). Boot net earned its keep.
+
+## [S5/S6] DEFERRED (need RE-4 cross-check 2010) — documented, NOT forgotten
+- Calculate (login re-grade) + its hook: needs the 2010 equivalent of KPlayer::OnExtDataLoadFinish
+  (candidates KPlayer.cpp:2076 CallLoginScript / LoadExtRoleData completion) — unconfirmed.
+- AddRewardItem + CallAddRewardItemScript (reward claim → PlayerScript.lua) + nested-UI
+  LuaGetRegressionData: needs VIP flag (v246 player+0xcc8) + current-kungfu accessor 2010.
+- DoSyncRegressionPlayerData packet (client 2.5-only). Stub.
+- COVERAGE: impl 15 / binary 24 → 4 ctor/dtor implicit + 4 folded (Save/Load*Data→Save/Load) +
+  3 deferred (Calculate/AddRewardItem/CallAddRewardItemScript). Forgotten=0.
