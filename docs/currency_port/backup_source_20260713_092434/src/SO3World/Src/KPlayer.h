@@ -35,7 +35,6 @@
 #include "KHairBox.h"
 #include "KMiniAvatar.h"
 #include "KRegressionPlayerData.h"
-#include "KCurrencyList.h"
 #include "KProbability.h"
 
 #ifdef _SERVER
@@ -317,7 +316,6 @@ public:
     KMiniAvatar         m_MiniAvatar;           // mini-avatar (xiao-wan-ban) collection
     DWORD               m_dwMiniAvatarID;       // currently worn mini-avatar id (0 = none)
     KRegressionPlayerData m_RegressionData;     // returning-player (hui-gui) state
-    KCurrencyList       m_CurrencyList;         // v2.5 NEW: capped/periodic currencies
     DWORD               m_dwApplyExteriorFlag;  // bit0-4 = per-slot applied; bit0x80 = master apply-on
 
     // ������������ID

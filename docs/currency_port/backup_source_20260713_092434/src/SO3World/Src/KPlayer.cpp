@@ -142,9 +142,6 @@ BOOL KPlayer::Init(void)
     KGLOG_PROCESS_ERROR(bRetCode);
     bDesignationFlag = true;
 
-    // v2.5 NEW: capped/periodic currencies (infallible init -> no rollback flag).
-    m_CurrencyList.Init(this);
-
     bRetCode = m_ExteriorBox.Init(this);
     KGLOG_PROCESS_ERROR(bRetCode);
     bExteriorBoxFlag = true;
@@ -583,9 +580,8 @@ void KPlayer::UnInit(void)
     m_SkillRecipeList.UnInit();
 
 	m_RecipeList.UnInit();
-	m_ProfessionList.UnInit();
+	m_ProfessionList.UnInit();    
     m_Designation.UnInit();
-    m_CurrencyList.UnInit();
     m_ExteriorBox.UnInit();
     m_PK.UnInit();
 	m_BookList.UnInit();
@@ -689,10 +685,6 @@ BOOL KPlayer::Activate(void)
         // v2.5: prune expired timed designations (low-frequency; a no-op while no
         // timed designation is granted, which is the case with the current .tab data).
         m_Designation.Activate();
-
-        // v2.5: periodic (weekly) currency earn-allowance reset. Guarded no-op while the
-        // currency config is dormant (reset period unconfigured). See docs/currency_port.
-        m_CurrencyList.Activate();
     }
 #endif //_SERVER
 
@@ -2071,11 +2063,6 @@ BOOL KPlayer::LoadExtRoleData(BYTE* pbyData, size_t uDataLen)
             KGLOG_PROCESS_ERROR(bRetCode);
             break;
 
-        case rbtCurrencyData:
-            bRetCode = m_CurrencyList.Load(pbyOffset, pBlock->dwLen);
-            KGLOG_PROCESS_ERROR(bRetCode);
-            break;
-
         case rbtRandData:
             bRetCode = LoadRandData(pbyOffset, pBlock->dwLen);
             KGLOG_PROCESS_ERROR(bRetCode);
@@ -2399,7 +2386,6 @@ BOOL KPlayer::Save(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize)
     SAVE_ROLE_BLOCK(m_HairBox.Save, rbtHairBoxData, 0);
     SAVE_ROLE_BLOCK(m_MiniAvatar.Save, rbtMiniAvatarData, 0);
     SAVE_ROLE_BLOCK(m_RegressionData.Save, rbtRegressionData, 0);
-    SAVE_ROLE_BLOCK(m_CurrencyList.Save, rbtCurrencyData, 0);
     SAVE_ROLE_BLOCK(m_AntiFarmer.Save, rbtAntiFarmerData, 0);
     SAVE_ROLE_BLOCK(SaveMentorData, rbtMentorData, 0);
 

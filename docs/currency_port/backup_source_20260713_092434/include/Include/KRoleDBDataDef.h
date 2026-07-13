@@ -41,7 +41,6 @@ enum ROLE_DATA_BLOCK_TYPE
     rbtHairBoxData,
     rbtMiniAvatarData,
     rbtRegressionData,
-    rbtCurrencyData,        // v2.5 NEW: KCurrencyList (capped/periodic currencies)
 
 	rbtTotal
 };
