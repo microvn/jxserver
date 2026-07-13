@@ -314,13 +314,6 @@ enum SHOP_SYSTEM_RESPOND_CODE
     ssrcItemNotInPackage,               // ��Ʒ���ڱ����С�
     ssrcNotEnoughItem,                  // ��Ҫ�ĵ��߲���
 
-    // v2.5 NEW currency-payment respond codes
-    ssrcNotEnoughCoin,                  // not enough yuanbao
-    ssrcNotEnoughJustice,               // not enough Justice
-    ssrcNotEnoughExamPrint,             // not enough ExamPrint
-    ssrcNotEnoughArenaAward,            // not enough ArenaAward
-    ssrcNotEnoughActivityAward,         // not enough ActivityAward
-
     ssrcTotal
 };
 

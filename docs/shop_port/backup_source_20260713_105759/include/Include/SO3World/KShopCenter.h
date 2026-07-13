@@ -15,17 +15,12 @@ struct KNPC_SHOP_TEMPLATE_ITEM
     int   nLimit;
     int   nDurability;
     int   nReputeLevel;
-    int   nPrice;        // ï¿½ï¿½Òªï¿½ï¿½Ç®
-    int   nCoin;         // v2.5: yuanbao (å…ƒå®) price
-    int   nContribution; // ï¿½ï¿½Òªï¿½Ä¹ï¿½ï¿½ï¿½Öµ
-    int   nPrestige;     // ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-    int   nJustice;      // v2.5: cbtJustice price
-    int   nExamPrint;    // v2.5: cbtExamPrint price
-    int   nArenaAward;   // v2.5: cbtArenaAward price
-    int   nActivityAward;// v2.5: cbtActivityAward price
-    int   nRequireAchievementRecord; // ï¿½ï¿½Òªï¿½ïµ½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½É¶ï¿½
-    int   nAchievementPoint;         // ï¿½ï¿½Òªï¿½Ä³É¾Íµï¿½ï¿½ï¿½
-    DWORD dwTabType;        // ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½   
+    int   nPrice;        // ĞèÒªµÄÇ®   
+    int   nContribution; // ĞèÒªµÄ¹±Ï×Öµ
+    int   nPrestige;     // ĞèÒªµÄÍşÍû
+    int   nRequireAchievementRecord; // ĞèÒª´ïµ½µÄÓÎÏ·Íê³É¶È
+    int   nAchievementPoint;         // ĞèÒªµÄ³É¾ÍµãÊı
+    DWORD dwTabType;        // ĞèÒªµÀ¾ß   
     DWORD dwIndex;
     int   nRequireAmount;
 };

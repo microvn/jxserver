@@ -128,35 +128,7 @@ SHOP_SYSTEM_RESPOND_CODE KShop::CanBuyItem(KPlayer* pBuyer, KNpc* pSeller, KSHOP
     {
         KG_PROCESS_ERROR_RET_CODE(pBuyer->m_nContribution >= pItemTemplate->nContribution * rParam.nCount, ssrcNotEnoughContribution);
     }
-
-    // v2.5: yuanbao + the 4 new (non-legacy) currency prices. Afford-check is server-side (anti-hack).
-    if (pItemTemplate->nCoin > 0)
-    {
-        KG_PROCESS_ERROR_RET_CODE(pBuyer->m_nCoin >= pItemTemplate->nCoin * rParam.nCount, ssrcNotEnoughCoin);
-    }
-    {
-        int nCurIdx = 0, nCurCost = 0;
-        // {KCurrency type, per-unit cost, respond-code}
-        for (nCurIdx = 0; nCurIdx < 4; nCurIdx++)
-        {
-            int       nType = 2 + nCurIdx;   // cbtJustice=2, cbtExamPrint=3, cbtArenaAward=4, cbtActivityAward=5
-            KCurrency* pCur = NULL;
-            switch (nCurIdx)
-            {
-            case 0: nCurCost = pItemTemplate->nJustice;       break;
-            case 1: nCurCost = pItemTemplate->nExamPrint;     break;
-            case 2: nCurCost = pItemTemplate->nArenaAward;    break;
-            default:nCurCost = pItemTemplate->nActivityAward; break;
-            }
-            if (nCurCost <= 0)
-                continue;
-            pCur = pBuyer->m_CurrencyList.GetCurrency(nType);
-            KGLOG_PROCESS_ERROR(pCur);
-            KG_PROCESS_ERROR_RET_CODE(pCur->GetValue() >= nCurCost * rParam.nCount,
-                (SHOP_SYSTEM_RESPOND_CODE)(ssrcNotEnoughJustice + nCurIdx));
-        }
-    }
-
+    
     if (pItemTemplate->nRequireAchievementRecord > 0)
     {
         KG_PROCESS_ERROR_RET_CODE(pBuyer->m_Achievement.m_nRecord >= pItemTemplate->nRequireAchievementRecord, ssrcAchievementRecordError);
@@ -217,7 +189,7 @@ int KShop::GetPlayerBuyCost(KPlayer* pPlayer, int nTemplateItemPrice, int nCount
             int nReputeLevel    = pPlayer->m_ReputeList.GetReputeLevel(m_pNpc->m_dwForceID);
             int nRebate         = g_pSO3World->m_ShopCenter.GetReputationRebate(m_pNpc->m_dwForceID, nReputeLevel);
             int nMaxRebate      = g_pSO3World->m_ShopCenter.GetMaxRebate(m_pNpc->m_dwForceID, nReputeLevel);
-            long long llShopItemPrice = nTemplateItemPrice; // ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½
+            long long llShopItemPrice = nTemplateItemPrice; // ·ÀÖ¹Òç³ö
 
             nRebate = max(nRebate, nMaxRebate);
 
@@ -256,7 +228,7 @@ int KShop::GetPlayerSellPrice(KPlayer* pPlayer, DWORD dwBox, DWORD dwX)
     case eShopType_NPC:
         llPrice = pItem->GetPrice();
         KGLOG_PROCESS_ERROR(llPrice >= 0);
-        // ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½Í¾Ã¶ï¿½,Òªï¿½Û³ï¿½ï¿½ï¿½Ó¦ï¿½Ä·ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã²ï¿½ï¿½Ü¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, Îªï¿½Ë·ï¿½Ö¹Ë¢Ç®)
+        // Èç¹ûÎïÆ·µôÄÍ¾Ã¶È,Òª¿Û³ýÏàÓ¦µÄ·ÑÓÃ(ÕâÀïµÄÐÞÀí·ÑÓÃ²»ÄÜ¸ù¾ÝÉùÍûÀ´´òÕÛ, ÎªÁË·ÀÖ¹Ë¢Ç®)
         
         nCurrentDurability = pItem->GetCurrentDurability();
         if (nCurrentDurability != -1 && pItem->m_nMaxDurability > 0)
@@ -369,7 +341,7 @@ BOOL KShop::BuyItem(KPlayer* pPlayer, KSHOP_BUY_ITEM_PARAM& rParam)
     pShopItem = &m_ShopPages[rParam.dwPageIndex].ShopItems[rParam.dwPosIndex];
     KGLOG_PROCESS_ERROR(pShopItem->pItem);
     
-    // ============== Ö´ï¿½Ð¹ï¿½ï¿½ï¿½ ============================>
+    // ============== Ö´ÐÐ¹ºÂò ============================>
     
     pItemTemplate = g_pSO3World->m_ShopCenter.GetShopTemplateItem(m_dwTemplateID, pShopItem->nItemTemplateIndex);
     KGLOG_PROCESS_ERROR(pItemTemplate);
@@ -417,37 +389,7 @@ BOOL KShop::BuyItem(KPlayer* pPlayer, KSHOP_BUY_ITEM_PARAM& rParam)
         if (nNewContribution != nOldContribution)
             g_pSO3World->m_StatDataServer.UpdateContributeStat(pPlayer, nNewContribution - nOldContribution, "BUY_ITEM");
     }
-
-    // v2.5: deduct yuanbao + the 4 new currencies (CanBuyItem already gated affordability server-side).
-    if (pItemTemplate->nCoin > 0)
-    {
-        bRetCode = pPlayer->AddCoin(-pItemTemplate->nCoin * rParam.nCount);
-        KGLOG_PROCESS_ERROR(bRetCode);
-    }
-    {
-        int nCurIdx = 0;
-        for (nCurIdx = 0; nCurIdx < 4; nCurIdx++)
-        {
-            int        nType    = 2 + nCurIdx;   // cbtJustice=2 .. cbtActivityAward=5
-            int        nCurCost = 0;
-            KCurrency* pCur     = NULL;
-            switch (nCurIdx)
-            {
-            case 0: nCurCost = pItemTemplate->nJustice;       break;
-            case 1: nCurCost = pItemTemplate->nExamPrint;     break;
-            case 2: nCurCost = pItemTemplate->nArenaAward;    break;
-            default:nCurCost = pItemTemplate->nActivityAward; break;
-            }
-            if (nCurCost <= 0)
-                continue;
-            pCur = pPlayer->m_CurrencyList.GetCurrency(nType);
-            KGLOG_PROCESS_ERROR(pCur);
-            bRetCode = pCur->AddCurrency(-nCurCost * rParam.nCount);   // spend (negative, clamps >=0)
-            KGLOG_PROCESS_ERROR(bRetCode);
-            // v2.5: DoSyncCurrency to client here (deferred packet).
-        }
-    }
-
+    
     if (pItemTemplate->nAchievementPoint > 0)
     {
         bRetCode = pPlayer->m_Achievement.AddPoint(-pItemTemplate->nAchievementPoint * rParam.nCount);
@@ -468,14 +410,14 @@ BOOL KShop::BuyItem(KPlayer* pPlayer, KSHOP_BUY_ITEM_PARAM& rParam)
     g_LogClient.LogPlayerItemChange(pPlayer, ITEM_OPERATION_TYPE_IN, &ItemLogInfo, "buy from npc");
     pItemBuy = NULL;
     
-    // <============== Ö´ï¿½Ð¹ï¿½ï¿½ï¿½ ============================
+    // <============== Ö´ÐÐ¹ºÂò ============================
 
-    // ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ìµê²»ÎªNPCï¿½Ìµï¿½ò±»¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½Ò¹ï¿½ï¿½ï¿½ó£¬¸Ã¸ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¶ï¿½ï¿½Ç¸Ä±ï¿½ï¿½Ëµï¿½
+    // Èç¹ûÒ»¸öÉÌµê²»ÎªNPCÉÌµê»ò±»¹ºÂòµÄÎïÆ·ÊÇÏÞÁ¿µÄ£¬ÔòÍæ¼Ò¹ºÂòºó£¬¸Ã¸ñ×ÓÎïÆ·µÄÊýÁ¿¿Ï¶¨ÊÇ¸Ä±äÁËµÄ
     if ((m_nShopType != eShopType_NPC) || (pItemTemplate->nLimit != -1))
     {
         if ((m_nShopType == eShopType_PLAYER) && (pShopItem->nCount == 0))
         {
-            // ï¿½ï¿½ï¿½Ò»ï¿½Ìµï¿½Îªï¿½ï¿½ï¿½ï¿½Ìµê£¬Ä³ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½Îª0Ê±ï¿½ï¿½ï¿½ï¿½ï¿½è½«ï¿½ï¿½Æ·ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½È¥ï¿½ï¿½
+            // Èç¹ûÒ»ÉÌµêÎªÍæ¼ÒÉÌµê£¬Ä³ÎïÆ·±»¹ºÂòºóµÄ¸öÊýÎª0Ê±£¬ÔòÐè½«ÎïÆ·´ÓÉÌµêÖÐÈ¥³ý
             bRetCode = DeleteItem(rParam.dwPageIndex, rParam.dwPosIndex);
             KGLOG_PROCESS_ERROR(bRetCode);
 
@@ -525,12 +467,12 @@ BOOL KShop::SellItem(KPlayer* pPlayer, KSHOP_SELL_ITEM_PARAM& rParam)
     nBoxType = pPlayer->m_ItemList.GetBoxType(rParam.dwBox);
     KGLOG_PROCESS_ERROR(nBoxType == ivtEquipment || nBoxType == ivtPackage);
 
-    // È·ï¿½ï¿½ï¿½ï¿½ï¿½È·Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·(ï¿½Ë¶ï¿½ï¿½ï¿½Æ·ID)
+    // È·ÈÏÍæ¼ÒÈ·ÊµÓÐÕâ¸öÎïÆ·(ºË¶ÔÎïÆ·ID)
     pItem = pPlayer->m_ItemList.GetItem(rParam.dwBox, rParam.dwX);
     KGLOG_PROCESS_ERROR(pItem);
     KGLOG_PROCESS_ERROR(pItem->m_dwID == rParam.dwItemID);
 
-    // È·ï¿½ï¿½ï¿½ï¿½Æ·ï¿½Ç·ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½Æ·"ï¿½É½ï¿½ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½, 
+    // È·ÈÏÎïÆ·ÊÇ·ñ¿ÉÂô: ÎïÆ·"¿É½»Ò×"ÊôÐÔ, 
     nRetCode = pItem->IsCanTrade();
     KGLOG_PROCESS_ERROR(nRetCode);
     
@@ -541,20 +483,20 @@ BOOL KShop::SellItem(KPlayer* pPlayer, KSHOP_SELL_ITEM_PARAM& rParam)
     KGLOG_PROCESS_ERROR(nPrice >= 0);
 
     nCost = nPrice * nCount;
-    KG_ASSERT_EXIT(nCost >= 0);      // ï¿½ï¿½ï¿½
-    // ï¿½Ë¶Ô¼ï¿½Öµï¿½Ç·ï¿½ï¿½ï¿½ï¿½Ò¿ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
+    KG_ASSERT_EXIT(nCost >= 0);      // Òç³ö
+    // ºË¶Ô¼ÛÖµÊÇ·ñ¸úÍæ¼Ò¿´µ½µÄÒ»ÖÂ
     KGLOG_PROCESS_ERROR(nCost == rParam.nCost);
 
-    // È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï½ï¿½Ç®ï¿½ï¿½ï¿½á³¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    // È·ÈÏÍæ¼ÒÉíÉÏ½ðÇ®²»»á³¬¹ýÉÏÏÞ
     nMoney = pPlayer->m_ItemList.GetMoney();
     nMaxMoney = pPlayer->m_ItemList.GetMoneyLimit();
-    KGLOG_PROCESS_ERROR(nMoney <= nMaxMoney - nCost);    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    KGLOG_PROCESS_ERROR(nMoney <= nMaxMoney - nCost);    // Òç³ö¼ì²é
 
-    // ×ªï¿½ï¿½ï¿½ï¿½Æ·ï¿½Í½ï¿½Ç®
+    // ×ªÒÆÎïÆ·ºÍ½ðÇ®
     switch (m_nShopType)
     {
     case eShopType_NPC:
-        // ï¿½ï¿½ï¿½Ø±ï¿½
+        // ¹º»Ø±í
         nRetCode = pPlayer->m_ItemList.FindFreeSoldList(dwX);
         KGLOG_PROCESS_ERROR(nRetCode);
 
@@ -577,7 +519,7 @@ BOOL KShop::SellItem(KPlayer* pPlayer, KSHOP_SELL_ITEM_PARAM& rParam)
 
         break;
     default:
-        KG_ASSERT_EXIT(!"Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½");
+        KG_ASSERT_EXIT(!"Î´¶¨ÒåµÄÉÌµêÀàÐÍ");
     }
 
     g_LogClient.LogPlayerItemChange(pPlayer, ITEM_OPERATION_TYPE_OUT, pItem, "sell to npc");
@@ -649,13 +591,13 @@ BOOL KShop::RepairAllItems(KPlayer* pPlayer, int nCost)
     KGLOG_PROCESS_ERROR(m_pNpc);
     KGLOG_PROCESS_ERROR(m_pNpc->m_dwID == m_dwNpcID);
 
-    // È·ï¿½ï¿½ï¿½Ìµï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·(ï¿½ï¿½ï¿½ï¿½Ìµê²»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+    // È·ÈÏÉÌµêÊÇ·ñ¿ÉÒÔÐÞÀí¸ÃÎïÆ·(Íæ¼ÒÉÌµê²»ÄÜÐÞÀí)
     KG_PROCESS_ERROR(m_nShopType == eShopType_NPC);
     KG_PROCESS_ERROR(m_bCanRepair);
     
     KG_PROCESS_SUCCESS(nCost == 0);
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Û¸ï¿½
+    // ¼ì²âÐÞÀí¼Û¸ñ
     for (DWORD dwBoxIndex = 0; dwBoxIndex < ibTotal; ++dwBoxIndex)
     {
         int nBoxType = pPlayer->m_ItemList.GetBoxType(dwBoxIndex);
@@ -677,7 +619,7 @@ BOOL KShop::RepairAllItems(KPlayer* pPlayer, int nCost)
                 KGLOG_PROCESS_ERROR(nPrice >= 0);
                 
                 nNeedCost += nPrice;
-                KG_ASSERT_EXIT(nNeedCost >= 0); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                KG_ASSERT_EXIT(nNeedCost >= 0); // Òç³ö¼ì²â
             }
         }
     }
@@ -740,12 +682,12 @@ BOOL KShop::BuySoldListItem(KPlayer* pPlayer, KSHOP_BUY_SOLD_LIST_ITEM_PARAM& rP
     KGLOG_PROCESS_ERROR(m_pNpc);
     KG_PROCESS_ERROR(m_nShopType == eShopType_NPC);
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½Ç·ï¿½ï¿½Ð¸Ä±ï¿½
+    // ¼ì²éÎïÆ·ÊÇ·ñÓÐ¸Ä±ä
     pItem = pPlayer->m_ItemList.GetItem(ibSoldList, rParam.dwX);
     KGLOG_PROCESS_ERROR(pItem);
     KGLOG_PROCESS_ERROR(pItem->m_dwID == rParam.dwItemID);
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ã¹»ï¿½ï¿½Ç®
+    // ¼ì²éÍæ¼ÒÊÇ·ñÓÐ×ã¹»µÄÇ®
     nPrice = GetPlayerSellPrice(pPlayer, ibSoldList, rParam.dwX);
     KGLOG_PROCESS_ERROR(nPrice >= 0);
 
@@ -785,7 +727,7 @@ BOOL KShop::BuySoldListItem(KPlayer* pPlayer, KSHOP_BUY_SOLD_LIST_ITEM_PARAM& rP
 
     g_pSO3World->m_StatDataServer.UpdateMoneyStat(pPlayer, -nCost, "BUY_ITEM");
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½Æ·ï¿½Ç»Ø¹ï¿½ï¿½Ð±ï¿½ï¿½Ð¼ï¿½ï¿½Ä³ï¿½î£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½Ö¤KItemList::FindFreeSoldList()ï¿½ï¿½ï¿½ï¿½È·ï¿½Ô¡ï¿½
+    // Èç¹ûÍæ¼ÒÂô»ØµÄÎïÆ·ÊÇ»Ø¹ºÁÐ±íÖÐ¼äµÄÄ³Ïî£¬ÐèÕûÀí»Ø¹º°ü£¬ÒÔ±£Ö¤KItemList::FindFreeSoldList()µÄÕýÈ·ÐÔ¡£
     nNext = (rParam.dwX + 1) >= MAX_SOLDLIST_PACKAGE_SIZE ? 0 : (rParam.dwX + 1);
     pItem = pPlayer->m_ItemList.GetItem(ibSoldList, nNext);
     if (pItem)

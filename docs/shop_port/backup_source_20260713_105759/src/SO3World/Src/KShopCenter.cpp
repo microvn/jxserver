@@ -371,29 +371,14 @@ BOOL KShopCenter::LoadNpcShopTemplateItems(KNPC_SHOP_TEMPLATE* pShopTemplate, co
         nRetCode = pNPCShopConfigFile->GetInteger(nLine, "ReputeLevel", 0, &pShopItem->nReputeLevel);     
         (void)nRetCode; /*[endgame] tolerant*/
         
-        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "Price", -1, &pShopItem->nPrice);
+        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "Price", -1, &pShopItem->nPrice);     
+        (void)nRetCode; /*[endgame] tolerant*/
+        KGLOG_PROCESS_ERROR(pShopItem->nPrice > 0);
+
+        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "Prestige", -1, &pShopItem->nPrestige);     
         (void)nRetCode; /*[endgame] tolerant*/
 
-        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "Coin", 0, &pShopItem->nCoin);   // v2.5: yuanbao price
-        (void)nRetCode; /*[endgame] tolerant*/
-
-        // v2.5 relaxed: an item must have a money OR a yuanbao price (currency-only still needs one).
-        KGLOG_PROCESS_ERROR(pShopItem->nPrice > 0 || pShopItem->nCoin > 0);
-
-        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "Prestige", -1, &pShopItem->nPrestige);
-        (void)nRetCode; /*[endgame] tolerant*/
-
-        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "Contribution", -1, &pShopItem->nContribution);
-        (void)nRetCode; /*[endgame] tolerant*/
-
-        // v2.5 NEW currency prices (KCurrency types 2..5)
-        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "Justice", 0, &pShopItem->nJustice);
-        (void)nRetCode; /*[endgame] tolerant*/
-        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "ExamPrint", 0, &pShopItem->nExamPrint);
-        (void)nRetCode; /*[endgame] tolerant*/
-        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "ArenaAward", 0, &pShopItem->nArenaAward);
-        (void)nRetCode; /*[endgame] tolerant*/
-        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "ActivityAward", 0, &pShopItem->nActivityAward);
+        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "Contribution", -1, &pShopItem->nContribution);     
         (void)nRetCode; /*[endgame] tolerant*/
 
         nRetCode = pNPCShopConfigFile->GetInteger(nLine, "RequireAchievementRecord", -1, &pShopItem->nRequireAchievementRecord);     
