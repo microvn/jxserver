@@ -145,3 +145,28 @@ currencies hold/earn/spend/cap/reset with real values. build ok=202, boot settin
    the currency to work in C++; needed for content scripts. Follow-on.
 3. **Sync/log packets (NEW):** DoSyncCurrency/DoSyncCurrencyList (client realtime display) +
    LogPlayerCurrencyChange. Without them client sees currency only after relog (Load). Follow-on (packet tier).
+
+---
+
+## [PORT-4] Lua interface slice (2026-07-13) — 4 non-legacy currencies usable from content
+Un-defers #2 (Lua) for the currencies that have NO 2010 legacy field. RE'd the wrapper set via
+__PRETTY strings + decompile (LuaAddJustice 0833887e = GetCurrency->AddCurrency direct;
+LuaAddJusticeRemainSpace 08322398 = AddRemainSpace; LuaGetActivityAwardRemainSpace 08321240).
+
+- **12 KPlayer Lua wrappers** (macro DEFINE_LUA_CURRENCY) for Justice(2)/ExamPrint(3)/ArenaAward(4)/
+  ActivityAward(5): LuaAdd{Name}(value[,action]) -> AddCurrency; LuaAdd{Name}RemainSpace(value) ->
+  AddRemainSpace; LuaGet{Name}RemainSpace() -> GetRemainSpace. Registered. build ok=202, boot [OK] (no nil).
+- **Contribution(0)/Prestige(1) deliberately NOT ported to Lua-currency:** they have full legacy 2010
+  systems (m_nContribution/m_nCurrentPrestige + AddContribution/DECLARE_LUA_INTEGER + LuaAddPrestige).
+  v246 routes LuaAddContribution through KPlayer::AddContribution (dual old-field+KCurrency); porting
+  that = behavior/DB change on live fields -> OUT OF SCOPE. Types 0/1 stay legacy; KCurrency slots 0/1
+  are reserved/unused. Documented.
+- **No value-getter:** v246 exposes NO LuaGet{Type} value (only RemainSpace); the balance reaches the
+  client via the sync packet (deferred), not Lua read-back. Matches our port.
+
+## Still DEFER (after PORT-4)
+- Lua for Contribution/Prestige currency-migration (legacy-field coexistence; needs a migration decision).
+- Value-add stat/log (UpdateCurrencyStat / LogPlayerCurrencyChange) on the delta.
+- Sync packets DoSyncCurrency/DoSyncCurrencyList (client realtime balance display).
+- KShop currency-buy drift + the deferred hair/exterior buy-chains (the actual "spend currency in a shop"
+  flow) + per-shop cost config + content consumers (e.g. KNpc::LootActivityAward drops currency).

@@ -1368,6 +1368,20 @@ public:
 
     // v2.5 NEW: query the calling player's single-dungeon score rank within their force.
     int LuaGetSingleDungeonScoreRankPos(Lua_State* L);
+
+    // v2.5 NEW currency bindings (KCurrency; 4 non-legacy types).
+    int LuaAddJustice(Lua_State* L);
+    int LuaAddJusticeRemainSpace(Lua_State* L);
+    int LuaGetJusticeRemainSpace(Lua_State* L);
+    int LuaAddExamPrint(Lua_State* L);
+    int LuaAddExamPrintRemainSpace(Lua_State* L);
+    int LuaGetExamPrintRemainSpace(Lua_State* L);
+    int LuaAddArenaAward(Lua_State* L);
+    int LuaAddArenaAwardRemainSpace(Lua_State* L);
+    int LuaGetArenaAwardRemainSpace(Lua_State* L);
+    int LuaAddActivityAward(Lua_State* L);
+    int LuaAddActivityAwardRemainSpace(Lua_State* L);
+    int LuaGetActivityAwardRemainSpace(Lua_State* L);
 #endif
 
 	int LuaGetAcquiredDesignationCount(Lua_State* L);

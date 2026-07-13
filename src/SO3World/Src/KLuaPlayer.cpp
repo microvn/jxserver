@@ -10641,6 +10641,54 @@ int KPlayer::LuaGetSingleDungeonScoreRankPos(Lua_State* L)
     Lua_PushNumber(L, nPos);
     return 1;
 }
+
+// v2.5 NEW currency bindings (KCurrency). Only the 4 currencies with NO legacy 2010 field:
+// cbtJustice=2, cbtExamPrint=3, cbtArenaAward=4, cbtActivityAward=5. Contribution(0)/Prestige(1)
+// stay on their legacy KPlayer fields+bindings (not dual-tracked). Value-add matches v246
+// (GetCurrency->AddCurrency direct; the delta stat/log is a deferred NEW packet).
+#define DEFINE_LUA_CURRENCY(Name, Type)                                             \
+int KPlayer::LuaAdd##Name(Lua_State* L)                                             \
+{                                                                                   \
+    BOOL       bResult = false;                                                     \
+    KCurrency* pCur    = NULL;                                                      \
+    int        nValue  = 0;                                                         \
+    int        nTop    = Lua_GetTopIndex(L);                                        \
+    KGLOG_PROCESS_ERROR(nTop == 1 || nTop == 2); /* arg2 = user-action for stat/log (deferred) */ \
+    nValue = (int)Lua_ValueToNumber(L, 1);                                          \
+    pCur = m_CurrencyList.GetCurrency(Type);                                         \
+    KGLOG_PROCESS_ERROR(pCur);                                                       \
+    bResult = pCur->AddCurrency(nValue);                                            \
+Exit0:                                                                              \
+    Lua_PushBoolean(L, bResult);                                                    \
+    return 1;                                                                       \
+}                                                                                   \
+int KPlayer::LuaAdd##Name##RemainSpace(Lua_State* L)                                \
+{                                                                                   \
+    BOOL       bResult = false;                                                     \
+    KCurrency* pCur    = NULL;                                                      \
+    int        nValue  = 0;                                                         \
+    KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 1);                                   \
+    nValue = (int)Lua_ValueToNumber(L, 1);                                          \
+    pCur = m_CurrencyList.GetCurrency(Type);                                         \
+    KGLOG_PROCESS_ERROR(pCur);                                                       \
+    bResult = pCur->AddRemainSpace(nValue);                                         \
+Exit0:                                                                              \
+    Lua_PushBoolean(L, bResult);                                                    \
+    return 1;                                                                       \
+}                                                                                   \
+int KPlayer::LuaGet##Name##RemainSpace(Lua_State* L)                                \
+{                                                                                   \
+    KCurrency* pCur = m_CurrencyList.GetCurrency(Type);                              \
+    Lua_PushNumber(L, pCur ? pCur->GetRemainSpace() : 0);                            \
+    return 1;                                                                       \
+}
+
+DEFINE_LUA_CURRENCY(Justice,       2)
+DEFINE_LUA_CURRENCY(ExamPrint,     3)
+DEFINE_LUA_CURRENCY(ArenaAward,    4)
+DEFINE_LUA_CURRENCY(ActivityAward, 5)
+
+#undef DEFINE_LUA_CURRENCY
 #endif // _SERVER
 
 int KPlayer::LuaGetAcquiredDesignationCount(Lua_State* L)
@@ -12111,6 +12159,20 @@ DEFINE_LUA_CLASS_BEGIN(KPlayer)
 
     // v2.5 NEW: single-dungeon score rank query
     REGISTER_LUA_FUNC(KPlayer, GetSingleDungeonScoreRankPos)
+
+    // v2.5 NEW currency bindings (4 non-legacy types)
+    REGISTER_LUA_FUNC(KPlayer, AddJustice)
+    REGISTER_LUA_FUNC(KPlayer, AddJusticeRemainSpace)
+    REGISTER_LUA_FUNC(KPlayer, GetJusticeRemainSpace)
+    REGISTER_LUA_FUNC(KPlayer, AddExamPrint)
+    REGISTER_LUA_FUNC(KPlayer, AddExamPrintRemainSpace)
+    REGISTER_LUA_FUNC(KPlayer, GetExamPrintRemainSpace)
+    REGISTER_LUA_FUNC(KPlayer, AddArenaAward)
+    REGISTER_LUA_FUNC(KPlayer, AddArenaAwardRemainSpace)
+    REGISTER_LUA_FUNC(KPlayer, GetArenaAwardRemainSpace)
+    REGISTER_LUA_FUNC(KPlayer, AddActivityAward)
+    REGISTER_LUA_FUNC(KPlayer, AddActivityAwardRemainSpace)
+    REGISTER_LUA_FUNC(KPlayer, GetActivityAwardRemainSpace)
 #endif
 
     REGISTER_LUA_FUNC(KPlayer, GetAcquiredDesignationCount)
