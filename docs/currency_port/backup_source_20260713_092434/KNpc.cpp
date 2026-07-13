@@ -141,12 +141,12 @@ BOOL KNpc::Activate(void)
 	if (m_nUpdateMiniMapMarkFrame <= g_pSO3World->m_nGameLoop)
 	{
 		m_nUpdateMiniMapMarkFrame = g_pSO3World->m_nGameLoop + UPDATE_MINIMAP_MARK_INTERVAL;
-		UpdateMiniMapMark(); //ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½Í¼ï¿½ï¿½ï¿½
+		UpdateMiniMapMark(); //¸üÐÂÐ¡µØÍ¼±ê¼Ç
 	}
 #endif //_CLIENT
 
 	KCharacter::Activate();
-    // m_pSceneÖ¸ï¿½ï¿½Îªï¿½Õ±ï¿½Ê¾ï¿½Ô¼ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½
+    // m_pSceneÖ¸ÕëÎª¿Õ±íÊ¾×Ô¼º±»É¾³ýÁË
     KG_PROCESS_ERROR(m_pScene);
 
 #ifdef _CLIENT
@@ -155,7 +155,7 @@ BOOL KNpc::Activate(void)
 #endif
 
 #ifdef _SERVER
-	// ï¿½Ð¶ï¿½ï¿½Ç²ï¿½ï¿½Çµï¿½ï¿½ï¿½ï¿½ï¿½Ê§Ê±ï¿½ï¿½
+	// ÅÐ¶ÏÊÇ²»ÊÇµ½ÁËÏûÊ§Ê±¼ä
 	if (m_nDisappearFrames != 0 && g_pSO3World->m_nGameLoop > m_nDisappearFrames)
 	{
 		if (m_bDisappearToReviveList)
@@ -295,15 +295,15 @@ void KNpc::RegisterToViewRegion(KRegion* pFromRegion, KRegion* pToRegion)
     assert(m_pScene);
     assert(pToRegion);
 
-    // 1. ï¿½ï¿½ï¿½ï¿½Regionï¿½ï¿½ï¿½ï¿½ï¿½Ú½ï¿½Regionï¿½ï¿½ï¿½Îªtrue
+    // 1. ½«ÐÂRegion¼°ÆäÁÚ½ÓRegion±ê¼ÇÎªtrue
     m_pScene->SetViewObjectRegisterFlag(pToRegion, true);
     
     
-    // 2. ï¿½ï¿½ï¿½ï¿½Regionï¿½ï¿½ï¿½ï¿½ï¿½Ú½ï¿½Regionï¿½ï¿½ï¿½Îªfalse,ï¿½Â¾ï¿½ï¿½ï¿½Ò°ï¿½Ä½ï¿½ï¿½ï¿½ï¿½á±»ï¿½ï¿½ï¿½ï¿½Îªfalse
+    // 2. ½«¾ÉRegion¼°ÆäÁÚ½ÓRegion±ê¼ÇÎªfalse,ÐÂ¾ÉÊÓÒ°µÄ½»¼¯»á±»¸²¸ÇÎªfalse
     if (pFromRegion)
         m_pScene->SetViewObjectRegisterFlag(pFromRegion, false);
 
-    // 3. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Region
+    // 3. ±éÀúÐÂRegion
     nLeft       = pToRegion->m_nRegionX - m_pScene->m_nBroadcastRegion;
     nRight      = pToRegion->m_nRegionX + m_pScene->m_nBroadcastRegion;
     nBottom     = pToRegion->m_nRegionY - m_pScene->m_nBroadcastRegion;
@@ -316,7 +316,7 @@ void KNpc::RegisterToViewRegion(KRegion* pFromRegion, KRegion* pToRegion)
             KRegion* pRegion = m_pScene->GetRegion(nX, nY);
             if (pRegion && pRegion->m_bRegionView)
             {
-                // ï¿½ï¿½ï¿½ï¿½×¢ï¿½áµ½ï¿½ï¿½Regionï¿½Úµï¿½Playerï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                // ½«ÎÒ×¢²áµ½ÐÂRegionÄÚµÄPlayer¶ÔÏóÉíÉÏ
                 pRegion->TraversePlayer(Func);
                 pRegion->TraverseViewPoint(Func, pToRegion);
             }
@@ -373,7 +373,7 @@ void KNpc::LootExp(KPlayer* pDropTarget)
 			fPersonalCoefficient = fPersonalCoefficientList[nDiffLevel];
 		}
 
-		// ï¿½ï¿½Ã¾ï¿½ï¿½ï¿½
+		// »ñµÃ¾­Ñé
         nAddExp = (int)(nExp * fPersonalCoefficient * (1024 + pDropTarget->m_nExpPercent) / (float)1024); 
         if (
             pDropTarget->m_nLevel < g_pSO3World->m_Settings.m_ConstList.nFreeMaxLevel ||
@@ -385,7 +385,7 @@ void KNpc::LootExp(KPlayer* pDropTarget)
             g_pSO3World->m_StatDataServer.UpdateExpStat(pDropTarget, nAddExp, "LOOT");
         }
 
-		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		// »ñµÃÉùÍû
 		for (int nReputationIndex = 0; nReputationIndex < MAX_NPC_REPUTATION; nReputationIndex++)
 		{
 			DWORD dwForceID = m_pTemplate->dwReputeID[nReputationIndex];
@@ -396,7 +396,7 @@ void KNpc::LootExp(KPlayer* pDropTarget)
 			if (dwForceID == 0 || nReputation == 0)
 				continue;
 
-            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            // »ñµÃÉùÍûµ÷Õû
             nReputation = nReputation * (KILO_NUM + pDropTarget->m_nReputationPercent) / KILO_NUM;
             
             int nCampLevel = g_pSO3World->m_CampInfo.GetCampLevel();
@@ -466,7 +466,7 @@ void KNpc::LootExp(KPlayer* pDropTarget)
 			fPersonalCoefficient = fPersonalCoefficientList[nDiffLevel];
 		}
 
-		// ï¿½ï¿½Ã¾ï¿½ï¿½ï¿½
+		// »ñµÃ¾­Ñé
 		nAddExp = (int)(nExp * fPersonalCoefficient * (1 + 0.1f * ((float)nPlayerCount - 1)) * 
             (pMember->m_nLevel / (float)nTotalLevel) * ((1024 + (float)pMember->m_nExpPercent) / (float)1024));
 
@@ -480,7 +480,7 @@ void KNpc::LootExp(KPlayer* pDropTarget)
             g_pSO3World->m_StatDataServer.UpdateExpStat(pMember, nAddExp, "LOOT");
         }
 
-		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		// »ñµÃÉùÍû
 		for (int nReputationIndex = 0; nReputationIndex < MAX_NPC_REPUTATION; nReputationIndex++)
 		{
 			DWORD dwForceID = m_pTemplate->dwReputeID[nReputationIndex];
@@ -498,7 +498,7 @@ void KNpc::LootExp(KPlayer* pDropTarget)
             nReputePercent = g_pSO3World->m_CampInfo.GetReputePercent(pMember->m_eCamp, nCampLevel);
             nReputation = nReputation * nReputePercent / KILO_NUM;
             
-            if (nReputation < 0) // ï¿½ï¿½ï¿½ï¿½Ú³ï¿½Þ±ï¿½ï¿½Ð²Å»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            if (nReputation < 0) // Íæ¼ÒÔÚ³ðºÞ±íÖÐ²Å»á¼õÉùÍû
             {
                 bRetCode = m_SimpThreatList.IsInThreatList(pMember);
                 if (!bRetCode)
@@ -612,7 +612,7 @@ void KNpc::LootContribution(KPlayer* pDropTarget)
 	
     dwTeamID = pDropTarget->GetCurrentTeamID();
 
-    if (dwTeamID == ERROR_ID) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    if (dwTeamID == ERROR_ID) // µ¥ÈËÇé¿öÏÂ
     {
         if (pDropTarget->m_dwTongID != ERROR_ID)
         {
@@ -681,70 +681,6 @@ void KNpc::LootContribution(KPlayer* pDropTarget)
 
         if (nNewContribution != nOldContribution)
             g_pSO3World->m_StatDataServer.UpdateContributeStat(pMember, nNewContribution - nOldContribution, "LOOT");
-    }
-
-Exit0:
-    return;
-}
-
-// v2.5 NEW: distribute a KCurrency (nType) of base amount nAmount to all loot-eligible players
-// (team members in loot range with a tong), reusing KNpc::LootContribution's eligibility rule.
-// Flat distribution (per v246 LootExamPrint/LootActivityAward); the Justice gain-rate multiplier
-// is a documented refinement (docs TODO #5).
-void KNpc::LootJustice(KPlayer* pDropTarget)        { LootCurrencyToEligible(pDropTarget, 2, m_pTemplate ? m_pTemplate->nJustice : 0); }
-void KNpc::LootExamPrint(KPlayer* pDropTarget)      { LootCurrencyToEligible(pDropTarget, 3, m_pTemplate ? m_pTemplate->nExamPrint : 0); }
-void KNpc::LootActivityAward(KPlayer* pDropTarget)  { LootCurrencyToEligible(pDropTarget, 5, m_pTemplate ? m_pTemplate->nActivityAward : 0); }
-
-void KNpc::LootCurrencyToEligible(KPlayer* pDropTarget, int nType, int nAmount)
-{
-    BOOL     bRetCode     = false;
-    KTeam*   pTeam        = NULL;
-    DWORD    dwTeamID     = ERROR_ID;
-    int      nPlayerCount = 0;
-    int      i            = 0;
-    KPLAYERS vecMemberList;
-
-    assert(pDropTarget);
-    assert(m_pTemplate);
-    KGLOG_PROCESS_ERROR(m_pScene);
-    KG_PROCESS_ERROR(nAmount > 0);
-
-    // v246 Loot{Justice,ExamPrint,ActivityAward} eligibility = same-scene + g_IsInLootRange only.
-    // (NO tong gate â€” that is LootContribution-specific; these currencies are not tong-gated.)
-    dwTeamID = pDropTarget->GetCurrentTeamID();
-    if (dwTeamID == ERROR_ID)
-    {
-        vecMemberList.push_back(pDropTarget);   // solo: the killer alone (v246: no-team branch)
-    }
-    else
-    {
-        pTeam = g_pSO3World->m_TeamServer.GetTeam(dwTeamID);
-        KGLOG_PROCESS_ERROR(pTeam);
-
-        for (i = 0; i < pTeam->nGroupNum; i++)
-        {
-            for (KTEAM_MEMBER_LIST::iterator it = pTeam->MemberGroup[i].MemberList.begin();
-                 it != pTeam->MemberGroup[i].MemberList.end(); ++it)
-            {
-                KPlayer* pMember = g_pSO3World->m_PlayerSet.GetObj(it->dwMemberID);
-                if (!pMember)                       continue;
-                if (pMember->m_pScene != m_pScene)  continue;
-                bRetCode = g_IsInLootRange(this, pMember, m_pScene->m_nBroadcastRegion);
-                if (!bRetCode)                      continue;
-                vecMemberList.push_back(pMember);
-            }
-        }
-    }
-
-    nPlayerCount = (int)vecMemberList.size();
-    KG_PROCESS_ERROR(nPlayerCount > 0);
-
-    for (i = 0; i < nPlayerCount; i++)
-    {
-        KPlayer*   pMember = vecMemberList[i];
-        KCurrency* pCur    = pMember->m_CurrencyList.GetCurrency(nType);
-        if (pCur)
-            pCur->AddCurrency(nAmount);   // AddCurrency enforces cap + earn-allowance + syncs client
     }
 
 Exit0:
@@ -851,13 +787,13 @@ BOOL KNpc::AdjustLevel()
     
     switch(m_pTemplate->nAdjustLevel)
     {
-    case 1: // ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½ï¿½
+    case 1: // ÏòÉÏ¸¡¶¯
         nRandomLevel = g_Random(2);
     	break;
-    case 2: // ï¿½ï¿½ï¿½Â¸ï¿½ï¿½ï¿½
+    case 2: // ÏòÏÂ¸¡¶¯
         nRandomLevel -= g_Random(2);
     	break;
-    case 3: // ï¿½ï¿½ï¿½Â¸ï¿½ï¿½ï¿½
+    case 3: // ÉÏÏÂ¸¡¶¯
         nRandomLevel = g_Random(3) - 1;
         break;
     default:
@@ -868,7 +804,7 @@ BOOL KNpc::AdjustLevel()
 	nOriginLevel = m_nLevel;
 	m_nLevel = m_pTemplate->nLevel + nRandomLevel;
 	
-	// ï¿½È¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½0
+	// µÈ¼¶±ØÐë´óÓÚ0
 	if (m_nLevel <= 0)
     {
 		m_nLevel = m_pTemplate->nLevel;
@@ -965,7 +901,7 @@ int KNpc::GetPlayerRelation(KPlayer* pTarget)
 	return nRelation;
 }
 
-// Ëµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½Ä£ï¿½
+// Ëµ»°£¨ÆÁÄ»½üÁÄ£©
 BOOL KNpc::Say(char* pszText, int nRange /* = 0 */)
 {
     BOOL        bResult     = false;
@@ -992,7 +928,7 @@ Exit0:
 	return bResult;
 }
 
-// Ëµï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+// Ëµ»°(³¡¾°º°»°)
 BOOL KNpc::Yell(char* pszText)
 {
     BOOL        bResult     = false;
@@ -1017,7 +953,7 @@ Exit0:
     return bResult;
 }
 
-// Ëµï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½)
+// Ëµ»°(ÃÜÓï)
 BOOL KNpc::Whisper(KPlayer* pTarget, char* pszText)
 {
     BOOL        bResult     = false;
@@ -1042,7 +978,7 @@ Exit0:
     return bResult;
 }
 
-// ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½
+// ºÍÖ¸¶¨Íæ¼ÒËµ»°
 BOOL KNpc::SayTo(KPlayer* pTarget, char* pszText)
 {
     BOOL        bResult     = false;
@@ -1067,7 +1003,7 @@ Exit0:
     return bResult;
 }
 
-// ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½Ò´ï¿½
+// ÏòÖ¸¶¨Íæ¼Ò´óº°
 BOOL KNpc::YellTo(KPlayer* pTarget, char* pszText)
 {
     BOOL        bResult     = false;
@@ -1364,7 +1300,7 @@ BOOL KNpc::GotoReviveList()
 
     bNpcDeleteFalg = true;
 
-	// ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Îª0ï¿½ï¿½,Ä¬ï¿½Ï²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// ÖØÉúÊ±¼äÎª0µÄ,Ä¬ÈÏ²»¼ÓÈëÖØÉú¶ÓÁÐ
 	if (m_nReviveTime)
 	{
 	    bRetCode = pScene->AddReviveNpc(this, m_nReviveTime);
@@ -1398,7 +1334,7 @@ BOOL KNpc::GetAutoDialogString(KPlayer* pPlayer, char* szBuffer, size_t uBufferS
 
     nReputeLevel = pPlayer->m_ReputeList.GetReputeLevel(m_pTemplate->dwForceID);
 
-	//		ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½
+	//		ÅÐ¶ÏÈÎÎñÊÇ·ñÍê³É
 	if (m_pTemplate->dwDialogQuestID)
 	{
 		eQuestState = pPlayer->m_QuestList.GetQuestState(m_pTemplate->dwDialogQuestID);	
@@ -1406,7 +1342,7 @@ BOOL KNpc::GetAutoDialogString(KPlayer* pPlayer, char* szBuffer, size_t uBufferS
 
 	if (eQuestState == qsFinished)
 	{
-		// ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÉµÄ½×¶Î¶Ô»ï¿½
+		// ÏÔÊ¾ÈÎÎñÍê³ÉµÄ½×¶Î¶Ô»°
 		uStrLen = strlen(m_pTemplate->szDialogAfterQuest);
 		KGLOG_PROCESS_ERROR(uStrLen <= uBufferSize);
 
@@ -1416,7 +1352,7 @@ BOOL KNpc::GetAutoDialogString(KPlayer* pPlayer, char* szBuffer, size_t uBufferS
 	}
 	else if (m_pTemplate->nTotalRate > 0)
 	{
-		// ï¿½ï¿½3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
+		// ÔÚ3¸ö´ý»ú¶Ô»°ÖÐËæ»úÒ»¸ö
 		int nRandom = g_Random(m_pTemplate->nTotalRate);
 
 		for (nIndex = 0; nIndex < MAX_NPC_DIALOG_COUNT; nIndex++)
@@ -1437,7 +1373,7 @@ BOOL KNpc::GetAutoDialogString(KPlayer* pPlayer, char* szBuffer, size_t uBufferS
 		uBufferSize -= uStrLen;
 	}
 
-	// ï¿½ï¿½ï¿½ï¿½\n<H28>
+	// ²åÈë\n<H28>
 	snprintf(szTempStr, 256, "\n<H28>");
 	uStrLen = strlen(szTempStr);
 	KGLOG_PROCESS_ERROR(uStrLen <= uBufferSize);
@@ -1446,7 +1382,7 @@ BOOL KNpc::GetAutoDialogString(KPlayer* pPlayer, char* szBuffer, size_t uBufferS
 	szBuffer += uStrLen;
 	uBufferSize -= uStrLen;
 	
-	// ï¿½Ìµï¿½
+	// ÉÌµê
 	if (m_pShop && m_pTemplate->szShopOptionText[0] != '\0' && nReputeLevel >= m_pTemplate->nShopRequireReputeLevel)
 	{
 		snprintf(szTempStr, 256, "<M %lu %s>", m_pShop->m_dwShopID, m_pTemplate->szShopOptionText);
@@ -1458,7 +1394,7 @@ BOOL KNpc::GetAutoDialogString(KPlayer* pPlayer, char* szBuffer, size_t uBufferS
 		uBufferSize -= uStrLen;
 	}
 	
-	// ï¿½ï¿½ï¿½ï¿½
+	// ÒøÐÐ
 	if (m_pTemplate->bHasBank && m_pTemplate->szBankOptionText[0] != '\0' && nReputeLevel >= m_pTemplate->nBankRequireReputeLevel)
 	{
 		snprintf(szTempStr, 256, "<B%s>", m_pTemplate->szBankOptionText);
@@ -1470,7 +1406,7 @@ BOOL KNpc::GetAutoDialogString(KPlayer* pPlayer, char* szBuffer, size_t uBufferS
 		uBufferSize -= uStrLen;
 	}
 
-	// ï¿½ï¿½ï¿½ï¿½
+	// ÓÊÏä
 	if (m_pTemplate->bHasMailBox && m_pTemplate->szMailBoxOptionText[0] != '\0' && nReputeLevel >= m_pTemplate->nMailBoxRequireReputeLevel)
 	{
 		snprintf(szTempStr, 256, "<L%s>", m_pTemplate->szMailBoxOptionText);
@@ -1482,7 +1418,7 @@ BOOL KNpc::GetAutoDialogString(KPlayer* pPlayer, char* szBuffer, size_t uBufferS
 		uBufferSize -= uStrLen;
 	}
 
-	// ï¿½ï¿½ï¿½ï¿½Ñµï¿½ï¿½Ê¦
+	// ¼¼ÄÜÑµÁ·Ê¦
 	if (m_pTemplate->dwMasterID && m_pTemplate->szMasterOptionText[0] != '\0' && nReputeLevel >= m_pTemplate->nMasterRequireReputeLevel)
 	{
 		snprintf(szTempStr, 256, "<K %lu %s>", m_pTemplate->dwMasterID, m_pTemplate->szMasterOptionText);
@@ -1494,7 +1430,7 @@ BOOL KNpc::GetAutoDialogString(KPlayer* pPlayer, char* szBuffer, size_t uBufferS
 		uBufferSize -= uStrLen;
 	}
 
-	// ï¿½ï¿½ï¿½î¼¼ï¿½ï¿½Ñ§Ï°Ê¦
+	// Éú»î¼¼ÄÜÑ§Ï°Ê¦
 	if (m_pTemplate->dwCraftMasterID && m_pTemplate->szCraftMasterOptionText[0] != '\0' && nReputeLevel >= m_pTemplate->nCraftMasterRequireReputeLevel)
 	{
 		snprintf(szTempStr, 256, "<E %lu %s>", m_pTemplate->dwCraftMasterID, m_pTemplate->szCraftMasterOptionText);
@@ -1506,7 +1442,7 @@ BOOL KNpc::GetAutoDialogString(KPlayer* pPlayer, char* szBuffer, size_t uBufferS
 		uBufferSize -= uStrLen;
 	}
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    // ¼ÄÂôÐÐ
     if (m_pTemplate->bHasAuction && m_pTemplate->szAuctionOptionText[0] != '\0' && nReputeLevel >= m_pTemplate->nAuctionRequireReputeLevel)
     {
         snprintf(szTempStr, 256, "<Y%s>", m_pTemplate->szAuctionOptionText);
@@ -1518,7 +1454,7 @@ BOOL KNpc::GetAutoDialogString(KPlayer* pPlayer, char* szBuffer, size_t uBufferS
         uBufferSize -= uStrLen;
     }
 
-    // ï¿½ï¿½ï¿½Ö¿ï¿½
+    // °ï»á²Ö¿â
     if (m_pTemplate->bHasTongRepertory && m_pTemplate->szTongRepertoryOptionText[0] != '\0' && nReputeLevel >= m_pTemplate->nTongRepertoryRequireReputeLevel)
     {
         snprintf(szTempStr, 256, "<GB %s>", m_pTemplate->szTongRepertoryOptionText);
@@ -1530,7 +1466,7 @@ BOOL KNpc::GetAutoDialogString(KPlayer* pPlayer, char* szBuffer, size_t uBufferS
         uBufferSize -= uStrLen;
     }
 	
-    // ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    // ÓÎÏ·¿¨¼ÄÊÛ
     if (m_pTemplate->bHasGameCardSale && m_pTemplate->szGameCardSaleOptionText[0] != '\0' && nReputeLevel >= m_pTemplate->nGameCardTradeRequireReputeLevel)
     {
         snprintf(szTempStr, sizeof(szTempStr), "<CS %s>", m_pTemplate->szGameCardSaleOptionText);
@@ -1553,7 +1489,7 @@ BOOL KNpc::GetAutoDialogString(KPlayer* pPlayer, char* szBuffer, size_t uBufferS
         uBufferSize -= uStrLen;
     }
 
-	// ï¿½ï¿½ï¿½ï¿½\n\n
+	// ²åÈë\n\n
 	snprintf(szTempStr, 256, "<H28>");
 	uStrLen = strlen(szTempStr);
 	KGLOG_PROCESS_ERROR(uStrLen <= uBufferSize);
@@ -1562,7 +1498,7 @@ BOOL KNpc::GetAutoDialogString(KPlayer* pPlayer, char* szBuffer, size_t uBufferS
 	szBuffer += uStrLen;
 	uBufferSize -= uStrLen;
 
-	// ï¿½ï¿½ï¿½ï¿½
+	// ÈÎÎñ
     if (nReputeLevel >= m_pTemplate->nQuestRequireReputeLevel)
     {
         nResult = g_pSO3World->m_Settings.m_QuestInfoList.GetNpcQuestString(m_pScene->m_dwMapID, m_dwTemplateID, szBuffer, (int)uBufferSize);
@@ -1658,7 +1594,7 @@ KDoodad* KNpc::GenerateCorpse(void)
     KGLOG_PROCESS_ERROR(bRetCode);
     bDoodadInitFlag = true;
 	
-	// Ê¬ï¿½ï¿½ï¿½ï¿½Ô±ï¿½ï¿½ï¿½ï¿½î¼¼ï¿½Ü²ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¿ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½;
+	// Ê¬Ìå¿ÉÒÔ±»Éú»î¼¼ÄÜ²Ù×÷,ËùÒÔÉè³É¿ÉÒÔ¼ðÁ½´Î;
 	pDoodad->m_nLastLootCount = 2;
     	
 	KGLOG_PROCESS_ERROR(m_pTemplate);
@@ -1716,7 +1652,7 @@ void KNpc::InitDialogFlag()
     BOOL bRetCode    = false;
     BOOL bDialogFlag = false;
 
-    // ï¿½ï¿½ï¿½Ú½Å±ï¿½OnDialogueï¿½Ó¿ï¿½
+    // ´æÔÚ½Å±¾OnDialogue½Ó¿Ú
     bRetCode = g_pSO3World->m_ScriptCenter.IsScriptExist(m_dwScriptID);
     if (bRetCode &&
         g_pSO3World->m_ScriptCenter.IsFuncExist(m_dwScriptID, SCRIPT_ON_DIALOGUE)
@@ -1728,13 +1664,13 @@ void KNpc::InitDialogFlag()
 
     
     if (
-        (m_pTemplate->dwDialogQuestID)              || // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½IDï¿½Ç¿ï¿½
-        (m_pTemplate->nTotalRate > 0)               || // ï¿½ï¿½ï¿½ï¿½ï¿½Ô»ï¿½ï¿½ï¿½Îªï¿½ï¿½
-        (m_pTemplate->szShopOptionText[0] != '\0')  || // ï¿½ï¿½ï¿½Ìµï¿½
-        (m_pTemplate->bHasBank)                     || // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-        (m_pTemplate->bHasMailBox)                  || // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-        (m_pTemplate->dwMasterID)                   || // ï¿½Ç¼ï¿½ï¿½ï¿½Ñµï¿½ï¿½Ê¦
-        (m_pTemplate->dwCraftMasterID)                 // ï¿½ï¿½ï¿½î¼¼ï¿½ï¿½Ñµï¿½ï¿½Ê¦
+        (m_pTemplate->dwDialogQuestID)              || // ´ý»úÈÎÎñID·Ç¿Õ
+        (m_pTemplate->nTotalRate > 0)               || // ´ý»ú¶Ô»°²»Îª¿Õ
+        (m_pTemplate->szShopOptionText[0] != '\0')  || // ÊÇÉÌµê
+        (m_pTemplate->bHasBank)                     || // ÊÇÒøÐÐ
+        (m_pTemplate->bHasMailBox)                  || // ÊÇÓÊÏä
+        (m_pTemplate->dwMasterID)                   || // ÊÇ¼¼ÄÜÑµÁ·Ê¦
+        (m_pTemplate->dwCraftMasterID)                 // Éú»î¼¼ÄÜÑµÁ·Ê¦
     )
     {
         bDialogFlag = true;
@@ -1742,7 +1678,7 @@ void KNpc::InitDialogFlag()
     }
 
     
-    // ï¿½ï¿½ï¿½ï¿½
+    // ÈÎÎñ
     bRetCode = g_pSO3World->m_Settings.m_QuestInfoList.IsNpcQuestExist(m_pTemplate->dwTemplateID);
     if (bRetCode)
     {

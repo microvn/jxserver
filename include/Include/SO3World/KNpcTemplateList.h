@@ -1,11 +1,11 @@
 /************************************************************************/
-/* ³¡¾°×°ÊÎÎïÄ£°åÁÐ±í					                            */
+/* ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½Ð±ï¿½					                            */
 /* Copyright : Kingsoft 2004										    */
 /* Author	 : Zhu Jianqiu												*/
 /* History	 :															*/
 /*		2005.04.25	Create												*/
 /* Comment	 :															*/
-/*		·â×°ÁË¶ÔNPCÄ£°åÅäÖÃÎÄ¼þµÄ¶ÁÐ´ºÍCache						*/
+/*		ï¿½ï¿½×°ï¿½Ë¶ï¿½NPCÄ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ä¶ï¿½Ð´ï¿½ï¿½Cache						*/
 /************************************************************************/
 #ifndef _KNPC_TEMPLATE_LIST_
 #define _KNPC_TEMPLATE_LIST_
@@ -16,45 +16,45 @@
 #include <map>
 
 #define MAX_NPC_REPRESENT_ID_COUNT 10
-#define MAX_NPC_DIALOG_COUNT 3			//NpcÉíÉÏµÄËæ»ú¶Ô»°ÊýÁ¿
+#define MAX_NPC_DIALOG_COUNT 3			//Npcï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½Ô»ï¿½ï¿½ï¿½ï¿½ï¿½
 #define MAX_NPC_DIALOG_LEN	1024
 #define MAX_OPTION_TEXT_LEN	128
-#define MAX_NPC_REPUTATION	4			//Ã¿¸öNpc¿ÉÒÔÓ°ÏìµÄÉùÍûÊýÁ¿
+#define MAX_NPC_REPUTATION	4			//Ã¿ï¿½ï¿½Npcï¿½ï¿½ï¿½ï¿½Ó°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 class KNpc;
 
 struct KNpcTemplate
 {
 	DWORD						dwTemplateID;
-	char						szName[_NAME_LEN];		    // ½ÇÉ«Ãû
+	char						szName[_NAME_LEN];		    // ï¿½ï¿½É«ï¿½ï¿½
 #ifdef _CLIENT
-	char						szTitle[TITLE_LEN];			// ³ÆºÅ
-	char						szMapName[_NAME_LEN];		// ËùÊôµØÍ¼
+	char						szTitle[TITLE_LEN];			// ï¿½Æºï¿½
+	char						szMapName[_NAME_LEN];		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼
 #endif
 
-	int							nKind;					    // ¼ûCHARACTER_KIND
-	DWORD						dwForceID;				    // ËùÊôÊÆÁ¦
-    DWORD                       dwGuardForceID;             // ÊÜ¸ÃÊÆÁ¦µÄÊØÎÀ±£»¤
-    int                         nSpecies;                   // NPCÎïÖÖ£¬¼ûKNPC_SPECIES¶¨Òå
-	int							nLevel;					    // ½ÇÉ«»ù×¼µÈ¼¶
-	int							nAdjustLevel;				// ½ÇÉ«µÈ¼¶µÄÉú³ÉÄ£Ê½£¬0²»¸¡¶¯£¬1ÏòÉÏ£¬2ÏòÏÂ£¬3ÉÏÏÂ¸¡¶¯
-	int							nHeight;					// Npc¸ß¶È
-	MOVE_MODE					eMoveMode;					// NpcµÄÒÆ¶¯Ä£Ê½				
+	int							nKind;					    // ï¿½ï¿½CHARACTER_KIND
+	DWORD						dwForceID;				    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    DWORD                       dwGuardForceID;             // ï¿½Ü¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    int                         nSpecies;                   // NPCï¿½ï¿½ï¿½Ö£ï¿½ï¿½ï¿½KNPC_SPECIESï¿½ï¿½ï¿½ï¿½
+	int							nLevel;					    // ï¿½ï¿½É«ï¿½ï¿½×¼ï¿½È¼ï¿½
+	int							nAdjustLevel;				// ï¿½ï¿½É«ï¿½È¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£Ê½ï¿½ï¿½0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½Ï£ï¿½2ï¿½ï¿½ï¿½Â£ï¿½3ï¿½ï¿½ï¿½Â¸ï¿½ï¿½ï¿½
+	int							nHeight;					// Npcï¿½ß¶ï¿½
+	MOVE_MODE					eMoveMode;					// Npcï¿½ï¿½ï¿½Æ¶ï¿½Ä£Ê½				
 
-    int                         nTouchRange;                //ÊÜ»÷·¶Î§£¬´¥¼°·¶Î§£¬ÀàËÆÓÚÎïÌå°ë¾¶
-    int                         nIntensity;                 //Ç¿¶È
-    int                         nReviveTime;                //ÖØÉúÊ±¼ä
+    int                         nTouchRange;                //ï¿½Ü»ï¿½ï¿½ï¿½Î§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë¾¶
+    int                         nIntensity;                 //Ç¿ï¿½ï¿½
+    int                         nReviveTime;                //ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
     int                         nReviveMinTime;
 
-	BOOL						bSelectable;				// ÄÜ·ñµãÑ¡
-	BOOL						bCanSeeLifeBar;				// ÄÜ·ñÏÔÊ¾ÑªÌõ
-    BOOL                        bCanSeeName;                // ÊÇ·ñÏÔÊ¾Ãû×Ö
+	BOOL						bSelectable;				// ï¿½Ü·ï¿½ï¿½Ñ¡
+	BOOL						bCanSeeLifeBar;				// ï¿½Ü·ï¿½ï¿½ï¿½Ê¾Ñªï¿½ï¿½
+    BOOL                        bCanSeeName;                // ï¿½Ç·ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
 
-	int							nMaxLife;				    // ×î´óÉúÃüÖµ
-	int							nLifeReplenish;			    // ÉúÃüµãÊý»Ø¸´ËÙ¶È
-	int							nLifeReplenishPercent;	    // ÉúÃü°Ù·Ö±È»Ø¸´ËÙ¶È
+	int							nMaxLife;				    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
+	int							nLifeReplenish;			    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¸ï¿½ï¿½Ù¶ï¿½
+	int							nLifeReplenishPercent;	    // ï¿½ï¿½ï¿½ï¿½ï¿½Ù·Ö±È»Ø¸ï¿½ï¿½Ù¶ï¿½
 
-	int							nMaxMana;				    // ×î´óÄÚÁ¦Öµ
+	int							nMaxMana;				    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 	int							nManaReplenish;			
 	int							nManaReplenishPercent;	
 
@@ -67,53 +67,53 @@ struct KNpcTemplate
     int                         nRangeWeaponDamageBase;
     int                         nRangeWeaponDamageRand;
 
-	int							nDodge;			            //ÉÁ±ÜµãÊý
-    int                         nParry;                     //ÕÐ¼Ü¼¸ÂÊ
-    int                         nParryValue;                //ÕÐ¼ÜÖµ£¬ºÍ¼õÃâÉËº¦Ïà¹Ø
-    int                         nSense;                     //¶´²ìÖµ
-    int                         nHitBase;                   //ÃüÖÐ»ù´¡Öµ
+	int							nDodge;			            //ï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½
+    int                         nParry;                     //ï¿½Ð¼Ü¼ï¿½ï¿½ï¿½
+    int                         nParryValue;                //ï¿½Ð¼ï¿½Öµï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½Ëºï¿½ï¿½ï¿½ï¿½
+    int                         nSense;                     //ï¿½ï¿½ï¿½ï¿½Öµ
+    int                         nHitBase;                   //ï¿½ï¿½ï¿½Ð»ï¿½ï¿½ï¿½Öµ
 
-    int                         nPhysicsCriticalStrike;     //Íâ¹¦ÖØ»÷¸ÅÂÊ 
-    int                         nSolarCriticalStrike;       //ÑôÐÔÄÚ¹¦ÖØ»÷¸ÅÂÊ
-    int                         nNeutralCriticalStrike;     //ÖÐÐÔÄÚ¹¦ÖØ»÷¸ÅÂÊ
-    int                         nLunarCriticalStrike;       //ÒõÐÔÄÚ¹¦ÖØ»÷¸ÅÂÊ
-    int                         nPoisonCriticalStrike;      //¶¾ÐÔÄÚ¹¦ÖØ»÷¸ÅÂÊ
+    int                         nPhysicsCriticalStrike;     //ï¿½â¹¦ï¿½Ø»ï¿½ï¿½ï¿½ï¿½ï¿½ 
+    int                         nSolarCriticalStrike;       //ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½Ø»ï¿½ï¿½ï¿½ï¿½ï¿½
+    int                         nNeutralCriticalStrike;     //ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½Ø»ï¿½ï¿½ï¿½ï¿½ï¿½
+    int                         nLunarCriticalStrike;       //ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½Ø»ï¿½ï¿½ï¿½ï¿½ï¿½
+    int                         nPoisonCriticalStrike;      //ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½Ø»ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    int							nPhysicsShieldBase;         //Íâ¹¦·ÀÓùÁ¦
-    int							nSolarMagicDefence;			//ÑôÐÔÄÚ¹¦·ÀÓùÏµÊý
-    int							nNeutralMagicDefence;		//ÖÐÐÔÄÚ¹¦·ÀÓùÏµÊý
-    int							nLunarMagicDefence;			//ÒõÐÔÄÚ¹¦·ÀÓùÏµÊý
-    int							nPoisonMagicDefence;		//¶¾ÐÔÄÚ¹¦·ÀÓùÏµÊý
+    int							nPhysicsShieldBase;         //ï¿½â¹¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    int							nSolarMagicDefence;			//ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½
+    int							nNeutralMagicDefence;		//ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½
+    int							nLunarMagicDefence;			//ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½
+    int							nPoisonMagicDefence;		//ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½
 
-	int							nAIType;					//AIÀàÐÍ
-	int							nAIParamTemplateID;			//AI²ÎÊýÄ£°å
+	int							nAIType;					//AIï¿½ï¿½ï¿½ï¿½
+	int							nAIParamTemplateID;			//AIï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½
 
-	int							nCorpseDoodadID;			//Ê¬ÌåÄ£°åID
-	int							nDropClassID;				//npc·ÖÀàµôÂäÖÐÊ¹ÓÃ		
+	int							nCorpseDoodadID;			//Ê¬ï¿½ï¿½Ä£ï¿½ï¿½ID
+	int							nDropClassID;				//npcï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½		
 
 	DWORD						dwRepresentID[MAX_NPC_REPRESENT_ID_COUNT];
-	int							nNpcDialogID;				//NpcËµ»°ÓÃµÄID,¶ÔÓ¦±íSmartDialog.tab
+	int							nNpcDialogID;				//NpcËµï¿½ï¿½ï¿½Ãµï¿½ID,ï¿½ï¿½Ó¦ï¿½ï¿½SmartDialog.tab
 
-    DWORD                       dwImmunityMask;             // BossÊôÐÔ ÃâÒßÑÚÂë
+    DWORD                       dwImmunityMask;             // Bossï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 #if defined(_SERVER)
-    BOOL                        bDropNotQuestItemFlag;      // ±íÊ¾Õâ¸öNPC°ïÍæ¼Ò´òÆäËûNPC,ÆäËûNPCÊÇ·ñÒªµôÂä·ÇÈÎÎñµÀ¾ß
-	char						szDropName[MAX_DROP_PER_NPC][MAX_PATH];//µôÂä±íÎÄ¼þÃû
+    BOOL                        bDropNotQuestItemFlag;      // ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½NPCï¿½ï¿½ï¿½ï¿½Ò´ï¿½ï¿½ï¿½ï¿½ï¿½NPC,ï¿½ï¿½ï¿½ï¿½NPCï¿½Ç·ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	char						szDropName[MAX_DROP_PER_NPC][MAX_PATH];//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
 	int							nDropCount[MAX_DROP_PER_NPC];
 
-	DWORD						dwSkillIDList[MAX_NPC_AI_SKILL];		//AI¼¼ÄÜID
-	DWORD						dwSkillLevelList[MAX_NPC_AI_SKILL];		//AI¼¼ÄÜµÈ¼¶
-	int							nSkillCastInterval[MAX_NPC_AI_SKILL];	//AI¼¼ÄÜ¼ä¸ô
-	int							nAISkillType[MAX_NPC_AI_SKILL];			//AI¼¼ÄÜÀàÐÍ
-	int							nSkillRate[MAX_NPC_AI_SKILL];			//AI¼¼ÄÜÊÍ·ÅµÄ¸ÅÂÊ
-    int							nSkillAniFrame[MAX_NPC_AI_SKILL];       //AI¼¼ÄÜ¶¯×÷Ö¡Êý
-    int							nSkillRestFrame[MAX_NPC_AI_SKILL];      //AI¼¼ÄÜÍ£Ö¹Ö¡Êý
+	DWORD						dwSkillIDList[MAX_NPC_AI_SKILL];		//AIï¿½ï¿½ï¿½ï¿½ID
+	DWORD						dwSkillLevelList[MAX_NPC_AI_SKILL];		//AIï¿½ï¿½ï¿½ÜµÈ¼ï¿½
+	int							nSkillCastInterval[MAX_NPC_AI_SKILL];	//AIï¿½ï¿½ï¿½Ü¼ï¿½ï¿½
+	int							nAISkillType[MAX_NPC_AI_SKILL];			//AIï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	int							nSkillRate[MAX_NPC_AI_SKILL];			//AIï¿½ï¿½ï¿½ï¿½ï¿½Í·ÅµÄ¸ï¿½ï¿½ï¿½
+    int							nSkillAniFrame[MAX_NPC_AI_SKILL];       //AIï¿½ï¿½ï¿½Ü¶ï¿½ï¿½ï¿½Ö¡ï¿½ï¿½
+    int							nSkillRestFrame[MAX_NPC_AI_SKILL];      //AIï¿½ï¿½ï¿½ï¿½Í£Ö¹Ö¡ï¿½ï¿½
 
-	int							nThreatTime;				            //³ðºÞÏûÍË¼ä¸ô
+	int							nThreatTime;				            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¼ï¿½ï¿½
 	int							nOverThreatPercent;
-    int                         nPursuitRange;                          //×·»÷¾àÀë
+    int                         nPursuitRange;                          //×·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-	//------  ¹ÖÎïµôÇ®  ------------------------------------------------->
+	//------  ï¿½ï¿½ï¿½ï¿½ï¿½Ç®  ------------------------------------------------->
     int                         nExp;
 	int							nMinMoney;
 	int							nMaxMoney;
@@ -154,7 +154,7 @@ struct KNpcTemplate
     char                        szGameCardSaleOptionText[MAX_OPTION_TEXT_LEN];
     char                        szGameCardBuyOptionText[MAX_OPTION_TEXT_LEN];
 
-    // OpenWindows Ê±¸÷¸öÄ£¿é¶ÔÉùÍûµÈ¼¶µÄÐèÇó
+    // OpenWindows Ê±ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     int                         nShopRequireReputeLevel;
     int                         nMasterRequireReputeLevel;
     int                         nCraftMasterRequireReputeLevel;
@@ -175,14 +175,17 @@ struct KNpcTemplate
     
 #ifdef _SERVER
     int                         nProgressID;
-    int                         nCampLootPrestige; // ÕóÓªÑÚÂë, 0,1,2Î»·Ö±ð±íÊ¾¶ÔÓ¦ÕóÓªÄÜ·ñ¼ÓÍþÍû
+    int                         nCampLootPrestige; // ï¿½ï¿½Óªï¿½ï¿½ï¿½ï¿½, 0,1,2Î»ï¿½Ö±ï¿½ï¿½Ê¾ï¿½ï¿½Ó¦ï¿½ï¿½Óªï¿½Ü·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     int                         nPrestige;
     int                         nContribution;
-    int                         nAchievementID;     // »÷É±ºó¸øµÄ³É¾ÍID
-    int                         nAddCampScore;      // »÷É±ºóÔö¼ÓµÄÊ¿ÆøÖµ,ÕýÊý¼ÓºÆÆøÃË,¸ºÊý¼Ó¶ñÈË¹È
+    int                         nJustice;           // v2.5: cbtJustice dropped on kill
+    int                         nExamPrint;         // v2.5: cbtExamPrint dropped on kill
+    int                         nActivityAward;     // v2.5: cbtActivityAward dropped on kill
+    int                         nAchievementID;     // ï¿½ï¿½É±ï¿½ï¿½ï¿½ï¿½Ä³É¾ï¿½ID
+    int                         nAddCampScore;      // ï¿½ï¿½É±ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½Ê¿ï¿½ï¿½Öµ,ï¿½ï¿½ï¿½ï¿½ï¿½Óºï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Ó¶ï¿½ï¿½Ë¹ï¿½
 #endif
 
-    int                         nKnockedBackRate; // ±»¶¯ÒÆ¶¯¸ÅÂÊ£º»÷·ÉµÈ
+    int                         nKnockedBackRate; // ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½Ê£ï¿½ï¿½ï¿½ï¿½Éµï¿½
     int                         nKnockedDownRate;
     int                         nKnockedOffRate;
     int                         nRepulsedRate;
@@ -227,7 +230,7 @@ private:
 	BOOL LoadNpcTemplate(int nIndex, ITabFile* piTabFile, KNpcTemplate& fNpcTemplate);
 };
 
-// NpcËÀºó¸ø³öµÄ¾­ÑéÓÉÆäÇ¿¶ÈºÍ¾­Ñé²é±í¾ö¶¨
+// Npcï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¿ï¿½ÈºÍ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 
 #endif	//_KNPC_TEMPLATE_LIST_

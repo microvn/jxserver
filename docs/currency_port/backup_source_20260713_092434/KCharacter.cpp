@@ -17,14 +17,14 @@
 #include "SO3UI/SO3GameWorldUIHandler.h"
 #endif
  
-// ï¿½ï¿½ï¿½Öµï¿½ï¿½Ê¾Ã¿DAMAGE_2_MANA_RATEï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½Ëºï¿½
+// Õâ¸öÖµ±íÊ¾Ã¿DAMAGE_2_MANA_RATEµãÄÚÁ¦µÖÏû1µãÉËº¦
 #define DAMAGE_2_MANA_RATE          2
 
 #define THERAPY_TO_THREAT           2
 
 #define CORPSE_DISPPEAR_TIME	    (GAME_FPS * 60 * 2)
 
-//Ã¿ï¿½ï¿½ï¿½Ë¶ï¿½Npcï¿½ï¿½ï¿½Ð¶Ô»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+//Ã¿¸öÈË¶ÔNpc½øÐÐ¶Ô»°²Ù×÷µÄÊ±ºò
 #define MAX_IDLE_FRAME_ON_DIALOGUE  (GAME_FPS * 20)
 
 #define RESIST_FEAR_INTERVAL        (GAME_FPS * 2)
@@ -65,7 +65,7 @@ BOOL KCharacter::Init(void)
     m_eGender                               = cgGay;
 	m_eKind								    = ckInvalid;
 	m_eRace								    = crHuman;
-	m_dwForceID							    = 0;    // Ä¬ï¿½ï¿½Öµï¿½ï¿½Îªï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½ï¿½Ï·Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	m_dwForceID							    = 0;    // Ä¬ÈÏÖµ£¬ÎªÍæ¼Ò³õ½øÓÎÏ·Ê±µÄËùÊôÊÆÁ¦
     m_dwGuardForceID                        = 0;
 	m_nLevel							    = 0;
 	m_dwCharacterAction						= 0;
@@ -76,7 +76,7 @@ BOOL KCharacter::Init(void)
     m_dwOwner                               = ERROR_ID;
 #endif
 
-    // ---------- ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ ------------------->
+    // ---------- ÒÆ¶¯Ïà¹Ø ------------------->
 	m_eMoveState                            = cmsOnStand;
 
     m_bSlip                                 = false;
@@ -128,7 +128,7 @@ BOOL KCharacter::Init(void)
     m_bAutoTurnFlag                         = false;
 #endif
 
-	// ---------- Ç±ï¿½ï¿½ ----------------------->
+	// ---------- Ç±ÄÜ ----------------------->
     m_nCurrentStrength		                = 0;		
     m_nStrengthBase                         = 0;
     m_nStrengthBasePercentAdd               = 0;
@@ -149,7 +149,7 @@ BOOL KCharacter::Init(void)
     m_nSpunkBase                            = 0;
     m_nSpunkBasePercentAdd                  = 0;
 
-	// ---------- ï¿½ï¿½ï¿½ï¿½ ----------------------->
+	// ---------- ÉúÃü ----------------------->
 	m_nCurrentLife                          = INT_MAX / 2;
 	m_nMaxLife                              = 0;
 	m_nMaxLifeBase                          = 0;
@@ -160,7 +160,7 @@ BOOL KCharacter::Init(void)
     m_nLifeReplenishCoefficient             = 0;
     m_nLifeReplenishExt                     = 0;
 
-	// ---------- ï¿½ï¿½ï¿½ï¿½ ----------------------->
+	// ---------- ÄÚÁ¦ ----------------------->
 	m_nCurrentMana                          = INT_MAX / 2;
 	m_nMaxMana                              = 0;
 	m_nMaxManaBase                          = 0;
@@ -171,12 +171,12 @@ BOOL KCharacter::Init(void)
     m_nManaReplenishCoefficient             = 0;
     m_nManaReplenishExt                     = 0;
 
-    // ---------- Å­ï¿½ï¿½ ----------------------->
+    // ---------- Å­Æø ----------------------->
     m_nCurrentRage                          = 0;
     m_nMaxRage                              = 0;
     m_nRageReplenish                        = 0;
 
-    // ---------- ï¿½ï¿½ï¿½ï¿½ ----------------------->
+    // ---------- ÔÓÏî ----------------------->
 	m_nDodge                                = 0;
     m_nDodgeBaseRate                        = 0;
 	m_bFightState                           = false;
@@ -231,13 +231,13 @@ BOOL KCharacter::Init(void)
 
 	m_nBeatBackRate                         = KILO_NUM;
 	m_nStunStrikeRate                       = 0;
-	m_nKnockedBackRate                      = KILO_NUM; // Ä¬ï¿½ï¿½ 100% ï¿½ï¿½ï¿½Ë¡ï¿½
-	m_nKnockedOffRate                       = KILO_NUM; // Ä¬ï¿½ï¿½ 100% ï¿½ï¿½ï¿½É¡ï¿½
-    m_nKnockedDownRate                      = KILO_NUM; // Ä¬ï¿½ï¿½ 100% ï¿½ï¿½ï¿½ï¿½
-    m_nRepulsedRate                         = KILO_NUM; // Ä¬ï¿½ï¿½ 100% ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-    m_nPullRate                             = KILO_NUM; // Ä¬ï¿½ï¿½ 100% ï¿½ï¿½ï¿½ï¿½
+	m_nKnockedBackRate                      = KILO_NUM; // Ä¬ÈÏ 100% »÷ÍË¡£
+	m_nKnockedOffRate                       = KILO_NUM; // Ä¬ÈÏ 100% »÷·É¡£
+    m_nKnockedDownRate                      = KILO_NUM; // Ä¬ÈÏ 100% »÷µ¹
+    m_nRepulsedRate                         = KILO_NUM; // Ä¬ÈÏ 100% »÷»¬²½
+    m_nPullRate                             = KILO_NUM; // Ä¬ÈÏ 100% ±»À­
 
-    // -->[ï¿½ï¿½ï¿½ï¿½]
+    // -->[ÆÆÕÀ]
 #ifdef _SERVER
     m_nUpperWeak                            = 0;
     m_nMiddleWeak                           = 0;
@@ -251,9 +251,9 @@ BOOL KCharacter::Init(void)
     m_nUpperWeakLevel                      = swlNone;
     m_nMiddleWeakLevel                     = swlNone;
     m_nLowerWeakLevel                      = swlNone;
-    // [ï¿½ï¿½ï¿½ï¿½]<--
+    // [ÆÆÕÀ]<--
 
-	// -------------- ï¿½â¹¦ ------------------------------------------------------>
+	// -------------- Íâ¹¦ ------------------------------------------------------>
 
 	m_nMeleeWeaponDamageBase                = 0;
 	m_nMeleeWeaponDamageRand                = 0;
@@ -304,7 +304,7 @@ BOOL KCharacter::Init(void)
 	m_nPhysicsDamageAbsorb                  = 0;    
 	m_nPhysicsDamageManaShield              = 0; 
 
-	// ------------- ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ ----------------------------->
+	// ------------- ÑôÐÔÄÚ¹¦ ----------------------------->
 	m_nSkillSolarDamage                     = 0;
     m_nSkillSolarDamageRand                 = 0;
 	m_nSkillSolarDamagePercent              = 0;
@@ -342,7 +342,7 @@ BOOL KCharacter::Init(void)
 	m_nSolarDamageAbsorb                    = 0;     
 	m_nSolarDamageManaShield                = 0; 
 
-	// ------------- ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ ----------------------------->
+	// ------------- ÖÐÐÔÄÚ¹¦ ----------------------------->
 	m_nSkillNeutralDamage                   = 0;
     m_nSkillNeutralDamageRand               = 0;
 	m_nSkillNeutralDamagePercent            = 0;	
@@ -381,7 +381,7 @@ BOOL KCharacter::Init(void)
 	m_nNeutralDamageAbsorb                  = 0;     
 	m_nNeutralDamageManaShield              = 0; 
 
-	// ------------- ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ ------------------------------->
+	// ------------- ÒõÐÔÄÚ¹¦ ------------------------------->
 	m_nSkillLunarDamage                     = 0;
     m_nSkillLunarDamageRand                 = 0;
 	m_nSkillLunarDamagePercent              = 0;	
@@ -421,7 +421,7 @@ BOOL KCharacter::Init(void)
 	m_nLunarDamageManaShield                = 0; 
 
 
-	// ------------- ï¿½ï¿½ï¿½ï¿½ ------------------------------------>
+	// ------------- ¶¾ÐÔ ------------------------------------>
 
 	m_nSkillPoisonDamage                    = 0;
     m_nSkillPoisonDamageRand                = 0;
@@ -461,7 +461,7 @@ BOOL KCharacter::Init(void)
     m_nPoisonDamageAbsorb                   = 0;     
     m_nPoisonDamageManaShield               = 0; 
 
-	// ----------- ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½Ø¸ï¿½) ---------------------------->
+	// ----------- ÖÎÁÆ(ÉúÃü»Ø¸´) ---------------------------->
     m_nTherapyPower                         = 0;
     m_nTherapyPowerBase                     = 0;
     m_nTherapyPowerPercent                  = KILO_NUM;
@@ -627,14 +627,14 @@ void KCharacter::Activate(void)
     {
         m_AIVM.Active();
 
-        // m_pSceneÖ¸ï¿½ï¿½Îªï¿½Õ±ï¿½Ê¾ï¿½Ô¼ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½
+        // m_pSceneÖ¸ÕëÎª¿Õ±íÊ¾×Ô¼º±»É¾³ýÁË
         KG_PROCESS_ERROR(m_pScene);
     }
 
 #if defined(_SERVER)
 	ProcessAutoCastSkill();
 #endif
-	// ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª
+	// ´¦ÀíÊ±¼ä³ÖÐøÐÐÎª
 	ProcessOTAction();
 
     m_BuffList.Activate();
@@ -660,11 +660,11 @@ void KCharacter::Activate(void)
 #endif	//_SERVER
 
 	RunStateMachine();
-    // m_pSceneÖ¸ï¿½ï¿½Îªï¿½Õ±ï¿½Ê¾ï¿½Ô¼ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½
+    // m_pSceneÖ¸ÕëÎª¿Õ±íÊ¾×Ô¼º±»É¾³ýÁË
     KG_PROCESS_ERROR(m_pScene);
 
 	ProcessMove();
-    // m_pSceneÖ¸ï¿½ï¿½Îªï¿½Õ±ï¿½Ê¾ï¿½Ô¼ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½
+    // m_pSceneÖ¸ÕëÎª¿Õ±íÊ¾×Ô¼º±»É¾³ýÁË
     KG_PROCESS_ERROR(m_pScene);
 
 #ifdef _SERVER
@@ -682,7 +682,7 @@ Exit0:
 	return;
 }
 
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½×´Ì¬ï¿½ï¿½
+// ´¦Àí½ÇÉ«µÄ×´Ì¬»ú
 void KCharacter::RunStateMachine()
 {
 	switch (m_eMoveState)
@@ -788,7 +788,7 @@ BOOL KCharacter::PrepareSkill(DWORD dwSkillID, DWORD dwSkillLevel, KTarget& rTar
         if (m_dwID == g_pSO3World->m_dwClientPlayerID)
         {
             KUIEventSkillProgress    Param;
-            // UI: ï¿½ï¿½Ê¾Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            // UI: ÏÔÊ¾Í¨µÀ¼¼½ø¶ÈÌõ
             Param.nTotalFrame  = nPrepareFrame;
             Param.dwSkillID    = dwSkillID;
             Param.dwSkillLevel = dwSkillLevel;
@@ -826,14 +826,14 @@ SKILL_RESULT_CODE KCharacter::CastSkill(DWORD dwSkillID, DWORD dwSkillLevel, KTa
     pSkill = SkillRecipePointer.SetRecipeKey(RecipeKey);
     KG_PROCESS_ERROR_RET_CODE(pSkill, srcInvalidSkill);
 
-    KGLOG_PROCESS_ERROR(pSkill->m_pBaseInfo->nCastMode != scmItem); // ï¿½Ôµï¿½ï¿½ï¿½Ê¹ï¿½ÃµÄ¼ï¿½ï¿½Ü²ï¿½ï¿½ï¿½ï¿½ßµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¡ï¿½
+    KGLOG_PROCESS_ERROR(pSkill->m_pBaseInfo->nCastMode != scmItem); // ¶ÔµÀ¾ßÊ¹ÓÃµÄ¼¼ÄÜ²»ÄÜ×ßµ½¸ÃÁ÷³Ì¡£
 
 //     if (m_eMoveState == cmsOnDash)
 //     {
 //         Stop();
 //     }
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½Ð¶ï¿½
+    // Èç¹ûÕýÔÚÊÍ·ÅÍ¨µÀ¼¼£¬ÔòÖ±½ÓÖÐ¶Ï
     if (
         m_OTActionParam.eActionType == otActionSkillChannel ||
         m_OTActionParam.eActionType == otActionPicking
@@ -864,7 +864,7 @@ SKILL_RESULT_CODE KCharacter::CastSkill(DWORD dwSkillID, DWORD dwSkillLevel, KTa
         pSkill->ResetPublicCooldown(pPlayer);
     }
 
-    // ï¿½ï¿½â¼¼ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Òªï¿½Ô¶ï¿½×ªï¿½ï¿½
+    // ¼ì²â¼¼ÄÜÊÇ·ñÐèÒª×Ô¶¯×ªÏò
     if (pSkill->IsAutoTurn())
     {
         m_bAutoTurnFlag = true;
@@ -872,7 +872,7 @@ SKILL_RESULT_CODE KCharacter::CastSkill(DWORD dwSkillID, DWORD dwSkillLevel, KTa
 
     nPrepareFrame   = pSkill->m_nPrepareFrames;
 
-	// ï¿½ï¿½â¼¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ÎªË²ï¿½ï¿½
+	// ¼ì²â¼¼ÄÜÀàÐÍÊÇ·ñÎªË²·¢
 	if (nPrepareFrame > 0 && !(m_dwDirectCastMask & pSkill->m_pBaseInfo->dwCastMask))
 	{
 		nRetCode = g_PlayerServer.DoSkillPrepare(this, dwSkillID, dwSkillLevel, nPrepareFrame, m_SkillTarget);
@@ -906,7 +906,7 @@ SKILL_RESULT_CODE KCharacter::CastSkill(DWORD dwSkillID, DWORD dwSkillLevel, KTa
 	nResult = pSkill->Cast(this, this, rTarget, RecipeKey);
 	KGLOG_PROCESS_ERROR(nResult == srcSuccess);
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½ï¿½Â¼ï¿½(Ë²ï¿½ï¿½)
+    // ¼¼ÄÜÊÍ·ÅÊÂ¼þ(Ë²·¢)
 
     switch (m_SkillTarget.GetTargetType())
     {
@@ -949,7 +949,7 @@ SKILL_RESULT_CODE KCharacter::CastSkillSub(KCharacter* pLogicCaster, DWORD dwSki
 
     assert(pLogicCaster);
 
-	// ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
+	// »ñµÃ¼¼ÄÜÖ¸Õë
 
     nRetCode = g_pSO3World->m_SkillManager.GetSkillRecipeKey(&RecipeKey, dwSkillID, dwSkillLevel, this);
     KGLOG_PROCESS_ERROR(nRetCode);
@@ -957,9 +957,9 @@ SKILL_RESULT_CODE KCharacter::CastSkillSub(KCharacter* pLogicCaster, DWORD dwSki
     pSkill = g_pSO3World->m_SkillManager.GetSkill(RecipeKey);
 	KG_PROCESS_ERROR_RET_CODE(pSkill, srcInvalidSkill);
 
-    KGLOG_PROCESS_ERROR(pSkill->m_pBaseInfo->nCastMode != scmItem); // ï¿½Ôµï¿½ï¿½ï¿½Ê¹ï¿½ÃµÄ¼ï¿½ï¿½Ü²ï¿½ï¿½ï¿½ï¿½ßµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¡ï¿½
+    KGLOG_PROCESS_ERROR(pSkill->m_pBaseInfo->nCastMode != scmItem); // ¶ÔµÀ¾ßÊ¹ÓÃµÄ¼¼ÄÜ²»ÄÜ×ßµ½¸ÃÁ÷³Ì¡£
 
-	// ï¿½Ð»ï¿½Ä¿ï¿½ï¿½Í¼ï¿½Â¼ï¿½ï¿½ï¿½ï¿½
+	// ÇÐ»»Ä¿±êºÍ¼ÇÂ¼¼¼ÄÜ
 	m_SkillTarget   = rTarget;
 
     if (pSkill->m_pBaseInfo->nCastMode == scmTargetLeader && IS_PLAYER(m_dwID))
@@ -1022,7 +1022,7 @@ SKILL_RESULT_CODE KCharacter::CastSkillSub(KCharacter* pLogicCaster, DWORD dwSki
 	nResult = pSkill->Cast(this, pLogicCaster, rTarget, RecipeKey);
 	KGLOG_PROCESS_ERROR(nResult == srcSuccess);
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½ï¿½Â¼ï¿½(ï¿½Ó¼ï¿½ï¿½ï¿½)
+    // ¼¼ÄÜÊÍ·ÅÊÂ¼þ(×Ó¼¼ÄÜ)
     {
         BOOL        bRetCode     = false;
         KCharacter* pEventTarget = NULL;
@@ -1110,16 +1110,16 @@ SKILL_RESULT_CODE KCharacter::CastSkill(DWORD dwSkillID, DWORD dwSkillLevel, KTa
     KSKILL_RECIPE_KEY               RecipeKey;
     KSkillRecipePointer             SkillRecipePointer;
 
-	// ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
+	// »ñµÃ¼¼ÄÜÖ¸Õë
     nRetCode = g_pSO3World->m_SkillManager.GetSkillRecipeKey(&RecipeKey, dwSkillID, dwSkillLevel, this);
     KGLOG_PROCESS_ERROR(nRetCode);
 
     pSkill = SkillRecipePointer.SetRecipeKey(RecipeKey);
     KGLOG_PROCESS_ERROR(pSkill);
 
-    KGLOG_PROCESS_ERROR(pSkill->m_pBaseInfo->nCastMode != scmItem); // ï¿½Ôµï¿½ï¿½ï¿½Ê¹ï¿½ÃµÄ¼ï¿½ï¿½Ü²ï¿½ï¿½ï¿½ï¿½ßµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¡ï¿½
+    KGLOG_PROCESS_ERROR(pSkill->m_pBaseInfo->nCastMode != scmItem); // ¶ÔµÀ¾ßÊ¹ÓÃµÄ¼¼ÄÜ²»ÄÜ×ßµ½¸ÃÁ÷³Ì¡£
 
-	// ï¿½Ð»ï¿½Ä¿ï¿½ï¿½Í¼ï¿½Â¼ï¿½ï¿½ï¿½ï¿½
+	// ÇÐ»»Ä¿±êºÍ¼ÇÂ¼¼¼ÄÜ
 	m_SkillTarget   = rTarget;
 
 	pSkill->Cast(this, this, rTarget, RecipeKey);
@@ -1135,7 +1135,7 @@ SKILL_RESULT_CODE KCharacter::CastSkill(DWORD dwSkillID, DWORD dwSkillLevel, KTa
             if (m_dwID == g_pSO3World->m_dwClientPlayerID)
             {
                 KUIEventSkillProgress    Param;
-                // UI: ï¿½ï¿½Ê¾Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                // UI: ÏÔÊ¾Í¨µÀ¼¼½ø¶ÈÌõ
                 Param.nTotalFrame  = nChannelFrame;
                 Param.dwSkillID    = dwSkillID;
                 Param.dwSkillLevel = dwSkillLevel;
@@ -1178,13 +1178,13 @@ SKILL_RESULT_CODE KCharacter::CastSkillSub(KCharacter* pLogicCaster, DWORD dwSki
     nRetCode = g_pSO3World->m_SkillManager.GetSkillRecipeKey(&SkillRecipeKey, dwSkillID, dwSkillLevel, this);
     KGLOG_PROCESS_ERROR(nRetCode);
 
-	// ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
+	// »ñµÃ¼¼ÄÜÖ¸Õë
 	pSkill = g_pSO3World->m_SkillManager.GetSkill(SkillRecipeKey);
 	KG_PROCESS_ERROR_RET_CODE(pSkill, srcInvalidSkill);
 
-    KGLOG_PROCESS_ERROR(pSkill->m_pBaseInfo->nCastMode != scmItem); // ï¿½Ôµï¿½ï¿½ï¿½Ê¹ï¿½ÃµÄ¼ï¿½ï¿½Ü²ï¿½ï¿½ï¿½ï¿½ßµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¡ï¿½
+    KGLOG_PROCESS_ERROR(pSkill->m_pBaseInfo->nCastMode != scmItem); // ¶ÔµÀ¾ßÊ¹ÓÃµÄ¼¼ÄÜ²»ÄÜ×ßµ½¸ÃÁ÷³Ì¡£
 
-	// ï¿½Ð»ï¿½Ä¿ï¿½ï¿½Í¼ï¿½Â¼ï¿½ï¿½ï¿½ï¿½
+	// ÇÐ»»Ä¿±êºÍ¼ÇÂ¼¼¼ÄÜ
 	m_SkillTarget   = rTarget;
 
 	pSkill->Cast(this, this, rTarget, SkillRecipeKey);
@@ -1224,7 +1224,7 @@ BOOL KCharacter::ProcessCommonSkillActive(const KSKILL_RECIPE_KEY& crSkillRecipe
 
     switch (pSkill->m_pBaseInfo->nCommonSkillActiveMode)
     {
-    case scamInvalid: // ï¿½ï¿½ï¿½ï¿½Ã´ï¿½ï¿½Ê²Ã´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    case scamInvalid: // ¸ÃÔõÃ´×öÊ²Ã´£¬²»¹Ü
         break;
     case scamNone:
         DoAutoCastSkillIdle();
@@ -1383,7 +1383,7 @@ BOOL KCharacter::Stop(void)
 
     KG_PROCESS_ERROR(m_pScene);
 
-	// Õ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Stop,ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Stop(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Debuffï¿½ï¿½Ó¦ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+	// Õ¾Á¢ÊÇÎÞÐèStop,ËÀÍöÊ±²»ÄÜStop(·ñÔò»á³öÏÖÔÎDebuff·´Ó¦ÓÃ»á°ÑËÀÈË"¸´»î"µÄÎÊÌâ)
     KG_PROCESS_ERROR(
         m_eMoveState != cmsOnStand && m_eMoveState != cmsOnDeath &&
         m_eMoveState != cmsOnJump
@@ -1534,8 +1534,8 @@ BOOL KCharacter::WalkTo(int nDestX, int nDestY, BOOL bBroadcast, int nWalkSpeed 
 
     if (nDestX == m_nX && nDestY == m_nY)
     {
-        // Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½/ï¿½Üµï¿½×´Ì¬ï¿½ï¿½,ï¿½Å¿ï¿½ï¿½ï¿½Í¨ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½"ï¿½ï¿½Í£Ö¹ï¿½Æ¶ï¿½
-        // ×¢ï¿½ï¿½,ï¿½ï¿½Ô¾×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î½ï¿½ï¿½"Í£Ö¹"Ö¸ï¿½ï¿½,ï¿½ï¿½Øºï¿½ï¿½ï¿½È»ï¿½ï¿½Í£Ö¹
+        // Ö»ÓÐÔÚ×ß/ÅÜµÄ×´Ì¬ÏÂ,²Å¿ÉÒÔÍ¨¹ý"×ßÏòµ±Ç°µã"À´Í£Ö¹ÒÆ¶¯
+        // ×¢Òâ,ÌøÔ¾×´Ì¬²»Àí»áËùÎ½µÄ"Í£Ö¹"Ö¸Áî,ÂäµØºó×ÔÈ»»áÍ£Ö¹
         KG_PROCESS_ERROR(m_eMoveState == cmsOnWalk || m_eMoveState == cmsOnRun);
         nVelocityXY       = 0;
         nDirectionXY      = m_nDirectionXY;
@@ -1547,7 +1547,7 @@ BOOL KCharacter::WalkTo(int nDestX, int nDestY, BOOL bBroadcast, int nWalkSpeed 
     {
         if (m_eMoveState == cmsOnJump)
         {
-            // ï¿½ï¿½ï¿½ï¿½Ô¾×´Ì¬(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½Î»ï¿½ï¿½(ï¿½ï¿½Ò»ï¿½ï¿½)
+            // ÔÚÌøÔ¾×´Ì¬(Á¢¶¨Ìø)ÏÂ,ÔÊÐíÔÚ¿ÕÖÐ×÷Ò»¸öºÜÐ¡µÄÎ»ÒÆ(ÏÞÒ»´Î)
             if (m_nVelocityXY == 0 && !m_bSlip)
             {
                 nVelocityXY         = GetWalkSpeed() * VELOCITY_ZOOM_COEFFICIENT;
@@ -1602,7 +1602,7 @@ Exit1:
 #ifdef _SERVER
     if (IS_NPC(m_dwID))
     {
-        // NPCÃ»ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½",ï¿½ï¿½Â·Ê±ï¿½Ô¶ï¿½×ªï¿½ï¿½Ä¿ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½Ã·ï¿½"×ªï¿½ï¿½"ï¿½ï¿½Ï¢,ï¿½Æ¶ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½Ï³ï¿½ï¿½ï¿½
+        // NPCÃ»ÓÐ"ºóÍË",×ßÂ·Ê±×Ô¶¯×ªÏòÄ¿±êµã,²»ÓÃ·¢"×ªÏò"ÏûÏ¢,ÒÆ¶¯Ö¸Áî»á´øÉÏ³¯Ïò
         m_nFaceDirection = g_GetDirection(m_nX, m_nY, nDestX, nDestY);
     }
 
@@ -1644,8 +1644,8 @@ BOOL KCharacter::RunTo(int nDestX, int nDestY, BOOL bBroadcast, int nRunSpeed /*
 
     if (nDestX == m_nX && nDestY == m_nY)
     {
-        // Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½/ï¿½Üµï¿½×´Ì¬ï¿½ï¿½,ï¿½Å¿ï¿½ï¿½ï¿½Í¨ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½"ï¿½ï¿½Í£Ö¹ï¿½Æ¶ï¿½
-        // ×¢ï¿½ï¿½,ï¿½ï¿½Ô¾×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î½ï¿½ï¿½"Í£Ö¹"Ö¸ï¿½ï¿½,ï¿½ï¿½Øºï¿½ï¿½ï¿½È»ï¿½ï¿½Í£Ö¹
+        // Ö»ÓÐÔÚ×ß/ÅÜµÄ×´Ì¬ÏÂ,²Å¿ÉÒÔÍ¨¹ý"×ßÏòµ±Ç°µã"À´Í£Ö¹ÒÆ¶¯
+        // ×¢Òâ,ÌøÔ¾×´Ì¬²»Àí»áËùÎ½µÄ"Í£Ö¹"Ö¸Áî,ÂäµØºó×ÔÈ»»áÍ£Ö¹
         KG_PROCESS_ERROR(m_eMoveState == cmsOnWalk || m_eMoveState == cmsOnRun);
         nVelocityXY       = 0;
         nDirectionXY      = m_nDirectionXY;
@@ -1659,7 +1659,7 @@ BOOL KCharacter::RunTo(int nDestX, int nDestY, BOOL bBroadcast, int nRunSpeed /*
 
         if (m_eMoveState == cmsOnJump)
         {
-            // ï¿½ï¿½ï¿½ï¿½Ô¾×´Ì¬(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½Î»ï¿½ï¿½(ï¿½ï¿½Ò»ï¿½ï¿½)
+            // ÔÚÌøÔ¾×´Ì¬(Á¢¶¨Ìø)ÏÂ,ÔÊÐíÔÚ¿ÕÖÐ×÷Ò»¸öºÜÐ¡µÄÎ»ÒÆ(ÏÞÒ»´Î)
             if (m_nVelocityXY == 0 && !m_bSlip)
             {
                 nVelocityXY         = GetWalkSpeed() * VELOCITY_ZOOM_COEFFICIENT;
@@ -1676,7 +1676,7 @@ BOOL KCharacter::RunTo(int nDestX, int nDestY, BOOL bBroadcast, int nRunSpeed /*
 
         if (IS_PLAYER(m_dwID))
         {
-            // ï¿½ï¿½Òºï¿½ï¿½ï¿½Ê±ï¿½Ù¶È¼ï¿½ï¿½ï¿½
+            // Íæ¼ÒºóÍËÊ±ËÙ¶È¼õ°ë
             int nDirectionMargin = nDestDirection - m_nFaceDirection;
 
             if (nDirectionMargin > DIRECTION_COUNT / 2)
@@ -1737,7 +1737,7 @@ Exit1:
 #ifdef _SERVER
     if (IS_NPC(m_dwID))
     {
-        // NPCÃ»ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½",ï¿½ï¿½Â·Ê±ï¿½Ô¶ï¿½×ªï¿½ï¿½Ä¿ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½Ã·ï¿½"×ªï¿½ï¿½"ï¿½ï¿½Ï¢,ï¿½Æ¶ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½Ï³ï¿½ï¿½ï¿½
+        // NPCÃ»ÓÐ"ºóÍË",×ßÂ·Ê±×Ô¶¯×ªÏòÄ¿±êµã,²»ÓÃ·¢"×ªÏò"ÏûÏ¢,ÒÆ¶¯Ö¸Áî»á´øÉÏ³¯Ïò
         m_nFaceDirection = g_GetDirection(m_nX, m_nY, nDestX, nDestY);
     }
 
@@ -1756,7 +1756,7 @@ BOOL KCharacter::SwimTo(int nDestX, int nDestY, BOOL bBroadcast)
 {
     BOOL bResult              = false;
     BOOL bRetCode             = false;
-    int  nDistance            = 0; // Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë®Æ½Í¶Ó°
+    int  nDistance            = 0; // Ä¿±êµã¾àÀëµÄË®Æ½Í¶Ó°
     int  nConvergenceSpeed    = 0;
     int  nVelocityXY          = 0;
     int  nVelocityZ           = 0;
@@ -1764,7 +1764,7 @@ BOOL KCharacter::SwimTo(int nDestX, int nDestY, BOOL bBroadcast)
 
     assert(m_pCell);
 
-    // ï¿½ï¿½Ò²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð»ï¿½ï¿½ï¿½ï¿½ï¿½Ó¾×´Ì¬,Ö»ï¿½Üµï¿½Ë®ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½Ð»ï¿½
+    // Íæ¼Ò²»ÄÜÖ÷¶¯ÇÐ»»µ½ÓÎÓ¾×´Ì¬,Ö»ÄÜµ½Ë®Àïºó×Ô¶¯ÇÐ»»
     if (m_eMoveState != cmsOnSwim && m_eMoveState != cmsOnFloat)
     {
         goto Exit0;
@@ -1855,7 +1855,7 @@ Exit1:
 #ifdef _SERVER
     if (IS_NPC(m_dwID))
     {
-        // NPCÃ»ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½",ï¿½ï¿½Â·Ê±ï¿½Ô¶ï¿½×ªï¿½ï¿½Ä¿ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½Ã·ï¿½"×ªï¿½ï¿½"ï¿½ï¿½Ï¢,ï¿½Æ¶ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½Ï³ï¿½ï¿½ï¿½
+        // NPCÃ»ÓÐ"ºóÍË",×ßÂ·Ê±×Ô¶¯×ªÏòÄ¿±êµã,²»ÓÃ·¢"×ªÏò"ÏûÏ¢,ÒÆ¶¯Ö¸Áî»á´øÉÏ³¯Ïò
         m_nFaceDirection = nDirectionXY;
     }
 
@@ -1904,10 +1904,10 @@ BOOL KCharacter::Jump(BOOL bStandJump, int nJumpDirection, BOOL bSyncSelf)
         
         if (pPlayer->m_bOnHorse)
         {
-            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            // ÆïÂí²»ÄÜÁ¢¶¨Ìø
             KG_PROCESS_ERROR(!bStandJump);
 
-            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            // ÆïÂí²»ÄÜÍùºóÌø
             if (g_Cos(nJumpDirection - m_nFaceDirection) < 0)
             {
                 goto Exit0;
@@ -1932,7 +1932,7 @@ BOOL KCharacter::Jump(BOOL bStandJump, int nJumpDirection, BOOL bSyncSelf)
 
         if (g_pSO3World->m_nGameLoop <= m_nJumpLimitFrame)
         {
-            // ï¿½Ú´ò»¬µï¿½Ò»ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,Ö»ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½Ô¾
+            // ÔÚ´ò»¬µÄÒ»¶¨Ê±¼äÒÔÄÚ,Ö»ÄÜÍùÐ±ÆÂÏÂÆÂ·½ÏòÌøÔ¾
             int nGradientDegree = m_pCell->GetGradientDegree();
             if (nGradientDegree > 0)
             {
@@ -2229,7 +2229,7 @@ BOOL KCharacter::KnockedDown(int nFrame)
 		goto Exit0;
     }
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¡ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Í¬ï¿½ï¿½Ê±ï¿½ï¿½Õ¼ï¿½ï¿½ï¿½ï¿½Î»
+    // ÕâÀïÏÞÖÆÖ¡ÊýÊÇÎªÁËÍ¬²½Ê±ÉÙÕ¼¼¸¸öÎ»
     KGLOG_PROCESS_ERROR(nFrame < UCHAR_MAX);
 
     m_nMoveFrameCounter = nFrame;
@@ -2366,7 +2366,7 @@ BOOL KCharacter::Halt(void)
 		goto Exit0;
     }
 
-    KG_PROCESS_ERROR(m_pRegion); // ï¿½ï¿½Ò±ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½Ú³ï¿½ï¿½ï¿½ï¿½ï¿½
+    KG_PROCESS_ERROR(m_pRegion); // Íæ¼Ò±ØÐëÒÑ¾­ÔÚ³¡¾°ÖÐ
 
     SetMoveState(cmsOnHalt);
 
@@ -2469,7 +2469,7 @@ BOOL KCharacter::CheckDie()
                 pPlayer->m_PK.SetLoserID(ERROR_ID);
                 pPlayer->m_nCurrentLife = 1;
 
-                if (pTarget && pTarget->m_bToDie) // ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ê±»ï¿½ï¿½ï¿½ï¿½checkdieÅªï¿½ï¿½
+                if (pTarget && pTarget->m_bToDie) // ±ÜÃâÄ¿±ê±»ËæºóµÄcheckdieÅªËÀ
                 {
                     pTarget->m_nCurrentLife = 1;
                     pTarget->m_bToDie = false;
@@ -2479,7 +2479,7 @@ BOOL KCharacter::CheckDie()
             }
         }
 
-		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å±ï¿½
+		// Íæ¼ÒËÀÍö½Å±¾
 		pPlayer->m_nCurrentLife = 0;
         pPlayer->ProcessCampPK(m_dwKillerID);
 		pPlayer->CallDeathScript(m_dwKillerID);
@@ -2517,7 +2517,7 @@ BOOL KCharacter::CheckDie()
         pNpc->CallDeathScript(m_dwKillerID);
         pNpc->m_AIVM.FireEvent(aevOnSelfKilled, m_dwKillerID, 0);
 
-		// ï¿½ß»ï¿½ï¿½ï¿½ï¿½ï¿½:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å±ï¿½ï¿½ï¿½Npcï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½>0ï¿½ï¿½,ï¿½ï¿½Ã´ï¿½Í²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		// ²ß»®ÐèÇó:Èç¹ûµ÷ÓÃËÀÍö½Å±¾ºóNpcµÄÉúÃü±ä³É>0µÄ,ÄÇÃ´¾Í²»½øÈëËÀÍöÁ÷³Ì
 		if (pNpc->m_nCurrentLife > 0)
 		{
 			goto Exit1;
@@ -2529,9 +2529,6 @@ BOOL KCharacter::CheckDie()
             pNpc->LootExp(pPlayer);
             pNpc->LootPrestige(pPlayer);
             pNpc->LootContribution(pPlayer);
-            pNpc->LootJustice(pPlayer);          // v2.5: drop the new currencies on kill
-            pNpc->LootExamPrint(pPlayer);
-            pNpc->LootActivityAward(pPlayer);
             pNpc->LootAchievement(pPlayer);
             pNpc->LootCampScore();
 
@@ -2566,8 +2563,8 @@ BOOL KCharacter::CheckDie()
     }
 #endif
 
-    DoActionIdle(); // ï¿½Ð¶Ï³ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ê±ï¿½ï¿½Ä¼ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-    DoAutoCastSkillIdle(); // ï¿½Ð¶Ï³ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Í·Åµï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½
+    DoActionIdle(); // ÖÐ¶Ï³ÖÐøÒ»¶ÎÊ±¼äµÄ¼¼ÄÜ£¬ÈçÒ÷³ª
+    DoAutoCastSkillIdle(); // ÖÐ¶Ï³ÖÐøÒ»¶ÎÊ±¼äÊÍ·ÅµÄ×Ô¶¯¼¼ÄÜ£¬Èç×Ô¶¯¹¥»÷
 
 #ifdef _SERVER
     g_PlayerServer.DoCharacterDeath(this, m_dwKillerID);
@@ -2577,7 +2574,7 @@ BOOL KCharacter::CheckDie()
     m_SimpThreatList.ClearAllThreat();
     m_SimpThreatList.ClearAllThreaten();
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½Ú·ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬Í¬ï¿½ï¿½ï¿½ï¿½Ö®ï¿½ó£¬·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½á²»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    // ±ØÐëÔÚ·¢ËÀÍö×´Ì¬Í¬²½°üÖ®ºó£¬·ñÔò½çÃæ»á²»Õý³£¡£
     if (IS_PLAYER(m_dwID))
     {
         KPlayer* pPlayer = (KPlayer*)this;
@@ -2618,7 +2615,7 @@ BOOL KCharacter::Action(DWORD dwCharacterID, DWORD dwActionType)
     DWORD               dwOldActionType     = 0;
     static char         szAutoDialog[MAX_NPC_DIALOG_LEN];
 
-    // ×¢ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Îª0ï¿½ï¿½Ê¾ï¿½Ð¶Ï±ï¿½ï¿½é¶¯ï¿½ï¿½,
+    // ×¢Òâ,±íÇéºÅÎª0±íÊ¾ÖÐ¶Ï±íÇé¶¯×÷,
 
     KGLOG_PROCESS_ERROR(m_pScene);
     KGLOG_PROCESS_ERROR(m_eMoveState != cmsOnDeath);
@@ -2648,7 +2645,7 @@ BOOL KCharacter::Action(DWORD dwCharacterID, DWORD dwActionType)
         KG_PROCESS_ERROR(bRetCode);
     }
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½AIï¿½Â¼ï¿½
+    // ´¥·¢ÐÂAIÊÂ¼þ
     if (pCharacter && pCharacter->m_pScene && IS_NPC(pCharacter->m_dwID) && pCharacter->m_AIVM.GetAIType() != 0)
     {
         if (dwActionType == DIALOG_ACTION_ID)
@@ -2668,8 +2665,8 @@ BOOL KCharacter::Action(DWORD dwCharacterID, DWORD dwActionType)
 Exit1:
     m_dwCharacterAction = dwActionType;
 #ifdef _CLIENT
-    //Í¨Öªï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½
-    if (dwActionType)   // Í¨Öªï¿½ï¿½Ê¼
+    //Í¨Öª±íÏÖÂß¼­
+    if (dwActionType)   // Í¨Öª¿ªÊ¼
     {
         pCharacterAction = g_pSO3World->m_Settings.m_CharacterActionList.GetAction(dwActionType);
         KGLOG_PROCESS_ERROR(pCharacterAction);
@@ -2679,7 +2676,7 @@ Exit1:
             g_pGameWorldRepresentHandler->OnCharacterPlayAnimation(this, pCharacterAction->dwAnimationID);
         }
     }
-    else    // Í¨Öªï¿½ï¿½ï¿½ï¿½
+    else    // Í¨Öª½áÊø
     {
         pCharacterAction = g_pSO3World->m_Settings.m_CharacterActionList.GetAction(dwOldActionType);
         KGLOG_PROCESS_ERROR(pCharacterAction);
@@ -2818,8 +2815,8 @@ BOOL KCharacter::MoveTo(int nX, int nY, int nZ, BOOL bIgnoreBlock, BOOL bBroadca
 #ifdef _CLIENT
     if (m_dwID == g_pSO3World->m_dwClientPlayerID)
     {
-        // ValidateRegionsÒ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð»ï¿½Regionï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-        // ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎªMoveï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÜºÜ´ï¿½,ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½"ï¿½ï¿½
+        // ValidateRegionsÒ»°ãÊÇÔÚÖ÷½ÇÇÐ»»RegionµÄÊ±ºò×öµÄ
+        // ÕâÀïÒª×öÒ»ÏÂÊÇÒòÎªMove¾àÀë¿ÉÄÜºÜ´ó,ÒÑ¾­²»ÔÙ"¸½½ü"ÁË
         bRetCode = m_pScene->ValidateRegions(nDstRegionX, nDstRegionY);
         KGLOG_PROCESS_ERROR(bRetCode);
     }
@@ -2892,14 +2889,14 @@ BOOL KCharacter::GoToHell(DWORD dwKiller)
     if (IS_PLAYER(m_dwID))
     {
         KPlayer* pPlayer    = (KPlayer*)this;
-        DWORD    dwLoserID  = pPlayer->m_PK.GetLoserID(); //  ï¿½ï¿½ï¿½ï¿½Ö®Ç°ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½Ã¹ï¿½Loserï¿½ï¿½(ï¿½ï¿½ï¿½"GoToHell")
+        DWORD    dwLoserID  = pPlayer->m_PK.GetLoserID(); //  ¿ÉÄÜÖ®Ç°ÒÑ¾­ÉèÖÃ¹ýLoserÁË(¶à´Î"GoToHell")
         PK_STATE eState     = pPlayer->m_PK.GetPKState();
 
         if (dwLoserID == ERROR_ID && (eState == pksDueling || eState == pksDuelOutOfRange))
             pPlayer->m_PK.SetLoserID(m_dwID);
     }
 
-    // ï¿½ï¿½ï¿½×¶ï¿½Í³ï¿½ï¿½
+    // ¹±Ï×¶ÈÍ³¼Æ
 
     if (dwKiller != m_dwID && IS_PLAYER(m_dwID))
     {
@@ -3237,7 +3234,7 @@ void KCharacter::CheckFightFlag()
 
     InvalidateMoveState(GAME_FPS / 4, false);
 
-    // ï¿½ï¿½ï¿½ï¿½Ð»ï¿½ï¿½ï¿½Õ½ï¿½ï¿½×´Ì¬,ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½Î½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    // Èç¹ûÇÐ»»³ÉÕ½¶·×´Ì¬,Ôò×Ô¶¯°Î½£,µ«ÊÇÍÑÀëÕ½¶·²¢²»×Ô¶¯ÊÕÆðÎäÆ÷
     if (m_bFightState && m_bSheathFlag)
     {
         m_bSheathFlag = false;
@@ -3246,10 +3243,10 @@ void KCharacter::CheckFightFlag()
 
     if (!bFightState)
     {
-        // ï¿½ï¿½Õ½ï¿½ï¿½×´Ì¬ï¿½Ð»ï¿½Îªï¿½ï¿½Õ½ï¿½ï¿½×´Ì¬
+        // ´ÓÕ½¶·×´Ì¬ÇÐ»»Îª·ÇÕ½¶·×´Ì¬
         if ((IS_NPC(m_dwID)) && m_eMoveState != cmsOnDeath)
         {
-            // Npcï¿½ï¿½ï¿½ï¿½Õ½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½Ø¸ï¿½ï¿½ï¿½ï¿½ï¿½
+            // NpcÍÑÀëÕ½¶·×´Ì¬Á¢¼´»Ø¸´ÊôÐÔ
             m_nCurrentLife      = m_nMaxLife;
             m_nCurrentMana      = m_nMaxMana;
 
@@ -3343,7 +3340,7 @@ void KCharacter::ReviseAttribValue()
 {
     AttribReplenish();
 
-    MAKE_IN_RANGE(m_nCurrentLife, 1, m_nMaxLife); // ï¿½ï¿½ï¿½ï¿½ï¿½Ñªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1
+    MAKE_IN_RANGE(m_nCurrentLife, 1, m_nMaxLife); // ÈËÎïµÄÑªÁ¿×îÉÙÊÇ1
     MAKE_IN_RANGE(m_nCurrentMana, 0, m_nMaxMana);
     MAKE_IN_RANGE(m_nCurrentRage, 0, m_nMaxRage);
 }
@@ -3439,22 +3436,22 @@ void KCharacter::ProcessBullet(KSKILL_BULLET *pBullet)
     switch (pSkill->m_pBaseInfo->nCastMode)
     {
     case scmSector:            
-        assert(false); // Ä¿Ç°Êµï¿½ï¿½ï¿½ï¿½,Êµï¿½Ê²ï¿½ï¿½ï¿½ï¿½ßµï¿½ï¿½ï¿½ï¿½!
+        assert(false); // Ä¿Ç°ÊµÏÖÉÏ,Êµ¼Ê²»»á×ßµ½Õâ¶ù!
         pSkill->ApplyOnSector(pBullet);
         break;
     case scmCasterArea:
-        assert(false); // Ä¿Ç°Êµï¿½ï¿½ï¿½ï¿½,Êµï¿½Ê²ï¿½ï¿½ï¿½ï¿½ßµï¿½ï¿½ï¿½ï¿½!
+        assert(false); // Ä¿Ç°ÊµÏÖÉÏ,Êµ¼Ê²»»á×ßµ½Õâ¶ù!
         pSkill->ApplyOnArea(pBullet, pCaster->m_nX, pCaster->m_nY);
         break;
     case scmItem:
-        assert(false); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½Í·ï¿½ï¿½Ë£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½
+        assert(false); // ¶¼¶ÔÎïÆ·ÊÍ·ÅÁË£¬²»¿ÉÄÜÔÚÈËµÄÉíÉÏ
         break;
     case scmTargetArea:
         pSkill->ApplyOnSingle(pBullet);
         pSkill->ApplyOnArea(pBullet, m_nX, m_nY);
         break;
     case scmCasterSingle:
-        assert(false); // Ä¿Ç°Êµï¿½ï¿½ï¿½ï¿½,Êµï¿½Ê²ï¿½ï¿½ï¿½ï¿½ßµï¿½ï¿½ï¿½ï¿½!
+        assert(false); // Ä¿Ç°ÊµÏÖÉÏ,Êµ¼Ê²»»á×ßµ½Õâ¶ù!
         pSkill->ApplyOnSingle(pBullet);
         break;
     case scmTargetSingle:
@@ -3520,7 +3517,7 @@ KSKILL_HIT_RESULT KCharacter::JudgeSkillHit(KSKILL_BULLET* pBullet)
 
     nSkillKindType = pSkill->m_pBaseInfo->nKindType;
 
-    if (pSkill->m_pBaseInfo->bIsExactHit)   // Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü£ï¿½Missï¿½ï¿½ï¿½Ð¼ï¿½
+    if (pSkill->m_pBaseInfo->bIsExactHit)   // Ò»¶¨ÃüÖÐ£¬ÔòÌø¹ýÉÁ±Ü£¬MissºÍÕÐ¼Ü
     {
         goto Exit1;
     }
@@ -3546,7 +3543,7 @@ KSKILL_HIT_RESULT KCharacter::JudgeSkillHit(KSKILL_BULLET* pBullet)
         break;
     }
 
-    // -------------------- ï¿½ï¿½ï¿½ï¿½È¼ï¿½ï¿½ï¿½ -------------------------------------->>
+    // -------------------- ¼ÆËãµÈ¼¶²î -------------------------------------->>
         nLevelMargin = m_nLevel - pSkillSrc->m_nLevel;
 
     // -------------------- Miss -------------------------------------------->>
@@ -3559,7 +3556,7 @@ KSKILL_HIT_RESULT KCharacter::JudgeSkillHit(KSKILL_BULLET* pBullet)
         if (nLevelMargin <= -3)
         {
             nHitValue = nHitValue + (-2 - nLevelMargin) * 100;
-        } // [-2, 0] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        } // [-2, 0] ²»×öÔËËã
         else if (nLevelMargin >= 0 && nLevelMargin <= 2)
         {
             nHitValue = nHitValue - nLevelMargin * 250;
@@ -3576,7 +3573,7 @@ KSKILL_HIT_RESULT KCharacter::JudgeSkillHit(KSKILL_BULLET* pBullet)
         if (nLevelMargin <= -4)
         {
             nHitValue = nHitValue + (-3 - nLevelMargin) * 100;
-        } // [-3, 0] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        } // [-3, 0] ²»×öÔËËã
         else if (nLevelMargin >= 0 && nLevelMargin <= 3)
         {
             nHitValue = nHitValue - nLevelMargin * 200;
@@ -3593,7 +3590,7 @@ KSKILL_HIT_RESULT KCharacter::JudgeSkillHit(KSKILL_BULLET* pBullet)
         if (nLevelMargin <= -4)
         {
             nHitValue = nHitValue + (-3 - nLevelMargin) * 100;
-        } // [-3, 0] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        } // [-3, 0] ²»×öÔËËã
         else if (nLevelMargin >= 0 && nLevelMargin <= 3)
         {
             nHitValue = nHitValue - nLevelMargin * 200;
@@ -3609,7 +3606,7 @@ KSKILL_HIT_RESULT KCharacter::JudgeSkillHit(KSKILL_BULLET* pBullet)
         if (nLevelMargin <= -4)
         {
             nHitValue = nHitValue + (-3 - nLevelMargin) * 100;
-        } // [-3, 0] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        } // [-3, 0] ²»×öÔËËã
         else if (nLevelMargin >= 0 && nLevelMargin <= 3)
         {
             nHitValue = nHitValue - nLevelMargin * 200;
@@ -3630,22 +3627,22 @@ KSKILL_HIT_RESULT KCharacter::JudgeSkillHit(KSKILL_BULLET* pBullet)
     }
     // <<----------------------------------------------------------------------
 
-    if (nSkillKindType == sktPhysics && pSkill->m_pBaseInfo->nEffectType == scetHarmful) // Ö»ï¿½ï¿½ï¿½â¹¦ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½
+    if (nSkillKindType == sktPhysics && pSkill->m_pBaseInfo->nEffectType == scetHarmful) // Ö»ÓÐÍâ¹¦ÓÐ¶ãÉÁºÍÕÐ¼Ü
     {
         MAKE_IN_RANGE(nLevelMargin, 0, 20);
-        // -------------------- ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ -------------------------------------->>
+        // -------------------- ¶ãÉÁÖµ¼ÆËã -------------------------------------->>
         nDenominator = m_nDodge + 59 * (m_nLevel - nLevelMargin) + 380;
         KGLOG_PROCESS_ERROR(nDenominator > 0);
         nDodgeValue = m_nDodgeBaseRate + MAX_HIT_VALUE * m_nDodge / nDenominator;
 
-        // -------------------- ï¿½Ð¼ï¿½Öµï¿½ï¿½ï¿½ï¿½ -------------------------------------->>
+        // -------------------- ÕÐ¼ÜÖµ¼ÆËã -------------------------------------->>
         nDenominator = m_nParry + 30 * m_nLevel + 50;
         KGLOG_PROCESS_ERROR(nDenominator > 0);
         nParryValue = m_nParryBaseRate + MAX_HIT_VALUE * m_nParry / nDenominator;
     }
 
 Exit1:
-    // -------------------- Ê¶ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ -------------------------------------->>
+    // -------------------- Ê¶ÆÆÖµ¼ÆËã -------------------------------------->>
     if (bSrcIsPlayer && !bDstIsPlayer && pSkill->m_pBaseInfo->nEffectType == scetHarmful)   // Player -> Npc
     {
         int PlayerStrain = 0;
@@ -3656,10 +3653,10 @@ Exit1:
         MAKE_IN_RANGE(nInsightValue, 0, MAX_HIT_VALUE);
     }
 
-    // -------------------- ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ -------------------------------------->>
+    // -------------------- »áÐÄÖµ¼ÆËã -------------------------------------->>
     nCriticalStrikeValue 	= pBullet->nCriticalStrike;
 	
-    if (pSkill->m_pBaseInfo->nEffectType != scetBeneficial)     // ï¿½ï¿½ï¿½æ¼¼ï¿½Ü²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
+    if (pSkill->m_pBaseInfo->nEffectType != scetBeneficial)     // ÔöÒæ¼¼ÄÜ²»¼ÆËã×ÔÉíÓù¾¢Öµ
     {
         nDenominator = m_nToughness + 74 * m_nLevel + 320;
         KGLOG_PROCESS_ERROR(nDenominator > 0);
@@ -3673,7 +3670,7 @@ Exit1:
         nCriticalStrikeValue = 0;
     }
 
-    // -------------------- È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ------------------------------------>>
+    // -------------------- È·¶¨Ëæ»úÇø¼ä ------------------------------------>>
     nRandomValue = g_Random(MAX_HIT_VALUE);
 
     KG_PROCESS_ERROR_RET_CODE(nRandomValue >= nMissValue, shrMiss);
@@ -3754,11 +3751,11 @@ BOOL KCharacter::ApplyBullet(KSKILL_BULLET *pBullet)
     bDstIsPlayer = IS_PLAYER(m_dwID);
     bSrcIsPlayer = IS_PLAYER(pSkillSrc->m_dwID);
 
-    // -------------------- ï¿½ï¿½Ä¿ï¿½ï¿½Ó¦ï¿½Ã»Ø¹ï¿½ï¿½ï¿½Ä§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ------------------------>>
+    // -------------------- ¸øÄ¿±êÓ¦ÓÃ»Ø¹öµÄÄ§·¨ÊôÐÔ ------------------------>>
     ApplyAttribute(pSkill->m_pAttrbuteEffectToDestAndRollback);
     bRollbackAttrib = true;
 
-    // -------------------- ï¿½ï¿½ï¿½ï¿½Éµï¿½ï¿½ï¿½ï¿½ï¿½ ------------------------------------>>
+    // -------------------- ±£´æ¾ÉµÄÊý¾Ý ------------------------------------>>
     pSrcOldResult = m_pSrcSkillCalculateResult;
     pDstOldResult = m_pDstSkillCalculateResult;
 
@@ -3767,8 +3764,8 @@ BOOL KCharacter::ApplyBullet(KSKILL_BULLET *pBullet)
 
     bRestoreOldParam = true;
 
-    // -------------------- ï¿½ï¿½ï¿½ï¿½ï¿½ÂµÄ²ï¿½ï¿½ï¿½ ------------------------------------>>
-    // Ô¼ï¿½ï¿½: ï¿½ï¿½ï¿½srcï¿½ï¿½dstï¿½ï¿½Í¬Ò»ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Åµï¿½dst(this)ï¿½ï¿½
+    // -------------------- ÉèÖÃÐÂµÄ²ÎÊý ------------------------------------>>
+    // Ô¼¶¨: Èç¹ûsrcºÍdstÊÇÍ¬Ò»¸öÈË£¬ÔòÔËËã½á¹û´æ·Åµ½dst(this)ÉÏ
     m_pSrcSkillCalculateResult = &SrcResult;
     m_pDstSkillCalculateResult = &DstResult;
 
@@ -3787,17 +3784,17 @@ BOOL KCharacter::ApplyBullet(KSKILL_BULLET *pBullet)
     DstResult.EffectSrc.dwID  = pSkill->m_pBaseInfo->dwSkillID;
     DstResult.EffectSrc.nLevel = pSkill->m_dwLevel;
 
-    // -------------------- ÏµÍ³ï¿½ÞµÐ£ï¿½ÏµÍ³ï¿½Ú²ï¿½ï¿½á¹©ï¿½ï¿½ ------------------------>>
+    // -------------------- ÏµÍ³ÎÞµÐ£¬ÏµÍ³ÄÚ²¿Ìá¹©µÄ ------------------------>>
     if (m_bSystemShield)
     {
         m_pDstSkillCalculateResult->bShield = true;
         goto Exit1;
     }
 
-    // -------------------- ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½0ï¿½ï¿½ï¿½ ----------------------------------->>
+    // -------------------- ÉèÖÃÒ»¸ö0³ðºÞ ----------------------------------->>
     if (pSkill->m_pBaseInfo->nEffectType == scetHarmful)
     {
-        if (pSkillSrc != this) // ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½
+        if (pSkillSrc != this) // ²»ÄÜ×Ô¼º³ðºÞ×Ô¼º
         {
             nRetCode = m_SimpThreatList.ModifyThreat(thtSpecialThreat, pSkillSrc, 0);
             KGLOG_CHECK_ERROR(nRetCode);
@@ -3810,10 +3807,10 @@ BOOL KCharacter::ApplyBullet(KSKILL_BULLET *pBullet)
         KGLOG_CHECK_ERROR(nRetCode);
     }
 
-    // -------------------- AIï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ -------------------------------------->>
+    // -------------------- AI±»»÷ÊÂ¼þ -------------------------------------->>
     if (
-        pSkill->m_pBaseInfo->nEffectType == scetHarmful &&  // ï¿½Ç¼ï¿½ï¿½ï¿½Ð§ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ü²ï¿½Í¨Öª
-        pSkillSrc->m_dwID != m_dwID                         // ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½ï¿½ß²ï¿½ï¿½ï¿½ï¿½Ú£ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½ï¿½Í·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½Í¨Öª
+        pSkill->m_pBaseInfo->nEffectType == scetHarmful &&  // ·Ç¼õÒæÐ§¹ûµÄ¼¼ÄÜ²»Í¨Öª
+        pSkillSrc->m_dwID != m_dwID                         // ¼¼ÄÜÊÍ·ÅÕß²»´æÔÚ£¬»òÕß¼¼ÄÜÊÍ·ÅÕßÊÇ×Ô¼º£¬²»Í¨Öª
     )
     {
         if (pSkillSrc->m_dwID == m_SelectTarget.GetTargetID())
@@ -3823,7 +3820,7 @@ BOOL KCharacter::ApplyBullet(KSKILL_BULLET *pBullet)
         m_AIVM.FireEvent(aevOnAttacked, pSkillSrc->m_dwID, 0);
     }
 
-    // -------------------- ï¿½Þµï¿½ï¿½Ð¶ï¿½ ---------------------------------------->>
+    // -------------------- ÎÞµÐÅÐ¶¨ ---------------------------------------->>
     if (m_bPositiveShield && !pSkill->m_pBaseInfo->bIgnorePositiveShield)
     {
         bShield = true;
@@ -3840,12 +3837,12 @@ BOOL KCharacter::ApplyBullet(KSKILL_BULLET *pBullet)
         goto Exit1;
     }
 
-    // -------------------- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ ------------------------------------>>
+    // -------------------- ¹¥»÷½á¹ûÅÐ¶¨ ------------------------------------>>
     eHitResult = JudgeSkillHit(pBullet);
     KGLOG_PROCESS_ERROR(eHitResult > shrInvalid && eHitResult < shrTotal);
 
     m_SkillDebug.Trace(
-        1, "[ï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½][%d]:[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½] SkillResult:(%s-%u,%u) %d From(%s-%u) To(%s-%u)",
+        1, "[¼¼ÄÜµ÷ÊÔ][%d]:[¼¼ÄÜÁ÷³Ì] SkillResult:(%s-%u,%u) %d From(%s-%u) To(%s-%u)",
         g_pSO3World->m_nGameLoop, pSkill->m_pBaseInfo->szSkillName,
         pSkill->m_pBaseInfo->dwSkillID, pSkill->m_dwLevel,
         eHitResult,
@@ -3887,11 +3884,11 @@ BOOL KCharacter::ApplyBullet(KSKILL_BULLET *pBullet)
         bCriticalStrike = true;
     }
 
-    // -------------------- ï¿½ï¿½ï¿½ï¿½ -------------------------------------------->>
+    // -------------------- »ù´¡ -------------------------------------------->>
 
     if (pSkill->m_pBaseInfo->nEffectType == scetHarmful)
     {
-        if (pSkillSrc != this) // ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½
+        if (pSkillSrc != this) // ²»ÄÜ×Ô¼º³ðºÞ×Ô¼º
         {
             int nThreat = pSkill->m_nBaseThreat * pBullet->nBaseThreatCoefficient / KILO_NUM;
 
@@ -3908,7 +3905,7 @@ BOOL KCharacter::ApplyBullet(KSKILL_BULLET *pBullet)
         KGLOG_CHECK_ERROR(nRetCode);
     }
 
-    // -------------------- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ -------------------------------->>
+    // -------------------- ´òÏÂÂíµÄ¼¸ÂÊ¼ÆËã -------------------------------->>
     if (bDstIsPlayer)
     {
         KPlayer* pDstPlayer = (KPlayer*)this;
@@ -3925,7 +3922,7 @@ BOOL KCharacter::ApplyBullet(KSKILL_BULLET *pBullet)
             }
 
             m_SkillDebug.Trace(
-                2, "[ï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½][%d]:[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½] (%s-%u) ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:<%s> By %s-%u From %s-%u, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:%d, ï¿½ï¿½ï¿½ï¿½Öµ:%d ï¿½ï¿½ï¿½Öµ:%d",
+                2, "[¼¼ÄÜµ÷ÊÔ][%d]:[¼¼ÄÜÁ÷³Ì] (%s-%u) ±»»÷Âä:<%s> By %s-%u From %s-%u, ·ÀÂäÂÊ:%d, »÷ÂäÖµ:%d Ëæ»úÖµ:%d",
                 g_pSO3World->m_nGameLoop, m_szName, m_dwID, (nRandom < DismountingRate) ? "OK" : "FAILED",
                 pSkill->m_pBaseInfo->szSkillName, pSkill->m_pBaseInfo->dwSkillID,
                 pSkillSrc->m_szName, pSkillSrc->m_dwID,
@@ -3934,13 +3931,13 @@ BOOL KCharacter::ApplyBullet(KSKILL_BULLET *pBullet)
         }
     }
 
-    // -------------------- ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ç·ï¿½Îªï¿½ï¿½ï¿½ï¿½×´Ì¬ ------------------------>>
+    // -------------------- ÅÐ¶ÏÃüÖÐÊ±ÊÇ·ñÎªÒ÷³ª×´Ì¬ ------------------------>>
     if (m_OTActionParam.eActionType == otActionSkillPrepare || m_OTActionParam.eActionType == otActionSkillChannel)
     {
         bBehitInOTAction = true;
     }
 
-    // -------------------- ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½Ü¼ï¿½ï¿½ï¿½È«ï¿½Ö²ï¿½ï¿½ï¿½ ---------------------------->>
+    // -------------------- ÉèÖÃ¼¼ÄÜ¼ÆËãÈ«¾Ö²ÎÊý ---------------------------->>
     SkillAttributeParam.SkillRecipePointer              = pBullet->SkillRecipePointer;
     SkillAttributeParam.pSkillSrc                       = pSkillSrc;
     SkillAttributeParam.dwSkillSrcID                    = pBullet->dwSkillSrcID;
@@ -3965,10 +3962,10 @@ BOOL KCharacter::ApplyBullet(KSKILL_BULLET *pBullet)
     SkillAttributeParam.dwAddDamageByDstMoveStateMask   = pBullet->dwAddDamageByDstMoveStateMask;
     SkillAttributeParam.nAddDamagePercentByDstMoveState = pBullet->nAddDamagePercentByDstMoveState;
 
-    // -------------------- Ä¿ï¿½ê²»ï¿½É»Ø¹ï¿½Ä§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ ------------------------>>
+    // -------------------- Ä¿±ê²»¿É»Ø¹öÄ§·¨ÊôÐÔÓ¦ÓÃ ------------------------>>
     ApplyAttribute(pSkill->m_pAttrbuteEffectToDestNotRollback);
 
-    // -------------------- ï¿½ï¿½ï¿½ï¿½ -------------------------------------------->>
+    // -------------------- ÆÆÕÀ -------------------------------------------->>
     switch(pSkill->m_nAttackWeakPos)
     {
     case swpUpper:
@@ -3998,16 +3995,16 @@ BOOL KCharacter::ApplyBullet(KSKILL_BULLET *pBullet)
         ApplyAttribute(pSkill->m_pAttrbuteEffectToDestOnMaxWeak);
     }
 
-    // -------------------- Ê©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½Ã²ï¿½ï¿½É»Ø¹ï¿½ï¿½ï¿½Ä§ï¿½ï¿½ï¿½ï¿½ï¿½Ô£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç»ï¿½ï¿½ï¿½ ---->>
+    // -------------------- Ê©·¨Õß×ÔÉíÓ¦ÓÃ²»¿É»Ø¹öµÄÄ§·¨ÊôÐÔ£¬²»¿¼ÂÇ»áÐÄ ---->>
     SkillAttributeParam.bCriticalStrike = false;
 
     pSkillSrc->ApplyAttribute(pSkill->m_pAttrbuteEffectToSelfNotRollback);
 
-    // -------------------- ï¿½Ëºï¿½Í³ï¿½ï¿½ ---------------------------------------->>
+    // -------------------- ÉËº¦Í³¼Æ ---------------------------------------->>
     nRetCode = ConcludeResult(pBullet->dwBulletID, bCriticalStrike, &nDamageValue);
     KG_PROCESS_ERROR(nRetCode);
 
-    // -------------------- Buffï¿½ï¿½ï¿½ï¿½ ---------------------------------------->>
+    // -------------------- Buff´¦Àí ---------------------------------------->>
     for (int i = 0; i < sizeof(pSkill->m_BindBuffs) / sizeof(pSkill->m_BindBuffs[0]); i++)
     {
         KBUFF_RECIPE_KEY& rBuffRecipeKey = pSkill->m_BindBuffs[i].GetRecipeKey();
@@ -4018,7 +4015,7 @@ BOOL KCharacter::ApplyBullet(KSKILL_BULLET *pBullet)
         }
     }
 
-    // -------------------- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ---------------------------------------->>
+    // -------------------- Ò÷³ª´òÍË ---------------------------------------->>
     if (pSkill->m_pBaseInfo->bCauseBeatBack && nDamageValue < 0)
     {
         int nBeatBackCount = m_OTActionParam.nBeatBackCount;
@@ -4029,7 +4026,7 @@ BOOL KCharacter::ApplyBullet(KSKILL_BULLET *pBullet)
         if (nBeatBackCount < m_OTActionParam.nBeatBackCount)
         {
             m_SkillDebug.Trace(
-                2, "[ï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½][%d]:[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½] Skill:(%s-%u,%u) ï¿½ï¿½ï¿½ï¿½:<ï¿½É¹ï¿½>ï¿½ï¿½ï¿½Ñ±ï¿½ï¿½ï¿½ï¿½ï¿½<%d>ï¿½ï¿½, Frameï¿½ï¿½%d/%d From(%s-%u) To(%s-%u)",
+                2, "[¼¼ÄÜµ÷ÊÔ][%d]:[¼¼ÄÜÁ÷³Ì] Skill:(%s-%u,%u) ´òÍË:<³É¹¦>¡£ÒÑ±»´òÍË<%d>´Î, Frame£º%d/%d From(%s-%u) To(%s-%u)",
                 g_pSO3World->m_nGameLoop,
                 pSkill->m_pBaseInfo->szSkillName, pSkill->m_pBaseInfo->dwSkillID, pSkill->m_dwLevel,
                 m_OTActionParam.nBeatBackCount,
@@ -4040,13 +4037,13 @@ BOOL KCharacter::ApplyBullet(KSKILL_BULLET *pBullet)
         }
     }
 
-    // -------------------- ï¿½ï¿½Ï´ï¿½ï¿½ï¿½ ---------------------------------------->>
+    // -------------------- ´ò¶Ï´¦Àí ---------------------------------------->>
     if (pSkill->m_pBaseInfo->bCauseBeatBreak)
     {
         CheckBeatBreak(pSkill);
     }
 
-    // -------------------- ×°ï¿½ï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ ------------------------------------>>
+    // -------------------- ×°±¸ËðºÄ´¦Àí ------------------------------------>>
     if (pSkill->m_pBaseInfo->bCauseAbradeEquipment)
     {
         if (IS_PLAYER(m_dwID))
@@ -4081,7 +4078,7 @@ Exit1:
 
 Exit0:
 
-    // ï¿½Ö¸ï¿½ï¿½É²ï¿½ï¿½ï¿½
+    // »Ö¸´¾É²ÎÊý
     if (bRestoreOldParam)
     {
         m_pSrcSkillCalculateResult          = pSrcOldResult;
@@ -4099,7 +4096,7 @@ Exit0:
         bRollbackAttrib = false;
     }
 
-    // -------------------- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó£¬´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ -------------------->>
+    // -------------------- Õý³£½áÊøµÄ×îºó£¬´¦Àí¼¼ÄÜÊÂ¼þ -------------------->>
     if (bResult)
     {
         if (eHitResult == shrMiss)
@@ -4162,11 +4159,11 @@ BOOL KCharacter::ConcludeResult(DWORD dwBulletID, BOOL bCriticalStrikeFlag, int*
     
     nBeTherapyCoefficient = max(m_nBeTherapyCoefficient, 0);
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½Ë´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÏµÄ±ï¿½ï¿½ï¿½ï¿½Æ¼Ó³É±ï¿½ï¿½ï¿½Ó°ï¿½ï¿½
+    // ÐÞÕý±»ÖÎÁÆµÄÊýÖµ£¬¸ÃÊýÖµ´Ë´¦±»ÈËÎïÉíÉÏµÄ±»ÖÎÁÆ¼Ó³É±ÈÀýÓ°Ïì
     m_pDstSkillCalculateResult->nSkillEffectResult[serTherapy] = 
         m_pDstSkillCalculateResult->nSkillEffectResult[serTherapy] * nBeTherapyCoefficient / KILO_NUM;
 
-    // ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½Ö®ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½Damageï¿½ï¿½Ê±ï¿½ï¿½Û³ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½DeltaLifeï¿½ï¿½Ê±ï¿½ï¿½Òªï¿½ï¿½ï¿½Ø¸ï¿½ï¿½ï¿½ï¿½ï¿½!
+    // ÉËº¦ÎüÊÕ,µÖÏûÖ®ÀàµÄÒÑ¾­ÔÚËãDamageµÄÊ±ºò¿Û³ýÁË,ËùÒÔÕâÀïËãDeltaLifeµÄÊ±ºò²»ÒªÔÙÖØ¸´¼ÆËã!
     nDst_DeltaLife = 0
         + m_pDstSkillCalculateResult->nSkillEffectResult[serStealLife]
         + m_pDstSkillCalculateResult->nSkillEffectResult[serTherapy]
@@ -4186,7 +4183,7 @@ BOOL KCharacter::ConcludeResult(DWORD dwBulletID, BOOL bCriticalStrikeFlag, int*
     }
 
     m_SkillDebug.Trace(
-        1, "[ï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½][%d]:[ï¿½Ëºï¿½] %s ï¿½ï¿½:%d ï¿½ï¿½:%d ï¿½ï¿½:%d ï¿½ï¿½:%d ï¿½ï¿½:%d To(%s-%u)",
+        1, "[¼¼ÄÜµ÷ÊÔ][%d]:[ÉËº¦] %s Íâ:%d Ñô:%d ÖÐ:%d Òõ:%d ¶¾:%d To(%s-%u)",
         g_pSO3World->m_nGameLoop,
         szSkill,
         m_pDstSkillCalculateResult->nSkillEffectResult[serPhysicsDamage],
@@ -4213,7 +4210,7 @@ BOOL KCharacter::ConcludeResult(DWORD dwBulletID, BOOL bCriticalStrikeFlag, int*
 
     *pnRetDamageValue = nDst_DeltaLife;
 
-    // ---------- ï¿½ï¿½Öµï¿½ï¿½Î§ï¿½ï¿½ï¿½ï¿½ ---------------------------------------------------------
+    // ---------- ÊýÖµ·¶Î§ÐÞÕý ---------------------------------------------------------
 
     //MAKE_IN_RANGE(nDst_DeltaLife, -m_nCurrentLife, m_nMaxLife - m_nCurrentLife);
 
@@ -4225,7 +4222,7 @@ BOOL KCharacter::ConcludeResult(DWORD dwBulletID, BOOL bCriticalStrikeFlag, int*
     if (nDst_DeltaLife > 0)
         nDst_EffectiveTherapy = nDst_DeltaLife - max(0, m_nCurrentLife - m_nMaxLife);
 
-    if (m_nCurrentLife > m_nMaxLife && pSkillSrc) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    if (m_nCurrentLife > m_nMaxLife && pSkillSrc) // ¹ýÁ¿ÖÎÁÆ
     {
         OnSkillEvent(pSkill, seBeOverHeal, m_SkillEventVector, this, pSkillSrc);
         pSkillSrc->OnSkillEvent(pSkill, seOverHeal, pSkillSrc->m_SkillEventVector, pSkillSrc, this);
@@ -4236,7 +4233,7 @@ BOOL KCharacter::ConcludeResult(DWORD dwBulletID, BOOL bCriticalStrikeFlag, int*
     
     if (pSkillSrc && pSkillSrc != this)
     {   
-        // ï¿½ï¿½ï¿½srcï¿½ï¿½dstï¿½ï¿½Í¬Ò»ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½Ã´ï¿½ï¿½Ñªï¿½ï¿½ï¿½Ñªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½dstï¿½Ï£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¸ï¿½ï¿½ï¿½ï¿½ï¿½
+        // Èç¹ûsrcºÍdstÊÇÍ¬Ò»¸öÈË£¬ÄÇÃ´¼ÓÑª»ò¿ÛÑª¶¼·ÅÔÚdstÉÏ£¬ÒÔÃâÖØ¸´²Ù×÷
         //MAKE_IN_RANGE(nSrc_DeltaLife, -pSkillSrc->m_nCurrentLife, pSkillSrc->m_nMaxLife - pSkillSrc->m_nCurrentLife);
         pSkillSrc->m_nCurrentLife += nSrc_DeltaLife;
 
@@ -4251,7 +4248,7 @@ BOOL KCharacter::ConcludeResult(DWORD dwBulletID, BOOL bCriticalStrikeFlag, int*
     }
 
     // ------------------------------------------------------------------------------
-    // ï¿½ï¿½ï¿½ï¿½Üµï¿½ï¿½Ëºï¿½, ï¿½ò±»¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½Ñ£ï¿½ï¿½Ð§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§
+    // Èç¹ûÊÜµ½ÉËº¦, Ôò±»¹¥»÷ÕßÉíÉÏµÄÑ£ÔÎÐ§¹û¾ÍÏûÊ§
 
     if (nDst_DeltaLife < 0)
     {
@@ -4267,7 +4264,7 @@ BOOL KCharacter::ConcludeResult(DWORD dwBulletID, BOOL bCriticalStrikeFlag, int*
 
 	if (pSkillSrc && pSkillSrc != this && pSkill && nDst_DeltaLife < 0)
 	{
-        // src Ê¹ dst ï¿½Üµï¿½ï¿½Ëºï¿½,ï¿½ï¿½ï¿½ï¿½dstï¿½ï¿½ï¿½ï¿½ï¿½Ó¶ï¿½srcï¿½Ä³ï¿½ï¿½
+        // src Ê¹ dst ÊÜµ½ÉËº¦,ËùÒÔdst»áÔö¼Ó¶ÔsrcµÄ³ðºÞ
 	    int nThreat = ((-nDst_DeltaLife) * pSkill->m_nThreatRevisePercent / KILO_NUM) * 
             m_pSkillAttributeParam->nDamageThreatCoefficient / KILO_NUM;
 
@@ -4276,7 +4273,7 @@ BOOL KCharacter::ConcludeResult(DWORD dwBulletID, BOOL bCriticalStrikeFlag, int*
 	}
 	else if (pSkillSrc && pSkill && nDst_EffectiveTherapy > 0)
 	{
-        // src Ê¹ dst ï¿½Üµï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½Ô³ï¿½ï¿½dstï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½src
+        // src Ê¹ dst ÊÜµ½ÖÎÁÆ,ËùÒÔ³ðºÞdstµÄÈË»á³ðºÞsrc
         int nThreat = (nDst_EffectiveTherapy * pSkill->m_nThreatRevisePercent / KILO_NUM) * 
             m_pSkillAttributeParam->nTherapyThreatCoefficient / KILO_NUM / THERAPY_TO_THREAT;
 
@@ -4286,7 +4283,7 @@ BOOL KCharacter::ConcludeResult(DWORD dwBulletID, BOOL bCriticalStrikeFlag, int*
 
 	if (pSkillSrc && pSkillSrc != this && pSkill && nSrc_DeltaLife < 0)
 	{
-        // src ï¿½ï¿½ dst ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½Ê¹srcï¿½Üµï¿½ï¿½Ëºï¿½,ï¿½ï¿½ï¿½Ê¹srcï¿½ï¿½ï¿½dst
+        // src ¶Ô dst ·¢¼¼ÄÜ,·´¶øÊ¹srcÊÜµ½ÉËº¦,Õâ»áÊ¹src³ðºÞdst
         int nThreat = ((-nSrc_DeltaLife) * pSkill->m_nThreatRevisePercent / KILO_NUM) * 
             m_pSkillAttributeParam->nDamageThreatCoefficient / KILO_NUM;
 
@@ -4295,7 +4292,7 @@ BOOL KCharacter::ConcludeResult(DWORD dwBulletID, BOOL bCriticalStrikeFlag, int*
 	}
 	else if (pSkillSrc && pSkillSrc != this && pSkill && nSrc_EffectiveTherapy > 0)
 	{
-        // src ï¿½ï¿½ dst ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,Ê¹ srcï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(Êµï¿½Ê¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Ö®ï¿½ï¿½ï¿½), ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½Ð³ï¿½ï¿½srcï¿½ï¿½ï¿½Ë¸ï¿½ï¿½ï¿½ï¿½src(ï¿½ï¿½ï¿½ï¿½ËµÒ»ï¿½ï¿½ï¿½ï¿½dstï¿½ï¿½ï¿½src).
+        // src ¶Ô dst ·¢¼¼ÄÜ,Ê¹ src»ñµÃÁËÖÎÁÆ(Êµ¼Ê¿ÉÄÜÊÇÎüÈ¡ÉúÃüÖ®ÀàµÄ), »áÊ¹ËùÓÐ³ðºÞsrcµÄÈË¸ü³ðºÞsrc(²»ÄÜËµÒ»¶¨ÊÇdst³ðºÞsrc).
         int nThreat = (nSrc_EffectiveTherapy * pSkill->m_nThreatRevisePercent / KILO_NUM) * 
             m_pSkillAttributeParam->nTherapyThreatCoefficient / KILO_NUM / THERAPY_TO_THREAT;
 
@@ -4305,10 +4302,10 @@ BOOL KCharacter::ConcludeResult(DWORD dwBulletID, BOOL bCriticalStrikeFlag, int*
 
 	// ------------------------- sync skill result -------------------------------------
 
-    // ï¿½ï¿½ï¿½Ü»ï¿½ï¿½ï¿½ï¿½Caster ï¿½Üµï¿½ï¿½ï¿½ï¿½Ëºï¿½(ï¿½ï¿½ï¿½ç·´ï¿½ï¿½ï¿½Ëºï¿½)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ÍµÈ¡ï¿½ï¿½ï¿½ï¿½)Ç¡ï¿½Ãµï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½Ì«Ð¡ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ä»¯ï¿½ï¿½nSrc_DeltaLifeÎª0Ê±,ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½,×¢ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½Üµï¿½"ï¿½ï¿½ï¿½ï¿½ï¿½Ëºï¿½"ï¿½ï¿½"ÍµÈ¡ï¿½ï¿½ï¿½ï¿½"Ó°ï¿½ï¿½
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"ï¿½ï¿½"Ö®ï¿½Úµï¿½Ð§ï¿½ï¿½
-    // ï¿½ï¿½ï¿½srcï¿½ï¿½dstï¿½ï¿½Í¬Ò»ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½ï¿½Ç´ï¿½Åµï¿½dstï¿½ÏµÄ£ï¿½ï¿½ï¿½ï¿½ï¿½Í²ï¿½ï¿½Ã¶ï¿½Ò»ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½
+    // ¿ÉÄÜ»á³öÏÖCaster ÊÜµ½µÄÉËº¦(±ÈÈç·´µ¯ÉËº¦)ºÍÉúÃüÔöÒæ(±ÈÈçÍµÈ¡ÉúÃü)Ç¡ºÃµÖÏû,µ«ÊÇÕâÖÖ¼¸ÂÊÌ«Ð¡ÁË,²»×÷´¦Àí
+    // ÔÚÉúÃüÖµ±ä»¯Á¿nSrc_DeltaLifeÎª0Ê±,²»×÷Í¬²½,×¢Òâ,¼¼ÄÜÊÍ·ÅÕßÔÚÉËº¦Á÷³ÌÖÐÖ»»áÊÜµ½"·´µ¯ÉËº¦"ºÍ"ÍµÈ¡ÉúÃü"Ó°Ïì
+    // ²¢²»´æÔÚÆäËûµÄÖîÈç"¸ñµ²"Ö®ÄÚµÄÐ§¹û
+    // Èç¹ûsrcºÍdstÊÇÍ¬Ò»¸öÈË£¬ÄÇÃ´½á¹ûÊÇ´æ·Åµ½dstÉÏµÄ£¬ÕâÀï¾Í²»ÓÃ¶àÒ»¸öÍ¬²½ÁË
     if (nSrc_DeltaLife && (pSkillSrc != this))
     {     
 		bRetCode = g_PlayerServer.DoSkillEffectResult(
@@ -4352,7 +4349,7 @@ BOOL KCharacter::ConcludeResult(DWORD dwBulletID, BOOL bCriticalStrikeFlag, int*
         }
 
         m_SkillDebug.Trace(
-            1, "(%s-%u)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½Îª%s-%u ï¿½ï¿½ %sï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½%dï¿½ï¿½ï¿½Ëºï¿½.",
+            1, "(%s-%u)ËÀÍöÁË, ÒòÎª%s-%u µÄ %s¶ÔÆäÔì³ÉÁË%dµãÉËº¦.",
             m_szName, m_dwID,
             szKiller, dwKiller,
             szSkill,
@@ -4369,7 +4366,7 @@ BOOL KCharacter::ConcludeResult(DWORD dwBulletID, BOOL bCriticalStrikeFlag, int*
     {
         pSkillSrc->GoToHell(m_dwID);
         m_SkillDebug.Trace(
-            1, "(%s-%u)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½Îª%s-%uï¿½ï¿½ %sï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½%dï¿½ï¿½ï¿½Ëºï¿½.",
+            1, "(%s-%u)ËÀÍöÁË, ÒòÎª%s-%uµÄ %s¶ÔÆäÔì³ÉÁË%dµãÉËº¦.",
             pSkillSrc->m_szName, pSkillSrc->m_dwID,
             pSkillSrc->m_szName, pSkillSrc->m_dwID,
             szSkill,
@@ -4570,9 +4567,9 @@ BOOL KCharacter::ProcessPull(KCharacter* pCharacter, int nVelocityXY)
 
     nApplyOdds = (int)g_Random(KILO_NUM);
 
-    KG_PROCESS_SUCCESS(nApplyOdds + m_nPullRate < KILO_NUM); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ÏºÍ»ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
+    KG_PROCESS_SUCCESS(nApplyOdds + m_nPullRate < KILO_NUM); // ÕâÀïµÄÃâÒßÅÐ¶ÏºÍ»÷ÍËÒ»ÑùµÄÊýÖµ
 
-    nDistanceCharacter = m_nTouchRange + pCharacter->m_nTouchRange + CELL_LENGTH * 2; // ï¿½ï¿½ï¿½ï¿½ï¿½Ë¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½CELL
+    nDistanceCharacter = m_nTouchRange + pCharacter->m_nTouchRange + CELL_LENGTH * 2; // Á½¸öÈË¼ä¸ôÁ½¸öCELL
 
     nDestX = pCharacter->m_nX + nDistanceCharacter * g_Cos(pCharacter->m_nDirectionXY) / SIN_COS_NUMBER;
     nDestY = pCharacter->m_nY + nDistanceCharacter * g_Sin(pCharacter->m_nDirectionXY) / SIN_COS_NUMBER;
@@ -4621,7 +4618,7 @@ BOOL KCharacter::ProcessRepulsed(int nFrame)
 
     nApplyOdds = (int)g_Random(KILO_NUM);
 
-    KG_PROCESS_SUCCESS(nApplyOdds + m_nRepulsedRate < KILO_NUM); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ÏºÍ»ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
+    KG_PROCESS_SUCCESS(nApplyOdds + m_nRepulsedRate < KILO_NUM); // ÕâÀïµÄÃâÒßÅÐ¶ÏºÍ»÷ÍËÒ»ÑùµÄÊýÖµ
 
     nDirection  = g_GetDirection(pSkillSrc->m_nX, pSkillSrc->m_nY, m_nX, m_nY);
     nVelocityXY = REPULSED_DECELERATION * nFrame;
@@ -4727,7 +4724,7 @@ BOOL KCharacter::ProcessTherapy(int nTherapyValue)
         nDeltaLife = nDeltaLife * (KILO_NUM + m_nTherapyCoefficient) / KILO_NUM;
     }
 
-    nDeltaLife = nDeltaLife * (KILO_NUM + m_pSkillAttributeParam->nDamageAddPercent) / KILO_NUM;    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¼Ó³ï¿½
+    nDeltaLife = nDeltaLife * (KILO_NUM + m_pSkillAttributeParam->nDamageAddPercent) / KILO_NUM;    // ¼¼ÄÜÃØóÅ¼Ó³É
 
     if (m_pSkillAttributeParam->nStackNum > 1)
     {
@@ -4809,10 +4806,10 @@ BOOL KCharacter::ProcessDamage(int nDamageType, int nDamageValue)
     pSkillSrc = m_pSkillAttributeParam->pSkillSrc;
 
     nSkillSrcLevel = m_pSkillAttributeParam->nSkillSrcLevel;
-    if (nSkillSrcLevel == 0)    // ï¿½Í²ß»ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Srcï¿½È¼ï¿½ï¿½ï¿½ï¿½Í°ï¿½ï¿½Ô¼ï¿½ï¿½ÄµÈ¼ï¿½ï¿½ã¡£
+    if (nSkillSrcLevel == 0)    // ºÍ²ß»®Ô¼¶¨£¬È¡²»µ½SrcµÈ¼¶£¬¾Í°´×Ô¼ºµÄµÈ¼¶Ëã¡£
         nSkillSrcLevel = m_nLevel;
 
-    nSkillSrcLevel = max(nSkillSrcLevel, 1);    // ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½0
+    nSkillSrcLevel = max(nSkillSrcLevel, 1);    // ±£Ö¤²»»á³ý0
 
     KGLOG_PROCESS_ERROR(m_pSrcSkillCalculateResult);
     KGLOG_PROCESS_ERROR(m_pDstSkillCalculateResult);
@@ -4862,7 +4859,7 @@ BOOL KCharacter::ProcessDamage(int nDamageType, int nDamageValue)
         // -------------- physics ---------------------------------------       
         {
             DamageCalculateParam.nDamageValue                  = max(0, m_pSkillAttributeParam->nPhysicsDamage + nDamageValue);
-            if (m_pSkillAttributeParam->bParray) // ï¿½ï¿½ï¿½Ð¼ï¿½
+            if (m_pSkillAttributeParam->bParray) // ±»ÕÐ¼Ü
             {
                 int nParryDamage = m_nParryValue + m_nCurrentStrength / 4;
 
@@ -4872,7 +4869,7 @@ BOOL KCharacter::ProcessDamage(int nDamageType, int nDamageValue)
             }
 
             DamageCalculateParam.nDstResistPercent             = m_nPhysicsResistPercent;
-            // ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½É²ß»ï¿½ï¿½Ä¼ï¿½ï¿½ã¹«Ê½ï¿½Æµï¿½ï¿½ï¿½
+            // ÒÔÏÂ¼¸¸öÊýÖµÊÇÓÉ²ß»®µÄ¼ÆËã¹«Ê½ÍÆµ¼µÄ
             nDenominator = m_nLevel * 270 + nPhysicsShield;
             KGLOG_PROCESS_ERROR(nDenominator > 0);
             DamageCalculateParam.nDstDefenceCoefficient        = min(
@@ -4887,7 +4884,7 @@ BOOL KCharacter::ProcessDamage(int nDamageType, int nDamageValue)
             DamageCalculateParam.nDstTypedDamageCoefficient    = m_nPhysicsDamageCoefficient;
 
             m_SkillDebug.Trace(
-                2, "[ï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½][%d]:[ï¿½â¹¦ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½] ï¿½â¹¦ï¿½Ëºï¿½:%d, ï¿½â¹¦ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½:%d ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½:%d ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½:%d/%d Ä§ï¿½ï¿½ï¿½ï¿½:%d/%d ï¿½ï¿½ï¿½ï¿½:%d/%d ï¿½â¹¦ï¿½Ëºï¿½ï¿½Ó³ï¿½:%d To(%s-%d)",
+                2, "[¼¼ÄÜµ÷ÊÔ][%d]:[Íâ¹¦ÉËº¦¼ÆËã] Íâ¹¦ÉËº¦:%d, Íâ¹¦ÉËº¦¼õÃâ:%d ·ÀÓùÏµÊý:%d ÉËº¦ÎüÊÕ:%d/%d Ä§·¨¶Ü:%d/%d ·´µ¯:%d/%d Íâ¹¦ÉËº¦¼Ó³É:%d To(%s-%d)",
                 g_pSO3World->m_nGameLoop, DamageCalculateParam.nDamageValue,
                 DamageCalculateParam.nDstResistPercent, DamageCalculateParam.nDstDefenceCoefficient,
                 m_nPhysicsDamageAbsorb, m_nGlobalDamageAbsorb, m_nPhysicsDamageManaShield, m_nGlobalDamageManaShield,
@@ -4922,7 +4919,7 @@ BOOL KCharacter::ProcessDamage(int nDamageType, int nDamageValue)
         }
        
         {
-            // ï¿½Ëºï¿½ï¿½Ö¿ï¿½
+            // ÉËº¦µÖ¿¹
             int nRow                = 0;
             int nProbability        = 0;
             int nSolarMagicDefence  = 0;
@@ -4949,7 +4946,7 @@ BOOL KCharacter::ProcessDamage(int nDamageType, int nDamageValue)
             DamageCalculateParam.nDstTypedDamageCoefficient    = m_nSolarDamageCoefficient;
 
             m_SkillDebug.Trace(
-                2, "[ï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½][%d]:[ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½Ëºï¿½ï¿½ï¿½ï¿½] ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½Ëºï¿½:%d, ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½:%d ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½:%d ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½:%d/%d Ä§ï¿½ï¿½ï¿½ï¿½:%d/%d ï¿½ï¿½ï¿½ï¿½:%d/%d ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½Ëºï¿½ï¿½Ó³ï¿½:%d To(%s-%u)",
+                2, "[¼¼ÄÜµ÷ÊÔ][%d]:[ÑôÐÔÄÚ¹¦ÉËº¦½á¹û] ÑôÐÔÄÚ¹¦ÉËº¦:%d, ÑôÐÔÄÚ¹¦ÉËº¦¼õÃâ:%d ·ÀÓùÏµÊý:%d ÉËº¦ÎüÊÕ:%d/%d Ä§·¨¶Ü:%d/%d ·´µ¯:%d/%d ÑôÐÔÄÚ¹¦ÉËº¦¼Ó³É:%d To(%s-%u)",
                 g_pSO3World->m_nGameLoop, DamageCalculateParam.nDamageValue,
                 DamageCalculateParam.nDstResistPercent, DamageCalculateParam.nDstDefenceCoefficient,
                 m_nSolarDamageAbsorb, m_nGlobalDamageAbsorb, m_nSolarDamageManaShield, m_nGlobalDamageManaShield,
@@ -4983,7 +4980,7 @@ BOOL KCharacter::ProcessDamage(int nDamageType, int nDamageValue)
         }
 
         {
-            // ï¿½Ëºï¿½ï¿½Ö¿ï¿½
+            // ÉËº¦µÖ¿¹
             int nRow                    = 0;
             int nProbability            = 0;
             int nNeutralMagicDefence    = 0;
@@ -5009,7 +5006,7 @@ BOOL KCharacter::ProcessDamage(int nDamageType, int nDamageValue)
             DamageCalculateParam.nDstTypedDamageCoefficient    = m_nNeutralDamageCoefficient;
 
             m_SkillDebug.Trace(
-                2, "[ï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½][%d]:[ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½Ëºï¿½ï¿½ï¿½ï¿½] ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½Ëºï¿½:%d, ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½:%d ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½:%d ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½:%d/%d Ä§ï¿½ï¿½ï¿½ï¿½:%d/%d ï¿½ï¿½ï¿½ï¿½:%d/%d ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½Ëºï¿½ï¿½Ó³ï¿½:%d To(%s-%u)",
+                2, "[¼¼ÄÜµ÷ÊÔ][%d]:[ÖÐÐÔÄÚ¹¦ÉËº¦½á¹û] ÖÐÐÔÄÚ¹¦ÉËº¦:%d, ÖÐÐÔÄÚ¹¦ÉËº¦¼õÃâ:%d ·ÀÓùÏµÊý:%d ÉËº¦ÎüÊÕ:%d/%d Ä§·¨¶Ü:%d/%d ·´µ¯:%d/%d ÖÐÐÔÄÚ¹¦ÉËº¦¼Ó³É:%d To(%s-%u)",
                 g_pSO3World->m_nGameLoop, DamageCalculateParam.nDamageValue,
                 DamageCalculateParam.nDstResistPercent, DamageCalculateParam.nDstDefenceCoefficient,
                 m_nNeutralDamageAbsorb, m_nGlobalDamageAbsorb, m_nNeutralDamageManaShield, m_nGlobalDamageManaShield,
@@ -5042,7 +5039,7 @@ BOOL KCharacter::ProcessDamage(int nDamageType, int nDamageValue)
            goto Exit1;
         }
         {
-            // ï¿½Ëºï¿½ï¿½Ö¿ï¿½
+            // ÉËº¦µÖ¿¹
             int nRow                = 0;
             int nProbability        = 0;
             int nLunarMagicDefence  = 0;
@@ -5068,7 +5065,7 @@ BOOL KCharacter::ProcessDamage(int nDamageType, int nDamageValue)
             DamageCalculateParam.nDstTypedDamageCoefficient    = m_nLunarDamageCoefficient;
 
             m_SkillDebug.Trace(
-                2, "[ï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½][%d]:[ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½Ëºï¿½ï¿½ï¿½ï¿½] ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½Ëºï¿½:%d, ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½:%d ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½:%d ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½:%d/%d Ä§ï¿½ï¿½ï¿½ï¿½:%d/%d ï¿½ï¿½ï¿½ï¿½:%d/%d ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½Ëºï¿½ï¿½Ó³ï¿½:%d To(%s-%u)",
+                2, "[¼¼ÄÜµ÷ÊÔ][%d]:[ÒõÐÔÄÚ¹¦ÉËº¦½á¹û] ÒõÐÔÄÚ¹¦ÉËº¦:%d, ÒõÐÔÄÚ¹¦ÉËº¦¼õÃâ:%d ·ÀÓùÏµÊý:%d ÉËº¦ÎüÊÕ:%d/%d Ä§·¨¶Ü:%d/%d ·´µ¯:%d/%d ÒõÐÔÄÚ¹¦ÉËº¦¼Ó³É:%d To(%s-%u)",
                 g_pSO3World->m_nGameLoop, DamageCalculateParam.nDamageValue,
                 DamageCalculateParam.nDstResistPercent, DamageCalculateParam.nDstDefenceCoefficient,
                 m_nLunarDamageAbsorb, m_nGlobalDamageAbsorb, m_nLunarDamageManaShield, m_nGlobalDamageManaShield,
@@ -5101,7 +5098,7 @@ BOOL KCharacter::ProcessDamage(int nDamageType, int nDamageValue)
             goto Exit1;    
         }
         {
-            // ï¿½Ëºï¿½ï¿½Ö¿ï¿½
+            // ÉËº¦µÖ¿¹
             int nRow                = 0;
             int nProbability        = 0;
             int nPoisonMagicDefence = 0;
@@ -5127,7 +5124,7 @@ BOOL KCharacter::ProcessDamage(int nDamageType, int nDamageValue)
             DamageCalculateParam.nDstTypedDamageCoefficient    = m_nPoisonDamageCoefficient;
 
             m_SkillDebug.Trace(
-                2, "[ï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½][%d]:[ï¿½ï¿½ï¿½Ëºï¿½ï¿½ï¿½ï¿½] ï¿½ï¿½ï¿½Ëºï¿½:%d, ï¿½ï¿½ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½:%d ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½:%d ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½:%d/%d Ä§ï¿½ï¿½ï¿½ï¿½:%d/%d ï¿½ï¿½ï¿½ï¿½:%d/%d ï¿½ï¿½ï¿½Ëºï¿½ï¿½Ó³ï¿½:%d To(%s-%u)",
+                2, "[¼¼ÄÜµ÷ÊÔ][%d]:[¶¾ÉËº¦½á¹û] ¶¾ÉËº¦:%d, ¶¾ÉËº¦¼õÃâ:%d ·ÀÓùÏµÊý:%d ÉËº¦ÎüÊÕ:%d/%d Ä§·¨¶Ü:%d/%d ·´µ¯:%d/%d ¶¾ÉËº¦¼Ó³É:%d To(%s-%u)",
                 g_pSO3World->m_nGameLoop, DamageCalculateParam.nDamageValue,
                 DamageCalculateParam.nDstResistPercent, DamageCalculateParam.nDstDefenceCoefficient,
                 m_nPoisonDamageAbsorb, m_nGlobalDamageAbsorb, m_nPoisonDamageManaShield, m_nGlobalDamageManaShield,
@@ -5140,7 +5137,7 @@ BOOL KCharacter::ProcessDamage(int nDamageType, int nDamageValue)
         goto Exit1;
     }
 
-    if (m_pSkillAttributeParam->bInsight) // Ê¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëºï¿½
+    if (m_pSkillAttributeParam->bInsight) // Ê¶ÆÆÕë¶ÔËùÓÐÉËº¦
     {
         int nInsightDamageValue = DamageCalculateParam.nDamageValue * 256 / KILO_NUM;
 
@@ -5169,14 +5166,14 @@ BOOL KCharacter::ProcessDamage(int nDamageType, int nDamageValue)
     MAKE_IN_RANGE(DamageCalculateParam.nDstResistPercent, 0, KILO_NUM);
     MAKE_IN_RANGE(DamageCalculateParam.nDstDefenceCoefficient, 0, KILO_NUM);
 
-    DamageCalculateParam.nDamageValue = DamageCalculateParam.nDamageValue * (KILO_NUM + m_pSkillAttributeParam->nDamageAddPercent) / KILO_NUM;    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¼Ó³ï¿½
+    DamageCalculateParam.nDamageValue = DamageCalculateParam.nDamageValue * (KILO_NUM + m_pSkillAttributeParam->nDamageAddPercent) / KILO_NUM;    // ¼¼ÄÜÃØóÅ¼Ó³É
 
     if (m_pSkillAttributeParam->nStackNum > 1)
     {
         DamageCalculateParam.nDamageValue = DamageCalculateParam.nDamageValue * m_pSkillAttributeParam->nStackNum;
     }
 
-    if (pSkillSrc && IS_PLAYER(pSkillSrc->m_dwID)) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Playerï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óªï¿½Ô¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    if (pSkillSrc && IS_PLAYER(pSkillSrc->m_dwID)) // Èç¹û¹¥»÷·½ÊÇPlayerÔò¼ÆËãÕóÓª¶Ô¹¥»÷µÄÌáÉý
     {
         KPlayer* pSrcPlayer         = (KPlayer*)pSkillSrc;
         int      nCampLevel         = g_pSO3World->m_CampInfo.GetCampLevel();
@@ -5187,7 +5184,7 @@ BOOL KCharacter::ProcessDamage(int nDamageType, int nDamageValue)
         DamageCalculateParam.nDamageValue = DamageCalculateParam.nDamageValue * nCampDamagePercent / KILO_NUM;
     }
 
-    if (IS_PLAYER(m_dwID)) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Playerï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óªï¿½ï¿½ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    if (IS_PLAYER(m_dwID)) // Èç¹û±»»÷·½ÊÇPlayerÔò¼ÆËãÕóÓª¶ÔÉËº¦¼õÃâµÄÌáÉý
     {
         KPlayer* pDstPlayer         = (KPlayer*)this;
         int      nCampLevel         = g_pSO3World->m_CampInfo.GetCampLevel();
@@ -5241,7 +5238,7 @@ BOOL KCharacter::CalculateDamage(const KDAMAGE_CALCULATE_PARAM &crParam)
         dwDstMoveStateMask = (1 << m_eMoveState);
         if (dwDstMoveStateMask & m_pSkillAttributeParam->dwAddDamageByDstMoveStateMask)
         {
-            nDamageToDst = nDamageToDst * (KILO_NUM + m_pSkillAttributeParam->nAddDamagePercentByDstMoveState) / KILO_NUM; // Ä¿ï¿½ï¿½ï¿½Æ¶ï¿½×´Ì¬ï¿½ï¿½ï¿½Ëºï¿½ï¿½Ä¼Ó³ï¿½
+            nDamageToDst = nDamageToDst * (KILO_NUM + m_pSkillAttributeParam->nAddDamagePercentByDstMoveState) / KILO_NUM; // Ä¿±êÒÆ¶¯×´Ì¬¶ÔÉËº¦µÄ¼Ó³É
         }
     }
 
@@ -5266,10 +5263,10 @@ BOOL KCharacter::CalculateDamage(const KDAMAGE_CALCULATE_PARAM &crParam)
         nDamageToDst = nDamageToDst * 3 / 2 + nDamageToDst * nCriticalStrikeCof / KILO_NUM;
     }
 
-    // Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½Ëºï¿½Ð§ï¿½ï¿½
+    // Ê¹¼¼ÄÜÖÁÉÙÄÜÔì³É1µãÉËº¦Ð§¹û
     nDamageToDst = max(nDamageToDst, 1);
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½
+    // ÎÞÀàÐÍµÄÉËº¦ÎüÊÕ
     nGlobalDamageAbsorb = min(m_nGlobalDamageAbsorb, nDamageToDst);
     if (nGlobalDamageAbsorb < 0)
     {
@@ -5279,7 +5276,7 @@ BOOL KCharacter::CalculateDamage(const KDAMAGE_CALCULATE_PARAM &crParam)
     nDamageToDst -= nGlobalDamageAbsorb;
     m_nGlobalDamageAbsorb -= nGlobalDamageAbsorb;
     
-    // ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½
+    // ÓÐÀàÐÍµÄÉËº¦ÎüÊÕ
     nTypedDamageAbsorb = min(*crParam.pnDstMaxTypedDamageAbsorb, nDamageToDst);
     if (nTypedDamageAbsorb < 0)
     {
@@ -5292,7 +5289,7 @@ BOOL KCharacter::CalculateDamage(const KDAMAGE_CALCULATE_PARAM &crParam)
    
     m_pDstSkillCalculateResult->nSkillEffectResult[serAbsorbDamage] += nGlobalDamageAbsorb + nTypedDamageAbsorb;
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëºï¿½
+    // ÎÞÀàÐÍµÄÄÚÁ¦µÖÉËº¦
     nGlobalManaShieldDamage = min(m_nGlobalDamageManaShield, nDamageToDst);
     nGlobalManaShieldDamage = min(nGlobalManaShieldDamage, m_nCurrentMana / DAMAGE_2_MANA_RATE);
     if (nGlobalManaShieldDamage < 0)
@@ -5304,7 +5301,7 @@ BOOL KCharacter::CalculateDamage(const KDAMAGE_CALCULATE_PARAM &crParam)
     m_nGlobalDamageManaShield -= nGlobalManaShieldDamage;
     m_nCurrentMana -= nGlobalManaShieldDamage * DAMAGE_2_MANA_RATE;
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëºï¿½
+    // ÓÐÀàÐÍµÄÄÚÁ¦µÖÉËº¦
     nTypedManaShieldDamage = min(*crParam.pnDstMaxTypedDamageManaShield, nDamageToDst);
     nTypedManaShieldDamage = min(nTypedManaShieldDamage, m_nCurrentMana / DAMAGE_2_MANA_RATE);
     if (nTypedManaShieldDamage < 0)
@@ -5318,7 +5315,7 @@ BOOL KCharacter::CalculateDamage(const KDAMAGE_CALCULATE_PARAM &crParam)
     
     m_pDstSkillCalculateResult->nSkillEffectResult[serShieldDamage] += nGlobalManaShieldDamage + nTypedManaShieldDamage;
 
-    // ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½: ï¿½Ù·Ö±È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½Üµï¿½ï¿½ï¿½ï¿½Ëºï¿½ï¿½ï¿½Ê©ï¿½Ó¸ï¿½ï¿½ï¿½ï¿½ï¿½Ê©ï¿½ï¿½ï¿½ß£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½Ç°ï¿½ï¿½Ëºï¿½Ê©ï¿½Ó¸ï¿½ï¿½ï¿½ï¿½ï¿½Ê©ï¿½ï¿½ï¿½ß£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½Üµï¿½ï¿½ï¿½ï¿½Ëºï¿½
+    // ÉËº¦·´µ¯: °Ù·Ö±È·´µ¯¿ÉÒÔ¼õÉÙ×Ô¼ºÊÜµ½µÄÉËº¦²¢Ê©¼Ó¸ø¼¼ÄÜÊ©·ÅÕß£¬µãÊý·´µ¯Ö»ÊÇ°ÑÉËº¦Ê©¼Ó¸ø¼¼ÄÜÊ©·ÅÕß£¬²¢²»¼õÉÙ×Ô¼ºÊÜµ½µÄÉËº¦
     nReflectiedDamage = nDamageToDst * crParam.nDstPercentReflection / KILO_NUM;
 
     nReflectiedDamageToSrc += nReflectiedDamage + crParam.nDstPointReflection;
@@ -5329,7 +5326,7 @@ BOOL KCharacter::CalculateDamage(const KDAMAGE_CALCULATE_PARAM &crParam)
 
     m_pSrcSkillCalculateResult->nSkillEffectResult[serReflectiedDamage] += nReflectiedDamageToSrc;
 
-    // ï¿½Ëºï¿½×ªï¿½ï¿½ï¿½ï¿½
+    // ÉËº¦×ªÄÚÁ¦
     nTransferDamageToMana = nDamageToDst * m_nTransferDamageToManaPercent / KILO_NUM;
     if (nTransferDamageToMana < 0)
     {
@@ -5337,7 +5334,7 @@ BOOL KCharacter::CalculateDamage(const KDAMAGE_CALCULATE_PARAM &crParam)
     }
     m_nCurrentMana += nTransferDamageToMana;
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÍµÈ¡ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½Ëºï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½Îªï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½ï¿½Ëºï¿½)
+    // ¹¥»÷ÕßÍµÈ¡ÉúÃü(½«ÉËº¦µÄÒ»²¿·Ö×ª»¯Îª×Ô¼ºµÄÉúÃü,²¢²»Ôö¼ÓÄ¿±êÊÜµ½µÄÉËº¦)
     nDamageToLifeForSrc += nDamageToDst * crParam.nDamageToLifeForSrc / KILO_NUM;    
     if (nDamageToLifeForSrc < 0)
     {
@@ -5346,7 +5343,7 @@ BOOL KCharacter::CalculateDamage(const KDAMAGE_CALCULATE_PARAM &crParam)
 
     m_pSrcSkillCalculateResult->nSkillEffectResult[serStealLife] += nDamageToLifeForSrc;
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÍµÈ¡ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½Ëºï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½Îªï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+    // ¹¥»÷ÕßÍµÈ¡ÄÚÁ¦(½«ÉËº¦µÄÒ»²¿·Ö×ª»¯Îª×Ô¼ºµÄÄÚÁ¦,²¢²»¼õÉÙÄ¿±êµÄÄÚÁ¦)
     nDamageToManaForSrc += nDamageToDst * crParam.nDamageToManaForSrc / KILO_NUM;
     
     if (pSkillSrc)
@@ -5354,7 +5351,7 @@ BOOL KCharacter::CalculateDamage(const KDAMAGE_CALCULATE_PARAM &crParam)
         pSkillSrc->m_nCurrentMana += nDamageToManaForSrc;
     }
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½Ëºï¿½×ªï¿½ï¿½,Ö»ï¿½ï¿½Playerï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½
+    // ×÷ÓÃÓÚÐ¡¶ÓÉËº¦×ª»¯,Ö»ÓÐPlayer²ÅÓÐ¶ÓÎé
     if (pSkillSrc && IS_PLAYER(pSkillSrc->m_dwID))
     {
         KPlayer* pPlayer        = (KPlayer*)pSkillSrc;
@@ -5375,7 +5372,7 @@ BOOL KCharacter::CalculateDamage(const KDAMAGE_CALCULATE_PARAM &crParam)
             nDamageToManaForSrcTeam = 0;
         }
 
-        // ï¿½ï¿½ï¿½Ãµï¿½Ð¡ï¿½ï¿½
+        // ×÷ÓÃµ½Ð¡¶Ó
         pTeam = g_pSO3World->m_TeamServer.GetTeam(dwTeamID);
         
         if (pTeam)
@@ -5391,7 +5388,7 @@ BOOL KCharacter::CalculateDamage(const KDAMAGE_CALCULATE_PARAM &crParam)
                 KPlayer* pMemberPlayer = NULL;
                 pMemberPlayer = g_pSO3World->m_PlayerSet.GetObj(it->dwMemberID);
 
-                if (!pMemberPlayer) // ï¿½Ò²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ£ï¿½ï¿½ï¿½Ó°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÑµÄ²ï¿½ï¿½ï¿½
+                if (!pMemberPlayer) // ÕÒ²»µ½¶ÓÓÑ£¬²»Ó°ÏìÆäËû¶ÓÓÑµÄ²Ù×÷
                     continue;
 
                 nRetCode = g_GetDistance3(
@@ -5406,7 +5403,7 @@ BOOL KCharacter::CalculateDamage(const KDAMAGE_CALCULATE_PARAM &crParam)
                 pMemberPlayer->m_nCurrentMana += nDamageToManaForSrcTeam;
             }
         }
-        else // Ã»ï¿½Ð¶ï¿½ï¿½é£¬Ö»ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½Ñª
+        else // Ã»ÓÐ¶ÓÎé£¬Ö»¸ø×Ô¼º¼ÓÑª
         {
             pSkillSrc->m_nCurrentLife += nDamageToLifeForSrcTeam;
             pSkillSrc->m_nCurrentMana += nDamageToManaForSrcTeam;
@@ -5538,7 +5535,7 @@ void KCharacter::OnSkillEvent(
         if (pSkill)
         {
             m_SkillDebug.Trace(
-                2, "[ï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½][%d]:[ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½] (%s-%u) ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½%u ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½Ê©ï¿½Å¼ï¿½ï¿½ï¿½ (%u,%u) By %s-(%u,%d) From (%s-%u)",
+                2, "[¼¼ÄÜµ÷ÊÔ][%d]:[¼¼ÄÜÊÂ¼þ] (%s-%u) µÄ ¼¼ÄÜÊÂ¼þ£º%u ´¥·¢,½«Ê©·Å¼¼ÄÜ (%u,%u) By %s-(%u,%d) From (%s-%u)",
                 g_pSO3World->m_nGameLoop, m_szName, m_dwID,
                 it->dwEventID, pEventInfo->dwSkillID, pEventInfo->dwSkillLevel,
                 pSkill->m_pBaseInfo->szSkillName, pSkill->m_pBaseInfo->dwSkillID, pSkill->m_dwLevel,
@@ -5604,7 +5601,7 @@ void KCharacter::CheckBeatBreak(KSkill* pSkill)
     KGLOG_PROCESS_ERROR(pSkillSrc);
 
     m_SkillDebug.Trace(
-        1, "[ï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½][%d]:[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½] (%s-%u) ï¿½ï¿½ (%s-%u,%d) ï¿½ï¿½ï¿½ï¿½Ï¡ï¿½By %s-(%u,%u) From %s-%u  ï¿½ï¿½Ï¸ï¿½ï¿½ï¿½:%d ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½ï¿½:%d ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ:%d",
+        1, "[¼¼ÄÜµ÷ÊÔ][%d]:[¼¼ÄÜÁ÷³Ì] (%s-%u) µÄ (%s-%u,%d) ±»´ò¶Ï¡£By %s-(%u,%u) From %s-%u  ´ò¶Ï¸ÅÂÊ:%d ±»´ò¶Ï¸ÅÂÊ:%d ´ò¶ÏËæ»úÖµ:%d",
         g_pSO3World->m_nGameLoop, m_szName, m_dwID,
         pOTSkill->m_pBaseInfo->szSkillName, pOTSkill->m_pBaseInfo->dwSkillID, pOTSkill->m_dwLevel,
         pSkill->m_pBaseInfo->szSkillName, pSkill->m_pBaseInfo->dwSkillID, pSkill->m_dwLevel,
@@ -5656,7 +5653,7 @@ void KCharacter::CheckBeatBack()
     if (pSkill && pSkillSrc)
     {
         m_SkillDebug.Trace(
-            2, "[ï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½][%d]:[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½] Skill:(%s-%u,%u) ï¿½ï¿½ï¿½ï¿½:<ï¿½É¹ï¿½>ï¿½ï¿½ï¿½Ñ±ï¿½ï¿½ï¿½ï¿½ï¿½<%d>ï¿½ï¿½, Frame: %d From(%s-%u) To(%s-%u)",
+            2, "[¼¼ÄÜµ÷ÊÔ][%d]:[¼¼ÄÜÁ÷³Ì] Skill:(%s-%u,%u) ´òÍË:<³É¹¦>¡£ÒÑ±»´òÍË<%d>´Î, Frame: %d From(%s-%u) To(%s-%u)",
             g_pSO3World->m_nGameLoop,
             pSkill->m_pBaseInfo->szSkillName, pSkill->m_pBaseInfo->dwSkillID, pSkill->m_dwLevel,
             m_OTActionParam.nBeatBackCount,
@@ -5675,7 +5672,7 @@ Exit0:
 
 void KCharacter::OnOTActionBeatBack(int nFrame)
 {
-    // TODO: Êµï¿½ï¿½Í³Ò»ï¿½Ä´ï¿½ï¿½Ë»ï¿½ï¿½ï¿½
+    // TODO: ÊµÏÖÍ³Ò»µÄ´òÍË»úÖÆ
 
     switch (m_OTActionParam.eActionType)
     {
@@ -5762,7 +5759,7 @@ void KCharacter::OnOTActionBeatBack(int nFrame)
         }
 	case otActionCustomPrepare:		
 	case otActionCustomChannel:
-		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		//´¦Àí´ò¶Ï
 #ifdef _SERVER
 		g_PlayerServer.DoSkillBeatBack(this, 0, true);
 #endif
@@ -5779,7 +5776,7 @@ void KCharacter::OnDamage(KCharacter* pAttackter, int nDamage)
 {
     assert(nDamage > 0);
 #ifdef _SERVER
-    // ï¿½Üµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ£ï¿½ï¿½ï¿½ï¿½Debuff
+    // ÊÜµ½¹¥»÷µÄÊ±ºòÇå³ýËùÓÐÑ£ÔÎÀàDebuff
     m_BuffList.CleanBuffByType(btpStun);
     m_BuffList.CleanBuffByType(btpDaze);
 
@@ -5929,7 +5926,7 @@ BOOL KCharacter::OnDeath(void)
         goto Exit1;
     }
 
-    // Ö»ï¿½ï¿½NPCï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð©ï¿½ï¿½ï¿½ï¿½
+    // Ö»ÓÐNPC²ÅÐèÒªºóÃæµÄÕâÐ©´¦Àí
     KG_PROCESS_SUCCESS(IS_PLAYER(m_dwID));
 
     KG_PROCESS_SUCCESS(m_nZ - m_pCell->m_wHighLayer * POINT_PER_ALTITUDE > 0);
@@ -5939,7 +5936,7 @@ BOOL KCharacter::OnDeath(void)
 	pDoodad = pNpc->GenerateCorpse();
     KGLOG_PROCESS_ERROR(pDoodad);
     
-    // È¡ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½
+    // È¡µôÂäÄ¿±ê
 	pDropTarget = pNpc->GetDropTarget();
     if (pDropTarget)
     {
@@ -5954,12 +5951,12 @@ BOOL KCharacter::OnDeath(void)
 		    }
 	    }
     }
-    else // ï¿½Þµï¿½ï¿½ï¿½Ä¿ï¿½ï¿½
+    else // ÎÞµôÂäÄ¿±ê
     {
         pDoodad->LootOver();
     }
 
-    // ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Îª0ï¿½ï¿½,Ä¬ï¿½Ï²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    // ÖØÉúÊ±¼äÎª0µÄ,Ä¬ÈÏ²»¼ÓÈëÖØÉú¶ÓÁÐ
 	if (!(pNpc->m_nReviveTime))
     {
 		g_pSO3World->DeleteNpc(pNpc);
@@ -6060,7 +6057,7 @@ void KCharacter::SetMoveState(int nState)
     case cmsOnStand:
         #ifdef _CLIENT
         if (m_eMoveState == cmsOnAutoFly)
-        { // ï¿½Â½ï¿½Í¨ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
+        { // ÏÂ½»Í¨µÄÊ±ºòµÄÊÂ¼þ
             if (g_pGameWorldUIHandler)
             {
                 g_pGameWorldUIHandler->OnEndAutoFly();
@@ -6110,14 +6107,14 @@ void KCharacter::SetMoveState(int nState)
     case cmsOnAutoFly:
         #ifdef _CLIENT
         if (m_eMoveState == cmsOnAutoFly)
-        { // ï¿½ï¿½AutoFlyï¿½Ð»ï¿½ï¿½ï¿½AutoFlyï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½Ð»ï¿½ï¿½ï¿½ï¿½ï¿½
+        { // ´ÓAutoFlyÇÐ»»µ½AutoFlyµÄÇé¿öÎªÇÐ»»µØÌæ
             if (g_pGameWorldUIHandler)
             {
                 g_pGameWorldUIHandler->OnAutoFlySwitchMap();
             }
         }
         else
-        { // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½Ð»ï¿½ï¿½ï¿½AutoFlyï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½Ï½ï¿½Í¨
+        { // ´ÓÆäËû×´Ì¬ÇÐ»»µ½AutoFlyµÄÇé¿öÎªÉÏ½»Í¨
             if (g_pGameWorldUIHandler)
             {
                 g_pGameWorldUIHandler->OnStartAutoFly();
@@ -6164,7 +6161,7 @@ void KCharacter::SetMoveState(int nState)
 #endif
 }
 
-// ----------------- ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Îª ----------------------------->
+// ----------------- ³ÖÐøÒ»¶ÎÊ±¼äµÄÐÐÎª ----------------------------->
 
 
 BOOL KCharacter::DoOTAction(KOT_ACTION_PARAM& rParam)
@@ -6207,7 +6204,7 @@ Exit0:
 
 void KCharacter::DoActionIdle(void)
 {   
-    // ï¿½Ðµï¿½Idleï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Ã¾ï¿½ï¿½ï¿½"ï¿½ï¿½ï¿½"
+    // ÇÐµ½Idle¿ÉÄÜÊÇÒòÎªÕý³£µÄÍê³ÉÁË,²»¼ûµÃ¾ÍÊÇ"´ò¶Ï"
 	m_OTActionParam.eActionType = otActionIdle;
 }
 
@@ -6450,7 +6447,7 @@ void KCharacter::ProcessAutoCastSkill()
         nRetCode = m_SelectTarget.GetTarget(&pTarget);
         if (!nRetCode || !pTarget || !pTarget->m_pScene || pTarget->m_eMoveState == cmsOnDeath)
         {
-            // ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½Í£Ö¹
+            // Èç¹ûÄ¿±êÒÑ¾­²»´æÔÚÁË,ÔòÍ£Ö¹
             DoAutoCastSkillIdle();
             goto Exit0;
         }
@@ -6464,7 +6461,7 @@ void KCharacter::ProcessAutoCastSkill()
 
     nRetCode = pSkill->CanCast(this, m_SelectTarget);
     
-    // ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½Í·Å¹ï¿½ï¿½ï¿½ï¿½ï¿½,Ä¿ï¿½ê³¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î§ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½Í£Ö¹ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½    
+    // ÆÕÍ¨¹¥»÷×Ô¶¯ÊÍ·Å¹ý³ÌÖÐ,Ä¿±ê³¬³ö¹¥»÷·¶Î§ºó,²¢²»Í£Ö¹ÔÚ×Ô¶¯¹¥»÷    
     if (nRetCode != srcSuccess)
     {   
         if (nRetCode != srcTooCloseTarget && nRetCode != srcTooFarTarget && nRetCode != srcOutOfAngle)
@@ -6493,7 +6490,7 @@ BOOL KCharacter::OnCustomOTActionPrepare()
 	if (m_eMoveState != cmsOnStand && m_eMoveState != cmsOnFloat)
 	{
 #ifdef _SERVER
-		//Ö´ï¿½Ð´ï¿½ÏµÄ½Å±ï¿½
+		//Ö´ÐÐ´ò¶ÏµÄ½Å±¾
 		bRetCode = g_pSO3World->m_ScriptCenter.IsScriptExist(m_OTActionParam.dwScriptID);
 		if (bRetCode && g_pSO3World->m_ScriptCenter.IsFuncExist(m_OTActionParam.dwScriptID, SCRIPT_ON_CUSTOM_BREAK))
 		{
@@ -6520,7 +6517,7 @@ BOOL KCharacter::OnCustomOTActionPrepare()
 	KG_PROCESS_SUCCESS(g_pSO3World->m_nGameLoop < m_OTActionParam.nEndFrame);
 
 #if defined(_SERVER)
-	//Ö´ï¿½Ð½Å±ï¿½
+	//Ö´ÐÐ½Å±¾
 	bRetCode = g_pSO3World->m_ScriptCenter.IsScriptExist(m_OTActionParam.dwScriptID);
 	if (bRetCode && g_pSO3World->m_ScriptCenter.IsFuncExist(m_OTActionParam.dwScriptID, SCRIPT_ON_CUSTOM_EVENT))
 	{
@@ -6590,7 +6587,7 @@ BOOL KCharacter::OnCustomOTActionChannel()
 	if (m_eMoveState != cmsOnStand && m_eMoveState != cmsOnFloat)
 	{
 #ifdef _SERVER
-		//Ö´ï¿½Ð´ï¿½ÏµÄ½Å±ï¿½
+		//Ö´ÐÐ´ò¶ÏµÄ½Å±¾
 		bRetCode = g_pSO3World->m_ScriptCenter.IsScriptExist(m_OTActionParam.dwScriptID);
 		if (bRetCode && g_pSO3World->m_ScriptCenter.IsFuncExist(m_OTActionParam.dwScriptID, SCRIPT_ON_CUSTOM_BREAK))
 		{
@@ -6617,7 +6614,7 @@ BOOL KCharacter::OnCustomOTActionChannel()
 	KG_PROCESS_SUCCESS(g_pSO3World->m_nGameLoop < m_OTActionParam.nEndFrame);
 
 #if defined(_SERVER)
-	//Ö´ï¿½Ð½Å±ï¿½
+	//Ö´ÐÐ½Å±¾
 	bRetCode = g_pSO3World->m_ScriptCenter.IsScriptExist(m_OTActionParam.dwScriptID);
 	if (bRetCode && g_pSO3World->m_ScriptCenter.IsFuncExist(m_OTActionParam.dwScriptID, SCRIPT_ON_CUSTOM_EVENT))
 	{
@@ -6815,7 +6812,7 @@ BOOL KCharacter::OnSkillPrepare()
     pSkill = m_OTActionParam.Data.SkillRecipePointer.GetPointer();
     KGLOG_PROCESS_ERROR(pSkill);
 
-    KGLOG_PROCESS_ERROR(pSkill->m_pBaseInfo->nCastMode != scmItem); // ï¿½Ôµï¿½ï¿½ï¿½Ê¹ï¿½ÃµÄ¼ï¿½ï¿½Ü²ï¿½ï¿½ï¿½ï¿½ßµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¡ï¿½
+    KGLOG_PROCESS_ERROR(pSkill->m_pBaseInfo->nCastMode != scmItem); // ¶ÔµÀ¾ßÊ¹ÓÃµÄ¼¼ÄÜ²»ÄÜ×ßµ½¸ÃÁ÷³Ì¡£
 
     nRetCode = pSkill->CheckSelfState(this);
     if (nRetCode != srcSuccess)
@@ -6894,7 +6891,7 @@ BOOL KCharacter::OnSkillPrepare()
 
     m_AIVM.FireEvent(aevOnCastSkill, m_dwID, 0);
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½ï¿½Â¼ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+    // ¼¼ÄÜÊÍ·ÅÊÂ¼þ(Ò÷³ª¼¼)
     {
         BOOL        bRetCode     = false;
         KCharacter* pEventTarget = NULL;
@@ -7053,7 +7050,7 @@ BOOL KCharacter::OnPickPrepare()
 
 	if (m_eMoveState != cmsOnStand && m_eMoveState != cmsOnFloat)
 	{
-		//ï¿½ï¿½ï¿½Æ¶ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½ÎªÕ¾ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ð¶ï¿½Ê°È¡ï¿½ï¿½ï¿½ï¿½ï¿½Ñ±ï¿½ï¿½ï¿½ï¿½
+		//µ±ÒÆ¶¯×´Ì¬»ú²»ÎªÕ¾Á¢Ê±£¬ÅÐ¶ÏÊ°È¡¶¯×÷ÒÑ±»´ò¶Ï
 #ifdef _SERVER
 		if (pDoodad->m_eKind != dkCorpse)
 		{
@@ -7076,7 +7073,7 @@ BOOL KCharacter::OnPickPrepare()
 	}
 
     KG_PROCESS_SUCCESS(g_pSO3World->m_nGameLoop < m_OTActionParam.nEndFrame);
-    // ï¿½ï¿½PickPrepareÊ±ï¿½äµ½ï¿½ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½Doodadï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Picking
+    // ÈôPickPrepareÊ±¼äµ½£¬Ôò³É¹¦²Ù×÷Doodad£¬ÓÐµôÂäÔò½øÈëPicking
 
 #ifdef _SERVER
 	if (IS_PLAYER(this->m_dwID))
@@ -7188,7 +7185,7 @@ BOOL KCharacter::OnPicking()
         }
 
         KGLOG_PROCESS_ERROR(IS_PLAYER(m_dwID));
-        g_PlayerServer.DoFinishLoot((KPlayer*)this, pDoodad); // doodadÃ»ï¿½ï¿½lootlistï¿½ï¿½Ó¦ï¿½Ã½ï¿½ï¿½ï¿½Ê°È¡
+        g_PlayerServer.DoFinishLoot((KPlayer*)this, pDoodad); // doodadÃ»ÓÐlootlist£¬Ó¦¸Ã½áÊøÊ°È¡
         goto Exit0;
     }
 #endif	
@@ -7202,7 +7199,7 @@ Exit0:
 	return bResult;
 }
 
-//----------- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ------------------->
+//----------- ´¦Àí´ò¶Ï ------------------->
 
 BOOL KCharacter::OnBreakPickPrepare(KOT_ACTION_PARAM& rNewAction)
 {
@@ -7223,7 +7220,7 @@ BOOL KCharacter::OnBreakPickPrepare(KOT_ACTION_PARAM& rNewAction)
 			bResult = g_pSO3World->m_ScriptCenter.IsScriptExist(pDoodad->m_dwScriptID);
 			if (bResult && g_pSO3World->m_ScriptCenter.IsFuncExist(pDoodad->m_dwScriptID, SCRIPT_ON_BREAK_OPEN))
 			{
-				// ï¿½ï¿½ï¿½ß½Å±ï¿½
+				// ÏÈ×ß½Å±¾
 				int nTopIndex = 0;
 				g_pSO3World->m_ScriptCenter.SafeCallBegin(&nTopIndex);
 
@@ -7250,7 +7247,7 @@ BOOL KCharacter::OnBreakPickPrepare(KOT_ACTION_PARAM& rNewAction)
 	}
 
 #ifdef  _SERVER
-	//ï¿½ï¿½ï¿½ï¿½Doodadï¿½ò¿ªµÄ´ï¿½ï¿½
+	//´¦ÀíDoodad´ò¿ªµÄ´ò¶Ï
 	if (rNewAction.eActionType != otActionPicking)
 	{
 		pDoodad->ChangeState(dsIdle);
@@ -7308,7 +7305,7 @@ Exit0:
 	return bResult;
 }
 
-//<---------- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ --------------------
+//<---------- ´¦Àí´ò¶Ï --------------------
 
 BOOL KCharacter::UpdateMoveParameter()
 {
@@ -7449,7 +7446,7 @@ BOOL KCharacter::ReversePosition(KPOSITION_RECORD* pRecord)
         SetCell(pDstCell);
     }
 
-    // ï¿½ï¿½ÊµMoveToï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½ï¿½Æ³ï¿½
+    // ÆäÊµMoveTo¿ÉÄÜµ¼ÖÂ×Ô¼º±»´Ó³¡¾°ÒÆ³ý
     KGLOG_PROCESS_ERROR(m_pScene);
 
     m_eMoveState          =   pRecord->eMoveState;  
@@ -7505,7 +7502,7 @@ BOOL KCharacter::ForwardPosition(int nFrame)
     bResult = true;
 Exit0:
 #ifdef _SERVER
-    // Ö»Òªï¿½ï¿½ï¿½ï¿½ï¿½Ë¿ï¿½ï¿½,ï¿½Í²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù´Î»Ø¹ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê·ï¿½ï¿½Â¼
+    // Ö»Òª·¢ÉúÁË¿ì½ø,¾Í²»¿ÉÄÜÔÙ´Î»Ø¹ö,ËùÒÔÇå³þµôÀúÊ·¼ÇÂ¼
     if (IS_PLAYER(m_dwID))
     {
         ((KPlayer*)this)->m_nRecordCount = 0;
@@ -7551,7 +7548,7 @@ void KCharacter::ProcessMove()
         }
     }
 
-    // ---------- ï¿½ï¿½ï¿½Ù¶È¼ï¿½ï¿½ï¿½ --------------------------
+    // ---------- ¼ÓËÙ¶È¼ÆËã --------------------------
     
     if (
         m_eMoveState != cmsOnSwim && m_eMoveState != cmsOnFloat && 
@@ -7560,28 +7557,28 @@ void KCharacter::ProcessMove()
     {
     	if (m_nZ - nEarthPos > 0)
         {
-            // ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½
+            // Ðü¿Õ×´Ì¬ÏòÏÂ¼ÓËÙ
             m_nVelocityZ -= m_nCurrentGravity;
             MAKE_IN_RANGE(m_nVelocityZ, MIN_VELOCITY_Z, MAX_VELOCITY_Z);
         }
 
         if (m_bSlip)
         {
-            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÄºÏ³ï¿½Ð§ï¿½ï¿½: ï¿½ï¿½Ä¦ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-            // ×¢ï¿½ï¿½,NPCï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ò»¬µï¿½
+            // ¼ÆËãÁ¦µÄºÏ³ÉÐ§¹û: ¶¯Ä¦²ÁÁ¦/ÖØÁ¦·ÖÁ¿
+            // ×¢Òâ,NPCÊÇÓÀÔ¶²»»á´ò»¬µÄ
             ProcessAcceleration();
         }
     }
 
-    // Ë®Æ½ï¿½Ë¶ï¿½ï¿½ï¿½ï¿½ï¿½
+    // Ë®Æ½ÔË¶¯´¦Àí
     ProcessHorizontalMove();
     KG_PROCESS_ERROR(m_pScene);
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¬Cellï¿½ï¿½ï¿½ï¿½ï¿½Ò»Ð©ï¿½ï¿½Ö±ï¿½ä»¯
+    // ´¦Àí¶¯Ì¬CellÒýÆðµÄÒ»Ð©´¹Ö±±ä»¯
     ProcessDynamicObstacle();
     KG_PROCESS_ERROR(m_pScene);
 
-    // ï¿½ï¿½Ö±ï¿½Ë¶ï¿½ï¿½ï¿½ï¿½ï¿½
+    // ´¹Ö±ÔË¶¯´¦Àí
     ProcessVerticalMove();
 
 Exit0:
@@ -7638,7 +7635,7 @@ void KCharacter::ProcessAutoFly()
         nCurrentNode = (pTrack->nFromNode == nFromNode) ? pTrack->nToNode : pTrack->nFromNode;
 
         m_nMoveFrameCounter = 0;
-        // TODO: ï¿½ï¿½ï¿½Å±ï¿½
+        // TODO: µ÷½Å±¾
 
         pCurrentNode = g_pSO3World->m_RoadManager.GetNodeInfo(nCurrentNode);
         KGLOG_PROCESS_ERROR_RET_CODE(pCurrentNode, afeFailed);
@@ -7656,7 +7653,7 @@ void KCharacter::ProcessAutoFly()
             goto Exit1;
         }
 
-        if (IS_PLAYER(m_dwID)) // NPCÃ»ï¿½Ð¿ï¿½Í¨ï¿½ï¿½Í¨ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ï¿½Éµï¿½ï¿½Ð¶ï¿½
+        if (IS_PLAYER(m_dwID)) // NPCÃ»ÓÐ¿ªÍ¨½»Í¨µÄÁÐ±í£¬Ã»ÓÐÊÆÁ¦ºÍ°ïÅÉµÄÅÐ¶Ï
         {
             KPlayer* pThis          = (KPlayer*)this;
             int      nNextTrackID   = 0;
@@ -7699,23 +7696,23 @@ void KCharacter::ProcessAutoFly()
         }
         KG_PROCESS_ERROR_RET_CODE(pToNode, afeFailed);
 
-        // ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½È»Òªï¿½Ð»ï¿½ï¿½ï¿½Í¼ï¿½ï¿½
+        // ¸ÃËÀµÄ£¬¾ÓÈ»ÒªÇÐ»»µØÍ¼£¡
         if (pCurrentNode->dwMapID != pToNode->dwMapID)
         {
             KPlayer* pThis = NULL;
-            // Òªï¿½ï¿½Ö¤ï¿½Ð»ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½ï»¹ï¿½ï¿½ï¿½ï¿½ï¿½AutoFlyï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½Ð»ï¿½ï¿½ï¿½Í¼
-            // Ö®Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½AutoFlyï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÃºÃ¡ï¿½
+            // Òª±£Ö¤ÇÐ»»µØÍ¼ºóÈËÎï»¹»á¼ÌÐøAutoFly£¬ÎÒÃÇÒªÔÚÇÐ»»µØÍ¼
+            // Ö®Ç°°ÑÈËÎïµÄAutoFly²ÎÊý¶¼ÉèÖÃºÃ¡£
 
             KG_PROCESS_ERROR_RET_CODE(IS_PLAYER(m_dwID), afeFailed);
 
             m_nMoveFrameCounter = 1;
 
-            // ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½Ò»Ö¡ï¿½Ë¡ï¿½ï¿½æ¶¨ï¿½ï¿½ï¿½ÐµÄ¿ï¿½ï¿½Í¼ï¿½ï¿½Trackï¿½ï¿½ï¿½ï¿½1Ö¡ï¿½ï¿½
-            // ï¿½ÈµÄ¡ï¿½ï¿½ï¿½Ã´ï¿½Ð»ï¿½ï¿½ï¿½Ä¿ï¿½Äµï¿½Í¼ï¿½ó£¬»ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Â·ï¿½ï¿½ï¿½ã¡£
+            // ÎÒÃÇÒÑ¾­×ßÁËÒ»Ö¡ÁË¡£¹æ¶¨ËùÓÐµÄ¿çµØÍ¼µÄTrack¶¼ÊÇ1Ö¡³¤
+            // ¶ÈµÄ¡£ÄÇÃ´ÇÐ»»µ½Ä¿µÄµØÍ¼ºó£¬»á×Ô¶¯¼ÆËãÏÂÒ»¸öÂ·¾¶µã¡£
             pThis = (KPlayer*)this;
 
-            // ï¿½Ú¿ï¿½ï¿½Í¼ï¿½ï¿½Ê±ï¿½ï¿½,ï¿½ï¿½Í¬ï¿½ï¿½Ò»ï¿½ï¿½,
-            // ï¿½ï¿½ï¿½ï¿½áµ¼ï¿½Â¿Í»ï¿½ï¿½ËºÍ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½Ä²ï¿½Í¬ï¿½ï¿½,Regionï¿½ï¿½ï¿½ï¿½.
+            // ÔÚ¿çµØÍ¼µÄÊ±ºò,¶àÍ¬²½Ò»´Î,
+            // ·ñÔò»áµ¼ÖÂ¿Í»§¶ËºÍ·þÎñÆ÷µÀÂ·µÄ²»Í¬²½,Region³ö´í.
             InvalidateMoveState(0, true);
 
             pThis->SwitchMap(pToNode->dwMapID, 0, pToNode->nX, pToNode->nY, pToNode->nZ);
@@ -7820,15 +7817,15 @@ int  KCharacter::GetFrictionDirection()
     nSinBeta        = g_Sin(nSinBeta);
     nCosThetaAlpha  = g_Cos(nTheta - nAlpha);
 
-    // ×¢ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½Ü¹ï¿½ï¿½Ü¶ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½Ü¶ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"ï¿½ï¿½ï¿½Ù¶ï¿½",ï¿½ï¿½ï¿½ï¿½,Òªï¿½ï¿½nMyVï¿½ï¿½ï¿½ï¿½Ð±ï¿½Â·Ö½ï¿½,È»ï¿½ï¿½ï¿½ï¿½ï¿½ëµ±Ç°ï¿½ï¿½
-    // Ë²Ê±ï¿½Ù¶È½ï¿½ï¿½ÐºÏ³ï¿½,ï¿½ï¿½È»Òª×¢ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¦ï¿½ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½,Ë²Ê±ï¿½Ù¶ÈµÄ·ï¿½ï¿½ï¿½ÒªÈ¡ï¿½ä·´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½ï¿½ï¿½
+    // ×¢Òâ,ÎÒÃÇÈÏÎªÈËÄÜ¹»ÅÜ¶à¿é,Õâ¸öÅÜ¶¯ÄÜÁ¦Ö»µÄÊÇÑØ×ÅÆÂÃæµÄ"ÏßËÙ¶È",ËùÒÔ,Òª¶ÔnMyV½øÐÐÐ±ÆÂ·Ö½â,È»ºóÔÙÓëµ±Ç°µÄ
+    // Ë²Ê±ËÙ¶È½øÐÐºÏ³É,µ±È»Òª×¢Òâ,ÎÒÃÇÒª¼ÆËãµÄÊÇÄ¦²ÁÁ¦µÄ·½Ïò,ËùÒÔ,Ë²Ê±ËÙ¶ÈµÄ·½ÏòÒªÈ¡Æä·´·½ÏòÀ´½øÐÐ¼ÆËã
 
     nMyVBase = (int)sqrt(
         (float)SIN_COS_NUMBER * SIN_COS_NUMBER + (float)nCosThetaAlpha * nCosThetaAlpha / nCosBeta * nSinBeta / nCosBeta * nSinBeta
     );
 
-    // ×¢ï¿½ï¿½,"Ë²Ê±ï¿½Ù¶ï¿½"ï¿½ï¿½ï¿½ï¿½Êµï¿½Ù¶È³ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ïµï¿½ï¿½"VELOCITY_ZOOM_COEFFICIENT"ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½Ù¶ÈºÏ³ï¿½,ï¿½ï¿½ï¿½ï¿½Ò²Òªï¿½ï¿½Ïµï¿½ï¿½
-    // ×¢ï¿½ï¿½ï¿½Ö¹ï¿½ï¿½Öµï¿½ï¿½ï¿½
+    // ×¢Òâ,"Ë²Ê±ËÙ¶È"ÊÇÕæÊµËÙ¶È³ËÉÏÁËÒ»¸öÏµÊý"VELOCITY_ZOOM_COEFFICIENT"µÄ,ËùÒÔÒª×öËÙ¶ÈºÏ³É,ÕâÀïÒ²Òª³ËÏµÊý
+    // ×¢Òâ·ÀÖ¹ÊýÖµÒç³ö
     nMyVx = VELOCITY_ZOOM_COEFFICIENT * nMyV * g_Cos(nTheta) / nMyVBase;
     nMyVy = VELOCITY_ZOOM_COEFFICIENT * nMyV * g_Sin(nTheta) / nMyVBase;
 
@@ -7867,9 +7864,9 @@ BOOL KCharacter::ProcessAcceleration()
 
     nAlpha = m_pCell->GetGradientDirection();
     nBeta  = m_pCell->GetGradientDegree();
-    nTheta = GetFrictionDirection(); // È¡Ä¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë®Æ½ï¿½ï¿½ï¿½ï¿½Í¶Ó°ï¿½Ä·ï¿½ï¿½ï¿½
+    nTheta = GetFrictionDirection(); // È¡Ä¦²ÁÁ¦ÔÚË®Æ½ÃæÉÏÍ¶Ó°µÄ·½Ïò
 
-    // ï¿½ï¿½ï¿½ã»¬ï¿½ï¿½Ä¦ï¿½ï¿½ï¿½ï¿½ï¿½Ä´ï¿½Ð¡(ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½Ç»ï¿½ï¿½ï¿½Ä¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ù¶ÈµÄ´ï¿½Ð¡)
+    // ¼ÆËã»¬¶¯Ä¦²ÁÁ¦µÄ´óÐ¡(ÕâÀïÊµ¼ÊÉÏÊÇ»¬¶¯Ä¦²ÁÁ¦ÒýÆðµÄ¼ÓËÙ¶ÈµÄ´óÐ¡)
     if (m_pCell->m_BaseInfo.dwCellType != ctWater)
     {
         nFValue = m_nCurrentGravity * g_Cos(nBeta) * m_pCell->GetDynamicFrictionCoefficient() / 
@@ -7877,7 +7874,7 @@ BOOL KCharacter::ProcessAcceleration()
     }
     else
     {
-        // Ë®CellÒªÈ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÄµØ±ï¿½ï¿½Ä¶ï¿½Ä¦ï¿½ï¿½Ïµï¿½ï¿½
+        // Ë®CellÒªÈ¡ÆäÏÂÃæµÄµØ±íµÄ¶¯Ä¦²ÁÏµÊý
         KCell* pPreCell = m_pRegion->GetPreCell(m_nXCell, m_nYCell, m_pCell);
         KGLOG_PROCESS_ERROR(pPreCell);
         nFValue = m_nCurrentGravity * g_Cos(nBeta) * pPreCell->GetDynamicFrictionCoefficient() / 
@@ -7891,7 +7888,7 @@ BOOL KCharacter::ProcessAcceleration()
         nFlotageZ = -m_nCurrentGravity * FLOTAGE_COEFFICIENT / KILO_NUM;
     }
 
-    // ----- ï¿½ï¿½ï¿½ï¿½Ä¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xyzï¿½ï¿½ï¿½ï¿½ï¿½ÏµÄ·Ö½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ù¶È·ï¿½ï¿½ï¿½ -----------
+    // ----- ¼ÆËãÄ¦²ÁÁ¦ÔÚxyz·½ÏòÉÏµÄ·Ö½âÒýÆðµÄ¼ÓËÙ¶È·ÖÁ¿ -----------
     nCosBeta = g_Cos(nBeta);
     nCosThetaAlpha = g_Cos(nTheta - nAlpha);
     nSinBeta = g_Sin(nBeta);
@@ -7902,13 +7899,13 @@ BOOL KCharacter::ProcessAcceleration()
 
     assert(nBaseValue > 0);
 
-    // nFValueï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ÎªË®Æ½ï¿½ï¿½ï¿½êµ¥Î»,×¢ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ö¹ï¿½ï¿½Öµï¿½ï¿½ï¿½
+    // nFValueÊÇÓÉÖØÁ¦ÕÛËã¹ýÀ´µÄ,ÕâÀïÒª»»ËãÎªË®Æ½×ø±êµ¥Î»,×¢Òâ,ÕâÀïÒª·ÀÖ¹ÊýÖµÒç³ö
     nAFx = ZPOINT_TO_XYPOINT(VELOCITY_ZOOM_COEFFICIENT * nFValue) * g_Cos(nTheta) / nBaseValue;
     nAFy = ZPOINT_TO_XYPOINT(VELOCITY_ZOOM_COEFFICIENT * nFValue) * g_Sin(nTheta) / nBaseValue;
 
     if (nCosThetaAlpha < 0)
     {
-        // Ä¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½
+        // Ä¦²ÁÁ¦³¯ÉÏÆÂ·½Ïò
         nAFz = -nFValue * nCosThetaAlpha * nSinBeta / nCosBeta / nBaseValue;
     }
     else
@@ -8045,8 +8042,8 @@ BOOL KCharacter::CellMoveStupid(int nStepLength)
     int  nDestDirection     = 0;
 
 
-    // Ö»ï¿½ï¿½ï¿½ï¿½Ð©×´Ì¬ï¿½ï¿½Òªï¿½ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½",ï¿½ï¿½Ô¾×´Ì¬ï¿½Ç¼ï¿½ï¿½"ï¿½ï¿½ï¿½"ï¿½Ð»ï¿½×´Ì¬ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-    // ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½Õ¾ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½Îªï¿½ò»¬¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î½"ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½"
+    // Ö»ÓÐÕâÐ©×´Ì¬ÐèÒª¼ì²â"µ½´ïÄ¿±ê",ÌøÔ¾×´Ì¬ÊÇ¼ì²â"ÂäµØ"ÇÐ»»×´Ì¬µÄ,²»ÔÚÕâÀï½øÐÐ
+    // ÆäËû×´Ì¬ÏÂ,±ÈÈçÕ¾Á¢×´Ì¬ÏÂÒòÎª´ò»¬¶øÒýÆðµÄÒÆ¶¯,ÔòÎÞËùÎ½"µ½´ïÄ¿±ê"
     if (
         m_eMoveState == cmsOnWalk || m_eMoveState == cmsOnRun || m_eMoveState == cmsOnSwim
     )
@@ -8077,14 +8074,14 @@ BOOL KCharacter::CellMoveStupid(int nStepLength)
 
     KG_PROCESS_ERROR(nMoveRetCode == mrObstacle);
 
-    // ï¿½ï¿½Ð©×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÑ°Â·
+    // ÕâÐ©×´Ì¬ÏÂÔÚÐèÒªÑ°Â·
     KG_PROCESS_ERROR(
         m_eMoveState == cmsOnWalk || m_eMoveState == cmsOnRun ||
         m_eMoveState == cmsOnSwim || m_eMoveState == cmsOnDash ||
         m_eMoveState == cmsOnPull
     );
     
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¹ï¿½È¡ï¿½ï¿½ï¿½Ï°ï¿½ï¿½ï¿½ï¿½ß·ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ñ°Â·
+    // ±ØÐëÔÚÄÜ¹»È¡µÃÕÏ°­·¨Ïß·½ÏòµÄÊ±ºò²ÅÄÜÑ°Â·
     KG_PROCESS_ERROR(nObstacleNormal != -1);
 
     assert(nObstacleNormal >= 0 && nObstacleNormal < DIRECTION_COUNT);
@@ -8100,10 +8097,10 @@ BOOL KCharacter::CellMoveStupid(int nStepLength)
     }
 
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½Ê±ï¿½Ô¶ï¿½ï¿½ï¿½Â·,×¢ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½Ò¶ï¿½ï¿½ï¿½,ï¿½Ç¸ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½Ï°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½Ç¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·,ï¿½ï¿½ï¿½ï¿½NPCï¿½ï¿½ï¿½ï¿½,Ö»ï¿½Ç¸ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ï¿½ï¿½ï¿½ï¿½
-    // ï¿½Ð¶ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·
+    // Óöµ½ÕÏ°­Ê±×Ô¶¯ÈÆÂ·,×¢Òâ,¶ÔÍæ¼Ò¶øÑÔ,ÊÇ¸ù¾ÝÇ°·½ÕÏ°­·½ÏòÅÐ¶ÏÓ¦¸ÃÍùÄÇ¸ö·½ÏòÈÆÂ·,¶ø¶ÔNPC¶øÑÔ,Ö»ÊÇ¸ù¾ÝÕÏ°­·½Ïò
+    // ÅÐ¶ÏÓ¦¸ÃÓÅÏÈÍùÄÄ¸ö·½ÏòÈÆÂ·
 
-    // ï¿½ï¿½ï¿½ß·ï¿½ï¿½ï¿½ï¿½90ï¿½ï¿½,Ò²ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß·ï¿½ï¿½ï¿½
+    // ·¨Ïß·½Ïò¼Ó90¶È,Ò²¾ÍÊÇÕÏ°­µÄÇÐÏß·½Ïò
     nRetCode = g_Sin(nObstacleNormal - m_nDirectionXY);    
     if (nRetCode >= 0)
     {
@@ -8167,8 +8164,8 @@ Exit0:
 
         if (m_eMoveState == cmsOnWalk || m_eMoveState == cmsOnRun || m_eMoveState == cmsOnDash)
         {
-            // ï¿½ï¿½Ð©×´Ì¬,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½Ê±ï¿½ï¿½×ªÎªÕ¾ï¿½ï¿½
-            // ×¢ï¿½ï¿½,ï¿½ï¿½Ô¾×´Ì¬ï¿½Ç²ï¿½Òªï¿½ï¿½ÎªÕ¾ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½áµ¼ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½
+            // ÕâÐ©×´Ì¬,ÔÚÓöµ½ÕÏ°­Ê±¼´×ªÎªÕ¾Á¢
+            // ×¢Òâ,ÌøÔ¾×´Ì¬ÊÇ²»ÒªÇÐÎªÕ¾Á¢,·ñÔò»áµ¼ÖÂ"ÅÊÐüÑÂ"ÎÊÌâ
             SetMoveState(cmsOnStand);
         }
         else if (m_eMoveState == cmsOnSwim)
@@ -8186,7 +8183,7 @@ Exit0:
             m_eMoveState == cmsOnDash
         )
         {
-            // ï¿½ï¿½Ð©×´Ì¬,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½Ê±ï¿½ï¿½×ªÎªÕ¾ï¿½ï¿½
+            // ÕâÐ©×´Ì¬,ÔÚÓöµ½ÕÏ°­Ê±¼´×ªÎªÕ¾Á¢
             SetMoveState(cmsOnStand);
         }
         else if (m_eMoveState == cmsOnSwim)
@@ -8218,8 +8215,8 @@ BOOL KCharacter::CellMoveSmart(int nStepLength)
     int  nDestDirection     = 0;
 
 
-    // Ö»ï¿½ï¿½ï¿½ï¿½Ð©×´Ì¬ï¿½ï¿½Òªï¿½ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½",ï¿½ï¿½Ô¾×´Ì¬ï¿½Ç¼ï¿½ï¿½"ï¿½ï¿½ï¿½"ï¿½Ð»ï¿½×´Ì¬ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-    // ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½Õ¾ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½Îªï¿½ò»¬¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î½"ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½"
+    // Ö»ÓÐÕâÐ©×´Ì¬ÐèÒª¼ì²â"µ½´ïÄ¿±ê",ÌøÔ¾×´Ì¬ÊÇ¼ì²â"ÂäµØ"ÇÐ»»×´Ì¬µÄ,²»ÔÚÕâÀï½øÐÐ
+    // ÆäËû×´Ì¬ÏÂ,±ÈÈçÕ¾Á¢×´Ì¬ÏÂÒòÎª´ò»¬¶øÒýÆðµÄÒÆ¶¯,ÔòÎÞËùÎ½"µ½´ïÄ¿±ê"
     if (
         m_eMoveState == cmsOnWalk || m_eMoveState == cmsOnRun || m_eMoveState == cmsOnSwim ||
         m_eMoveState == cmsOnKnockedBack || m_eMoveState == cmsOnKnockedOff
@@ -8260,7 +8257,7 @@ BOOL KCharacter::CellMoveSmart(int nStepLength)
         }
         KG_PROCESS_ERROR(nMoveRetCode == mrObstacle);
 
-        // ï¿½Ð¶ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½
+        // ÅÐ¶ÏÈÆÂ··½Ïò
         for (nDelta = DIRECTION_COUNT / 16; nDelta < DIRECTION_COUNT / 2; nDelta += DIRECTION_COUNT / 16)
         {
             nTryDirection = nDestDirection - nDelta;
@@ -8293,7 +8290,7 @@ BOOL KCharacter::CellMoveSmart(int nStepLength)
         goto Exit1;
     }
 
-    // ï¿½ï¿½ï¿½ï¿½Â·×´Ì¬:
+    // ÔÚÈÆÂ·×´Ì¬:
     nMoveRetCode = TryMove(nStepLength, nDestDirection, NULL);
     if (nMoveRetCode == mrSucceed)
     {
@@ -8307,7 +8304,7 @@ BOOL KCharacter::CellMoveSmart(int nStepLength)
     {
         int nDelta = 0;
 
-        // ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·
+        // ³¢ÊÔ¼ÌÐøÍù×ó±ßÈÆÂ·
         for (nDelta = DIRECTION_COUNT / 16; nDelta < DIRECTION_COUNT / 2; nDelta += DIRECTION_COUNT / 16)
         {
             nTryDirection = nDestDirection - nDelta;
@@ -8327,7 +8324,7 @@ BOOL KCharacter::CellMoveSmart(int nStepLength)
     {
         int nDelta = 0;
 
-        // ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò±ï¿½ï¿½ï¿½Â·
+        // ³¢ÊÔ¼ÌÐøÍùÓÒ±ßÈÆÂ·
         for (nDelta = DIRECTION_COUNT / 16; nDelta < DIRECTION_COUNT / 2; nDelta += DIRECTION_COUNT / 16)
         {
             nTryDirection = nDestDirection + nDelta;
@@ -8368,7 +8365,7 @@ Exit0:
 
         if (m_eMoveState == cmsOnWalk || m_eMoveState == cmsOnRun || m_eMoveState == cmsOnDash)
         {
-            // ï¿½ï¿½Ð©×´Ì¬,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½Ê±ï¿½ï¿½×ªÎªÕ¾ï¿½ï¿½
+            // ÕâÐ©×´Ì¬,ÔÚÓöµ½ÕÏ°­Ê±¼´×ªÎªÕ¾Á¢
             SetMoveState(cmsOnStand);
         }
         else if (m_eMoveState == cmsOnSwim)
@@ -8388,7 +8385,7 @@ Exit0:
             m_eMoveState == cmsOnDash
         )
         {
-            // ï¿½ï¿½Ð©×´Ì¬,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½Ê±ï¿½ï¿½×ªÎªÕ¾ï¿½ï¿½
+            // ÕâÐ©×´Ì¬,ÔÚÓöµ½ÕÏ°­Ê±¼´×ªÎªÕ¾Á¢
             SetMoveState(cmsOnStand);
         }
         else if (m_eMoveState == cmsOnSwim)
@@ -8483,9 +8480,9 @@ int KCharacter::TryMove(int nStepLength, int nDirection, int* pnObstacleDirectio
     bIsChase =  m_eMoveState == cmsOnRun || m_eMoveState == cmsOnWalk || m_eMoveState == cmsOnDash || m_eMoveState == cmsOnPull;
     if (m_bFightState && IS_NPC(m_dwID) && bIsChase)
     {
-        nClimbAbility = INT_MAX / 2; // ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½
+        nClimbAbility = INT_MAX / 2; // ·ÀÖ¹ÔËËãÊ±Òç³ö
 
-        if (m_pScene->m_bDoNotGoThroughRoof)    // ï¿½ï¿½ï¿½Ú¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½NPCï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        if (m_pScene->m_bDoNotGoThroughRoof)    // ÊÒÄÚ¸±±¾ÏÞÖÆNPCµÄÅÀÆÂÄÜÁ¦
             nClimbAbility = 10240;  // 20m
     }
 
@@ -8502,8 +8499,8 @@ int KCharacter::TryMove(int nStepLength, int nDirection, int* pnObstacleDirectio
     {
         if (m_eMoveState == cmsOnStand || m_eMoveState == cmsOnWalk || m_eMoveState == cmsOnRun)
         {
-            // ×¢ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó°ï¿½ìµ½ï¿½ï¿½Ð§ï¿½ï¿½
-            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç²ï¿½ï¿½ò»¬µï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï²»ï¿½ï¿½0,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½Ê±ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            // ×¢Òâ,Õâ¸ö¸³0²Ù×÷»áÓ°Ïìµ½´ò»¬Ð§¹û
+            // ÓÉÓÚÐü¿ÕÊÇ²»´ò»¬µÄ,Èç¹ûÕâÀï²»¸³0,Ôò»áÔì³ÉÐ±ÆÂÉÏÒÆ¶¯Ê±´ò»¬×´Ì¬²»Á¬Ðø
             nRelativeZ = 0;
         }
     }
@@ -8519,7 +8516,7 @@ int KCharacter::TryMove(int nStepLength, int nDirection, int* pnObstacleDirectio
 
             if (!(m_bFightState && bIsChase))
             {
-                // ï¿½ï¿½Ö¹ï¿½ï¿½Ë®
+                // ·ÀÖ¹ÏÂË®
                 KG_PROCESS_ERROR_RET_CODE(nRelativeZ > -m_nHeight / 2, mrObstacle);
                 KG_PROCESS_ERROR_RET_CODE(nWaterDeepth < m_nHeight / 2, mrObstacle);
             }
@@ -8529,7 +8526,7 @@ int KCharacter::TryMove(int nStepLength, int nDirection, int* pnObstacleDirectio
 		    KG_PROCESS_ERROR_RET_CODE(nRelativeZ < -m_nHeight / 2, mrObstacle);
 		}
 
-		// ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		// ·ÀÖ¹ÏÂÐüÑÂ
 //         if (m_eMoveState != cmsOnJump)
 //         {
 //             int nCriticalHeight = min(CRITICAL_JUMP_HEIGHT, nClimbAbility);
@@ -8538,7 +8535,7 @@ int KCharacter::TryMove(int nStepLength, int nDirection, int* pnObstacleDirectio
 //         }
 	}
 
-    // ï¿½ï¿½ï¿½É³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    // ¼ì²â·É³ö·¿¶¥µÄÇé¿ö
     if (m_pScene->m_bDoNotGoThroughRoof)
     {
         for (KCell* pCellNode = m_pRegion->GetNextCell(m_pCell, bIgnoreDynamicObstacle); pCellNode != NULL; pCellNode = m_pRegion->GetNextCell(pCellNode, bIgnoreDynamicObstacle))
@@ -8609,7 +8606,7 @@ void KCharacter::ProcessDynamicObstacle()
 
     assert(m_pCell);
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½NPC/Playerï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½Îªï¿½ï¿½ï¿½ï±¾ï¿½ï¿½ï¿½Í²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î½"ï¿½ï¿½ï¿½ï¿½"
+    // ÕâÀïÅÀÆÂÄÜÁ¦²»¿¼ÂÇNPC/PlayerÇø±ð,ÒòÎªÕâÀï±¾À´¾Í²»ÊÇÕæµÄËùÎ½"ÅÀÆÂ"
 	pDestCell = m_pRegion->GetAdaptedCellForObj(
         m_nXCell, m_nYCell, m_nZ, CLIMB_ABILITY, 
         m_nHeight, false,
@@ -8635,12 +8632,12 @@ void KCharacter::ProcessVerticalMove()
 
     assert(m_pCell);
 
-    // ï¿½Ú¸Ä±ï¿½Zï¿½ï¿½ï¿½ï¿½Ö®Ç°ï¿½ï¿½È¡ï¿½Ã¶ï¿½Ì¬ï¿½Ï°ï¿½×´Ì¬
+    // ÔÚ¸Ä±äZ×ø±êÖ®Ç°ÏÈÈ¡µÃ¶¯Ì¬ÕÏ°­×´Ì¬
     bIgnoreDynamicObstacle = IgnoreDynamicObstacle();
 
     nGradient = m_pCell->GetGradientDegree();
 
-    // È¡ï¿½ÃµØ±ï¿½ï¿½ß¶ï¿½
+    // È¡µÃµØ±í¸ß¶È
     if (m_pCell->m_BaseInfo.dwCellType != ctWater)
         nEarthPos = m_pCell->m_wHighLayer * POINT_PER_ALTITUDE;
     else
@@ -8663,15 +8660,15 @@ void KCharacter::ProcessVerticalMove()
         {
             if (m_nVelocityZ < 0)
             {
-                // ï¿½ï¿½ï¿½Ë¤ï¿½Ë¼ï¿½ï¿½ï¿½
+                // ÂäµØË¤ÉË¼ÆËã
                 if (IS_PLAYER(m_dwID))
                     ProcessDropDamage();
 
-                // ï¿½ï¿½ï¿½ï¿½Ù¶È´ï¿½ï¿½ï¿½
+                // ÂäµØËÙ¶È´¦Àí
                 ProcessDropSpeed();
             }
 
-            // ï¿½ï¿½ï¿½×´Ì¬ï¿½Ð»ï¿½
+            // ÂäµØ×´Ì¬ÇÐ»»
             if (m_eMoveState == cmsOnJump)
             {
                 if (!m_bSlip)
@@ -8698,7 +8695,7 @@ void KCharacter::ProcessVerticalMove()
         }
     }
 
-	// --ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½--
+	// --Åö¶¥´¦Àí--
     pCellNode = m_pRegion->GetNextCell(m_pCell, bIgnoreDynamicObstacle);
     while (pCellNode)
     {
@@ -8722,8 +8719,8 @@ void KCharacter::ProcessVerticalMove()
 		}
 	}
 
-    // --ï¿½ï¿½ï¿½Ø´ï¿½ï¿½ï¿½--
-    // ×¢ï¿½ï¿½,Ò»ï¿½ï¿½Òªï¿½È´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½Ù´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¥m_nHeightï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    // --´¥µØ´¦Àí--
+    // ×¢Òâ,Ò»¶¨ÒªÏÈ´¦ÀíÅö¶¥,ÔÙ´¦Àí´¥µØ,·ñÔòÉÏÃæ¼õÈ¥m_nHeight¿ÉÄÜÏÝÈëµØÏÂ
     if (m_nZ < nEarthPos)
     {
         m_nZ = nEarthPos;
@@ -8734,12 +8731,12 @@ void KCharacter::ProcessVerticalMove()
         ProcessDrowning();
     }
 
-    // È¡ï¿½Ã³ï¿½Ë®ï¿½ï¿½ï¿½
+    // È¡µÃ³ÔË®Éî¶È
     nWaterline = GetWaterline();
     if (IS_NPC(m_dwID))
         nWaterline = 0;
 
-    // ï¿½ï¿½Ó¾ï¿½ï¿½ï¿½×´Ì¬ï¿½Ð»ï¿½
+    // ÓÎÓ¾Ïà¹Ø×´Ì¬ÇÐ»»
     switch (m_eMoveState)
     {
     case cmsOnStand:
@@ -8799,10 +8796,10 @@ void KCharacter::ProcessVerticalMove()
     }
 
 
-    // ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½×´Ì¬Ê±,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ³ï¿½ï¿½ï¿½3ï¿½ï¿½,ï¿½Ô¶ï¿½×ªÎªï¿½ï¿½Ô¾×´Ì¬
+    // ÔÚ×ß/ÅÜ×´Ì¬Ê±,Èç¹ûÐü¿Õ³¬¹ý3Ã×,×Ô¶¯×ªÎªÌøÔ¾×´Ì¬
     if (m_eMoveState == cmsOnWalk || m_eMoveState == cmsOnRun || m_eMoveState == cmsOnSwim || m_eMoveState == cmsOnStand)
     {
-        if (IS_NPC(m_dwID)) // NPC Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½Ø£ï¿½ï¿½ï¿½ï¿½ï¿½Ô¾ï¿½ï¿½
+        if (IS_NPC(m_dwID)) // NPC Ê¼ÖÕÌùµØ£¬²»ÌøÔ¾¡£
             m_nZ = nEarthPos;
 
         if (m_nZ - m_pCell->m_wHighLayer * POINT_PER_ALTITUDE > CRITICAL_JUMP_HEIGHT)
@@ -8837,12 +8834,12 @@ void KCharacter::ProcessDrowning()
     int nWaterline          = GetWaterline();
 	int nDivingCountLast    = m_nDivingCount;
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±,ï¿½ï¿½ï¿½ï¿½Ä£ï¿½Í¾ï¿½ï¿½ï¿½ï¿½ß¶È´ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¶Èµï¿½87/100
-    // ï¿½ï¿½ï¿½ï¿½ï¿½Ë®ï¿½ï¿½Èµï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Öºï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½Â°ï¿½ï¿½ï¿½9/10ï¿½ï¿½
+    // ÃÀÊõÖÆ×÷Ê±,ÈËÎïÄ£ÐÍ¾±²¿¸ß¶È´óÔ¼ÊÇÈËÎï¸ß¶ÈµÄ87/100
+    // Èç¹ûÈëË®Éî¶Èµ½×ìµÄÊ±ºò¿ªÊ¼³öÏÖºôÎüÌõ,´óÖÂ°´ÕÕ9/10Ëã
 
     if (IS_UNDER_WATER(nWaterline, m_nHeight))
     {
-        // ï¿½ï¿½Ë®ï¿½ï¿½Ê¼ï¿½ï¿½Ê±...
+        // ÈëË®¿ªÊ¼¼ÆÊ±...
         if (m_eMoveState != cmsOnDeath && m_nDivingFrame > 0)
         {
             m_nDivingCount++;
@@ -8897,7 +8894,7 @@ void KCharacter::ProcessDrowning()
             {
                 if (m_nDivingCount > 0)
                 {
-                    //ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                    //ÏÔÊ¾ºôÎüÌõ
                     g_pGameWorldUIHandler->OnShowSwimmingProgress();
                 }
             }
@@ -8905,7 +8902,7 @@ void KCharacter::ProcessDrowning()
             {
                 if (m_nDivingCount < 1)
                 {
-                    //ï¿½ï¿½ï¿½Øºï¿½ï¿½ï¿½ï¿½ï¿½
+                    //Òþ²ØºôÎüÌõ
                     g_pGameWorldUIHandler->OnHideSwimmingProgress();
                 }
             }
@@ -8928,7 +8925,7 @@ BOOL KCharacter::ProcessDropDamage()
 #ifdef _SERVER    
 	KG_PROCESS_ERROR(m_eMoveState != cmsOnDeath);
 
-    KG_PROCESS_ERROR(m_eMoveState != cmsOnDash); // ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ò²»¼ï¿½ï¿½ï¿½Ë¤ï¿½Ë£ï¿½ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Ë¤ï¿½ï¿½
+    KG_PROCESS_ERROR(m_eMoveState != cmsOnDash); // ³å·æµÄÊ±ºò²»¼ÆËãË¤ÉË£¬·ÀÖ¹ÏòµØÃæ³å·æµÄÊ±ºòË¤ËÀ
 	    
     KG_PROCESS_ERROR(nDropSpeed > DROP_DAMAGE_SPEED);
 
@@ -8986,7 +8983,7 @@ BOOL KCharacter::ProcessDropSpeed()
 
     if (nBeta <= DIRECTION_COUNT / 4 / 8)
     {
-        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ò»¯´ï¿½ï¿½ï¿½
+        // ÕâÖÖÇé¿ö¿ÉÒÔ¼ò»¯´¦Àí
         m_nVelocityZ = 0;
         goto Exit0;
     }
@@ -9169,8 +9166,8 @@ inline BOOL IsBattleEnemy(int nSelfSide, int nDestSide, DWORD dwRelationMask)
     KG_PROCESS_ERROR(nSelfSide >= 0);
     KG_PROCESS_ERROR(nDestSide >= 0);
 
-    if (nSelfSide > nDestSide)  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½Ò»ï¿½ï¿½4*4ï¿½Ä¾ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½DWORDï¿½ï¡£
-    {                           // ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¶Ô³ÆµÄ£ï¿½ï¿½ï¿½ï¿½ï¿½Ö»È¡X <= Yï¿½Ä²ï¿½ï¿½Ö¡ï¿½
+    if (nSelfSide > nDestSide)  // Õâ¸öº¯Êý£¬ÊÇ°ÑÒ»¸ö4*4µÄ¾ØÕóÑ¹Ëõµ½Ò»¸öDWORDÀï¡£
+    {                           // ÓÉÓÚ¾ØÕóµÄÊý¾ÝÊÇ¶Ô³ÆµÄ£¬ÎÒÃÇÖ»È¡X <= YµÄ²¿·Ö¡£
         int nTemp = nSelfSide;
 
         nSelfSide = nDestSide;
@@ -9181,7 +9178,7 @@ inline BOOL IsBattleEnemy(int nSelfSide, int nDestSide, DWORD dwRelationMask)
     {
         nPos += i;
     }
-    nPos += nSelfSide; // 0ï¿½ï¿½Ê¼ï¿½ï¿½
+    nPos += nSelfSide; // 0¿ªÊ¼µÄ
 
     assert(nPos < sizeof(DWORD) * CHAR_BIT);
 
@@ -9191,8 +9188,8 @@ Exit0:
 }
 
 
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ï¿½Ç´ï¿½pSrcCharacterï¿½ï¿½pDstCharacterï¿½Ä¹ï¿½Ïµï¿½ï¿½Ä³Ð©ï¿½ï¿½Ïµï¿½Çµï¿½ï¿½ï¿½ï¿½(PKï¿½Í·ï¿½Ö®ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½
-// ï¿½ï¿½ï¿½Ô´ï¿½pSrcCharacterï¿½ï¿½pDstCharacterï¿½Í´ï¿½pDstCharacterï¿½ï¿½pSrcCharacterï¿½Ä½ï¿½ï¿½ï¿½ï¿½ï¿½Ü²ï¿½Ò»ï¿½ï¿½
+// Õâ¸öº¯Êý·µ»ØµÄÊÇ´ÓpSrcCharacterµ½pDstCharacterµÄ¹ØÏµ£¬Ä³Ð©¹ØÏµÊÇµ¥ÏòµÄ(PK³Í·£Ö®ºìÃû)£¬
+// ËùÒÔ´ÓpSrcCharacterµ½pDstCharacterºÍ´ÓpDstCharacterµ½pSrcCharacterµÄ½á¹û¿ÉÄÜ²»Ò»Ñù
 int g_GetRelation(KCharacter* pSrcCharacter, KCharacter* pDstCharacter)
 {
 	int     nResult         = sortNone;
@@ -9235,8 +9232,8 @@ int g_GetRelation(KCharacter* pSrcCharacter, KCharacter* pDstCharacter)
 		}
 	}
 
-    // Ö»Òªï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½Ó¦ï¿½Ã½ï¿½ï¿½ï¿½ï¿½Ð¶Ï¡ï¿½
-    // Ò²ï¿½ï¿½ï¿½ï¿½GMÖ®ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½Õ½ï¿½ï¿½ï¿½ï¿½Û¿ï¿½ï¿½ï¿½
+    // Ö»ÒªÓÐÒ»¸öÈËÔÚÕ½³¡ÖÐ£¬¾ÍÓ¦¸Ã½øÈëÅÐ¶Ï¡£
+    // Ò²ÐíÊÇGMÖ®ÀàµÄÈË£¬ÔÚÕ½³¡Àï¹Û¿´¡£
     bInBattleField =
         (pSrcCharacter->m_nBattleFieldSide > INVALID_BATTLE_SIDE && pSrcCharacter->m_nBattleFieldSide < MAX_BATTLE_SIDE) ||
         (pDstCharacter->m_nBattleFieldSide > INVALID_BATTLE_SIDE && pDstCharacter->m_nBattleFieldSide < MAX_BATTLE_SIDE);
@@ -9300,9 +9297,9 @@ BOOL KCharacter::SetForceID(DWORD dwForceID)
 		    KPlayer* pClientPlayer = (KPlayer*)this;
 		    KGLOG_PROCESS_ERROR(pClientPlayer);
 
-            pClientPlayer->m_QuestList.UpdateNpcQuestMark(-1); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î§Npcï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            pClientPlayer->m_QuestList.UpdateNpcQuestMark(-1); // ¸üÐÂÈÎÎñÖÜÎ§NpcµÄÈÎÎñ±ê¼Ç
 
-            g_pGameWorldUIHandler->OnCurrentPlayerForceChanged(param); // Ë¢ï¿½ï¿½Playerï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            g_pGameWorldUIHandler->OnCurrentPlayerForceChanged(param); // Ë¢ÐÂPlayerµÄÊÆÁ¦Ãæ°å
             
             g_pGameWorldUIHandler->OnUpdateAllRelation();
             g_pGameWorldRepresentHandler->OnCharacterUpdateAllRelation();
@@ -9311,7 +9308,7 @@ BOOL KCharacter::SetForceID(DWORD dwForceID)
         {
             KUIEventUpdateRelation param = {m_dwID};
 
-            g_pGameWorldRepresentHandler->OnCharacterUpdateTitleMark(this); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î§Npcï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            g_pGameWorldRepresentHandler->OnCharacterUpdateTitleMark(this); // ¸üÐÂÈÎÎñÖÜÎ§NpcµÄÈÎÎñ±ê¼Ç
             
             g_pGameWorldUIHandler->OnUpdateRelation(param);
             g_pGameWorldRepresentHandler->OnCharacterUpdateRelation(this);
@@ -9331,7 +9328,7 @@ const char* KCharacter::GetName()
 
 	if (IS_PLAYER(m_dwID))
 	{
-		//ï¿½ï¿½ï¿½
+		//Íæ¼Ò
 		return m_szName;
 	}
 	else

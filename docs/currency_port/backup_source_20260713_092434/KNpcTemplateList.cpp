@@ -237,9 +237,6 @@
 #define NPC_CAMP_LOOT_PRESTIGE "CampLootPrestige"
 #define NPC_PRESTIGE           "Prestige"
 #define NPC_CONTRIBUTE         "Contribution"
-#define NPC_JUSTICE            "Justice"
-#define NPC_EXAMPRINT          "ExamPrint"
-#define NPC_ACTIVITYAWARD      "ActivityAward"
 #define NPC_ACHIEVEMENT_ID     "AchievementID"
 
 #define NPC_KNOCKED_BACK_RATE   "KnockedBackRate"
@@ -408,7 +405,7 @@ BOOL KNpcTemplateList::LoadFromTemplate(DWORD dwNpcTemplateID, KNpc* pNpc)
     pNpc->CallAttributeFunction(atLunarMagicShieldBase, true, pNpcTemplate->nLunarMagicDefence, 0);
     pNpc->CallAttributeFunction(atPoisonMagicShieldBase, true, pNpcTemplate->nPoisonMagicDefence, 0);
 
-    // 锟斤拷取 Boss锟斤拷锟斤拷 锟斤拷锟斤拷锟斤拷锟斤拷
+    // 读取 Boss属性 免疫掩码
     assert(sftTotal <= (sizeof(DWORD) * CHAR_BIT + 1));
     for (int nFuncType = sftInvalid + 1; nFuncType < sftTotal; nFuncType++)
     {
@@ -455,7 +452,7 @@ BOOL KNpcTemplateList::LoadFromTemplate(DWORD dwNpcTemplateID, KNpc* pNpc)
 		pNpc->m_dwScriptID = g_FileNameHash(pNpcTemplate->szScriptName);
 	}
 
-	pNpc->m_dwModelID  = pNpcTemplate->dwRepresentID[0]; //默锟较讹拷锟斤拷一锟斤拷锟斤拷锟斤拷ID
+	pNpc->m_dwModelID  = pNpcTemplate->dwRepresentID[0]; //默认读第一个表现ID
 
     pNpc->m_nProgressID = pNpcTemplate->nProgressID;
 #endif
@@ -590,7 +587,7 @@ BOOL KNpcTemplateList::LoadNpcTemplate(int nIndex, ITabFile* piTabFile, KNpcTemp
 	bRetCode = piTabFile->GetInteger(nIndex, NPC_LIFE_REPLENISH, m_DefaultNpcTemplate.nLifeReplenish, &(fNpcTemplate.nLifeReplenish));
 	(void)bRetCode; /*[endgame] tolerant*/
 
-    //锟斤拷锟斤拷锟截革拷锟劫分憋拷
+    //生命回复百分比
 	bRetCode = piTabFile->GetInteger(nIndex, NPC_LIFE_REPLENISH_PERCENT, m_DefaultNpcTemplate.nLifeReplenishPercent, &(fNpcTemplate.nLifeReplenishPercent));
 	(void)bRetCode; /*[endgame] tolerant*/
 
@@ -600,14 +597,14 @@ BOOL KNpcTemplateList::LoadNpcTemplate(int nIndex, ITabFile* piTabFile, KNpcTemp
     );
 	(void)bRetCode; /*[endgame] tolerant*/
 
-    //锟斤拷锟斤拷锟截革拷锟斤拷锟斤拷
+    //内力回复点数
 	bRetCode = piTabFile->GetInteger(
         nIndex, NPC_MANA_REPLENISH, 
 		m_DefaultNpcTemplate.nManaReplenish, (int*)&(fNpcTemplate.nManaReplenish)
     );
 	(void)bRetCode; /*[endgame] tolerant*/
 
-    //锟斤拷锟斤拷锟截革拷锟劫分憋拷
+    //内力回复百分比
 	bRetCode = piTabFile->GetInteger(
         nIndex, NPC_MANA_REPLENISH_PERCENT, 
 		m_DefaultNpcTemplate.nManaReplenishPercent, (int*)&(fNpcTemplate.nManaReplenishPercent)
@@ -1502,7 +1499,7 @@ BOOL KNpcTemplateList::LoadNpcTemplate(int nIndex, ITabFile* piTabFile, KNpcTemp
     );
 	(void)bRetCode; /*[endgame] tolerant*/
     
-    fNpcTemplate.nDailyQuestCycle *= 60; // 转锟斤拷锟斤拷
+    fNpcTemplate.nDailyQuestCycle *= 60; // 转成秒
 
     bRetCode = piTabFile->GetInteger(
         nIndex, NPC_DAILY_QUEST_OFFSET, 
@@ -1510,7 +1507,7 @@ BOOL KNpcTemplateList::LoadNpcTemplate(int nIndex, ITabFile* piTabFile, KNpcTemp
     );
 	(void)bRetCode; /*[endgame] tolerant*/
     
-    fNpcTemplate.nDailyQuestOffset *= 60; // 转锟斤拷锟斤拷
+    fNpcTemplate.nDailyQuestOffset *= 60; // 转成秒
 
     bRetCode = piTabFile->GetInteger(
         nIndex, NPC_IS_RANDOM_DAILY_QUEST, 
@@ -1572,14 +1569,6 @@ BOOL KNpcTemplateList::LoadNpcTemplate(int nIndex, ITabFile* piTabFile, KNpcTemp
     bRetCode = piTabFile->GetInteger(
         nIndex, NPC_CONTRIBUTE, m_DefaultNpcTemplate.nContribution, &fNpcTemplate.nContribution
     );
-    (void)bRetCode; /*[endgame] tolerant*/
-
-    // v2.5 NEW: currencies dropped on kill (cbtJustice/ExamPrint/ActivityAward). Default 0 = no drop.
-    bRetCode = piTabFile->GetInteger(nIndex, NPC_JUSTICE,       0, &fNpcTemplate.nJustice);
-    (void)bRetCode; /*[endgame] tolerant*/
-    bRetCode = piTabFile->GetInteger(nIndex, NPC_EXAMPRINT,     0, &fNpcTemplate.nExamPrint);
-    (void)bRetCode; /*[endgame] tolerant*/
-    bRetCode = piTabFile->GetInteger(nIndex, NPC_ACTIVITYAWARD, 0, &fNpcTemplate.nActivityAward);
     (void)bRetCode; /*[endgame] tolerant*/
 
     bRetCode = piTabFile->GetInteger(

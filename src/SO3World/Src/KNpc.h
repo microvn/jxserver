@@ -15,15 +15,15 @@
 enum  KNPC_SPECIES
 {
     ensInvalid = 0, 
-    ensHumanoid,    // ÈËÐÍ¹Ö
-    ensBeast,       // Ò°ÊÞ
-    ensMechanical,  // Ä¾¼×
-    ensUndead,      // ½©Ê¬, ÐÐÊ¬×ßÈâ
-    ensGhost,       // ÑýÁé
-    ensPlant,       // Ö²Îï
-    ensLegendary,   // ÉñÊÞ£¬Ê²Ã´ÇàÁú¡¢°×»¢¡¢ÖìÈ¸¡¢ÐþÎäµÈµÈ
-    ensCritter,     // Ð¡¶¯Îï,¼ÒÐóµÈ
-    ensOther,       // Î´·ÖÀà
+    ensHumanoid,    // ï¿½ï¿½ï¿½Í¹ï¿½
+    ensBeast,       // Ò°ï¿½ï¿½
+    ensMechanical,  // Ä¾ï¿½ï¿½
+    ensUndead,      // ï¿½ï¿½Ê¬, ï¿½ï¿½Ê¬ï¿½ï¿½ï¿½ï¿½
+    ensGhost,       // ï¿½ï¿½ï¿½ï¿½
+    ensPlant,       // Ö²ï¿½ï¿½
+    ensLegendary,   // ï¿½ï¿½ï¿½Þ£ï¿½Ê²Ã´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×»ï¿½ï¿½ï¿½ï¿½ï¿½È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Èµï¿½
+    ensCritter,     // Ð¡ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½
+    ensOther,       // Î´ï¿½ï¿½ï¿½ï¿½
     ensTotal
 };
 
@@ -39,57 +39,57 @@ public:
 	BOOL Activate(void);
 
 public:
-    int             m_nIntensity;       // Ç¿¶È
-	DWORD			m_dwScriptID;		// °ó¶¨½Å±¾ID		
-	KShop*          m_pShop;            // °ó¶¨µÄÉÌµê
-	DWORD			m_dwTemplateID;		// Ä£°å±àºÅ
-    int             m_nReviveTime;      // ÖØÉúÊ±¼ä£¬µ¥Î»Ãë
-	int				m_nDisappearFrames;	// ÏûÊ§Ö¡Êý
-	BOOL			m_bDisappearToReviveList; //ÏûÊ§ºó²»É¾³ý,¶øÊÇ½øÖØÉú¶ÓÁÐ
+    int             m_nIntensity;       // Ç¿ï¿½ï¿½
+	DWORD			m_dwScriptID;		// ï¿½ó¶¨½Å±ï¿½ID		
+	KShop*          m_pShop;            // ï¿½ó¶¨µï¿½ï¿½Ìµï¿½
+	DWORD			m_dwTemplateID;		// Ä£ï¿½ï¿½ï¿½ï¿½
+    int             m_nReviveTime;      // ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£¬ï¿½ï¿½Î»ï¿½ï¿½
+	int				m_nDisappearFrames;	// ï¿½ï¿½Ê§Ö¡ï¿½ï¿½
+	BOOL			m_bDisappearToReviveList; //ï¿½ï¿½Ê§ï¿½ï¿½É¾ï¿½ï¿½,ï¿½ï¿½ï¿½Ç½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     KNPC_SPECIES    m_eSpecies;
 
-    // ±ê¼ÇNpcÉíÉÏÊÇ·ñÓÐ¿ÉÒÔ¶Ô»°µÄ½Å±¾,Èç¹ûÕâ¸ö±ê¼ÇÎªfalseµÄ»°,Á¬ÈÎÎñMarkÒ²²»ÏÔÊ¾
-    // ×¢Òâ,Õâ¸ö±ê¼ÇÎªÖ»ÊÇÎª¿Í»§¶Ë±íÏÖ¶øÉèÖÃµÄ,²¢Ã»ÓÐÂß¼­ÉÏµÄ±ØÈ»¹ØÏµ
+    // ï¿½ï¿½ï¿½Npcï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ð¿ï¿½ï¿½Ô¶Ô»ï¿½ï¿½Ä½Å±ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªfalseï¿½Ä»ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½MarkÒ²ï¿½ï¿½ï¿½ï¿½Ê¾
+    // ×¢ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎªÖ»ï¿½ï¿½Îªï¿½Í»ï¿½ï¿½Ë±ï¿½ï¿½Ö¶ï¿½ï¿½ï¿½ï¿½Ãµï¿½,ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ÏµÄ±ï¿½È»ï¿½ï¿½Ïµ
 	BOOL			m_bDialogFlag;
 
-    // ±ê¼ÇNpcÊÇ·ñÃ¿Ö¡¶¼×Ô¶¯Active
+    // ï¿½ï¿½ï¿½Npcï¿½Ç·ï¿½Ã¿Ö¡ï¿½ï¿½ï¿½Ô¶ï¿½Active
     BOOL            m_bActiveMark;
 
-	BOOL			m_bDisableAutoTurn;	// ±»¶Ô»°Ê±×Ô¶¯×ªÏò
+	BOOL			m_bDisableAutoTurn;	// ï¿½ï¿½ï¿½Ô»ï¿½Ê±ï¿½Ô¶ï¿½×ªï¿½ï¿½
     MOVE_MODE       m_eMoveMode;
 
-	DWORD			m_dwReliveID;					//ÖØÉúÈº×éµÄ±àºÅ
-    DWORD           m_dwRandomID;                   //ÖØÉúÈº½MµÄëS™C¾ŽÌ–£¬žé0•r²»ëS™C
-	int				m_nNpcTeamID;					//NpcÐ¡¶ÓID
-	int				m_nNpcTeamIndex;				//NPCÐ¡¶ÓÖÐµÄ±àºÅ£¬Ã»ÓÐ¶ÓÎéµÄnpcÎª-1
-	int				m_nSkillCommomCD;						//Npc¼¼ÄÜµÄ¹«¹²CD,·ÀÖ¹NpcÒ»´ÎÊÍ·Å¶à¸ö¼¼ÄÜ
-	int				m_nSkillCastFrame[MAX_NPC_AI_SKILL];	//NPCÃ¿¸ö¼¼ÄÜµÄ×îºóÊÍ·ÅÊ±¼ä
+	DWORD			m_dwReliveID;					//ï¿½ï¿½ï¿½ï¿½Èºï¿½ï¿½Ä±ï¿½ï¿½
+    DWORD           m_dwRandomID;                   //ï¿½ï¿½ï¿½ï¿½Èºï¿½Mï¿½ï¿½ï¿½Sï¿½Cï¿½ï¿½Ì–ï¿½ï¿½ï¿½ï¿½0ï¿½rï¿½ï¿½ï¿½Sï¿½C
+	int				m_nNpcTeamID;					//NpcÐ¡ï¿½ï¿½ID
+	int				m_nNpcTeamIndex;				//NPCÐ¡ï¿½ï¿½ï¿½ÐµÄ±ï¿½Å£ï¿½Ã»ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½npcÎª-1
+	int				m_nSkillCommomCD;						//Npcï¿½ï¿½ï¿½ÜµÄ¹ï¿½ï¿½ï¿½CD,ï¿½ï¿½Ö¹NpcÒ»ï¿½ï¿½ï¿½Í·Å¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	int				m_nSkillCastFrame[MAX_NPC_AI_SKILL];	//NPCÃ¿ï¿½ï¿½ï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½Ê±ï¿½ï¿½
 
 #if defined(_CLIENT)
-	int				m_nUpdateMiniMapMarkFrame;		// ¸üÐÂÐ¡µØÍ¼±ê¼ÇµÄ¼ÆÊ±Æ÷
+	int				m_nUpdateMiniMapMarkFrame;		// ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½Í¼ï¿½ï¿½ÇµÄ¼ï¿½Ê±ï¿½ï¿½
 #endif 
 
 #if defined(_SERVER)
-	BOOL			m_bBank;						// ÊÇ·ñÊÇÒøÐÐ
-    BOOL            m_bMailbox;                     // ÊÇ·ñÓÊÏä
-    DWORD           m_dwSkillMasterID;              // Îä¹¦¼¼ÄÜÅàÑµµãID
-    DWORD           m_dwCraftMasterID;              // Éú»î¼¼ÄÜÅàÑµµãID
-    BOOL            m_bAuction;                     // ÊÇ·ñ¼ÄÂôÐÐ
-    BOOL            m_bTongRepertory;               // ÊÇ·ñ°ï»á²Ö¿â
+	BOOL			m_bBank;						// ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    BOOL            m_bMailbox;                     // ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½
+    DWORD           m_dwSkillMasterID;              // ï¿½ä¹¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñµï¿½ï¿½ID
+    DWORD           m_dwCraftMasterID;              // ï¿½ï¿½ï¿½î¼¼ï¿½ï¿½ï¿½ï¿½Ñµï¿½ï¿½ID
+    BOOL            m_bAuction;                     // ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    BOOL            m_bTongRepertory;               // ï¿½Ç·ï¿½ï¿½ï¿½Ö¿ï¿½
 
     int             m_nPathFindAstar;
     
-    BOOL            m_bDropNotQuestItemFlag;        // ÊÇ·ñµôÂä·ÇÈÎÎñµÀ¾ß
-    int             m_nAllAttackerLevel;            // ³ýµôÂäÄ¿±êÍâ£¬ËùÓÐ¹¥»÷ÎÒµÄ½ÇÉ«µÄµÈ¼¶Ö®ºÍ
+    BOOL            m_bDropNotQuestItemFlag;        // ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    int             m_nAllAttackerLevel;            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½â£¬ï¿½ï¿½ï¿½Ð¹ï¿½ï¿½ï¿½ï¿½ÒµÄ½ï¿½É«ï¿½ÄµÈ¼ï¿½Ö®ï¿½ï¿½
 #endif 
-    DWORD           m_dwDropTargetPlayerID;         // µôÂäÄ¿±ê
+    DWORD           m_dwDropTargetPlayerID;         // ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½
 
-	KNpcTemplate*	m_pTemplate;					// Ö¸ÏòÄ£°åµÄÖ¸Õë
-    DWORD           m_dwEmployer;                   // Õâ¸öNPCµÄ¹ÍÖ÷£¬Ò²¾ÍÊÇÖ÷ÈË£¬Ò»°ãÇé¿öÏÂNPCÊÇÃ»ÓÐ¹ÍÖ÷µÄ
+	KNpcTemplate*	m_pTemplate;					// Ö¸ï¿½ï¿½Ä£ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
+    DWORD           m_dwEmployer;                   // ï¿½ï¿½ï¿½NPCï¿½Ä¹ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½NPCï¿½ï¿½Ã»ï¿½Ð¹ï¿½ï¿½ï¿½ï¿½ï¿½
 
 #ifdef _SERVER
-    // -- ÐÂAIÏà¹Ø ------------------------------------------------------->
-    int             m_nSkillSelectIndex;            // ¼¼ÄÜÑ¡ÔñÆ÷µÄ½á¹û
+    // -- ï¿½ï¿½AIï¿½ï¿½ï¿½ ------------------------------------------------------->
+    int             m_nSkillSelectIndex;            // ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½Ä½ï¿½ï¿½
     // <----------------------------------------------------------------------
 #endif // _SERVER
 
@@ -97,7 +97,7 @@ public:
     int             m_nReviveGameLoop;
     int             m_nInFightGameLoop;
 
-    int             m_nProgressID;                  // ¸ÃNPCËùÊôµÄ½ø¶ÈID
+    int             m_nProgressID;                  // ï¿½ï¿½NPCï¿½ï¿½ï¿½ï¿½ï¿½Ä½ï¿½ï¿½ï¿½ID
 #endif
 
 public:
@@ -116,30 +116,34 @@ public:
 	int GetNpcRelation(KNpc* pTarget);
 	int GetPlayerRelation(KPlayer* pTarget);
 
-	BOOL Say(char* pszText, int nRange = 0);		    // Ëµ»°(ÆÁÄ»½üÁÄ)
-	BOOL Yell(char* pszText);						    // Ëµ»°(³¡¾°º°»°)
-    BOOL Whisper(KPlayer* pTarget, char* pszText);	    // Ëµ»°(ÃÜÓï)
-    BOOL SayTo(KPlayer* pTarget, char* pszText);	    // ºÍÖ¸¶¨Íæ¼ÒËµ»°
-    BOOL YellTo(KPlayer* pTarget, char* pszText);	    // ÏòÖ¸¶¨Íæ¼Ò´óº°
-    BOOL SayToCamp(KCAMP eCamp, char* pszText);        // NPCÕóÓªÆµµÀ
+	BOOL Say(char* pszText, int nRange = 0);		    // Ëµï¿½ï¿½(ï¿½ï¿½Ä»ï¿½ï¿½ï¿½ï¿½)
+	BOOL Yell(char* pszText);						    // Ëµï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+    BOOL Whisper(KPlayer* pTarget, char* pszText);	    // Ëµï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½)
+    BOOL SayTo(KPlayer* pTarget, char* pszText);	    // ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½
+    BOOL YellTo(KPlayer* pTarget, char* pszText);	    // ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½Ò´ï¿½
+    BOOL SayToCamp(KCAMP eCamp, char* pszText);        // NPCï¿½ï¿½ÓªÆµï¿½ï¿½
 
-    BOOL SayToTargetUseSentenceID(KPlayer* pTarget, DWORD dwSentenceID);	// ºÍÖ¸¶¨Íæ¼ÒËµ»°
+    BOOL SayToTargetUseSentenceID(KPlayer* pTarget, DWORD dwSentenceID);	// ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½
 
-    BOOL SetRevivePoint(int nX, int nY, int nZ, int nDirection);            // ÉèÖÃNPCµÄÖØÉúÎ»ÖÃ
-    BOOL GetRevivePoint(KScene* pScene, int* pnRetX, int* pnRetY, int* pnRetZ, int* pnRetDirection);    // »ñÈ¡NPCµÄÖØÉúÎ»ÖÃ
+    BOOL SetRevivePoint(int nX, int nY, int nZ, int nDirection);            // ï¿½ï¿½ï¿½ï¿½NPCï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
+    BOOL GetRevivePoint(KScene* pScene, int* pnRetX, int* pnRetY, int* pnRetZ, int* pnRetDirection);    // ï¿½ï¿½È¡NPCï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
 
 #ifdef _SERVER
     BOOL SetScript(const char* pszFileName);
     void LootExp(KPlayer* pDropTarget);
     void LootPrestige(KPlayer* pDropTarget);
     void LootContribution(KPlayer* pDropTarget);
+    void LootJustice(KPlayer* pDropTarget);        // v2.5: drop cbtJustice to eligible players
+    void LootExamPrint(KPlayer* pDropTarget);       // v2.5: drop cbtExamPrint
+    void LootActivityAward(KPlayer* pDropTarget);   // v2.5: drop cbtActivityAward
+    void LootCurrencyToEligible(KPlayer* pDropTarget, int nType, int nAmount);  // v2.5 shared helper
     void LootAchievement(KPlayer* pDropTarget);
     void LootCampScore();
 	BOOL AdjustLevel();
 	BOOL SetDisappearFrames(int nFrames, BOOL bDisappearToReviveList = false);
-	// ×Ô¼º»Øµ½ÖØÉúÁÐ±í,Ïàµ±ÓÚ±»´òËÀ
+	// ï¿½Ô¼ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½,ï¿½àµ±ï¿½Ú±ï¿½ï¿½ï¿½ï¿½ï¿½
 	BOOL GotoReviveList(); 
-	// NpcÉú³É×Ô¶¯¶Ô»°µÄÎÄ±¾
+	// Npcï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½Ô»ï¿½ï¿½ï¿½ï¿½Ä±ï¿½
 	BOOL GetAutoDialogString(KPlayer* pPlayer, char* szBuffer, size_t uBufferSize);
     
     KPlayer*    GetDropTarget();
@@ -190,7 +194,7 @@ public:
 	int	LuaSetBank(Lua_State* L);
 
 	int LuaFollowTarget(Lua_State* L);
-	int LuaModifyThreat(Lua_State* L);		// ½Å±¾ÐÞ¸Ä³ðºÞ
+	int LuaModifyThreat(Lua_State* L);		// ï¿½Å±ï¿½ï¿½Þ¸Ä³ï¿½ï¿½
     int LuaCopyThreatList(Lua_State* L);
     int LuaSetActiveMark(Lua_State* L);
 	int LuaSetPatrolPath(Lua_State* L);
