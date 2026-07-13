@@ -1,0 +1,84 @@
+# S2C struct-body parity audit (static, vs SO3GameServerD DWARF) — option C
+
+Method: sizeof(struct) from real compiler (jx3build container, header widened to 2B) vs v246
+DWARF byte_size. Size-match = body matches v246 (necessary check; sufficient first-pass). Size-
+mismatch = body drift -> the v246 client would misparse if the server emits it.
+
+## Summary
+- common S2C structs: 216
+- SIZE MATCH (body OK): 165
+- MISMATCH (body drift, TODO): 51
+- our-only (removed/renamed in v246): 16
+
+## MISMATCH worklist (our vs v246 byte_size)
+| struct | our | v246 | delta |
+|---|---|---|---|
+| S2C_ACQUIRE_DESIGNATION | 4 | 12 | +8 |
+| S2C_ADJUST_PLAYER_MOVE | 36 | 46 | +10 |
+| S2C_APPLY_JOIN_TEAM_REQUEST | 34 | 37 | +3 |
+| S2C_APPLY_OPEN_TONG_REPERTORY_RESPOND | 35 | 36 | +1 |
+| S2C_BATTLE_FIELD_NOTIFY | 22 | 34 | +12 |
+| S2C_CHARACTER_ACTION | 14 | 38 | +24 |
+| S2C_CHARACTER_DEATH | 18 | 26 | +8 |
+| S2C_CHARACTER_THREAT_RANKLIST | 10 | 14 | +4 |
+| S2C_CLEAR_THREAT | 6 | 8 | +2 |
+| S2C_DELETE_TONG_MEMBER_NOTIFY | 6 | 10 | +4 |
+| S2C_FORGET_PROFESSION_NOTIFY | 6 | 10 | +4 |
+| S2C_FORGET_RECIPE_NOTIFY | 6 | 10 | +4 |
+| S2C_GAME_CARD_BUY_RESPOND | 3 | 4 | +1 |
+| S2C_GAME_CARD_CANCEL_RESPOND | 3 | 4 | +1 |
+| S2C_GAME_CARD_LOOKUP_RESPOND | 12 | 10 | -2 |
+| S2C_GAME_CARD_SELL_RESPOND | 3 | 4 | +1 |
+| S2C_INVITE_JOIN_TEAM_REQUEST | 34 | 37 | +3 |
+| S2C_JOIN_BATTLE_FIELD_QUEUE_RESPOND | 10 | 46 | +36 |
+| S2C_OPEN_SHOP_NOTIFY | 17 | 18 | +1 |
+| S2C_PLAYER_DISPLAY_DATA | 73 | 39 | -34 |
+| S2C_ROLL_ITEM_MESSAGE | 18 | 16 | -2 |
+| S2C_SEEK_APPRENTICE_YELL | 69 | 70 | +1 |
+| S2C_SYNC_ACHIEVEMENT_DATA | 12 | 14 | +2 |
+| S2C_SYNC_BATTLEFIELD_STATISTICS | 122 | 126 | +4 |
+| S2C_SYNC_BUFF_SINGLE | 24 | 28 | +4 |
+| S2C_SYNC_CAMP_INFO | 11 | 97 | +86 |
+| S2C_SYNC_FREE_LIMIT_FLAG_INFO | 3 | 4 | +1 |
+| S2C_SYNC_ITEM_DATA | 14 | 15 | +1 |
+| S2C_SYNC_LOOT_LIST | 13 | 17 | +4 |
+| S2C_SYNC_MOVE_CTRL | 25 | 26 | +1 |
+| S2C_SYNC_MOVE_PARAM | 28 | 34 | +6 |
+| S2C_SYNC_MOVE_STATE | 27 | 37 | +10 |
+| S2C_SYNC_NEW_DOODAD | 39 | 45 | +6 |
+| S2C_SYNC_NEW_NPC | 38 | 53 | +15 |
+| S2C_SYNC_NEW_PLAYER | 34 | 59 | +25 |
+| S2C_SYNC_PLAYER_BASE_INFO | 133 | 161 | +28 |
+| S2C_SYNC_PLAYER_STATE_INFO | 45 | 58 | +13 |
+| S2C_SYNC_QUEST_DATA | 9 | 10 | +1 |
+| S2C_SYNC_SELECT_CHARACTER_CURRENT_LMR | 9 | 12 | +3 |
+| S2C_SYNC_SELECT_CHARACTER_MAX_LMR | 18 | 30 | +12 |
+| S2C_SYNC_SELF_CURRENT_LMRS | 14 | 34 | +20 |
+| S2C_SYNC_SELF_CURRENT_ST | 10 | 14 | +4 |
+| S2C_SYNC_SELF_MAX_LMRS | 14 | 34 | +20 |
+| S2C_SYNC_TEAM_MEMBER_CURRENT_LMR | 9 | 12 | +3 |
+| S2C_SYNC_TEAM_MEMBER_MAX_LMR | 18 | 30 | +12 |
+| S2C_SYNC_TEAM_MEMBER_MISC | 22 | 26 | +4 |
+| S2C_SYNC_TONG_HISTORY_RESPOND | 10 | 6 | -4 |
+| S2C_SYNC_TONG_MEMBER_INFO | 89 | 103 | +14 |
+| S2C_SYNC_TONG_REPERTORY_PAGE_RESPOND | 13 | 11 | -2 |
+| S2C_SYNC_TRADING_ITEM_DATA | 16 | 15 | -1 |
+| S2C_UPDATE_TONG_CLIENT_DATA_VERSION | 7 | 11 | +4 |
+
+## our-only (candidates: removed/renamed in v246, or 2010-specific)
+- S2C_ACCOUNT_KICKOUT (our=2)
+- S2C_ADD_ITEM_REF (our=14)
+- S2C_APEX_PROTOCOL (our=8)
+- S2C_EXCHANGE_ITEM_REF (our=10)
+- S2C_LOOT_MONEY_MESSAGE (our=14)
+- S2C_OVER_TIME_ACTION (our=12)
+- S2C_REMOVE_ITEM_REF (our=6)
+- S2C_SET_ITEM_REF_PARAM (our=14)
+- S2C_SKILL_BREAK (our=6)
+- S2C_SYNC_APPLY_EXTERIOR_FLAG (our=6)
+- S2C_SYNC_BATTLE_FIELD_LIST (our=10)
+- S2C_SYNC_BATTLE_FIELD_SIDE (our=10)
+- S2C_SYNC_CONTRIBUTION (our=6)
+- S2C_SYNC_CURRENT_PRESTIGE (our=6)
+- S2C_SYNC_FORCE_ID (our=6)
+- S2C_SYNC_TONG_REPERTORY_PAGE_FRAME (our=7)
