@@ -33,3 +33,20 @@ Method = EXPLOIT the matched artifacts (v246 debug server DWARF + v246 client) i
   client's REQUESTS to parse: login/move/buy). If drifted, its own realign.
 - **P3 client-oracle**: run v246 debug server (SO3GameServerD) + JX3Client.exe as a reference pair;
   capture/diff wire; then connect the client to the rebuild cluster to verify end-to-end.
+
+## [P1b] c2s (CLIENT_GS_PROTOCOL) realign + sentinel fix — DONE, build ok=202, boot [OK]
+Second enum in the same file = CLIENT_GS_PROTOCOL (client->server, server PARSES). Same clean drift:
+2010=146, v246=210; 134 common order-IDENTICAL; 76 new; 12 removed (c2s_apply_player_bufflist,
+c2s_request_target, c2s_apex_protocol, tong-salary/repertory, camp, game-card, ...). c2s_handshake_request=1 both.
+
+**Array-sizing fix (critical):** the server sizes inbound/stat tables by the enum sentinel:
+`m_ProcessProtocolFuns[client_gs_connection_end]`, `m_nProtocolSize[client_gs_connection_end]`,
+`m_DownwardProtocolStatTable[gs_client_connection_end]`. Legacy entries appended past the v246
+sentinel would overflow those arrays. Fix: place legacy BEFORE the sentinel and bump the sentinel to
+the true max -> gs_client_connection_end=329 (was v246 322 + 7 legacy), client_gs_connection_end=221
+(was 209 + 12 legacy). Sentinel is server-internal (array size + inbound bound `id < end`); bumping is
+safe (bigger table, looser bound; the v246 client carries its own enum). Verified build+boot.
+
+Both directions (s2c + c2s) now speak v246 numbering. This is the infrastructure unblock for using the
+real v246 client. Next: P2 struct-drift for emitted packets (id now right; body must match v246 too),
+starting with DoSyncCurrency; P3 live client-oracle (JX3Client.exe) end-to-end verify.

@@ -24,9 +24,7 @@
 
 enum GS_CLIENT_PROTOCOL
 {
-    // v2.5 (v246) client-protocol numbering, extracted verbatim from SO3GameServerD DWARF
-    // (GS_CLIENT_PROTOCOL, 323 entries 0..322). Realigned from the 2010 enum so this server
-    // sends the exact protocol ids the v246 client (JX3Client.exe) expects. See docs/protocol_port.
+    // v2.5 (v246) numbering from SO3GameServerD DWARF, verbatim. Server->client (s2c).
     gs_client_connection_begin = 0,
     s2c_message_notify = 1,
     s2c_frame_signal = 2,
@@ -349,230 +347,251 @@ enum GS_CLIENT_PROTOCOL
     s2c_sync_player_drop_death = 319,
     s2c_sync_manual_drop_info = 320,
     s2c_sync_continuous_login_reward_flag = 321,
-    gs_client_connection_end = 322,
 
-    // 2010-only protocols not present in v246 (kept so legacy server code still compiles;
-    // the v246 client ignores these ids). 7 entries.
-    s2c_account_kickout = 323,
-    s2c_over_time_action = 324,
-    s2c_sync_battle_field_list = 325,
-    s2c_sync_battle_field_side = 326,
-    s2c_sync_current_prestige = 327,
-    s2c_apex_protocol = 328,
-    s2c_sync_apply_exterior_flag = 329,
+    // 2010-only (absent in v246), kept so legacy code compiles; v246 client never uses these.
+    s2c_account_kickout = 322,
+    s2c_over_time_action = 323,
+    s2c_sync_battle_field_list = 324,
+    s2c_sync_battle_field_side = 325,
+    s2c_sync_current_prestige = 326,
+    s2c_apex_protocol = 327,
+    s2c_sync_apply_exterior_flag = 328,
+
+    // sentinel AFTER legacy so handler/stat arrays [gs_client_connection_end] size to cover legacy ids too.
+    gs_client_connection_end = 329,
 };
 //GS 2 Client Protocol End
 
 // Client 2 GS Protocol Begin
 enum CLIENT_GS_PROTOCOL
 {
+    // v2.5 (v246) numbering from SO3GameServerD DWARF, verbatim. Client->server (c2s).
     client_gs_connection_begin = 0,
+    c2s_handshake_request = 1,
+    c2s_client_confirm_ready = 2,
+    c2s_apply_enter_scene = 3,
+    c2s_sync_role_data_section_check_respond = 4,
+    c2s_player_logout = 5,
+    c2s_ping_signal = 6,
+    c2s_move_ctrl = 7,
+    c2s_apply_move_adjust = 8,
+    c2s_character_stand = 9,
+    c2s_character_jump = 10,
+    c2s_character_sprint = 11,
+    c2s_character_follow = 12,
+    c2s_character_set_rope = 13,
+    c2s_aim_at_sprint_dash_target = 14,
+    c2s_sprint_dash_target = 15,
+    c2s_character_sit = 16,
+    c2s_sync_direction = 17,
+    c2s_character_action = 18,
+    c2s_apply_player_name_data = 19,
+    c2s_apply_player_display_data = 20,
+    c2s_stop_current_action = 21,
+    c2s_character_skill = 22,
+    c2s_mount_kungfu = 23,
+    c2s_cancel_buff = 24,
+    c2s_set_sheath_state = 25,
+    c2s_set_hide_hat_flag = 26,
+    c2s_apply_character_bufflist = 27,
+    c2s_invite_join_team_request = 28,
+    c2s_invite_join_team_respond = 29,
+    c2s_apply_join_team_request = 30,
+    c2s_apply_join_team_respond = 31,
+    c2s_team_del_member_request = 32,
+    c2s_team_change_authority_request = 33,
+    c2s_team_set_distribute_mode_request = 34,
+    c2s_team_set_roll_quality_request = 35,
+    c2s_team_set_formation_leader_request = 36,
+    c2s_team_member_notify_signpost_request = 37,
+    c2s_team_set_mark_request = 38,
+    c2s_team_level_up_raid_request = 39,
+    c2s_team_change_member_group_request = 40,
+    c2s_accept_quest = 41,
+    c2s_cancel_quest = 42,
+    c2s_finish_quest = 43,
+    c2s_share_quest = 44,
+    c2s_accept_escort_quest = 45,
+    c2s_gm_command = 46,
+    c2s_open_shop_request = 47,
+    c2s_query_shop_items = 48,
+    c2s_shop_buy_request = 49,
+    c2s_shop_sell_request = 50,
+    c2s_shop_repair_request = 51,
+    c2s_sold_list_buy_request = 52,
+    c2s_time_limit_sold_list_buy_request = 53,
+    c2s_trading_invite_request = 54,
+    c2s_trading_invite_respond = 55,
+    c2s_trading_add_item = 56,
+    c2s_trading_delete_item = 57,
+    c2s_trading_set_money = 58,
+    c2s_trading_confirm = 59,
+    c2s_select_target = 60,
+    c2s_apply_exchange_item = 61,
+    c2s_apply_use_item = 62,
+    c2s_window_select = 63,
+    c2s_cast_profession_skill = 64,
+    c2s_change_dynamic_skill_group = 65,
+    c2s_loot_item = 66,
+    c2s_roll_item = 67,
+    c2s_apply_loot_list = 68,
+    c2s_character_open = 69,
+    c2s_open_box = 70,
+    c2s_finish_loot = 71,
+    c2s_loot_money = 72,
+    c2s_change_pk_mode = 73,
+    c2s_distribute_item = 74,
+    c2s_talk_message = 75,
+    c2s_get_fellowship_list_request = 76,
+    c2s_add_fellowship_request = 77,
+    c2s_del_fellowship_request = 78,
+    c2s_add_fellowship_group_request = 79,
+    c2s_del_fellowship_group_request = 80,
+    c2s_rename_fellowship_group_request = 81,
+    c2s_set_fellowship_remark_request = 82,
+    c2s_set_fellowship_group_request = 83,
+    c2s_send_mail_request = 84,
+    c2s_get_maillist_request = 85,
+    c2s_query_mail_content = 86,
+    c2s_acquire_mail_money_request = 87,
+    c2s_acquire_mail_item_request = 88,
+    c2s_set_mail_read = 89,
+    c2s_delete_mail = 90,
+    c2s_return_mail = 91,
+    c2s_apply_pk_operate = 92,
+    c2s_sync_user_preferences = 93,
+    c2s_set_bank_opened_flag = 94,
+    c2s_enable_bank_package = 95,
+    c2s_set_cubpackage_opened_flag = 96,
+    c2s_sync_mid_map_mark = 97,
+    c2s_player_learn_skill = 98,
+    c2s_player_learn_recipe = 99,
+    c2s_player_active_skill_recipe = 100,
+    c2s_peek_other_player_equip = 101,
+    c2s_peek_other_player_book = 102,
+    c2s_peek_other_player_quest = 103,
+    c2s_road_track_start_out = 104,
+    c2s_reset_road_track_start_out = 105,
+    c2s_force_end_road_track = 106,
+    c2s_road_track_force_request = 107,
+    c2s_open_venation = 108,
+    c2s_open_talent_set = 109,
+    c2s_send_gm_message = 110,
+    c2s_join_battle_field_queue_request = 111,
+    c2s_leave_battle_field_queue_request = 112,
+    c2s_accept_join_battle_field = 113,
+    c2s_leave_battle_field = 114,
+    c2s_join_tong_battle_field_queue_request = 115,
+    c2s_leave_tong_battle_field_queue_request = 116,
+    c2s_accept_join_tong_battle_field = 117,
+    c2s_leave_tong_battle_field = 118,
+    c2s_join_arena_queue_request = 119,
+    c2s_leave_arena_queue_request = 120,
+    c2s_accept_join_arena = 121,
+    c2s_leave_arena = 122,
+    c2s_corps_create_request = 123,
+    c2s_corps_destroy_request = 124,
+    c2s_corps_del_member_request = 125,
+    c2s_corps_change_leader_request = 126,
+    c2s_invitation_join_corps_request = 127,
+    c2s_apply_invitation_join_corps = 128,
+    c2s_sync_corps_list_request = 129,
+    c2s_sync_corps_rank_list_request = 130,
+    c2s_sync_corps_base_data_request = 131,
+    c2s_sync_corps_member_data_request = 132,
+    c2s_apply_arena_statistics = 133,
+    c2s_update_tong_roster_request = 134,
+    c2s_apply_tong_info_request = 135,
+    c2s_apply_tong_repertory_page_request = 136,
+    c2s_invite_player_join_tong_request = 137,
+    c2s_invite_player_join_tong_respond = 138,
+    c2s_apply_kick_out_tong_member_request = 139,
+    c2s_modify_tong_info_request = 140,
+    c2s_modify_tong_schema_request = 141,
+    c2s_apply_quit_tong_request = 142,
+    c2s_change_tong_member_group_request = 143,
+    c2s_change_tong_master_request = 144,
+    c2s_cancel_change_tong_master = 145,
+    c2s_change_tong_member_remark_request = 146,
+    c2s_get_tong_description_request = 147,
+    c2s_save_money_in_tong_request = 148,
+    c2s_apply_open_tong_repertory_request = 149,
+    c2s_take_tong_repertory_item_request = 150,
+    c2s_put_tong_repertory_item_request = 151,
+    c2s_exchange_tong_repertory_item_pos_request = 152,
+    c2s_stack_tong_repertory_item_request = 153,
+    c2s_stack_item_in_tong_repertory_request = 154,
+    c2s_sync_tong_history_request = 155,
+    c2s_sync_tong_simple_info_request = 156,
+    c2s_sync_tong_diplomacy_data_request = 157,
+    c2s_apply_tong_war_kill_stat_request = 158,
+    c2s_apply_battlefield_statistics = 159,
+    c2s_set_hero_flag = 160,
+    c2s_auction_lookup_request = 161,
+    c2s_auction_bid_request = 162,
+    c2s_auction_sell_request = 163,
+    c2s_auction_cancel_request = 164,
+    c2s_bm_lookup_request = 165,
+    c2s_bm_bid_request = 166,
+    c2s_bm_bid_cancel_request = 167,
+    c2s_remote_lua_call = 168,
+    c2s_player_revive_request = 169,
+    c2s_query_product_identity = 170,
+    c2s_apply_achievement_data_request = 171,
+    c2s_set_current_designation_request = 172,
+    c2s_create_view_point_request = 173,
+    c2s_remove_view_point_request = 174,
+    c2s_move_view_point_request = 175,
+    c2s_game_card_sell_coin_request = 176,
+    c2s_game_card_buy_coin_request = 177,
+    c2s_game_card_lookup_request = 178,
+    c2s_game_card_cancel_request = 179,
+    c2s_game_card_sell_money_request = 180,
+    c2s_game_card_buy_money_request = 181,
+    c2s_apply_character_threat_ranklist = 182,
+    c2s_apply_character = 183,
+    c2s_verify_trust_result = 184,
+    c2s_send_clientfile_checksum = 185,
+    c2s_set_player_sync_frame_interval = 186,
+    c2s_check_characters_invalid = 187,
+    c2s_sync_new_player_respond = 188,
+    c2s_sync_new_npc_respond = 189,
+    c2s_sync_new_doodad_respond = 190,
+    c2s_set_team_skill_effect_sync_option = 191,
+    c2s_exterior_buy_from_item = 192,
+    c2s_add_regression_reward_item = 193,
+    c2s_follow_invite_respond = 194,
+    c2s_follow_stop = 195,
+    c2s_domesticate_start = 196,
+    c2s_domesticate_stop = 197,
+    c2s_domesticate_feed = 198,
+    c2s_domesticate_evoke = 199,
+    c2s_feed_horse = 200,
+    c2s_buy_cub_package = 201,
+    c2s_sync_single_dungeon_score_rank_info = 202,
+    c2s_peek_other_player_exterior = 203,
+    c2s_create_fellow_pet_request = 204,
+    c2s_apply_mini_avatar_data = 205,
+    c2s_rewards_shop_buy = 206,
+    c2s_mpak_downloaded = 207,
+    c2s_apply_loot_manual_drop = 208,
 
-    c2s_handshake_request,			// ��¼ʱ�����������
-    c2s_apply_enter_scene,			// �ͻ��˼�����Դ���,������볡��
-    c2s_player_logout,				// ��ҵǳ�
-    c2s_ping_signal,                // ����ping�ź�
+    // 2010-only (absent in v246), kept so legacy code compiles; v246 client never uses these.
+    c2s_apply_player_bufflist = 209,
+    c2s_request_target = 210,
+    c2s_apply_fight_flag = 211,
+    c2s_get_battle_field_list = 212,
+    c2s_pay_tong_salary_request = 213,
+    c2s_get_tong_salary_request = 214,
+    c2s_take_tong_repertory_item_to_pos_request = 215,
+    c2s_put_tong_repertory_item_to_pos_request = 216,
+    c2s_apply_set_camp_request = 217,
+    c2s_apex_protocol = 218,
+    c2s_game_card_sell_request = 219,
+    c2s_game_card_buy_request = 220,
 
-    c2s_move_ctrl,
-    c2s_apply_move_adjust,
-    c2s_character_stand,            // ��ɫվ�����ϴ�ָ��
-    c2s_character_jump,				// ��ɫ��Ծ���ϴ�ָ��
-    c2s_character_sit,				// ��ɫ���µ��ϴ�ָ��
-    c2s_sync_direction,             // ����/����ͬ��
-
-    c2s_character_action,			// ��ɫ�����������ϴ�ָ��
-
-    c2s_apply_player_display_data,	// �����ʾ����
-
-    c2s_stop_current_action,        // �ж���ҵ�ǰ���ڽ��е���Ϊ
-
-    // ------------ skill about protocol ------------->
-    c2s_character_skill,			//��ɫ�������ϴ�ָ��
-    c2s_mount_kungfu,
-    c2s_cancel_buff,
-    c2s_set_sheath_state,
-    c2s_set_hide_hat_flag,
-    c2s_apply_player_bufflist,
-
-    // ------------- party about protocol ------------->
-    c2s_invite_join_team_request, 
-    c2s_invite_join_team_respond, 
-    c2s_apply_join_team_request,
-    c2s_apply_join_team_respond,
-    c2s_team_del_member_request,
-    c2s_team_change_authority_request,
-    c2s_team_set_distribute_mode_request,
-	c2s_team_set_roll_quality_request,
-    c2s_team_set_formation_leader_request,
-    c2s_team_member_notify_signpost_request,   // ����ѷ���С��ͼ�ϵı��
-    c2s_team_set_mark_request,
-    c2s_team_level_up_raid_request,
-    c2s_team_change_member_group_request,
-
-    //�������Э��
-    c2s_accept_quest,				//��������
-    c2s_cancel_quest,				//ȡ������
-    c2s_finish_quest,				//�������
-    c2s_share_quest,				//��������
-
-	c2s_accept_escort_quest,		//���ܻ�������
-
-    //GMָ���ϴ�Э��
-    c2s_gm_command,
-
-    // ------------- shop about protocol ------------->
-    c2s_open_shop_request,
-    c2s_query_shop_items,
-    c2s_shop_buy_request,
-    c2s_shop_sell_request,
-    c2s_shop_repair_request,
-    c2s_sold_list_buy_request,
-
-    // ------------- Trading about ------------------->
-    c2s_trading_invite_request,
-    c2s_trading_invite_respond,
-    c2s_trading_add_item,
-    c2s_trading_delete_item,
-    c2s_trading_set_money,
-    c2s_trading_confirm,
-
-    // ----------------------------------------------
-    c2s_request_target,
-    c2s_apply_exchange_item,		//���뽻��װ��
-    c2s_apply_use_item,				//����ʹ�õ���
-
-    c2s_window_select,				//ѡ�񴰿�ѡ��
-
-    c2s_cast_profession_skill,			//�䷽ʹ��Э��
-
-    c2s_loot_item,			
-    c2s_roll_item,			
-
-    c2s_apply_loot_list,			//����ʰȡ�б�
-    c2s_character_open,				//��
-
-	c2s_apply_fight_flag,			//�ı�ս������
-
-	c2s_finish_loot,				//����ʰȡ
-	c2s_loot_money,					//ʰȡ��Ǯ
-	c2s_change_pk_mode,				//�ı�PK״̬
-	c2s_distribute_item,		    //�����߷�����Ʒ
-
-    c2s_talk_message,
-
-    c2s_get_fellowship_list_request,
-    c2s_add_fellowship_request,
-    c2s_del_fellowship_request,
-    c2s_add_fellowship_group_request,
-    c2s_del_fellowship_group_request,
-    c2s_rename_fellowship_group_request,
-    c2s_set_fellowship_remark_request,
-    c2s_set_fellowship_group_request,
-
-    c2s_send_mail_request,
-    c2s_get_maillist_request,
-    c2s_query_mail_content,
-    c2s_acquire_mail_money_request,
-    c2s_acquire_mail_item_request,
-    c2s_set_mail_read,
-    c2s_delete_mail,
-    c2s_return_mail,
-
-	c2s_apply_pk_operate,
-
-	c2s_sync_user_preferences,		//ͬ����ҽ�ɫ����������Ϣ���޸�
-
-	c2s_set_bank_opened_flag,
-	c2s_enable_bank_package,
-
-	c2s_sync_mid_map_mark,
-
-    c2s_player_learn_skill, 
-	c2s_player_learn_recipe,
-
-    c2s_player_active_skill_recipe,
-
-    c2s_peek_other_player_equip,
-    c2s_peek_other_player_book,
-    c2s_peek_other_player_quest,
-
-    c2s_road_track_start_out,
-    c2s_road_track_force_request,
-    c2s_open_venation,
-
-    c2s_send_gm_message, 
-
-    c2s_join_battle_field_queue_request,
-    c2s_leave_battle_field_queue_request,
-    
-    c2s_accept_join_battle_field,
-    c2s_get_battle_field_list,
-    c2s_leave_battle_field,
-
-    // ------------- Tong about ------------------->
-    c2s_update_tong_roster_request,
-    c2s_apply_tong_info_request,
-    c2s_apply_tong_repertory_page_request,
-    c2s_invite_player_join_tong_request,
-    c2s_invite_player_join_tong_respond,
-    c2s_apply_kick_out_tong_member_request,
-    c2s_modify_tong_info_request,
-    c2s_modify_tong_schema_request,
-    c2s_apply_quit_tong_request,
-
-    c2s_change_tong_member_group_request,
-    c2s_change_tong_master_request,
-    c2s_change_tong_member_remark_request,
-
-    c2s_get_tong_description_request,
-    c2s_save_money_in_tong_request,
-    c2s_pay_tong_salary_request,
-    c2s_get_tong_salary_request,
-
-    c2s_apply_open_tong_repertory_request,
-    c2s_take_tong_repertory_item_to_pos_request,
-    c2s_take_tong_repertory_item_request,
-    c2s_put_tong_repertory_item_to_pos_request,
-    c2s_put_tong_repertory_item_request,
-    c2s_exchange_tong_repertory_item_pos_request,
-    c2s_stack_tong_repertory_item_request,
-
-    // -----------------------------------------------
-    c2s_apply_battlefield_statistics,
-    c2s_set_hero_flag,
-
-    // ------------- Auction about ------------------->
-    c2s_auction_lookup_request,
-    c2s_auction_bid_request,
-    c2s_auction_sell_request,
-    c2s_auction_cancel_request,
-    
-    c2s_apply_set_camp_request,
-
-    c2s_remote_lua_call,
-
-    c2s_player_revive_request,
-    c2s_query_product_identity,
-    // ------------- Achievement about ------------------->
-    c2s_apply_achievement_data_request,
-
-    c2s_set_current_designation_request,
-
-    // ------------- ViewPoint --------------------------->
-    c2s_create_view_point_request,
-    c2s_remove_view_point_request,
-    c2s_move_view_point_request,
-
-    c2s_apex_protocol,
-
-    c2s_game_card_sell_request,
-    c2s_game_card_buy_request,
-    c2s_game_card_lookup_request,
-    c2s_game_card_cancel_request,
-
-    c2s_apply_character_threat_ranklist, 
-
-    client_gs_connection_end
+    // sentinel AFTER legacy so handler/stat arrays [client_gs_connection_end] size to cover legacy ids too.
+    client_gs_connection_end = 221,
 };
 // Client 2 GS Protocol End
 
