@@ -116,3 +116,32 @@ KCurrency + KCurrencyList: all out-of-line methods implemented (B-A = 2 dtors, f
 
 So the substrate (class + anti-hack caps + DB persistence + tick) is complete & verified; the
 data (config) + interface (Lua/packets) are the follow-up that flips it live and lets shops spend.
+
+---
+
+## [PORT-3] Config slice (2026-07-13) — currency now LIVE (was DEFER #1)
+Config source FOUND + wired + runtime-proven. The 6-type config is GameWorldConstList.ini [CURRENCY].
+
+- **KGWConstList (2010) extended** with the v2.5 fields (int[6] unless noted): nCurrencyMaxValue,
+  nCurrencyRemainSpace, nCurrencyRemainSpaceCanAccumulate, nCurrencyAccumulateRate,
+  nLogCurrencyThreshold, + scalars nCurrencyRemainSpaceResetCycle/ResetOffest. (DWARF: same fields
+  at ConstList+0x230..0x2ac; m_ConstList sits at g_pSO3World+0x74, deltas all 0x74.)
+- **Loader** (KGWConstList.cpp LoadData): [CURRENCY] section, per-type keys by name prefix
+  {Contribution,Prestige,Justice,ExamPrint,ArenaAward,ActivityAward} (order = CURRENCY_DATA_BLOCK_TYPE):
+  Max%s / %sRemainSpace / %sRemainSpaceCanAccumulate / %sAccumulateRate / Log%sThreshold +
+  RemainSpaceResetCycle / RemainSpaceResetOffest.
+- **KCurrency accessors** now read g_pSO3World->m_Settings.m_ConstList.* (was return-0 stubs).
+  Activate week-base = ResetOffest + 0x54600 (345600s=4d -> Monday anchor; runtime tz DAT_084df688=0).
+- **6 types confirmed** (CURRENCY_DATA_BLOCK_TYPE): 0 cbtContribution(贡献), 1 cbtPrestige(威望),
+  2 cbtJustice(侠义值), 3 cbtExamPrint(考评印), 4 cbtArenaAward(竞技场, reset-EXEMPT), 5 cbtActivityAward(活动).
+
+**RUNTIME PROOF (temp log, then removed):**
+`[CURRENCY-CHK] Max=200000/200000/50000/1500/50000/500 Remain=55000/55000/6000/400/99999999/180
+Cycle=604800 Off=25200` — matches GameWorldConstList.ini [CURRENCY] exactly. Config is NOT dormant:
+currencies hold/earn/spend/cap/reset with real values. build ok=202, boot settings-[OK].
+
+## Remaining DEFER (interface/parity — currency already functions server-side)
+2. **Lua interface:** large per-type wrapper set in KScriptFuncList (dozens; xrefs). Not needed for
+   the currency to work in C++; needed for content scripts. Follow-on.
+3. **Sync/log packets (NEW):** DoSyncCurrency/DoSyncCurrencyList (client realtime display) +
+   LogPlayerCurrencyChange. Without them client sees currency only after relog (Load). Follow-on (packet tier).

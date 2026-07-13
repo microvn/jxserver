@@ -37,41 +37,41 @@ public:
 	int nBankPackagePrice[MAX_BANK_PACKAGE_COUNT];
 
     // Fellowship
-    int nTeamAttractiveInterval;       // ×é¶ÓÔö¼ÓºÃ¸Ð¶ÈµÄ¼ä¸ô(Frame)
-    int nTeamAttractiveRange;          // ×é¶ÓÔö¼ÓºÃ¸Ð¶ÈµÄ¾àÀë
-    int nTeamAttractiveUpLimit;        // ×é¶ÓÔö¼ÓºÃ¸Ð¶ÈµÄÉÏÏÞÖµ
+    int nTeamAttractiveInterval;       // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÓºÃ¸Ð¶ÈµÄ¼ï¿½ï¿½(Frame)
+    int nTeamAttractiveRange;          // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÓºÃ¸Ð¶ÈµÄ¾ï¿½ï¿½ï¿½
+    int nTeamAttractiveUpLimit;        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÓºÃ¸Ð¶Èµï¿½ï¿½ï¿½ï¿½ï¿½Öµ
     int nTeamAttractiveAdd;
 
-    int nTeamAttractiveIntervalOnlyGroup;       // ×é¶ÓÔö¼ÓºÃ¸Ð¶ÈµÄ¼ä¸ô(Frame)
-    int nTeamAttractiveRangeOnlyGroup;          // ×é¶ÓÔö¼ÓºÃ¸Ð¶ÈµÄ¾àÀë
-    int nTeamAttractiveUpLimitOnlyGroup;        // ×é¶ÓÔö¼ÓºÃ¸Ð¶ÈµÄÉÏÏÞÖµ
+    int nTeamAttractiveIntervalOnlyGroup;       // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÓºÃ¸Ð¶ÈµÄ¼ï¿½ï¿½(Frame)
+    int nTeamAttractiveRangeOnlyGroup;          // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÓºÃ¸Ð¶ÈµÄ¾ï¿½ï¿½ï¿½
+    int nTeamAttractiveUpLimitOnlyGroup;        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÓºÃ¸Ð¶Èµï¿½ï¿½ï¿½ï¿½ï¿½Öµ
     int nTeamAttractiveAddOnlyGroup;
 
-    int nDuelAttractiveDailyCount;      // ÇÐ´èÔö¼ÓºÃ¸Ð¶ÈµÄÃ¿ÈÕÏÞÖÆ
-    int nDuelAttractiveUpLimit;         // ÇÐ´èÔö¼ÓºÃ¸Ð¶ÈµÄÉÏÏÞÖµ
+    int nDuelAttractiveDailyCount;      // ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ÓºÃ¸Ð¶Èµï¿½Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    int nDuelAttractiveUpLimit;         // ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ÓºÃ¸Ð¶Èµï¿½ï¿½ï¿½ï¿½ï¿½Öµ
     int nDuelAttractiveAdd;
 
-    int nAssistAttractiveUpLimit;       // Ð­ÖúÈÎÎñÔö¼ÓºÃ¸Ð¶ÈµÄÉÏÏÞÖµ
-    int nAssistPresentContribution;     // Ò»¸ö°ï»áµÄÈË»¥ÏàÐ­ÖúÔö¼Ó¹±Ï×¶È
+    int nAssistAttractiveUpLimit;       // Ð­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÓºÃ¸Ð¶Èµï¿½ï¿½ï¿½ï¿½ï¿½Öµ
+    int nAssistPresentContribution;     // Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½Ð­ï¿½ï¿½ï¿½ï¿½ï¿½Ó¹ï¿½ï¿½×¶ï¿½
 
-    int nWhisperAttractiveDailyCount;   // ÃÜÁÄÔö¼ÓºÃ¸Ð¶ÈµÄÃ¿ÈÕÏÞÖÆ
-    int nWhisperAttractiveUpLimit;      // ÃÜÁÄÔö¼ÓºÃ¸Ð¶ÈµÄÉÏÏÞÖµ
+    int nWhisperAttractiveDailyCount;   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÓºÃ¸Ð¶Èµï¿½Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    int nWhisperAttractiveUpLimit;      // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÓºÃ¸Ð¶Èµï¿½ï¿½ï¿½ï¿½ï¿½Öµ
     int nWhisperAttractiveAdd;
 
-    int nAttractiveLevel[MAX_FELLOWSHIP_ATTRACTIVE_LEVEL];          // ºÃ¸Ð¶ÈµÈ¼¶µÄ»®·Ö
-    int nAttractiveAchievement[MAX_FELLOWSHIP_ATTRACTIVE_LEVEL];    // ºÃ¸Ð¶ÈµÈ¼¶³É¾Í
-    int nCountAchievement[MAX_FELLOWSHIP_COUNT_ACHIEVEMENT];        // ºÃÓÑÊýÁ¿³É¾Í
+    int nAttractiveLevel[MAX_FELLOWSHIP_ATTRACTIVE_LEVEL];          // ï¿½Ã¸Ð¶ÈµÈ¼ï¿½ï¿½Ä»ï¿½ï¿½ï¿½
+    int nAttractiveAchievement[MAX_FELLOWSHIP_ATTRACTIVE_LEVEL];    // ï¿½Ã¸Ð¶ÈµÈ¼ï¿½ï¿½É¾ï¿½
+    int nCountAchievement[MAX_FELLOWSHIP_COUNT_ACHIEVEMENT];        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½
 
-    int nDifferentCampApplyJoinTeam;                                // ²»Í¬ÕóÓª×é¶ÓÐèÒªµÄºÃ¸Ð¶ÈµÈ¼¶
+    int nDifferentCampApplyJoinTeam;                                // ï¿½ï¿½Í¬ï¿½ï¿½Óªï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ÄºÃ¸Ð¶ÈµÈ¼ï¿½
 
-    // ÄçË®¶øÍöµÄÊ±¼ä,µ¥Î»: Ãë
+    // ï¿½ï¿½Ë®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½,ï¿½ï¿½Î»: ï¿½ï¿½
     int nDrowningTime;
     int nSaveInterval;
     
-    // NPCËÀÍöºó,²úÉúÊ¬ÌåµÄÑÓ³ÙÊ±¼ä
+    // NPCï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½Ê¬ï¿½ï¿½ï¿½ï¿½Ó³ï¿½Ê±ï¿½ï¿½
     int nCorpseGenerationFrame;
 
-    // Íæ¼Ò¿ÉÉý¼¶µÄ×î´óµÈ¼¶
+    // ï¿½ï¿½Ò¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¼ï¿½
     int nPlayerMaxLevel;
 
     // Skill
@@ -87,12 +87,12 @@ public:
     int nMentorChannelCoolDownID;
     int nFriendsChannelCoolDownID;
 
-    // ³ðºÞ²å¼þ½Ó¿Ú
+    // ï¿½ï¿½Þ²ï¿½ï¿½ï¿½Ó¿ï¿½
     int nApplyThreatRankListCD;
 
     int nPlayerAndQuestDiffLevel[PLAYER_AND_QUEST_DIFF_LEVEL_COUNT];
 
-    // ÕóÓªÍþÍûÏà¹ØµÄ½±ÀøÓë³Í·£
+    // ï¿½ï¿½Óªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ØµÄ½ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½
     int nReducePrestigeOnDeath;
     int nSoloKill;
     int nLastHit;
@@ -102,18 +102,18 @@ public:
     int nSameCampAssistKill;
     int nKilledCountPercent[MAX_KILL_COUNT];
     int nResetKilledCountCycle;
-    // ÕóÓªÍþÍûÉÏÏÞ
+    // ï¿½ï¿½Óªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     int nMaxPrestige; 
     
-    // ÊÇ·ñÊ¹ÓÃÐÂµÄÊ¹ÓÃµÀ¾ß»úÖÆ£¬¹ý¶ÉÓÃ
+    // ï¿½Ç·ï¿½Ê¹ï¿½ï¿½ï¿½Âµï¿½Ê¹ï¿½Ãµï¿½ï¿½ß»ï¿½ï¿½Æ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     BOOL bNewUseItemStyle;
 
-    // ÊÕ·ÑÏà¹Ø
-    int nFreeMaxLevel;      // Ãâ·Ñ½×¶Î×î´óµÈ¼¶
-    int nFreeDurationTime;  // Ãâ·Ñ×î³¤Ê±¼ä
-    int nEndOfDayTimeDealy; // ½ØÖ¹Ê±¼ä¶ÏÏßÑÓÊ±
+    // ï¿½Õ·ï¿½ï¿½ï¿½ï¿½
+    int nFreeMaxLevel;      // ï¿½ï¿½Ñ½×¶ï¿½ï¿½ï¿½ï¿½È¼ï¿½
+    int nFreeDurationTime;  // ï¿½ï¿½ï¿½ï¿½î³¤Ê±ï¿½ï¿½
+    int nEndOfDayTimeDealy; // ï¿½ï¿½Ö¹Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±
 
-    // È«¾ÖÈÎÎñ¼ÆÊý³É¾Í
+    // È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½
     int nQuestCountAchievementID;
     int nAssistQuestCountAchievementID;
     int nFinishQuestAssistByOtherAchievementID;
@@ -125,7 +125,7 @@ public:
 
     int nMaxDesignationBynameIndex;
 
-    // ·´´òÇ®
+    // ï¿½ï¿½ï¿½ï¿½Ç®
     int     nAntiFarmerCheckOnlineTimeRange;
     float   fAntiFarmerOnlineRate;
     float   fAntiFarmerKillNpcRate;
@@ -139,6 +139,15 @@ public:
     BOOL bGroupLoot;
 
     int  nLootItemQualityToLog;
+
+    // v2.5 NEW [CURRENCY] â€” per-type config for KCurrency (6 types = CURRENCY_DATA_BLOCK_TYPE).
+    int nCurrencyMaxValue[6];               // total cap per type
+    int nCurrencyRemainSpace[6];            // per-period earn allowance (default) per type
+    int nCurrencyRemainSpaceCanAccumulate[6];// carry unused allowance to next period? (flag)
+    int nCurrencyAccumulateRate[6];         // carryover decay percent (1/100)
+    int nLogCurrencyThreshold[6];           // |change| >= this -> log to logserver
+    int nCurrencyRemainSpaceResetCycle;     // earn-allowance reset period (sec; 604800 = 1 week)
+    int nCurrencyRemainSpaceResetOffest;    // reset time offset (sec; 25200 = 7h)
 
 	BOOL Init();
 	void UnInit();

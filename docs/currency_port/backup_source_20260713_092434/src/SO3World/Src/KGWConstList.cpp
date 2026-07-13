@@ -21,7 +21,6 @@
 #define SECTION_DESIGNATION "DESIGNATION"
 #define SECTION_ANTI_FARMER "ANTI_FARMER"
 #define SECTION_BINDONTIMELIMITATION "BINDONTIMELIMITATION"
-#define SECTION_CURRENCY    "CURRENCY"
 
 BOOL KGWConstList::Init()
 {
@@ -348,38 +347,6 @@ BOOL KGWConstList::LoadData(IIniFile* piIniFile)
 
     nRetCode = piIniFile->GetInteger(SECTION_BINDONTIMELIMITATION, "GroupLoot", 0, &bGroupLoot);
     (void)nRetCode; /*[endgame] tolerant*/
-
-    // v2.5 [CURRENCY] — per-type config, keyed by currency name. Order = CURRENCY_DATA_BLOCK_TYPE
-    // (0 Contribution, 1 Prestige, 2 Justice, 3 ExamPrint, 4 ArenaAward, 5 ActivityAward).
-    {
-        static const char* const s_szCurrencyName[6] =
-        {
-            "Contribution", "Prestige", "Justice", "ExamPrint", "ArenaAward", "ActivityAward"
-        };
-        int  i = 0;
-        char szKey[128];
-
-        for (i = 0; i < 6; i++)
-        {
-            snprintf(szKey, sizeof(szKey), "Max%s", s_szCurrencyName[i]);
-            piIniFile->GetInteger(SECTION_CURRENCY, szKey, 0, &nCurrencyMaxValue[i]);
-
-            snprintf(szKey, sizeof(szKey), "%sRemainSpace", s_szCurrencyName[i]);
-            piIniFile->GetInteger(SECTION_CURRENCY, szKey, 0, &nCurrencyRemainSpace[i]);
-
-            snprintf(szKey, sizeof(szKey), "%sRemainSpaceCanAccumulate", s_szCurrencyName[i]);
-            piIniFile->GetInteger(SECTION_CURRENCY, szKey, 0, &nCurrencyRemainSpaceCanAccumulate[i]);
-
-            snprintf(szKey, sizeof(szKey), "%sAccumulateRate", s_szCurrencyName[i]);
-            piIniFile->GetInteger(SECTION_CURRENCY, szKey, 0, &nCurrencyAccumulateRate[i]);
-
-            snprintf(szKey, sizeof(szKey), "Log%sThreshold", s_szCurrencyName[i]);
-            piIniFile->GetInteger(SECTION_CURRENCY, szKey, 0, &nLogCurrencyThreshold[i]);
-        }
-
-        piIniFile->GetInteger(SECTION_CURRENCY, "RemainSpaceResetCycle", 0, &nCurrencyRemainSpaceResetCycle);
-        piIniFile->GetInteger(SECTION_CURRENCY, "RemainSpaceResetOffest", 0, &nCurrencyRemainSpaceResetOffest);
-    }
 
     bResult = true;
 Exit0:

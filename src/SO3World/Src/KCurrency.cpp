@@ -5,19 +5,37 @@
 // v2.5 NEW (RE'd from v246). See KCurrency.h + docs/currency_port/.
 
 // ---------------------------------------------------------------------------
-// Per-type CONFIG (v246 reads 4 arrays + period/week-base from g_pSO3World early
-// offsets, indexed by type). That config is a NEW v2.5 settings subsystem whose
-// source table is NOT yet identified (docs/currency_port WORKLOG [RE-5]). These
-// accessors are the SINGLE wire-point: dormant now (return 0) -> currencies hold
-// nothing and Activate is a guarded no-op. The config-source slice replaces these
-// bodies to read from settings, flipping every currency live with no other change.
+// Per-type CONFIG — read from GameWorldConstList.ini [CURRENCY] via KGWConstList
+// (loaded in KGWConstList.cpp). Indexed by CURRENCY_DATA_BLOCK_TYPE (0..5).
+// 0x54600 (=345600s, 4 days) anchors the weekly-reset boundary to Monday, matching
+// v246 (epoch Thu + 4 days = Mon); the runtime timezone base DAT_084df688 is 0 here.
 // ---------------------------------------------------------------------------
-static int    GetCurrencyMaxValue(int /*nType*/)      { return 0; }
-static int    GetCurrencyRemainDefault(int /*nType*/) { return 0; }
-static int    GetCurrencyCarryFlag(int /*nType*/)     { return 0; }
-static int    GetCurrencyCarryPct(int /*nType*/)      { return 0; }
-static int    GetCurrencyResetPeriod()                { return 0; }  // 0 => Activate no-op (also avoids div-by-0)
-static time_t GetCurrencyWeekBase()                   { return 0; }
+#define CURRENCY_RESET_WEEK_ANCHOR  0x54600
+
+static int GetCurrencyMaxValue(int nType)
+{
+    return g_pSO3World->m_Settings.m_ConstList.nCurrencyMaxValue[nType];
+}
+static int GetCurrencyRemainDefault(int nType)
+{
+    return g_pSO3World->m_Settings.m_ConstList.nCurrencyRemainSpace[nType];
+}
+static int GetCurrencyCarryFlag(int nType)
+{
+    return g_pSO3World->m_Settings.m_ConstList.nCurrencyRemainSpaceCanAccumulate[nType];
+}
+static int GetCurrencyCarryPct(int nType)
+{
+    return g_pSO3World->m_Settings.m_ConstList.nCurrencyAccumulateRate[nType];
+}
+static int GetCurrencyResetPeriod()
+{
+    return g_pSO3World->m_Settings.m_ConstList.nCurrencyRemainSpaceResetCycle;
+}
+static time_t GetCurrencyWeekBase()
+{
+    return g_pSO3World->m_Settings.m_ConstList.nCurrencyRemainSpaceResetOffest + CURRENCY_RESET_WEEK_ANCHOR;
+}
 
 KCurrency::KCurrency()
 {
