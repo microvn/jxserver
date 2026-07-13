@@ -24,342 +24,311 @@
 
 enum GS_CLIENT_PROTOCOL
 {
-    // v2.5 (v246) client-protocol numbering, extracted verbatim from SO3GameServerD DWARF
-    // (GS_CLIENT_PROTOCOL, 323 entries 0..322). Realigned from the 2010 enum so this server
-    // sends the exact protocol ids the v246 client (JX3Client.exe) expects. See docs/protocol_port.
     gs_client_connection_begin = 0,
-    s2c_message_notify = 1,
-    s2c_frame_signal = 2,
-    s2c_ping_signal = 3,
-    s2c_sync_player_base_info = 4,
-    s2c_sync_quest_data = 5,
-    s2c_account_kickout_notify = 6,
-    s2c_switch_gs = 7,
-    s2c_switch_map = 8,
-    s2c_sync_new_player = 9,
-    s2c_sync_new_npc = 10,
-    s2c_sync_new_doodad = 11,
-    s2c_move_character = 12,
-    s2c_remove_character = 13,
-    s2c_remove_doodad = 14,
-    s2c_sync_doodad_state = 15,
-    s2c_player_name_data = 16,
-    s2c_player_display_data = 17,
-    s2c_sync_experience = 18,
-    s2c_player_level_up = 19,
-    s2c_common_health = 20,
-    s2c_sync_move_ctrl = 21,
-    s2c_sync_move_param = 22,
-    s2c_adjust_player_move = 23,
-    s2c_sync_move_state = 24,
-    s2c_character_action = 25,
-    s2c_character_death = 26,
-    s2c_delay_move_param = 27,
-    s2c_sync_follow = 28,
-    s2c_sync_set_rope = 29,
-    s2c_sync_skill_data = 30,
-    s2c_sync_skill_recipe = 31,
-    s2c_delete_skill_recipe = 32,
-    s2c_skill_prepare = 33,
-    s2c_change_dynamic_skill_group = 34,
-    s2c_skill_cast = 35,
-    s2c_sync_common_skill_auto_cast_state = 36,
-    s2c_reset_cooldown = 37,
-    s2c_skill_chain_effect = 38,
-    s2c_skill_effect_result = 39,
-    s2c_sync_behit_represent = 40,
-    s2c_sync_buff_list = 41,
-    s2c_sync_buff_single = 42,
-    s2c_sync_represent_state = 43,
-    s2c_sync_kungfu_mount = 44,
-    s2c_skill_beat_back = 45,
-    s2c_sync_sheath_state = 46,
-    s2c_sync_self_max_lmrs = 47,
-    s2c_sync_self_current_lmrs = 48,
-    s2c_sync_self_current_sprint_power = 49,
-    s2c_sync_self_weak_info = 50,
-    s2c_sync_select_character_max_lmr = 51,
-    s2c_sync_select_character_current_lmr = 52,
-    s2c_sync_select_character_weak_info = 53,
-    s2c_sync_team_member_max_lmr = 54,
-    s2c_sync_team_member_current_lmr = 55,
-    s2c_sync_team_member_misc = 56,
-    s2c_sync_team_member_position = 57,
-    s2c_broadcast_character_life = 58,
-    s2c_sync_player_team_base_info = 59,
-    s2c_invite_join_team_request = 60,
-    s2c_apply_join_team_request = 61,
-    s2c_team_add_member_notify = 62,
-    s2c_team_del_member_notify = 63,
-    s2c_team_change_authority_notify = 64,
-    s2c_team_set_loot_mode_notify = 65,
-    s2c_team_set_formation_leader_notify = 66,
-    s2c_team_disband_notify = 67,
-    s2c_sync_team_member_online_flag = 68,
-    s2c_team_member_signpost_notify = 69,
-    s2c_team_set_mark_respond = 70,
-    s2c_team_camp_change = 71,
-    s2c_team_level_up_raid_notify = 72,
-    s2c_team_change_member_group_notify = 73,
-    s2c_open_shop_notify = 74,
-    s2c_update_shop_item = 75,
-    s2c_trading_invite_request = 76,
-    s2c_open_trading_box_notify = 77,
-    s2c_sync_trading_confirm = 78,
-    s2c_sync_trading_item_data = 79,
-    s2c_sync_trading_money = 80,
-    s2c_trading_complete = 81,
-    s2c_sync_money = 82,
-    s2c_sync_contribution = 83,
-    s2c_sync_item_data = 84,
-    s2c_sync_item_destroy = 85,
-    s2c_exchange_item = 86,
-    s2c_update_item_amount = 87,
-    s2c_sync_equip_represent = 88,
-    s2c_add_item_notify = 89,
-    s2c_sync_fea_active_flag = 90,
-    s2c_update_horse_full_measure = 91,
-    s2c_sync_player_pendent = 92,
-    s2c_learn_profession_notify = 93,
-    s2c_learn_branch_notify = 94,
-    s2c_forget_profession_notify = 95,
-    s2c_add_profession_proficiency = 96,
-    s2c_set_max_profession_level_notify = 97,
-    s2c_sync_profession_adjust_level = 98,
-    s2c_update_player_profession = 99,
-    s2c_learn_recipe_notify = 100,
-    s2c_forget_recipe_notify = 101,
-    s2c_sync_recipe_state = 102,
-    s2c_open_window = 103,
-    s2c_start_use_recipe = 104,
-    s2c_accept_quest = 105,
-    s2c_finish_quest = 106,
-    s2c_cancel_quest = 107,
-    s2c_clear_quest = 108,
-    s2c_share_quest = 109,
-    s2c_sync_quest_value = 110,
-    s2c_start_escort_quest = 111,
-    s2c_sync_loot_list = 112,
-    s2c_roll_item_message = 113,
-    s2c_open_loot_list = 114,
-    s2c_sync_fight_flag = 115,
-    s2c_sync_repute = 116,
-    s2c_sync_fightflag_list = 117,
-    s2c_sync_repute_list = 118,
-    s2c_show_reputation = 119,
-    s2c_sync_repute_update = 120,
-    s2c_character_open = 121,
-    s2c_distribute_item_message = 122,
-    s2c_finish_loot = 123,
-    s2c_begin_roll_item = 124,
-    s2c_custom_OTAction = 125,
-    s2c_modify_threat = 126,
-    s2c_modify_threaten = 127,
-    s2c_clear_threat = 128,
-    s2c_clear_threaten = 129,
-    s2c_talk_message = 130,
-    s2c_sync_self_current_st = 131,
-    s2c_doodad_loot_over = 132,
-    s2c_sync_fellowship_list = 133,
-    s2c_sync_fellowship_group_name = 134,
-    s2c_npc_talk_to_player = 135,
-    s2c_set_force = 136,
-    s2c_set_battle_field_side = 137,
-    s2c_send_mail_respond = 138,
-    s2c_sync_mail_count_info = 139,
-    s2c_get_maillist_respond = 140,
-    s2c_new_mail_notify = 141,
-    s2c_sync_mail_content = 142,
-    s2c_mail_general_respond = 143,
-    s2c_sync_pk_state = 144,
-    s2c_sync_transparency_value = 145,
-    s2c_win_duel_broadcast = 146,
-    s2c_sync_force_id = 147,
-    s2c_sync_user_preferences = 148,
-    s2c_sync_all_book_state = 149,
-    s2c_sync_book_state = 150,
-    s2c_character_change_model = 151,
-    s2c_sync_npc_dialog_flag = 152,
-    s2c_sync_role_data_section_check_request = 153,
-    s2c_sync_role_data_over = 154,
-    s2c_sync_enable_bank_package = 155,
-    s2c_update_map_mark = 156,
-    s2c_sync_mid_map_mark = 157,
-    s2c_play_sound = 158,
-    s2c_play_mini_game = 159,
-    s2c_sync_horse_flag = 160,
-    s2c_road_track_force_respond = 161,
-    s2c_sync_route_node_open_list = 162,
-    s2c_sync_player_state_info = 163,
-    s2c_sync_player_train = 164,
-    s2c_broadcast_player_school_id = 165,
-    s2c_broadcast_switch_big_sword = 166,
-    s2c_sync_target_mini_avatar_misc = 167,
-    s2c_sync_targettarget_mini_avatar_misc = 168,
-    s2c_sync_prink_force = 169,
-    s2c_sync_visit_map_info = 170,
-    s2c_sync_accumulate_value = 171,
-    s2c_sync_sun_moon_power_value = 172,
-    s2c_set_target = 173,
-    s2c_sync_kill_point = 174,
-    s2c_sync_single_fellow_pet_data = 175,
-    s2c_sync_fellow_pet_time_limit = 176,
-    s2c_sync_fellow_pet_data = 177,
-    s2c_set_player_red_name = 178,
-    s2c_set_player_hunter_state = 179,
-    s2c_set_player_fake_name_state = 180,
-    s2c_set_player_dialog_flag = 181,
-    s2c_set_only_revive_in_situ = 182,
-    s2c_sync_formation_coefficient = 183,
-    s2c_join_battle_field_queue_respond = 184,
-    s2c_leave_battle_field_queue_respond = 185,
-    s2c_battle_field_notify = 186,
-    s2c_battle_field_end = 187,
-    s2c_join_tong_battle_field_queue_respond = 188,
-    s2c_leave_tong_battle_field_queue_respond = 189,
-    s2c_tong_battle_field_notify = 190,
-    s2c_tong_battle_field_end = 191,
-    s2c_join_arena_visitor_queue_respond = 192,
-    s2c_leave_arena_visitor_queue_respond = 193,
-    s2c_arena_end = 194,
-    s2c_join_arena_queue_respond = 195,
-    s2c_leave_arena_queue_respond = 196,
-    s2c_arena_notify = 197,
-    s2c_sync_arena_statistics = 198,
-    s2c_corps_operation_respond = 199,
-    s2c_sync_corps_list_respond = 200,
-    s2c_sync_corps_rank_list_respond = 201,
-    s2c_sync_corps_base_data_respond = 202,
-    s2c_sync_corps_member_data_respond = 203,
-    s2c_sync_corps_change_value = 204,
-    s2c_cancel_invitation_join_corps = 205,
-    s2c_sync_camp_info = 206,
-    s2c_sync_currency = 207,
-    s2c_sync_tong_info = 208,
-    s2c_sync_tong_member_info = 209,
-    s2c_delete_tong_member_notify = 210,
-    s2c_apply_tong_info_respond = 211,
-    s2c_update_tong_client_data_version = 212,
-    s2c_sync_tong_repertory_page_respond = 213,
-    s2c_sync_tong_simple_info_respond = 214,
-    s2c_invite_player_join_tong_request = 215,
-    s2c_change_player_tong_notify = 216,
-    s2c_tong_broadcast_message = 217,
-    s2c_get_tong_description_respond = 218,
-    s2c_broadcast_player_change_tong = 219,
-    s2c_sync_tong_online_message = 220,
-    s2c_apply_open_tong_repertory_respond = 221,
-    s2c_sync_tong_history_respond = 222,
-    s2c_sync_tong_diplomacy_data = 223,
-    s2c_apply_tong_war_kill_stat_respond = 224,
-    s2c_tong_event_notify = 225,
-    s2c_sync_tong_personal_data = 226,
-    s2c_sync_tong_total_cache = 227,
-    s2c_sync_tong_cache_change = 228,
-    s2c_auction_lookup_respond = 229,
-    s2c_auction_bid_respond = 230,
-    s2c_auction_sell_respond = 231,
-    s2c_auction_cancel_respond = 232,
-    s2c_auction_message_notify = 233,
-    s2c_bm_lookup_respond = 234,
-    s2c_bm_bid_respond = 235,
-    s2c_bm_bid_cancel_respond = 236,
-    s2c_sync_safe_lock_info = 237,
-    s2c_mibao_verify_respond = 238,
-    s2c_set_camp = 239,
-    s2c_sync_battlefield_statistics = 240,
-    s2c_sync_battlefield_objective = 241,
-    s2c_sync_battlefield_pq_info = 242,
-    s2c_sync_hero_flag = 243,
-    s2c_sync_npc_drop_target = 244,
-    s2c_remote_lua_call = 245,
-    s2c_sync_player_revive_ctrl = 246,
-    s2c_sync_achievement_data = 247,
-    s2c_new_achievement_notify = 248,
-    s2c_achievement_announce_notify = 249,
-    s2c_sync_achievement_point = 250,
-    s2c_sync_achievement_count = 251,
-    s2c_sync_designation_data = 252,
-    s2c_set_generation = 253,
-    s2c_acquire_designation = 254,
-    s2c_designation_announce = 255,
-    s2c_remove_designation = 256,
-    s2c_sync_player_designation = 257,
-    s2c_sync_max_level = 258,
-    s2c_use_item_prepare = 259,
-    s2c_create_view_point_respond = 260,
-    s2c_remove_view_point_respond = 261,
-    s2c_move_view_point_respond = 262,
-    s2c_account_end_of_day_time = 263,
-    s2c_sync_free_limit_flag_info = 264,
-    s2c_game_card_sell_respond = 265,
-    s2c_game_card_buy_respond = 266,
-    s2c_game_card_lookup_respond = 267,
-    s2c_game_card_cancel_respond = 268,
-    s2c_sync_coin = 269,
-    s2c_sync_rewards = 270,
-    s2c_seek_mentor_yell = 271,
-    s2c_seek_apprentice_yell = 272,
-    s2c_sync_mentor_data = 273,
-    s2c_sync_direct_mentor_data = 274,
-    s2c_delete_mentor_data = 275,
-    s2c_delete_direct_mentor_data = 276,
-    s2c_sync_camp_flag = 277,
-    s2c_character_threat_ranklist_respond = 278,
-    s2c_sync_pendent_data = 279,
-    s2c_sync_pet_list = 280,
-    s2c_update_fellow_pet_index = 281,
-    s2c_sync_exterior_box_data = 282,
-    s2c_sync_exterior_set_data = 283,
-    s2c_sync_exterior_all_set_data = 284,
-    s2c_delete_exterior_data = 285,
-    s2c_sync_exterior_free_count_data = 286,
-    s2c_sync_exterior_buy_latest_data = 287,
-    s2c_delete_exterior_buy_latest_data = 288,
-    s2c_sync_exterior_apply_flag = 289,
-    s2c_sync_hair_data = 290,
-    s2c_sync_hair_free_count_data = 291,
-    s2c_sync_regression_player_data = 292,
-    s2c_sync_delay_trade_item = 293,
-    s2c_sync_time_limit_return_item = 294,
-    s2c_sync_time_limit_sold_list_info = 295,
-    s2c_sync_single_dungeon_current_score = 296,
-    s2c_sync_single_dungeon_last_score = 297,
-    s2c_sync_single_dungeon_score_rank_info = 298,
-    s2c_sync_sprint_v2 = 299,
-    s2c_follow_invite_request = 300,
-    s2c_follow_stop = 301,
-    s2c_sync_domesticate_data = 302,
-    s2c_clear_domesticate_data = 303,
-    s2c_sync_domesticate_growth_level_info = 304,
-    s2c_sync_domesticate_growth_exp_info = 305,
-    s2c_sync_domesticate_full_measure_info = 306,
-    s2c_sync_domesticate_event_info = 307,
-    s2c_buy_cub_package_respond = 308,
-    s2c_sync_cub_package_size = 309,
-    s2c_sync_camera_animation = 310,
-    s2c_sync_talent_skill_data = 311,
-    s2c_sync_max_talent_set_count = 312,
-    s2c_open_talent_set = 313,
-    s2c_reset_talent_set = 314,
-    s2c_sync_mini_avatar_data = 315,
-    s2c_acquire_mini_avatar_notify = 316,
-    s2c_client_report_config = 317,
-    s2c_rewards_shop_notify = 318,
-    s2c_sync_player_drop_death = 319,
-    s2c_sync_manual_drop_info = 320,
-    s2c_sync_continuous_login_reward_flag = 321,
-    gs_client_connection_end = 322,
 
-    // 2010-only protocols not present in v246 (kept so legacy server code still compiles;
-    // the v246 client ignores these ids). 7 entries.
-    s2c_account_kickout = 323,
-    s2c_over_time_action = 324,
-    s2c_sync_battle_field_list = 325,
-    s2c_sync_battle_field_side = 326,
-    s2c_sync_current_prestige = 327,
-    s2c_apex_protocol = 328,
-    s2c_sync_apply_exterior_flag = 329,
+    s2c_message_notify,			    // ֪ͨ��Ϣ
+    s2c_frame_signal,				// ֡ͬ��
+    s2c_ping_signal,                // ����ping�ź�
+
+    // ��½��������ߺŵ����Э��
+    s2c_sync_player_base_info,	    // ��¼ʱͬ���������
+    s2c_sync_quest_data,            // ��½ʱͬ������
+
+    s2c_account_kickout,            // �ߺ�֪ͨ
+    s2c_switch_gs,			        // ���֪ͨ
+    s2c_switch_map,                 // ����ͼ֪ͨ
+
+    s2c_sync_new_player,	        // ֪ͨ�ͻ���: һ����ҽ���Region��
+    s2c_sync_new_npc,	            // ֪ͨ�ͻ���: һ��npc����Region��
+    s2c_sync_new_doodad,            // ֪ͨ�ͻ���: һ���µ�Doodad����Region
+
+    s2c_move_character,				// �ƶ���ɫ��λ��
+    s2c_remove_character,			// �ӳ������Ƴ���ɫ
+    s2c_remove_doodad,
+
+    s2c_sync_doodad_state,			// Doodad״̬ͬ��
+
+    s2c_player_display_data,		// �����ʾ����
+
+    s2c_sync_experience,            // ����ֵͬ��
+    s2c_player_level_up,            // �������ʱ�Ĺ㲥��Ϣ
+    s2c_common_health,              // ��ͨ�˺���������,����ˤ��֮���
+
+    // ��ɫ�ƶ�ͬ��
+    s2c_sync_move_ctrl,
+    s2c_sync_move_param,            // ����ͬ��,У���ͻ�����ҵ��ƶ�����,�㲥
+    s2c_adjust_player_move,         // ͬ��У��,У���ͻ�����ҵ��ƶ�״̬�����,���ͻ������
+    s2c_sync_move_state,            // �ͻ��˷����ƶ�ָ���ʱ��,�������˷������겻��,��֪ͨ�ͻ�������
+    s2c_character_action,			// ��ɫ����������ͬ�����ݰ�
+    s2c_character_death,			// ��ɫ������ͬ�����ݰ�
+    s2c_over_time_action,
+    
+    // ------------- skill about protocol -------------------
+    s2c_sync_skill_data,			//��¼����ѧϰ�¼���ʱͬ����������
+    s2c_sync_skill_recipe,
+    s2c_skill_prepare,
+    s2c_skill_cast,
+    s2c_sync_common_skill_auto_cast_state, // ���ּ����Զ��ͷ�״̬
+    s2c_reset_cooldown,
+    s2c_skill_chain_effect,
+    s2c_skill_effect_result,
+    s2c_sync_behit_represent,
+    s2c_sync_buff_list,		
+    s2c_sync_buff_single,		
+    s2c_sync_represent_state,
+    s2c_sync_kungfu_mount,
+    s2c_skill_beat_back,
+    s2c_sync_sheath_state,
+
+    // ------------- ��ֵͬ�� -----------------------------
+
+    s2c_sync_self_max_lmrs,
+    s2c_sync_self_current_lmrs,
+    s2c_sync_self_weak_info,
+    s2c_sync_select_character_max_lmr,
+    s2c_sync_select_character_current_lmr,
+    s2c_sync_select_character_weak_info,
+    s2c_sync_team_member_max_lmr,
+    s2c_sync_team_member_current_lmr,
+    s2c_sync_team_member_misc,
+    s2c_sync_team_member_position,
+    s2c_broadcast_character_life,
+
+    // ------------- party about protocol -----------------
+    s2c_sync_player_team_base_info,
+    s2c_invite_join_team_request,     
+    s2c_apply_join_team_request,
+    s2c_team_add_member_notify,        // ֪ͨ�������г�Ա"ĳ�˼��������ǵĶ���"
+    s2c_team_del_member_notify,
+    s2c_team_change_authority_notify,
+    s2c_team_set_loot_mode_notify,
+    s2c_team_set_formation_leader_notify,
+    s2c_team_disband_notify,
+    s2c_sync_team_member_online_flag,
+    s2c_team_member_signpost_notify,   // ֪ͨ����С��ͼ�ϵı��
+    s2c_team_set_mark_respond,
+    s2c_team_camp_change,
+    s2c_team_level_up_raid_notify,
+    s2c_team_change_member_group_notify,
+
+    // ------------- shop about protocol ------------->
+    s2c_open_shop_notify,
+    s2c_update_shop_item,
+    
+    // -------------- Trading about ------------------>
+    s2c_trading_invite_request,
+    s2c_open_trading_box_notify,
+    s2c_sync_trading_confirm,
+    s2c_sync_trading_item_data,    
+    s2c_sync_trading_money,
+    s2c_trading_complete,
+    // <------------- Trading about ------------------
+
+    s2c_sync_money,					//ͬ����Ǯ����
+    s2c_sync_contribution,          //ͬ������ֵ
+    s2c_sync_item_data,				//ͬ����������
+    s2c_sync_item_destroy,			//ͬ������ɾ��
+    s2c_exchange_item,				//����װ��
+    s2c_update_item_amount,			//������Ʒ�������;�
+    s2c_sync_equip_represent,       //��װ�㲥
+	s2c_add_item_notify,
+
+    s2c_learn_profession_notify,	//ѧϰ�����
+	s2c_learn_branch_notify,		//ѧϰ����ܷ�֧
+    s2c_forget_profession_notify,		//��������
+
+    s2c_add_profession_proficiency,		//��������ܾ���
+    s2c_set_max_profession_level_notify,//������������ȼ�
+    s2c_sync_profession_adjust_level,   // ͬ����������������ظı�ĵ����ȼ�
+    s2c_update_player_profession,		//ͬ��������������
+
+	s2c_learn_recipe_notify,
+	s2c_forget_recipe_notify,
+	s2c_sync_recipe_state,
+
+    s2c_open_window,				// ��һ���ͻ��˴���
+
+    s2c_start_use_recipe,			// ͬ���䷽��ʹ��
+
+    s2c_accept_quest,				// ֪ͨ�ͻ��˽�������
+    s2c_finish_quest,				// ֪ͨ�ͻ����������
+    s2c_cancel_quest,				// ֪ͨ�ͻ���ȡ������
+    s2c_clear_quest,                // ֪ͨ�ͻ����������״̬
+    s2c_share_quest,				// ��������
+    s2c_sync_quest_value,			// ͬ���������
+	s2c_start_escort_quest,
+
+    s2c_sync_loot_list,				// ͬ��ʰȡ�б�
+    s2c_roll_item_message,			// ��������Ϣ
+    s2c_open_loot_list,				// ��ʰȡ���
+	s2c_sync_fight_flag,			// ͬ��ս������
+	s2c_sync_repute,				// ͬ������
+	s2c_sync_fightflag_list,		// ͬ����������ս������
+	s2c_sync_repute_list,			// ͬ�����е���������
+	s2c_show_reputation,			
+	s2c_sync_repute_update,
+	s2c_character_open,				
+    s2c_distribute_item_message,    // �����߷�����Ʒ
+	s2c_finish_loot,				// ����ʰȡ
+	s2c_begin_roll_item,			// start roll
+	s2c_custom_OTAction,			// ͬ�����Ƶ��û���Ϣ
+
+	s2c_modify_threat,				// ���ӳ��
+	s2c_modify_threaten,			// �޸ı����
+	s2c_clear_threat,				// ������
+	s2c_clear_threaten,				// ��������
+    s2c_talk_message,               //
+	s2c_sync_self_current_st,	    // ͬ������
+    
+	s2c_doodad_loot_over,			//
+
+    s2c_sync_fellowship_list, 
+    s2c_sync_fellowship_group_name, 
+
+	s2c_npc_talk_to_player,			//
+	s2c_set_force,
+    s2c_send_mail_respond,
+    s2c_sync_mail_count_info,
+    s2c_get_maillist_respond,
+    s2c_new_mail_notify,
+    s2c_sync_mail_content,
+    s2c_mail_general_respond,
+    
+	s2c_sync_pk_state,
+
+	s2c_win_duel_broadcast,
+	
+    s2c_sync_force_id,			
+	s2c_sync_user_preferences,	
+	s2c_sync_all_book_state,	
+	s2c_sync_book_state,		
+	s2c_character_change_model,	
+	s2c_sync_npc_dialog_flag,	
+	s2c_sync_role_data_over,
+	s2c_sync_enable_bank_package,
+	s2c_update_map_mark,			//��ͼ���
+	s2c_sync_mid_map_mark,
+	s2c_play_sound,
+	s2c_play_mini_game,
+
+    s2c_sync_horse_flag,            // ͬ��������־
+    s2c_road_track_force_respond,
+    s2c_sync_route_node_open_list,
+    s2c_sync_player_state_info,
+    s2c_sync_player_train,
+    s2c_broadcast_player_school_id,
+    
+    s2c_sync_prink_force,
+
+    s2c_sync_visit_map_info,
+
+    s2c_sync_accumulate_value,
+
+    s2c_set_target,
+
+    s2c_sync_kill_point,
+    s2c_set_player_red_name,
+    s2c_set_player_dialog_flag,
+    s2c_set_only_revive_in_situ,
+
+    s2c_sync_formation_coefficient,
+
+    s2c_join_battle_field_queue_respond,
+    s2c_leave_battle_field_queue_respond,
+    s2c_battle_field_notify,
+    s2c_sync_battle_field_list,
+    s2c_sync_battle_field_side,
+    s2c_battle_field_end,
+
+    s2c_sync_camp_info,
+    s2c_sync_current_prestige,
+
+    // -------------- ������ ------------------>
+    s2c_sync_tong_member_info,
+    s2c_delete_tong_member_notify,
+    s2c_apply_tong_info_respond,
+    s2c_update_tong_client_data_version,
+    
+    s2c_sync_tong_repertory_page_respond,
+
+    s2c_invite_player_join_tong_request,
+    s2c_change_player_tong_notify,
+    s2c_tong_broadcast_message,
+    s2c_get_tong_description_respond,
+    s2c_broadcast_player_change_tong,
+    s2c_sync_tong_online_message,
+    s2c_apply_open_tong_repertory_respond,
+    s2c_sync_tong_history_respond,
+
+    // -------------- ��������� ------------------>
+    s2c_auction_lookup_respond,
+    s2c_auction_bid_respond,
+    s2c_auction_sell_respond,
+    s2c_auction_cancel_respond,
+    s2c_auction_message_notify,
+    
+    s2c_set_camp,
+
+    s2c_sync_battlefield_statistics, 
+    s2c_sync_battlefield_objective, 
+    s2c_sync_battlefield_pq_info, 
+
+    s2c_sync_hero_flag,
+
+    s2c_sync_npc_drop_target,
+
+    s2c_remote_lua_call,
+
+    s2c_sync_player_revive_ctrl, 
+
+    // ------------ Achievement about -------------->
+    s2c_sync_achievement_data,
+    s2c_new_achievement_notify,
+    s2c_achievement_announce_notify,
+    s2c_sync_achievement_point,
+    s2c_sync_achievement_count,
+
+    s2c_sync_designation_data,
+    s2c_set_generation,
+    s2c_acquire_designation,
+    s2c_designation_announce,
+    s2c_remove_designation,
+    s2c_sync_player_designation,
+
+    s2c_sync_max_level,
+
+    s2c_use_item_prepare,
+
+    // ------------ ViewPoint ---------------------->
+    s2c_create_view_point_respond,
+    s2c_remove_view_point_respond,
+    s2c_move_view_point_respond,
+
+    s2c_account_end_of_day_time,
+    s2c_sync_free_limit_flag_info,
+
+    s2c_apex_protocol,
+
+    s2c_game_card_sell_respond,
+    s2c_game_card_buy_respond,
+    s2c_game_card_lookup_respond,
+    s2c_game_card_cancel_respond,
+
+    s2c_sync_coin,
+
+    s2c_seek_mentor_yell,
+    s2c_seek_apprentice_yell,
+    s2c_sync_mentor_data,
+    s2c_delete_mentor_data,
+
+    s2c_sync_camp_flag,
+
+    s2c_character_threat_ranklist_respond,
+
+    s2c_sync_exterior_box_data,             // exterior (wai-guan) box contents -> owner
+    s2c_sync_apply_exterior_flag,           // exterior apply-flag -> owner
+
+	gs_client_connection_end
 };
 //GS 2 Client Protocol End
 
