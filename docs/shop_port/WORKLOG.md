@@ -35,3 +35,29 @@ the Lua slice decision (types 0/1 legacy, 2-5 KCurrency).
   MentorValue, RequireTitle, CanReturn, HaveTooMuch cap-checks. Each its own feature.
 - DoSyncCurrency/DoSyncCurrencyList client packet (balance realtime) — NEW protocol tier.
 - Client-side respond-code display for the new ssrc codes (PAP2 version-gap).
+
+---
+
+## [S3 BLOCKER — RE-proven] DoSyncCurrency needs a full GS_CLIENT_PROTOCOL realignment
+Client at /Volumes/Data/909160_剑侠3/客户端/JX3 (JX3Client.exe, Sep-Nov 2012) IS a real v2.5.2 client
+(resolves the "no client" concern). Server-side DoSyncCurrency is fully RE'd:
+- KPlayerServer::DoSyncCurrency (0805b406): send to owner conn — packet 11B = [WORD proto=0xcf][BYTE type]
+  [DWORD value][DWORD remainSpace]. DoSyncCurrencyList (0807e52a): loop type 0..5 -> DoSyncCurrency.
+- v246 GS_CLIENT_PROTOCOL: s2c_sync_currency = 207 (0xcf), between s2c_sync_camp_info(206) / s2c_sync_tong_info(208).
+
+**BUT the client-facing protocol enum has PERVASIVE 2010->v246 drift (verified DWARF vs source):**
+  packet        v246   2010
+  message_notify   1     1   (aligned at start)
+  begin_roll_item 124   ~   
+  battle_field_end 187  ~168
+  sync_camp_info  206   169   (+37)
+v246 inserted ~37 packets scattered through the enum (auction, tong, battlefield expansions, currency...).
+=> The 2010 server sends 2010-numbered protocol bytes; the v246 client expects v246 numbers. They agree
+only for the earliest packets. Sending currency as 207 alone doesn't help — the client also misreads every
+other late 2010 packet. Using THIS v246 client for anything past the early region requires realigning the
+ENTIRE GS_CLIENT_PROTOCOL enum to v246 (insert ~37 packets at correct ordinals + their structs) — a large,
+delicate protocol-tier subproject (cf. the KR2S/KS2R realignment, network §R10). Currency-sync is 1 line of it.
+Verify = live v246-client login (env-heavy). DEFERRED as its own slice: "GS_CLIENT_PROTOCOL 2010->v246 realign".
+
+The currency LOOP works server-side regardless (grant/hold/spend/persist/reset, all verified). Only the
+client's realtime balance DISPLAY needs this realignment; balance is correct on relog (DB Load).
