@@ -7157,49 +7157,6 @@ Exit0:
     return bResult;
 }
 
-// v2.5 (DoSyncCurrency 0805b406): send one currency's value+allowance to the owning client.
-BOOL KPlayerServer::DoSyncCurrency(KPlayer* pPlayer, KCurrency* pCurrency)
-{
-    BOOL              bResult  = false;
-    BOOL              bRetCode = false;
-    S2C_SYNC_CURRENCY Pak;
-
-    assert(pPlayer);
-    assert(pCurrency);
-
-    Pak.byProtocolID = s2c_sync_currency;
-    Pak.byType       = (BYTE)pCurrency->GetType();
-    Pak.nValue       = pCurrency->GetValue();
-    Pak.nRemainSpace = pCurrency->GetRemainSpace();
-
-    bRetCode = Send(pPlayer->m_nConnIndex, &Pak, sizeof(Pak));
-    KGLOG_PROCESS_ERROR(bRetCode);
-
-    bResult = true;
-Exit0:
-    return bResult;
-}
-
-// v2.5 (DoSyncCurrencyList 0807e52a): sync all 6 currencies (e.g. on login).
-BOOL KPlayerServer::DoSyncCurrencyList(KPlayer* pPlayer)
-{
-    BOOL bResult = false;
-    int  i       = 0;
-
-    assert(pPlayer);
-
-    for (i = 0; i < CURRENCY_TYPE_COUNT; i++)
-    {
-        KCurrency* pCurrency = pPlayer->m_CurrencyList.GetCurrency(i);
-        KGLOG_PROCESS_ERROR(pCurrency);
-        DoSyncCurrency(pPlayer, pCurrency);
-    }
-
-    bResult = true;
-Exit0:
-    return bResult;
-}
-
 BOOL KPlayerServer::DoSyncMaxLevel(int nConnIndex, int nMaxLevel)
 {
     S2C_SYNC_MAX_LEVEL SyncMaxLevel;

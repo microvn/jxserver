@@ -73,3 +73,12 @@ Plan: stand up JX3Client.exe (Windows/Wine or the packaged launcher) pointed at 
 login; observe. The v246 debug server (SO3GameServerD) can serve as a reference pair for packet diff.
 Remaining code work AFTER a green live login: P2b per-packet struct-drift for emitted packets (bodies),
 DoSyncCurrency emit (id 207 now valid, struct known), then currency renders on the client.
+
+## [S3 DONE] DoSyncCurrency emit + hook — currency now syncs to client (static-verified)
+Unblocked by the protocol realign. S2C_SYNC_CURRENCY added to GS_Client_Protocol.h (header(2)+byType+
+nValue+nRemainSpace); compiled sizeof=11 == v246 DWARF (struct-parity confirmed statically, no client).
+- KPlayerServer::DoSyncCurrency (id s2c_sync_currency=207) + DoSyncCurrencyList (6 currencies).
+- Hooked at every change site: KCurrency::AddCurrency / AddRemainSpace / Activate (only when a reset
+  actually fires) -> DoSyncCurrency; shop BuyItem auto-syncs via AddCurrency. Initial sync on enter:
+  KPlayer.cpp DoSyncCurrencyList next to DoSyncCoin/DoSyncDesignationData.
+Verify: build ok=202, boot [OK], sizeof==11 (id+struct == v246). Live client-render = P3 (needs client).

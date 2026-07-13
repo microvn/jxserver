@@ -589,10 +589,6 @@ public:
     BOOL DoRemoveDesignation(KPlayer* pPlayer, int nPrefix, int nPostfix);
     BOOL DoSyncPlayerDesignation(KPlayer* pPlayer, int nPrefix, int nPostfix, int nGeneretion, int nByname, BOOL bDisplay);
 
-    // v2.5 NEW: sync one currency (or all 6) to the owning client (s2c_sync_currency).
-    BOOL DoSyncCurrency(KPlayer* pPlayer, class KCurrency* pCurrency);
-    BOOL DoSyncCurrencyList(KPlayer* pPlayer);
-
     BOOL DoSyncMaxLevel(int nConnIndex, int nMaxLevel);
 
     BOOL DoUseItemPrepare(KPlayer* pPlayer, int nFrames, DWORD dwOTAniID, DWORD dwEndAniID, const char* pcszText);

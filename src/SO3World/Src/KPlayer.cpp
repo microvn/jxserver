@@ -1906,6 +1906,8 @@ BOOL KPlayer::Load(BYTE* pbyData, size_t uDataLen)
 
     g_PlayerServer.DoSyncCoin(this);
 
+    g_PlayerServer.DoSyncCurrencyList(this);   // v2.5: initial currency values on enter
+
     m_nNextSaveFrame = g_pSO3World->m_nGameLoop + g_pSO3World->m_Settings.m_ConstList.nSaveInterval * GAME_FPS;
 
     m_nNextKillPointReduceTime = g_pSO3World->m_nCurrentTime + g_pSO3World->m_Settings.m_ConstList.nKillPointReduceCycle;

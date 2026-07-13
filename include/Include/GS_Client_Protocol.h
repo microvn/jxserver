@@ -2288,6 +2288,15 @@ struct S2C_SYNC_CAMP_INFO : DOWNWARDS_PROTOCOL_HEADER
     time_t  nNextResetTime;
 };
 
+// v2.5 NEW: one currency's value + earn-allowance, synced to the owning client.
+// Layout pinned from v246 DWARF (S2C_SYNC_CURRENCY, byte_size 11 = header(2)+byType(1)+2*int).
+struct S2C_SYNC_CURRENCY : DOWNWARDS_PROTOCOL_HEADER
+{
+    BYTE    byType;         // @0x02  currency type (cbt*)
+    int     nValue;         // @0x03  current amount
+    int     nRemainSpace;   // @0x07  remaining earn allowance
+};
+
 struct S2C_SYNC_CURRENT_PRESTIGE : DOWNWARDS_PROTOCOL_HEADER 
 {
     int     nCurrentPrestige;

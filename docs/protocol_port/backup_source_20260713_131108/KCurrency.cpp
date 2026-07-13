@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "KCurrency.h"
 #include "KPlayer.h"
-#include "KPlayerServer.h"   // g_PlayerServer.DoSyncCurrency (client sync)
 
 // v2.5 NEW (RE'd from v246). See KCurrency.h + docs/currency_port/.
 
@@ -108,11 +107,8 @@ BOOL KCurrency::AddCurrency(int nAddValue)
     }
 
 Exit1:
-    // v246: log if |change| >= a per-player threshold (LogPlayerCurrencyChange, deferred) then sync.
-#ifdef _SERVER
-    if (m_pPlayer)
-        g_PlayerServer.DoSyncCurrency(m_pPlayer, this);
-#endif
+    // v246: log if |change| >= a per-player threshold, then DoSyncCurrency to client.
+    // Both are NEW packets -> deferred with the currency-sync slice (docs/currency_port).
     bResult = true;
 Exit0:
     return bResult;
@@ -132,10 +128,7 @@ BOOL KCurrency::AddRemainSpace(int nAddRemainSpaceValue)
         if (m_nRemainSpace < 0)
             m_nRemainSpace = 0;
 
-#ifdef _SERVER
-        if (m_pPlayer)
-            g_PlayerServer.DoSyncCurrency(m_pPlayer, this);
-#endif
+        // v246: DoSyncCurrency (NEW packet, deferred)
     }
 
     bResult = true;
@@ -185,10 +178,7 @@ void KCurrency::Activate()
         }
     }
 
-#ifdef _SERVER
-    if (m_pPlayer)
-        g_PlayerServer.DoSyncCurrency(m_pPlayer, this);
-#endif
+    // v246: notify + DoSyncCurrency (NEW packets, deferred)
 Exit0:
     return;
 }
