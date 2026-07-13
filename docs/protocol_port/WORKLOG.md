@@ -50,3 +50,26 @@ safe (bigger table, looser bound; the v246 client carries its own enum). Verifie
 Both directions (s2c + c2s) now speak v246 numbering. This is the infrastructure unblock for using the
 real v246 client. Next: P2 struct-drift for emitted packets (id now right; body must match v246 too),
 starting with DoSyncCurrency; P3 live client-oracle (JX3Client.exe) end-to-end verify.
+
+## [P2a] External protocol-id widen BYTE->WORD — DONE (build+boot), NEEDS live-verify
+Root cause found (S2C_SYNC_CURRENCY DWARF = 11B: DOWNWARDS_PROTOCOL_HEADER(2B) + byType@2 + nValue@3
++ nRemainSpace@7). v246 EXTERNAL_PROTOCOL_HEADER byte_size=2: **byProtocolID widened BYTE->WORD**
+because v246 has >255 client protocols (s2c_sync_player_designation=257, s2c_sync_currency=207, ...).
+The 1-byte 2010 id CANNOT hold them -> the enum realign (P1/P1b) is only correct WITH this widen.
+- Changed EXTERNAL_PROTOCOL_HEADER.byProtocolID BYTE->WORD (SO3ProtocolBasic.h). Inherited by
+  DOWNWARDS (s2c) + UPWARDS (c2s) -> both external headers now 2-byte id (matches the v246 client).
+- Safe mechanically: send is field-based (`Pak.byProtocolID = s2c_xxx; Send(&Pak, sizeof(Pak))`) so the
+  full 2-byte id goes on the wire; framing is length-prefixed (id-agnostic); dispatch reads the field.
+- Verified: build ok=202, boot settings-[OK]. **NOT wire-verified** — this is a systemic wire change;
+  correctness with the real client (and no residual 1-byte-assuming code) needs the live client-oracle.
+
+## STATE: code-level v246 client-protocol alignment COMPLETE (enum s2c + enum c2s + id widen).
+Committed to the v246 client (JX3Client.exe) as the target. This changes the wire for ALL client
+packets; a 1-byte-header client would no longer work (intended — we target v246).
+
+## P3 (live client-oracle) is now the MANDATORY next step, not optional
+Only a live JX3Client.exe <-> server session verifies the wire (enum + header + per-packet struct drift).
+Plan: stand up JX3Client.exe (Windows/Wine or the packaged launcher) pointed at the cluster gateway;
+login; observe. The v246 debug server (SO3GameServerD) can serve as a reference pair for packet diff.
+Remaining code work AFTER a green live login: P2b per-packet struct-drift for emitted packets (bodies),
+DoSyncCurrency emit (id 207 now valid, struct known), then currency renders on the client.

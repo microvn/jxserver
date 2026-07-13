@@ -1,5 +1,5 @@
 /************************************************************************/
-/* ï¿½ï¿½ï¿½ï¿½Ð­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½á¹¹ï¿½ï¿½ï¿½ï¿½						                            */
+/* ½£ÈýÐ­Òé»ù´¡½á¹¹¶¨Òå						                            */
 /* Copyright : Kingsoft 2005										    */
 /* Author	 : Zhu Jianqiu												*/
 /* History	 :															*/
@@ -17,11 +17,11 @@
 #pragma	pack(1)
 
 /************************************************************************/
-/* ï¿½ï¿½ï¿½ï¿½Ð­ï¿½ï¿½ï¿½Ð³ï¿½ï¿½ÃµÄ¹ï¿½ï¿½Ã½á¹¹												*/
+/* ³£ÓÃÐ­ÒéÖÐ³£ÓÃµÄ¹²ÓÃ½á¹¹												*/
 
-#define QUEST_PARAM_COUNT		4		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+#define QUEST_PARAM_COUNT		4		//ÈÎÎñ²ÎÊý¸öÊý
 
-// ï¿½ï¿½ï¿½ß½á¹¹
+// µÀ¾ß½á¹¹
 enum ITEM_SYNC_STRUCT_TYPE
 {
 	isst_Common = 0,
@@ -31,7 +31,7 @@ enum ITEM_SYNC_STRUCT_TYPE
 	isst_Total,
 };
 
-// Õ½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
+// Õ½³¡ÐÅÏ¢ÀàÐÍ
 
 enum BATTLE_FIELD_NOTIFY_TYPE
 {
@@ -45,21 +45,16 @@ enum BATTLE_FIELD_NOTIFY_TYPE
 };
 
 /************************************************************************/
-/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð­ï¿½ï¿½Í·ï¿½ï¿½ï¿½ï¿½						                            */
+/* ÍâÍø»ù´¡Ð­ÒéÍ·¶¨Òå						                            */
 
 struct EXTERNAL_PROTOCOL_HEADER
 {
-	// v2.5 (v246): protocol id widened BYTE->WORD. v246 has >255 client protocols
-	// (e.g. s2c_sync_player_designation=257), so the 1-byte id no longer fits; the real
-	// v246 client sends/expects a 2-byte id. Field-based send (Pak.byProtocolID=...) +
-	// Send(&Pak,sizeof) put the full 2-byte id on the wire. Header 1B->2B (matches DWARF
-	// EXTERNAL_PROTOCOL_HEADER byte_size=2). Affects all s2c/c2s external packets.
-	WORD	byProtocolID;			//Ð­ï¿½ï¿½ï¿½
+	BYTE	byProtocolID;			//Ð­ÒéºÅ
 };
 
 struct UPWARDS_PROTOCOL_HEADER : EXTERNAL_PROTOCOL_HEADER
 {
-	int		nFrame;				//ï¿½ï¿½Ç°Ö¡ï¿½ï¿½	
+	int		nFrame;				//µ±Ç°Ö¡Êý	
 };
 
 struct DOWNWARDS_PROTOCOL_HEADER : EXTERNAL_PROTOCOL_HEADER
@@ -83,20 +78,20 @@ struct UNDEFINED_SIZE_DOWNWARDS_HEADER : DOWNWARDS_PROTOCOL_HEADER
 	m_nProtocolSize[ProtocolID] = ProtocolSize;}						
 
 /************************************************************************/
-/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð­ï¿½ï¿½Í·ï¿½ï¿½ï¿½ï¿½						                            */
+/* ÄÚÍø»ù´¡Ð­ÒéÍ·¶¨Òå						                            */
 //
-//1.Ð­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-//		["ï¿½ï¿½ï¿½Í¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð´"2"ï¿½ï¿½ï¿½Õ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð´"_]["ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð´"_]"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
-//		ï¿½ï¿½Ä¸È«Ð¡Ð´
-//		ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¢ï¿½Äµï¿½ï¿½ï¿½Ö®ï¿½ï¿½ï¿½ï¿½_ï¿½Ö¸ï¿½
-//		e.g.	b2r_player_login			ï¿½ï¿½BishopÍ¨ÖªRelayï¿½ï¿½Òµï¿½Â½ï¿½ï¿½Ð­ï¿½é£©
-//				g2r_dml_apply_mapcopy		ï¿½ï¿½GSï¿½ï¿½Relayï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð­ï¿½é£¬ï¿½ï¿½ï¿½Ú¶ï¿½Ì¬ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½Ä£ï¿½é£©
-//2.Ð­ï¿½ï¿½á¹¹ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-//		ï¿½ï¿½Ð­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ±ï¿½ï¿½È«ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½
+//1.Ð­ÒéºÅÃû³ÆÃüÃû¹æÔò
+//		["·¢ËÍ¶ËÃû³ÆËõÐ´"2"½ÓÊÕ¶ËÃû³ÆËõÐ´"_]["¹¦ÄÜÄ£¿éÃû³ÆËõÐ´"_]"¹¦ÄÜÃèÊö"
+//		×ÖÄ¸È«Ð¡Ð´
+//		¹¦ÄÜÃèÊöµÄÓ¢ÎÄµ¥´ÊÖ®¼äÓÃ_·Ö¸î
+//		e.g.	b2r_player_login			£¨BishopÍ¨ÖªRelayÍæ¼ÒµÇÂ½µÄÐ­Òé£©
+//				g2r_dml_apply_mapcopy		£¨GSÏòRelayÉêÇëµØÍ¼¸±±¾µÄÐ­Òé£¬ÊôÓÚ¶¯Ì¬µØÍ¼¹¦ÄÜÄ£¿é£©
+//2.Ð­Òé½á¹¹Ãû³ÆµÄÃüÃû¹æÔò
+//		½«Ð­ÒéºÅÃû³Æ±ä³ÉÈ«´óÐ´¼´¿É
 //		e.g.	B2R_PLAYER_LOGIN
-//3.ï¿½ï¿½ï¿½Ð­ï¿½é´¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-//		On"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
-//		ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¢ï¿½Äµï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½Ð´
+//3.Ïà¹ØÐ­Òé´¦Àíº¯ÊýµÄÃüÃû¹æÔò
+//		On"¹¦ÄÜÃèÊö"
+//		¹¦ÄÜÃèÊöÖÐÓ¢ÎÄµ¥´ÊµÄÊ××ÖÄ¸´óÐ´
 //		e.g		OnPlayerLogin
 
 
@@ -104,12 +99,12 @@ struct UNDEFINED_SIZE_DOWNWARDS_HEADER : DOWNWARDS_PROTOCOL_HEADER
 
 typedef struct _INTERNAL_PROTOCOL_HEADER
 {
-	WORD	wProtocolID;			//Ð­ï¿½ï¿½ï¿½
+	WORD	wProtocolID;			//Ð­ÒéºÅ
 }INTERNAL_PROTOCOL_HEADER;
 
 typedef struct _IDENTITY_HEADER : INTERNAL_PROTOCOL_HEADER
 {
-	DWORD		dwPacketIdentity;		//ï¿½ï¿½ï¿½Ý°ï¿½ï¿½ï¿½Î¨Ò»ï¿½ï¿½Ç£ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½Ê¹ï¿½ï¿½
+	DWORD		dwPacketIdentity;		//Êý¾Ý°üµÄÎ¨Ò»±ê¼Ç£¬¹©ÑéÖ¤·µ»ØÂ·ÓÉÊ¹ÓÃ
 }IDENTITY_HEADER;
 
 #pragma pack()
