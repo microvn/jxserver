@@ -119,6 +119,35 @@ Buy/BuyFromShop/BuyFromItem/CanBuy/CanBuyOne/AddExterior/Pay/PayCoin/... + time-
 c2s handler + OnBuyExteriorRespond. Trả free/money/coin. Ước ~3-4h. Feature mua cosmetic, orthogonal currency.
 (Trùng phần lớn mục 4 "19 method truly-missing" — gộp khi port.)
 
+## 8. [Server bug] Login lại phải thử ~3 lần mới vào được — Paysys logout fail → account kẹt `WaitForDisconnect`
+
+**Triệu chứng**: sau khi tắt client (nhất là kill đột ngột lúc debug frida), login lại 1-2 lần đầu
+client báo "mất kết nối tới máy chủ", tới lần ~thứ 3 (sau ~1-2 phút) mới vào được.
+
+**Nguyên nhân (RE từ log gateway, 2026-07-18)** — server ghi giờ UTC, client giờ VN(+7), server 17:4x = client 00:4x:
+```
+174644 New connection index=7 → paysys login success → 174646 Connection lost: 7 (90175com, WaitForDisconnect)
+174811 index=8 → success → 174812 Connection lost: 8 (WaitForDisconnect)
+174826 index=9 → success → 174828 Connection lost: 9 (WaitForDisconnect)
+174842 index=10 → success → 174843 Connection lost: 10 (WaitForDisconnect)
+```
+Mỗi lần: gateway nhận kết nối, paysys "login success", rồi ~2s sau rớt ở trạng thái `WaitForDisconnect`,
+kèm **`[PaysysAgency] Account logout paysys faild, Account='90175com'`**. Session cũ chưa dọn xong vì
+**logout qua Paysys luôn FAIL** (Paysys = passport ngoài của Zing, không có trong bản leak — xem memory
+[[jx3-auth-paysys]]). Cleanup treo tới hết timeout → mọi re-login trong cửa sổ đó bị đẩy ra. Đây là lỗi
+SERVER, không do patch client. Login đã bypass paysys (`m_bOpen=0`) nhưng LOGOUT vẫn gọi paysys.
+
+**Cách làm đúng (RE/patch gateway SO3Gateway)**:
+- Tìm đường logout trong gateway gọi PaysysAgency (grep binary chuỗi `logout paysys faild` / `WaitForDisconnect`
+  / `PaysysAgency`), làm cho logout **không chờ/không phụ thuộc kết quả paysys** — mirror cách `m_bOpen=0`
+  đã cho login local-accept (bỏ qua paysys). Hoặc rút ngắn timeout state `WaitForDisconnect`.
+- Gateway hiện binary-only (có PDB → BSim); cách dump packed + patch: xem memory [[jx3-auth-paysys]].
+- Verify: kill client → login lại ngay → phải vào được không cần chờ/không cần thử nhiều lần.
+
+**Workaround tạm**: thoát game bằng menu (logout sạch) thay vì kill, hoặc chờ ~1 phút giữa 2 lần login khi debug.
+
+---
+
 ## Ghi chú phương pháp (đọc trước khi RE tiếp)
 
 - **Cross-build name drift**: DWARF debug build và stripped release `-3c8199` (cùng thời v2.5)

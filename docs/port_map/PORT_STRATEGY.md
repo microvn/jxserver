@@ -1,5 +1,10 @@
 # PORT STRATEGY — thứ tự & nguyên tắc port 2010 → v2.5
 
+> **THAY BẰNG `FEATURE_ATLAS.md` (2026-07-13).** Khung tier-coupling dưới đây (leaf→hub) tối ưu SAI
+> thứ: nó theo coupling code, không theo playability, nên chơi-được rất muộn. Kế hoạch port hiện dùng
+> = atlas: chọn theo playability (dọc), thực thi coherent theo struct CHỈ trên serialization spine.
+> File này giữ làm **tham chiếu dependency/cạm-bẫy**, không còn là thứ tự port.
+
 Bổ trợ cho `PORT_MAP.md` (số liệu) và `PORT_MAP.csv` (danh sách hàm). File này = **chiến lược**:
 port cái gì trước, vì sao, cạm bẫy.
 
