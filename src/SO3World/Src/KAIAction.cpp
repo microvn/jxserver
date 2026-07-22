@@ -819,6 +819,23 @@ Exit0:
     return nResult;
 }
 
+int AIIsOTActionState(KCharacter* pCharacter, KAIAction* pActionData)
+{
+    int                 nResult       = 0;
+    int                 nBranchYes    = 1;
+    int                 nBranchNo     = 2;
+    KOT_ACTION_TYPE     eActionType   = (KOT_ACTION_TYPE)pActionData->m_nParam[0];
+
+    KG_PROCESS_ERROR_RET_CODE(pCharacter->m_OTActionParam.eActionType == eActionType, nBranchNo);
+    KG_PROCESS_SUCCESS(eActionType == otActionIdle);
+    KG_PROCESS_ERROR_RET_CODE(pCharacter->m_OTActionParam.nEndFrame >= g_pSO3World->m_nGameLoop, nBranchNo);
+
+Exit1:
+    nResult = nBranchYes;
+Exit0:
+    return nResult;
+}
+
 // 判断AI的所属人物是否退出战斗
 // 分支1：不在战斗状态
 // 分支2：在战斗中
@@ -2865,5 +2882,6 @@ void KAIManager::RegisterActionFunctions()
     REGISTER_AI_ACTION_FUNC(CopyThreatListToTargetGroup);
     REGISTER_AI_ACTION_FUNC(ExtractionTargetGroup);
     REGISTER_AI_ACTION_FUNC(ReturnPositionDistanceCompare);
+    REGISTER_AI_ACTION_FUNC(IsOTActionState);
 #endif
 }

@@ -3,7 +3,7 @@
 //  FileName    : KAIAction.h
 //  Version     : 1.0
 //  Creator     : Chen Jie, zhaochunfeng
-//  Comment     : ¶¨ÒåËùÓÐµÄAI Action
+//  Comment     : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½AI Action
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -71,6 +71,7 @@ enum KAI_ACTION_KEY
     eakStand,
 
     eakSearchEnemy,
+    eakSearchEnemy2D,
     eakAddTargetToThreatList,
     eakSelectFirstThreat,
     eakIsInFight,
@@ -127,10 +128,24 @@ enum KAI_ACTION_KEY
     eakExtractionTargetGroup,
     eakReturnPositionDistanceCompare,
 
+    eakIsOTActionState,
+    eakSearchNpc,
+    eakSetStandardSkillUseFlag,
+    eakSelectEmployerFirstThreat,
+    eakClearSelectTarget,
+    eakPetFollowEmployer,
+    eakSetAlertEffect,
+    eakUpdateAlertEffect,
+    eakCancelAlertEffect,
+    eakCastBackStun,
+
     eakTotal
 };
 
-// ÓÃ»§×Ô¶¨Òå ai action key ´Ó KAI_USER_ACTION ¿ªÊ¼
+typedef char _CHK_enum_KAI_ACTION_KEY_eakCastSkill[(eakCastSkill == 13) ? 1 : -1];
+typedef char _CHK_enum_KAI_ACTION_KEY_eakTotal[(eakTotal == 74) ? 1 : -1];
+
+// ï¿½Ã»ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ ai action key ï¿½ï¿½ KAI_USER_ACTION ï¿½ï¿½Ê¼
 #define KAI_USER_ACTION 1000
 
 typedef int (*KAI_ACTION_FUNC)(KCharacter* pCharacter, KAIAction* pActionData);

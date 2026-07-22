@@ -1869,6 +1869,7 @@ KLuaConst LUA_AI_ACTION_KEY[] =
     {"COPY_THREATLIST_TO_TARGETGROUP",          eakCopyThreatListToTargetGroup},
     {"EXTRACTION_TARGETGROUP",                  eakExtractionTargetGroup},
     {"RETURN_POSITION_DISTANCE_COMPARE",        eakReturnPositionDistanceCompare},
+    {"IS_OTACTION_STATE",                       eakIsOTActionState},
 
     {"TOTAL",                                   eakTotal},
     {NULL, 0}
