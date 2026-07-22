@@ -1,0 +1,21 @@
+# Accepted P1/P2/P3 source closure. New waves overlay this baseline; they do not
+# rebuild a tree by copying only their own lane files.
+include/Include/SO3World/KAIAction.h
+include/Include/SO3World/KAILogic.h
+include/Include/SO3World/KAIManager.h
+include/Include/SO3World/KNpcTemplateList.h
+src/SO3World/Src/KAIAction.cpp
+src/SO3World/Src/KAILogic.cpp
+src/SO3World/Src/KAIManager.cpp
+src/SO3World/Src/KAIVM.cpp
+src/SO3World/Src/KAIVM.h
+src/SO3World/Src/KBaseFuncList.cpp
+src/SO3World/Src/KCharacter.h
+src/SO3World/Src/KLuaCharacter.cpp
+src/SO3World/Src/KLuaConstList.cpp
+src/SO3World/Src/KLuaSkill.cpp
+src/SO3World/Src/KSkill.cpp
+src/SO3World/Src/KSkill.h
+src/SO3World/Src/KItemInfoList.cpp
+src/SO3World/Src/KNpcTemplateList.cpp
+src/SO3World/Src/KShopCenter.cpp

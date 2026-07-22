@@ -108,6 +108,14 @@ requires a contract checkpoint and fresh Claude scope review before editing.
 
 ## Patch scope
 
+### Canonical baseline gate
+
+- Canonical accepted-source root: `/Volumes/ExData/game/jx3/linux-build`.
+- Accepted closure manifest: `docs/waves/wave-1b/BASELINE_MANIFEST.sha256`.
+- Manifest file list: `docs/waves/wave-1b/BASELINE_FILES.txt`.
+- Current closure: 19 accepted P1/P2/P3 source files; preflight passes with `BASELINE_OK checked=19`.
+- Future waves must create an overlay worktree from the accepted HEAD and run `baseline_manifest.py check` before review, before build, and after overlay sync. Missing/mismatched accepted files are a hard stop.
+
 - Worktree/branch: `/Volumes/ExData/game/jx3/wave1b-worktree`, branch `wave1b-pilot`; remote build worktree `/root/jx3/linux-build-wave1b`.
 - Backup: `wave1b-worktree/docs/wave1b_port/backup_source_20260722_130711/`.
 - Producer-owned files: `KItemInfoList.cpp`, `KNpcTemplateList.cpp`, `KShopCenter.cpp`, `KSkill.h`, `KSkill.cpp`, `KLuaSkill.cpp`.
