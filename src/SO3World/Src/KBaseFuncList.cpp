@@ -3701,7 +3701,7 @@ public:
     {
         BOOL    bResult     = false;
         BOOL    bRetCode    = false;
-        int     nAIType     = 0;
+        DWORD nAIType = 0;
         KScene* pScene      = NULL;
 
         KGLOG_PROCESS_ERROR(dwID);
@@ -3737,13 +3737,13 @@ int LuaReloadAI(Lua_State* L)
 {
     BOOL            bRetCode    = false;
     int             nTopIndex   = 0;
-    int             nAIType     = 0;
+    DWORD nAIType = 0;
     KPutNpcToRelive PutNpcToRelive;
 
     nTopIndex = Lua_GetTopIndex(L);
     KGLOG_PROCESS_ERROR(nTopIndex == 1);
 
-    nAIType  = (int)Lua_ValueToNumber(L, 1);
+    nAIType = (DWORD)Lua_ValueToNumber(L, 1);
     KGLOG_PROCESS_ERROR(nAIType);
 
     bRetCode = g_pSO3World->m_AIManager.ReloadAILogic(nAIType);

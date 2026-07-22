@@ -49,9 +49,9 @@ class KAIVM
 public:
     KAIVM();
 
-    BOOL Setup(KCharacter* pCharacter, int nAIType);
+    BOOL Setup(KCharacter* pCharacter, DWORD dwAIType);
 
-    int  GetAIType();
+    DWORD GetAIType();
 
     void Active();
 
@@ -72,7 +72,7 @@ public:
 
 private:
     KCharacter*         m_pOwner;
-    int                 m_nAIType;
+    DWORD               m_dwAIType;
     KAILogic*           m_pAILogic;
     KAIState*           m_pState;
     int                 m_nStateID;

@@ -85,7 +85,7 @@ struct KNpcTemplate
     int							nLunarMagicDefence;			//�����ڹ�����ϵ��
     int							nPoisonMagicDefence;		//�����ڹ�����ϵ��
 
-	int							nAIType;					//AI����
+	DWORD                       nAIType;					//AI����
 	int							nAIParamTemplateID;			//AI����ģ��
 
 	int							nCorpseDoodadID;			//ʬ��ģ��ID

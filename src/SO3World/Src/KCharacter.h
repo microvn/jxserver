@@ -957,7 +957,7 @@ public:
 public:
     struct KCharacterAIData 
     {
-        int                 nAIType;
+        DWORD               nAIType;
 
         int                 nOriginPosX;
         int                 nOriginPosY;

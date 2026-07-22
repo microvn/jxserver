@@ -16,7 +16,7 @@
 KAIVM::KAIVM()
 {
     m_pOwner                = NULL;
-    m_nAIType               = 0;
+    m_dwAIType               = 0;
     m_pState                = NULL;
     m_pAILogic              = NULL;
     m_nStateID              = 0;
@@ -31,7 +31,7 @@ KAIVM::KAIVM()
     m_ullRunTimeStatistic   = 0;
 }
 
-BOOL KAIVM::Setup(KCharacter* pCharacter, int nAIType)
+BOOL KAIVM::Setup(KCharacter* pCharacter, DWORD dwAIType)
 {
     BOOL        bResult     = false;
     BOOL        bRetCode    = false;
@@ -45,22 +45,22 @@ BOOL KAIVM::Setup(KCharacter* pCharacter, int nAIType)
 
     m_pOwner = pCharacter;
 
-    if (nAIType == 0)
+    if (dwAIType == 0)
     {
         // 清除原有AI类型
         m_pAILogic  = NULL;
         goto Exit1;
     }
 
-    pAILogic = g_pSO3World->m_AIManager.GetAILogic(nAIType);
+    pAILogic = g_pSO3World->m_AIManager.GetAILogic(dwAIType);
     if (!pAILogic)
     {
-        KGLogPrintf(KGLOG_ERR, "[AI] Setup AIVM failed, AIType %d is invalid.", nAIType);
+        KGLogPrintf(KGLOG_ERR, "[AI] Setup AIVM failed, AIType %d is invalid.", dwAIType);
         goto Exit0;
     }
 
     m_nDebugCount   = 0;
-    m_nAIType   = nAIType;
+    m_dwAIType   = dwAIType;
     m_pAILogic  = pAILogic;
     nInitState  = m_pAILogic->GetInitState();
 
@@ -80,9 +80,9 @@ Exit0:
     return bResult;
 }
 
-int KAIVM::GetAIType()
+DWORD KAIVM::GetAIType()
 {
-    return m_nAIType;
+    return m_dwAIType;
 }
 
 
@@ -130,7 +130,7 @@ void KAIVM::FireEvent(int nEvent, DWORD dwEventSrc, int nEventParam)
         {
             KGLogPrintf(
                 KGLOG_ERR, "[AI] Event %d blocked by %d, PendingEvent %d, ai type %d, npc name is %s.\n", 
-                nEvent, nEventBlock, m_nPendingEvent, m_nAIType, m_pOwner->m_szName
+                nEvent, nEventBlock, m_nPendingEvent, m_dwAIType, m_pOwner->m_szName
             );
         }
         goto Exit0;
@@ -152,7 +152,7 @@ void KAIVM::FireEvent(int nEvent, DWORD dwEventSrc, int nEventParam)
             // 死循环检测
             KGLogPrintf(
                 KGLOG_ERR, "[AI] Action call up to limit(%d), ai type = %d, event = %d, action = %d\n", 
-                MAX_ACTION_CALL, m_nAIType, nEvent, ActionKey.nAIActionID
+                MAX_ACTION_CALL, m_dwAIType, nEvent, ActionKey.nAIActionID
             );
             break;
         }
@@ -181,7 +181,7 @@ void KAIVM::FireEvent(int nEvent, DWORD dwEventSrc, int nEventParam)
         {
             KGLogPrintf(
                 KGLOG_ERR, "[AI] Action call return error, AI type = %d, event = %d, action = %d, character id = %u, name:%s, pos(%d, %d, %d)\n", 
-                m_nAIType, nEvent, ActionKey.nAIActionID, m_pOwner->m_dwID, m_pOwner->m_szName, m_pOwner->m_nX, m_pOwner->m_nY, m_pOwner->m_nZ
+                m_dwAIType, nEvent, ActionKey.nAIActionID, m_pOwner->m_dwID, m_pOwner->m_szName, m_pOwner->m_nX, m_pOwner->m_nY, m_pOwner->m_nZ
             );
 
             m_pAILogic = NULL;  // 出错的时候就把AI清掉，防止Log不断刷屏。
@@ -299,7 +299,7 @@ void KAIVM::DebugAICurrentStateInfo()
 {
     assert(m_pState);
 
-    KGLogPrintf(KGLOG_DEBUG, "[AI] DebugAI : AIType is %d, Current StateID is %d, ActionID is %d.\n", m_nAIType, m_nStateID, m_nActionID);
+    KGLogPrintf(KGLOG_DEBUG, "[AI] DebugAI : AIType is %d, Current StateID is %d, ActionID is %d.\n", m_dwAIType, m_nStateID, m_nActionID);
     KGLogPrintf(KGLOG_DEBUG, "[AI] DebugAI : nGameLoop is %lu\n", g_pSO3World->m_nGameLoop);
     KGLogPrintf(KGLOG_DEBUG, "[AI] DebugAI : PrimaryTimer is %lu\n", m_nPrimaryTimerFrame);
     KGLogPrintf(KGLOG_DEBUG, "[AI] DebugAI : SecondaryTimer is %lu\n", m_nSecondaryTimerFrame);

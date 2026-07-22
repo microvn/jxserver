@@ -20,7 +20,7 @@ class KAILogic
 public:
     KAILogic();
 
-    BOOL            Setup(int nType, DWORD dwScriptID);
+    BOOL            Setup(DWORD dwType, DWORD dwScriptID);
 
     KAIAction*      GetAction(int nActionID);
     KAIState*       GetState(int nState);
@@ -30,7 +30,7 @@ public:
     KAIActionHandle CallAction(KCharacter* pCharacter, KAIActionHandle ActionKey);
 
 private:
-    int     m_nAIType;      // AI typeµÄID
+    DWORD   m_nAIType;      // AI typeµÄID
     DWORD   m_dwScriptID;
     int     m_nInitState;
 

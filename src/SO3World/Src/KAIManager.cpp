@@ -23,7 +23,7 @@ BOOL KAIManager::Init()
 #ifdef _SERVER
     KGLogPrintf(KGLOG_DEBUG, "[AI] loading ... ...");
 
-    bRetCode = LoadAITabFile();
+    bRetCode = LoadAITabListFile();
     KGLOG_PROCESS_ERROR(bRetCode);
 
     KGLogPrintf(KGLOG_DEBUG, "[AI] %u AI loaded !", m_AITable.size());
@@ -151,80 +151,75 @@ void KAIManager::UnInit()
         LogAIRuntimeStat();
 }
 
-BOOL KAIManager::LoadAITabFile()
+BOOL KAIManager::LoadAITabListFile()
 {
-    BOOL        bResult                 = false;
-    int         nRetCode                = false;
-    ITabFile*   piAITabFile             = NULL;
-    char        szFilePath[]            = SETTING_DIR"/AIType.tab";
-    int         nHeight                 = 0;
-    std::pair<KAI_TABLE::iterator, bool> RetPair;
-
-    piAITabFile = g_OpenTabFile(szFilePath);
+    BOOL bResult = false;
+    int nRetCode = false;
+    ITabFile* piAITabFile = NULL;
+    char szListFilePath[] = SETTING_DIR"/AITypeList.tab";
+    int nHeight = 0;
+    piAITabFile = g_OpenTabFile(szListFilePath);
     if (!piAITabFile)
     {
-        KGLogPrintf(KGLOG_ERR, "[AI] Unable to open table file \"%s\"\n", szFilePath);
+        KGLogPrintf(KGLOG_ERR, "[AI] Unable to open table file \"%s\"\n", szListFilePath);
         goto Exit0;
     }
-
     nHeight = piAITabFile->GetHeight();
     KGLOG_PROCESS_ERROR(nHeight > 1);
-
-    for (int nRow = 2; nRow <= nHeight; nRow++)
+    for (int nRow = 2; nRow <= nHeight; ++nRow)
     {
-        int                 nAIType         = 0;
-        DWORD               dwScriptID      = 0;
-        char                szScriptPath[MAX_PATH];
-        KAIInfo             AIInfo;
-
-        nRetCode = piAITabFile->GetInteger(nRow, "AIType", 0, &nAIType);
-        (void)nRetCode; /*[endgame] tolerant*/
-        if (nAIType == 0) continue; /* [drift 2.5.2] binary has no >=0 assert; skip AIType 0 rows, high-bit AI IDs are valid map keys */
-
-        nRetCode = piAITabFile->GetString(nRow, "ScriptFile", "", szScriptPath, sizeof(szScriptPath));
-        (void)nRetCode; /*[endgame] tolerant*/
-
-        dwScriptID = g_FileNameHash(szScriptPath);
-        KGLOG_PROCESS_ERROR(dwScriptID);
-
-        AIInfo.dwScriptID = dwScriptID;
-        AIInfo.pLogic     = NULL;
-
-        m_AITable[nAIType] = AIInfo;
+        char szTabFilePath[MAX_PATH];
+        nRetCode = piAITabFile->GetString(nRow, "FilePath", "", szTabFilePath, sizeof(szTabFilePath));
+        KGLOG_PROCESS_ERROR(nRetCode == 1);
+        KGLOG_PROCESS_ERROR(LoadAITabFile(szTabFilePath));
     }
-
 #ifdef _SERVER
     if (!g_pSO3World->m_bFastBootMode)
-    {
-        KAI_TABLE::iterator it = m_AITable.begin();
-        int nCount = (int)m_AITable.size();
-        int nIndex = 1;
-
-        for (;it != m_AITable.end(); ++it, ++nIndex)
-        {
-            #if (defined(_MSC_VER) || defined(__ICL))   //WIN32
-            cprintf("******************************>: Setup AI scripts : %d/%d\r", nIndex, nCount);
-            #endif
-            it->second.pLogic   = CreateAI(it->first, it->second.dwScriptID);
-        }
-        
-        #if (defined(_MSC_VER) || defined(__ICL))   //WIN32
-        cprintf("\n");
-        #endif
-    }
+        for (KAI_TABLE::iterator it = m_AITable.begin(); it != m_AITable.end(); ++it)
+            it->second.pLogic = CreateAI(it->first, it->second.dwScriptID);
 #endif
-
     bResult = true;
 Exit0:
-    if (!bResult)
-    {
-        m_AITable.clear();
-    }
+    if (!bResult) m_AITable.clear();
     KG_COM_RELEASE(piAITabFile);
     return bResult;
 }
 
-BOOL KAIManager::ReloadAILogic(int nAIType)
+BOOL KAIManager::LoadAITabFile(char* szFilePath)
+{
+    BOOL bResult = false;
+    int nRetCode = false;
+    ITabFile* piAITabFile = NULL;
+    int nHeight = 0;
+    piAITabFile = g_OpenTabFile(szFilePath);
+    KGLOG_PROCESS_ERROR(piAITabFile);
+    nHeight = piAITabFile->GetHeight();
+    KGLOG_PROCESS_ERROR(nHeight > 1);
+    for (int nRow = 2; nRow <= nHeight; ++nRow)
+    {
+        DWORD dwAIType = 0;
+        DWORD dwScriptID = 0;
+        char szScriptPath[MAX_PATH];
+        KAIInfo AIInfo;
+        nRetCode = piAITabFile->GetInteger(nRow, "AIType", 0, (int*)&dwAIType);
+        (void)nRetCode;
+        if (dwAIType == 0) continue;
+        nRetCode = piAITabFile->GetString(nRow, "ScriptFile", "", szScriptPath, sizeof(szScriptPath));
+        (void)nRetCode;
+        dwScriptID = g_FileNameHash(szScriptPath);
+        KGLOG_PROCESS_ERROR(dwScriptID);
+        AIInfo.dwScriptID = dwScriptID;
+        AIInfo.pLogic = NULL;
+        m_AITable[dwAIType] = AIInfo;
+    }
+    bResult = true;
+Exit0:
+    if (!bResult) m_AITable.clear();
+    KG_COM_RELEASE(piAITabFile);
+    return bResult;
+}
+
+BOOL KAIManager::ReloadAILogic(DWORD dwAIType)
 {
     BOOL                bResult                 = false;
     int                 nRetCode                = false;
@@ -234,7 +229,7 @@ BOOL KAIManager::ReloadAILogic(int nAIType)
     int                 nHeight                 = 0;
     DWORD               dwScriptID              = 0;
     int                 nRow                    = 0;
-    int                 nReadAIType             = 0;
+    DWORD               dwReadAIType             = 0;
     KAI_TABLE::iterator it;
     char                szScriptPath[MAX_PATH];
 
@@ -246,10 +241,10 @@ BOOL KAIManager::ReloadAILogic(int nAIType)
 
     for (nRow = 2; nRow <= nHeight; nRow++)
     {
-        nRetCode = piAITabFile->GetInteger(nRow, "AIType", 0, &nReadAIType);
+        nRetCode = piAITabFile->GetInteger(nRow, "AIType", 0, (int*)&dwReadAIType);
         KGLOG_PROCESS_ERROR(nRetCode == 1);
 
-        if (nReadAIType != nAIType)
+        if (dwReadAIType != dwAIType)
             continue;
 
         nRetCode = piAITabFile->GetString(nRow, "ScriptFile", "", szScriptPath, sizeof(szScriptPath));
@@ -266,17 +261,17 @@ BOOL KAIManager::ReloadAILogic(int nAIType)
     dwScriptID = g_FileNameHash(szScriptPath);
     KGLOG_PROCESS_ERROR(dwScriptID);
 
-    it = m_AITable.find(nAIType);
+    it = m_AITable.find(dwAIType);
     if (it == m_AITable.end() || it->second.pLogic == NULL)
     {
-        m_AITable[nAIType].dwScriptID   = dwScriptID;
-        m_AITable[nAIType].pLogic       = CreateAI(nAIType, dwScriptID);
+        m_AITable[dwAIType].dwScriptID   = dwScriptID;
+        m_AITable[dwAIType].pLogic       = CreateAI(dwAIType, dwScriptID);
     }
     else
     {
         it->second.dwScriptID = dwScriptID;
 
-        nRetCode = it->second.pLogic->Setup(nAIType, dwScriptID);
+        nRetCode = it->second.pLogic->Setup(dwAIType, dwScriptID);
         KGLOG_PROCESS_ERROR(nRetCode);
     }
 
@@ -285,11 +280,11 @@ Exit0:
     return bResult;
 }
 
-KAILogic* KAIManager::GetAILogic(int nAIType)
+KAILogic* KAIManager::GetAILogic(DWORD dwAIType)
 {
     KAILogic*           pLogic  = NULL;
     KAIInfo*            pInfo   = NULL;
-    KAI_TABLE::iterator it      = m_AITable.find(nAIType);
+    KAI_TABLE::iterator it      = m_AITable.find(dwAIType);
 
     KGLOG_PROCESS_ERROR(it != m_AITable.end());
 
@@ -297,7 +292,7 @@ KAILogic* KAIManager::GetAILogic(int nAIType)
 
     if (!pInfo->pLogic)
     {
-        pInfo->pLogic = CreateAI(nAIType, pInfo->dwScriptID);
+        pInfo->pLogic = CreateAI(dwAIType, pInfo->dwScriptID);
     }
 
     pLogic = pInfo->pLogic;
@@ -315,7 +310,7 @@ KAI_ACTION_FUNC KAIManager::GetActionFunction(int nKey)
     return NULL;
 }
 
-KAILogic* KAIManager::CreateAI(int nType, DWORD dwScriptID)
+KAILogic* KAIManager::CreateAI(DWORD dwType, DWORD dwScriptID)
 {
     KAILogic* pResult       = NULL;
     BOOL      bRetCode      = false;
@@ -324,7 +319,7 @@ KAILogic* KAIManager::CreateAI(int nType, DWORD dwScriptID)
     pAI = KMemory::New<KAILogic>();
     KGLOG_PROCESS_ERROR(pAI);
 
-    bRetCode = pAI->Setup(nType, dwScriptID);
+    bRetCode = pAI->Setup(dwType, dwScriptID);
     KGLOG_PROCESS_ERROR(bRetCode);
 
     pResult = pAI;
@@ -337,7 +332,7 @@ Exit0:
             pAI = NULL;
         }
 
-        KGLogPrintf(KGLOG_ERR, "[AI] Setup AI failed, AIType: %d", nType);
+        KGLogPrintf(KGLOG_ERR, "[AI] Setup AI failed, AIType: %d", dwType);
     }
     return pResult;
 }

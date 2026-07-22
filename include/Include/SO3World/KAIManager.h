@@ -32,12 +32,12 @@ public:
     void UnInit();
 
     void RegisterActionFunctions();
-    BOOL LoadAITabFile();
-    BOOL ReloadAILogic(int nAIType);
+    BOOL LoadAITabListFile();
+    BOOL ReloadAILogic(DWORD dwAIType);
 
     BOOL LogAIRuntimeStat();
 
-    KAILogic*       GetAILogic(int nAIType);
+    KAILogic*       GetAILogic(DWORD dwAIType);
     KAI_ACTION_FUNC GetActionFunction(int nKey);
 
 public:
@@ -46,7 +46,8 @@ public:
     KAI_RUNTIME_STATISTICS_NODE                     m_ActionRunTimeStatisticsArray[eakTotal];
 
 private:
-    KAILogic* CreateAI(int nType, DWORD dwScriptID);
+    KAILogic* CreateAI(DWORD dwType, DWORD dwScriptID);
+    BOOL LoadAITabFile(char* szFilePath);
 
 private:
     KAI_ACTION_FUNC m_ActionFunctionTable[eakTotal];
@@ -57,7 +58,7 @@ private:
         KAILogic*   pLogic;
     };
 
-    typedef std::map<int, KAIInfo> KAI_TABLE;
+    typedef std::map<DWORD, KAIInfo> KAI_TABLE;
     KAI_TABLE       m_AITable;
 };
 

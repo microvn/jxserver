@@ -792,7 +792,7 @@ Exit0:
 int KCharacter::LuaGetAIType(Lua_State* L)
 {
     int nRetCode    = 0;
-    int nAIType     = 0;
+    DWORD nAIType = 0;
 
     nRetCode = Lua_GetTopIndex(L);
     KGLOG_PROCESS_ERROR(nRetCode == 0);
@@ -809,12 +809,12 @@ Exit0:
 int KCharacter::LuaSetAIType(Lua_State* L)
 {
     int nRetCode    = 0;
-	int nAIType     = 0;
+	DWORD nAIType = 0;
 
     nRetCode = Lua_GetTopIndex(L);
 	KGLOG_PROCESS_ERROR(nRetCode == 1);
 
-	nAIType = (int)Lua_ValueToNumber(L, 1);
+	nAIType = (DWORD)Lua_ValueToNumber(L, 1);
     
     m_AIData.nAIType = nAIType;
     m_AIVM.Setup(this, nAIType);

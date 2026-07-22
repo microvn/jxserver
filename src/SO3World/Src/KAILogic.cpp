@@ -25,7 +25,7 @@ KAILogic::KAILogic()
     m_nInitState    = 0;
 }
 
-BOOL KAILogic::Setup(int nType, DWORD dwScriptID)
+BOOL KAILogic::Setup(DWORD dwType, DWORD dwScriptID)
 {
     BOOL      bResult       = false;
     int       nLuaTopIndex  = 0;
@@ -36,7 +36,7 @@ BOOL KAILogic::Setup(int nType, DWORD dwScriptID)
     m_StateTable.clear();
     m_UserActionTable.clear();
 
-    m_nAIType       = nType;
+    m_nAIType       = dwType;
     m_dwScriptID    = dwScriptID;
     m_nInitState    = 0;
 
