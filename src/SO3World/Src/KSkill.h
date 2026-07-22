@@ -45,8 +45,8 @@ class   KSkill;
 #define MAX_SKILL_REICPE_COUNT          4
 #define MAX_BUFF_REICPE_COUNT           1
 
-#define MAX_ACCUMULATE_VALUE            10                          // ¾ÛÆøµÄ×îÐ¡µ¥ÔªÊ±¼äÎª0.5Ãë
-#define MAX_ACCUMULATE_SUB_COUNT        MAX_ACCUMULATE_VALUE + 1    // ¾ÛÆø·Ö10 + 1(ÐîÂúÒÔºó)¸öµ¥Ôª
+#define MAX_ACCUMULATE_VALUE            10                          // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ÔªÊ±ï¿½ï¿½Îª0.5ï¿½ï¿½
+#define MAX_ACCUMULATE_SUB_COUNT        MAX_ACCUMULATE_VALUE + 1    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½10 + 1(ï¿½ï¿½ï¿½ï¿½ï¿½Ôºï¿½)ï¿½ï¿½ï¿½ï¿½Ôª
 
 #define MAX_CHAIN_TARGET                21
 
@@ -54,7 +54,7 @@ class   KSkill;
 #define OTHER_SCHOOL_KUNGFU_CD_INDEX    1
 
 
-// ¸ÃÃ¶¾ÙÃèÊöÁË¼¼ÄÜµÄ×÷ÓÃÐ§¹ûÀàÐÍ
+// ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¼ï¿½ï¿½Üµï¿½ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 enum KSKILL_EFFECT_TYPE
 {
     setInvalid,
@@ -63,61 +63,66 @@ enum KSKILL_EFFECT_TYPE
     setTotal
 };
 
-// ¼¼ÄÜ·ÖÀà£¬°´¼¼ÄÜÓ¦ÓÃ£ºApplyType
+// ï¿½ï¿½ï¿½Ü·ï¿½ï¿½à£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½Ã£ï¿½ApplyType
 enum KSKILL_APPLY_TYPE
 {
     satInvalid = 0,
 
-    satPlayerSkill,     // Ö÷½Ç¼¼ÄÜ
-    satNpcSkill,        // Npc¼¼ÄÜ
-    satGearSkill,       // ×°±¸¼¼ÄÜ
-    satItemSkill,       // Item¼¼ÄÜ
-    satSystemSkill,     // ÏµÍ³¼¼ÄÜ
-    satMissionSkill,    // ÈÎÎñÏà¹Ø¼¼ÄÜ
-    satTestSkill,       // ²âÊÔ¼¼ÄÜ
+    satPlayerSkill,     // ï¿½ï¿½ï¿½Ç¼ï¿½ï¿½ï¿½
+    satNpcSkill,        // Npcï¿½ï¿½ï¿½ï¿½
+    satGearSkill,       // ×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    satItemSkill,       // Itemï¿½ï¿½ï¿½ï¿½
+    satSystemSkill,     // ÏµÍ³ï¿½ï¿½ï¿½ï¿½
+    satMissionSkill,    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ï¿½ï¿½
+    satTestSkill,       // ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½
 
     satTotal
 };
 
-// ¼¼ÄÜ·ÖÀà£¬°´¼¼ÄÜÀàÐÍ£ºKindType
+// ï¿½ï¿½ï¿½Ü·ï¿½ï¿½à£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í£ï¿½KindType
 enum KSKILL_KIND_TYPE
 {
     sktInvalid = 0,
 
-    sktPhysics,         // Íâ¹¦ÀàÐÍ
-    sktSolarMagic,      // ÑôÐÔÄÚ¹¦ÀàÐÍ
-    sktNeutralMagic,    // ÖÐÐÔÄÚ¹¦ÀàÐÍ
-    sktLunarMagic,      // ÒõÐÔÄÚ¹¦ÀàÐÍ
-    sktPoison,          // ¶¾ÊôÐÔ
-    sktLeap,            // Çá¹¦ÊôÐÔ
-    sktNone,            // ÎÞÊôÐÔ
+    sktPhysics,         // ï¿½â¹¦ï¿½ï¿½ï¿½ï¿½
+    sktSolarMagic,      // ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½ï¿½ï¿½ï¿½
+    sktNeutralMagic,    // ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½ï¿½ï¿½ï¿½
+    sktLunarMagic,      // ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½ï¿½ï¿½ï¿½
+    sktPoison,          // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    sktLeap,            // ï¿½á¹¦ï¿½ï¿½ï¿½ï¿½
+    sktNone,            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     sktTotal
 };
 
-// ¼¼ÄÜ·ÖÀà£¬°´¼¼ÄÜ¹¦ÄÜÐÔÖÊ£ºFunctionType
+// ï¿½ï¿½ï¿½Ü·ï¿½ï¿½à£¬ï¿½ï¿½ï¿½ï¿½ï¿½Ü¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê£ï¿½FunctionType
 enum KSKILL_FUNCTION_TYPE
 {
     sftInvalid = 0,
 
-    sftNormal,          // ÆÕÍ¨
-    sftSlow,            // ³Ù»º
-    sftFear,            // ¿Ö¾å
-    sftHalt,            // ¶¨Éí
-    sftSilence,         // ½ûÑÔ
-    sftChaos,           // »ìÂÒ
-    sftCharm,           // ÷È»ó
-    sftStun,            // »÷ÔÎ
-    sftEnmity,          // ³ðºÞ
-    sftBoolding,        // Á÷Ñª
-    sftDaze,            // Ñ£ÔÎ
+    sftNormal,          // ï¿½ï¿½Í¨
+    sftSlow,            // ï¿½Ù»ï¿½
+    sftFear,            // ï¿½Ö¾ï¿½
+    sftHalt,            // ï¿½ï¿½ï¿½ï¿½
+    sftSilence,         // ï¿½ï¿½ï¿½ï¿½
+    sftChaos,           // ï¿½ï¿½ï¿½ï¿½
+    sftCharm,           // ï¿½È»ï¿½
+    sftStun,            // ï¿½ï¿½ï¿½ï¿½
+    sftEnmity,          // ï¿½ï¿½ï¿½
+    sftBoolding,        // ï¿½ï¿½Ñª
+    sftDaze,            // Ñ£ï¿½ï¿½
 
-    sftDamage,          // ÉËº¦
+    sftDamage,          // ï¿½Ëºï¿½
+
+    sftFly,
+    sftDisarm,
 
     sftTotal
 };
 
-// ¼¼ÄÜ·ÖÀà£¬°´ÃÅÅÉÁ÷ÅÉ£ºGenreType
+typedef char _CHK_enum_KSKILL_FUNCTION_TYPE_sftTotal[(sftTotal == 15) ? 1 : -1];
+
+// ï¿½ï¿½ï¿½Ü·ï¿½ï¿½à£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É£ï¿½GenreType
 enum KSILL_GENRE_TYPE
 {
     sgtInvalid = 0,
@@ -125,7 +130,7 @@ enum KSILL_GENRE_TYPE
     sgtTotal
 };
 
-// ¼¼ÄÜ¶ÔÆïÂí×´Ì¬µÄÒªÇó
+// ï¿½ï¿½ï¿½Ü¶ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½Òªï¿½ï¿½
 enum SKILL_HORSE_STATE_CONDITION
 {
     shcInvalid = 0,
@@ -138,24 +143,24 @@ enum SKILL_HORSE_STATE_CONDITION
 };
 
 
-// ¼¼ÄÜµÄÊÍ·Å·½Ê½
+// ï¿½ï¿½ï¿½Üµï¿½ï¿½Í·Å·ï¿½Ê½
 enum KSKILL_CAST_MODE
 {
     scmInvalid,
-    scmSector,          // ÉÈÐÎ·¶Î§,ÉÈÐÄ¹Ì¶¨ÔÚ×Ô¼º
+    scmSector,          // ï¿½ï¿½ï¿½Î·ï¿½Î§,ï¿½ï¿½ï¿½Ä¹Ì¶ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½
     scmTargetAngleSector,       /* [drift 2.5.2] interleave: shifts scmCasterArea..scmTeamArea +3 */
     scmRectangle,
     scmTargetAngleRectangle,
-    scmCasterArea,      // ÒÔ×Ô¼ºÎªÖÐÐÄµÄÔ²ÐÎÇøÓò
-    scmTargetArea,      // ÒÔÄ¿±êÎªÖÐÐÄµÄÔ²ÐÎÇøÓò
+    scmCasterArea,      // ï¿½ï¿½ï¿½Ô¼ï¿½Îªï¿½ï¿½ï¿½Äµï¿½Ô²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    scmTargetArea,      // ï¿½ï¿½Ä¿ï¿½ï¿½Îªï¿½ï¿½ï¿½Äµï¿½Ô²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     scmPointArea,
-    scmCasterSingle,    // ¶Ôµ¥Ìå¶ÔÏó(ÏÞÓÚ×Ô¼º)Ê©·Å
-    scmTargetSingle,    // ¶Ôµ¥Ìå¶ÔÏó(Ö¸¶¨Ä¿±ê)Ê©·Å
-    scmPoint,           // ¶Ô×ø±êµãÊ©·Å
-	scmItem,			// ¶ÔµÀ¾ßÊÍ·Å
-    scmTargetChain,     // ¶ÔÄ¿±êÊÍ·ÅÁ´×´¼¼ÄÜ
-    scmTargetLeader,    // ¶ÔÕóÑÛÊÍ·Å¼¼ÄÜ
-    scmTeamArea,       // Ð¡¶ÓµÄ·¶Î§¼¼ÄÜ
+    scmCasterSingle,    // ï¿½Ôµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½)Ê©ï¿½ï¿½
+    scmTargetSingle,    // ï¿½Ôµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(Ö¸ï¿½ï¿½Ä¿ï¿½ï¿½)Ê©ï¿½ï¿½
+    scmPoint,           // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê©ï¿½ï¿½
+	scmItem,			// ï¿½Ôµï¿½ï¿½ï¿½ï¿½Í·ï¿½
+    scmTargetChain,     // ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½Í·ï¿½ï¿½ï¿½×´ï¿½ï¿½ï¿½ï¿½
+    scmTargetLeader,    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í·Å¼ï¿½ï¿½ï¿½
+    scmTeamArea,       // Ð¡ï¿½ÓµÄ·ï¿½Î§ï¿½ï¿½ï¿½ï¿½
     scmTotal
 };
 
@@ -298,22 +303,25 @@ struct KSKILL_RECIPE_BASE_INFO
 
     int         nDamageAddPercent;
 
-    char	    szScriptFile[MAX_PATH];	// ÃØóÅ¶Ô¼¼ÄÜµÄÓ°Ïì½Å±¾ÎÄ¼þ¡£²ß»®¿ÉÒÔÔÚ½Å±¾ÖÐÌí¼ÓÄ§·¨ÊôÐÔµÈµÈ¡£
-                                        // ËùÓÐÔÚÃØóÅ½Å±¾ÖÐµÄÄ§·¨ÊôÐÔÌí¼ÓÔÚÊôÐÔÁ´±íµÄÇ°¶Ë¡£
+    char	    szScriptFile[MAX_PATH];	// ï¿½ï¿½ï¿½Å¶Ô¼ï¿½ï¿½Üµï¿½Ó°ï¿½ï¿½Å±ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ß»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú½Å±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä§ï¿½ï¿½ï¿½ï¿½ï¿½ÔµÈµÈ¡ï¿½
+                                        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å½Å±ï¿½ï¿½Ðµï¿½Ä§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½Ë¡ï¿½
 };
 
 //////////////////////////////////////////////////////////////////////////
 
-// Buff¼ì²éÁ´±í
+// Buffï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 enum KBUFF_COMPARE_FLAG
 {
     bcfInvailed,
 
     bcfEqual,
     bcfGreaterEqual,
+    bcfLess,
 
     bcfTotal
 };
+
+typedef char _CHK_enum_KBUFF_COMPARE_FLAG_bcfTotal[(bcfTotal == 4) ? 1 : -1];
 
 struct KSKILL_REQUIRE_BUFF_NODE
 {
@@ -324,7 +332,7 @@ struct KSKILL_REQUIRE_BUFF_NODE
     KBUFF_COMPARE_FLAG  eLevelCompareFlag;
 };
 
-// ÐîÆø¼¼×Ó¼¼ÄÜÊÍ·ÅÐÅÏ¢
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¼ï¿½ï¿½ï¿½ï¿½Í·ï¿½ï¿½ï¿½Ï¢
 
 struct KSKILL_ACCUMULATE
 {
@@ -332,7 +340,7 @@ struct KSKILL_ACCUMULATE
     DWORD   dwSubSkillLevel;
 };
 
-// Á´×´¼¼ÄÜÖÐÄ¿±êµÄ½á¹¹
+// ï¿½ï¿½×´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½Ä½á¹¹
 struct KSKILL_CHAIN_TARGET
 {
     KSKILL_CHAIN_TARGET() {};
@@ -343,10 +351,10 @@ struct KSKILL_CHAIN_TARGET
     int         nDistance;
 };
 
-// 1. ×Óµ¯ÊÇ¼ÇÂ¼ÔÚ·¢¼¼ÄÜÕßÉíÉÏµÄ
-// 2. Ò»¸ö×Óµ¯¿ÉÒÔ×÷ÓÃ¶à¸öÈË
-// 3. ·¢¼¼ÄÜÕß×Ô¼ºËÀÍöºó×Óµ¯²¢²»Çå³ý
-// 4. ·¢¼¼ÄÜÕß×Ô¼º»»µØÍ¼Ê±ÒªÇå³ýËùÓÐ×Óµ¯
+// 1. ï¿½Óµï¿½ï¿½Ç¼ï¿½Â¼ï¿½Ú·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½
+// 2. Ò»ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½
+// 3. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// 4. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Ê±Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½
 
 struct KUSER_SKILL_EVENT;
 
@@ -366,17 +374,17 @@ private:
 
 struct KSKILL_BULLET
 {
-    DWORD       dwBulletID;             // ×Óµ¯ID£¬Éú³É×Óµ¯µÄÊ±ºò£¬ÏµÍ³ÎªÃ¿¸ö×Óµ¯·ÖÅäÒ»¸öÎ¨Ò»µÄID
+    DWORD       dwBulletID;             // ï¿½Óµï¿½IDï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½Ê±ï¿½ï¿½ÏµÍ³ÎªÃ¿ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Î¨Ò»ï¿½ï¿½ID
 
-    KSkillRecipePointer SkillRecipePointer;   // ¼¼ÄÜÖ¸Õë¶ÔÏó£¬
-                                              // Ê¹ÓÃÇ°±ØÐëÏÈ±È½Ï½á¹¹ÌåÖÐ¼ÇÂ¼µÄSNºÍpSkillËùÖ¸¶ÔÏóµÄSNÖ»·ñÆ¥Åä£¬
-                                              // Èç²»Æ¥ÅäÔòËµÃ÷Ö¸ÕëÒÑ¾­ÎÞÐ§£¬±ØÐëÓÃSkillRecipeKeyÖØÐÂGetSkill¡£
+    KSkillRecipePointer SkillRecipePointer;   // ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½
+                                              // Ê¹ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½È±È½Ï½á¹¹ï¿½ï¿½ï¿½Ð¼ï¿½Â¼ï¿½ï¿½SNï¿½ï¿½pSkillï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½SNÖ»ï¿½ï¿½Æ¥ï¿½ä£¬
+                                              // ï¿½ç²»Æ¥ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½Ð§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½SkillRecipeKeyï¿½ï¿½ï¿½ï¿½GetSkillï¿½ï¿½
     
     KCharacter* pSkillSrc;
-    DWORD       dwSkillSrcID;           // ¼¼ÄÜÊÍ·ÅÕßµÄID
+    DWORD       dwSkillSrcID;           // ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½ï¿½ßµï¿½ID
     int         nSkillSrcLevel;
-    KTarget     Target;                 // Ö»¿ÉÄÜÊÇ¼¸ÖÖÇé¿ö: NpcPointer, PlayerPointer, DoodadPointer, Coordination
-    DWORD       dwTargetID;             // µ±Target¼ÇÂ¼ÎªÖ¸ÕëµÄÊ±ºò£¬ÐèÒªÑéÖ¤ID
+    KTarget     Target;                 // Ö»ï¿½ï¿½ï¿½ï¿½ï¿½Ç¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: NpcPointer, PlayerPointer, DoodadPointer, Coordination
+    DWORD       dwTargetID;             // ï¿½ï¿½Targetï¿½ï¿½Â¼ÎªÖ¸ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ö¤ID
     int         nEndFrame;      
 
     int         nPhysicsHitValue;
@@ -385,27 +393,27 @@ struct KSKILL_BULLET
     int         nNeutralHitValue;
     int         nPoisonHitValue;
 
-    int         nCriticalStrike;        // ÖØ»÷ÂÊ
+    int         nCriticalStrike;        // ï¿½Ø»ï¿½ï¿½ï¿½
     int         nCriticalStrikePower;
 
-    std::vector<KUSER_SKILL_EVENT> SkillEventVector; // ¼¼ÄÜÊÍ·ÅÕßÉíÉÏ¼¼ÄÜÊÂ¼þµÄ¿½±´
+    std::vector<KUSER_SKILL_EVENT> SkillEventVector; // ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½
     
-    int         nPhysicsDamage;         // Íâ¹¦ÉËº¦, °üÀ¨¼¼ÄÜ±¾ÉíµÄÉËº¦ÓëÈËÎïÉíÉÏÆäËûÊôÐÔÔì³ÉµÄ¸½¼ÓÉËº¦
+    int         nPhysicsDamage;         // ï¿½â¹¦ï¿½Ëºï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÉµÄ¸ï¿½ï¿½ï¿½ï¿½Ëºï¿½
     int         nSolarDamage;      
     int         nNeutralDamage;    
     int         nLunarDamage;      
     int         nPoisonDamage; 
     int         nTherapy;	    
     
-    int         nDotPhysicsAP;          // ¸½¼Óµ½DotÉÏµÄÍâ¹¦ÉËº¦, ²»°üÀ¨Dot±¾ÉíµÄÉËº¦
+    int         nDotPhysicsAP;          // ï¿½ï¿½ï¿½Óµï¿½Dotï¿½Ïµï¿½ï¿½â¹¦ï¿½Ëºï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Dotï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëºï¿½
     int         nDotSolarAP;      
     int         nDotNeutralAP;    
     int         nDotLunarAP;      
     int         nDotPoisonAP; 
     int         nDotTherapyAP;	       
 
-    int         nDamageToLifeForSelf;     // °ÑÉËº¦×ªÎª×Ô¼ºµÄÉúÃü
-    int         nDamageToManaForSelf;     // °ÑÉËº¦×ªÎª×Ô¼ºµÄÄÚÁ¦
+    int         nDamageToLifeForSelf;     // ï¿½ï¿½ï¿½Ëºï¿½×ªÎªï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    int         nDamageToManaForSelf;     // ï¿½ï¿½ï¿½Ëºï¿½×ªÎªï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     int         nBaseThreatCoefficient;
     int         nDamageThreatCoefficient;
@@ -418,57 +426,57 @@ struct KSKILL_BULLET
 };
 
 
-// ×¢Òâ,Îä¹¦ÔÚÊµÏÖÉÏÒ²ÊÇÒ»¸öÌØÊâµÄ¼¼ÄÜ,Èç¹ûÒ»¸öSkillµÄdwBelongKungfuÎª0,ÄÇ¾Í±íÊ¾ËüÊµ¼ÊÉÏÊÇ¸öÎä¹¦
+// ×¢ï¿½ï¿½,ï¿½ä¹¦ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Skillï¿½ï¿½dwBelongKungfuÎª0,ï¿½Ç¾Í±ï¿½Ê¾ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½Ç¸ï¿½ï¿½ä¹¦
 
 struct KSKILL_BASE_INFO
 {
 	char	szSkillName[_NAME_LEN];
     DWORD	dwSkillID;
-    int     nSkillMark;             // PQ¹±Ï×¶ÈÍ³¼ÆÓÃµÄÊ©·¨·ÖÊý
-	DWORD	dwMaxLevel;				// ¼¼ÄÜµÈ¼¶ÉÏÏÞ,»ù±¾µÈ¼¶ºÏ·¨·¶Î§ [1, dwMaxLevel]
+    int     nSkillMark;             // PQï¿½ï¿½ï¿½×¶ï¿½Í³ï¿½ï¿½ï¿½Ãµï¿½Ê©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	DWORD	dwMaxLevel;				// ï¿½ï¿½ï¿½ÜµÈ¼ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½È¼ï¿½ï¿½Ï·ï¿½ï¿½ï¿½Î§ [1, dwMaxLevel]
     
-    int     nApplyType;             // ¼¼ÄÜ·ÖÀà£¬°´¼¼ÄÜÓ¦ÓÃ£ºApplyType
-    int     nKindType;              // ¼¼ÄÜ·ÖÀà£¬°´¼¼ÄÜÀàÐÍ£ºKindType 
-    int     nRecipeType;            // ¼¼ÄÜÃØóÅÆ¥Åä·ÖÀà
-    // int     nFunctionType;          // ¼¼ÄÜ·ÖÀà£¬°´¼¼ÄÜ¹¦ÄÜÐÔÖÊ£ºFunctionType
-    int     nGenreType;             // ¼¼ÄÜ·ÖÀà£¬°´ÃÅÅÉÁ÷ÅÉ£º
+    int     nApplyType;             // ï¿½ï¿½ï¿½Ü·ï¿½ï¿½à£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½Ã£ï¿½ApplyType
+    int     nKindType;              // ï¿½ï¿½ï¿½Ü·ï¿½ï¿½à£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í£ï¿½KindType 
+    int     nRecipeType;            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½ï¿½
+    // int     nFunctionType;          // ï¿½ï¿½ï¿½Ü·ï¿½ï¿½à£¬ï¿½ï¿½ï¿½ï¿½ï¿½Ü¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê£ï¿½FunctionType
+    int     nGenreType;             // ï¿½ï¿½ï¿½Ü·ï¿½ï¿½à£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É£ï¿½
 
-    int     nUIType;                // ±íÊ¾¸Ã¼¼ÄÜÊôÓÚÄÚ¹¦»¹ÊÇÍâ¹¦»¹ÊÇÆäËû...
+    int     nUIType;                // ï¿½ï¿½Ê¾ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â¹¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½...
 
-    DWORD   dwBelongKungfu;         // ËùÊôÎä¹¦
-    DWORD   dwBelongSchool;         // ËùÊôÃÅÅÉ
+    DWORD   dwBelongKungfu;         // ï¿½ï¿½ï¿½ï¿½ï¿½ä¹¦
+    DWORD   dwBelongSchool;         // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    int     nCastMode;              // KSKILL_CAST_MODE, ÊÍ·Å·½Ê½
+    int     nCastMode;              // KSKILL_CAST_MODE, ï¿½Í·Å·ï¿½Ê½
 
     DWORD   dwWeaponRequest;
-    BOOL    bCostAmmo;              // ÊÇ·ñÏûºÄµ¯Ò©¸ñ×ÓÀïµÄµ¯Ò©
-    int     nCostItemType;          // ¼¼ÄÜÏûºÄÖ¸¶¨ÎïÆ·ËùÔÚµÄÅäÖÃ±í
-    int     nCostItemIndex;         // ¼¼ÄÜÏûºÄÖ¸¶¨ÎïÆ·ËùÔÚÅäÖÃ±íÀïµÄË÷ÒýÖµ(Index)
-    DWORD   dwMountRequestType;     // ¼¼ÄÜÐèÒªµÄÄÚ¹¦ÀàÐÍ£¬Ö»ÓÐÔÚ²»ÐèÒªÄÚ¹¦µÄÊ±ºò²Å¿ªÊ¼ÅÐ¶ÏÕâ¸öÀàÐÍ£¬Ò»°ãºÍÃÅÅÉÓÐ¹Ø
-    DWORD   dwMountRequestDetail;   // ¼¼ÄÜÐèÒªµÄÄÚ¹¦£¬Ö¸¶¨Ò»¸öÄÚ¹¦
-    DWORD   dwMountRequestDetailLevel;  // ¼¼ÄÜÐèÒªµÄÄÚ¹¦µÈ¼¶
+    BOOL    bCostAmmo;              // ï¿½Ç·ï¿½ï¿½ï¿½ï¿½Äµï¿½Ò©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½Ò©
+    int     nCostItemType;          // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½Ã±ï¿½
+    int     nCostItemIndex;         // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ(Index)
+    DWORD   dwMountRequestType;     // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½Ú¹ï¿½ï¿½ï¿½ï¿½Í£ï¿½Ö»ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½Òªï¿½Ú¹ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Å¿ï¿½Ê¼ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í£ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¹ï¿½
+    DWORD   dwMountRequestDetail;   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½Ú¹ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ú¹ï¿½
+    DWORD   dwMountRequestDetailLevel;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½Ú¹ï¿½ï¿½È¼ï¿½
     DWORD   dwMountType;
 
     BOOL    bIsMountable;
 	BOOL    bIsPassiveSkill;
     BOOL    bIsChannelSkill;
     BOOL    bIsExpSkill;
-    BOOL    bIsExactHit;            // ÊÇ·ñ±ØÖÐ(¼´²»¿¼ÂÇÃüÖÐÂÊ)
-    BOOL    bIsInstinct;            // ÊÇ·ñ±¾ÄÜ(¼´²»ÓÃÑ§¾ÍÄÜÓÃµÄ¼¼ÄÜ)
-    BOOL    bIsAutoTurn;            // ÊÇ·ñÐèÒª×Ô¶¯³¯Ïò
+    BOOL    bIsExactHit;            // ï¿½Ç·ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+    BOOL    bIsInstinct;            // ï¿½Ç·ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½ï¿½ÃµÄ¼ï¿½ï¿½ï¿½)
+    BOOL    bIsAutoTurn;            // ï¿½Ç·ï¿½ï¿½ï¿½Òªï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½
     
-    int     nEffectType;            // ¼¼ÄÜÐ§¹û£¬·ÖÎªÓÐÒæ£¬ÓÐº¦£¬ÖÐÐÔ
+    int     nEffectType;            // ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½æ£¬ï¿½Ðºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     BOOL    bCheckBindBuff;
 
-    BOOL    bCauseAbradeEquipment;  // ¼¼ÄÜÃüÖÐºó,ÊÇ·ñ¶Ô¼¼ÄÜÊÍ·ÅÕßµÄÎäÆ÷ºÍ¼¼ÄÜÄ¿±ê×°±¸Ôì³ÉÄ¥Ëð
-    BOOL    bCauseBeatBreak;        // ¼¼ÄÜÊÇ·ñ¿ÉÒÔ°Ñ±ðÈËµÄÍ¨µÀ¼¼´ò¶Ï
-    BOOL    bCauseBeatBack;         // ¼¼ÄÜÊÇ·ñ¿ÉÒÔ°Ñ±ðÈËµÄÒ÷³ª/Í¨µÀ´òÍË
-    BOOL    bHasCriticalStrike;     // ¼¼ÄÜÊÇ·ñ¿¼ÂÇËæ¼´ÖØ»÷
+    BOOL    bCauseAbradeEquipment;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðºï¿½,ï¿½Ç·ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½Í·ï¿½ï¿½ßµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½Ä¥ï¿½ï¿½
+    BOOL    bCauseBeatBreak;        // ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ô°Ñ±ï¿½ï¿½Ëµï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    BOOL    bCauseBeatBack;         // ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ô°Ñ±ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½/Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    BOOL    bHasCriticalStrike;     // ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½æ¼´ï¿½Ø»ï¿½
 
     DWORD   dwSkillEventMask1;
     DWORD   dwSkillEventMask2;
     DWORD   dwSkillCastFlag;
-    DWORD   dwCastMask;             // ¼¼ÄÜÊÍ·Å·ÖÀà£¬ÓÃ×÷Ä³¼¸Àà¼¼ÄÜÊÇ·ñÊÜÈËÎïÉíÉÏÌØ¶¨ÊôÐÔÓ°Ïì
+    DWORD   dwCastMask;             // ï¿½ï¿½ï¿½ï¿½ï¿½Í·Å·ï¿½ï¿½à£¬ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½à¼¼ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¶ï¿½ï¿½ï¿½ï¿½ï¿½Ó°ï¿½ï¿½
 
     BOOL    bUseCastScript;
     BOOL    bUse3DObstacle;
@@ -489,7 +497,7 @@ struct KSKILL_BASE_INFO
     BOOL    bTargetRelationMentor;
     BOOL    bTargetRelationApprentice;
 
-    BOOL    bBindCombatTag;         // ÊÇ·ñ°ó¶¨Ã°ÑªµÄ¶¯×÷±êÇ©£¬ºÍÂß¼­ÎÞ¹Ø¡£ÓÃÓÚ±íÏÖ
+    BOOL    bBindCombatTag;         // ï¿½Ç·ï¿½ï¿½Ã°Ñªï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½Ç©ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½Þ¹Ø¡ï¿½ï¿½ï¿½ï¿½Ú±ï¿½ï¿½ï¿½
 
     int     nTargetMoveStateMask;
     BOOL    bTargetOnFear;
@@ -502,7 +510,7 @@ struct KSKILL_BASE_INFO
     BOOL    bAutoSelectTarget;
     int     nNPCWeaponType;
     DWORD   dwMapBanMask;
-	char	szScriptFile[MAX_PATH];	// ¼¼ÄÜ½Å±¾ÎÄ¼þ
+	char	szScriptFile[MAX_PATH];	// ï¿½ï¿½ï¿½Ü½Å±ï¿½ï¿½Ä¼ï¿½
 };
 
 struct KSKILL_DISPLAY_INFO
@@ -564,82 +572,87 @@ public:
 
 
 public:
-    KSKILL_BASE_INFO*   m_pBaseInfo;			// »ù´¡¼¼ÄÜÐÅÏ¢
+    KSKILL_BASE_INFO*   m_pBaseInfo;			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 
-    DWORD               m_dwSerialNumber;       // ¼¼ÄÜ¶ÔÏó³õÊ¼»¯Ê±È·¶¨µÄÒ»¸öÎ¨Ò»±êÊ¶¡£
+    DWORD               m_dwSerialNumber;       // ï¿½ï¿½ï¿½Ü¶ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½Ê±È·ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Î¨Ò»ï¿½ï¿½Ê¶ï¿½ï¿½
 
-	DWORD				m_dwLevel;		        // ¼¼ÄÜµÈ¼¶
+	DWORD				m_dwLevel;		        // ï¿½ï¿½ï¿½ÜµÈ¼ï¿½
 
-    // --------- ¼¼ÄÜÁìÎò ------------------------------>
+    // --------- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ------------------------------>
 	DWORD				m_dwLevelUpExp;
-    int 				m_nPlayerLevelLimit;    // Ñ§µÃ¸Ã¼¼ÄÜµÈ¼¶ÏÞÖÆ 
-    int                 m_nExpAddOdds;          // ¼¼ÄÜÊìÁ·¶ÈÔö³¤¸ÅÂÊ
+    int 				m_nPlayerLevelLimit;    // Ñ§ï¿½Ã¸Ã¼ï¿½ï¿½ÜµÈ¼ï¿½ï¿½ï¿½ï¿½ï¿½ 
+    int                 m_nExpAddOdds;          // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    // --------- ¼¼ÄÜÏûºÄ ------------------------------>
+    // --------- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ------------------------------>
 	int	                m_nCostLife;
 	int	                m_nCostMana;
+    int                 m_nCostManaBasePercent;  /* [drift 2.5.2] DWARF offset 0x20 */
     int                 m_nCostRage;
+	int                 m_nCostEnergy;           /* [drift 2.5.2] DWARF offset 0x28 */
 	int					m_nCostStamina;	
+    int                 m_nCostTrain;            /* [wave1b P1] */
 
-    // <--------- ¼¼ÄÜÏûºÄ ------------------------------
+    // <--------- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ------------------------------
 
-	int					m_nPrepareFrames;		// Ò÷³ªÖ¡Êý
+	int					m_nPrepareFrames;		// ï¿½ï¿½ï¿½ï¿½Ö¡ï¿½ï¿½
 
-	int					m_nThreatRevisePercent;	// ³ðºÞÐÞÕý°Ù·Ö±È
+	int					m_nThreatRevisePercent;	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù·Ö±ï¿½
 
-	int					m_nMinRadius;		    // ×îÐ¡¾àÀë    
-    int					m_nMaxRadius;		    // ×î´ó¾àÀë
-    // m_nAreaRadiusÊÇÊ²Ã´¶«Î÷?
-    // ¿¼ÂÇÀàËÆÓëÈÔÊÖÁñµ¯µÄ¼¼ÄÜ,m_nMaxRadius±íÊ¾ÁËÊÖÁñµ¯ÄÜÈÔ¶àÔ¶,¶øm_nAreaRadiusÔò±íÊ¾ÁËÊÖÁñµ¯µÄ±¬Õ¨°ë¾¶
+	int					m_nMinRadius;		    // ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½    
+    int					m_nMaxRadius;		    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    int                 m_nProtectRadius;        /* [drift 2.5.2] DWARF offset 0x44 */
+    // m_nAreaRadiusï¿½ï¿½Ê²Ã´ï¿½ï¿½ï¿½ï¿½?
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ñµ¯µÄ¼ï¿½ï¿½ï¿½,m_nMaxRadiusï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½Ô¶,ï¿½ï¿½m_nAreaRadiusï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ñµ¯µÄ±ï¿½Õ¨ï¿½ë¾¶
     int                 m_nAreaRadius;         
+    int                 m_nHeight;               /* [drift 2.5.2] DWARF offset 0x4c */
+    int                 m_nRectWidth;            /* [drift 2.5.2] DWARF offset 0x50 */
 
-	int					m_nAngleRange;		    // ·¶Î§¹¥»÷µÄÉÈÐÎÉËº¦½Ç¶È·¶Î§
+	int					m_nAngleRange;		    // ï¿½ï¿½Î§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëºï¿½ï¿½Ç¶È·ï¿½Î§
 
-    int                 m_nBulletVelocity;      // ×Óµ¯ËÙ¶È
+    int                 m_nBulletVelocity;      // ï¿½Óµï¿½ï¿½Ù¶ï¿½
 
-    int                 m_nWeaponDamagePercent; // ¶ÔÎäÆ÷ÉËº¦ÖµµÄ¼Ó³É
+    int                 m_nWeaponDamagePercent; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëºï¿½Öµï¿½Ä¼Ó³ï¿½
     
-    int                 m_nBreakRate;           // ´ò¶ÏµÄ¸ÅÂÊ
-	int					m_nBrokenRate;		    // ±»´ò¶ÏµÄ¸ÅÂÊ(»ùÊý1024)
+    int                 m_nBreakRate;           // ï¿½ï¿½ÏµÄ¸ï¿½ï¿½ï¿½
+	int					m_nBrokenRate;		    // ï¿½ï¿½ï¿½ï¿½ÏµÄ¸ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½1024)
 
-    int                 m_nBeatBackRate;        // ´òÍË¸ÅÂÊ
+    int                 m_nBeatBackRate;        // ï¿½ï¿½ï¿½Ë¸ï¿½ï¿½ï¿½
     
-    int                 m_nChannelFrame;        // Í¨µÀ¼¼ÄÜ³ÖÐøÊ±¼ä
-    int                 m_nChannelInterval;     // Í¨µÀ¼¼¼ä¸ôÊ±¼ä
+    int                 m_nChannelFrame;        // Í¨ï¿½ï¿½ï¿½ï¿½ï¿½Ü³ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+    int                 m_nChannelInterval;     // Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
 
-    int                 m_nTargetCountLimit;    // ¼¼ÄÜ×÷ÓÃÄ¿±êÊýÁ¿ÏÞÖÆ£¬Ö÷ÒªÓÃÓÚ·¶Î§¼¼; (Ð¡ÓÚ0 ´ú±íÄ¿±êÊýÁ¿²»ÏÞÖÆ)
+    int                 m_nTargetCountLimit;    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ£ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½Ú·ï¿½Î§ï¿½ï¿½; (Ð¡ï¿½ï¿½0 ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 
     int                 m_nAttackWeakPos;
 
     int                 m_nDamageAddPercent;
 
-    // Õó·¨Ïà¹Ø
-    BOOL                m_bIsFormationSkill;            // Èç¹ûÎªtrue£¬´Ë¼¼ÄÜÖ»ÄÜÓÉÕóÑÛ£¨¶Ó³¤£©ÊÍ·Å£¬µ±´ËÏîÎªfalseÊ±£¬²»¿¼ÂÇÏÂÃæÁ½¸ö²ÎÊý¡£
-    int                 m_nFormationRange;              // ½áÕóµÄ·¶Î§£¬ÒÔÕóÑÛÎªÔ²ÐÄ¡£
-    int                 m_nLeastFormationPopulation;    // ½áÕóµÄ·¶Î§µÄ×îÉÙ¶ÓÔ±Êý£¨°üÀ¨¶Ó³¤£©
+    // ï¿½ï¿½ï¿½ï¿½ï¿½
+    BOOL                m_bIsFormationSkill;            // ï¿½ï¿½ï¿½Îªtrueï¿½ï¿½ï¿½Ë¼ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Û£ï¿½ï¿½Ó³ï¿½ï¿½ï¿½ï¿½Í·Å£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎªfalseÊ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    int                 m_nFormationRange;              // ï¿½ï¿½ï¿½ï¿½Ä·ï¿½Î§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎªÔ²ï¿½Ä¡ï¿½
+    int                 m_nLeastFormationPopulation;    // ï¿½ï¿½ï¿½ï¿½Ä·ï¿½Î§ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½Ô±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½
 
-    int                 m_nDismountingRate;             // ´òÂäÏÂÂíÂÊ
+    int                 m_nDismountingRate;             // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    int                 m_nBaseThreat;                  // ¼¼ÄÜ²úÉúµÄ»ù´¡³ðºÞ
+    int                 m_nBaseThreat;                  // ï¿½ï¿½ï¿½Ü²ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    // ÐîÆø¼ÆÏà¹Ø
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     BOOL                m_bIsAccumulate;
+    BOOL                m_bIsSunMoonPower;       /* [wave1b P1] */
     KSKILL_ACCUMULATE   m_SubsectionSkill[MAX_ACCUMULATE_SUB_COUNT];
-    KSKILL_ACCUMULATE   m_SunSubsectionSkill[MAX_SUN_POWER_VALUE];    /* [drift 2.5.2] */
-    KSKILL_ACCUMULATE   m_MoonSubsectionSkill[MAX_MOON_POWER_VALUE];
 
-    // Á´×´¼¼ÄÜÏà¹Ø
+    // ï¿½ï¿½×´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     int                 m_nChainDepth;
     int                 m_nChainBranch;
     
-    int                 m_nDamageToLifeForParty;    // °ÑÉËº¦×ªÎªÐ¡¶ÓµÄÉúÃü
-    int                 m_nDamageToManaForParty;    // °ÑÉËº¦×ªÎªÐ¡¶ÓµÄÄÚÁ¦
+    int                 m_nDamageToLifeForParty;    // ï¿½ï¿½ï¿½Ëºï¿½×ªÎªÐ¡ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½
+    int                 m_nDamageToManaForParty;    // ï¿½ï¿½ï¿½Ëºï¿½×ªÎªÐ¡ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½
 
-    int                 m_nTargetLifePercentMax;    // ¶ÔÄ¿±êÑªÁ¿µÄÐèÇó£¬¼¼ÄÜÐèÇóÄ¿±êÑªÁ¿Çø¼äµÄÉÏÏÞ
-    int                 m_nTargetLifePercentMin;    // ¶ÔÄ¿±êÑªÁ¿µÄÐèÇó£¬¼¼ÄÜÐèÇóÄ¿±êÑªÁ¿Çø¼äµÄÏÂÏÞ
+    int                 m_nTargetLifePercentMax;    // ï¿½ï¿½Ä¿ï¿½ï¿½Ñªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó£¬¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½Ñªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    int                 m_nTargetLifePercentMin;    // ï¿½ï¿½Ä¿ï¿½ï¿½Ñªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó£¬¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½Ñªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    int                 m_nSelfLifePercentMax;      // ¶Ô×ÔÉíÑªÁ¿µÄÐèÇó£¬¼¼ÄÜÐèÇó×ÔÉíÑªÁ¿Çø¼äµÄÉÏÏÞ
-    int                 m_nSelfLifePercentMin;      // ¶Ô×ÔÉíÑªÁ¿µÄÐèÇó£¬¼¼ÄÜÐèÇó×ÔÉíÑªÁ¿Çø¼äµÄÏÂÏÞ
+    int                 m_nSelfLifePercentMax;      // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó£¬¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    int                 m_nSelfLifePercentMin;      // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó£¬¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 	KAttribute*		    m_pAttrbuteEffectToSelfAndRollback;
 	KAttribute*		    m_pAttrbuteEffectToSelfNotRollback;
@@ -661,11 +674,6 @@ public:
     DWORD               m_dwCoolDownID[MAX_SKILL_COOL_DOWN_TIMER];
     int                 m_nCoolDownAlter[MAX_SKILL_COOL_DOWN_TIMER];
     DWORD               m_dwCheckCoolDownID[MAX_SKILL_CHECKONLY_COOL_DOWN_TIMER];  /* [drift 2.5.2] */
-    int                 m_nHeight;              /* [drift 2.5.2] Rect/Sector cast geometry */
-    int                 m_nRectWidth;
-    int                 m_nProtectRadius;
-    int                 m_nCostManaBasePercent;
-    int                 m_nCostEnergy;
 
 public:
 
@@ -697,7 +705,7 @@ public:
 
     SKILL_RESULT_CODE CallCastScript(KCharacter* pCaster, SKILL_RESULT_CODE nPreResult);
 
-    // ×Ô¶¯Ñ¡ÔñÒ»¸öÊÊºÏÊÍ·Å¸Ã¼¼ÄÜµÄÄ¿±ê
+    // ï¿½Ô¶ï¿½Ñ¡ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Êºï¿½ï¿½Í·Å¸Ã¼ï¿½ï¿½Üµï¿½Ä¿ï¿½ï¿½
     BOOL AutoSelectTarget(KCharacter* pCaster); 
 
 public:
@@ -731,7 +739,7 @@ public:
 
 
 public:
-    //½Å±¾½Ó¿Ú
+    //ï¿½Å±ï¿½ï¿½Ó¿ï¿½
     DECLARE_LUA_CLASS(KSkill);
 
     DECLARE_LUA_STRUCT_STRING(SkillName,             sizeof(m_pBaseInfo->szSkillName),  (char *)m_pBaseInfo->szSkillName);
@@ -769,6 +777,7 @@ public:
     DECLARE_LUA_INTEGER(CostMana);
     DECLARE_LUA_INTEGER(CostRage);
     DECLARE_LUA_INTEGER(CostStamina);
+    DECLARE_LUA_INTEGER(CostTrain);              /* [wave1b P1] */
 
     DECLARE_LUA_INTEGER(PrepareFrames);	
 
@@ -800,6 +809,7 @@ public:
     DECLARE_LUA_INTEGER(LeastFormationPopulation);
 
     DECLARE_LUA_BOOL(IsAccumulate);
+    DECLARE_LUA_BOOL(IsSunMoonPower);            /* [wave1b P1] */
 
     DECLARE_LUA_INTEGER(DismountingRate);
     DECLARE_LUA_INTEGER(BaseThreat);
@@ -885,14 +895,14 @@ struct KSkillAreaTravFunc
     KSKILL_BULLET*  pBullet;
     int             nLeftCount;
     BOOL            bTargetArea;
-    int             nTargetType;  // ÓÃÀ´¼ÇÂ¼TargetArea¿ªÊ¼×÷ÓÃµÄÄ¿±êÀàÐÍ
-    DWORD           dwTargetID;   // ÓÃÀ´¼ÇÂ¼TargetArea¿ªÊ¼×÷ÓÃµÄÄ¿±êID
+    int             nTargetType;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼TargetAreaï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Ãµï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    DWORD           dwTargetID;   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼TargetAreaï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Ãµï¿½Ä¿ï¿½ï¿½ID
     BOOL            CanApply(KTarget &rTarget);
     BOOL            operator()(KCharacter *pCharacter);
 	BOOL            operator()(KDoodad *pDoodad);
 };
 
-// --------------------- ¼¼ÄÜÊÂ¼þ -------------------------------->
+// --------------------- ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ -------------------------------->
 
 enum KSKILL_EVENT_TYPE
 {
@@ -917,12 +927,15 @@ enum KSKILL_EVENT_TYPE
     seMiss,
     seBeMiss,
     seParry,                    /* [drift 2.5.2] append =20 */
+    seBeParry,
     seTotal
 };
 
-// ¼¼ÄÜÊÂ¼þµÄ´¦ÀíÁ÷³ÌÊµ¼ÊÉÏ¾ÍÊÇ°´ÕÕÔ¤ÉèµÄ²ÎÊýµ÷ÓÃÁíÍâÒ»¸ö¼¼ÄÜ
-// ÉèÔÚA->BÊ©·Å¼¼ÄÜµÄ¹ý³ÌÖÐ´¥·¢¼¼ÄÜÊÂ¼þX
-// ÔòÏÂÃæµÄÃ¶¾Ù¶ÔÓÚ¼¼ÄÜÊÂ¼þ´¦ÀíÁ÷³ÌÀ´Ëµ,esttCasterÖ¸Õâ¸ö¼¼ÄÜÓ¦¸ÃÒÔAÎªÄ¿±ê,esttTargetÖ¸Õâ¸ö¼¼ÄÜÓ¦¸ÃÒÔBÎªÄ¿±ê
+typedef char _CHK_enum_KSKILL_EVENT_TYPE_seTotal[(seTotal == 22) ? 1 : -1];
+
+// ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½Ï¾ï¿½ï¿½Ç°ï¿½ï¿½ï¿½Ô¤ï¿½ï¿½Ä²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// ï¿½ï¿½ï¿½ï¿½A->BÊ©ï¿½Å¼ï¿½ï¿½ÜµÄ¹ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½X
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½Ù¶ï¿½ï¿½Ú¼ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµ,esttCasterÖ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½AÎªÄ¿ï¿½ï¿½,esttTargetÖ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½BÎªÄ¿ï¿½ï¿½
 enum KEVENT_SKILL_CASTER_TARGET_TYPE
 {
     escttInvalid,
@@ -934,7 +947,7 @@ enum KEVENT_SKILL_CASTER_TARGET_TYPE
 struct KSKILL_EVENT
 {
     int     nEventType;
-    int     nOdds;  // ´¥·¢¸ÅÂÊ,°Ù·ÖÊý, 1 / 1024.
+    int     nOdds;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½Ù·ï¿½ï¿½ï¿½, 1 / 1024.
     DWORD   dwEventMask1;
     DWORD   dwEventMask2;
     DWORD   dwSkillID;
@@ -950,11 +963,11 @@ struct KUSER_SKILL_EVENT
     KSKILL_EVENT    SkillEvent;
 };
 
-// ÎªÁËÓë AI ÅäºÏ£¬¼¼ÄÜµÄ¾àÀëÅÐ¶ÏÊÇÓÃÔ²ÖùÌåµÄ·½Ê½£¬¶ø²»ÊÇÇòÌå¡£
+// Îªï¿½ï¿½ï¿½ï¿½ AI ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½ÜµÄ¾ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½Ô²ï¿½ï¿½ï¿½ï¿½Ä·ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½å¡£
 BOOL SkillInRange(int nSrcX, int nSrcY, int nSrcZ, int nDstX, int nDstY, int nDstZ, int nRange);
 IN_RANGE_RESULT SkillInRange(int nSrcX, int nSrcY, int nSrcZ, int nDstX, int nDstY, int nDstZ, int nMinRange, int nMaxRange);
 
-// <--------------------- ¼¼ÄÜÊÂ¼þ --------------------------------
+// <--------------------- ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ --------------------------------
 
 #endif	//_KSKILL_H_
 

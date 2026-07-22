@@ -547,8 +547,8 @@ int KSkill::LuaSetSunSubsectionSkill(Lua_State* L)
     for (int i = nBeginInterval; i <= nEndInterval; i++)
     {
         KGLOG_PROCESS_ERROR(i > 0 && i <= MAX_SUN_POWER_VALUE);
-        m_SunSubsectionSkill[i - 1].dwSubSkillID    = dwSkillID;
-        m_SunSubsectionSkill[i - 1].dwSubSkillLevel = dwSkillLevel;
+        m_SubsectionSkill[i - 1].dwSubSkillID    = dwSkillID;
+        m_SubsectionSkill[i - 1].dwSubSkillLevel = dwSkillLevel;
     }
 
     nResult = true;
@@ -585,8 +585,8 @@ int KSkill::LuaSetMoonSubsectionSkill(Lua_State* L)
     for (int i = nBeginInterval; i <= nEndInterval; i++)
     {
         KGLOG_PROCESS_ERROR(i > 0 && i <= MAX_MOON_POWER_VALUE);
-        m_MoonSubsectionSkill[i - 1].dwSubSkillID    = dwSkillID;
-        m_MoonSubsectionSkill[i - 1].dwSubSkillLevel = dwSkillLevel;
+        m_SubsectionSkill[MAX_SUN_POWER_VALUE + i - 1].dwSubSkillID    = dwSkillID;
+        m_SubsectionSkill[MAX_SUN_POWER_VALUE + i - 1].dwSubSkillLevel = dwSkillLevel;
     }
 
     nResult = true;
@@ -1217,6 +1217,7 @@ DEFINE_LUA_CLASS_BEGIN(KSkill)
     REGISTER_LUA_INTEGER(KSkill,             CostMana)
     REGISTER_LUA_INTEGER(KSkill,             CostRage)
     REGISTER_LUA_INTEGER(KSkill,             CostStamina)
+    REGISTER_LUA_INTEGER(KSkill,             CostTrain)          /* [wave1b P1] */
     
     REGISTER_LUA_INTEGER(KSkill,             PrepareFrames)	
   
@@ -1248,6 +1249,7 @@ DEFINE_LUA_CLASS_BEGIN(KSkill)
     REGISTER_LUA_INTEGER(KSkill,             LeastFormationPopulation)
 
     REGISTER_LUA_BOOL(KSkill,                IsAccumulate)
+    REGISTER_LUA_BOOL(KSkill,                IsSunMoonPower)     /* [wave1b P1] */
 
     REGISTER_LUA_INTEGER(KSkill,             DismountingRate)
 

@@ -155,6 +155,7 @@ KSkill::KSkill(void)
     m_nCostMana                         = 0;	
     m_nCostRage                         = 0;
     m_nCostStamina                      = 0;	
+    m_nCostTrain                        = 0;   /* [wave1b P1] */
 
     m_nPrepareFrames                    = 0;
     
@@ -189,6 +190,7 @@ KSkill::KSkill(void)
     m_nLeastFormationPopulation         = 0;
 
     m_bIsAccumulate                     = false;
+    m_bIsSunMoonPower                   = false;   /* [wave1b P1] */
 
     m_nChainDepth                       = 0;
     m_nChainBranch                      = 0;
@@ -232,8 +234,6 @@ KSkill::KSkill(void)
     memset(m_nCoolDownAlter, 0 ,sizeof(m_nCoolDownAlter));
 
     memset(m_SubsectionSkill, 0, sizeof(m_SubsectionSkill));
-    memset(m_SunSubsectionSkill, 0, sizeof(m_SunSubsectionSkill));    /* [drift 2.5.2] */
-    memset(m_MoonSubsectionSkill, 0, sizeof(m_MoonSubsectionSkill));
 }
 
 KSkill::~KSkill(void)
@@ -328,6 +328,7 @@ BOOL KSkill::CallInitializeScript()
 
 	bRetCode = g_pSO3World->m_ScriptCenter.CallFunction(m_pBaseInfo->szScriptFile, "GetSkillLevelData", 1);
 	g_pSO3World->m_ScriptCenter.SafeCallEnd(nLuaTopIndex);
+    if (!bRetCode) { KGLogPrintf(KGLOG_ERR, "DBGML id=%u maxlv=%u lv=%u script=%s", m_pBaseInfo->dwSkillID, m_pBaseInfo->dwMaxLevel, m_dwLevel, m_pBaseInfo->szScriptFile); }
     KGLOG_CHECK_ERROR(bRetCode);
 
     bResult = true;
