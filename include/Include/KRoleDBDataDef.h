@@ -163,6 +163,62 @@ struct KROLE_STATE_INFO
     BYTE    byReserved[23];
 };
 
+// Target v2.5 rbtStateInfo version 2 payload.  The serialized layout is
+// target-backed by KROLE_STATE_INFO_V2 (DWARF DIE 0x059e5856), not by the
+// legacy source-era KROLE_STATE_INFO declaration above.
+struct KROLE_STATE_INFO_V2
+{
+    BYTE    byMoveState;
+    WORD    wCurrentTrack;
+    int     nMoveFrameCounter;
+    WORD    wFromFlyNode;
+    WORD    wTargetCityID;
+    int     nExperience;
+    int     nCurrentLife;
+    int     nCurrentMana;
+    int     nAddTrainTimeInToday;
+    int     nCurrentTrainValue;
+    int     nUsedTrainValue;
+    WORD    wReserved;
+    WORD    wLeftReviveFrame;
+    time_t  nLastSituReviveTime;
+    BYTE    bySituReviveCount;
+    DWORD   dwKillerID;
+    WORD    wCurrentKillPoint;
+    time_t  nBanTime;
+    int     nMaxLevel;
+    BYTE    byHideHat;
+    BYTE    byReservedExpired1[3];
+    BYTE    byKilledCount;
+    time_t  nNextResetKilledCountTime;
+    BYTE    byCampFlag;
+    int     nLastAddTrainTime;
+    BYTE    byBigSwordSelected;
+    BYTE    byTitle;
+    int     nTitlePoint;
+    int     nRankPoint;
+    BYTE    byRankPointVersion;
+    time_t  nLastGainTitleTime;
+    WORD    wReservedExpired3;
+    BYTE    byReservedExpired2;
+    DWORD   dwKillCount;
+    int     nSprintPower;
+    BYTE    byApplyExteriorFlag;
+    int     nHorseSprintPower;
+    WORD    wSendMailDailyCount;
+    WORD    wTalkWorldDailyCount;
+    WORD    wTalkForceDailyCount;
+    WORD    wTalkCampDailyCount;
+    WORD    wWhisperDailyCount;
+    WORD    wTalkSceneDailyCount;
+    WORD    wTalkNearbyDailyCount;
+    BYTE    byHunterQualification;
+    BYTE    byHuntingFlag;
+    BYTE    byPrisonFlag;
+    BYTE    byFakeNameState;
+    BYTE    byReserved[7];
+};
+
 struct KUSER_ROLE_GENERATOR_PARAM
 {
 	char	szRoleName[_NAME_LEN];

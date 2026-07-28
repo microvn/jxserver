@@ -146,6 +146,7 @@ public:
 
 #ifdef _SERVER
     BOOL    Load(BYTE* pbyData, size_t uDataLen);
+    BOOL    Load(BYTE* pbyData, size_t uDataLen, int nVersion);
     BOOL    Save(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
 	
     void    TidyUpSoldList();    

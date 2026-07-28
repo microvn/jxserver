@@ -1793,6 +1793,109 @@ Exit0:
     return bResult;
 }
 
+BOOL KPlayer::LoadStateInfoV2(BYTE* pbyData, size_t uDataLen)
+{
+    BOOL                    bResult         = false;
+    KROLE_STATE_INFO_V2*    pRoleStateInfo  = NULL;
+    size_t                  uLeftSize       = uDataLen;
+    int                     nReviveFrame    = 0;
+
+    typedef char KRoleStateInfoV2SizeCheck[(sizeof(KROLE_STATE_INFO_V2) == 0x80) ? 1 : -1];
+
+    KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(KROLE_STATE_INFO_V2));
+    pRoleStateInfo = (KROLE_STATE_INFO_V2*)pbyData;
+    uLeftSize -= sizeof(KROLE_STATE_INFO_V2);
+
+    // The assignments below follow target LoadStateInfo_V2 @ 0x0839a01c.
+    // Fields present only in the v2 payload but not yet represented by this
+    // candidate are still consumed by the packed struct and intentionally
+    // remain non-authoritative until their owning subsystem is ported.
+    m_eMoveState       = (CHARACTER_MOVE_STATE)pRoleStateInfo->byMoveState;
+    m_nCurrentTrack    = pRoleStateInfo->wCurrentTrack;
+    m_nMoveFrameCounter = pRoleStateInfo->nMoveFrameCounter;
+    m_nFromNode        = pRoleStateInfo->wFromFlyNode;
+    m_nTargetCity      = pRoleStateInfo->wTargetCityID;
+    m_nExperience      = pRoleStateInfo->nExperience;
+    m_nCurrentLife     = pRoleStateInfo->nCurrentLife;
+    m_nCurrentMana     = pRoleStateInfo->nCurrentMana;
+    m_nAddTrainTimeInToday = pRoleStateInfo->nAddTrainTimeInToday;
+    m_nCurrentTrainValue   = pRoleStateInfo->nCurrentTrainValue;
+    m_nUsedTrainValue      = pRoleStateInfo->nUsedTrainValue;
+
+    nReviveFrame = pRoleStateInfo->wLeftReviveFrame -
+        (int)(g_pSO3World->m_nCurrentTime - m_nLastSaveTime) * GAME_FPS;
+    m_ReviveCtrl.nReviveFrame          = max(nReviveFrame, 0);
+    m_ReviveCtrl.nLastSituReviveTime   = pRoleStateInfo->nLastSituReviveTime;
+    m_ReviveCtrl.nSituReviveCount      = pRoleStateInfo->bySituReviveCount;
+    m_ReviveCtrl.nNextCheckReviveFrame = 0;
+
+    if (m_eMoveState == cmsOnDeath)
+        m_ReviveCtrl.nNextCheckReviveFrame = g_pSO3World->m_nGameLoop + 1;
+
+    m_dwKillerID = pRoleStateInfo->dwKillerID;
+
+    switch (m_eMoveState)
+    {
+    case cmsOnAutoFly:
+    case cmsOnFloat:
+    case cmsOnDeath:
+        break;
+
+    case cmsOnSwim:
+        m_eMoveState = cmsOnFloat;
+        break;
+
+    default:
+        m_eMoveState = cmsOnStand;
+        m_nCurrentTrack = 0;
+        break;
+    }
+
+    m_nCurrentKillPoint         = pRoleStateInfo->wCurrentKillPoint;
+    m_nBanTime                  = pRoleStateInfo->nBanTime > g_pSO3World->m_nCurrentTime ?
+                                  pRoleStateInfo->nBanTime : 0;
+    m_nMaxLevel                 = pRoleStateInfo->nMaxLevel;
+    m_bHideHat                  = pRoleStateInfo->byHideHat != 0;
+    if (m_bHideHat)
+        m_wRepresentId[perHelmStyle] = 0;
+
+    m_nTalkWorldDailyCount      = pRoleStateInfo->wTalkWorldDailyCount;
+    m_nTalkForceDailyCount      = pRoleStateInfo->wTalkForceDailyCount;
+    m_nTalkCampDailyCount       = pRoleStateInfo->wTalkCampDailyCount;
+    m_nKilledCount              = pRoleStateInfo->byKilledCount;
+    m_nNextResetKilledCountTime = pRoleStateInfo->nNextResetKilledCountTime;
+
+    if (m_eCamp != cNeutral)
+        SetCampFlag(pRoleStateInfo->byCampFlag);
+
+    KGLOG_PROCESS_ERROR(uLeftSize == 0);
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
+BOOL KPlayer::LoadStateInfo(BYTE* pbyData, size_t uDataLen, int nVersion)
+{
+    switch (nVersion)
+    {
+    case 0:
+        return LoadStateInfo(pbyData, uDataLen);
+
+    case 2:
+        return LoadStateInfoV2(pbyData, uDataLen);
+
+    case 1:
+        // Version 1 has a distinct 0x80-byte target layout and currency
+        // side effects. Do not reinterpret it as the legacy 117-byte struct.
+        KGLogPrintf(KGLOG_INFO, "LoadStateInfo version 1 is not yet ported\n");
+        return false;
+
+    default:
+        KGLogPrintf(KGLOG_INFO, "LoadStateInfo unsupported version=%d\n", nVersion);
+        return false;
+    }
+}
+
 BOOL KPlayer::LoadRoadOpenNode(BYTE* pbyData, size_t uDataLen)
 {
     BOOL                bResult     = false;
@@ -1969,7 +2072,11 @@ BOOL KPlayer::LoadExtRoleData(BYTE* pbyData, size_t uDataLen)
             break;
 
         case rbtItemList:
-            bRetCode = m_ItemList.Load(pbyOffset, pBlock->dwLen);
+            KGLogPrintf(KGLOG_INFO,
+                "W1_ITEM_BLOCK player=%u type=%d ver=%u len=%u remaining=%u\n",
+                m_dwID, pBlock->nType, pBlock->dwVer, pBlock->dwLen,
+                (unsigned)uLeftSize);
+            bRetCode = m_ItemList.Load(pbyOffset, pBlock->dwLen, (int)pBlock->dwVer);
 		    KGLOG_PROCESS_ERROR(bRetCode);
 			break;
 
@@ -1995,7 +2102,7 @@ BOOL KPlayer::LoadExtRoleData(BYTE* pbyData, size_t uDataLen)
                 m_dwID, pBlock->nType, pBlock->dwVer, pBlock->dwLen,
                 (unsigned)sizeof(KROLE_STATE_INFO), (unsigned)uLeftSize
             );
-            bRetCode = LoadStateInfo(pbyOffset, pBlock->dwLen);
+            bRetCode = LoadStateInfo(pbyOffset, pBlock->dwLen, (int)pBlock->dwVer);
             KGLOG_PROCESS_ERROR(bRetCode);
             break;
 

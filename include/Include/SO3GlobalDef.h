@@ -13,27 +13,27 @@
 #define CLIENT_ITEM_ID_PREFIX	0x01
 #define NPC_ID_PREFIX	        0x01
 
-// ´´½¨INT64
+// ï¿½ï¿½ï¿½ï¿½INT64
 #define MAKE_INT64(__A__, __B__)	(((uint64_t)(__A__) << 32) + (uint64_t)__B__)
 
 #define ERROR_ID		0
 
-// ¶¯Ì¬ÕÏ°­·Ö×éµÄÎÞÐ§Öµ
+// ï¿½ï¿½Ì¬ï¿½Ï°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§Öµ
 #define INVALID_OBSTACLE_GROUP  (-1)
-// ÓÐÐ§µÄ¶¯Ì¬ÕÏ°­·Ö×éË÷ÒýºÅÈ¡Öµ·¶Î§: [0, 4096)
+// ï¿½ï¿½Ð§ï¿½Ä¶ï¿½Ì¬ï¿½Ï°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡Öµï¿½ï¿½Î§: [0, 4096)
 #define MAX_OBSTACLE_GROUP      4096
 
-// ³¡¾°ºÍÓÎÏ·ÊÀ½çµÄ¿Õ¼ä»®·Ö´óÐ¡¶¨Òå
-#define MAX_REGION_WIDTH_BIT_NUM	6	//µØÍ¼ÖÐX×ø±êÉÏ×î¶àµÄRegion¸öÊý
-#define MAX_REGION_HEIGHT_BIT_NUM	6	//µØÍ¼ÖÐY×ø±êÉÏ×î¶àµÄRegion¸öÊý
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½Ä¿Õ¼ä»®ï¿½Ö´ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½
+#define MAX_REGION_WIDTH_BIT_NUM	6	//ï¿½ï¿½Í¼ï¿½ï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Regionï¿½ï¿½ï¿½ï¿½
+#define MAX_REGION_HEIGHT_BIT_NUM	6	//ï¿½ï¿½Í¼ï¿½ï¿½Yï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Regionï¿½ï¿½ï¿½ï¿½
 
-#define REGION_GRID_WIDTH_BIT_NUM	6	//RegionÖÐX×ø±êÉÏ×î¶àµÄCell¸öÊý
-#define REGION_GRID_HEIGHT_BIT_NUM	6	//RegionÖÐY×ø±êÉÏ×î¶àµÄCell¸öÊý
+#define REGION_GRID_WIDTH_BIT_NUM	6	//Regionï¿½ï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Cellï¿½ï¿½ï¿½ï¿½
+#define REGION_GRID_HEIGHT_BIT_NUM	6	//Regionï¿½ï¿½Yï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Cellï¿½ï¿½ï¿½ï¿½
 
-#define CELL_LENGTH_BIT_NUM			5	//¸ñ×ÓÖÐµÄÏóËØµã¾«¶È
+#define CELL_LENGTH_BIT_NUM			5	//ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½Øµã¾«ï¿½ï¿½
 #define ALTITUDE_BIT_NUM			6
 
-#define MAX_Z_ALTITUDE_BIT_NUM		16	//ZÖáµÄ×î´óÖµÎ»Êý(ALTITUDE)
+#define MAX_Z_ALTITUDE_BIT_NUM		16	//Zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÖµÎ»ï¿½ï¿½(ALTITUDE)
 #define MAX_Z_POINT_BIT_NUM         (MAX_Z_ALTITUDE_BIT_NUM + ALTITUDE_BIT_NUM)
 
 #define MOVE_DEST_RANGE_BIT_NUM		12
@@ -41,7 +41,7 @@
 
 #define	MAX_VELOCITY_XY_BIT_NUM		(CELL_LENGTH_BIT_NUM + 2)
 #define MAX_VELOCITY_Z_BIT_NUM		(ALTITUDE_BIT_NUM + 6)
-// ÓÃÓÚË®Æ½ËÙ¶ÈÊÕÁ²¼ÆËãÊ±Ïû³ý¼ÆËãÎó²î,×¢Òâ,Õâ¸öÖµ×îºÃ²»ÒªÐ¡ÓÚÊÕÁ²¼ÆËãÊ±µÄ·ÖÄ¸ÊýÖµ
+// ï¿½ï¿½ï¿½ï¿½Ë®Æ½ï¿½Ù¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,×¢ï¿½ï¿½,ï¿½ï¿½ï¿½Öµï¿½ï¿½Ã²ï¿½ÒªÐ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ä·ï¿½Ä¸ï¿½ï¿½Öµ
 #define VELOCITY_ZOOM_BIT_NUM      4
 #define VELOCITY_ZOOM_COEFFICIENT (1 << VELOCITY_ZOOM_BIT_NUM)
 
@@ -49,7 +49,7 @@
 #define MAX_ZOOM_VELOCITY           ((1 << MAX_ZOOM_VELOCITY_BIT_NUM) - 1)
 
 #define MAX_VELOCITY_XY				((1 << MAX_VELOCITY_XY_BIT_NUM) - 1)
-// ×¢Òâ,ZÖáËÙ¶ÈÊÇÓÐ·ûºÅ,¿ÉÒÔÎª¸ºÖµµÄ,Ä¿Ç°È¡ÖµÇø¼äÎª[-512, 511], 10 bits
+// ×¢ï¿½ï¿½,Zï¿½ï¿½ï¿½Ù¶ï¿½ï¿½ï¿½ï¿½Ð·ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Öµï¿½ï¿½,Ä¿Ç°È¡Öµï¿½ï¿½ï¿½ï¿½Îª[-512, 511], 10 bits
 #define MAX_VELOCITY_Z				((1 << (MAX_VELOCITY_Z_BIT_NUM - 1)) - 1)
 #define MIN_VELOCITY_Z				(-(1 << (MAX_VELOCITY_Z_BIT_NUM - 1)))
 
@@ -58,7 +58,7 @@
 #define MAX_X_COORDINATE            ((1 << MAX_X_COORDINATE_BIT) - 1)
 #define MAX_Y_COORDINATE            ((1 << MAX_Y_COORDINATE_BIT) - 1)
 
-//×ø±êÏà¹Ø¶¨Òå
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¶ï¿½ï¿½ï¿½
 #define MAX_REGION_WIDTH			(1 << MAX_REGION_WIDTH_BIT_NUM)
 #define MAX_REGION_HEIGHT			(1 << MAX_REGION_HEIGHT_BIT_NUM)
 #define MAX_Z_ALTITUDE				((1 << MAX_Z_ALTITUDE_BIT_NUM) - 1)
@@ -77,7 +77,7 @@
 #define LOGICAL_CELL_CM_LENGTH		50
 #define _3D_CELL_CM_LENGTH			100
 
-// µØ±í¸ß¶È¼ÆÁ¿µ¥Î»(ÀåÃ×)
+// ï¿½Ø±ï¿½ï¿½ß¶È¼ï¿½ï¿½ï¿½ï¿½ï¿½Î»(ï¿½ï¿½ï¿½ï¿½)
 #define ALTITUDE_UNIT				((LOGICAL_CELL_CM_LENGTH) / 4.0f)
 #define TERRAIN_MIN_HEIGHT			(-65536.0f / 4.0f * ALTITUDE_UNIT)
 #define TERRAIN_MAX_HEIGHT			(65536.0f / 4.0f * ALTITUDE_UNIT)
@@ -88,14 +88,14 @@
 #define ZPOINT_TO_ALTITUDE(Z)           ((Z) / POINT_PER_ALTITUDE)
 
 #define AI_PARAM_COUNT		8
-#define DIALOG_ACTION_ID	1					//¶Ô»°µÄ±íÇéID
+#define DIALOG_ACTION_ID	1					//ï¿½Ô»ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ID
 
 #define	MAX_TARGET_RANGE		(CELL_LENGTH * REGION_GRID_WIDTH * 2)
 
-// ÅÀÆÂÕÏ°­¸ß¶È²î
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ï¿½ß¶È²ï¿½
 #define CLIMB_ABILITY 	    (XYPOINT_TO_ZPOINT(CELL_LENGTH))
 
-// Ö÷½ÇÒÆ¶¯Ê±¶¨Î»Ç°·½Ä¿±êµãµÄ¾àÀë,30Ã×
+// ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½Ê±ï¿½ï¿½Î»Ç°ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½Ä¾ï¿½ï¿½ï¿½,30ï¿½ï¿½
 #define MOVE_TARGET_RANGE   (30 * 100 * 32 / 50)
 
 #define MAX_MOVE_STATE_BIT_NUM  5
@@ -104,58 +104,65 @@
 #define MAX_JUMP_COUNT_BIT 2
 #define MAX_JUMP_COUNT ((1 << MAX_JUMP_COUNT_BIT) - 1)
 
-// ×î´óMapID,MapIDÈ¡Öµ·¶Î§(0, MAX_MAP_ID]
+// ï¿½ï¿½ï¿½MapID,MapIDÈ¡Öµï¿½ï¿½Î§(0, MAX_MAP_ID]
 #define MAX_MAP_ID UCHAR_MAX
 #define MAX_MAP_ID_DATA_SIZE (((MAX_MAP_ID) - 1) / (CHAR_BIT) + 1)
 
 #define BANISH_PLAYER_WAIT_SECONDS      30
 #define DELETE_SCENE_WAIT_SECONDS       (BANISH_PLAYER_WAIT_SECONDS + 5) 
 
-// Íæ¼Ò×°±¸±íÏÖ
-// Ð¡ÐÄ: ÃÀÊõÔÚ×ÊÔ´(¶¯×÷±êÇ©)ÀïÃæÒýÓÃÁËÕâÀïµÄÃ¶¾ÙÊýÖµ,ÐÞ¸Ä¿ÉÄÜÔì³ÉÎÊÌâ,ÕÒÏà¹ØÈËÔ±È·ÈÏ.
+// ï¿½ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// Ð¡ï¿½ï¿½: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç©)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½Öµ,ï¿½Þ¸Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô±È·ï¿½ï¿½.
 enum PLAYER_EQUIP_REPRESENT
 {
-    perFaceStyle,          // Á³ÐÍ              
+    perFaceStyle,          // ï¿½ï¿½ï¿½ï¿½              
     
-    perHairStyle,          // ·¢ÐÍ              
+    perHairStyle,          // ï¿½ï¿½ï¿½ï¿½              
     
-    perHelmStyle,          // Í·¿øÍâÐÎ          
-    perHelmColor,          // Í·¿øÑÕÉ«          
-    perHelmEnchant,        // Í·¿ø¸½Ä§Ð§¹û      
+    perHelmStyle,          // Í·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½          
+    perHelmColor,          // Í·ï¿½ï¿½ï¿½ï¿½É«          
+    perHelmEnchant,        // Í·ï¿½ï¿½ï¿½ï¿½Ä§Ð§ï¿½ï¿½      
 
-    perChestStyle,         // ÉÏ×°ÑùÊ½          
-    perChestColor,         // ÉÏ×°ÑÕÉ«          
-    perChestEnchant,       // ÉÏ×°¸½Ä§Ð§¹û      
+    perChestStyle,         // ï¿½ï¿½×°ï¿½ï¿½Ê½          
+    perChestColor,         // ï¿½ï¿½×°ï¿½ï¿½É«          
+    perChestEnchant,       // ï¿½ï¿½×°ï¿½ï¿½Ä§Ð§ï¿½ï¿½      
 
-    perWaistStyle,         // Ñü´øÍâÐÎ          
-    perWaistColor,         // Ñü´øÑÕÉ«          
-    perWaistEnchant,       // Ñü´ø¸½Ä§          
+    perWaistStyle,         // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½          
+    perWaistColor,         // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«          
+    perWaistEnchant,       // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä§          
 
-    perBangleStyle,        // »¤ÍóÍâÐÎ          
-    perBangleColor,        // »¤ÍóÑÕÉ«          
-    perBangleEnchant,      // »¤Íó¸½Ä§          
+    perBangleStyle,        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½          
+    perBangleColor,        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«          
+    perBangleEnchant,      // ï¿½ï¿½ï¿½ï¿½Ä§          
 
-    perBootsStyle,         // Ð¬×ÓÍâÐÎ          
-    perBootsColor,         // Ð¬×ÓÑÕÉ«          
+    perBootsStyle,         // Ð¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½          
+    perBootsColor,         // Ð¬ï¿½ï¿½ï¿½ï¿½É«          
 
-    perWeaponStyle,        // ÎäÆ÷ÍâÐÎ          
-    perWeaponEnchant1,     // ÎäÆ÷¸½Ä§1         
-    perWeaponEnchant2,     // ÎäÆ÷¸½Ä§2         
+    perWeaponStyle,        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½          
+    perWeaponColor,
+    perWeaponEnchant1,     // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä§1         
+    perWeaponEnchant2,     // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä§2         
 
-    perBackExtend,         // ±³²¿À©Õ¹          
-    perWaistExtend,        // Ñü²¿À©Õ¹          
+    perBigSwordStyle,
+    perBigSwordColor,
+    perBigSwordEnchant1,
+    perBigSwordEnchant2,
 
-    perHorseStyle,         // Âí
-    perHorseAdornment1,    // ÂíµÄ×°ÊÎ1
-    perHorseAdornment2,    // ÂíµÄ×°ÊÎ2
-    perHorseAdornment3,    // ÂíµÄ×°ÊÎ3
-    perHorseAdornment4,    // ÂíµÄ×°ÊÎ4
-    perReserved,           // ±£Áô  
+    perBackExtend,         // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¹          
+    perWaistExtend,        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¹          
+
+    perHorseStyle,         // ï¿½ï¿½
+    perHorseAdornment1,    // ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½1
+    perHorseAdornment2,    // ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½2
+    perHorseAdornment3,    // ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½3
+    perHorseAdornment4,    // ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½4
+    perFaceExtend,
+    perReserved,           // ï¿½ï¿½ï¿½ï¿½  
     perRepresentCount
 };
 
-// AIÀàÐÍ×îºÃÖ»ÍùºóÃæÔö¼Ó
-// Èç¹ûÒªÖÐ¼ä²åÈë»òÉ¾³ý,Ð¡ÐÄÓÐÐ©º¯ÊýÖ¸ÕëÊý×é³ö´í
+// AIï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// ï¿½ï¿½ï¿½Òªï¿½Ð¼ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½,Ð¡ï¿½ï¿½ï¿½ï¿½Ð©ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 enum AI_TYPE
 {
 	aitInvalid = 0,
@@ -167,23 +174,23 @@ enum AI_TYPE
 	aitTotal
 };
 
-// AIµÄÐÐÎª×´Ì¬
+// AIï¿½ï¿½ï¿½ï¿½Îª×´Ì¬
 enum KAI_STATE
 {
 	aisInvalid = 0,
 
-	aisIdle,        // ·¢´ô,Í¨³£Ö¸µ½´ïÄ³Ä¿±êºóµÄ¿ÕÏÐ
-	aisWander,		// ÏÐ¹ä
-	aisPatrol,      // Ñ²Âßµ½Ä³¸öµãµÄ¹ý³ÌÖÐ
-	aisFollow,      // ¸úËæ
-	aisAlert,       // ¶¢×ÅÄ¿±ê,¿ÉÄÜÊÇÔÚaisPatrolÖÐ·¢ÏÖÒ»¸öÄ¿±ê,È»ºó¶¢×ÅËü,Ò²¿ÉÄÜÊÇIdleÊÇ·¢ÏÖÄ¿±ê,È»ºó¶¢×ÅËü
-	aisPursuit,     // ×·»÷
-	aisKeepAway,    // ºóÍË
-	aisEscape,      // ÌÓÅÜ
-	aisReturn,      // AttackÍê³ÉÒÔºó·µ»Ø
+	aisIdle,        // ï¿½ï¿½ï¿½ï¿½,Í¨ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½Ä³Ä¿ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½
+	aisWander,		// ï¿½Ð¹ï¿½
+	aisPatrol,      // Ñ²ï¿½ßµï¿½Ä³ï¿½ï¿½ï¿½ï¿½Ä¹ï¿½ï¿½ï¿½ï¿½ï¿½
+	aisFollow,      // ï¿½ï¿½ï¿½ï¿½
+	aisAlert,       // ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½aisPatrolï¿½Ð·ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ä¿ï¿½ï¿½,È»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,Ò²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Idleï¿½Ç·ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½,È»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	aisPursuit,     // ×·ï¿½ï¿½
+	aisKeepAway,    // ï¿½ï¿½ï¿½ï¿½
+	aisEscape,      // ï¿½ï¿½ï¿½ï¿½
+	aisReturn,      // Attackï¿½ï¿½ï¿½ï¿½Ôºó·µ»ï¿½
 
-	//Ôö¼ÓÐÂµÄ×´Ì¬
-	aisWait			// NpcÐ¡¶ÓAIÖÐµÈ´ý¶ÓÓÑµÄ×´Ì¬ 
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½×´Ì¬
+	aisWait			// NpcÐ¡ï¿½ï¿½AIï¿½ÐµÈ´ï¿½ï¿½ï¿½ï¿½Ñµï¿½×´Ì¬ 
 };
 
 enum AI_SKILL_TYPE
@@ -221,43 +228,43 @@ enum AI_SKILL_TYPE
 	aistTotal
 };
 
-//½ÇÉ«ÌåÐÎ
+//ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½
 enum ROLE_TYPE
 {
 	rtInvalid = 0,
 
-	rtStandardMale,     // ±ê×¼ÄÐ
-	rtStandardFemale,   // ±ê×¼Å®
-    rtStrongMale,       // ¿ýÎàÄÐ
-    rtSexyFemale,       // ÐÔ¸ÐÅ®
-    rtLittleBoy,        // Ð¡ÄÐº¢
-    rtLittleGirl,       // Ð¡º¢Å®
+	rtStandardMale,     // ï¿½ï¿½×¼ï¿½ï¿½
+	rtStandardFemale,   // ï¿½ï¿½×¼Å®
+    rtStrongMale,       // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    rtSexyFemale,       // ï¿½Ô¸ï¿½Å®
+    rtLittleBoy,        // Ð¡ï¿½Ðºï¿½
+    rtLittleGirl,       // Ð¡ï¿½ï¿½Å®
 
 	rtTotal
 };
 
 enum KBUFF_REPRESENT_POS
 {
-    brpTrample = 0,     // ½ÅÏÂ²È×ÅµÄ
-    brpBody,            // ÉíÉÏµÄ
-    brpTopHead,         // ¶¥ÔÚÍ·ÉÏµÄ
+    brpTrample = 0,     // ï¿½ï¿½ï¿½Â²ï¿½ï¿½Åµï¿½
+    brpBody,            // ï¿½ï¿½ï¿½Ïµï¿½
+    brpTopHead,         // ï¿½ï¿½ï¿½ï¿½Í·ï¿½Ïµï¿½
 
     brpTotal
 };
 
 
-//½ÇÉ«½»»¥¶¯×÷
+//ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 enum CHARACTER_ACTION_TYPE
 {
 	catInvalid = 0,
 
-	catDialogue,		//¶Ô»°
-	catHowl,			//º¿½Ð
+	catDialogue,		//ï¿½Ô»ï¿½
+	catHowl,			//ï¿½ï¿½ï¿½ï¿½
 
 	catTotal
 };
 
-//ÊÆÁ¦Ïà¹Ø¶¨Òå
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¶ï¿½ï¿½ï¿½
 enum FORCE_RELATION_TYPE
 {
 	frtInvalid = 0,
@@ -278,9 +285,9 @@ enum FORCE_RELATION_TYPE
 
 enum KCAMP
 {
-    cNeutral, // ÖÐÁ¢ÕóÓª
-    cGood,    // ÕýÒåÕóÓª
-    cEvil,    // Ð°¶ñÕóÓª
+    cNeutral, // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óª
+    cGood,    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óª
+    cEvil,    // Ð°ï¿½ï¿½ï¿½ï¿½Óª
 
     cTotal
 };
@@ -307,7 +314,7 @@ struct KForceRelation
 	FORCE_RELATION_TYPE		eRelationType;
 };
 
-// ¼¼ÄÜµÄ×÷ÓÃ½á¹ûÀàÐÍ
+// ï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½ï¿½Ã½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 enum KSKILL_RESULT_TYPE
 {
     serPhysicsDamage = 0,
@@ -318,8 +325,8 @@ enum KSKILL_RESULT_TYPE
 
     serReflectiedDamage,    
 
-    serTherapy,             // ÊÜµ½ÖÎÁÆ
-    serStealLife,           // ÍµÈ¡Ä¿±êµÄÉúÃü  
+    serTherapy,             // ï¿½Üµï¿½ï¿½ï¿½ï¿½ï¿½
+    serStealLife,           // ÍµÈ¡Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
     serAbsorbDamage,      
     serShieldDamage,
     serParryDamage,
@@ -329,7 +336,7 @@ enum KSKILL_RESULT_TYPE
 };
 
 
-// µÀ¾ßÏà¹Ø
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 #define MAX_ITEM_BASE_COUNT		6
 #define	MAX_ITEM_REQUIRE_COUNT	6
 #define	MAX_ITEM_MAGIC_COUNT	12
@@ -339,29 +346,29 @@ enum KSKILL_RESULT_TYPE
 
 #define MAP_LIST_FILE_NAME	"MapList.tab"
 
-// ½Å±¾»Øµ÷º¯ÊýÃû
+// ï¿½Å±ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 #define SCRIPT_ON_LOAD		"OnLoad"
 
-// µØÍ¼ÕÏ°­ºÍ³¡¾°ÎïÌå
+// ï¿½ï¿½Í¼ï¿½Ï°ï¿½ï¿½Í³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 #define MAP_DIR				"maps"			//Ä¿Â¼
-#define MAP_FILE_EXT		"map"			//ºó×º
+#define MAP_FILE_EXT		"map"			//ï¿½ï¿½×º
 
-// ×Ö·û´®³¤¶È¶¨Òå
+// ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¶ï¿½ï¿½ï¿½
 #define TITLE_LEN			32
 #define TASK_NAME_LEN		256
 #define FUNC_NAME_LEN		32
 #define MAX_CHAT_TEXT_LEN	768
 
-//À©Õ¹µã
+//ï¿½ï¿½Õ¹ï¿½ï¿½
 #define MAX_EXT_POINT_COUNT   8
 
-//ÊÆÁ¦Ïà¹Ø¶¨Òå
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¶ï¿½ï¿½ï¿½
 #define MAX_FORCE_COUNT			128
 #define FORCE_NAME_LEN			32
 
 
 
-//µØÍ¼±ê¼ÇµÄ×¢ÊÍ³¤¶È
+//ï¿½ï¿½Í¼ï¿½ï¿½Çµï¿½×¢ï¿½Í³ï¿½ï¿½ï¿½
 #define MAX_MAP_MARK_COMMENT_LEN 32
 #define MAX_MIDMAP_MARK_COMMENT_LEN 32
 
@@ -369,45 +376,49 @@ enum KMAP_TYPE
 {
     emtInvalid = -1,
     
-    emtNormalMap,       // Õý³£³¡¾°
-    emtDungeon,         // ÈÎÎñ¸±±¾
-    emtBattleField,     // Õ½³¡
-    emtBirthMap,        // ÐÂÊÖ´å
+    emtNormalMap,       // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    emtDungeon,         // ï¿½ï¿½ï¿½ñ¸±±ï¿½
+    emtBattleField,     // Õ½ï¿½ï¿½
+    emtBirthMap,        // ï¿½ï¿½ï¿½Ö´ï¿½
+
+    emtTongDungeon,
 
     emtTotal
 };
+
+typedef char _CHK_enum_KMAP_TYPE_emtTotal[(emtTotal == 5) ? 1 : -1];
 
 enum KMAP_CAMP_TYPE
 {
     emctInvalid = 0,
 
-    emctAllProtect,  // È«±£»¤µØÍ¼
-    emctProtectGood, // ±£»¤ºÆÆøÃË
-    emctProtectEvil, // ±£»¤¶ñÈË¹È
-    emctNeutral,     // ÖÐÁ¢µØÍ¼
-    emctFight,       // Õù¶áµØÍ¼
+    emctAllProtect,  // È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼
+    emctProtectGood, // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    emctProtectEvil, // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¹ï¿½
+    emctNeutral,     // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼
+    emctFight,       // ï¿½ï¿½ï¿½ï¿½ï¿½Í¼
     emctTotal
 };
 
-#define CLOSE_CAMP_FLAG_TIME 5 * 60 // ¹Ø±ÕÕóÓª¿ª¹ØµÄÊ±¼ä£¬µ¥Î»:Ãë
+#define CLOSE_CAMP_FLAG_TIME 5 * 60 // ï¿½Ø±ï¿½ï¿½ï¿½Óªï¿½ï¿½ï¿½Øµï¿½Ê±ï¿½ä£¬ï¿½ï¿½Î»:ï¿½ï¿½
 
-// ×î´óÍâÍøÊý¾Ý°üµÄ´óÐ¡
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý°ï¿½ï¿½Ä´ï¿½Ð¡
 #define MAX_EXTERNAL_PACKAGE_SIZE	    (1024 * 32)
 
 #ifdef _PERFORMANCE_OPTIMIZATION
     extern DWORD g_dwGameFps;
-    #define GAME_FPS					g_dwGameFps			//ÓÎÏ·Ö¡Êý
+    #define GAME_FPS					g_dwGameFps			//ï¿½ï¿½Ï·Ö¡ï¿½ï¿½
 #else
     #define GAME_FPS                    16
 #endif
 
 
-// ×é¶ÓÏà¹Ø¶¨Òå
-// PARTY: ×é¶ÓµÄ¶ÓÎé
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ø¶ï¿½ï¿½ï¿½
+// PARTY: ï¿½ï¿½ÓµÄ¶ï¿½ï¿½ï¿½
 #define INVALID_TEAM_GROUP  (-1)
-// Õû¸öÓÎÏ·ÊÀ½çµÄ×î´óÔÊÐíµÄ¶ÓÎéÊý
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½
 #define MAX_PARTY_COUNT     4096
-// Ò»Ö§¶ÓÎéÔÊÐíµÄ×î´óÍæ¼ÒÊýÄ¿
+// Ò»Ö§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿
 #define PARTY_MARK_COUNT        16
 
 #define MAX_PLAYER_PER_GROUP    5
@@ -433,9 +444,9 @@ enum ITEM_LOOT_MODE
 {
     ilmInvalid = 0,
 
-	ilmFreeForAll,		// ¶ÓÎéÄÚ×ÔÓÉÊ°È¡
-	ilmDistribute,		// ¸ßÓÚÆ·ÖÊÏßµÄÎïÆ··ÖÅäÕß·ÖÅä£¬ÆäËüÎïÆ·ÂÖÁ÷
-	ilmGroupLoot,		// ¸ßÓÚÆ·ÖÊÏßµÄÎïÆ·roll¾ö¶¨¹éÊô£¬ÆäËüÎïÆ·ÂÖÁ÷
+	ilmFreeForAll,		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê°È¡
+	ilmDistribute,		// ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ßµï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ß·ï¿½ï¿½ä£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½
+	ilmGroupLoot,		// ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ßµï¿½ï¿½ï¿½Æ·rollï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½
 
 	ilmTotal           
 };
@@ -447,36 +458,42 @@ enum INVENTORY_TYPE
 	ivtBank,
 	ivtSlot,
 	ivtSoldlist,
+    ivtSystemPackage,
+    ivtBulletPackage,
+    ivtTimeLimitSoldlist,
+    ivtCubPackage,
     ivtTotal,
 };
 
+typedef char _CHK_enum_INVENTORY_TYPE_ivtTotal[(ivtTotal == 9) ? 1 : -1];
+
 enum EQUIPMENT_INVENTORY_TYPE
 {
-	eitMeleeWeapon = 0,		// ½üÕ½ÎäÆ÷
-	eitRangeWeapon,			// Ô¶³ÌÎäÆ÷
-	eitChest,				// ÉÏÒÂ
-	eitHelm,				// Í·²¿
-	eitAmulet,				// ÏîÁ´
-	eitLeftRing,			// ×óÊÖ½äÖ¸
-	eitRightRing,			// ÓÒÊÖ½äÖ¸
-	eitWaist,				// Ñü´ø
-	eitPendant,				// Ñü×º
-	eitPants,				// ¿ã×Ó
-	eitBoots,				// Ð¬×Ó
-	eitBangle,				// »¤±Û
-	eitWaistExtend,			// Ñü²¿À©Õ¹Àà×°±¸£¬¾ÆºøÖ®ÀàµÄ
-	eitPackage1,            // À©Õ¹±³°ü1
-	eitPackage2,			// À©Õ¹±³°ü2
-	eitPackage3,			// À©Õ¹±³°ü3
-	eitPackage4,			// À©Õ¹±³°ü4
+	eitMeleeWeapon = 0,		// ï¿½ï¿½Õ½ï¿½ï¿½ï¿½ï¿½
+	eitRangeWeapon,			// Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	eitChest,				// ï¿½ï¿½ï¿½ï¿½
+	eitHelm,				// Í·ï¿½ï¿½
+	eitAmulet,				// ï¿½ï¿½ï¿½ï¿½
+	eitLeftRing,			// ï¿½ï¿½ï¿½Ö½ï¿½Ö¸
+	eitRightRing,			// ï¿½ï¿½ï¿½Ö½ï¿½Ö¸
+	eitWaist,				// ï¿½ï¿½ï¿½ï¿½
+	eitPendant,				// ï¿½ï¿½×º
+	eitPants,				// ï¿½ï¿½ï¿½ï¿½
+	eitBoots,				// Ð¬ï¿½ï¿½
+	eitBangle,				// ï¿½ï¿½ï¿½ï¿½
+	eitWaistExtend,			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¹ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½Æºï¿½Ö®ï¿½ï¿½ï¿½
+	eitPackage1,            // ï¿½ï¿½Õ¹ï¿½ï¿½ï¿½ï¿½1
+	eitPackage2,			// ï¿½ï¿½Õ¹ï¿½ï¿½ï¿½ï¿½2
+	eitPackage3,			// ï¿½ï¿½Õ¹ï¿½ï¿½ï¿½ï¿½3
+	eitPackage4,			// ï¿½ï¿½Õ¹ï¿½ï¿½ï¿½ï¿½4
 	eitBankPackage1,
 	eitBankPackage2,
 	eitBankPackage3,
 	eitBankPackage4,
 	eitBankPackage5,
-	eitArrow,				// °µÆ÷
+	eitArrow,				// ï¿½ï¿½ï¿½ï¿½
     eitBackExtend,
-    eitHorse,               // ×øÆï 
+    eitHorse,               // ï¿½ï¿½ï¿½ï¿½ 
 	eitTotal
 };
 
@@ -521,23 +538,23 @@ enum TALK_DATA_BLOCK_TYPE
     tdbTotal
 };
 
-// ÁÄÌìÀàÐÍ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 enum CHARACTER_TALK_TYPE
 {
     trInvalid = 0,
 
     // Player to Player chat.
-    trNearby,           // ½üÁÄ
-    trTeam,             // Ð¡¶ÓÁÄÌì
-    trRaid,             // ÍÅ¶ÓÁÄÌì
-    trBattleField,      // Õ½³¡ÍÅ¶Ó
-    trSence,            // Í¬³¡¾°ÁÄÌì£¨³ÇÁÄ£©
-    trWhisper,          // ÃÜÁÄ
-    trFace,             // ±íÇéÆµµÀ
+    trNearby,           // ï¿½ï¿½ï¿½ï¿½
+    trTeam,             // Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    trRaid,             // ï¿½Å¶ï¿½ï¿½ï¿½ï¿½ï¿½
+    trBattleField,      // Õ½ï¿½ï¿½ï¿½Å¶ï¿½
+    trSence,            // Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì£¨ï¿½ï¿½ï¿½Ä£ï¿½
+    trWhisper,          // ï¿½ï¿½ï¿½ï¿½
+    trFace,             // ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½
 
     // System message
-    trLocalSys,         // ±¾µØÏµÍ³ÏûÏ¢
-    trGlobalSys,        // È«¾ÖÏµÍ³ÏûÏ¢
+    trLocalSys,         // ï¿½ï¿½ï¿½ï¿½ÏµÍ³ï¿½ï¿½Ï¢
+    trGlobalSys,        // È«ï¿½ï¿½ÏµÍ³ï¿½ï¿½Ï¢
     trGmMessage,        // GM 
 
     // NPC to Player chat.
@@ -545,8 +562,8 @@ enum CHARACTER_TALK_TYPE
     trNpcTeam,
     trNpcSence,
     trNpcWhisper,
-    trNpcSayTo,         // NPC ºÍÖ¸¶¨µÄÍæ¼ÒËµ»°£»¹¦ÄÜÉÏÀàËÆÃÜÁÄ£¬µ«ÊÇÁÄÌìµÄÄÚÈÝ³öÏÖÔÚ¿Í»§¶ËµÄNPC½üÁÄÆµµÀ¡£
-    trNpcYellTo,        // NPC ÏòÖ¸¶¨µÄÍæ¼Ò´óº°£»¹¦ÄÜÉÏÀàËÆÃÜÁÄ£¬µ«ÊÇÁÄÌìµÄÄÚÈÝ³öÏÖÔÚ¿Í»§¶ËµÄNPCµØÍ¼ÆµµÀ¡£
+    trNpcSayTo,         // NPC ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý³ï¿½ï¿½ï¿½ï¿½Ú¿Í»ï¿½ï¿½Ëµï¿½NPCï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½
+    trNpcYellTo,        // NPC ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò´óº°£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý³ï¿½ï¿½ï¿½ï¿½Ú¿Í»ï¿½ï¿½Ëµï¿½NPCï¿½ï¿½Í¼Æµï¿½ï¿½ï¿½ï¿½
     trNpcFace,
     trNpcSayToTargetUseSentenceID,
     trNpcSayToCamp,
@@ -560,7 +577,7 @@ enum CHARACTER_TALK_TYPE
     trFriends,
 
     // Player custom channel.
-    trCustomCh1 = 100,  // Íæ¼Ò×Ô¶¨ÒåÆµµÀÔ¤Áô
+    trCustomCh1 = 100,  // ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½Æµï¿½ï¿½Ô¤ï¿½ï¿½
     trCustomCh2,
     trCustomCh3,
     trCustomCh4,
@@ -575,7 +592,7 @@ enum CHARACTER_TALK_TYPE
     trTotal
 };
 
-//ºÃÓÑÏà¹Øºê¶¨Òå
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øºê¶¨ï¿½ï¿½
 #define KG_FELLOWSHIP_MAX_ATTRACTION        1500
 #define KG_FELLOWSHIP_MIN_ATTRACTION       -1500
 #define KG_FELLOWSHIP_MAX_RECORD            80
@@ -583,40 +600,47 @@ enum CHARACTER_TALK_TYPE
 #define KG_FELLOWSHIP_MAX_BLACKLIST_RECORD  20
 #define KG_FELLOWSHIP_MAX_CUSTEM_GROUP      8
 
-// ½ÇÉ«×´Ì¬»úµÄ×´Ì¬
+// ï¿½ï¿½É«×´Ì¬ï¿½ï¿½ï¿½ï¿½×´Ì¬
 enum CHARACTER_MOVE_STATE
 {
-	cmsInvalid = 0,				// ÎÞÐ§×´Ì¬
+	cmsInvalid = 0,				// ï¿½ï¿½Ð§×´Ì¬
 
-	// ÊÜ¿Ø×´Ì¬
-	cmsOnStand,					// Õ¾Á¢×´Ì¬
-	cmsOnWalk,					// ×ßÂ·×´Ì¬
-	cmsOnRun,					// ÅÜ²½×´Ì¬
-    cmsOnJump,                  // ÌøÔ¾×´Ì¬
-    cmsOnSwimJump,              // Ë®ÖÐÌøÔ¾
-    cmsOnSwim,                  // Ë®ÖÐÓÎÓ¾
-    cmsOnFloat,                 // Ë®ÖÐÐü¸¡
-	cmsOnSit,					// ×ø×´Ì¬
+	// ï¿½Ü¿ï¿½×´Ì¬
+	cmsOnStand,					// Õ¾ï¿½ï¿½×´Ì¬
+	cmsOnWalk,					// ï¿½ï¿½Â·×´Ì¬
+	cmsOnRun,					// ï¿½Ü²ï¿½×´Ì¬
+    cmsOnJump,                  // ï¿½ï¿½Ô¾×´Ì¬
+    cmsOnSwimJump,              // Ë®ï¿½ï¿½ï¿½ï¿½Ô¾
+    cmsOnSwim,                  // Ë®ï¿½ï¿½ï¿½ï¿½Ó¾
+    cmsOnFloat,                 // Ë®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	cmsOnSit,					// ï¿½ï¿½×´Ì¬
 
-	// ²»ÊÜ¿Ø×´Ì¬
-	cmsOnKnockedDown,			// ±»»÷µ¹×´Ì¬
-	cmsOnKnockedBack,			// ±»»÷ÍË×´Ì¬
-	cmsOnKnockedOff,			// ±»»÷·É×´Ì¬ 
-    cmsOnHalt,                  // ¶¨Éí(Ñ£ÔÎ¡¢Ð¦Ñ¨µÈµÈ)
-    cmsOnFreeze,                // ²»ÄÜ¶¯(¹Ì¶¨¶¯×÷)
-    cmsOnEntrap,                // ²»ÄÜÒÆ¶¯
-    cmsOnAutoFly,               // ×Ô¶¯ÒÆ¶¯,±ÈÈç×ø³µµÈ
+	// ï¿½ï¿½ï¿½Ü¿ï¿½×´Ì¬
+	cmsOnKnockedDown,			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬
+	cmsOnKnockedBack,			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬
+	cmsOnKnockedOff,			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬ 
+    cmsOnHalt,                  // ï¿½ï¿½ï¿½ï¿½(Ñ£ï¿½Î¡ï¿½Ð¦Ñ¨ï¿½Èµï¿½)
+    cmsOnFreeze,                // ï¿½ï¿½ï¿½Ü¶ï¿½(ï¿½Ì¶ï¿½ï¿½ï¿½ï¿½ï¿½)
+    cmsOnEntrap,                // ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½
+    cmsOnAutoFly,               // ï¿½Ô¶ï¿½ï¿½Æ¶ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-	cmsOnDeath,					// ËÀÍö×´Ì¬
-	cmsOnDash,					// ³å´Ì×´Ì¬
-    cmsOnPull,                  // ±»×¥×´Ì¬£¬±»±ðÈË×¥×¡×Ô¼ºÀ­µ½¶Ô·½Éí±ß
-    cmsOnRepulsed,              // »¬²½×´Ì¬£¬Ò»¸ö»á¼õËÙµÄ×´Ì¬
+	cmsOnDeath,					// ï¿½ï¿½ï¿½ï¿½×´Ì¬
+	cmsOnDash,					// ï¿½ï¿½ï¿½×´Ì¬
+    cmsOnPull,                  // ï¿½ï¿½×¥×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¥×¡ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½
+    cmsOnRepulsed,              // ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ùµï¿½×´Ì¬
 
-    cmsOnRise,                  // ÅÀÆð×´Ì¬
-    cmsOnSkid,                  // Í£»¬×´Ì¬
+    cmsOnRise,                  // ï¿½ï¿½ï¿½ï¿½×´Ì¬
+    cmsOnSkid,                  // Í£ï¿½ï¿½×´Ì¬
+
+    cmsOnSprintBreak,
+    cmsOnSprintDash,
+    cmsOnSprintKick,
+    cmsOnSprintFlash,
 
 	cmsTotal
 };
+
+typedef char _CHK_enum_CHARACTER_MOVE_STATE_cmsTotal[(cmsTotal == 26) ? 1 : -1];
 
 enum KPQ_STATISTICS_INDEX 
 {
@@ -646,7 +670,7 @@ enum KPQ_STATISTICS_INDEX
 #define ROLE_NAME_LEN       32
 
 #pragma	pack(1)
-// Í·ÏñÏà¹ØÊý¾Ý
+// Í·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct KPORTRAIT_INFO
 {
     DWORD   dwFaceStyle : 5;
@@ -654,7 +678,7 @@ struct KPORTRAIT_INFO
     DWORD   dwHelmStyle : 8;
     DWORD   dwHelmColor : 3;
     
-    DWORD   dwReserved  : 8;    // ¶ÔÆë
+    DWORD   dwReserved  : 8;    // ï¿½ï¿½ï¿½ï¿½
     // <-- 32 bits --
 
     BOOL operator != (const KPORTRAIT_INFO& crOther)
@@ -673,7 +697,7 @@ struct KPORTRAIT_INFO
 #endif
 
 
-// Õ½³¡Ïà¹Ø
+// Õ½ï¿½ï¿½ï¿½ï¿½ï¿½
 #define MAX_BATTLE_SIDE             4
 #define INVALID_BATTLE_SIDE         (-1)
 
@@ -733,7 +757,7 @@ struct KPOSITION_RECORD
     KCell*                  pCell;
 };
 
-// lzoÑ¹ËõÔ´´®´óÐ¡ºÍÄ¿±ê´®´óÐ¡(×Ö½Ú)
+// lzoÑ¹ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½Ä¿ï¿½ê´®ï¿½ï¿½Ð¡(ï¿½Ö½ï¿½)
 #define LZO_ORIGINAL_BUFFER_LEN (60 * 1024)
 #define LZO_COMPRESS_BUFFER_LEN (LZO_ORIGINAL_BUFFER_LEN + LZO_ORIGINAL_BUFFER_LEN / 16 + 64 + 3)
 

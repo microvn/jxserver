@@ -642,6 +642,13 @@ struct S2C_SYNC_PLAYER_BASE_INFO : DOWNWARDS_PROTOCOL_HEADER
     time_t  nBaseTime;
     DWORD   dwTongID;
     int     nBattleFieldSide;
+    int     nChargeMode;
+    BYTE    byAccountMaxLevel;
+    BYTE    byIsBankPasswordVerified;
+    BYTE    byMibaoMode;
+    int     nServerTimezone;
+    int     nServerDaylight;
+    BYTE    bySelectKungfuIndex;
 };
 
 struct S2C_SYNC_QUEST_DATA : UNDEFINED_SIZE_DOWNWARDS_HEADER 

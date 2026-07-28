@@ -79,7 +79,9 @@ public:
 
 	BOOL DoPlayerLoginRespond(DWORD dwPlayerID, BOOL bPermit, GUID Guid, DWORD dwPacketIdentity);
 
-	BOOL DoConfirmPlayerLoginRequest(DWORD dwPlayerID);
+	BOOL DoSyncNewExtPointRequest(DWORD dwPlayerID, int nGatewayPlayerIndex, int nBoundKey);
+
+	BOOL DoConfirmPlayerLoginRequest(DWORD dwPlayerID, DWORD dwIP);
 
     BOOL DoPlayerLeaveGS(DWORD dwPlayerID);
 
@@ -321,6 +323,7 @@ private:
 	void OnTransferPlayerRespond(BYTE* pbyData, size_t uDataLen);
 
 	void OnPlayerLoginRequest(BYTE* pbyData, size_t uDataLen);
+	void OnSyncNewExtPointRespond(BYTE* pbyData, size_t uDataLen);
 
 	void OnConfirmPlayerLoginRespond(BYTE* pbyData, size_t uDataLen);
 

@@ -498,6 +498,8 @@ public:
     BOOL    LoadSkillRecipeList(BYTE* pbyData, size_t uDataLen);
     BOOL    LoadQuestData(BYTE* pbyData, size_t uDataLen);
     BOOL    LoadStateInfo(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadStateInfo(BYTE* pbyData, size_t uDataLen, int nVersion);
+    BOOL    LoadStateInfoV2(BYTE* pbyData, size_t uDataLen);
     BOOL    LoadRoadOpenNode(BYTE* pbyData, size_t uDataLen);
     BOOL    LoadHeroData(BYTE* pbyData, size_t uDataLen);
 

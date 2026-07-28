@@ -33,6 +33,7 @@ enum KS2R_PROTOCOL
 
     s2r_player_login_respond,
 	s2r_search_map_request,
+	s2r_search_map_queue_request,
     s2r_transfer_player_request,
     s2r_transfer_player_respond,
     s2r_confirm_player_login_request,
@@ -86,19 +87,21 @@ enum KS2R_PROTOCOL
 	s2r_sync_mid_map_mark,
     
     // ---------------- 副本相关 --------------------------------------
-    s2r_save_scene_player_list,
-    s2r_save_scene_data,
-    s2r_reset_map_copy_request,
-    s2r_player_enter_scene_notify,
+    // Target v2.5.2 Relay IDs are explicit because the 2010 enum omits routes.
+    s2r_save_scene_player_list = 52,
+    s2r_save_scene_data = 53,
+    s2r_reset_map_copy_request = 54,
+    s2r_player_enter_scene_notify = 55,
 
     // ---------------- 交通相关 --------------------------------------
-    s2r_sync_road_track_force,
+    s2r_sync_road_track_force = 56,
     
     // ---------------- 角色操作 --------------------------------------
-    s2r_load_role_data_request,
+    s2r_load_role_data_request = 57,
+    s2r_load_account_data_request = 58,
 
-    s2r_change_role_level_request,
-    s2r_change_role_forceid_request,
+    s2r_change_role_level_request = 59,
+    s2r_change_role_forceid_request = 60,
 
     s2r_send_gm_message,
     s2r_send_gm_chn,
@@ -424,9 +427,14 @@ struct S2R_CREATE_MAP_RESPOND : INTERNAL_PROTOCOL_HEADER
 };
 
 // GameServer对登录请求的应答消息 
-struct S2R_PLAYER_LOGIN_RESPOND : IDENTITY_HEADER
+struct S2R_PLAYER_LOGIN_RESPOND : INTERNAL_PROTOCOL_HEADER
 {
 	DWORD		dwPlayerID;
+	union
+	{
+		int			nGatewayPlayerIndex;
+		DWORD		dwPacketIdentity;
+	};
 	BOOL		bPermit;
 	GUID		Guid;
 	DWORD       dwGSAddr;
@@ -436,6 +444,7 @@ struct S2R_PLAYER_LOGIN_RESPOND : IDENTITY_HEADER
 struct S2R_CONFIRM_PLAYER_LOGIN_REQUEST : INTERNAL_PROTOCOL_HEADER
 {
     DWORD dwPlayerID;
+    DWORD dwIP;
 };
 
 struct S2R_PLAYER_LEAVE_GS : INTERNAL_PROTOCOL_HEADER
@@ -1354,21 +1363,57 @@ struct R2S_DELETE_MAP_NOTIFY : INTERNAL_PROTOCOL_HEADER
 };
 
 // 玩家登录请求
-struct R2S_PLAYER_LOGIN_REQUEST : IDENTITY_HEADER
+struct R2S_PLAYER_LOGIN_REQUEST : INTERNAL_PROTOCOL_HEADER
 {
     DWORD           dwRoleID;
+    union
+    {
+        int             nGatewayPlayerIndex;
+        DWORD           dwPacketIdentity;
+    };
     char            szRoleName[_NAME_LEN];
     char            szAccount[_NAME_LEN];
-    int             nChargeFlag;            // 收费状态
-	tagExtPointInfo	ExtPointInfo;			// 可用的附送点
-    time_t          nEndTimeOfFee;          // 收费总截止时间
-    int             nCoin;                  // 金币数
+    tagExtPointInfo ExtPointInfo;
+    DWORD           nEndTimeOfFee;
+    DWORD           nCoin;
+    int             nLastLoginTime;
+    BYTE            nChargeFlag;
+    BYTE            byMibaoMode;
+    BYTE            byFreeIP;
+    BYTE            byReserved;
     DWORD           dwSystemTeamID;
     DWORD           dwTeamID;
     KRoleBaseInfo   BaseInfo;
     int             nBattleSide;
     DWORD           dwTongID;
     BYTE            byFarmerLimit;
+    BYTE            byAccountMaxLevel;
+};
+
+/* Target v2.5.2 wire contract: packed, no inherited-header tail padding. */
+struct __attribute__((packed)) S2R_SYNC_NEW_EXT_POINT_REQUEST
+{
+    WORD    wProtocolID;
+    DWORD   dwPlayerID;
+    int     nGatewayPlayerIndex;
+    int     nBoundKey;
+};
+
+struct __attribute__((packed)) SYNC_NEP_INFO
+{
+    int     nKey;
+    int     nValue;
+};
+
+struct __attribute__((packed)) R2S_SYNC_NEW_EXT_POINT_RESPOND
+{
+    WORD            wProtocolID;
+    int             nCenterIndex;
+    DWORD           dwPlayerID;
+    int             nGatewayIndex;
+    BYTE            bySyncFinish;
+    int             nCount;
+    SYNC_NEP_INFO   SyncNEPInfo[0];
 };
 
 struct R2S_CONFIRM_PLAYER_LOGIN_RESPOND : INTERNAL_PROTOCOL_HEADER
