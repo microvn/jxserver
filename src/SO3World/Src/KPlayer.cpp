@@ -1989,6 +1989,12 @@ BOOL KPlayer::LoadExtRoleData(BYTE* pbyData, size_t uDataLen)
             break;
 
         case rbtStateInfo:
+            KGLogPrintf(
+                KGLOG_INFO,
+                "W1_ROLE_STATE_BLOCK id=%u type=%d ver=%u len=%u legacy_size=%u remaining=%u\n",
+                m_dwID, pBlock->nType, pBlock->dwVer, pBlock->dwLen,
+                (unsigned)sizeof(KROLE_STATE_INFO), (unsigned)uLeftSize
+            );
             bRetCode = LoadStateInfo(pbyOffset, pBlock->dwLen);
             KGLOG_PROCESS_ERROR(bRetCode);
             break;
@@ -2456,6 +2462,7 @@ BOOL KPlayer::SaveBaseInfo(KRoleBaseInfo* pBaseInfo)
 	pBaseInfo->CurrentPos.nX                = m_SavePosition.nX;
 	pBaseInfo->CurrentPos.nY                = m_SavePosition.nY;
 	pBaseInfo->CurrentPos.nZ                = m_SavePosition.nZ;
+	pBaseInfo->CurrentPos.nCenterIndex      = 0;
 	pBaseInfo->CurrentPos.dwMapID           = m_SavePosition.dwMapID;
 	pBaseInfo->CurrentPos.nMapCopyIndex     = m_SavePosition.nMapCopyIndex;
     pBaseInfo->CurrentPos.byFaceDirection   = (BYTE)m_nFaceDirection;
@@ -2464,6 +2471,7 @@ BOOL KPlayer::SaveBaseInfo(KRoleBaseInfo* pBaseInfo)
     pBaseInfo->LastEntry.nX                 = m_LastEntry.nX;
     pBaseInfo->LastEntry.nY                 = m_LastEntry.nY;
     pBaseInfo->LastEntry.nZ                 = m_LastEntry.nZ;
+    pBaseInfo->LastEntry.nCenterIndex       = 0;
     pBaseInfo->LastEntry.byFaceDirection    = (BYTE)m_LastEntry.nFaceDirection;
     pBaseInfo->nLastLoginTime               = m_nCurrentLoginTime;
     pBaseInfo->nCreateTime                  = m_nCreateTime;
@@ -4956,4 +4964,3 @@ Exit0:
     return bResult;
 }
 #endif // _SERVER
-

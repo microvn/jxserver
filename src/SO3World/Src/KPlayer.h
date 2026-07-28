@@ -244,6 +244,7 @@ public:
 
 #if defined(_SERVER)
 	int					m_nConnIndex;
+    DWORD               m_dwIP;
     char                m_szClientIP[_NAME_LEN];
 	char				m_szAccount[_NAME_LEN];
 	tagExtPointInfo		m_ExtPointInfo;         // ��չ��

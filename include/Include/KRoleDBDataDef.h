@@ -52,6 +52,7 @@ enum ROLE_DATA_BLOCK_TYPE
 
 struct KROLE_POSITION_DB
 {
+    int     nCenterIndex;
     DWORD	dwMapID;
     int	    nMapCopyIndex;
     int		nX;
@@ -74,11 +75,16 @@ struct KRoleBaseInfo : KRoleBaseHeader
     BYTE                byCamp;
     BYTE                byForceID;
     WORD                wRepresentId[perRepresentCount];
-    time_t	            nLastSaveTime;
-    time_t              nLastLoginTime;
-    time_t              nTotalGameTime;
-    time_t              nCreateTime;
-    BYTE                byReserved[16];
+    int                 nLastSaveTime;
+    int                 nLastLoginTime;
+    int                 nTotalGameTime;
+    int                 nCreateTime;
+    int                 nDirectApprenticeEndTime;
+    BYTE                byCanBeDirectApprentice;
+    BYTE                byBeDirectMentor;
+    DWORD               dwCorpsSystemID;
+    BYTE                bySelectKungfuIndex;
+    BYTE                byReserved[11];
 };
 
 struct KROLE_LIST_INFO
