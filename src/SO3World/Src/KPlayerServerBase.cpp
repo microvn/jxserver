@@ -15,6 +15,13 @@
 
 #define KG_MAX_ACCEPT_EACH_WAIT     8
 
+/* Temporary W1 diagnostic only. It records the first CheckPackage predicate
+ * without changing the protocol decision or KPlayerServer layout. */
+static int s_nW1DiagnosticConnection = -1;
+static unsigned s_nW1DiagnosticFailures = 0;
+static unsigned s_nW1DiagnosticSuccesses = 0;
+static unsigned s_nW1DiagnosticProcessEntries = 0;
+
 int KPlayerServer::_Construct()
 {
 	m_nMaxConnection            = 0;
@@ -145,7 +152,7 @@ BOOL KPlayerServer::Init(IRecorderFactory* piFactory)
 
     nRetCode = m_piSocketServer->Init(
         m_szLocalIP, nListenPort, KG_MAX_ACCEPT_EACH_WAIT, 
-        nRecvBufferSize, nSendBufferSize, KSG_ENCODE_DECODE, NULL
+        nRecvBufferSize, nSendBufferSize, KSG_ENCODE_DECODE_FAST, NULL
     );
 
     KGLogPrintf(
@@ -305,6 +312,7 @@ BOOL KPlayerServer::Attach(KPlayer* pPlayer, int nConnIndex)
     pszRetString = inet_ntoa(RemoteAddr);
     KGLOG_PROCESS_ERROR(pszRetString);
 
+    pPlayer->m_dwIP = RemoteAddr.s_addr;
     strncpy(pPlayer->m_szClientIP, pszRetString, sizeof(pPlayer->m_szClientIP));
     pPlayer->m_szClientIP[sizeof(pPlayer->m_szClientIP) - 1] = '\0';
 
@@ -491,6 +499,12 @@ BOOL KPlayerServer::ProcessPackage(IKG_SocketStream* piSocket)
     assert(piSocket);
 
     nConnIndex = (int)(ptrdiff_t)(piSocket->GetUserData());
+    if (s_nW1DiagnosticProcessEntries < 256)
+    {
+        fprintf(stderr, "W1_PROCESS_ENTER conn=%d\n", nConnIndex);
+        fflush(stderr);
+    }
+    ++s_nW1DiagnosticProcessEntries;
     KGLOG_PROCESS_ERROR(nConnIndex >= 0 && nConnIndex < m_nMaxConnection);
 
     while (true)
@@ -506,6 +520,12 @@ BOOL KPlayerServer::ProcessPackage(IKG_SocketStream* piSocket)
         }
 
         nRetCode = piSocket->Recv(&piBuffer);
+        if (s_nW1DiagnosticProcessEntries <= 256)
+        {
+            fprintf(stderr, "W1_RECV conn=%d ret=%d size=%lu\n", nConnIndex, nRetCode,
+                    piBuffer ? (unsigned long)piBuffer->GetSize() : 0UL);
+            fflush(stderr);
+        }
         if (nRetCode == -2)
         {
             break;
@@ -537,7 +557,9 @@ BOOL KPlayerServer::ProcessPackage(IKG_SocketStream* piSocket)
 
         uDataLen = piBuffer->GetSize();
 
+        s_nW1DiagnosticConnection = nConnIndex;
         nRetCode  = CheckPackage(pbyData, uDataLen);
+        s_nW1DiagnosticConnection = -1;
         if (!nRetCode)
         {
 		    KGLogPrintf(KGLOG_INFO, "Pak error, connection: %d\n", nConnIndex);
@@ -637,28 +659,65 @@ Exit0:
 BOOL KPlayerServer::CheckPackage(BYTE* pbyData, size_t uDataLen)
 {
     BOOL                        bResult = false;
-	UPWARDS_PROTOCOL_HEADER*    pHeader = (UPWARDS_PROTOCOL_HEADER*)pbyData;
+    UPWARDS_PROTOCOL_HEADER*    pHeader = (UPWARDS_PROTOCOL_HEADER*)pbyData;
+    unsigned                    uProtocolID = 0xFFFFFFFFU;
+    int                         nExpectedSize = -2;
+    int                         bHandlerPresent = 0;
+    const char*                 pszFailure = NULL;
 
-    KGLOG_PROCESS_ERROR(uDataLen >= sizeof(UPWARDS_PROTOCOL_HEADER));
+    if (uDataLen >= sizeof(WORD))
+        uProtocolID = pHeader->byProtocolID;
 
-    KGLOG_PROCESS_ERROR(pHeader->byProtocolID > client_gs_connection_begin);
-
-    KGLOG_PROCESS_ERROR(pHeader->byProtocolID < client_gs_connection_end);
-
-	if (m_nProtocolSize[pHeader->byProtocolID] == UNDEFINED_PROTOCOL_SIZE)
-	{
-        KGLOG_PROCESS_ERROR(uDataLen >= sizeof(UNDEFINED_SIZE_UPWARDS_HEADER));
-	}
+    if (uDataLen < sizeof(UPWARDS_PROTOCOL_HEADER))
+        pszFailure = "header_len";
+    else if (uProtocolID <= client_gs_connection_begin)
+        pszFailure = "protocol_lower_bound";
+    else if (uProtocolID >= client_gs_connection_end)
+        pszFailure = "protocol_upper_bound";
     else
     {
-        KGLOG_PROCESS_ERROR(uDataLen == (size_t)m_nProtocolSize[pHeader->byProtocolID]);
+        nExpectedSize = m_nProtocolSize[uProtocolID];
+        if (nExpectedSize == UNDEFINED_PROTOCOL_SIZE)
+        {
+            if (uDataLen < sizeof(UNDEFINED_SIZE_UPWARDS_HEADER))
+                pszFailure = "undefined_header_len";
+        }
+        else if (uDataLen != (size_t)nExpectedSize)
+            pszFailure = "fixed_size";
+
+        bHandlerPresent = m_ProcessProtocolFuns[uProtocolID] != NULL;
+        if (!pszFailure && !bHandlerPresent)
+            pszFailure = "handler_null";
     }
 
-    KGLOG_PROCESS_ERROR(m_ProcessProtocolFuns[pHeader->byProtocolID]);
+    if (pszFailure)
+    {
+        if (s_nW1DiagnosticFailures < 128)
+        {
+            KGLogPrintf(
+                KGLOG_INFO,
+                "W1_CHECKPACKAGE_FAIL conn=%d predicate=%s len=%lu proto=%u expected=%d handler=%d\n",
+                s_nW1DiagnosticConnection, pszFailure, (unsigned long)uDataLen,
+                uProtocolID, nExpectedSize, bHandlerPresent
+            );
+        }
+        ++s_nW1DiagnosticFailures;
+        return false;
+    }
+
+    if (s_nW1DiagnosticSuccesses < 128)
+    {
+        KGLogPrintf(
+            KGLOG_INFO,
+            "W1_CHECKPACKAGE_OK conn=%d len=%lu proto=%u expected=%d handler=%d\n",
+            s_nW1DiagnosticConnection, (unsigned long)uDataLen,
+            uProtocolID, nExpectedSize, bHandlerPresent
+        );
+    }
+    ++s_nW1DiagnosticSuccesses;
 
     bResult = true;
-Exit0:
-	return bResult;
+    return bResult;
 }
 
 void KPlayerServer::TeamBroadcast(DWORD dwTeamID, void* pvData, size_t uSize)

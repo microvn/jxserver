@@ -7649,7 +7649,7 @@ void KPlayerServer::OnHandshakeRequest(char* pData, size_t nSize, int nConnIndex
 	pPlayer->m_eGameStatus  = gsWaitForPermit;
 	pPlayer->m_nTimer       = 0;
 
-	g_RelayClient.DoConfirmPlayerLoginRequest(pPlayer->m_dwID);
+	g_RelayClient.DoConfirmPlayerLoginRequest(pPlayer->m_dwID, pPlayer->m_dwIP);
 
     bResult = true;
 Exit0:

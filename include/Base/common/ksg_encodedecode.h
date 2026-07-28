@@ -22,6 +22,7 @@
 int KSG_DecodeEncode(size_t uSize, unsigned char *pbyBuf, unsigned *puKey);
 int KSG_DecodeEncode(size_t uSize, const unsigned char *pbySrcBuf, unsigned char *pbyDstBuf, unsigned *puKey);
 int KSG_DecodeEncode_ASM(size_t uSize, unsigned char *pbyBuf, unsigned *puKey);
+int KSG_DecodeEncodeFast(size_t uSize, unsigned char *pbyBuf, unsigned *puKey);
 
 int KSG_DecodeBuf(size_t uSize, unsigned char *pbyBuf, unsigned *puKey);
 int KSG_EncodeBuf(size_t uSize, unsigned char *pbyBuf, unsigned *puKey);

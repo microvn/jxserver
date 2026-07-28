@@ -244,6 +244,7 @@ public:
 
 #if defined(_SERVER)
 	int					m_nConnIndex;
+    DWORD               m_dwIP;
     char                m_szClientIP[_NAME_LEN];
 	char				m_szAccount[_NAME_LEN];
 	tagExtPointInfo		m_ExtPointInfo;         // ��չ��
@@ -497,6 +498,8 @@ public:
     BOOL    LoadSkillRecipeList(BYTE* pbyData, size_t uDataLen);
     BOOL    LoadQuestData(BYTE* pbyData, size_t uDataLen);
     BOOL    LoadStateInfo(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadStateInfo(BYTE* pbyData, size_t uDataLen, int nVersion);
+    BOOL    LoadStateInfoV2(BYTE* pbyData, size_t uDataLen);
     BOOL    LoadRoadOpenNode(BYTE* pbyData, size_t uDataLen);
     BOOL    LoadHeroData(BYTE* pbyData, size_t uDataLen);
 

@@ -2262,12 +2262,18 @@ Exit0:
 #ifdef _SERVER
 BOOL KItemList::Load(BYTE* pbyData, size_t uDataLen)
 {
+    return Load(pbyData, uDataLen, 0);
+}
+
+BOOL KItemList::Load(BYTE* pbyData, size_t uDataLen, int nVersion)
+{
     BOOL        bResult     = false;
     BOOL        bRetCode    = false;
     size_t      uLeftSize   = uDataLen;
     BYTE*       pbyOffset   = pbyData;
     int         nItemCount  = 0;
     KItem*      pItem       = NULL;
+    BOOL        bVersion6  = (nVersion == 6);
     
     KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(DWORD));
     m_nMoney = *(int*)pbyOffset;
@@ -2276,33 +2282,67 @@ BOOL KItemList::Load(BYTE* pbyData, size_t uDataLen)
     
     g_PlayerServer.DoSyncMoney(m_pPlayer->m_nConnIndex, m_nMoney, false);
 
-    KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD));
-    m_nEnabledBankPackageCount = *(WORD*)pbyOffset;
-    uLeftSize -= sizeof(WORD);
-    pbyOffset += sizeof(WORD);
-    
-    g_PlayerServer.DoSyncEnableBankPackage(m_pPlayer->m_nConnIndex, m_nEnabledBankPackageCount);
-
-    KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD));
-    nItemCount = *(WORD*)pbyOffset;
-    uLeftSize -= sizeof(WORD);
-    pbyOffset += sizeof(WORD);
+    if (bVersion6)
+    {
+        /* Target LoadItemList_V6 prefix: versioned bank count, three
+         * package-state bytes, then item count at prefix offset +3. */
+        KGLOG_PROCESS_ERROR(uLeftSize >= 6);
+        m_nEnabledBankPackageCount = *(WORD*)(pbyOffset + 4);
+        uLeftSize -= 6;
+        pbyOffset += 6;
+        g_PlayerServer.DoSyncEnableBankPackage(m_pPlayer->m_nConnIndex, m_nEnabledBankPackageCount);
+        KGLOG_PROCESS_ERROR(uLeftSize >= 3);
+        uLeftSize -= 3;
+        pbyOffset += 3;
+        KGLOG_PROCESS_ERROR(uLeftSize >= 5);
+        nItemCount = *(WORD*)(pbyOffset + 3);
+        uLeftSize -= 5;
+        pbyOffset += 5;
+    }
+    else
+    {
+        KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD));
+        m_nEnabledBankPackageCount = *(WORD*)pbyOffset;
+        uLeftSize -= sizeof(WORD);
+        pbyOffset += sizeof(WORD);
+        g_PlayerServer.DoSyncEnableBankPackage(m_pPlayer->m_nConnIndex, m_nEnabledBankPackageCount);
+        KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD));
+        nItemCount = *(WORD*)pbyOffset;
+        uLeftSize -= sizeof(WORD);
+        pbyOffset += sizeof(WORD);
+    }
 
     for (int nIndex = 0; nIndex < nItemCount; nIndex++)
     {
         KITEM_DB_HEADER*    pItemDataHeader     = NULL;
         DWORD               dwBoxIndex          = 0;
         DWORD               dwX                 = 0;
+        BYTE                byDataLen           = 0;
+        BYTE*               pbyItemData         = NULL;
         KENCHANT*           pEnchant            = NULL;
         time_t              nTotalLogoutTime    = 0;
 
-        KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(KITEM_DB_HEADER));
-        pItemDataHeader = (KITEM_DB_HEADER*)pbyOffset;
-        uLeftSize -= sizeof(KITEM_DB_HEADER);
-        pbyOffset += sizeof(KITEM_DB_HEADER);
-
-        dwBoxIndex          = pItemDataHeader->byBox;
-        dwX                 = pItemDataHeader->byPos;
+        if (bVersion6)
+        {
+            KGLOG_PROCESS_ERROR(uLeftSize >= 5);
+            dwBoxIndex = pbyOffset[2];
+            dwX = pbyOffset[3];
+            byDataLen = pbyOffset[4];
+            uLeftSize -= 5;
+            pbyOffset += 5;
+            pbyItemData = pbyOffset;
+        }
+        else
+        {
+            KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(KITEM_DB_HEADER));
+            pItemDataHeader = (KITEM_DB_HEADER*)pbyOffset;
+            uLeftSize -= sizeof(KITEM_DB_HEADER);
+            pbyOffset += sizeof(KITEM_DB_HEADER);
+            dwBoxIndex = pItemDataHeader->byBox;
+            dwX = pItemDataHeader->byPos;
+            byDataLen = pItemDataHeader->byDataLen;
+            pbyItemData = pItemDataHeader->byData;
+        }
 
         KGLOG_PROCESS_ERROR(dwBoxIndex < ibTotal);
         
@@ -2312,12 +2352,12 @@ BOOL KItemList::Load(BYTE* pbyData, size_t uDataLen)
             pItem = NULL;
         }
         
-        KGLOG_PROCESS_ERROR(uLeftSize >= pItemDataHeader->byDataLen);
-        uLeftSize -= pItemDataHeader->byDataLen;
-        pbyOffset += pItemDataHeader->byDataLen;
+        KGLOG_PROCESS_ERROR(uLeftSize >= byDataLen);
+        uLeftSize -= byDataLen;
+        pbyOffset += byDataLen;
 
         pItem = g_pSO3World->m_ItemManager.GenerateItemFromBinaryData(
-            ERROR_ID, pItemDataHeader->byData, pItemDataHeader->byDataLen
+            ERROR_ID, pbyItemData, byDataLen
         );
         if (pItem == NULL)
         {

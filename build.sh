@@ -31,8 +31,12 @@ KAI_Negative KAI_Critter KAI_Monk KAI_Positive KAI_Retardate KAI_Wolf KAI_WolfKi
 KAI_Player KMissile KPathFinder KTrackList KAIParamTemplateList \
 KGodServer KGod"
 
-docker run --rm --platform linux/amd64 -v "$HERE":/work "$IMAGE" bash -c '
-set -uo pipefail
+: "${JX3_TARGET_BIN:?missing exact target SO3GameServer path}"
+docker run --rm --platform linux/amd64 \
+    -e JX3_TARGET_BIN=/target/SO3GameServer \
+    -v "$JX3_TARGET_BIN":/target/SO3GameServer:ro \
+    -v "$HERE":/work "$IMAGE" bash -c '
+set -euo pipefail
 cd /work
 # NOTE: the real final build (session 8d215a3e, cmd 306) did NOT create any
 # include/Base/Engine|Common dir-symlinks — capital-case includes ("Engine/X.h")
@@ -43,12 +47,33 @@ cd /work
 M32="-m32 -I/usr/include/c++/4.8.2/i686-redhat-linux"
 INC="-Isrc/SO3GameServer -Isrc/SO3World -Isrc/SO3World/Src -Ishim -Icompat \
 -Iinclude/Include -Iinclude/Include/SO3World -Iinclude/Base -Iinclude/Base/engine \
--Iinclude/Base/common -Iinclude/Base/lua5 \
+-Iinclude/Base/common -Iinclude/Base/lua5 -Idevenv/include -Iobj \
 -Isrc/SO3Represent/Src -Iinclude/Include/SO3Represent"
 FLAGS="$M32 -include compat/prelude.h -c -w -fpermissive -std=gnu++98 -D__linux -D_SERVER -D_STANDALONE $INC"
 DEAD="'"$DEAD"'"
 
 rm -rf obj; mkdir obj
+[ -n "$JX3_TARGET_BIN" ] || { echo "missing JX3_TARGET_BIN (exact target SO3GameServerD)"; exit 2; }
+python src/common_recon/extract_ksg_fast_table.py "$JX3_TARGET_BIN" obj/ksg_fast_public_keys.inc || exit 2
+
+# Keep the tracked 2010 archive immutable.  The copied archive weakens only the
+# legacy selector so KG_Socket.o relocations resolve to the target-backed Fast
+# selector compiled below.
+mkdir obj/libcommon_fast
+cp libs/libcommon.a obj/libcommon_fast/libcommon.a
+(
+  cd obj/libcommon_fast || exit 2
+  ar x libcommon.a KG_Socket.o || exit 2
+  objcopy --weaken-symbol=_Z24_SetEncodeDecodeFunction18ENCODE_DECODE_MODEPPFijPhPjES4_ KG_Socket.o || exit 2
+  objcopy --weaken-symbol=_Z16_MakeSecurityKey18ENCODE_DECODE_MODEPjS0_PP10IKG_Buffer KG_Socket.o || exit 2
+  objcopy --add-symbol=_Z22_LegacyMakeSecurityKey18ENCODE_DECODE_MODEPjS0_PP10IKG_Buffer=.text:0x1690,global,function KG_Socket.o || exit 2
+  nm KG_Socket.o | grep " W _Z16_MakeSecurityKey18ENCODE_DECODE_MODEPjS0_PP10IKG_Buffer" >/dev/null || exit 2
+  nm KG_Socket.o | grep " T _Z22_LegacyMakeSecurityKey18ENCODE_DECODE_MODEPjS0_PP10IKG_Buffer" >/dev/null || exit 2
+  nm KG_Socket.o | grep " W _Z24_SetEncodeDecodeFunction18ENCODE_DECODE_MODEPPFijPhPjES4_" >/dev/null || exit 2
+  ar d libcommon.a KG_Socket.o || exit 2
+  ar rcs libcommon.a KG_Socket.o || exit 2
+  ranlib libcommon.a || exit 2
+)
 ok=0; fail=0
 for f in src/SO3World/Src/*.cpp; do
   b=$(basename "$f" .cpp)
@@ -63,18 +88,33 @@ done
 # [R7] The leaked common archive is the source of truth for socket/security,
 # including AcceptSecurity/ConnectSecurity and KG_SecuritySocketStream.  Do not
 # compile the old pass-through reconstruction: merely linking the archive is
-# insufficient if a recon object satisfies those symbols first.
-for m in crc32_shim; do
+# insufficient if a recon object satisfies those symbols first.  The itemv6
+# fast-codec overlay adds target-backed codec/security shims on top.
+for m in crc32_shim ksg_fast_codec ksg_fast_security_key; do
   g++ $FLAGS src/common_recon/$m.cpp -o obj/recon_$m.o 2>/dev/null && ok=$((ok+1)) || echo "  FAIL recon $m"
 done
+g++ $M32 -include compat/prelude.h -w -fpermissive -std=gnu++98 -D__linux -D_SERVER -D_STANDALONE $INC \
+    src/common_recon/ksg_fast_codec_probe.cpp obj/recon_ksg_fast_codec.o \
+    obj/libcommon_fast/libcommon.a -o obj/ksg_fast_codec_probe 2>/tmp/ksg_fast_probe_le \
+    && obj/ksg_fast_codec_probe || { echo "  FAIL ksg_fast_codec_probe"; cat /tmp/ksg_fast_probe_le; exit 2; }
 echo "=== COMPILE: ok=$ok fail=$fail  objects=$(ls obj/*.o 2>/dev/null | wc -l) ==="
 
 echo "=== LINK ==="
 # Xuất ra /work (= linux-build/ trên host, persistent) thay vì /tmp trong container.
-g++ -m32 obj/*.o libs/libcommon.a -L libs -lEngine_Lua5D -lSO3EnumConvertorD -lSO3ItemHouseD \
-    -llzo2 -ldl -lpthread -o /work/SO3GameServer 2>/tmp/le
-echo "link exit=$?  undefined refs: $(grep -c "undefined reference" /tmp/le)"
+if ! g++ -m32 obj/*.o obj/libcommon_fast/libcommon.a -L libs -lEngine_Lua5D -lSO3EnumConvertorD -lSO3ItemHouseD \
+    -llzo2 -ldl -lpthread -o /work/SO3GameServer 2>/tmp/le; then
+    echo "link exit=1  undefined refs: $(grep -c "undefined reference" /tmp/le || true)"
+    grep "undefined reference" /tmp/le | sed -E "s/.*undefined reference to .//; s/.$//" | c++filt | sort -u | head -60 || true
+    exit 2
+fi
+echo "link exit=0  undefined refs: $(grep -c "undefined reference" /tmp/le || true)"
 echo "--- distinct undefined symbols ---"
-grep "undefined reference" /tmp/le | sed -E "s/.*undefined reference to .//; s/.$//" | c++filt | sort -u | head -60
-[ -f /work/SO3GameServer ] && { echo "=== BINARY PRODUCED ==="; file /work/SO3GameServer; }
+grep "undefined reference" /tmp/le | sed -E "s/.*undefined reference to .//; s/.$//" | c++filt | sort -u | head -60 || true
+[ -f /work/SO3GameServer ] && {
+    # Do not use grep -q here: with pipefail it can make nm fail on SIGPIPE.
+    nm /work/SO3GameServer | grep " T _Z24_SetEncodeDecodeFunction18ENCODE_DECODE_MODEPPFijPhPjES4_" >/dev/null || exit 2
+    nm /work/SO3GameServer | grep " T _Z16_MakeSecurityKey18ENCODE_DECODE_MODEPjS0_PP10IKG_Buffer" >/dev/null || exit 2
+    nm /work/SO3GameServer | c++filt | grep "KSG_DecodeEncodeFast" >/dev/null || exit 2
+    echo "=== BINARY PRODUCED ==="; file /work/SO3GameServer;
+}
 '

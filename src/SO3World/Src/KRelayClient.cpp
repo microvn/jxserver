@@ -75,8 +75,8 @@ KRelayClient::KRelayClient(void)
     REGISTER_INTERNAL_FUNC(r2s_apply_fellowship_data_respond, &KRelayClient::OnApplyFellowshipDataRespond, 6);
     REGISTER_INTERNAL_FUNC(r2s_add_fellowship_respond, &KRelayClient::OnNoOpRespond, 43);
     REGISTER_INTERNAL_FUNC(r2s_get_fellowship_name_respond, &KRelayClient::OnNoOpRespond, 7);
-    REGISTER_INTERNAL_FUNC(r2s_sync_fellowship_mapid, &KRelayClient::OnNoOpRespond, 11);
-    REGISTER_INTERNAL_FUNC(r2s_sync_fellowship_player_level, &KRelayClient::OnNoOpRespond, 8);
+    REGISTER_INTERNAL_FUNC(r2s_sync_fellowship_mapid, &KRelayClient::OnSyncFellowshipMapID, 11);
+    REGISTER_INTERNAL_FUNC(r2s_sync_fellowship_player_level, &KRelayClient::OnSyncFellowshipPlayerLevel, 8);
     REGISTER_INTERNAL_FUNC(r2s_sync_fellowship_player_forceid, &KRelayClient::OnNoOpRespond, 7);
     REGISTER_INTERNAL_FUNC(r2s_add_fellowship_notify, &KRelayClient::OnNoOpRespond, 7);
     REGISTER_INTERNAL_FUNC(r2s_v246_unused_44, &KRelayClient::OnNoOpRespond, 46);
@@ -215,6 +215,12 @@ KRelayClient::KRelayClient(void)
     REGISTER_INTERNAL_FUNC(r2s_v246_unused_175, &KRelayClient::OnNoOpRespond, 22);
     REGISTER_INTERNAL_FUNC(r2s_v246_unused_176, &KRelayClient::OnNoOpRespond, 6);
     REGISTER_INTERNAL_FUNC(r2s_v246_unused_177, &KRelayClient::OnNoOpRespond, 10);
+
+    // Target v2.5.2 KR2S constructor: protocol 162 -> OnSyncMentorData, base size 6.
+    // The legacy enum places an unrelated no-op at this slot; keep the explicit target slot
+    // last so it supplies the startup completion signal before player-login requests arrive.
+    REGISTER_INTERNAL_FUNC(162, &KRelayClient::OnSyncMentorData, 6);
+    REGISTER_INTERNAL_FUNC(139, &KRelayClient::OnSyncNewExtPointRespond, 19);
     REGISTER_INTERNAL_FUNC(r2s_sync_battle_field_list, &KRelayClient::OnSyncBattleFieldList, sizeof(R2S_SYNC_BATTLE_FIELD_LIST));
     REGISTER_INTERNAL_FUNC(r2s_take_tong_repertory_item_to_pos_respond,  &KRelayClient::OnTakeTongRepertoryItemToPosRespond, sizeof(R2S_TAKE_TONG_REPERTORY_ITEM_TO_POS_RESPOND));
     //AutoCode:×¢²áÐ­Òé
@@ -908,12 +914,17 @@ void KRelayClient::OnPlayerLoginRequest(BYTE* pbyData, size_t uDataLen)
 
     g_pSO3World->m_StatDataServer.UpdateClientLoginPermit();
 
+    bRetCode = DoSyncNewExtPointRequest(
+        pRequest->dwRoleID, pRequest->nGatewayPlayerIndex, -1
+    );
+    KGLOG_PROCESS_ERROR(bRetCode);
+
 	bResult = true;
 Exit0:
-	DoPlayerLoginRespond(pRequest->dwRoleID, bResult, guid, pRequest->dwPacketIdentity);
 
     if (!bResult)
     {
+		DoPlayerLoginRespond(pRequest->dwRoleID, false, guid, pRequest->dwPacketIdentity);
         if (pPlayer)
         {
             g_pSO3World->DelPlayer(pPlayer);
@@ -922,6 +933,52 @@ Exit0:
     }
 
 	return;
+}
+
+void KRelayClient::OnSyncNewExtPointRespond(BYTE* pbyData, size_t uDataLen)
+{
+    R2S_SYNC_NEW_EXT_POINT_RESPOND* pRespond = (R2S_SYNC_NEW_EXT_POINT_RESPOND*)pbyData;
+    KPlayer*                        pPlayer = NULL;
+    BOOL                            bResult = false;
+    BOOL                            bRetCode = false;
+    GUID                            Guid = {0, 0, 0, 0};
+    int                             nLastKey = -1;
+    int                             i = 0;
+
+    KGLOG_PROCESS_ERROR(uDataLen >= sizeof(*pRespond));
+    KGLOG_PROCESS_ERROR(pRespond->nCount >= 0);
+    KGLOG_PROCESS_ERROR(uDataLen >= sizeof(*pRespond) + (size_t)pRespond->nCount * sizeof(SYNC_NEP_INFO));
+
+    pPlayer = g_pSO3World->m_PlayerSet.GetObj(pRespond->dwPlayerID);
+    KGLOG_PROCESS_ERROR(pPlayer);
+
+    for (i = 0; i < pRespond->nCount; ++i)
+    {
+        if (nLastKey < pRespond->SyncNEPInfo[i].nKey)
+            nLastKey = pRespond->SyncNEPInfo[i].nKey;
+    }
+
+    if (!pRespond->bySyncFinish)
+    {
+        bRetCode = DoSyncNewExtPointRequest(pRespond->dwPlayerID, pRespond->nGatewayIndex, nLastKey);
+        KGLOG_PROCESS_ERROR(bRetCode);
+        bResult = true;
+        goto Exit0;
+    }
+
+    KGLOG_PROCESS_ERROR(pRespond->nCenterIndex == 0);
+    bRetCode = DoPlayerLoginRespond(pRespond->dwPlayerID, true, pPlayer->m_Guid, pRespond->nGatewayIndex);
+    KGLOG_PROCESS_ERROR(bRetCode);
+
+    bResult = true;
+Exit0:
+    if (!bResult && pRespond)
+    {
+        DoPlayerLoginRespond(pRespond->dwPlayerID, false, Guid, pRespond->nGatewayIndex);
+        if (pPlayer)
+            g_pSO3World->DelPlayer(pPlayer);
+    }
+    return;
 }
 
 void KRelayClient::OnConfirmPlayerLoginRespond(BYTE* pbyData, size_t uDataLen)
@@ -3594,6 +3651,33 @@ Exit0:
 	return bResult;
 }
 
+BOOL KRelayClient::DoSyncNewExtPointRequest(DWORD dwPlayerID, int nGatewayPlayerIndex, int nBoundKey)
+{
+    BOOL                            bResult = false;
+    BOOL                            bRetCode = false;
+    IKG_Buffer*                     piPackage = NULL;
+    S2R_SYNC_NEW_EXT_POINT_REQUEST* pRequest = NULL;
+
+    piPackage = KG_MemoryCreateBuffer(sizeof(S2R_SYNC_NEW_EXT_POINT_REQUEST));
+    KGLOG_PROCESS_ERROR(piPackage);
+
+    pRequest = (S2R_SYNC_NEW_EXT_POINT_REQUEST*)piPackage->GetData();
+    KGLOG_PROCESS_ERROR(pRequest);
+
+    pRequest->wProtocolID = 155;
+    pRequest->dwPlayerID = dwPlayerID;
+    pRequest->nGatewayPlayerIndex = nGatewayPlayerIndex;
+    pRequest->nBoundKey = nBoundKey;
+
+    bRetCode = Send(piPackage);
+    KGLOG_PROCESS_ERROR(bRetCode);
+
+    bResult = true;
+Exit0:
+    KG_COM_RELEASE(piPackage);
+    return bResult;
+}
+
 BOOL KRelayClient::DoPlayerLoginRespond(DWORD dwPlayerID, BOOL bPermit, GUID Guid, DWORD dwPacketIdentity)
 {
     BOOL                        bResult     = false;
@@ -3624,7 +3708,7 @@ Exit0:
 	return bResult;
 }
 
-BOOL KRelayClient::DoConfirmPlayerLoginRequest(DWORD dwPlayerID)
+BOOL KRelayClient::DoConfirmPlayerLoginRequest(DWORD dwPlayerID, DWORD dwIP)
 {
     BOOL                                bResult     = false;
 	BOOL                                bRetCode    = false;
@@ -3639,8 +3723,22 @@ BOOL KRelayClient::DoConfirmPlayerLoginRequest(DWORD dwPlayerID)
 
 	pRequest->wProtocolID         = s2r_confirm_player_login_request;
 	pRequest->dwPlayerID          = dwPlayerID;
+    pRequest->dwIP                = dwIP;
+
+    KGLogPrintf(
+        KGLOG_INFO,
+        "W1_CONFIRM_SEND_ENTER player=%u ip=%u proto=%u size=%lu\\n",
+        dwPlayerID, dwIP, (unsigned)pRequest->wProtocolID,
+        (unsigned long)piPackage->GetSize()
+    );
 
 	bRetCode = Send(piPackage);
+
+    KGLogPrintf(
+        KGLOG_INFO,
+        "W1_CONFIRM_SEND_RESULT player=%u result=%d\\n",
+        dwPlayerID, bRetCode
+    );
 	KGLOG_PROCESS_ERROR(bRetCode);
 
     bResult = true;
@@ -5341,7 +5439,7 @@ BOOL KRelayClient::DoChangeRoleLevelRequest(KPlayer* pPlayer)
     pChangeRoleLevel = (S2R_CHANGE_ROLE_LEVEL_REQUEST*)piPackage->GetData();
     (void)pChangeRoleLevel; /*[endgame] tolerant*/
 
-    pChangeRoleLevel->wProtocolID = s2r_change_role_level_request;
+    pChangeRoleLevel->wProtocolID = 59; /* target SO3GameServerD DoChangeRoleLevelRequest 0x080cf99a */
     pChangeRoleLevel->dwPlayerID  = pPlayer->m_dwID;
     pChangeRoleLevel->byLevel     = (BYTE)pPlayer->m_nLevel;
 
@@ -7275,7 +7373,7 @@ BOOL KRelayClient::DoApplyMentorData(DWORD dwMentorID, DWORD dwApprenticeID)
     pRequest = (S2R_APPLY_MENTOR_DATA*)piBuffer->GetData();
     (void)pRequest; /*[endgame] tolerant*/
 
-    pRequest->wProtocolID       = s2r_apply_mentor_data;
+    pRequest->wProtocolID       = 174; // target v2.5.2 S2R_APPLY_MENTOR_DATA
     pRequest->dwMentorID        = dwMentorID;
     pRequest->dwApprenticeID    = dwApprenticeID;
 
