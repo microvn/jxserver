@@ -3726,7 +3726,7 @@ BOOL KRelayClient::DoConfirmPlayerLoginRequest(DWORD dwPlayerID, DWORD dwIP)
     pRequest->dwIP                = dwIP;
 
     KGLogPrintf(
-        KGLOG_INFO,
+        KGLOG_DEBUG,
         "W1_CONFIRM_SEND_ENTER player=%u ip=%u proto=%u size=%lu\\n",
         dwPlayerID, dwIP, (unsigned)pRequest->wProtocolID,
         (unsigned long)piPackage->GetSize()
@@ -3735,7 +3735,7 @@ BOOL KRelayClient::DoConfirmPlayerLoginRequest(DWORD dwPlayerID, DWORD dwIP)
 	bRetCode = Send(piPackage);
 
     KGLogPrintf(
-        KGLOG_INFO,
+        KGLOG_DEBUG,
         "W1_CONFIRM_SEND_RESULT player=%u result=%d\\n",
         dwPlayerID, bRetCode
     );
