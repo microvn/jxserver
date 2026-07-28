@@ -8,9 +8,8 @@
 #
 # Known residual undefined (documented, NOT scaffold bugs):
 #   CRC32 (write standard impl), 3 singles KMissile/KPathFinder/KTrackList,
-#   a lingering old-AI header ref to pin. Socket framing/security is provided
-#   by the verified i386 libs/libcommon.a archive (Wave 1b R11); the old
-#   common_recon/kg_socket.cpp pass-through must not be compiled.
+#   a lingering old-AI header ref to pin. socket framing/crypto = pass-through
+#   guess, must be validated vs real client 2.5.2 later.
 #
 # Env blocker on Apple Silicon: OrbStack's emulated x86 VM is UNSTABLE under the
 # full 188-file load ("unexpected EOF" / VM exit) -> gives incomplete compiles.
@@ -85,11 +84,7 @@ for f in src/SO3GameServer/Main.cpp src/SO3GameServer/KSO3GameServer.cpp \
   b=$(basename "$f" .cpp)
   g++ $FLAGS "$f" -o obj/glue_"$b".o 2>/dev/null && ok=$((ok+1)) || { fail=$((fail+1)); echo "  FAIL glue $b"; }
 done
-# [R7] The leaked common archive is the source of truth for socket/security,
-# including AcceptSecurity/ConnectSecurity and KG_SecuritySocketStream.  Do not
-# compile the old pass-through reconstruction: merely linking the archive is
-# insufficient if a recon object satisfies those symbols first.  The itemv6
-# fast-codec overlay adds target-backed codec/security shims on top.
+# [R7] recon socket/buffer/crc32 REPLACED by real libs/libcommon.a (KG_Socket.o+KG_Package.o+KG_Memory.o)
 for m in crc32_shim ksg_fast_codec ksg_fast_security_key; do
   g++ $FLAGS src/common_recon/$m.cpp -o obj/recon_$m.o 2>/dev/null && ok=$((ok+1)) || echo "  FAIL recon $m"
 done

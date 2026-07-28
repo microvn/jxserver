@@ -52,7 +52,7 @@ enum ROLE_DATA_BLOCK_TYPE
 
 struct KROLE_POSITION_DB
 {
-	int     nCenterIndex;
+    int     nCenterIndex;
     DWORD	dwMapID;
     int	    nMapCopyIndex;
     int		nX;

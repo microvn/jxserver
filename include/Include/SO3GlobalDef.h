@@ -139,8 +139,14 @@ enum PLAYER_EQUIP_REPRESENT
     perBootsColor,         // Ь����ɫ          
 
     perWeaponStyle,        // ��������          
+    perWeaponColor,
     perWeaponEnchant1,     // ������ħ1         
     perWeaponEnchant2,     // ������ħ2         
+
+    perBigSwordStyle,
+    perBigSwordColor,
+    perBigSwordEnchant1,
+    perBigSwordEnchant2,
 
     perBackExtend,         // ������չ          
     perWaistExtend,        // ������չ          
@@ -150,6 +156,7 @@ enum PLAYER_EQUIP_REPRESENT
     perHorseAdornment2,    // ����װ��2
     perHorseAdornment3,    // ����װ��3
     perHorseAdornment4,    // ����װ��4
+    perFaceExtend,
     perReserved,           // ����  
     perRepresentCount
 };

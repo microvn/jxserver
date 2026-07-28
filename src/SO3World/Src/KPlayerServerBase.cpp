@@ -695,7 +695,7 @@ BOOL KPlayerServer::CheckPackage(BYTE* pbyData, size_t uDataLen)
         if (s_nW1DiagnosticFailures < 128)
         {
             KGLogPrintf(
-                KGLOG_DEBUG,
+                KGLOG_INFO,
                 "W1_CHECKPACKAGE_FAIL conn=%d predicate=%s len=%lu proto=%u expected=%d handler=%d\n",
                 s_nW1DiagnosticConnection, pszFailure, (unsigned long)uDataLen,
                 uProtocolID, nExpectedSize, bHandlerPresent
@@ -708,7 +708,7 @@ BOOL KPlayerServer::CheckPackage(BYTE* pbyData, size_t uDataLen)
     if (s_nW1DiagnosticSuccesses < 128)
     {
         KGLogPrintf(
-            KGLOG_DEBUG,
+            KGLOG_INFO,
             "W1_CHECKPACKAGE_OK conn=%d len=%lu proto=%u expected=%d handler=%d\n",
             s_nW1DiagnosticConnection, (unsigned long)uDataLen,
             uProtocolID, nExpectedSize, bHandlerPresent

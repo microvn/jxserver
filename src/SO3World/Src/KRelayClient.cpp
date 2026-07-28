@@ -193,9 +193,7 @@ KRelayClient::KRelayClient(void)
     REGISTER_INTERNAL_FUNC(r2s_v246_unused_155, &KRelayClient::OnNoOpRespond, 19);
     REGISTER_INTERNAL_FUNC(r2s_game_card_lookup_respond, &KRelayClient::OnGameCardLookupRespond, 12);
     REGISTER_INTERNAL_FUNC(r2s_game_card_cancel_respond, &KRelayClient::OnGameCardCancelRespond, 13);
-    // v246 sends this sentinel after the mentor block; it completes the
-    // relay sync gate used by PlayerLoginRequest/scene handoff.
-    REGISTER_INTERNAL_FUNC(r2s_sync_mentor_data, &KRelayClient::OnSyncMentorData, 11);
+    REGISTER_INTERNAL_FUNC(r2s_sync_mentor_data, &KRelayClient::OnNoOpRespond, 11);
     REGISTER_INTERNAL_FUNC(r2s_delete_mentor_record, &KRelayClient::OnNoOpRespond, 15);
     REGISTER_INTERNAL_FUNC(r2s_update_mentor_record, &KRelayClient::OnNoOpRespond, 38);
     REGISTER_INTERNAL_FUNC(r2s_seek_mentor_yell, &KRelayClient::OnNoOpRespond, 34);
@@ -876,10 +874,7 @@ void KRelayClient::OnPlayerLoginRequest(BYTE* pbyData, size_t uDataLen)
     GUID                        guid                = {0, 0, 0, 0};
 
     KG_PROCESS_ERROR(!m_bQuiting);
-
-    /* Center may deliver the first player-login request before the optional
-     * mentor-sync completion packet.  Do not reject a valid login during
-     * that ordering window; mentor data is applied asynchronously later. */
+    KG_PROCESS_ERROR(m_bSyncDataOver);
 	
 	pPlayer = g_pSO3World->NewPlayer(pRequest->dwRoleID);
 	KGLOG_PROCESS_ERROR(pPlayer);
@@ -3726,7 +3721,7 @@ BOOL KRelayClient::DoConfirmPlayerLoginRequest(DWORD dwPlayerID, DWORD dwIP)
     pRequest->dwIP                = dwIP;
 
     KGLogPrintf(
-        KGLOG_DEBUG,
+        KGLOG_INFO,
         "W1_CONFIRM_SEND_ENTER player=%u ip=%u proto=%u size=%lu\\n",
         dwPlayerID, dwIP, (unsigned)pRequest->wProtocolID,
         (unsigned long)piPackage->GetSize()
@@ -3735,7 +3730,7 @@ BOOL KRelayClient::DoConfirmPlayerLoginRequest(DWORD dwPlayerID, DWORD dwIP)
 	bRetCode = Send(piPackage);
 
     KGLogPrintf(
-        KGLOG_DEBUG,
+        KGLOG_INFO,
         "W1_CONFIRM_SEND_RESULT player=%u result=%d\\n",
         dwPlayerID, bRetCode
     );

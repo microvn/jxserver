@@ -59,7 +59,7 @@ enum GAME_STATUS
 	gsWaitForConnect,			// ���ڵȴ��ͻ��˵�����
 	gsWaitForPermit,		    // ��½ʱ���ڵȴ�GC��ȷ��
     gsWaitForRoleData,		    // ��¼ʱ���ڵȴ�Goddess�Ļذ�
-        gsWaitForLoginLoading,      // ��¼(����)�����еȴ��ͻ�������
+    gsWaitForLoginLoading,      // ��¼(����)�����еȴ��ͻ�������
 	gsWaitForNewMapLoading,     // �л���ͼ�����еȴ��ͻ�������
 
 	gsPlaying,				    // ������Ϸ��

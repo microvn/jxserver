@@ -362,7 +362,7 @@ enum KR2S_PROTOCOL
 	r2s_v246_unused_155,	// v246 id=155 size=19 [new] noop
 	r2s_game_card_lookup_respond,	// v246 id=156 size=12 [src]
 	r2s_game_card_cancel_respond,	// v246 id=157 size=13 [src]
-	r2s_sync_mentor_data,	// v246 id=158 size=11; login-data completion sentinel
+	r2s_sync_mentor_data,	// v246 id=158 size=11 [src-unplaced] noop
 	r2s_delete_mentor_record,	// v246 id=159 size=15 [src-unplaced] noop
 	r2s_update_mentor_record,	// v246 id=160 size=38 [src-unplaced] noop
 	r2s_seek_mentor_yell,	// v246 id=161 size=34 [src-unplaced] noop

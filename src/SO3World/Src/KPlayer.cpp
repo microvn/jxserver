@@ -1887,11 +1887,11 @@ BOOL KPlayer::LoadStateInfo(BYTE* pbyData, size_t uDataLen, int nVersion)
     case 1:
         // Version 1 has a distinct 0x80-byte target layout and currency
         // side effects. Do not reinterpret it as the legacy 117-byte struct.
-        KGLogPrintf(KGLOG_WARNING, "LoadStateInfo version 1 is not yet ported\n");
+        KGLogPrintf(KGLOG_INFO, "LoadStateInfo version 1 is not yet ported\n");
         return false;
 
     default:
-        KGLogPrintf(KGLOG_WARNING, "LoadStateInfo unsupported version=%d\n", nVersion);
+        KGLogPrintf(KGLOG_INFO, "LoadStateInfo unsupported version=%d\n", nVersion);
         return false;
     }
 }
@@ -2072,7 +2072,7 @@ BOOL KPlayer::LoadExtRoleData(BYTE* pbyData, size_t uDataLen)
             break;
 
         case rbtItemList:
-            KGLogPrintf(KGLOG_DEBUG,
+            KGLogPrintf(KGLOG_INFO,
                 "W1_ITEM_BLOCK player=%u type=%d ver=%u len=%u remaining=%u\n",
                 m_dwID, pBlock->nType, pBlock->dwVer, pBlock->dwLen,
                 (unsigned)uLeftSize);
@@ -2097,7 +2097,7 @@ BOOL KPlayer::LoadExtRoleData(BYTE* pbyData, size_t uDataLen)
 
         case rbtStateInfo:
             KGLogPrintf(
-                KGLOG_DEBUG,
+                KGLOG_INFO,
                 "W1_ROLE_STATE_BLOCK id=%u type=%d ver=%u len=%u legacy_size=%u remaining=%u\n",
                 m_dwID, pBlock->nType, pBlock->dwVer, pBlock->dwLen,
                 (unsigned)sizeof(KROLE_STATE_INFO), (unsigned)uLeftSize
