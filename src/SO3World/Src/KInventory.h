@@ -4,7 +4,7 @@
 class KItem;
 
 #define		MAX_ITEM_PACKAGE_SIZE		32
-#define		FIRST_PACKAGE_SIZE			20
+#define		FIRST_PACKAGE_SIZE			24
 #define		MAX_SOLDLIST_PACKAGE_SIZE	10
 #define     INVALID_CONTAIN_ITEM_TYPE   -1
 

@@ -143,85 +143,135 @@ KItem* KItemManager::GenerateItemFromBinaryData(DWORD dwItemID, void* pvBuffer, 
     BOOL                bRetCode        = false;
     KItem*              pItem           = NULL;
     BOOL                bRegisterFlag   = false;
-    KCOMMON_ITEM_DATA*  pComm           = (KCOMMON_ITEM_DATA*)pvBuffer;
-    KENCHANT*           pEnchant        = NULL;
+    BYTE                byVersion      = 0;
+    BYTE                byTabType      = 0;
+    BYTE                byBind         = 0;
+    WORD                wTabIndex      = 0;
+    WORD                wDurability    = 0;
+    WORD                wEnchant[eiTotal] = {0};
+    WORD                wLeftEnchantTime = 0;
+    DWORD               dwRandSeed     = 0;
+    time_t              nGenTime       = 0;
 
-    KGLOG_PROCESS_ERROR(uBufferSize >= sizeof(KCOMMON_ITEM_DATA));
+    KGLOG_PROCESS_ERROR(pvBuffer);
+    KGLOG_PROCESS_ERROR(uBufferSize >= sizeof(BYTE));
+
+    byVersion = *(BYTE*)pvBuffer;
+    KGLOG_PROCESS_ERROR(
+        byVersion == ITEM_DATA_VERSION_V0 ||
+        byVersion == ITEM_DATA_VERSION_V1 ||
+        byVersion == CURRENT_ITEM_DATA_VERSION
+    );
+
+    if (byVersion == CURRENT_ITEM_DATA_VERSION)
+    {
+        KCOMMON_ITEM_DATA* pV2 = (KCOMMON_ITEM_DATA*)pvBuffer;
+        KGLOG_PROCESS_ERROR(uBufferSize >= sizeof(KCOMMON_ITEM_DATA));
+        byTabType = pV2->byTabType;
+        wTabIndex = pV2->wTabIndex;
+        byBind = pV2->byBind;
+        wDurability = pV2->wDurability;
+        nGenTime = pV2->nGenTime;
+    }
+    else
+    {
+        KCOMMON_ITEM_DATA_V0* pV0 = (KCOMMON_ITEM_DATA_V0*)pvBuffer;
+        KGLOG_PROCESS_ERROR(uBufferSize >= sizeof(KCOMMON_ITEM_DATA_V0));
+        byTabType = pV0->byTabType;
+        wTabIndex = pV0->wTabIndex;
+        byBind = pV0->byBind;
+        wDurability = pV0->wDurability;
+        nGenTime = pV0->nGenTime;
+    }
 
     pItem = KMemory::New<KItem>();
-	KGLOG_PROCESS_ERROR(pItem);
+    KGLOG_PROCESS_ERROR(pItem);
 
     bRetCode = g_pSO3World->m_ItemSet.Register(pItem, dwItemID);
     KGLOG_PROCESS_ERROR(bRetCode);
     bRegisterFlag = true;
 
-	switch (pComm->byTabType)
-	{
+    switch (byTabType)
+    {
     case ittOther:
-		{
-            KCOMMON_ITEM_DATA* pCid = (KCOMMON_ITEM_DATA*)pvBuffer;
-			KGLOG_PROCESS_ERROR(uBufferSize == sizeof(KCOMMON_ITEM_DATA));
-			
-			bRetCode = GenerateItemTo(
-                pItem, pCid->byTabType, pCid->wTabIndex, pCid->nGenTime,
+        {
+            if (byVersion == CURRENT_ITEM_DATA_VERSION)
+                KGLOG_PROCESS_ERROR(uBufferSize == sizeof(KCOMMON_ITEM_DATA));
+            else
+                KGLOG_PROCESS_ERROR(uBufferSize == sizeof(KCOMMON_ITEM_DATA_V0));
+
+            bRetCode = GenerateItemTo(
+                pItem, byTabType, wTabIndex, nGenTime,
                 pItem->m_dwID, 0, 0, 0, NULL
             );
-			KGLOG_PROCESS_ERROR(bRetCode);
-            
-            if (pItem->m_Common.bStack)
-            {
-                pItem->SetStackNum(pCid->wDurability);
-            }
-            else
-            {
-                pItem->m_nCurrentDurability = pCid->wDurability;
-            }
+            KGLOG_PROCESS_ERROR(bRetCode);
 
-            pItem->m_bBind  = pCid->byBind;
-		}
-		break;
+            if (pItem->m_Common.bStack)
+                pItem->SetStackNum(wDurability);
+            else
+                pItem->m_nCurrentDurability = wDurability;
+
+            pItem->m_bBind = byBind;
+        }
+        break;
 
     case ittCustArmor:
     case ittCustWeapon:
     case ittCustTrinket:
-		{
-            KCUSTOM_EQUI_DATA* pCed = (KCUSTOM_EQUI_DATA*)pvBuffer;
-            KGLOG_PROCESS_ERROR(uBufferSize == sizeof(KCUSTOM_EQUI_DATA));
-            
-			bRetCode = GenerateItemTo(
-                pItem, pCed->byTabType, pCed->wTabIndex, pCed->nGenTime,
-                pItem->m_dwID, pCed->dwRandSeed, 0, 0, NULL
-            );
-			KGLOG_PROCESS_ERROR(bRetCode);
-
-			pItem->m_nCurrentDurability = pCed->wDurability;
-            pItem->m_bBind              = pCed->byBind;
-            pItem->m_nColorID           = pCed->byColorID;
-
-            pItem->m_dwEnchantID[eiPermanentEnchant]  = pCed->wEnchant[eiPermanentEnchant];
-            pItem->m_dwEnchantID[eiTemporaryEnchant]  = 0;
-            pItem->m_dwEnchantID[eiMount1] = pCed->wEnchant[eiMount1];
-            pItem->m_dwEnchantID[eiMount2] = pCed->wEnchant[eiMount2];
-            pItem->m_dwEnchantID[eiMount3] = pCed->wEnchant[eiMount3];
-            pItem->m_dwEnchantID[eiMount4] = pCed->wEnchant[eiMount4];
-            pItem->m_nEnchantTime          = 0;
-            if (pCed->wLeftEnchantTime > 0)
+        {
+            if (byVersion == CURRENT_ITEM_DATA_VERSION)
             {
-                pItem->m_dwEnchantID[eiTemporaryEnchant]  = pCed->wEnchant[eiTemporaryEnchant];
-                pItem->m_nEnchantTime = pCed->wLeftEnchantTime + g_pSO3World->m_nCurrentTime;
+                KCUSTOM_EQUI_DATA* pCed = (KCUSTOM_EQUI_DATA*)pvBuffer;
+                KGLOG_PROCESS_ERROR(uBufferSize == sizeof(KCUSTOM_EQUI_DATA));
+                dwRandSeed = pCed->dwRandSeed;
+                memcpy(wEnchant, pCed->wEnchant, sizeof(wEnchant));
+                wLeftEnchantTime = pCed->wLeftEnchantTime;
             }
-		}
-		break;
+            else
+            {
+                KCUSTOM_EQUI_DATA_V0* pCed = (KCUSTOM_EQUI_DATA_V0*)pvBuffer;
+                KGLOG_PROCESS_ERROR(uBufferSize == sizeof(KCUSTOM_EQUI_DATA_V0));
+                dwRandSeed = pCed->dwRandSeed;
+                memcpy(wEnchant, pCed->wEnchant, sizeof(wEnchant));
+                wLeftEnchantTime = pCed->wLeftEnchantTime;
+            }
 
-	default:
+            bRetCode = GenerateItemTo(
+                pItem, byTabType, wTabIndex, nGenTime,
+                pItem->m_dwID, dwRandSeed, 0, 0, NULL
+            );
+            KGLOG_PROCESS_ERROR(bRetCode);
+
+            pItem->m_nCurrentDurability = wDurability;
+            pItem->m_bBind = byBind;
+            pItem->m_nColorID = byVersion == CURRENT_ITEM_DATA_VERSION
+                ? ((KCUSTOM_EQUI_DATA*)pvBuffer)->byColorID
+                : ((KCUSTOM_EQUI_DATA_V0*)pvBuffer)->byColorID;
+
+            pItem->m_dwEnchantID[eiPermanentEnchant] = wEnchant[eiPermanentEnchant];
+            pItem->m_dwEnchantID[eiTemporaryEnchant] = 0;
+            pItem->m_dwEnchantID[eiMount1] = wEnchant[eiMount1];
+            pItem->m_dwEnchantID[eiMount2] = wEnchant[eiMount2];
+            pItem->m_dwEnchantID[eiMount3] = wEnchant[eiMount3];
+            pItem->m_dwEnchantID[eiMount4] = wEnchant[eiMount4];
+            pItem->m_nEnchantTime = 0;
+            if (wLeftEnchantTime > 0)
+            {
+                pItem->m_dwEnchantID[eiTemporaryEnchant] = wEnchant[eiTemporaryEnchant];
+                pItem->m_nEnchantTime = wLeftEnchantTime + g_pSO3World->m_nCurrentTime;
+            }
+        }
+        break;
+
+    default:
         goto Exit0;
-	}
-    
+    }
+
     pResult = pItem;
 Exit0:
     if (!pResult)
     {
-        KGLogPrintf(KGLOG_ERR, "[ITEM] GenerateItemFromBinaryData failed, Tab: %d, Index: %d. \n", (int)pComm->byTabType, (int)pComm->wTabIndex);
+        KGLogPrintf(KGLOG_ERR, "[ITEM] GenerateItemFromBinaryData failed, Tab: %d, Index: %d. \n", (int)byTabType, (int)wTabIndex);
 
         if (bRegisterFlag)
         {
@@ -235,7 +285,7 @@ Exit0:
             pItem = NULL;
         }
     }
-	return pResult;
+    return pResult;
 }
 
 KItem* KItemManager::CloneItem(const KItem* pItem)

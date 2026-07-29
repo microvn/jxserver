@@ -3,13 +3,11 @@
 //  FileName    : KItemDef.h
 //  Version     : 1.0
 //  Creator     : Chen Jie, Xia Yong
-//  Comment     : ï¿½ï¿½ï¿½ï¿½ÏµÍ³
+//  Comment     : µÀ¾ßÏµÍ³
 //
 ////////////////////////////////////////////////////////////////////////////////
 #ifndef _KITEM_DEF_H_
 #define _KITEM_DEF_H_
-
-#define MAX_ITEM_DATA_SIZE sizeof(KCUSTOM_EQUI_DATA)
 
 #pragma	pack(1)
 enum ENCHANT_INDEX
@@ -25,7 +23,7 @@ enum ENCHANT_INDEX
     eiTotal
 };
 
-struct KCOMMON_ITEM_DATA 
+struct KCOMMON_ITEM_DATA_V0
 {
     BYTE    byVersion;
     BYTE    byTabType;
@@ -35,12 +33,34 @@ struct KCOMMON_ITEM_DATA
     time_t	nGenTime;
 };
 
+struct KCUSTOM_EQUI_DATA_V0 : KCOMMON_ITEM_DATA_V0
+{
+    DWORD   dwRandSeed;
+    WORD    wEnchant[eiTotal];
+    WORD    wLeftEnchantTime;
+    BYTE    byColorID;
+};
+
+// Target item-data V2 adds a reserved WORD before generation time and a
+// reserved BYTE after the custom-equipment payload.
+struct KCOMMON_ITEM_DATA
+{
+    BYTE    byVersion;
+    BYTE    byTabType;
+    WORD    wTabIndex;
+    BYTE    byBind;
+    WORD    wDurability;
+    WORD    wReservedV2;
+    time_t  nGenTime;
+};
+
 struct KCUSTOM_EQUI_DATA : KCOMMON_ITEM_DATA
 {
     DWORD   dwRandSeed;
     WORD    wEnchant[eiTotal];
     WORD    wLeftEnchantTime;
     BYTE    byColorID;
+    BYTE    byReservedV2;
 };
 
 struct KITEM_DB_HEADER 
@@ -52,19 +72,22 @@ struct KITEM_DB_HEADER
 };
 #pragma	pack()
 
-#define CURRENT_ITEM_DATA_VERSION 0
+#define ITEM_DATA_VERSION_V0 0
+#define ITEM_DATA_VERSION_V1 1
+#define CURRENT_ITEM_DATA_VERSION 2
+#define MAX_ITEM_DATA_SIZE sizeof(KCUSTOM_EQUI_DATA)
 
-// ï¿½ï¿½ï¿½ßµï¿½ï¿½ï¿½ï¿½ï¿½
+// µÀ¾ßµÄÖÖÀà
 enum ITEM_GENRE
 {
-    igEquipment = 0,	// ×°ï¿½ï¿½
+    igEquipment = 0,	// ×°±¸
     igPotion,			// Ò©Æ·
-    igTaskItem,			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-    igMaterial,			// ï¿½ï¿½ï¿½ï¿½
-    igBook,				// ï¿½é¼®
-    igDesignation,      // ï¿½ÆºÅµï¿½ï¿½ï¿½
-    igMountItem,        // ï¿½ï¿½Ç¶ï¿½ï¿½ï¿½ï¿½
-    igEnchantItem,      // ï¿½ï¿½Ä§ï¿½ï¿½ï¿½ï¿½
+    igTaskItem,			// ÈÎÎñµÀ¾ß
+    igMaterial,			// ²ÄÁÏ
+    igBook,				// Êé¼®
+    igDesignation,      // ³ÆºÅµÀ¾ß
+    igMountItem,        // ÏâÇ¶µÀ¾ß
+    igEnchantItem,      // ¸½Ä§µÀ¾ß
     igBox,              // Box/gift    (2.5.2 add =8, Ghidra OnOpenBox)
     igBoxKey,           // Box key     (2.5.2 add =9, Ghidra OnApplyUseItem)
     igDiamond,          // Diamond     (2.5.2 add =10, Ghidra LuaSetItemMountDiamond)
@@ -75,47 +98,40 @@ enum ITEM_GENRE
     igTotal
 };
 
-// ×°ï¿½ï¿½ï¿½Ä´ï¿½ï¿½Â·ï¿½ï¿½ï¿½
+// ×°±¸µÄ´óÖÂ·ÖÀà
 enum EQUIPMENT_SUB_TYPE
 {
-    estMeleeWeapon = 0,		// ï¿½ï¿½Õ½ï¿½ï¿½ï¿½ï¿½
-    estRangeWeapon,			// Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-    estChest,				// ï¿½ï¿½ï¿½ï¿½
-    estHelm,				// Í·ï¿½ï¿½
-    estAmulet,				// ï¿½ï¿½ï¿½ï¿½
-    estRing,				// ï¿½ï¿½Ö¸
-    estWaist,				// ï¿½ï¿½ï¿½ï¿½
-    estPendant,				// ï¿½ï¿½×º
-    estPants,				// ï¿½ï¿½ï¿½ï¿½
-    estBoots,				// Ð¬ï¿½ï¿½
-    estBangle,				// ï¿½ï¿½ï¿½ï¿½
-    estWaistExtend,		    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¹ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½Æºï¿½Ö®ï¿½ï¿½ï¿½
-    estPackage,				// ï¿½ï¿½ï¿½ï¿½
-    estArrow,				// ï¿½ï¿½ï¿½ï¿½
-    estBackExtend,          // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¹
-    estHorse,               // ï¿½ï¿½ï¿½ï¿½
-    estBullet,
-    estFaceExtend,
-    estMiniAvatar,
-    estPet,
-
+    estMeleeWeapon = 0,		// ½üÕ½ÎäÆ÷
+    estRangeWeapon,			// Ô¶³ÌÎäÆ÷
+    estChest,				// ÉÏÒÂ
+    estHelm,				// Í·²¿
+    estAmulet,				// ÏîÁ´
+    estRing,				// ½äÖ¸
+    estWaist,				// Ñü´ø
+    estPendant,				// Ñü×º
+    estPants,				// ¿ã×Ó
+    estBoots,				// Ð¬×Ó
+    estBangle,				// »¤±Û
+    estWaistExtend,		    // Ñü²¿À©Õ¹Àà×°±¸£¬¾ÆºøÖ®ÀàµÄ
+    estPackage,				// °ü¹ü
+    estArrow,				// °µÆ÷
+    estBackExtend,          // ±³²¿À©Õ¹
+    estHorse,               // ×øÆï
     estTotal
 };
 
-typedef char _CHK_enum_EQUIPMENT_SUB_TYPE_estTotal[(estTotal == 20) ? 1 : -1];
-
-// ï¿½ï¿½ï¿½ï¿½ï¿½Ä¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// ÎäÆ÷µÄ¾ßÌå·ÖÀà
 enum WEAPON_DETAIL_TYPE
 {
-    wdtWand = 0,	    // ï¿½ï¿½
+    wdtWand = 0,	    // ¹÷
     wdtSpear,           // Ç¹
-    wdtSword,           // ï¿½ï¿½
-    wdtFist,            // È­ï¿½ï¿½
-    wdtDoubleWeapon,    // Ë«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½: Ë«ï¿½ï¿½,Ë«É¡
-    wdtPen,             // ï¿½ï¿½
-    wdtSlingShot,       // ï¿½ï¿½ï¿½ï¿½
-    wdtDart,            // ï¿½ï¿½ï¿½ï¿½
-    wdtMachDart,        // ï¿½ï¿½ï¿½Ø°ï¿½ï¿½ï¿½
+    wdtSword,           // ½£
+    wdtFist,            // È­Ì×
+    wdtDoubleWeapon,    // Ë«ÊÖÎäÆ÷,±ÈÈç: Ë«µ¶,Ë«É¡
+    wdtPen,             // ±Ê
+    wdtSlingShot,       // ¶ÛÆ÷
+    wdtDart,            // ÈñÆ÷
+    wdtMachDart,        // »ú¹Ø°µÆ÷
     wdtBigSword,        // Big sword  (2.5.2 add =9, Ghidra verified)
     wdtFlute,           // Flute      (2.5.2 add =10)
     wdtBow,             // Bow        (2.5.2 add =11)
@@ -124,35 +140,35 @@ enum WEAPON_DETAIL_TYPE
     wdtTotal
 };
 
-// ï¿½ï¿½Ç¶ï¿½ï¿½ï¿½ßµï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½à±£ï¿½ï¿½Ò»ï¿½ï¿½
+// ÏâÇ¶µÀ¾ßµÄ×ÓÀà, Óë×°±¸×ÓÀà±£³ÖÒ»ÖÂ
 enum ENCHANT_SUB_TYPE
 {
-    nstMeleeWeapon = estMeleeWeapon,    // ï¿½ï¿½Õ½ï¿½ï¿½ï¿½ï¿½
-    nstRangeWeapon = estRangeWeapon,    // Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-    nstHorse       = estHorse           // ï¿½ï¿½ï¿½ï¿½
+    nstMeleeWeapon = estMeleeWeapon,    // ½üÕ½ÎäÆ÷
+    nstRangeWeapon = estRangeWeapon,    // Ô¶³ÌÎäÆ÷
+    nstHorse       = estHorse           // Âí¾ß
 };
 
-// ï¿½ï¿½ï¿½ßµï¿½Ï¸ï¿½ï¿½
+// Âí¾ßµÄÏ¸Àà
 enum ENCHANT_DETAIL_TYPE
 {
-    edtHead,            // Í·ï¿½ï¿½
-    edtChest,           // ï¿½ï¿½ï¿½ï¿½
-    edtFoot,            // ï¿½ï¿½ï¿½ï¿½
-    edtHangItem,        // ï¿½Ò¼ï¿½
+    edtHead,            // Í·ÊÎ
+    edtChest,           // ÐØÊÎ
+    edtFoot,            // ×ãÊÎ
+    edtHangItem,        // ¹Ò¼þ
 
     edtTotal
 };
 
-// ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½
+// µÀ¾ßÆ·ÖÊ
 enum ITEM_QUALITY
 {
-    iqLow = 0,				// ï¿½ï¿½Æ·
-    iqNormal,				// ï¿½ï¿½Í¨×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
-    iqGood,					// ï¿½ï¿½ï¿½ï¿½
+    iqLow = 0,				// ÁÓÆ·
+    iqNormal,				// ÆÕÍ¨×°±¸£¬°×É«
+    iqGood,					// ÓÅÖÊ
     iqTotal
 };
 
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// °ó¶¨ÀàÐÍ
 enum ITEM_BIND_TYPE
 {
     ibtInvalid = 0,

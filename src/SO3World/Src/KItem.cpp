@@ -287,6 +287,7 @@ BOOL KItem::GetBinaryData(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSiz
             pCid->byTabType     = (BYTE)m_GenParam.dwTabType;
 			pCid->wTabIndex     = (WORD)m_GenParam.dwIndex;
 			pCid->wDurability   = (WORD)m_nCurrentDurability;
+            pCid->wReservedV2   = 0;
             pCid->nGenTime      = m_GenParam.nGenTime;
 		}
 		break;
@@ -324,6 +325,7 @@ BOOL KItem::GetBinaryData(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSiz
             }
 
             pCed->byColorID             = (BYTE)m_nColorID;
+            pCed->byReservedV2           = 0;
 		}
 		break;
     

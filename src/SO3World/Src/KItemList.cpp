@@ -2274,6 +2274,7 @@ BOOL KItemList::Load(BYTE* pbyData, size_t uDataLen, int nVersion)
     int         nItemCount  = 0;
     KItem*      pItem       = NULL;
     BOOL        bVersion6  = (nVersion == 6);
+    BOOL        bV6FiveByteRecord = false;
     
     KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(DWORD));
     m_nMoney = *(int*)pbyOffset;
@@ -2301,6 +2302,52 @@ BOOL KItemList::Load(BYTE* pbyData, size_t uDataLen, int nVersion)
         nItemCount = *(WORD*)pbyOffset;
         uLeftSize -= sizeof(WORD);
         pbyOffset += sizeof(WORD);
+
+        /* Some v6 role blobs contain a pad byte before the count and keep a
+         * WORD item id ahead of each normal three-byte item header. Accept
+         * that layout only when a complete dry parse consumes the payload. */
+        if (nItemCount == 0 && uLeftSize > sizeof(WORD))
+        {
+            BYTE*  pbyProbe = pbyOffset + 1;
+            size_t uProbeLeft = uLeftSize - 1;
+            WORD   wProbeCount = 0;
+            BOOL   bProbeValid = true;
+
+            KGLOG_PROCESS_ERROR(uProbeLeft >= sizeof(WORD));
+            wProbeCount = *(WORD*)pbyProbe;
+            uProbeLeft -= sizeof(WORD);
+            pbyProbe += sizeof(WORD);
+
+            for (WORD nProbe = 0; nProbe < wProbeCount; ++nProbe)
+            {
+                BYTE byProbeLen = 0;
+                if (uProbeLeft < sizeof(WORD) + 3)
+                {
+                    bProbeValid = false;
+                    break;
+                }
+                uProbeLeft -= sizeof(WORD);
+                pbyProbe += sizeof(WORD);
+                byProbeLen = pbyProbe[2];
+                uProbeLeft -= 3;
+                pbyProbe += 3;
+                if (uProbeLeft < byProbeLen)
+                {
+                    bProbeValid = false;
+                    break;
+                }
+                uProbeLeft -= byProbeLen;
+                pbyProbe += byProbeLen;
+            }
+
+            if (bProbeValid && uProbeLeft == 0)
+            {
+                uLeftSize -= 1 + sizeof(WORD);
+                pbyOffset += 1 + sizeof(WORD);
+                nItemCount = wProbeCount;
+                bV6FiveByteRecord = true;
+            }
+        }
     }
     else
     {
@@ -2327,6 +2374,9 @@ BOOL KItemList::Load(BYTE* pbyData, size_t uDataLen, int nVersion)
 
         if (bVersion6)
         {
+            KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD));
+            uLeftSize -= sizeof(WORD);
+            pbyOffset += sizeof(WORD);
             KGLOG_PROCESS_ERROR(uLeftSize >= 3);
             dwBoxIndex = pbyOffset[0];
             dwX = pbyOffset[1];
