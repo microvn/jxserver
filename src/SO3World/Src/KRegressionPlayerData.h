@@ -24,6 +24,9 @@ public:
     BOOL Save(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
     BOOL Load(BYTE* pbyData, size_t uDataLen);
 
+    // v246 role-data block contains only KREGRESSION_DB_DATA (46B).
+    BOOL LoadPlayerData(BYTE* pbyData, size_t uDataLen);
+
     int  GetGradeID()   { return m_nCurrentGradeID; }
     int  GetDailyCount(){ return m_nRegressionDailyCount; }
     BYTE GetItemMark(int nDailyIndex);

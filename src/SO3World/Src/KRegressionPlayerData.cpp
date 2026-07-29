@@ -104,3 +104,22 @@ BOOL KRegressionPlayerData::Load(BYTE* pbyData, size_t uDataLen)
 Exit0:
     return bResult;
 }
+
+BOOL KRegressionPlayerData::LoadPlayerData(BYTE* pbyData, size_t uDataLen)
+{
+    BOOL  bResult   = false;
+    BYTE* pbyOffset = pbyData;
+
+    KGLOG_PROCESS_ERROR(pbyData);
+    KGLOG_PROCESS_ERROR(uDataLen >= REG_PLAYER_BLOCK);
+
+    m_nNewPlayerRegressionEndTime = (time_t)*(DWORD*)(pbyOffset + 0);
+    m_nRegressionDailyCount       = pbyOffset[4];
+    memcpy(m_byItemMark, pbyOffset + 5, REGRESSION_ITEM_MARK_COUNT);
+    m_nCurrentGradeID             = pbyOffset[13];
+    m_nPlayerAccountRegressionVer = 0;
+
+    bResult = true;
+Exit0:
+    return bResult;
+}

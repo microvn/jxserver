@@ -2167,7 +2167,7 @@ BOOL KPlayer::LoadExtRoleData(BYTE* pbyData, size_t uDataLen)
             break;
 
         case rbtRegressionData:
-            bRetCode = m_RegressionData.Load(pbyOffset, pBlock->dwLen);
+            bRetCode = m_RegressionData.LoadPlayerData(pbyOffset, pBlock->dwLen);
             KGLOG_PROCESS_ERROR(bRetCode);
             break;
 
