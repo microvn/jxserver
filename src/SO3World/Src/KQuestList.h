@@ -105,9 +105,9 @@ public:
 	void                UnInit();
 	void                Activate();
     
-    BOOL                LoadQuestState(size_t* puUsedSize, BYTE* pbyData, size_t uDataLen);
+    BOOL                LoadQuestState(size_t* puUsedSize, BYTE* pbyData, size_t uDataLen, int nVersion = 0);
     BOOL                LoadQuestList(size_t* puUsedSize, BYTE* pbyData, size_t uDataLen);
-    BOOL                LoadDailyQuest(size_t* puUsedSize, BYTE* pbyData, size_t uDataLen);
+    BOOL                LoadDailyQuest(size_t* puUsedSize, BYTE* pbyData, size_t uDataLen, int nVersion = 0);
 
 #ifdef _SERVER
     BOOL                SaveQuestState(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);

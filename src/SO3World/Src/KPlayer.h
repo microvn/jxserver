@@ -263,7 +263,7 @@ public:
     int64_t             m_nTotalGameFrame; // ������֡��
     time_t              m_nCreateTime;
 
-	KCustomData<128>    m_CustomData;
+	KCustomData<360>    m_CustomData;
 
 	KScriptTimerList<KPlayer, 16>		m_ScriptTimerList;
     
@@ -496,7 +496,7 @@ public:
     BOOL    Load(BYTE* pbyData, size_t uDataLen);
     BOOL    LoadExtRoleData(BYTE* pbyData, size_t uDataLen);
     BOOL    LoadSkillRecipeList(BYTE* pbyData, size_t uDataLen);
-    BOOL    LoadQuestData(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadQuestData(BYTE* pbyData, size_t uDataLen, int nVersion = 0);
     BOOL    LoadStateInfo(BYTE* pbyData, size_t uDataLen);
     BOOL    LoadStateInfo(BYTE* pbyData, size_t uDataLen, int nVersion);
     BOOL    LoadStateInfoV2(BYTE* pbyData, size_t uDataLen);

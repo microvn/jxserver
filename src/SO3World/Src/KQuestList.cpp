@@ -66,14 +66,27 @@ void KQuestList::Activate()
     return;
 }
 
-BOOL KQuestList::LoadQuestState(size_t* puUsedSize, BYTE* pbyData, size_t uDataLen)
+BOOL KQuestList::LoadQuestState(size_t* puUsedSize, BYTE* pbyData, size_t uDataLen, int nVersion)
 {
     BOOL    bResult         = false;
     size_t  uLeftSize       = uDataLen;
     BYTE*   pbyOffset       = pbyData;
     int     nDwordBitCount  = sizeof(DWORD) * CHAR_BIT;
+    int     nDwordCount     = MAX_QUEST_COUNT / nDwordBitCount;
 
-    for (int nQuestIndex = 0; nQuestIndex < MAX_QUEST_COUNT / nDwordBitCount; nQuestIndex++)
+    if (nVersion != 0)
+    {
+        KGLOG_PROCESS_ERROR(nVersion >= 1 && nVersion <= 2);
+        KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(DWORD));
+
+        nDwordCount = *(DWORD*)pbyOffset;
+        uLeftSize -= sizeof(DWORD);
+        pbyOffset += sizeof(DWORD);
+
+        KGLOG_PROCESS_ERROR(nDwordCount <= MAX_QUEST_COUNT / nDwordBitCount);
+    }
+
+    for (int nQuestIndex = 0; nQuestIndex < nDwordCount; nQuestIndex++)
     {
         DWORD dwQuestState = 0;
 
@@ -174,7 +187,7 @@ Exit0:
     return bResult;
 }
 
-BOOL KQuestList::LoadDailyQuest(size_t* puUsedSize, BYTE* pbyData, size_t uDataLen)
+BOOL KQuestList::LoadDailyQuest(size_t* puUsedSize, BYTE* pbyData, size_t uDataLen, int nVersion)
 {
     BOOL                    bResult             = false;
     KDB_DAILY_QUEST_DATA*   pDailyQuestData     = NULL;
@@ -182,6 +195,24 @@ BOOL KQuestList::LoadDailyQuest(size_t* puUsedSize, BYTE* pbyData, size_t uDataL
     
     assert(puUsedSize);
     assert(pbyData);
+
+    if (nVersion == 2)
+    {
+        WORD wDailyQuestCount = 0;
+
+        // Target V2 stores a WORD count followed by 13-byte records. The
+        // current role-data producer emits an empty list; validate and
+        // consume that wire layout without applying the legacy V1 parser.
+        KGLOG_PROCESS_ERROR(uDataLen >= sizeof(WORD));
+        wDailyQuestCount = *(WORD*)pbyData;
+        KGLOG_PROCESS_ERROR(wDailyQuestCount == 0);
+
+        *puUsedSize = sizeof(WORD);
+        bResult = true;
+        goto Exit0;
+    }
+
+    KGLOG_PROCESS_ERROR(nVersion == 0 || nVersion == 1);
     
     KGLOG_PROCESS_ERROR(uDataLen >= sizeof(KDB_DAILY_QUEST_DATA));
     pDailyQuestData = (KDB_DAILY_QUEST_DATA*)pbyData;

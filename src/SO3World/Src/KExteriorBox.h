@@ -40,6 +40,7 @@ public:
     // Item byte-layouts pinned from v246; combined into one block because the
     // 2010 KRoleBlockHeader has no chunk key (v246 chunked owned items separately).
     BOOL Save(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
+    BOOL LoadExteriorBox(BYTE* pbyData, size_t uDataLen);
     BOOL Load(BYTE* pbyData, size_t uDataLen);
 
     // Add an owned exterior. nTimeType: ettPermanent/ett7Days/ettLimit (or the

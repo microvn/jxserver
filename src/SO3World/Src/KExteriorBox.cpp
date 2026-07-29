@@ -541,7 +541,7 @@ Exit0:
     return bResult;
 }
 
-BOOL KExteriorBox::Load(BYTE* pbyData, size_t uDataLen)
+BOOL KExteriorBox::LoadExteriorBox(BYTE* pbyData, size_t uDataLen)
 {
     BOOL    bResult   = false;
     BYTE*   pbyOffset = pbyData;
@@ -551,7 +551,6 @@ BOOL KExteriorBox::Load(BYTE* pbyData, size_t uDataLen)
 
     KGLOG_PROCESS_ERROR(pbyData);
 
-    // ---- owned box ----
     KGLOG_PROCESS_ERROR((size_t)(pbyTail - pbyOffset) >= sizeof(WORD));
     wCount = *(WORD*)pbyOffset; pbyOffset += sizeof(WORD);
     for (i = 0; i < wCount; i++)
@@ -566,38 +565,69 @@ BOOL KExteriorBox::Load(BYTE* pbyData, size_t uDataLen)
         pbyOffset += sizeof(*pItem);
     }
 
-    // ---- equip sets ----
+    // Target LoadExteriorBox accepts trailing data because the role loader
+    // stores the set/latest chunks in separate role blocks.
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
+BOOL KExteriorBox::Load(BYTE* pbyData, size_t uDataLen)
+{
+    BOOL    bResult   = false;
+    BYTE*   pbyOffset = pbyData;
+    BYTE*   pbyTail   = pbyData + uDataLen;
+    WORD    wChunkSize = 0;
+    WORD    wCount    = 0;
+    WORD    i         = 0;
+
+    KGLOG_PROCESS_ERROR(pbyData);
+
+    // Target format: [latest-buy chunk][exterior-set chunk].
     KGLOG_PROCESS_ERROR((size_t)(pbyTail - pbyOffset) >= sizeof(WORD));
+    wChunkSize = *(WORD*)pbyOffset; pbyOffset += sizeof(WORD);
+    KGLOG_PROCESS_ERROR((size_t)(pbyTail - pbyOffset) >= wChunkSize);
+    KGLOG_PROCESS_ERROR(wChunkSize >= sizeof(WORD));
     wCount = *(WORD*)pbyOffset; pbyOffset += sizeof(WORD);
+    KGLOG_PROCESS_ERROR((size_t)(pbyOffset - (pbyData + sizeof(WORD))) <= wChunkSize);
+    KGLOG_PROCESS_ERROR(wCount <= MAX_EXTERIOR_LATEST_BUY);
+    KGLOG_PROCESS_ERROR((size_t)wCount * sizeof(KEXTERIOR_BUY_LATEST_DB_DATA::KEXTERIOR_INFO) <=
+                        wChunkSize - sizeof(WORD));
+    m_LatestBuy.clear();
+    for (i = 0; i < wCount; i++)
+    {
+        KEXTERIOR_BUY_LATEST_DB_DATA::KEXTERIOR_INFO* pItem =
+            (KEXTERIOR_BUY_LATEST_DB_DATA::KEXTERIOR_INFO*)pbyOffset;
+        if (g_pSO3World->m_Settings.m_Exterior.GetExteriorInfo(pItem->wID))
+            m_LatestBuy.push_back(pItem->wID);
+        pbyOffset += sizeof(*pItem);
+    }
+    pbyOffset = pbyData + sizeof(WORD) + wChunkSize;
+
+    KGLOG_PROCESS_ERROR((size_t)(pbyTail - pbyOffset) >= sizeof(WORD));
+    wChunkSize = *(WORD*)pbyOffset; pbyOffset += sizeof(WORD);
+    KGLOG_PROCESS_ERROR((size_t)(pbyTail - pbyOffset) >= wChunkSize);
+    KGLOG_PROCESS_ERROR(wChunkSize >= sizeof(WORD) + sizeof(BYTE) + sizeof(WORD));
+    wCount = *(WORD*)pbyOffset; pbyOffset += sizeof(WORD);
+    KGLOG_PROCESS_ERROR((size_t)wCount * sizeof(KEXTERIOR_SET_DB_DATA::KEXTERIOR_SET_INFO) <=
+                        wChunkSize - sizeof(WORD) - sizeof(BYTE) - sizeof(WORD));
     m_ExteriorSet.clear();
     for (i = 0; i < wCount; i++)
     {
-        KEXTERIOR_SET_DB_DATA::KEXTERIOR_SET_INFO* pItem = (KEXTERIOR_SET_DB_DATA::KEXTERIOR_SET_INFO*)pbyOffset;
+        KEXTERIOR_SET_DB_DATA::KEXTERIOR_SET_INFO* pItem =
+            (KEXTERIOR_SET_DB_DATA::KEXTERIOR_SET_INFO*)pbyOffset;
         KEXTERIOR_SET_INFO Set;
         int nSlot = 0;
-        KGLOG_PROCESS_ERROR((size_t)(pbyTail - pbyOffset) >= sizeof(*pItem));
         for (nSlot = 0; nSlot < MAX_EXTERIOR_SLOT; nSlot++)
             Set.dwExteriorID[nSlot] = pItem->wExteriorID[nSlot];
         m_ExteriorSet.push_back(Set);
         pbyOffset += sizeof(*pItem);
     }
-    KGLOG_PROCESS_ERROR((size_t)(pbyTail - pbyOffset) >= sizeof(BYTE) + sizeof(WORD));
     m_uCurrentSetID = *(BYTE*)pbyOffset; pbyOffset += sizeof(BYTE);
     m_uExteriorFreeCount = *(WORD*)pbyOffset; pbyOffset += sizeof(WORD);
+    // The second chunk must consume the remainder exactly.
+    KGLOG_PROCESS_ERROR(pbyOffset == pbyTail);
 
-    // ---- latest buy ----
-    KGLOG_PROCESS_ERROR((size_t)(pbyTail - pbyOffset) >= sizeof(WORD));
-    wCount = *(WORD*)pbyOffset; pbyOffset += sizeof(WORD);
-    m_LatestBuy.clear();
-    for (i = 0; i < wCount; i++)
-    {
-        KEXTERIOR_BUY_LATEST_DB_DATA::KEXTERIOR_INFO* pItem = (KEXTERIOR_BUY_LATEST_DB_DATA::KEXTERIOR_INFO*)pbyOffset;
-        KGLOG_PROCESS_ERROR((size_t)(pbyTail - pbyOffset) >= sizeof(*pItem));
-        m_LatestBuy.push_back(pItem->wID);
-        pbyOffset += sizeof(*pItem);
-    }
-
-    KGLOG_PROCESS_ERROR(pbyOffset == pbyTail);   // leftover == 0
     bResult = true;
 Exit0:
     return bResult;

@@ -43,6 +43,11 @@ enum ROLE_DATA_BLOCK_TYPE
     rbtRegressionData,
     rbtCurrencyData,        // v2.5 NEW: KCurrencyList (capped/periodic currencies)
 
+    // Target v2.5 exterior blocks. The source-era enum above predates the
+    // intervening role-data blocks and must not be used for these IDs.
+    rbtExteriorBoxData = 30,
+    rbtExteriorSetData = 31,
+
 	rbtTotal
 };
 

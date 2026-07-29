@@ -5,7 +5,7 @@
 #include <algorithm>
 
 #define KG_SKILL_RECIPE_DB_LOAD_LOWEST_VER  1
-#define KG_SKILL_RECIPE_DB_CURRENT_VER      2
+#define KG_SKILL_RECIPE_DB_CURRENT_VER      4
 
 class KPlayer;
 
@@ -30,6 +30,16 @@ struct KG_SKILL_RECIPE_LIST_DB_DATA_V2 : KG_SKILL_RECIPE_LIST_DB_DATA_BASE
     struct _RecipeNode
     {
         DWORD   dwRecipeKey;
+        BYTE    byActive;
+    } RecipeArray[0];
+};
+
+struct KG_SKILL_RECIPE_LIST_DB_DATA_V4 : KG_SKILL_RECIPE_LIST_DB_DATA_BASE
+{
+    WORD    wCount;
+    struct _RecipeNode
+    {
+        WORD    wRecipeKey;
         BYTE    byActive;
     } RecipeArray[0];
 };
@@ -83,6 +93,7 @@ private:
 #ifdef _SERVER
     BOOL _LoadDataV1(size_t* puUsedSize, BYTE* pbyData, size_t uDataLen);
     BOOL _LoadDataV2(size_t* puUsedSize, BYTE* pbyData, size_t uDataLen);
+    BOOL _LoadDataV4(size_t* puUsedSize, BYTE* pbyData, size_t uDataLen);
 #endif
 
     typedef std::vector<KG_SKILL_RECIPE_LIST_NODE> KG_SKILL_RECIPE_LIST;

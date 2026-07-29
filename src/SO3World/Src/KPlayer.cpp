@@ -1645,7 +1645,7 @@ Exit0:
     return bResult;
 }
 
-BOOL KPlayer::LoadQuestData(BYTE* pbyData, size_t uDataLen)
+BOOL KPlayer::LoadQuestData(BYTE* pbyData, size_t uDataLen, int nVersion)
 {
     BOOL    bResult     = false;
     BOOL    bRetCode    = false;
@@ -1653,7 +1653,7 @@ BOOL KPlayer::LoadQuestData(BYTE* pbyData, size_t uDataLen)
     size_t  uUsedSize   = 0;
     BYTE*   pbyOffset   = pbyData;
 
-    bRetCode = m_QuestList.LoadQuestState(&uUsedSize, pbyOffset, uLeftSize);
+    bRetCode = m_QuestList.LoadQuestState(&uUsedSize, pbyOffset, uLeftSize, nVersion);
 	KGLOG_PROCESS_ERROR(bRetCode);
 
     g_PlayerServer.DoSyncQuestData(m_nConnIndex, m_dwID, pbyOffset, uUsedSize, (BYTE)qdtQuestState);
@@ -1675,7 +1675,7 @@ BOOL KPlayer::LoadQuestData(BYTE* pbyData, size_t uDataLen)
     uLeftSize -= uUsedSize;
     pbyOffset += uUsedSize;
     
-    bRetCode = m_QuestList.LoadDailyQuest(&uUsedSize, pbyOffset, uLeftSize);
+    bRetCode = m_QuestList.LoadDailyQuest(&uUsedSize, pbyOffset, uLeftSize, nVersion);
     KGLOG_PROCESS_ERROR(bRetCode);
 
     g_PlayerServer.DoSyncQuestData(m_nConnIndex, m_dwID, pbyOffset, uUsedSize, (BYTE)qdtDailyQuest);
@@ -2081,7 +2081,7 @@ BOOL KPlayer::LoadExtRoleData(BYTE* pbyData, size_t uDataLen)
 			break;
 
         case rbtQuestList:
-            bRetCode = LoadQuestData(pbyOffset, pBlock->dwLen);
+            bRetCode = LoadQuestData(pbyOffset, pBlock->dwLen, pBlock->dwVer);
             KGLOG_PROCESS_ERROR(bRetCode);
             break;
 
@@ -2166,21 +2166,6 @@ BOOL KPlayer::LoadExtRoleData(BYTE* pbyData, size_t uDataLen)
             KGLOG_PROCESS_ERROR(bRetCode);
             break;
 
-        case rbtExteriorData:
-            bRetCode = m_ExteriorBox.Load(pbyOffset, pBlock->dwLen);
-            KGLOG_PROCESS_ERROR(bRetCode);
-            break;
-
-        case rbtHairBoxData:
-            bRetCode = m_HairBox.Load(pbyOffset, pBlock->dwLen);
-            KGLOG_PROCESS_ERROR(bRetCode);
-            break;
-
-        case rbtMiniAvatarData:
-            bRetCode = m_MiniAvatar.Load(pbyOffset, pBlock->dwLen);
-            KGLOG_PROCESS_ERROR(bRetCode);
-            break;
-
         case rbtRegressionData:
             bRetCode = m_RegressionData.Load(pbyOffset, pBlock->dwLen);
             KGLOG_PROCESS_ERROR(bRetCode);
@@ -2203,6 +2188,16 @@ BOOL KPlayer::LoadExtRoleData(BYTE* pbyData, size_t uDataLen)
 
         case rbtMentorData:
             bRetCode = LoadMentorData(pbyOffset, pBlock->dwLen);
+            KGLOG_PROCESS_ERROR(bRetCode);
+            break;
+
+        case rbtExteriorBoxData:
+            bRetCode = m_ExteriorBox.LoadExteriorBox(pbyOffset, pBlock->dwLen);
+            KGLOG_PROCESS_ERROR(bRetCode);
+            break;
+
+        case rbtExteriorSetData:
+            bRetCode = m_ExteriorBox.Load(pbyOffset, pBlock->dwLen);
             KGLOG_PROCESS_ERROR(bRetCode);
             break;
 

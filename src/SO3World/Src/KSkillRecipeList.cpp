@@ -411,6 +411,12 @@ BOOL KSkillRecipeList::Load(size_t* puUsedSize, BYTE* pbyData, size_t uDataLen)
     KGLOG_PROCESS_ERROR(uDataLen >= sizeof(KG_SKILL_RECIPE_LIST_DB_DATA_BASE));
     pSkillRecipeData = (KG_SKILL_RECIPE_LIST_DB_DATA_BASE*)pbyData;
 
+    // Some persisted role blobs store the version WORD byte-swapped.
+    if (pSkillRecipeData->wVersion == 0x0100 || pSkillRecipeData->wVersion == 0x0200)
+    {
+        pSkillRecipeData->wVersion >>= 8;
+    }
+
     KGLOG_PROCESS_ERROR(pSkillRecipeData->wVersion >= KG_SKILL_RECIPE_DB_LOAD_LOWEST_VER);
     KGLOG_PROCESS_ERROR(pSkillRecipeData->wVersion <= KG_SKILL_RECIPE_DB_CURRENT_VER);
 
@@ -422,6 +428,10 @@ BOOL KSkillRecipeList::Load(size_t* puUsedSize, BYTE* pbyData, size_t uDataLen)
         break;
     case 2:
         bRetCode = _LoadDataV2(puUsedSize, pbyData, uDataLen);
+        KGLOG_PROCESS_ERROR(bRetCode);
+        break;
+    case 4:
+        bRetCode = _LoadDataV4(puUsedSize, pbyData, uDataLen);
         KGLOG_PROCESS_ERROR(bRetCode);
         break;
     }
@@ -505,19 +515,56 @@ Exit0:
     return bResult;
 }
 
+BOOL KSkillRecipeList::_LoadDataV4(size_t* puUsedSize, BYTE* pbyData, size_t uDataLen)
+{
+    BOOL                                bResult             = false;
+    BOOL                                bRetCode            = false;
+    size_t                              uSize               = 0;
+    KG_SKILL_RECIPE_LIST_DB_DATA_V4*   pSkillRecipeData    = NULL;
+
+    KGLOG_PROCESS_ERROR(uDataLen >= sizeof(KG_SKILL_RECIPE_LIST_DB_DATA_V4));
+    pSkillRecipeData = (KG_SKILL_RECIPE_LIST_DB_DATA_V4*)pbyData;
+
+    assert(pSkillRecipeData->wVersion == 4);
+
+    uSize = sizeof(KG_SKILL_RECIPE_LIST_DB_DATA_V4) + sizeof(KG_SKILL_RECIPE_LIST_DB_DATA_V4::_RecipeNode) * pSkillRecipeData->wCount;
+    KGLOG_PROCESS_ERROR(uDataLen >= uSize);
+
+    KG_PROCESS_SUCCESS(pSkillRecipeData->wCount == 0);
+
+    for (int i = 0; i < pSkillRecipeData->wCount; i++)
+    {
+        bRetCode = _Add(pSkillRecipeData->RecipeArray[i].wRecipeKey, pSkillRecipeData->RecipeArray[i].byActive);
+        KGLOG_PROCESS_ERROR(bRetCode);
+    }
+
+    g_PlayerServer.DoSyncSkillRecipe(
+        m_pPlayer->m_nConnIndex,
+        pSkillRecipeData->wCount,
+        &m_SkillRecipeVector[0]
+    );
+
+Exit1:
+    *puUsedSize = uSize;
+
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
 BOOL KSkillRecipeList::Save(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize)
 {
     BOOL                                bResult             = false;
     int                                 nCount              = 0;
     size_t                              uSize               = 0;
-    KG_SKILL_RECIPE_LIST_DB_DATA_V2*    pSkillRecipeData    = NULL;
+    KG_SKILL_RECIPE_LIST_DB_DATA_V4*    pSkillRecipeData    = NULL;
 
     nCount = (int)m_SkillRecipeVector.size();
 
-    uSize = sizeof(KG_SKILL_RECIPE_LIST_DB_DATA_V2) + sizeof(KG_SKILL_RECIPE_LIST_DB_DATA_V2::_RecipeNode) * nCount;
+    uSize = sizeof(KG_SKILL_RECIPE_LIST_DB_DATA_V4) + sizeof(KG_SKILL_RECIPE_LIST_DB_DATA_V4::_RecipeNode) * nCount;
 
     KGLOG_PROCESS_ERROR(uBufferSize >= uSize);
-    pSkillRecipeData = (KG_SKILL_RECIPE_LIST_DB_DATA_V2*)pbyBuffer;
+    pSkillRecipeData = (KG_SKILL_RECIPE_LIST_DB_DATA_V4*)pbyBuffer;
 
     pSkillRecipeData->wVersion = KG_SKILL_RECIPE_DB_CURRENT_VER;
 
@@ -526,7 +573,8 @@ BOOL KSkillRecipeList::Save(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferS
 
     for (int i = 0; i < nCount; i++)
     {
-        pSkillRecipeData->RecipeArray[i].dwRecipeKey    = m_SkillRecipeVector[i].dwRecipeKey;
+        assert((m_SkillRecipeVector[i].dwRecipeKey & 0xFFFF0000) == 0);
+        pSkillRecipeData->RecipeArray[i].wRecipeKey     = (WORD)m_SkillRecipeVector[i].dwRecipeKey;
         pSkillRecipeData->RecipeArray[i].byActive       = (BYTE)m_SkillRecipeVector[i].bActive;
     }
 
