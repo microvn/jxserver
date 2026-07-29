@@ -27,6 +27,22 @@ class KItemListV6LayoutTest(unittest.TestCase):
         self.assertIn("uLeftSize -= 3", v6)
         self.assertIn("pbyOffset += 3", v6)
 
+    def test_v6_item_header_matches_target_three_byte_layout(self):
+        source = SOURCE.read_text(encoding="gbk")
+        item_loop = source.split("for (int nIndex = 0; nIndex < nItemCount; nIndex++)", 1)[1]
+        v6 = item_loop.split("else", 1)[0]
+
+        # Regression: target V6 item headers are [box, pos, data_len].
+        self.assertIn("KGLOG_PROCESS_ERROR(uLeftSize >= 3);", v6)
+        self.assertIn("dwBoxIndex = pbyOffset[0];", v6)
+        self.assertIn("dwX = pbyOffset[1];", v6)
+        self.assertIn("byDataLen = pbyOffset[2];", v6)
+        self.assertIn("uLeftSize -= 3;", v6)
+        self.assertIn("pbyOffset += 3;", v6)
+        self.assertNotIn("uLeftSize >= 5", v6)
+        self.assertNotIn("pbyOffset[3]", v6)
+        self.assertNotIn("pbyOffset[4]", v6)
+
 
 if __name__ == "__main__":
     unittest.main()

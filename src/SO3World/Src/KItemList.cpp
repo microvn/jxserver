@@ -2323,12 +2323,12 @@ BOOL KItemList::Load(BYTE* pbyData, size_t uDataLen, int nVersion)
 
         if (bVersion6)
         {
-            KGLOG_PROCESS_ERROR(uLeftSize >= 5);
-            dwBoxIndex = pbyOffset[2];
-            dwX = pbyOffset[3];
-            byDataLen = pbyOffset[4];
-            uLeftSize -= 5;
-            pbyOffset += 5;
+            KGLOG_PROCESS_ERROR(uLeftSize >= 3);
+            dwBoxIndex = pbyOffset[0];
+            dwX = pbyOffset[1];
+            byDataLen = pbyOffset[2];
+            uLeftSize -= 3;
+            pbyOffset += 3;
             pbyItemData = pbyOffset;
         }
         else
