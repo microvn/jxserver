@@ -9,7 +9,16 @@ class KItemListV6LayoutTest(unittest.TestCase):
     def test_v6_prefix_reads_target_offsets(self):
         source = SOURCE.read_text(encoding="gbk")
         v6 = source.split("if (bVersion6)", 1)[1].split("else", 1)[0]
+        load = source.split(
+            "BOOL KItemList::Load(BYTE* pbyData, size_t uDataLen, int nVersion)",
+            1,
+        )[1].split("BOOL KItemList::Save", 1)[0]
 
+        # Regression: target V6 keeps a DWORD between money and bank count.
+        self.assertEqual(load.count("uLeftSize -= sizeof(int);"), 1)
+        self.assertEqual(load.count("pbyOffset += sizeof(int);"), 1)
+        self.assertEqual(load.count("uLeftSize -= sizeof(DWORD);"), 1)
+        self.assertEqual(load.count("pbyOffset += sizeof(DWORD);"), 1)
         self.assertIn("m_nEnabledBankPackageCount = *(WORD*)pbyOffset;", v6)
         self.assertIn("uLeftSize -= sizeof(WORD);", v6)
         self.assertIn("pbyOffset += sizeof(WORD);", v6)

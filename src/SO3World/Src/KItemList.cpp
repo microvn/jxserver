@@ -2284,7 +2284,11 @@ BOOL KItemList::Load(BYTE* pbyData, size_t uDataLen, int nVersion)
 
     if (bVersion6)
     {
-        /* Target V6: bank count, three state bytes, then item count. */
+        /* Target V6 keeps a reserved DWORD between money and bank count. */
+        KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(DWORD));
+        uLeftSize -= sizeof(DWORD);
+        pbyOffset += sizeof(DWORD);
+        /* Then bank count, three state bytes, and item count follow. */
         KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD));
         m_nEnabledBankPackageCount = *(WORD*)pbyOffset;
         uLeftSize -= sizeof(WORD);
