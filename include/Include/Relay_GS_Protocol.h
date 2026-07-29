@@ -21,70 +21,74 @@
 #define MAX_ROLE_DATA_PAK_SIZE  (1024 * 32)
 
 // 上行协议定义
+// Target v2.5.2 KS2R IDs are explicit. Missing source routes remain named
+// here so the enum itself cannot silently renumber later IDs.
 enum KS2R_PROTOCOL
 {
-    s2r_protocol_begin,
+    s2r_protocol_begin = 0,
 
-	s2r_handshake_request,
-    s2r_ping_signal,
-    s2r_update_performance,
+	s2r_handshake_request = 1,
+    s2r_ping_signal = 2,
+    s2r_update_performance = 3,
 
-	s2r_create_map_respond,
+	s2r_create_map_respond = 4,
 
-    s2r_player_login_respond,
-	s2r_search_map_request,
-	s2r_search_map_queue_request,
-    s2r_transfer_player_request,
-    s2r_transfer_player_respond,
-    s2r_confirm_player_login_request,
-	s2r_player_leave_gs,
+    s2r_player_login_respond = 5,
+	s2r_search_map_request = 6,
+	s2r_search_map_queue_request = 7,
+    s2r_transfer_player_request = 8,
+    s2r_transfer_player_respond = 9,
+    s2r_confirm_player_login_request = 10,
+	s2r_player_leave_gs = 11,
 
-	s2r_update_fellowship,
+	s2r_update_fellowship = 12,
 
     // ------------- 组队相关协议 --------------------------------
-	s2r_invite_player_join_team_request,
-	s2r_invite_player_join_team_respond,
-    s2r_apply_join_team_request,
-    s2r_apply_join_team_respond,
-    s2r_team_del_member_request,
-    s2r_team_change_authority_request,
-    s2r_team_set_loot_mode_request,
-	s2r_team_set_roll_quality_request,
-	s2r_team_set_formation_leader_request,
-    s2r_team_disband_request,
-    s2r_sync_team_member_max_lmr,
-    s2r_sync_team_member_current_lmr,
-    s2r_sync_team_member_misc,
-    s2r_sync_team_member_position,
-    s2r_team_set_mark_request,
-    s2r_team_level_up_raid_request,
-    s2r_team_change_member_group_request,
+	s2r_invite_player_join_team_request = 13,
+	s2r_invite_player_join_team_respond = 14,
+    s2r_apply_join_team_request = 15,
+    s2r_apply_join_team_respond = 16,
+    s2r_team_del_member_request = 17,
+    s2r_team_change_authority_request = 18,
+    s2r_team_set_loot_mode_request = 19,
+	s2r_team_set_roll_quality_request = 20,
+	s2r_team_set_formation_leader_request = 21,
+    s2r_team_disband_request = 22,
+    s2r_sync_team_member_max_lmr = 23,
+    s2r_sync_team_member_current_lmr = 24,
+    s2r_sync_team_member_misc = 25,
+    s2r_sync_team_member_position = 26,
+    s2r_team_set_mark_request = 27,
+    s2r_team_level_up_raid_request = 28,
+    s2r_team_change_member_group_request = 29,
 
     // ---------------- 聊天相关 --------------------------------------
-    s2r_talk_message, 
-    s2r_player_talk_error, 
+    s2r_talk_message = 30,
+    s2r_remote_talk_message = 31,
+    s2r_player_talk_error = 32,
 
     // ---------------- 好友相关 --------------------------------------
-    s2r_apply_fellowship_data_request, 
-    s2r_update_fellowship_data, 
-    s2r_add_fellowship_request, 
-    s2r_get_fellowship_name_request, 
-    s2r_apply_fellowship_player_level_and_forceid, 
-    s2r_add_fellowship_notify, 
+    s2r_apply_fellowship_data_request = 33,
+    s2r_update_fellowship_data = 34,
+    s2r_add_fellowship_request = 35,
+    s2r_get_fellowship_name_request = 36,
+    s2r_apply_fellowship_player_fellow_info = 37,
+    s2r_add_fellowship_notify = 38,
+    s2r_sync_fellowship_player_mini_avatar = 39,
 
     // ---------------- 邮件系统 --------------------------------------
-    s2r_send_mail_request,
-    s2r_send_global_mail_request,
-    s2r_get_maillist_request,
-    s2r_query_mail_content,
-    s2r_acquire_mail_money_request,
-    s2r_acquire_mail_item_request,
-    s2r_give_mail_money_to_player,
-    s2r_give_mail_item_to_player,
-    s2r_set_mail_read,
-    s2r_delete_mail,
-    s2r_return_mail,
-	s2r_sync_mid_map_mark,
+    s2r_send_mail_request = 40,
+    s2r_send_global_mail_request = 41,
+    s2r_get_maillist_request = 42,
+    s2r_query_mail_content = 43,
+    s2r_acquire_mail_money_request = 44,
+    s2r_acquire_mail_item_request = 45,
+    s2r_give_mail_money_to_player = 46,
+    s2r_give_mail_item_to_player = 47,
+    s2r_set_mail_read = 48,
+    s2r_delete_mail = 49,
+    s2r_return_mail = 50,
+	s2r_sync_mid_map_mark = 51,
     
     // ---------------- 副本相关 --------------------------------------
     // Target v2.5.2 Relay IDs are explicit because the 2010 enum omits routes.
@@ -103,102 +107,179 @@ enum KS2R_PROTOCOL
     s2r_change_role_level_request = 59,
     s2r_change_role_forceid_request = 60,
 
-    s2r_send_gm_message,
-    s2r_send_gm_chn,
+    s2r_send_gm_message = 61,
+    s2r_send_gm_chn = 62,
 
-    s2r_send_gm_command_gs,
-    s2r_send_gm_command_gc,
+    s2r_send_gm_command_to_player_gs = 63,
 
-    s2r_join_battle_field_queue_request,
-    s2r_leave_battle_field_queue_request,
+    s2r_send_gm_command_gc = 64,
+    s2r_send_gm_command_gs = 65,
 
-    s2r_accept_join_battle_field,
-    s2r_get_battle_field_list,
+    s2r_send_gm_command_all_gs = 66,
+    s2r_send_gm_command_all_gc = 67,
 
-    s2r_leave_battle_field_request,
+    s2r_join_battle_field_queue_request = 68,
+    s2r_leave_battle_field_queue_request = 69,
 
-    s2r_apply_create_pq_request, 
-    s2r_apply_delete_pq_request, 
-    s2r_apply_change_pq_value_request, 
+    s2r_accept_join_battle_field = 70,
+
+    s2r_leave_battle_field_request = 71,
+
+    s2r_join_tong_battle_field_queue_request = 72,
+    s2r_leave_tong_battle_field_queue_request = 73,
+    s2r_accept_join_tong_battle_field = 74,
+    s2r_leave_tong_battle_field_request = 75,
+    s2r_join_arena_visitor_queue_request = 76,
+    s2r_leave_arena_visitor_queue_request = 77,
+    s2r_join_arena_queue_request = 78,
+    s2r_leave_arena_queue_request = 79,
+    s2r_accept_join_arena = 80,
+    s2r_leave_arena = 81,
+    s2r_corps_create_request = 82,
+    s2r_corps_destroy_request = 83,
+    s2r_corps_del_member_request = 84,
+    s2r_corps_change_leader_request = 85,
+    s2r_invitation_join_corps_request = 86,
+    s2r_apply_invitation_join_corps = 87,
+    s2r_sync_corps_list_request = 88,
+    s2r_sync_corps_rank_list_request = 89,
+    s2r_sync_corps_base_data_request = 90,
+    s2r_sync_corps_member_data_request = 91,
+    s2r_sync_corps_change_data_request = 92,
+    s2r_update_corps_value = 93,
+    s2r_get_seanson_rank_info_request = 94,
+
+    s2r_apply_create_pq_request = 95,
+    s2r_apply_delete_pq_request = 96,
+    s2r_apply_change_pq_value_request = 97,
     
-    s2r_add_camp_score,
-    s2r_apply_set_camp_request,
+    s2r_add_camp_score = 98,
+    s2r_add_new_camp_fight_value = 99,
+    s2r_set_new_camp_fight_value = 100,
+    s2r_apply_set_camp_request = 101,
+    s2r_sync_camp_active_change = 102,
 
-    s2r_sync_role_data,
-    s2r_save_role_data,
+    s2r_sync_role_data = 103,
+    s2r_save_role_data = 104,
+    s2r_sync_account_data = 105,
+    s2r_save_account_data = 106,
 
     // ---------------- 帮会相关 --------------------------------------
-    s2r_apply_tong_roster_request,
-    s2r_apply_tong_info_request,
-    s2r_apply_tong_repertory_page_request,
-    s2r_apply_create_tong_request,
-    s2r_invite_player_join_tong_request,
-    s2r_invite_player_join_tong_respond,
-    s2r_apply_kick_out_tong_member_request,
-    s2r_modify_tong_info_request,
-    s2r_modify_tong_schema_request,
-    s2r_apply_quit_tong_request,
-    s2r_change_tong_member_group_request,
-    s2r_change_tong_master_request,
-    s2r_change_tong_member_remark_request,
-    s2r_get_tong_description_request,
-    s2r_save_money_in_tong_request,
-    s2r_pay_tong_salary_request,
-    s2r_get_tong_salary_request,
-    s2r_get_tong_salary_fail_respond,
-    s2r_change_tong_camp_request,
+    s2r_apply_tong_roster_request = 107,
+    s2r_apply_tong_info_request = 108,
+    s2r_apply_tong_repertory_page_request = 109,
+    s2r_apply_create_tong_request = 110,
+    s2r_invite_player_join_tong_request = 111,
+    s2r_invite_player_join_tong_respond = 112,
+    s2r_apply_kick_out_tong_member_request = 113,
+    s2r_modify_tong_info_request = 114,
+    s2r_modify_tong_schema_request = 115,
+    s2r_apply_quit_tong_request = 116,
+    s2r_change_tong_member_group_request = 117,
+    s2r_change_tong_master_request = 118,
+    s2r_cancel_change_tong_master = 119,
+    s2r_change_tong_member_remark_request = 120,
+    s2r_get_tong_description_request = 121,
+    s2r_save_money_in_tong_request = 122,
+    s2r_get_tong_salary_request = 123,
+    s2r_get_tong_salary_fail_respond = 124,
+    s2r_change_tong_camp_request = 125,
 
-    s2r_apply_open_tong_repertory_request,
+    s2r_apply_open_tong_repertory_request = 130,
 
-    s2r_take_tong_repertory_item_to_pos_request,
-    s2r_take_tong_repertory_item_request,
-    s2r_take_tong_repertory_item_respond,
+    s2r_take_tong_repertory_item_request = 131,
 
-    s2r_put_tong_repertory_item_to_pos_request,
-    s2r_put_tong_repertory_item_request,
-    s2r_put_tong_repertory_item_respond,
+    s2r_put_tong_repertory_item_request = 132,
 
-    s2r_unlock_tong_repertory_grid,
-    s2r_exchange_tong_repertory_item_pos_request,
+    s2r_exchange_tong_repertory_item_pos_request = 133,
 
-    s2r_apply_stack_tong_repertory_item_request,
-    s2r_stack_tong_repertory_item_request,
+    s2r_apply_stack_tong_repertory_item_request = 104, /* source-only route; target mapping pending */
+    s2r_stack_tong_repertory_item_request = 134,
+
+    s2r_stack_item_in_tong_repertory_request = 135,
+    s2r_tong_tech_tree_produce_item_respond = 136,
+    s2r_return_tong_bind_item = 137,
+    s2r_sync_tong_history_request = 138,
+    s2r_sync_tong_simple_info_request = 139,
+    s2r_update_tong_member_equip_score = 140,
     // ---------------- 寄卖行相关 --------------------------------------
-    s2r_auction_lookup_request,
-    s2r_auction_bid_request,
-    s2r_auction_sell_request,
-    s2r_auction_cancel_request,
+    s2r_auction_lookup_request = 141,
+    s2r_auction_bid_request = 142,
+    s2r_auction_sell_request = 143,
+    s2r_auction_cancel_request = 144,
+    s2r_bm_sell_respond = 145,
+    s2r_bm_lookup_request = 146,
+    s2r_bm_bid_request = 147,
+    s2r_bm_bid_cancel_request = 148,
 
-    s2r_remote_lua_call,
+    s2r_remote_lua_call = 149,
     
-    s2r_achievement_global_announce_request,
+    s2r_achievement_global_announce_request = 150,
 
-    s2r_designation_global_announce_request,
+    s2r_designation_global_announce_request = 151,
 
     // ---------------- 统计数据相关 ------------------------------------
-    s2r_update_stat_data_request,
-    s2r_query_stat_id_request,
-    s2r_map_copy_keep_player,
+    s2r_update_stat_data_request = 152,
+    s2r_query_stat_id_request = 153,
+    s2r_map_copy_keep_player = 154,
+    s2r_sync_new_ext_point_request = 155,
 
-    s2r_change_ext_point_request,
-    s2r_set_charge_flag_request,
-    s2r_active_present_code_request,
+    s2r_change_ext_point_request = 156,
+    s2r_change_new_ext_point_request = 157,
+    s2r_apply_gs_new_ext_point = 158,
+    s2r_sync_gs_new_ext_point = 159,
+    s2r_set_charge_flag_request = 160,
+    s2r_active_present_code_request = 161,
 
-    s2r_apex_protocol,
+    s2r_apex_protocol = 162,
     
-    s2r_report_farmer_player_request,
+    s2r_report_farmer_player_request = 163,
+    s2r_apply_freeze_farmer_reuqest = 164,
+    s2r_apply_coin_operating_flag = 165,
 
-    s2r_game_card_sell_request,
-    s2r_game_card_buy_request,
-    s2r_game_card_lookup_request,
-    s2r_game_card_cancel_request,
+    s2r_game_card_sell_coin_request = 166,
+    s2r_game_card_buy_coin_request = 167,
+    s2r_game_card_lookup_request = 168,
+    s2r_game_card_cancel_request = 169,
+    s2r_game_card_sell_money_request = 170,
+    s2r_game_card_buy_money_request = 171,
+    s2r_coin_shop_buy_item_request = 172,
+    s2r_coin_shop_buy_item_ex_request = 173,
 
-    s2r_apply_mentor_data,
-    s2r_update_max_apprentice_num,
-    s2r_add_mentor_value_request,
+    s2r_apply_mentor_data = 174,
+    s2r_apply_direct_mentor_data = 175,
+    s2r_update_max_apprentice_num = 176,
+    s2r_add_mentor_value_request = 177,
+    s2r_add_ta_equips_score_request = 178,
+    s2r_pickup_ta_equips_score_request = 179,
+    s2r_update_single_dungeon_score = 180,
+    s2r_apply_single_dungeon_score_rank_player_info = 181,
+    s2r_apply_single_dungeon_last_score = 182,
+    s2r_transfer_log = 183,
+    s2r_report_camp_npc_info = 184,
+    s2r_del_camp_npc = 185,
+    s2r_verify_trust_result = 186,
+    s2r_send_clientfile_checksum = 187,
+    s2r_mibao_verify_request = 188,
 
     
-    s2r_protocol_end
+    s2r_protocol_end = 189
+};
+
+// Source-2010 names without target route/handler proof. These values preserve
+// source compatibility only; they are not part of the target contract.
+enum KS2R_LEGACY_SOURCE_ONLY_PROTOCOL
+{
+    s2r_apply_fellowship_player_level_and_forceid = 33,
+    s2r_get_battle_field_list = 68,
+    s2r_pay_tong_salary_request = 91,
+    s2r_take_tong_repertory_item_to_pos_request = 96,
+    s2r_take_tong_repertory_item_respond = 98,
+    s2r_put_tong_repertory_item_to_pos_request = 99,
+    s2r_put_tong_repertory_item_respond = 101,
+    s2r_unlock_tong_repertory_grid = 102,
+    s2r_game_card_sell_request = 119,
+    s2r_game_card_buy_request = 120
 };
 
 // 下行协议定义
@@ -426,7 +507,7 @@ struct S2R_CREATE_MAP_RESPOND : INTERNAL_PROTOCOL_HEADER
 	BOOL		bResult;			
 };
 
-// GameServer对登录请求的应答消息 
+// GameServer对登录请求的应答消息
 struct S2R_PLAYER_LOGIN_RESPOND : INTERNAL_PROTOCOL_HEADER
 {
 	DWORD		dwPlayerID;
