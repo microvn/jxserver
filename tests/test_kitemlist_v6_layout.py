@@ -21,11 +21,11 @@ class KItemListV6LayoutTest(unittest.TestCase):
         source = SOURCE.read_text(encoding="gbk")
         v6 = source.split("if (bVersion6)", 1)[1].split("else", 1)[0]
 
-        # Regression: the live v6 role block stores ten bytes between the
-        # bank count and the item count; reading at +9 produced zero items.
-        self.assertIn("uLeftSize >= 10", v6)
-        self.assertIn("uLeftSize -= 10", v6)
-        self.assertIn("pbyOffset += 10", v6)
+        # Regression: target V6 stores three bytes between bank count and the
+        # item count; the old ten-byte skip left the parser misaligned.
+        self.assertIn("uLeftSize >= 3", v6)
+        self.assertIn("uLeftSize -= 3", v6)
+        self.assertIn("pbyOffset += 3", v6)
 
 
 if __name__ == "__main__":

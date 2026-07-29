@@ -2284,15 +2284,15 @@ BOOL KItemList::Load(BYTE* pbyData, size_t uDataLen, int nVersion)
 
     if (bVersion6)
     {
-        /* V6 role data: bank count, ten-byte state prefix, item count. */
+        /* Target V6: bank count, three state bytes, then item count. */
         KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD));
         m_nEnabledBankPackageCount = *(WORD*)pbyOffset;
         uLeftSize -= sizeof(WORD);
         pbyOffset += sizeof(WORD);
         g_PlayerServer.DoSyncEnableBankPackage(m_pPlayer->m_nConnIndex, m_nEnabledBankPackageCount);
-        KGLOG_PROCESS_ERROR(uLeftSize >= 10);
-        uLeftSize -= 10;
-        pbyOffset += 10;
+        KGLOG_PROCESS_ERROR(uLeftSize >= 3);
+        uLeftSize -= 3;
+        pbyOffset += 3;
         KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD));
         nItemCount = *(WORD*)pbyOffset;
         uLeftSize -= sizeof(WORD);

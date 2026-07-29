@@ -22,13 +22,14 @@
 #   CHẶN 9001/5003/3306/5100 khỏi internet — host-net không có cô lập Docker,
 #   firewall là tuyến bảo vệ DUY NHẤT.
 #
-# Usage: [PUBIP=1.2.3.4] [GSBIN=SO3GameServer] cluster-vps.sh up|down|status|logs
+# Usage: [PUBIP=1.2.3.4] [GSBIN=SO3GameServer_STOCK_DONTREMOVE] cluster-vps.sh up|down|status|logs
 set -u
 : "${PUBIP:?set PUBIP to the public server IP}"
 : "${MYSQL_ROOT_PASSWORD:?set MYSQL_ROOT_PASSWORD before starting the cluster}"
 PUBIP=$PUBIP
-GSBIN=${GSBIN:-SO3GameServer}          # gốc: SO3GameServer | rebuild: SO3GameServer_ours
+GSBIN=${GSBIN:-SO3GameServer_STOCK_DONTREMOVE} # stock; rebuild: explicit candidate name
 DEPLOY=/root/jx3/镜像端/extracted/root
+DBROOT=${DBROOT:-/root/jx3/mysql56-data}
 SD="$(cd "$(dirname "$0")" && pwd)"
 CONF="$SD/vps-conf"
 RUN="$SD/vps-conf/.run"
@@ -39,6 +40,9 @@ gen_conf(){
   sed -i "s/__PUBIP__/$PUBIP/g" "$RUN/gs_settings.ini"
   esc_mysql_password=$(printf '%s' "$MYSQL_ROOT_PASSWORD" | sed 's/[\\/&]/\\\\&/g')
   sed -i "s/__MYSQL_ROOT_PASSWORD__/$esc_mysql_password/g" "$RUN/relay_settings.ini"
+}
+ensure_dbroot(){
+  mkdir -p "$DBROOT"
 }
 MNT(){ echo "-v $RUN/gateway.ini:/deploy/gateway.ini -v $RUN/gs_settings.ini:/deploy/gs_settings.ini -v $RUN/relay_settings.ini:/deploy/relay_settings.ini"; }
 
@@ -58,24 +62,54 @@ run(){ # $1=container name  $2=binary
     -v "$DEPLOY":/deploy $(MNT) jx3build bash -c \
     "localedef -c -f GBK -i zh_CN zh_CN.gbk 2>/dev/null||true; cd /deploy; export LC_ALL=zh_CN.gbk LD_LIBRARY_PATH=.; ./$2 >/tmp/$1.log 2>&1; sleep 10; while pgrep -x '$m' >/dev/null 2>&1; do sleep 15; done" >/dev/null
 }
-
-case "${1:-}" in
- up)
-  docker rm -f jx3mysql jx3center jx3gw jx3gs 2>/dev/null
-  gen_conf
-  echo "PUBIP=$PUBIP  GSBIN=$GSBIN  (client nối login tới $PUBIP:5004)"
+up_mysql(){
+  ensure_dbroot
+  docker rm -f jx3mysql 2>/dev/null
   docker run -d --name jx3mysql --network host --cap-add=NET_ADMIN --restart unless-stopped \
+    -v "$DBROOT":/var/lib/mysql \
     -e MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PASSWORD" -e MYSQL_DATABASE=jx3_25 \
     mysql:5.6 --lower-case-table-names=1 --max-allowed-packet=20M --bind-address=127.0.0.1 >/dev/null
   echo -n "mysql init"; for i in $(seq 1 40); do sleep 2; docker exec -e MYSQL_PWD="$MYSQL_ROOT_PASSWORD" jx3mysql mysqladmin -uroot ping 2>/dev/null|grep -q alive && break; echo -n .; done; echo
   docker exec -e MYSQL_PWD="$MYSQL_ROOT_PASSWORD" jx3mysql mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'127.0.0.1' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD'; GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD'; FLUSH PRIVILEGES;" 2>/dev/null
+}
+up_app(){
+  gen_conf
+  docker rm -f jx3center jx3gw jx3gs 2>/dev/null
   run jx3center SO3GameCenter; echo "center up"; sleep 16
   run jx3gw SO3Gateway;        echo "gateway up"; sleep 8
   run jx3gs "$GSBIN";          echo "gameserver up ($GSBIN)"
   fw_on; echo "firewall: 5003 blocked from public (5004+3113 open)"
+}
+down_app(){
+  docker rm -f jx3center jx3gw jx3gs 2>/dev/null
+  fw_off
+  echo down-app
+}
+restart_gs(){
+  gen_conf
+  docker rm -f jx3gs 2>/dev/null
+  run jx3gs "$GSBIN"
+  echo "gameserver restarted ($GSBIN)"
+}
+
+case "${1:-}" in
+ up)
+  echo "PUBIP=$PUBIP  GSBIN=$GSBIN  (client nối login tới $PUBIP:5004)"
+  down_app
+  docker rm -f jx3mysql 2>/dev/null
+  up_mysql
+  up_app
   ;;
- down) docker rm -f jx3mysql jx3center jx3gw jx3gs 2>/dev/null; fw_off; echo down;;
+ up-app)
+  echo "PUBIP=$PUBIP  GSBIN=$GSBIN  (app tier only)"
+  up_app
+  ;;
+ down) down_app; docker rm -f jx3mysql 2>/dev/null; echo down;;
+ down-app) down_app;;
+ restart-gs)
+  restart_gs
+  ;;
  status) docker ps --filter name=jx3 --format "{{.Names}}: {{.Status}}"; for c in jx3center jx3gw jx3gs; do echo -n "$c procs="; docker exec "$c" pgrep -c "SO3" 2>/dev/null||echo 0; done;;
  logs) cd "$DEPLOY"; for d in SO3GameCenter SO3Gateway SO3GameServer; do echo "=== $d ==="; L=$(ls -t logs/$d/*/*.log 2>/dev/null|head -1); grep -avE "]:Get" "$L" 2>/dev/null|tail -8; done;;
- *) echo "usage: [PUBIP=1.2.3.4] [GSBIN=SO3GameServer] $0 up|down|status|logs";;
+ *) echo "usage: [PUBIP=1.2.3.4] [MYSQL_ROOT_PASSWORD=...] [GSBIN=SO3GameServer_STOCK_DONTREMOVE] $0 up|up-app|down|down-app|restart-gs|status|logs";;
 esac
