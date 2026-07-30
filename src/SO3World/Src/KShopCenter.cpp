@@ -95,8 +95,6 @@ BOOL KShopCenter::BindNpcShop(KNpc* pNpc, DWORD dwTemplateID)
     pair<KSHOP_LIST::iterator, bool>   InsRet;
 
     assert(pNpc);
-    KGLOG_PROCESS_ERROR(!pNpc->m_pShop);
-
     it = m_NpcShopTemplateTable.find(dwTemplateID);
     if (it == m_NpcShopTemplateTable.end())
     {
@@ -180,7 +178,9 @@ BOOL KShopCenter::BindNpcShop(KNpc* pNpc, DWORD dwTemplateID)
     pNewShop->m_pNpc              = pNpc;
     pNewShop->m_bCanRepair        = pShopTemplate->bCanRepair;
 
-    pNpc->m_pShop = pNewShop;
+    pNpc->m_vShopList.push_back(pNewShop);
+    if (!pNpc->m_pShop)
+        pNpc->m_pShop = pNewShop;
     
     bResult = true;
 Exit0:
@@ -205,19 +205,21 @@ Exit0:
 BOOL KShopCenter::UnbindNpcShop(KNpc* pNpc)
 {
     BOOL                    bResult     = false;
-    DWORD                   dwShopID    = 0;
-    KShop*                  pShop       = NULL;
-    KSHOP_LIST::iterator    it;
+    std::vector<KShop*>     shops;
     
     KGLOG_PROCESS_ERROR(pNpc);
 
-    pShop = pNpc->m_pShop;
-    KG_PROCESS_ERROR(pShop);
-
-    dwShopID = pShop->m_dwShopID;
-    
-    pShop->UnInit();
-    m_ShopList.erase(dwShopID);
+    shops.swap(pNpc->m_vShopList);
+    for (size_t i = 0; i < shops.size(); ++i)
+    {
+        if (shops[i])
+        {
+            DWORD dwShopID = shops[i]->m_dwShopID;
+            shops[i]->UnInit();
+            m_ShopList.erase(dwShopID);
+        }
+    }
+    pNpc->m_pShop = NULL;
 
     bResult = true;
 Exit0:
@@ -374,8 +376,21 @@ BOOL KShopCenter::LoadNpcShopTemplateItems(KNPC_SHOP_TEMPLATE* pShopTemplate, co
         nRetCode = pNPCShopConfigFile->GetInteger(nLine, "Price", -1, &pShopItem->nPrice);
         (void)nRetCode; /*[endgame] tolerant*/
 
-        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "Coin", 0, &pShopItem->nCoin);   // v2.5: yuanbao price
-        (void)nRetCode; /*[endgame] tolerant*/
+        // Target v2.5.2 stores the yuanbao amount in KNPC_SHOP_TEMPLATE_ITEM::nCoin
+        // (DWARF offset 0x1c), and its loader names the canonical column "Coin".
+        // The deployed v2.5.2 shop tables use the older exported header
+        // CoinType1/CoinAmount1.  CoinType1 has no target field or target use in
+        // LoadLine; only CoinAmount1 is the amount-compatible alias.
+        int nCoinColumn = pNPCShopConfigFile->FindColumn("Coin");
+        if (nCoinColumn <= 0)
+        {
+            nCoinColumn = pNPCShopConfigFile->FindColumn("CoinAmount1");
+        }
+        if (nCoinColumn > 0)
+        {
+            nRetCode = pNPCShopConfigFile->GetInteger(nLine, nCoinColumn, 0, &pShopItem->nCoin);
+            (void)nRetCode; /*[endgame] tolerant*/
+        }
 
         // v2.5 relaxed: an item must have a money OR a yuanbao price (currency-only still needs one).
         KGLOG_PROCESS_ERROR(pShopItem->nPrice > 0 || pShopItem->nCoin > 0);

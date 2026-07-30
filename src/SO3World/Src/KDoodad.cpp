@@ -861,8 +861,11 @@ KLootList* KDoodad::GenerateLootListFromNpc(KPlayer* pDropTarget, KNpc* pNpc)
     if (pNpc->m_bDropNotQuestItemFlag && bCanDrop)
     {
         // µØÍ¼µôÂä
-        bRetCode = g_pSO3World->m_DropCenter.NpcMapDrop(pLootList, vecLooterList, m_pScene->m_dwMapID);
-        KGLOG_PROCESS_ERROR(bRetCode);
+        for (DWORD dwDropIndex = 0; dwDropIndex < 8; ++dwDropIndex)
+        {
+            bRetCode = g_pSO3World->m_DropCenter.NpcMapDrop(pLootList, vecLooterList, m_pScene->m_dwMapID, dwDropIndex, pNpc->m_nLevel, (DWORD)pNpc->m_eSpecies);
+            KGLOG_PROCESS_ERROR(bRetCode);
+        }
 
         // ·ÖÀàµôÂä
         if (pNpc->m_pTemplate->nDropClassID != 0)

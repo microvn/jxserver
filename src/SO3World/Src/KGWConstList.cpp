@@ -14,6 +14,7 @@
 #define SECTION_MISC        "MISC"
 #define SECTION_CAMP        "CAMP"
 #define SECTION_TALK        "TALK"
+#define SECTION_MENTOR      "MENTOR"
 #define SECTION_THREAT_RANK "THREAT_RANK"
 #define SECTION_CHARGE      "CHARGE"
 #define SECTION_ACHIEVEMENT "ACHIEVEMENT"
@@ -272,6 +273,9 @@ BOOL KGWConstList::LoadData(IIniFile* piIniFile)
     nRetCode = piIniFile->GetInteger(SECTION_TALK, "MentorChannelCoolDownID", 0, &nMentorChannelCoolDownID);
     (void)nRetCode; /*[endgame] tolerant*/
 
+    nRetCode = piIniFile->GetInteger(SECTION_MENTOR, "MaxUsableMentorValue", 0x7fffffff, &nMaxUsableMentorValue);
+    (void)nRetCode; /*[endgame] tolerant*/
+
     nRetCode = piIniFile->GetInteger(SECTION_TALK, "FriendsChannelCoolDownID", 0, &nFriendsChannelCoolDownID);
     (void)nRetCode; /*[endgame] tolerant*/
 
@@ -385,4 +389,3 @@ BOOL KGWConstList::LoadData(IIniFile* piIniFile)
 Exit0:
 	return bResult;
 }
-

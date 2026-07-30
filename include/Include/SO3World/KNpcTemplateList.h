@@ -14,17 +14,31 @@
 #include "Luna.h"
 
 #include <map>
+#include <stddef.h>
 
 #define MAX_NPC_REPRESENT_ID_COUNT 10
 #define MAX_NPC_DIALOG_COUNT 3			//Npc���ϵ�����Ի�����
 #define MAX_NPC_DIALOG_LEN	1024
 #define MAX_OPTION_TEXT_LEN	128
+#define NPC_SHOP_OPTION_TEXT_LEN 256
 #define MAX_NPC_REPUTATION	4			//ÿ��Npc����Ӱ�����������
 
 class KNpc;
 
+struct KSHOP_INFO
+{
+    int   nShopRequireReputeLevel;
+    DWORD dwShopTemplateID[16];
+    char* pszShopOptionText[16];
+};
+
+typedef char KSHOP_INFO_TARGET_SIZE[(sizeof(KSHOP_INFO) == 0x84) ? 1 : -1];
+typedef char KSHOP_INFO_TARGET_IDS[(offsetof(KSHOP_INFO, dwShopTemplateID) == 0x04) ? 1 : -1];
+typedef char KSHOP_INFO_TARGET_TEXT[(offsetof(KSHOP_INFO, pszShopOptionText) == 0x44) ? 1 : -1];
+
 struct KNpcTemplate
 {
+	char* GetShopOptionText(DWORD dwShopID);
 	DWORD						dwTemplateID;
 	char						szName[_NAME_LEN];		    // ��ɫ��
 #ifdef _CLIENT
@@ -97,6 +111,7 @@ struct KNpcTemplate
     DWORD                       dwImmunityMask;             // Boss���� ��������
 
 #if defined(_SERVER)
+    KSHOP_INFO*                 pShopInfo;
     BOOL                        bDropNotQuestItemFlag;      // ��ʾ���NPC����Ҵ�����NPC,����NPC�Ƿ�Ҫ������������
 	char						szDropName[MAX_DROP_PER_NPC][MAX_PATH];//������ļ���
 	int							nDropCount[MAX_DROP_PER_NPC];
@@ -139,6 +154,9 @@ struct KNpcTemplate
 	DWORD						dwCraftMasterID;
 	BOOL						bHasBank;
 	BOOL						bHasMailBox;
+    BOOL                        bHasCubPackage;
+    char                        szCubPackageOptionText[MAX_OPTION_TEXT_LEN];
+    int                         nCubPackageRequireReputeLevel;
     BOOL                        bHasAuction;
     BOOL                        bHasTongRepertory;
     BOOL                        bHasGameCardSale;
@@ -224,10 +242,17 @@ private:
 	typedef std::map<DWORD, KNpcTemplate*> KNPC_TEMPLATE_LIST;
 	KNPC_TEMPLATE_LIST	m_mapNpcTemplateList;
 	KNpcTemplate		m_DefaultNpcTemplate;
+	KSHOP_INFO           m_DefaultShopInfo;
+	std::map<DWORD, KSHOP_INFO> m_TmpNpcTemplateShopInfoList;
 	KNpcTemplate*		m_pNpcTemplateList;
 	int					m_nNpcTemplateCount;
+	int                 m_nLoadNpcTemplateIndex;
 
 	BOOL LoadNpcTemplate(int nIndex, ITabFile* piTabFile, KNpcTemplate& fNpcTemplate);
+	BOOL LoadNpcTemplateShopInfo(std::map<DWORD, KSHOP_INFO>& shopInfoList);
+	BOOL LoadOptionText(ITabFile* piTabFile, int nIndex, const char* pszColumn, char** ppszText);
+	BOOL LoadNpcTemplateTabList(void);
+	BOOL LoadNpcTemplateTab(char* pszFilePath, int bDefault);
 };
 
 // Npc��������ľ�������ǿ�Ⱥ;���������

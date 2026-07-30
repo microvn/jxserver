@@ -25,7 +25,7 @@ public:
     void UnInit();
 
     BOOL Save(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
-    BOOL Load(BYTE* pbyData, size_t uDataLen);
+    BOOL Load(BYTE* pbyData, size_t uDataLen, unsigned long nVersion);
 
     BOOL Acquire(DWORD dwID);        // validate (shop + force gate) then add
     BOOL CanAcquire(DWORD dwID);     // exists in config + force matches
@@ -46,7 +46,8 @@ private:
     BOOL _Add(DWORD dwID);           // raw insert (Load path), no validation
 
 private:
-    std::set<DWORD> m_MiniAvatarSet; // +0x00  acquired ids
+    typedef std::set<DWORD, std::less<DWORD>, KMemory::KAllocator<DWORD> > KMINI_AVATAR_SET;
+    KMINI_AVATAR_SET m_MiniAvatarSet; // +0x00  acquired ids
     KPlayer*        m_pPlayer;       // +0x18
 };
 

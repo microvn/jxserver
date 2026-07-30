@@ -23,6 +23,9 @@
 #include "KPlayerServer.h"
 #include "Engine/KTextFilter.h"
 #include "KMailDef.h"
+#ifdef _SERVER
+#include "KActivityMgrServer.h"
+#endif
 
 namespace KScriptFuncList
 {
@@ -31,6 +34,13 @@ namespace KScriptFuncList
 	{
 		return 0;
 	}
+
+#ifdef _SERVER
+    int LuaGetActivityMgrServer(Lua_State* L)
+    {
+        return g_pSO3World->m_ActivityMgrServer.LuaGetObj(L);
+    }
+#endif
 
 	/************************************************************************/
 	/* ����˺Ϳͻ��˹����ű�����                                           */
@@ -4834,6 +4844,9 @@ Exit0:
 	{
 		{"Test",					LuaTest},
         {"GetCurrentTime",          LuaGetCurrentTime},
+#ifdef _SERVER
+        {"GetActivityMgrServer",      LuaGetActivityMgrServer},
+#endif
 		{"GetTimezone",             LuaGetTimezone},
 		{"TimeToDate",              LuaTimeToDate},
 		{"DateToTime",			    LuaDateToTime},

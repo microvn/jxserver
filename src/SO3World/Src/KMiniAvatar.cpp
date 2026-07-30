@@ -81,7 +81,7 @@ BOOL KMiniAvatar::Save(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize)
     BOOL   bResult   = false;
     BYTE*  pbyOffset = pbyBuffer;
     BYTE*  pbyTail   = pbyBuffer + uBufferSize;
-    std::set<DWORD>::iterator it;
+    KMINI_AVATAR_SET::iterator it;
 
     KGLOG_PROCESS_ERROR(puUsedSize && m_pPlayer);
 
@@ -102,7 +102,7 @@ Exit0:
     return bResult;
 }
 
-BOOL KMiniAvatar::Load(BYTE* pbyData, size_t uDataLen)
+BOOL KMiniAvatar::Load(BYTE* pbyData, size_t uDataLen, unsigned long nVersion)
 {
     BOOL   bResult   = false;
     BYTE*  pbyOffset = pbyData;
@@ -112,6 +112,7 @@ BOOL KMiniAvatar::Load(BYTE* pbyData, size_t uDataLen)
     WORD   i         = 0;
 
     KGLOG_PROCESS_ERROR(pbyData && m_pPlayer);
+    KGLOG_PROCESS_ERROR(nVersion <= 1);
 
     KGLOG_PROCESS_ERROR((size_t)(pbyTail - pbyOffset) >= sizeof(WORD) * 2);
     wWornID = *(WORD*)pbyOffset; pbyOffset += sizeof(WORD);

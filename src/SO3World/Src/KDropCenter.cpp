@@ -41,7 +41,9 @@ BOOL KDropCenter::UnInit(void)
 	for (int nDropIndex = 0; nDropIndex < MAX_DROP_PER_NPC; nDropIndex++)
 		m_mapNpcTemplateID2DropList[nDropIndex].clear();
 	m_mapNpcClassID2DropList.clear();
-	m_mapMapID2DropList.clear();
+	m_mapMapDropID2MapDropTabItem.clear();
+	for (int nDropIndex = 0; nDropIndex < 8; nDropIndex++)
+		m_mapMapDropID2DropList[nDropIndex].clear();
 
 	for (int nDropIndex = 0; nDropIndex < MAX_DROP_PER_DOODAD; nDropIndex++)
 	{
@@ -59,18 +61,42 @@ BOOL KDropCenter::UnInit(void)
 	return true;
 }
 
-BOOL KDropCenter::NpcMapDrop(KLootList* pLootList, std::vector<DWORD>& vecLooterList, DWORD dwMapID)
+BOOL KDropCenter::NpcMapDrop(
+    KLootList* pLootList, std::vector<DWORD>& vecLooterList,
+    DWORD dwMapID, DWORD dwDropIndex, int nLevel, DWORD dwMapDropType
+)
 {
     BOOL            bResult     = false;
 	BOOL			bRetCode	= false;
 	KItem*			pItem		= NULL;
 	DROP_DATA		DropData;
-	MAP_DWORD_2_DROP_LIST::iterator it;
-	
-	it = m_mapMapID2DropList.find(dwMapID);
-	KG_PROCESS_SUCCESS(it == m_mapMapID2DropList.end());
+	KMapParams*     pMapParams  = NULL;
+	MAP_DWORD_2_MAP_DROP_TAB_ITEM::iterator itMapDrop;
+	MAP_INT64_2_DROP_LIST::iterator itDropList;
+	DWORD           dwMapDropID = 0;
+	uint64_t        qwKey       = 0;
 
-	pItem = it->second.GetRandomItem(DropData);
+	KG_PROCESS_ERROR(pLootList);
+	KG_PROCESS_ERROR(dwMapID != 0);
+	KG_PROCESS_ERROR(dwDropIndex < 8);
+
+	pMapParams = g_pSO3World->m_Settings.m_MapListFile.GetMapParamByID(dwMapID);
+	KG_PROCESS_SUCCESS(pMapParams == NULL);
+	dwMapDropID = pMapParams->dwMapDropID;
+	KG_PROCESS_SUCCESS(dwMapDropID == 0);
+
+	itMapDrop = m_mapMapDropID2MapDropTabItem.find(dwMapDropID);
+	KG_PROCESS_SUCCESS(itMapDrop == m_mapMapDropID2MapDropTabItem.end());
+	KG_PROCESS_SUCCESS(itMapDrop->second.bUsable[dwDropIndex] == 0);
+	KG_PROCESS_SUCCESS(
+	    (itMapDrop->second.dwMapDropTypeMask[dwDropIndex] & (DWORD(1) << dwMapDropType)) == 0
+	);
+
+	qwKey = MAKE_INT64(dwMapDropID, nLevel);
+	itDropList = m_mapMapDropID2DropList[dwDropIndex].find(qwKey);
+	KG_PROCESS_SUCCESS(itDropList == m_mapMapDropID2DropList[dwDropIndex].end());
+
+	pItem = itDropList->second.GetRandomItem(DropData);
 	if (pItem)
 	{
 		bRetCode = AddItemToLootList(pLootList, pItem, DropData, vecLooterList);
@@ -250,7 +276,7 @@ int KDropCenter::NpcDropMoney(DWORD dwNpcTemplateID)
 	pNpcTemplate = g_pSO3World->m_Settings.m_NpcTemplateList.GetTemplate(dwNpcTemplateID);
 	KGLOG_PROCESS_ERROR(pNpcTemplate);
 
-	//ƒ£∞Â
+	//Ê®°Êùø
 	{
 		MAP_DWORD_2_MONEY_DROP_LIST::iterator it = m_mapNpcTemplateID2MoneyDropList.find(dwNpcTemplateID);
 
@@ -262,7 +288,7 @@ int KDropCenter::NpcDropMoney(DWORD dwNpcTemplateID)
 		}
 	}
 
-	//∑÷¿‡
+	//ÂàÜÁ±ª
 	{
 		nKey = MAKE_INT64(pNpcTemplate->nDropClassID, pNpcTemplate->nLevel);
 
@@ -291,7 +317,7 @@ int KDropCenter::DoodadDropMoney(DWORD dwDoodadTempalteID)
 	pDoodadTemplate = g_pSO3World->m_Settings.m_DoodadTemplateList.GetTemplate(dwDoodadTempalteID);
 	KGLOG_PROCESS_ERROR(pDoodadTemplate);
 
-	//ƒ£∞Â
+	//Ê®°Êùø
 	{
 		MAP_DWORD_2_MONEY_DROP_LIST::iterator it = m_mapDoodadTemplateID2MoneyDropList.find(dwDoodadTempalteID);
 
@@ -305,7 +331,7 @@ int KDropCenter::DoodadDropMoney(DWORD dwDoodadTempalteID)
 		}
 	}
 
-	//∑÷¿‡
+	//ÂàÜÁ±ª
 	{
 		nKey = MAKE_INT64(pDoodadTemplate->m_dwClassID, pDoodadTemplate->m_nLevel);
 
@@ -517,55 +543,142 @@ Exit0:
 
 BOOL KDropCenter::MapDropInit(void)
 {
-    BOOL             bResult  = false;
-    BOOL             bRetCode = false;
-    KMAP_PARAM_TABLE MapList  = g_pSO3World->m_Settings.m_MapListFile.GetMapList();
+    BOOL bResult = false;
+    BOOL bRetCode = false;
+    ITabFile* pMapDropTab = NULL;
+    char szMapDropTab[MAX_PATH];
+    char szFileName[MAX_PATH];
+    char szDropName[MAX_PATH];
+    char szColumn[32];
+    std::map<uint64_t, DWORD> DropCounts[8];
 
-	for (KMAP_PARAM_TABLE::iterator it = MapList.begin(); it != MapList.end(); ++it)
-	{
-        KMapParams*         pMapParams  = NULL;
-        KDropList*          pDropList   = NULL;
-        char                szFileName[MAX_PATH];
-		KIndividualDropList IndividualDropList;
-		KDropList           DropList;
-  		std::pair<MAP_DWORD_2_DROP_LIST::iterator, bool> InsRet;
+    m_mapMapDropID2MapDropTabItem.clear();
+    for (int nDropIndex = 0; nDropIndex < 8; ++nDropIndex)
+        m_mapMapDropID2DropList[nDropIndex].clear();
 
-        pMapParams = &it->second;
+    snprintf(szMapDropTab, sizeof(szMapDropTab), "%s/%s", SETTING_DIR, "MapDrop.tab");
+    szMapDropTab[sizeof(szMapDropTab) - 1] = '\0';
+    pMapDropTab = g_OpenTabFile(szMapDropTab);
+    KG_PROCESS_ERROR(pMapDropTab);
 
-		if (pMapParams->szDropName[0] == '\0')
-			continue;
+    /* Target iterates MapDrop.tab itself. MapList.MapDrop is only a runtime
+     * reference and may contain an ID absent from this master table. */
+    for (int nRow = 2; nRow <= pMapDropTab->GetHeight(); ++nRow)
+    {
+        int nMapDropID = 0;
+        KMapDropTabItem MapDropItem;
+        std::pair<MAP_DWORD_2_MAP_DROP_TAB_ITEM::iterator, bool> InsRet;
+        ZeroMemory(&MapDropItem, sizeof(MapDropItem));
 
-		snprintf(szFileName, sizeof(szFileName), "%s/%s/%s", SETTING_DIR, DROP_LIST_DIR, pMapParams->szDropName);
-        szFileName[sizeof(szFileName) - 1] = '\0';
+        bRetCode = pMapDropTab->GetInteger(nRow, "ID", 0, &nMapDropID);
+        KGLOG_PROCESS_ERROR(bRetCode && nMapDropID > 0);
 
-		bRetCode = IndividualDropList.Init(szFileName);
-		if (!bRetCode) continue; /* [drift 2.5.2] map-drop redesigned: MapList.MapDrop is a MapDropID into settings/MapDrop.tab (MapDrop1..8/DropType1..8), NOT a filename. TODO: port MapDrop.tab indirection. Tolerant-skip for now. */
+        for (int nDropIndex = 0; nDropIndex < 8; ++nDropIndex)
+        {
+            int nDropType = -1;
+            snprintf(szColumn, sizeof(szColumn), "MapDrop%d", nDropIndex + 1);
+            bRetCode = pMapDropTab->GetString(nRow, szColumn, "", szDropName, sizeof(szDropName));
+            KGLOG_PROCESS_ERROR(bRetCode);
+            if (szDropName[0] == '\0')
+                continue;
 
-		InsRet = m_mapMapID2DropList.insert(std::make_pair(it->first, DropList));
-		KGLOG_PROCESS_ERROR(InsRet.second);
-        
-        pDropList = &(InsRet.first->second);
+            snprintf(szColumn, sizeof(szColumn), "DropType%d", nDropIndex + 1);
+            bRetCode = pMapDropTab->GetInteger(nRow, szColumn, -1, &nDropType);
+            KGLOG_PROCESS_ERROR(bRetCode && nDropType >= 0);
 
-		bRetCode = pDropList->Init(IndividualDropList.GetSize());
-		KGLOG_PROCESS_ERROR(bRetCode);
+            for (char* psz = szDropName; *psz != '\0'; ++psz)
+                if (*psz == '\\') *psz = '/';
 
-		for (DWORD dwIndex = 0; dwIndex < IndividualDropList.GetSize(); dwIndex++)
-		{
-			DROP_DATA DropData;
+            MapDropItem.bUsable[nDropIndex] = 1;
+            MapDropItem.dwMapDropTypeMask[nDropIndex] = (DWORD)nDropType;
+            snprintf(MapDropItem.MapDropName[nDropIndex], MAX_PATH, "%s", szDropName);
+        }
 
-			bRetCode = IndividualDropList.GetData(dwIndex, DropData);
-			KGLOG_PROCESS_ERROR(bRetCode);
+        InsRet = m_mapMapDropID2MapDropTabItem.insert(std::make_pair((DWORD)nMapDropID, MapDropItem));
+        KGLOG_PROCESS_ERROR(InsRet.second);
+    }
 
-			bRetCode = pDropList->AddItem(DropData);
-			KGLOG_PROCESS_ERROR(bRetCode);
-		}
+    /* First pass reserves the exact capacity for every (slot, type, level)
+     * list, including rows from multiple MapDrop IDs. */
+    for (MAP_DWORD_2_MAP_DROP_TAB_ITEM::iterator it = m_mapMapDropID2MapDropTabItem.begin();
+         it != m_mapMapDropID2MapDropTabItem.end(); ++it)
+    {
+        for (int nDropIndex = 0; nDropIndex < 8; ++nDropIndex)
+        {
+            if (!it->second.bUsable[nDropIndex]) continue;
+            snprintf(szFileName, sizeof(szFileName), "%s/%s/%s", SETTING_DIR, DROP_LIST_DIR,
+                     it->second.MapDropName[nDropIndex]);
+            KLevelDropList LevelDropList;
+            bRetCode = LevelDropList.Init(szFileName);
+            KGLOG_PROCESS_ERROR(bRetCode);
+            for (DWORD dwIndex = 0; dwIndex < LevelDropList.GetSize(); ++dwIndex)
+            {
+                LEVEL_DROP_DATA LevelDropData;
+                bRetCode = LevelDropList.GetData(dwIndex, LevelDropData);
+                KGLOG_PROCESS_ERROR(bRetCode);
+                uint64_t qwKey = ((uint64_t)it->first << 32) |
+                                 (DWORD)LevelDropData.nLevel;
+                DropCounts[nDropIndex][qwKey]++;
+            }
+        }
+    }
 
-		bRetCode = pDropList->PreProcess();
-		KGLOG_PROCESS_ERROR(bRetCode);		
-	}
+    for (int nDropIndex = 0; nDropIndex < 8; ++nDropIndex)
+    {
+        for (std::map<uint64_t, DWORD>::iterator it = DropCounts[nDropIndex].begin();
+             it != DropCounts[nDropIndex].end(); ++it)
+        {
+            std::pair<MAP_INT64_2_DROP_LIST::iterator, bool> InsRet;
+            InsRet = m_mapMapDropID2DropList[nDropIndex].insert(
+                std::make_pair(it->first, KDropList()));
+            KGLOG_PROCESS_ERROR(InsRet.second);
+            bRetCode = InsRet.first->second.Init(it->second);
+            KGLOG_PROCESS_ERROR(bRetCode);
+        }
+    }
+
+    /* Second pass fills the target-shaped lists; each list is preprocessed
+     * independently, so unrelated slots/types never corrupt its rate sum. */
+    for (MAP_DWORD_2_MAP_DROP_TAB_ITEM::iterator it = m_mapMapDropID2MapDropTabItem.begin();
+         it != m_mapMapDropID2MapDropTabItem.end(); ++it)
+    {
+        for (int nDropIndex = 0; nDropIndex < 8; ++nDropIndex)
+        {
+            if (!it->second.bUsable[nDropIndex]) continue;
+            snprintf(szFileName, sizeof(szFileName), "%s/%s/%s", SETTING_DIR, DROP_LIST_DIR,
+                     it->second.MapDropName[nDropIndex]);
+            KLevelDropList LevelDropList;
+            bRetCode = LevelDropList.Init(szFileName);
+            KGLOG_PROCESS_ERROR(bRetCode);
+            for (DWORD dwIndex = 0; dwIndex < LevelDropList.GetSize(); ++dwIndex)
+            {
+                LEVEL_DROP_DATA LevelDropData;
+                bRetCode = LevelDropList.GetData(dwIndex, LevelDropData);
+                KGLOG_PROCESS_ERROR(bRetCode);
+                uint64_t qwKey = ((uint64_t)it->first << 32) |
+                                 (DWORD)LevelDropData.nLevel;
+                MAP_INT64_2_DROP_LIST::iterator itDropList =
+                    m_mapMapDropID2DropList[nDropIndex].find(qwKey);
+                KGLOG_PROCESS_ERROR(itDropList != m_mapMapDropID2DropList[nDropIndex].end());
+                bRetCode = itDropList->second.AddItem(LevelDropData);
+                KGLOG_PROCESS_ERROR(bRetCode);
+            }
+        }
+    }
+
+    for (int nDropIndex = 0; nDropIndex < 8; ++nDropIndex)
+    {
+        for (MAP_INT64_2_DROP_LIST::iterator it = m_mapMapDropID2DropList[nDropIndex].begin();
+             it != m_mapMapDropID2DropList[nDropIndex].end(); ++it)
+        {
+            bRetCode = it->second.PreProcess();
+            KGLOG_PROCESS_ERROR(bRetCode);
+        }
+    }
 
     bResult = true;
 Exit0:
+    KG_COM_RELEASE(pMapDropTab);
     return bResult;
 }
 
@@ -873,7 +986,7 @@ BOOL KDropCenter::GetNeedQuestItemPlayer(
             continue;
         }
 
-        if (nQuestPhase != 1) // »Áπ˚ «“—Ω”Œ¥ÕÍ≥…ªπ“™ºÏ≤È»ŒŒÒŒÔ∆∑ «∑Ò“—æ≠◊„πª
+        if (nQuestPhase != 1) // Â¶ÇÊûúÊòØÂ∑≤Êé•Êú™ÂÆåÊàêËøòË¶ÅÊ£ÄÊü•‰ªªÂä°Áâ©ÂìÅÊòØÂê¶Â∑≤ÁªèË∂≥Â§ü
         {
             vecNeedQuestItemPlayer.push_back(pLooter->m_dwID);
             continue;
@@ -973,7 +1086,7 @@ BOOL KDropCenter::AddItemToLootList(
             goto Exit0;
         }
                
-        if (DropData.dwQuestID != 0) // ∏˙»ŒŒÒ”–πÿµƒNpcµÙ¬‰£¨…Ë÷√≥…–Ë“™µƒ»À◊‘”…ºÒ
+        if (DropData.dwQuestID != 0) // Ë∑ü‰ªªÂä°ÊúâÂÖ≥ÁöÑNpcÊéâËêΩÔºåËÆæÁΩÆÊàêÈúÄË¶ÅÁöÑ‰∫∫Ëá™Áî±Êç°
         {
             for (size_t i = 0; i < uPlayerCount; ++i)
             {
@@ -1146,7 +1259,7 @@ void KDropCenter::DropQuestItem(
                 
                 if (pItem->m_Common.nGenre == igBook)
                 {
-                    pItem->m_nCurrentDurability = dwItemCount; //  Èµƒ≈‰∑Ω
+                    pItem->m_nCurrentDurability = dwItemCount; // ‰π¶ÁöÑÈÖçÊñπ
                 }
 
 				pAddLootItem = pLootList->AddItem(pItem, dwQuestID, 1);
@@ -1181,7 +1294,7 @@ void KDropCenter::DropQuestItem(
             
             if (pItem->m_Common.nGenre == igBook)
             {
-                pItem->m_nCurrentDurability = dwItemCount; //  Èµƒ≈‰∑Ω
+                pItem->m_nCurrentDurability = dwItemCount; // ‰π¶ÁöÑÈÖçÊñπ
             }
 
 		    pAddLootItem = pLootList->AddItem(pItem, dwQuestID, 1);
@@ -1194,7 +1307,7 @@ void KDropCenter::DropQuestItem(
             
             pItem = NULL;
 
-            if (dwTeamID == ERROR_ID) // “ª∏ˆ»Àµƒ«Èøˆ
+            if (dwTeamID == ERROR_ID) // ‰∏Ä‰∏™‰∫∫ÁöÑÊÉÖÂÜµ
             {
                 assert(pDropTarget->m_dwID == vecNeedQuestItemLooter[0]);
                 pAddLootItem->eLootItemType = litOwnerLoot;
@@ -1206,7 +1319,7 @@ void KDropCenter::DropQuestItem(
             pTeam = g_pSO3World->m_TeamServer.GetTeam(dwTeamID);
             KGLOG_PROCESS_ERROR(pTeam);
 
-            if (pTeam->nLootMode == ilmFreeForAll) // ∂”ŒÈ◊‘”… ∞»°ƒ£ Ω”––Ë«Ûµƒ»À◊‘”… ∞»°
+            if (pTeam->nLootMode == ilmFreeForAll) // Èòü‰ºçËá™Áî±ÊãæÂèñÊ®°ÂºèÊúâÈúÄÊ±ÇÁöÑ‰∫∫Ëá™Áî±ÊãæÂèñ
             {
                 for (size_t i = 0; i < uNeedQuestItemLooterCount; ++i)
                 {
@@ -1218,7 +1331,7 @@ void KDropCenter::DropQuestItem(
                     pMember->m_QuestList.RegisterTeamAssistance(dwQuestID);
                 }
             }
-            else // ∆‰À¸«Èøˆœ¬”––Ë«Ûµƒ»À¬÷¡˜ ∞»°
+            else // ÂÖ∂ÂÆÉÊÉÖÂÜµ‰∏ãÊúâÈúÄÊ±ÇÁöÑ‰∫∫ËΩÆÊµÅÊãæÂèñ
             {
                 KPlayer* pRoundLooter       = NULL;
                 int      nCurMaxRoundCount  = 0;
@@ -1284,7 +1397,7 @@ void KDropCenter::DropQuestItemFromDoodadAbsoluteFree(
         goto Exit0;        
     }
     
-    nQuestIndex = pDropTarget->m_QuestList.GetQuestIndex(dwQuestID); // √ª”–Ω”»ŒŒÒæÕ≤ªµÙ
+    nQuestIndex = pDropTarget->m_QuestList.GetQuestIndex(dwQuestID); // Ê≤°ÊúâÊé•‰ªªÂä°Â∞±‰∏çÊéâ
 	KG_PROCESS_ERROR(nQuestIndex != -1);
 
 	for (int nIndex = 0; nIndex < QUEST_END_ITEM_COUNT; ++nIndex)
@@ -1322,7 +1435,7 @@ void KDropCenter::DropQuestItemFromDoodadAbsoluteFree(
         
         if (pItem->m_Common.nGenre == igBook)
         {
-            pItem->m_nCurrentDurability = dwItemCount; //  Èµƒ≈‰∑Ω
+            pItem->m_nCurrentDurability = dwItemCount; // ‰π¶ÁöÑÈÖçÊñπ
         }
 
 		pAddLootItem = pLootList->AddItem(pItem, dwQuestID, 1);

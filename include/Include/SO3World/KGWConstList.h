@@ -85,6 +85,7 @@ public:
     int nForceChannelCoolDownID;
     int nCampChannelCoolDownID;
     int nMentorChannelCoolDownID;
+    int nMaxUsableMentorValue;
     int nFriendsChannelCoolDownID;
 
     // ��޲���ӿ�

@@ -11,6 +11,7 @@
 #include "KShop.h"
 #include "KCharacter.h"
 #include "INpcFile.h"
+#include <vector>
 
 enum  KNPC_SPECIES
 {
@@ -42,6 +43,7 @@ public:
     int             m_nIntensity;       // ǿ��
 	DWORD			m_dwScriptID;		// �󶨽ű�ID		
 	KShop*          m_pShop;            // �󶨵��̵�
+	std::vector<KShop*> m_vShopList;
 	DWORD			m_dwTemplateID;		// ģ����
     int             m_nReviveTime;      // ����ʱ�䣬��λ��
 	int				m_nDisappearFrames;	// ��ʧ֡��

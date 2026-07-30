@@ -12,6 +12,7 @@
 
 #include <list>
 #include <map>
+#include <set>
 #include <string>
 #include <bitset>
 #include "Engine/KList.h"
@@ -88,6 +89,8 @@ public:
 
 	int Activate();
 
+    BOOL ActivityEndNotify(DWORD dwActivityID);
+
 public:
 	// 设定地表格子信息
 	BOOL SetCellData(int nXCell, int nYCell, KCell::KBaseInfo* pBaseInfo, WORD wLowLayer, WORD wHighLayer);
@@ -137,25 +140,41 @@ public:
 	int			    m_nCopyIndex;
 	SCENE_STATE		m_eSceneState;					
 	char			m_szName[_NAME_LEN];
+	char            m_szDisplayName[_NAME_LEN];
     int             m_nType;                        // 场景类型
     BOOL            m_bReviveInSitu;                // 玩家是否能在原地复活
 	DWORD			m_dwScriptID;
     int             m_nBroadcastRegion;             // 同步广播的半径,以Region为单位
+    int             m_nMaxLootRange;
     DWORD           m_dwBanSkillMask;
+    DWORD           m_dwBanUseItemMask;
     DWORD           m_dwBattleRelationMask;
     BOOL            m_bDoNotGoThroughRoof;
+    BOOL            m_bIsArenaMap;
 
     int             m_nInFightPlayerCount;
+    BOOL            m_bBroadcastTargetFlag;
 
 #ifdef _SERVER
     DWORD           m_dwOwnerID;
     BOOL            m_bSaved;
-    BOOL            m_bProgressChanged;
     int             m_nQuestCountAchID;             // 场景任务计数成就ID
 #endif
 
+    int             m_nAOECountPercent;
+    BOOL            m_bGongFangFightFlag;
+    typedef std::set<uint64_t, std::less<uint64_t>, KMemory::KAllocator<uint64_t> > KSCENE_FIGHT_LIST;
+    KSCENE_FIGHT_LIST m_FightList;
+    BOOL            m_bCanTongWar;
     BOOL            m_bCanPK;
+    BOOL            m_bCanDuel;
     int             m_nCampType;
+    BOOL            m_bNeedCampBuff;
+
+    DECLARE_LUA_BOOL(CanTongWar);
+    DECLARE_LUA_BOOL(CanPK);
+    DECLARE_LUA_BOOL(CanDuel);
+
 
 // 副本进度 --------------------------------------->
 #ifdef _SERVER
@@ -277,6 +296,7 @@ private:
 public:
     typedef std::vector<std::pair<DWORD /* dwMapID */, BOOL /* bMapAutoJoin */> >  KPQID_FLAG_VECTOR;
     KPQID_FLAG_VECTOR       m_PQIDFlagVector;
+    BOOL                    m_bProgressChanged;
 
 public:
     BOOL DeleteNpcNickname(KNpc* pNpc);
@@ -364,6 +384,7 @@ public:
 
     int LuaSaveMap(Lua_State* L);
     int LuaSendMessage(Lua_State* L);
+    int LuaGetPQList(Lua_State* L);
     int LuaGetAllPlayer(Lua_State* L); // 返回场景中所有的玩家ID,慎用
     int LuaGetAllNpc(Lua_State* L); // 返回场景中所有的玩家ID,慎用
     int LuaGetAllDoodad(Lua_State* L); // 返回场景中所有的玩家ID,慎用
@@ -382,6 +403,10 @@ public:
     int LuaDebugRevive(Lua_State* L);
 #endif
 };
+
+typedef char KSCENE_CAN_TONG_WAR_OFFSET[(offsetof(KScene, m_bCanTongWar) == 0xb0) ? 1 : -1];
+typedef char KSCENE_CAN_PK_OFFSET[(offsetof(KScene, m_bCanPK) == 0xb4) ? 1 : -1];
+typedef char KSCENE_CAN_DUEL_OFFSET[(offsetof(KScene, m_bCanDuel) == 0xb8) ? 1 : -1];
 
 //得到全局象素点坐标所在的Region指针
 inline KRegion* KScene::GetRegionByPoint(int nX, int nY)

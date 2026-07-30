@@ -10954,6 +10954,27 @@ int KPlayer::LuaAddMaxApprenticeNum(Lua_State* L)
 Exit0:
     return 0;
 }
+
+int KPlayer::LuaAddUsableMentorValue(Lua_State* L)
+{
+    BOOL        bResult       = false;
+    int         nTopIndex     = 0;
+    int         nDeltaValue   = 0;
+    const char* pszComment    = NULL;
+
+    nTopIndex = Lua_GetTopIndex(L);
+    KGLOG_PROCESS_ERROR(nTopIndex == 2);
+    nDeltaValue = (int)Lua_ValueToNumber(L, 1);
+    pszComment = Lua_ValueToString(L, 2);
+    KGLOG_PROCESS_ERROR(pszComment);
+
+    bResult = AddUsableMentorValue(nDeltaValue);
+    KGLOG_PROCESS_ERROR(bResult);
+    g_LogClient.LogUsableMentorValueChange(nDeltaValue, this, NULL, pszComment);
+Exit0:
+    Lua_PushBoolean(L, bResult);
+    return 1;
+}
 #endif // _SERVER
 
 int KPlayer::LuaIsMyMentor(Lua_State* L)
@@ -11566,6 +11587,7 @@ DEFINE_LUA_CLASS_BEGIN(KPlayer)
 
     // ʦͽ
     REGISTER_LUA_INTEGER(KPlayer, MaxApprenticeNum)
+    REGISTER_LUA_INTEGER(KPlayer, UsableMentorValue)
     REGISTER_LUA_INTEGER(KPlayer, AcquiredMentorValue)
     REGISTER_LUA_TIME(KPlayer, LastEvokeMentorTime)
     REGISTER_LUA_INTEGER(KPlayer, EvokeMentorCount)
@@ -12198,6 +12220,7 @@ DEFINE_LUA_CLASS_BEGIN(KPlayer)
     REGISTER_LUA_FUNC(KPlayer, ActivePresentCode)
     REGISTER_LUA_FUNC(KPlayer, GetChargeFlag)
     REGISTER_LUA_FUNC(KPlayer, AddMaxApprenticeNum)
+    REGISTER_LUA_FUNC(KPlayer, AddUsableMentorValue)
 #endif // _SERVER
     
 // ʦͽ

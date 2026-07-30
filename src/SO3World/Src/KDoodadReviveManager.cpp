@@ -168,6 +168,29 @@ Exit0:
     return bResult;
 }
 
+BOOL KDoodadReviveManager::RetrieveActivityDoodad(DWORD dwActivityID)
+{
+    for (KDoodadReviveMap::iterator it = m_DoodadReviveMap.begin(); it != m_DoodadReviveMap.end(); ++it)
+    {
+        if (it->second.dwActivityID == dwActivityID)
+            it->second.bActivityOn = false;
+    }
+
+    KDoodadActivityMap::iterator activityIt = m_ActivityDoodadTable.find(dwActivityID);
+    if (activityIt == m_ActivityDoodadTable.end())
+        return true;
+
+    for (std::list<DWORD>::iterator it = activityIt->second.begin(); it != activityIt->second.end(); ++it)
+    {
+        KDoodad* pDoodad = g_pSO3World->m_DoodadSet.GetObj(*it);
+        if (!pDoodad)
+            continue;
+        g_pSO3World->RemoveDoodad(pDoodad);
+        AddDoodad(pDoodad, 0);
+    }
+    return true;
+}
+
 BOOL KDoodadReviveManager::ReviveDoodad(DWORD dwReviveID)
 {
     BOOL     bResult        = false;
@@ -246,6 +269,7 @@ BOOL KDoodadReviveManager::LoadDoodadReviveTable(const char cszFileName[])
     int         nMinExistCount  = 0;
     int         nMaxExistCount  = 0;
     int         nIsRandom       = 0;
+    DWORD      dwActivityID    = 0;
 
     KDOODAD_TABLE_DATA          TableData;
     KDoodadTableMap::iterator   it;
@@ -272,11 +296,15 @@ BOOL KDoodadReviveManager::LoadDoodadReviveTable(const char cszFileName[])
         bRetCode = piTable->GetInteger(i, "IsRandom", 0, &nIsRandom);
         KGLOG_PROCESS_ERROR(bRetCode && "IsRandom");
 
+        bRetCode = piTable->GetInteger(i, "ActivityID", 0, (int*)&dwActivityID);
+        KGLOG_PROCESS_ERROR(bRetCode && "ActivityID");
+
         KGLOG_PROCESS_ERROR(nMinExistCount <= nMaxExistCount);
 
         TableData.nMinSize = nMinExistCount;
         TableData.nMaxSize = nMaxExistCount;
         TableData.bRandom  = (nIsRandom != 0);
+        TableData.dwActivityID = dwActivityID;
         TableData.bRandom  = true;  // 场景编辑器中没有地方设置，暂时默认为true
 
         it = m_DoodadTableMap.find(dwReviveID);
@@ -319,6 +347,10 @@ BOOL KDoodadReviveManager::CalculateReviveLimit()
         pDoodadReviveQueue->nMaxQueueSize = nMaxQueueSize;
         pDoodadReviveQueue->nMinQueueSize = nMinQueueSize;
         pDoodadReviveQueue->bRandom       = bTableRandom;
+        pDoodadReviveQueue->dwActivityID = m_DoodadTableMap[it->first].dwActivityID;
+        pDoodadReviveQueue->bActivityOn  = false;
+        if (pDoodadReviveQueue->dwActivityID)
+            m_ActivityDoodadTable[pDoodadReviveQueue->dwActivityID].push_back(it->first);
     }
 
     bResult = true;

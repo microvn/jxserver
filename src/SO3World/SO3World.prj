@@ -27,6 +27,7 @@ Libraries
 ./Src/KAIAction.cpp
 ./Src/KAILogic.cpp
 ./Src/KAIManager.cpp
+./Src/KActivityMgrServer.cpp
 ./Src/KAISearchTactics.cpp
 ./Src/KAISkillSelector.cpp
 ./Src/KAIState.cpp

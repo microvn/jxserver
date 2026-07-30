@@ -187,6 +187,28 @@ Exit0:
     return bResult;
 }
 
+BOOL KLogClient::LogUsableMentorValueChange(
+    int nChangeAmount, KPlayer* pPlayer, const char* pszComment, const char* pszCommentExt
+)
+{
+    BOOL bResult = false;
+    char szChangeAmount[16];
+
+    assert(pPlayer);
+    KG_PROCESS_ERROR(nChangeAmount != 0);
+
+    snprintf(szChangeAmount, sizeof(szChangeAmount), "%d", nChangeAmount);
+    szChangeAmount[sizeof(szChangeAmount) - 1] = '\0';
+    bResult = LogPlayerAction(
+        PLAYER_ACTION_USABLE_MV_CHANGE, 50, szChangeAmount,
+        pPlayer->m_szAccount, pPlayer->m_szName,
+        pszCommentExt ? strlen(pszCommentExt) + 1 : 0,
+        (BYTE*)pszCommentExt
+    );
+Exit0:
+    return bResult;
+}
+
 BOOL KLogClient::LogPlayerLogin(const char cszAccount[], const char cszRoleName[], const char cszIP[])
 {
     size_t uCommentLen = strlen(cszIP) + 1;

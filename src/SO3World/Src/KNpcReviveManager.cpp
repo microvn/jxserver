@@ -178,6 +178,29 @@ Exit0:
     return bResult;
 }
 
+BOOL KNpcReviveManager::RetrieveActivityNpc(DWORD dwActivityID)
+{
+    for (KNpcReviveMap::iterator it = m_NpcReviveMap.begin(); it != m_NpcReviveMap.end(); ++it)
+    {
+        if (it->second.dwActivityID == dwActivityID)
+            it->second.bActivityOn = false;
+    }
+
+    KNpcActivityMap::iterator activityIt = m_ActivityNpcTable.find(dwActivityID);
+    if (activityIt == m_ActivityNpcTable.end())
+        return true;
+
+    for (std::list<DWORD>::iterator it = activityIt->second.begin(); it != activityIt->second.end(); ++it)
+    {
+        KNpc* pNpc = g_pSO3World->m_NpcSet.GetObj(*it);
+        if (!pNpc)
+            continue;
+        g_pSO3World->RemoveNpc(pNpc, false);
+        AddNpc(pNpc, 0);
+    }
+    return true;
+}
+
 BOOL KNpcReviveManager::LoadNpc(KNpc* pNpc, KNPC_DATA& rNpcData)
 {
     BOOL                    bResult     = false;
@@ -523,6 +546,7 @@ BOOL KNpcReviveManager::LoadNpcReviveTable(const char cszFileName[])
     int                     nMinExistCount  = 0;
     int                     nMaxExistCount  = 0;
     int                     nIsRandom       = 0;
+    DWORD                   dwActivityID    = 0;
     KNPC_TABLE_DATA         NpcTableData;
     KNpcTableMap::iterator  it;
 
@@ -548,11 +572,15 @@ BOOL KNpcReviveManager::LoadNpcReviveTable(const char cszFileName[])
         bRetCode = piTable->GetInteger(i, "IsRandom", 0, &nIsRandom);
         KGLOG_PROCESS_ERROR(bRetCode && "IsRandom");
 
+        bRetCode = piTable->GetInteger(i, "ActivityID", 0, (int*)&dwActivityID);
+        KGLOG_PROCESS_ERROR(bRetCode && "ActivityID");
+
         KGLOG_PROCESS_ERROR(nMinExistCount <= nMaxExistCount);
 
         NpcTableData.nMinSize = nMinExistCount; // 這裡的Min和Max並不是隊列中使用的，還需要根據NPC的數量做一次運算
         NpcTableData.nMaxSize = nMaxExistCount;
         NpcTableData.bRandom  = (nIsRandom != 0);
+        NpcTableData.dwActivityID = dwActivityID;
 
         it = m_NpcTableMap.find(dwReviveID);
         KGLOG_PROCESS_ERROR(it == m_NpcTableMap.end() && "ReviveID Error");
@@ -679,6 +707,10 @@ BOOL KNpcReviveManager::CalculateReviveLimit()
         pNpcReviveQueue->nMaxQueueSize = nMaxQueueSize;
         pNpcReviveQueue->nMinQueueSize = nMinQueueSize;
         pNpcReviveQueue->bRandom       = bTableRandom;
+        pNpcReviveQueue->dwActivityID = m_NpcTableMap[it->first].dwActivityID;
+        pNpcReviveQueue->bActivityOn  = false;
+        if (pNpcReviveQueue->dwActivityID)
+            m_ActivityNpcTable[pNpcReviveQueue->dwActivityID].push_back(it->first);
     }
 
     bResult = true;

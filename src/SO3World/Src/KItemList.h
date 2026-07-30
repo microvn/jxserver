@@ -9,6 +9,7 @@
 #define _KITEM_LIST_H_
 
 #include <vector>
+#include <map>
 
 #include "SO3Result.h"
 #include "KItem.h"
@@ -26,6 +27,7 @@ typedef struct
 } TItemPos;
 
 class KPlayer;
+class KFEAEnchant;
 
 struct KUSE_ITEM
 {
@@ -49,13 +51,17 @@ class KItemList
 public:
 	int		m_nMoney;			//  金钱
 	int		m_nMoneyLimit;		//  金钱上限
+	int		m_nReserverd;		// target reserved state
 
+    BOOL    m_bCubPackageOpened;
     BOOL    m_bBankOpened;      //  银行是否已打开
 
 #ifdef _SERVER
     BOOL    m_bSoldListOpened;  //  回购列表是否已打开
     BOOL    m_bFinishLoadData;
 #endif
+
+    int     m_nEquipIDArray[3];
 
 public:
 	BOOL	Init(KPlayer* pPlayer);
@@ -155,6 +161,7 @@ public:
 
     //按装备最大耐久度的百分比, 磨损一个包包中的所有装备(主要用在玩家复活时,对其的惩罚)
     BOOL    AbradeEquipment(int nBoxType, int nAbradePercent);
+    void    UpdateItemID();
 #endif
 
     BOOL	ApplyAttrib(KItem* pItem);
@@ -243,17 +250,46 @@ private:
 #endif
     
 private:
+	struct KDelayTradeInfo
+	{
+		DWORD  dwItemID;
+		time_t nEndTime;
+	};
+
+	struct KTimeLimitReturnInfo
+	{
+		DWORD  dwShopTemplateID;
+		int    nShopItemIndex;
+		time_t nEndTime;
+	};
+
 	KInventory			m_Box[ibTotal];
 	DWORD				m_dwBoxCount;									// 箱子的总个数
 	int					m_nEnabledBankPackageCount;						// 激活的银行背包格子数
 
 	KPlayer*			m_pPlayer;
     int                 m_nNextSoldListPos;
+	KFEAEnchant*        m_pFEAEnchant;
+	BOOL                m_bFEAActiveFlag[3];
+	int                 m_nTotalEquipScore;
+	int                 m_nTotalBaseScore;
+	int                 m_nTotalStrengthScore;
+	int                 m_nTotalMountsScore;
+	int                 m_nTotalPackageSize;
+	BOOL                m_bCangjianFlag;
 
 public:
     // 开箱子
     DWORD               m_dwBoxItemID;
     std::vector<KItem*> m_BoxItem;
+
+private:
+	std::map<DWORD, DWORD> m_ItemChangeIDMap;
+	std::map<unsigned long long, KDelayTradeInfo> m_DelayTradeMap;
+	std::map<DWORD, KTimeLimitReturnInfo> m_TimeLimitReturnMap;
+	std::map<DWORD, long> m_TimeLimitSoldListInfoMap;
+
+public:
     
     void                ClearBox();
     BOOL                OpenBox(KItem* pBox);

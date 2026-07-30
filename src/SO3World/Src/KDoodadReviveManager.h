@@ -10,6 +10,7 @@
 #define _KDOODADREVIVEMANAGER_H_ 1
 
 #include <deque>
+#include <list>
 #include "IDoodadFile.h"
 
 #define MAX_REVIVE_DOODAD_PER_FRAME 16
@@ -30,11 +31,15 @@ struct KDOODAD_REVIVE_QUEUE
         bRandom = false;
         nMinQueueSize = 0;
         nMaxQueueSize = INT_MAX;
+        dwActivityID = 0;
+        bActivityOn = false;
     }
     std::deque<KDOODAD_REVIVE_NODE> ReviveQueue;
     int                             nMinQueueSize;
     int                             nMaxQueueSize;
     BOOL                            bRandom;
+    DWORD                           dwActivityID;
+    BOOL                            bActivityOn;
 };
 
 struct KDOODAD_TABLE_DATA 
@@ -44,11 +49,13 @@ struct KDOODAD_TABLE_DATA
         nMinSize = 0;
         nMaxSize = INT_MAX;
         bRandom  = 0;
+        dwActivityID = 0;
     }
 
     int  nMinSize;
     int  nMaxSize;
     BOOL bRandom;
+    DWORD dwActivityID;
 };
 
 class KDoodadReviveManager
@@ -70,6 +77,7 @@ public:
 
     BOOL DestroyDoodad(KDoodad* pDoodad);
     BOOL ForceReviveDoodad(KDoodad* pDoodad);
+    BOOL RetrieveActivityDoodad(DWORD dwActivityID);
 
 private:
     BOOL ReviveDoodad(DWORD dwReviveID);
@@ -82,10 +90,13 @@ private:
 private:
     typedef std::map<DWORD /* ReviveID */, KDOODAD_REVIVE_QUEUE>    KDoodadReviveMap;
     typedef std::map<DWORD /* ReviveID */, KDOODAD_TABLE_DATA>      KDoodadTableMap;
+    typedef std::map<DWORD, std::list<DWORD> > KDoodadActivityMap;
 
     KScene*             m_pScene;
     KDoodadReviveMap    m_DoodadReviveMap;
     KDoodadTableMap     m_DoodadTableMap;
+    KDoodadActivityMap m_ActivityDoodadTable;
+    DWORD              m_nNextCheckActivityTime;
 };
 
 #endif // _KDOODADREVIVEMANAGER_H_

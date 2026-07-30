@@ -360,10 +360,19 @@ BOOL KSetInfoList::Load(char* pszFile)
 		for (int i = 0; i < MAX_SET_ATTR_NUM; i++)
 		{
 			char szKey[32];
+			char szValue[32];
 
-			sprintf(szKey, "%d", i + 2);
+			sprintf(szKey, "%d_1", i + 2);
+			bRetCode = piTabFile->GetString(nIndex + 1, szKey, "", szValue, sizeof(szValue));
+			KGLOG_PROCESS_ERROR(bRetCode);
+			if (szValue[0] == '\0')
+			{
+				EquipInfo.dwAttribID[i] = DefaultInfo.dwAttribID[i];
+				continue;
+			}
+
 			bRetCode = piTabFile->GetInteger(nIndex + 1, szKey, DefaultInfo.dwAttribID[i], (int*)&EquipInfo.dwAttribID[i]);
-			(void)bRetCode; /*[endgame] tolerant*/
+			KGLOG_PROCESS_ERROR(bRetCode);
 		}
 
 		InsRet = m_ItemInfoList.insert(std::make_pair(dwID, EquipInfo));

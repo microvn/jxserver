@@ -47,6 +47,9 @@ public:
     );
     BOOL LogPlayerLevelup(int nLevel, const char* pszAccount, const char* pszRoleName);
     BOOL LogTrainvalueChange(int nAddValue, const char* pszAccount, const char* pszRoleName);
+    BOOL LogUsableMentorValueChange(
+        int nChangeAmount, KPlayer* pPlayer, const char* pszComment, const char* pszCommentExt = NULL
+    );
     BOOL LogPlayerLogin(const char cszAccount[], const char cszRoleName[], const char cszIP[]);
     BOOL LogPlayerLogout(const char cszAccount[], const char cszRoleName[]);
     

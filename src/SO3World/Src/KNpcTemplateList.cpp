@@ -5,7 +5,8 @@
 #include "KSO3World.h"
 
 #define DEFAULT_NPC_TEMPLATE_ID	0
-#define NPC_TEMPLATE_FILENAME	"NpcTemplate.tab"
+#define NPC_TEMPLATE_FILENAME	"NpcTemplateList.tab"
+#define NPC_TEMPLATE_SHOP_FILENAME "NpcTemplateShopInfo.tab"
 
 
 #define NPC_TEMPLATE_ID			    "ID"
@@ -164,17 +165,16 @@
 #define NPC_REPUTE_VALUE3			"ReputeValue3"
 #define NPC_REPUTE_VALUE4			"ReputeValue4"
 
-#define NPC_REPUTE_LOW_LIMIT1		"ReputeLowLimit1"
-#define NPC_REPUTE_LOW_LIMIT2		"ReputeLowLimit2"
-#define NPC_REPUTE_LOW_LIMIT3		"ReputeLowLimit3"
-#define NPC_REPUTE_LOW_LIMIT4		"ReputeLowLimit4"
+#define NPC_REPUTE_LOW_LIMIT1		"ReputeLevel1"
+#define NPC_REPUTE_LOW_LIMIT2		"ReputeLevel2"
+#define NPC_REPUTE_LOW_LIMIT3		"ReputeLevel3"
+#define NPC_REPUTE_LOW_LIMIT4		"ReputeLevel4"
 
-#define NPC_REPUTE_HIGH_LIMIT1		"ReputeHighLimit1"
-#define NPC_REPUTE_HIGH_LIMIT2		"ReputeHighLimit2"
-#define NPC_REPUTE_HIGH_LIMIT3		"ReputeHighLimit3"
-#define NPC_REPUTE_HIGH_LIMIT4		"ReputeHighLimit4"
+#define NPC_REPUTE_HIGH_LIMIT1		"ReputeLevel1"
+#define NPC_REPUTE_HIGH_LIMIT2		"ReputeLevel2"
+#define NPC_REPUTE_HIGH_LIMIT3		"ReputeLevel3"
+#define NPC_REPUTE_HIGH_LIMIT4		"ReputeLevel4"
 
-#define NPC_MODEL_FILE			    "ModelFile"
 
 #define NPC_REPRESENT_ID1		    "RepresentID1"
 #define NPC_REPRESENT_ID2		    "RepresentID2"
@@ -200,7 +200,9 @@
 
 #define NPC_HAS_BANK				"HasBank"
 #define NPC_HAS_MAILBOX				"HasMailBox"
-#define NPC_SHOP_TEMPLATE_ID        "ShopTemplateID"
+#define NPC_HAS_CUB_PACKAGE          "HasCubPackage"
+#define NPC_CUB_PACKAGE_TEXT         "CubPackageOptionText"
+#define NPC_CUB_PACKAGE_REPUTE_LEVEL "CubPackageRequireReputeLevel"
 #define NPC_MASTER_ID               "MasterID"
 #define NPC_CRAFT_MASTER_ID			"CraftMasterID"
 
@@ -223,7 +225,6 @@
 #define NPC_DROP_NOT_QUEST_ITEM_FLAG "DropNotQuestItemFlag"
 #define NPC_DAILY_QUEST_CYCLE       "DailyQuestCycle"
 #define NPC_DAILY_QUEST_OFFSET      "DailyQuestOffset"
-#define NPC_IS_RANDOM_DAILY_QUEST   "IsRandomDailyQuest"
 #define NPC_PROGRESS_ID             "ProgressID"
 
 #define NPC_HAS_AUCTION                     "HasAuction"
@@ -237,9 +238,9 @@
 #define NPC_CAMP_LOOT_PRESTIGE "CampLootPrestige"
 #define NPC_PRESTIGE           "Prestige"
 #define NPC_CONTRIBUTE         "Contribution"
-#define NPC_JUSTICE            "Justice"
-#define NPC_EXAMPRINT          "ExamPrint"
-#define NPC_ACTIVITYAWARD      "ActivityAward"
+#define NPC_JUSTICE            "DropJustice"
+#define NPC_EXAMPRINT          "DropExamPrint"
+#define NPC_ACTIVITYAWARD      "DropActivityAward"
 #define NPC_ACHIEVEMENT_ID     "AchievementID"
 
 #define NPC_KNOCKED_BACK_RATE   "KnockedBackRate"
@@ -249,16 +250,44 @@
 #define NPC_PULL_RATE           "PullRate"
 #define NPC_ADD_CAMP_SCORE      "AddCampScore"
 
-#define NPC_HAS_GAME_CARD_SALE                      "HasGameCardSale"
-#define NPC_HAS_GAME_CARD_BUY                       "HasGameCardBuy"
+#define NPC_HAS_GAME_CARD_SALE                      "HasGameCard"
+#define NPC_HAS_GAME_CARD_BUY                       "HasGameCard"
 #define NPC_GAME_CARD_SALE_OPTION_TEXT              "GameCardSaleOptionText"
 #define NPC_GAME_CARD_BUY_OPTION_TEXT               "GameCardBuyOptionText"
-#define NPC_GAME_CARD_TRADE_REQUIRE_REPUTE_LEVEL    "GameCardTradeRequireReputeLevel"
+#define NPC_GAME_CARD_TRADE_REQUIRE_REPUTE_LEVEL    "HasGameCard"
+
+static void FreeNpcShopInfo(KSHOP_INFO& shopInfo)
+{
+    for (int i = 0; i < 16; ++i)
+    {
+        KMemory::Free(shopInfo.pszShopOptionText[i]);
+        shopInfo.pszShopOptionText[i] = NULL;
+    }
+}
+
+static void FreeNpcShopInfoMap(std::map<DWORD, KSHOP_INFO>& shopInfoList)
+{
+    for (std::map<DWORD, KSHOP_INFO>::iterator it = shopInfoList.begin(); it != shopInfoList.end(); ++it)
+        FreeNpcShopInfo(it->second);
+    shopInfoList.clear();
+}
+
+char* KNpcTemplate::GetShopOptionText(DWORD dwShopID)
+{
+	for (int i = 0; i < 16; ++i)
+	{
+		if (pShopInfo && dwShopID == pShopInfo->dwShopTemplateID[i])
+			return pShopInfo->pszShopOptionText[i];
+	}
+	return NULL;
+}
 
 KNpcTemplateList::KNpcTemplateList(void)
 {
 	m_pNpcTemplateList = NULL;
 	m_nNpcTemplateCount = 0;
+	m_nLoadNpcTemplateIndex = 0;
+	memset(&m_DefaultShopInfo, 0, sizeof(m_DefaultShopInfo));
 }
 
 KNpcTemplateList::~KNpcTemplateList(void)
@@ -269,64 +298,193 @@ KNpcTemplateList::~KNpcTemplateList(void)
 
 BOOL KNpcTemplateList::Init(void)
 {
-    BOOL            bResult                 = false;
-	BOOL            bRetCode	            = false;
-	ITabFile*       piTabFile               = NULL;
-	int             nHeight                 = 0;
-    int             nNpcCount               = 0;
-	KNpcTemplate    NpcTemplate;
-	char            szFilePath[MAX_PATH];
-
-	snprintf(szFilePath, sizeof(szFilePath), "%s/%s", SETTING_DIR, NPC_TEMPLATE_FILENAME);
-    szFilePath[sizeof(szFilePath) - 1] = '\0';
-
-	piTabFile = g_OpenTabFile(szFilePath);
-	KGLOG_PROCESS_ERROR(piTabFile);
-
-	nHeight = piTabFile->GetHeight();
-	KGLOG_PROCESS_ERROR(nHeight >= 2);
-
+	BOOL bResult = false;
+	FreeNpcShopInfoMap(m_TmpNpcTemplateShopInfoList);
+	FreeNpcShopInfo(m_DefaultShopInfo);
 	memset(&m_DefaultNpcTemplate, 0, sizeof(m_DefaultNpcTemplate));
-	
-	bRetCode = LoadNpcTemplate(2, piTabFile, m_DefaultNpcTemplate);
-	KGLOG_PROCESS_ERROR(bRetCode);
-
-	KG_PROCESS_SUCCESS(nHeight == 2);
-    
-    nNpcCount = nHeight - 2;
-	m_pNpcTemplateList = new KNpcTemplate[nNpcCount];
-	KGLOG_PROCESS_ERROR(m_pNpcTemplateList);
-
-	for (int i = 0; i < nNpcCount; i++)
-	{
-        memset(&NpcTemplate, 0, sizeof(NpcTemplate));
-
-        bRetCode = LoadNpcTemplate(i + 3, piTabFile, NpcTemplate);
-		KGLOG_PROCESS_ERROR(bRetCode);
-
-		if (NpcTemplate.dwTemplateID == 0)
-		{
-			KGLogPrintf(
-                KGLOG_ERR, "[KNpcTemplateList]Line:%d ID:(%d) in %s was repeated!",
-				i + 3, NpcTemplate.dwTemplateID, NPC_TEMPLATE_FILENAME
-            );
-			goto Exit0;
-		}
-
-        m_pNpcTemplateList[i] = NpcTemplate;
-		m_mapNpcTemplateList[NpcTemplate.dwTemplateID] = m_pNpcTemplateList + i;
-	}
-
-	m_nNpcTemplateCount = nNpcCount;
-
-Exit1:
+	memset(&m_DefaultShopInfo, 0, sizeof(m_DefaultShopInfo));
+	m_mapNpcTemplateList.clear();
+	m_TmpNpcTemplateShopInfoList.clear();
+	m_nLoadNpcTemplateIndex = 0;
+	m_DefaultNpcTemplate.pShopInfo = &m_DefaultShopInfo;
+	KGLOG_PROCESS_ERROR(LoadNpcTemplateShopInfo(m_TmpNpcTemplateShopInfoList));
+	KGLOG_PROCESS_ERROR(LoadNpcTemplateTabList());
 	bResult = true;
 Exit0:
-    if (!bResult)
-    {
-        SAFE_DELETE_ARRAY(m_pNpcTemplateList);
-    }
-	KG_COM_RELEASE(piTabFile);
+	if (!bResult)
+	{
+		SAFE_DELETE_ARRAY(m_pNpcTemplateList);
+		m_nNpcTemplateCount = 0;
+		m_mapNpcTemplateList.clear();
+	}
+	if (!bResult)
+		FreeNpcShopInfoMap(m_TmpNpcTemplateShopInfoList);
+	return bResult;
+}
+
+BOOL KNpcTemplateList::LoadNpcTemplateShopInfo(std::map<DWORD, KSHOP_INFO>& shopInfoList)
+{
+	BOOL bResult = false;
+	ITabFile* pTabFile = NULL;
+	char szFilePath[MAX_PATH];
+	char szColumn[64];
+	int nHeight = 0;
+	FreeNpcShopInfoMap(shopInfoList);
+
+	snprintf(szFilePath, sizeof(szFilePath), "%s/%s", SETTING_DIR, NPC_TEMPLATE_SHOP_FILENAME);
+	pTabFile = g_OpenTabFile(szFilePath);
+	KGLOG_PROCESS_ERROR(pTabFile);
+	nHeight = pTabFile->GetHeight();
+	KGLOG_PROCESS_ERROR(nHeight >= 2);
+
+	for (int nRow = 2; nRow < nHeight; ++nRow)
+	{
+		KSHOP_INFO info;
+		DWORD dwTemplateID = 0;
+		memset(&info, 0, sizeof(info));
+		if (!pTabFile->GetInteger(nRow, "ID", 0, (int*)&dwTemplateID))
+		{
+			FreeNpcShopInfo(info);
+			goto Exit0;
+		}
+		for (int i = 0; i < 16; ++i)
+		{
+			snprintf(szColumn, sizeof(szColumn), "ShopTemplateID%d", i + 1);
+			if (!pTabFile->GetInteger(nRow, szColumn, 0, (int*)&info.dwShopTemplateID[i]))
+			{
+				FreeNpcShopInfo(info);
+				goto Exit0;
+			}
+			snprintf(szColumn, sizeof(szColumn), "ShopOptionText%d", i + 1);
+			if (!LoadOptionText(pTabFile, nRow, szColumn, &info.pszShopOptionText[i]))
+			{
+				FreeNpcShopInfo(info);
+				goto Exit0;
+			}
+		}
+		std::map<DWORD, KSHOP_INFO>::iterator it = shopInfoList.find(dwTemplateID);
+		if (it != shopInfoList.end())
+			FreeNpcShopInfo(it->second);
+		shopInfoList[dwTemplateID] = info;
+	}
+
+	bResult = true;
+Exit0:
+	if (!bResult)
+		FreeNpcShopInfoMap(shopInfoList);
+	KG_COM_RELEASE(pTabFile);
+	return bResult;
+}
+
+BOOL KNpcTemplateList::LoadOptionText(ITabFile* piTabFile, int nIndex, const char* pszColumn, char** ppszText)
+{
+	char szText[NPC_SHOP_OPTION_TEXT_LEN];
+
+	KGLOG_PROCESS_ERROR(piTabFile);
+	KGLOG_PROCESS_ERROR(pszColumn);
+	KGLOG_PROCESS_ERROR(ppszText);
+	*ppszText = NULL;
+	memset(szText, 0, sizeof(szText));
+	KGLOG_PROCESS_ERROR(piTabFile->GetString(nIndex, pszColumn, "", szText, sizeof(szText)));
+	if (szText[0] == '\0')
+		return true;
+
+	*ppszText = (char*)KMemory::Alloc(strlen(szText) + 1);
+	KGLOG_PROCESS_ERROR(*ppszText);
+	strcpy(*ppszText, szText);
+	return true;
+Exit0:
+	if (ppszText && *ppszText)
+	{
+		KMemory::Free(*ppszText);
+		*ppszText = NULL;
+	}
+	return false;
+}
+
+BOOL KNpcTemplateList::LoadNpcTemplateTabList(void)
+{
+	BOOL bResult = false;
+	ITabFile* pTabFile = NULL;
+	char szFilePath[MAX_PATH];
+	char szRelativePath[MAX_PATH];
+	int nHeight = 0;
+
+	snprintf(szFilePath, sizeof(szFilePath), "%s/%s", SETTING_DIR, NPC_TEMPLATE_FILENAME);
+	pTabFile = g_OpenTabFile(szFilePath);
+	KGLOG_PROCESS_ERROR(pTabFile);
+	nHeight = pTabFile->GetHeight();
+	KGLOG_PROCESS_ERROR(nHeight >= 2);
+
+	for (int nRow = 2; nRow < nHeight; ++nRow)
+	{
+		KGLOG_PROCESS_ERROR(pTabFile->GetString(nRow, "FilePath", "", szRelativePath, sizeof(szRelativePath)));
+		for (char* p = szRelativePath; *p; ++p)
+		{
+			if (*p == '\\')
+				*p = '/';
+		}
+		if (strncmp(szRelativePath, "settings/", 9) == 0)
+			memmove(szRelativePath, szRelativePath + 9, strlen(szRelativePath + 9) + 1);
+		KGLOG_PROCESS_ERROR(LoadNpcTemplateTab(szRelativePath, nRow == 2));
+	}
+
+	m_nNpcTemplateCount = m_nLoadNpcTemplateIndex;
+	bResult = true;
+Exit0:
+	KG_COM_RELEASE(pTabFile);
+	return bResult;
+}
+
+BOOL KNpcTemplateList::LoadNpcTemplateTab(char* pszFilePath, int bDefault)
+{
+	BOOL bResult = false;
+	ITabFile* pTabFile = NULL;
+	char szFullPath[MAX_PATH];
+	int nHeight = 0;
+
+	KGLOG_PROCESS_ERROR(pszFilePath);
+	snprintf(szFullPath, sizeof(szFullPath), "%s/%s", SETTING_DIR, pszFilePath);
+	pTabFile = g_OpenTabFile(szFullPath);
+	KGLOG_PROCESS_ERROR(pTabFile);
+	nHeight = pTabFile->GetHeight();
+	KGLOG_PROCESS_ERROR(nHeight >= 2);
+
+	if (bDefault)
+	{
+		KGLOG_PROCESS_ERROR(LoadNpcTemplate(2, pTabFile, m_DefaultNpcTemplate));
+	}
+	else
+	{
+		int nCount = nHeight - 2;
+		KNpcTemplate* pNewList = new KNpcTemplate[m_nLoadNpcTemplateIndex + nCount];
+		KGLOG_PROCESS_ERROR(pNewList);
+		if (m_pNpcTemplateList && m_nLoadNpcTemplateIndex > 0)
+		{
+			memcpy(pNewList, m_pNpcTemplateList, sizeof(KNpcTemplate) * m_nLoadNpcTemplateIndex);
+			for (std::map<DWORD, KNpcTemplate*>::iterator it = m_mapNpcTemplateList.begin(); it != m_mapNpcTemplateList.end(); ++it)
+				it->second = pNewList + (it->second - m_pNpcTemplateList);
+		}
+		SAFE_DELETE_ARRAY(m_pNpcTemplateList);
+		m_pNpcTemplateList = pNewList;
+		for (int nRow = 2; nRow < nHeight; ++nRow)
+		{
+			KNpcTemplate& npcTemplate = m_pNpcTemplateList[m_nLoadNpcTemplateIndex];
+			memset(&npcTemplate, 0, sizeof(npcTemplate));
+			KGLOG_PROCESS_ERROR(LoadNpcTemplate(nRow, pTabFile, npcTemplate));
+			KGLOG_PROCESS_ERROR(npcTemplate.dwTemplateID != 0);
+			std::map<DWORD, KSHOP_INFO>::iterator shopIt = m_TmpNpcTemplateShopInfoList.find(npcTemplate.dwTemplateID);
+			npcTemplate.pShopInfo = shopIt != m_TmpNpcTemplateShopInfoList.end() ? &shopIt->second : &m_DefaultShopInfo;
+			std::map<DWORD, KNpcTemplate*>::iterator it = m_mapNpcTemplateList.find(npcTemplate.dwTemplateID);
+			KGLOG_PROCESS_ERROR(it == m_mapNpcTemplateList.end());
+			m_mapNpcTemplateList[npcTemplate.dwTemplateID] = &npcTemplate;
+			++m_nLoadNpcTemplateIndex;
+		}
+	}
+
+	bResult = true;
+Exit0:
+	KG_COM_RELEASE(pTabFile);
 	return bResult;
 }
 
@@ -335,6 +493,9 @@ BOOL KNpcTemplateList::UnInit(void)
 	KG_DELETE_ARRAY(m_pNpcTemplateList);
 	m_nNpcTemplateCount = 0;
 	m_mapNpcTemplateList.clear();
+	FreeNpcShopInfoMap(m_TmpNpcTemplateShopInfoList);
+	FreeNpcShopInfo(m_DefaultShopInfo);
+	m_nLoadNpcTemplateIndex = 0;
 
 	return true;
 }
@@ -445,10 +606,24 @@ BOOL KNpcTemplateList::LoadFromTemplate(DWORD dwNpcTemplateID, KNpc* pNpc)
     pNpc->m_bAuction        = pNpcTemplate->bHasAuction;
     pNpc->m_bTongRepertory  = pNpcTemplate->bHasTongRepertory;
 
-    if (pNpcTemplate->nShopTemplateID > 0)
-    {
-        g_pSO3World->m_ShopCenter.BindNpcShop(pNpc, pNpcTemplate->nShopTemplateID);
-    }
+	if (pNpcTemplate->pShopInfo)
+	{
+		pNpcTemplate->nShopTemplateID = pNpcTemplate->pShopInfo->dwShopTemplateID[0];
+		if (pNpcTemplate->pShopInfo->pszShopOptionText[0])
+		{
+			strncpy(pNpcTemplate->szShopOptionText, pNpcTemplate->pShopInfo->pszShopOptionText[0], MAX_OPTION_TEXT_LEN);
+			pNpcTemplate->szShopOptionText[MAX_OPTION_TEXT_LEN - 1] = '\0';
+		}
+		else
+		{
+			pNpcTemplate->szShopOptionText[0] = '\0';
+		}
+		for (int i = 0; i < 16; ++i)
+		{
+			if (pNpcTemplate->pShopInfo->dwShopTemplateID[i] != 0)
+				g_pSO3World->m_ShopCenter.BindNpcShop(pNpc, pNpcTemplate->pShopInfo->dwShopTemplateID[i]);
+		}
+	}
 	
 	if (pNpcTemplate->szScriptName[0] != '\0')
 	{
@@ -1399,8 +1574,20 @@ BOOL KNpcTemplateList::LoadNpcTemplate(int nIndex, ITabFile* piTabFile, KNpcTemp
 	(void)bRetCode; /*[endgame] tolerant*/
 
     bRetCode = piTabFile->GetInteger(
-        nIndex, NPC_SHOP_TEMPLATE_ID, 
-        m_DefaultNpcTemplate.nShopTemplateID, (int*)&fNpcTemplate.nShopTemplateID
+        nIndex, NPC_HAS_CUB_PACKAGE,
+        m_DefaultNpcTemplate.bHasCubPackage, (int*)&fNpcTemplate.bHasCubPackage
+    );
+    (void)bRetCode; /*[endgame] tolerant*/
+
+    bRetCode = piTabFile->GetString(
+        nIndex, NPC_CUB_PACKAGE_TEXT, m_DefaultNpcTemplate.szCubPackageOptionText,
+        fNpcTemplate.szCubPackageOptionText, MAX_OPTION_TEXT_LEN
+    );
+    (void)bRetCode; /*[endgame] tolerant*/
+
+    bRetCode = piTabFile->GetInteger(
+        nIndex, NPC_CUB_PACKAGE_REPUTE_LEVEL, m_DefaultNpcTemplate.nCubPackageRequireReputeLevel,
+        &fNpcTemplate.nCubPackageRequireReputeLevel
     );
     (void)bRetCode; /*[endgame] tolerant*/
 
@@ -1428,12 +1615,6 @@ BOOL KNpcTemplateList::LoadNpcTemplate(int nIndex, ITabFile* piTabFile, KNpcTemp
     );
 	(void)bRetCode; /*[endgame] tolerant*/
 
-	bRetCode = piTabFile->GetString(
-        nIndex, NPC_SHOP_TEXT,
-		m_DefaultNpcTemplate.szShopOptionText, fNpcTemplate.szShopOptionText, MAX_OPTION_TEXT_LEN
-    );
-	(void)bRetCode; /*[endgame] tolerant*/
-	
 	bRetCode = piTabFile->GetString(
         nIndex, NPC_MASTER_TEXT,
 		m_DefaultNpcTemplate.szMasterOptionText, fNpcTemplate.szMasterOptionText, MAX_OPTION_TEXT_LEN
@@ -1511,12 +1692,6 @@ BOOL KNpcTemplateList::LoadNpcTemplate(int nIndex, ITabFile* piTabFile, KNpcTemp
 	(void)bRetCode; /*[endgame] tolerant*/
     
     fNpcTemplate.nDailyQuestOffset *= 60; // ת����
-
-    bRetCode = piTabFile->GetInteger(
-        nIndex, NPC_IS_RANDOM_DAILY_QUEST, 
-		m_DefaultNpcTemplate.bIsRandomDailyQuest, (int*)&fNpcTemplate.bIsRandomDailyQuest
-    );
-	(void)bRetCode; /*[endgame] tolerant*/
 
 #ifdef _SERVER
     bRetCode = piTabFile->GetInteger(
@@ -1614,11 +1789,6 @@ BOOL KNpcTemplateList::LoadNpcTemplate(int nIndex, ITabFile* piTabFile, KNpcTemp
     );
     (void)bRetCode; /*[endgame] tolerant*/
 
-    bRetCode = piTabFile->GetInteger(
-        nIndex, NPC_GAME_CARD_TRADE_REQUIRE_REPUTE_LEVEL, m_DefaultNpcTemplate.nGameCardTradeRequireReputeLevel,
-        &fNpcTemplate.nGameCardTradeRequireReputeLevel
-    );
-    (void)bRetCode; /*[endgame] tolerant*/
 #endif // _SERVER
 
     bRetCode = piTabFile->GetInteger(

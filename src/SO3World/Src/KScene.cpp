@@ -29,6 +29,17 @@ KScene::~KScene()
 {
 }
 
+BOOL KScene::ActivityEndNotify(DWORD dwActivityID)
+{
+    BOOL bRetCode = m_NpcReviveManager.RetrieveActivityNpc(dwActivityID);
+    KGLOG_PROCESS_ERROR(bRetCode);
+    bRetCode = m_DoodadReviveManager.RetrieveActivityDoodad(dwActivityID);
+    KGLOG_PROCESS_ERROR(bRetCode);
+    return true;
+Exit0:
+    return false;
+}
+
 BOOL KScene::Init()
 {
     BOOL bResult    = false;
@@ -41,21 +52,31 @@ BOOL KScene::Init()
 	m_nCopyIndex	        = 0;
 	m_eSceneState		    = ssInvalid;
 	m_szName[0]			    = '\0';
+	m_szDisplayName[0]       = '\0';
 	m_szFilePath[0]		    = '\0';
     m_nBroadcastRegion      = 1;
+    m_nMaxLootRange         = 0;
     m_dwBanSkillMask        = 0;
+    m_dwBanUseItemMask      = 0;
     m_dwBattleRelationMask  = 0;
     m_bDoNotGoThroughRoof   = false;
+    m_bIsArenaMap           = false;
 
     m_nInFightPlayerCount   = 0;
+    m_bBroadcastTargetFlag  = false;
 
 #ifdef _SERVER
     m_dwOwnerID             = ERROR_ID;
     m_bSaved                = false;
     m_bProgressChanged      = false;
 #endif
+    m_nAOECountPercent      = 0;
+    m_bGongFangFightFlag    = false;
+    m_bCanTongWar           = false;
     m_bCanPK                = false;
+    m_bCanDuel              = false;
     m_nCampType             = emctInvalid;
+    m_bNeedCampBuff         = false;
     m_nType                 = emtInvalid;
 
 	memset(m_RegionList, 0, sizeof(m_RegionList));

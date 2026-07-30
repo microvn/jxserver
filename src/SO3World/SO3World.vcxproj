@@ -280,6 +280,7 @@
     <ClCompile Include="src\KAIAction.cpp" />
     <ClCompile Include="src\KAILogic.cpp" />
     <ClCompile Include="src\KAIManager.cpp" />
+    <ClCompile Include="src\KActivityMgrServer.cpp" />
     <ClCompile Include="src\KAISearchTactics.cpp" />
     <ClCompile Include="src\KAISkillSelector.cpp" />
     <ClCompile Include="src\KAIState.cpp" />

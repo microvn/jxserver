@@ -17,7 +17,7 @@ KDropList::~KDropList(void)
 	KG_DELETE_ARRAY(m_ItemList);
 }
 
-//³õÊ¼»¯£¬ÉèÖÃ±íµÄ´óÐ¡
+//åˆå§‹åŒ–ï¼Œè®¾ç½®è¡¨çš„å¤§å°
 BOOL KDropList::Init(DWORD dwSize)
 {
 	m_ItemList = new DROP_DATA[dwSize + 1];
@@ -34,7 +34,7 @@ Exit0:
 	return false;
 }
 
-//Éè¶¨µÀ¾ßµôÂä±í£¬µôÂä±íµÄÐòºÅ£¬µÀ¾ßÀàÐÍ£¬µÀ¾ß±àºÅ£¬µôÂäÂÊ£¥
+//è®¾å®šé“å…·æŽ‰è½è¡¨ï¼ŒæŽ‰è½è¡¨çš„åºå·ï¼Œé“å…·ç±»åž‹ï¼Œé“å…·ç¼–å·ï¼ŒæŽ‰è½çŽ‡ï¼…
 BOOL KDropList::AddItem(DROP_DATA& DropData)
 {
 	KGLOG_PROCESS_ERROR(m_dwIndex <= m_dwSize);
@@ -47,7 +47,7 @@ Exit0:
 	return false;
 }
 
-//¼ÆËãµôÂäÂÊÇø¼ä
+//è®¡ç®—æŽ‰è½çŽ‡åŒºé—´
 BOOL KDropList::PreProcess(void)
 {
 	int nCurrentDropRate = -1;
@@ -57,7 +57,8 @@ BOOL KDropList::PreProcess(void)
 		m_ItemList[dwIndex].nDropRate = nCurrentDropRate;
 	}
 
-	KGLOG_PROCESS_ERROR(nCurrentDropRate < MILLION_NUM);
+	// Target PreProcess accepts an exact 0x100000 cumulative rate.
+	KGLOG_PROCESS_ERROR(nCurrentDropRate <= MILLION_NUM);
 
 	return true;
 
@@ -110,7 +111,7 @@ KItem* KDropList::GetRandomItem(DROP_DATA& DropData)
 
 	if (m_ItemList[nRear].dwMin == 0 && m_ItemList[nRear].dwMax == 0)
 	{
-		//²»ÄÜµþ¼ÓµÄÎïÆ·
+		//ä¸èƒ½å åŠ çš„ç‰©å“
 		nCount = 0;
 	}
 	else

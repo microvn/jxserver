@@ -84,7 +84,9 @@ BOOL KItemList::Init(KPlayer* pPlayer)
 
     m_nMoney            = 0;
     m_nMoneyLimit       = MONEY_LIMIT;
+	m_nReserverd         = 0;
 
+	m_bCubPackageOpened  = false;
     m_bBankOpened       = false;
 
 #ifdef _SERVER
@@ -93,9 +95,26 @@ BOOL KItemList::Init(KPlayer* pPlayer)
 #endif
 
     m_nEnabledBankPackageCount = 0;
+	m_nEquipIDArray[0] = 0;
+	m_nEquipIDArray[1] = 1;
+	m_nEquipIDArray[2] = 2;
 
     m_pPlayer = pPlayer;
     m_nNextSoldListPos = 0;
+	m_pFEAEnchant = NULL;
+	m_bFEAActiveFlag[0] = false;
+	m_bFEAActiveFlag[1] = false;
+	m_bFEAActiveFlag[2] = false;
+	m_nTotalEquipScore = 0;
+	m_nTotalBaseScore = 0;
+	m_nTotalStrengthScore = 0;
+	m_nTotalMountsScore = 0;
+	m_nTotalPackageSize = 0;
+	m_bCangjianFlag = false;
+	m_ItemChangeIDMap.clear();
+	m_DelayTradeMap.clear();
+	m_TimeLimitReturnMap.clear();
+	m_TimeLimitSoldListInfoMap.clear();
 
     for (int i = ibEquip; i < ibTotal; ++i)
     {
@@ -118,6 +137,17 @@ void KItemList::UnInit()
     }
 
     ClearBox();
+	m_ItemChangeIDMap.clear();
+	m_DelayTradeMap.clear();
+	m_TimeLimitReturnMap.clear();
+	m_TimeLimitSoldListInfoMap.clear();
+}
+
+void KItemList::UpdateItemID()
+{
+	// The target refreshes each time-limited map before clearing the change-ID map.
+	// Their loaders are ported in the following 36/37/38 block step.
+	m_ItemChangeIDMap.clear();
 }
 
 #ifdef _SERVER

@@ -1128,6 +1128,24 @@ Exit0:
     return 0;
 }
 
+int KScene::LuaGetPQList(Lua_State* L)
+{
+    int nCount = 0;
+
+    Lua_NewTable(L);
+
+    for (KPQID_FLAG_VECTOR::iterator it = m_PQIDFlagVector.begin();
+         it != m_PQIDFlagVector.end(); ++it)
+    {
+        ++nCount;
+        Lua_PushNumber(L, nCount);
+        Lua_PushNumber(L, it->first);
+        Lua_SetTable(L, -3);
+    }
+
+    return 1;
+}
+
 struct KTraverseScenePlayerFunc
 {
     BOOL operator()(KPlayer* pPlayer);
@@ -1454,6 +1472,9 @@ DEFINE_LUA_CLASS_BEGIN(KScene)
     REGISTER_LUA_BOOL_READONLY(KScene, ReviveInSitu)
     REGISTER_LUA_INTEGER_READONLY(KScene, InFightPlayerCount)
     REGISTER_LUA_INTEGER_READONLY(KScene, CampType)
+    REGISTER_LUA_BOOL_READONLY(KScene, CanTongWar)
+    REGISTER_LUA_BOOL_READONLY(KScene, CanPK)
+    REGISTER_LUA_BOOL_READONLY(KScene, CanDuel)
 
 #if defined(_SERVER)
 	REGISTER_LUA_FUNC(KScene, CreateNpc)
@@ -1479,6 +1500,7 @@ DEFINE_LUA_CLASS_BEGIN(KScene)
 
     REGISTER_LUA_FUNC(KScene, SaveMap)
     REGISTER_LUA_FUNC(KScene, SendMessage)
+    REGISTER_LUA_FUNC(KScene, GetPQList)
     REGISTER_LUA_FUNC(KScene, GetAllPlayer)
     REGISTER_LUA_FUNC(KScene, GetAllNpc)
     REGISTER_LUA_FUNC(KScene, GetAllDoodad)

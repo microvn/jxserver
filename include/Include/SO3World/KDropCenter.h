@@ -11,13 +11,23 @@
 class KPlayer;
 class KLootList;
 
+struct KMapDropTabItem
+{
+    DWORD bUsable[8];
+    DWORD dwMapDropTypeMask[8];
+    char  MapDropName[8][MAX_PATH];
+};
+
 class KDropCenter
 {
 public:
 	BOOL Init(void);
 	BOOL UnInit(void);
 
-	BOOL NpcMapDrop(KLootList* pLootList, std::vector<DWORD>& vecLooterList, DWORD dwMapID);
+	BOOL NpcMapDrop(
+        KLootList* pLootList, std::vector<DWORD>& vecLooterList,
+        DWORD dwMapID, DWORD dwDropIndex, int nLevel, DWORD dwMapDropType
+    );
 	BOOL NpcClassDrop(KLootList* pLootList, std::vector<DWORD>& vecLooterList, DWORD dwClassID, int nLevel);
 	BOOL NpcTemplateDrop(KLootList* pLootList, std::vector<DWORD>& vecLooterList, DWORD dwNpcTemplateID, int nDropListIndex);
     BOOL NpcDropQuestItem(DWORD dwTemplateID, KPlayer* pDropTarget, KLootList* pLootList, std::vector<DWORD>& vecLooterList);
@@ -39,12 +49,14 @@ private:
 private:
 	typedef std::map<DWORD, KDropList>		MAP_DWORD_2_DROP_LIST;
 	typedef std::map<uint64_t, KDropList>	MAP_INT64_2_DROP_LIST;
+	typedef std::map<DWORD, KMapDropTabItem>	MAP_DWORD_2_MAP_DROP_TAB_ITEM;
 
 	typedef std::map<DWORD, KMoneyDropList>		MAP_DWORD_2_MONEY_DROP_LIST;
 	typedef std::map<uint64_t, KMoneyDropList>	MAP_INT64_2_MONEY_DROP_LIST;
     
-    //  ¿ΩÁµÙ¬‰
-    MAP_DWORD_2_DROP_LIST	m_mapMapID2DropList;
+    // World map drops: target v2.5.2 layout starts with these members.
+    MAP_DWORD_2_MAP_DROP_TAB_ITEM m_mapMapDropID2MapDropTabItem;
+    MAP_INT64_2_DROP_LIST m_mapMapDropID2DropList[8];
     
     // NPC
 	MAP_DWORD_2_DROP_LIST	m_mapNpcTemplateID2DropList[MAX_DROP_PER_NPC];	

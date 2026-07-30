@@ -10,6 +10,7 @@
 #define _KNPCREVIVEMANAGER_H_
 
 #include <deque>
+#include <list>
 #include "INpcFile.h"
 
 #define MAX_REVIVE_NPC_PER_FRAME 16
@@ -36,12 +37,16 @@ struct KNPC_REVIVE_QUEUE
         nMinQueueSize   = 0;
         nMaxQueueSize   = INT_MAX;
         bRandom         = false;
+        dwActivityID    = 0;
+        bActivityOn     = false;
     };
 
     std::deque<KNPC_REVIVE_NODE>    ReviveQueue;
     int                             nMinQueueSize;
     int                             nMaxQueueSize;
     BOOL                            bRandom;
+    DWORD                           dwActivityID;
+    BOOL                            bActivityOn;
 };
 
 struct KNPC_TABLE_DATA
@@ -51,11 +56,13 @@ struct KNPC_TABLE_DATA
         nMinSize = 0;
         nMaxSize = INT_MAX;
         bRandom  = false;
+        dwActivityID = 0;
     };
 
     int     nMinSize;
     int     nMaxSize;
     BOOL    bRandom;
+    DWORD   dwActivityID;
 };
 
 struct KNPC_RANDOM_NODE
@@ -89,6 +96,7 @@ public:
 
     BOOL DestroyNpc(KNpc* pNpc);
     BOOL ForceReviveNpc(KNpc* pNpc);
+    BOOL RetrieveActivityNpc(DWORD dwActivityID);
 
 private:
     BOOL ReviveNpc(DWORD dwReviveID);
@@ -109,12 +117,15 @@ private:
     typedef std::vector<KNPC_RANDOM_DATA> KNpcRandomDataVector;
     typedef std::map<DWORD, KNpcRandomDataVector> KNpcRandomDataMap;
     typedef std::map<DWORD /*ReviveID*/, KNPC_TABLE_DATA> KNpcTableMap;
+    typedef std::map<DWORD, std::list<DWORD> > KNpcActivityMap;
 
     KScene*             m_pScene;
     KNpcReviveMap       m_NpcReviveMap;
     KNpcRandomMap       m_NpcRandomMap;
     KNpcRandomDataMap   m_NpcRandomDataMap;
     KNpcTableMap        m_NpcTableMap;
+    KNpcActivityMap     m_ActivityNpcTable;
+    DWORD               m_nNextCheckActivityTime;
 };
 
 #endif

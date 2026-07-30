@@ -1,28 +1,42 @@
 #ifndef _KMAP_LIST_FILE_H_
 #define _KMAP_LIST_FILE_H_
 
+#include <cstddef>
 #include "Global.h"
 
 struct KMapParams
 {
     DWORD   dwMapID;
-	char	szMapName[_NAME_LEN];    
+    char    szMapName[_NAME_LEN];
+    char    szDisplayName[_NAME_LEN];
     int     nBroadcast;
+    BOOL    bCanTongWar;
     BOOL    bCanPK;
+    BOOL    bCanDuel;
     int     nCampType;
     BOOL    bAllScenePlayerInFight;
-	char	szDropName[MAX_PATH];
+    DWORD   dwMapDropID;
     int     bReviveInSitu;
-	char	szResourceFilePath[MAX_PATH];
+    char    szResourceFilePath[MAX_PATH];
     int     nMaxPlayerCount;
     DWORD   dwBanSkillMask;
+    DWORD   dwBanUseItemMask;
     DWORD   dwBattleRelationMask;
     BOOL    bDoNotGoThroughRoof;
     int     nType;
-    int     nRefreshCycle;      // 单位：秒
-    int     nQuestCountAchID;   // 场景任务计数成就ID
+    int     nRefreshCycle;
+    int     nRefreshOffset;
+    int     nQuestCountAchID;
     int     nLimitTimes;
+    BOOL    bFightList;
+    BOOL    bNeedCampBuff;
+    int     nMaxLootRange;
+    BOOL    bIsArenaMap;
+    BOOL    bNewCampFight;
 };
+
+typedef char KMAP_PARAMS_TARGET_SIZE[(sizeof(KMapParams) == 0x1A4) ? 1 : -1];
+typedef char KMAP_PARAMS_TARGET_DROP_ID[(offsetof(KMapParams, dwMapDropID) == 0x5C) ? 1 : -1];
 
 typedef std::map<DWORD, KMapParams> KMAP_PARAM_TABLE;
 
@@ -42,4 +56,3 @@ private:
 };
 
 #endif	//_KMAP_LIST_FILE_H_
-

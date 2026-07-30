@@ -42,8 +42,8 @@ BOOL KMapListFile::Init(void)
         (void)bRetCode; /*[endgame] tolerant*/
         KGLOG_PROCESS_ERROR(MapParam.nCampType > emctInvalid && MapParam.nCampType < emctTotal);
 
-		bRetCode = piTabFile->GetString(nRowIndex, "MapDrop", "", MapParam.szDropName, sizeof(MapParam.szDropName));
-		(void)bRetCode; /*[endgame] tolerant*/
+		bRetCode = piTabFile->GetInteger(nRowIndex, "MapDrop", 0, (int*)&MapParam.dwMapDropID);
+		(void)bRetCode; /*[target] MapDrop is the master-row ID */
 
 		bRetCode = piTabFile->GetString(nRowIndex, "ResourcePath", "", MapParam.szResourceFilePath, sizeof(MapParam.szResourceFilePath));
 		(void)bRetCode; /*[endgame] tolerant*/

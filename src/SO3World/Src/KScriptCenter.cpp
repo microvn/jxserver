@@ -777,6 +777,7 @@ ILuaScriptEx* KScriptCenter::CreateScriptHolder()
     Luna<KMentorCache>::Register(pLuaState);
     Luna<KHairShop>::Register(pLuaState);
     Luna<KMiniAvatar>::Register(pLuaState);
+    Luna<KActivityMgrServer>::Register(pLuaState);
 #endif
     Luna<KTarget>::Register(pLuaState);
 
