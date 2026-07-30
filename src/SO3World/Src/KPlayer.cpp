@@ -2777,7 +2777,7 @@ BOOL KPlayer::SaveAccount(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSiz
 
     pGlobalHeader = (KRoleDataHeader*)pbyBuffer;
     pbyOffset = pbyBuffer + sizeof(KRoleDataHeader);
-    KGLOG_PROCESS_ERROR((size_t)(pbyTail - pbyOffset) >= 0x4c);
+    KGLOG_PROCESS_ERROR((size_t)(pbyTail - pbyOffset) >= sizeof(KRoleBlockHeader));
     pBlock = (KRoleBlockHeader*)pbyOffset;
     pbyOffset += sizeof(KRoleBlockHeader);
     KGLOG_PROCESS_ERROR(SaveAccountStateInfo(&uUsedSize, pbyOffset, pbyTail - pbyOffset));
@@ -2802,6 +2802,8 @@ BOOL KPlayer::SaveAccount(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSiz
     pGlobalHeader->dwCRC = CRC32(0, pbyBuffer + sizeof(KRoleDataHeader), (DWORD)uPayloadSize);
     *puUsedSize = (size_t)(pbyOffset - pbyBuffer);
     m_nAccountLastSaveTime = g_pSO3World->m_nCurrentTime;
+    m_nNextSaveFrame = g_pSO3World->m_nGameLoop
+        + g_pSO3World->m_Settings.m_ConstList.nSaveInterval * GAME_FPS;
     bResult = true;
 Exit0:
     return bResult;

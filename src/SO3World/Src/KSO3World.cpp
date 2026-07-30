@@ -1433,6 +1433,7 @@ BOOL KTraversePlayerFunc::operator()(DWORD dwID, KPlayer* pPlayer)
 
 	case gsWaitForPermit:
 	case gsWaitForRoleData:
+	case gsWaitForSyncClientData:
 		// �ȴ���½����ʱ
 		if (pPlayer->m_nTimer++ >= LOGIN_TIMEOUT)
 		{

@@ -466,18 +466,6 @@ BOOL KRelayClient::SaveRoleData(KPlayer* pPlayer)
     BYTE*           pbyPos       = m_pbySaveRoleBuffer;
     BYTE*           pbyTail      = NULL;
 
-    // A client disconnect during the paced role-data load must not persist a
-    // partially initialized player back through the stock Center.
-    if (!pPlayer->m_bExtDataLoadFinish)
-    {
-        KGLogPrintf(
-            KGLOG_INFO,
-            "Skip role save before ext data load completes, ID(%u)\n",
-            pPlayer->m_dwID
-        );
-        return true;
-    }
-
     bRetCode = pPlayer->Save(&uRoleDataLen, m_pbySaveRoleBuffer, MAX_ROLE_DATA_SIZE);
     KGLOG_PROCESS_ERROR(bRetCode);
 

@@ -80,6 +80,7 @@ def test_account_payload_uses_global_crc_and_versioned_chunks():
     assert "KRoleBlockHeader* pBlock" in load
     assert "pGlobalHeader->dwCRC = CRC32(0, pbyBuffer + sizeof(KRoleDataHeader)" in save
     assert "pBlock->dwVer = 0" in save
+    assert "pbyTail - pbyOffset) >= sizeof(KRoleBlockHeader)" in save
     assert "pHeader->dwCRC = CRC32" not in save
 
 
@@ -123,6 +124,37 @@ def test_account_save_is_wired_at_target_save_boundaries():
     playing_start = world.index("case gsPlaying:")
     playing = world[playing_start:world.index("if ((g_pSO3World->m_nGameLoop", playing_start)]
     assert playing.index("SaveRoleData(pPlayer)") < playing.index("SaveAccountData(pPlayer)")
+
+
+def test_account_save_refreshes_both_target_timers():
+    source = read(PLAYER_CPP)
+    start = source.index("BOOL KPlayer::SaveAccount")
+    end = source.index("#define SAVE_ROLE_BLOCK", start)
+    body = source[start:end]
+
+    assert "m_nAccountLastSaveTime = g_pSO3World->m_nCurrentTime" in body
+    assert "m_nNextSaveFrame = g_pSO3World->m_nGameLoop" in body
+    assert "nSaveInterval * GAME_FPS" in body
+
+
+def test_sync_data_load_state_is_cleaned_like_target():
+    base = read(ROOT / "src/SO3World/Src/KPlayerServerBase.cpp")
+    world = read(WORLD_CPP)
+
+    detach = base[base.index("BOOL KPlayerServer::Detach"):base.index("BOOL KPlayerServer::Send", base.index("BOOL KPlayerServer::Detach"))]
+    timeout = world[world.index("case gsWaitForPermit:"):world.index("case gsWaitForLoginLoading:", world.index("case gsWaitForPermit:"))]
+
+    assert "case gsWaitForSyncClientData:" in detach
+    assert "case gsWaitForSyncClientData:" in timeout
+
+
+def test_role_save_has_no_candidate_only_partial_load_guard():
+    source = read(RELAY_CPP)
+    start = source.index("BOOL KRelayClient::SaveRoleData")
+    end = source.index("BOOL KRelayClient::", start + len("BOOL KRelayClient::SaveRoleData"))
+    body = source[start:end]
+
+    assert "Skip role save before ext data load completes" not in body
 
 
 def test_regression_calculate_and_reward_contract():

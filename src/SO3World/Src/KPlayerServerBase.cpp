@@ -353,6 +353,7 @@ BOOL KPlayerServer::Detach(int nConnIndex)
 
 	case gsWaitForPermit:
 	case gsWaitForRoleData:
+	case gsWaitForSyncClientData:
 	case gsWaitForLoginLoading:
     case gsWaitForNewMapLoading:
 		g_pSO3World->DelPlayer(pPlayer);
