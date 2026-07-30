@@ -9,6 +9,7 @@
 #define	_KPLAYER_H_
 
 #include <list>
+#include <vector>
 #include "SO3ProtocolBasic.h"
 #include "KCharacter.h"
 #include "KCircleList.h"
@@ -59,6 +60,7 @@ enum GAME_STATUS
 	gsWaitForConnect,			// ���ڵȴ��ͻ��˵�����
 	gsWaitForPermit,		    // ��½ʱ���ڵȴ�GC��ȷ��
     gsWaitForRoleData,		    // ��¼ʱ���ڵȴ�Goddess�Ļذ�
+    gsWaitForSyncClientData,    // ��¼ʱ���ڵȴ��ͻ���ȷ�ϳ�ʼ����
     gsWaitForLoginLoading,      // ��¼(����)�����еȴ��ͻ�������
 	gsWaitForNewMapLoading,     // �л���ͼ�����еȴ��ͻ�������
 
@@ -262,6 +264,9 @@ public:
     time_t              m_nCurrentLoginTime;
     int64_t             m_nTotalGameFrame; // ������֡��
     time_t              m_nCreateTime;
+    time_t              m_nAccountLastSaveTime;
+    int                 m_nAccContinuousLoginCount;
+    BOOL                m_bContinuousLoginRewardFlag;
 
 	KCustomData<360>    m_CustomData;
 
@@ -474,6 +479,19 @@ public:
 
     KVIEW_SYNC_TABLE    m_DoodadSyncTable;
     KVIEW_SYNC_QUEUE    m_DoodadSyncQueue;
+
+    DWORD               m_uSyncPlayerSN;
+    DWORD               m_uSyncNpcSN;
+    DWORD               m_uSyncDoodadSN;
+    int                 m_nSyncPlayerCount[3];
+    int                 m_nSyncNpcCount;
+    int                 m_nSyncDoodadCount;
+    BOOL                m_bExtDataLoadFinish;
+    DWORD               m_uExtDataSectionIndex;
+    BYTE                m_byCurrentExtDataSectionType;
+    BYTE*               m_pbyExtDataBuffer;
+    size_t              m_uExtDataSize;
+    size_t              m_uExtDataOffset;
 #endif
 
 public:
@@ -494,6 +512,10 @@ public:
 
 #ifdef _SERVER
     BOOL    Load(BYTE* pbyData, size_t uDataLen);
+    BOOL    OnClientReady();
+    BOOL    OnExtDataLoadFinish();
+    BOOL    PartialLoadExtData();
+    BOOL    FinishRoleDataLoad();
     BOOL    LoadExtRoleData(BYTE* pbyData, size_t uDataLen);
     BOOL    LoadSkillRecipeList(BYTE* pbyData, size_t uDataLen);
     BOOL    LoadQuestData(BYTE* pbyData, size_t uDataLen, int nVersion = 0);
@@ -502,6 +524,8 @@ public:
     BOOL    LoadStateInfoV2(BYTE* pbyData, size_t uDataLen);
     BOOL    LoadRoadOpenNode(BYTE* pbyData, size_t uDataLen);
     BOOL    LoadHeroData(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadAccountStateInfo(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadAccountData(BYTE* pbyData, size_t uDataLen);
 
     BOOL    CallLoginScript();
     BOOL    RefreshDailyVariable(int nDays);
@@ -512,6 +536,8 @@ public:
     BOOL    SaveStateInfo(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
     BOOL    SaveRoadOpenNode(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
     BOOL    SaveHeroData(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
+    BOOL    SaveAccountStateInfo(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
+    BOOL    SaveAccount(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
     BOOL    SavePosition();
     // �����������֮ǰӦ��ȷ��m_SavePosition����ȷ������(����ͨ��SavePosition)
     BOOL    SaveBaseInfo(KRoleBaseInfo* pBaseInfo);
@@ -784,7 +810,8 @@ public:
     BOOL LoadRandData(BYTE* pbyData, size_t uDataLen);
 
     BOOL SaveMentorData(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
-    BOOL LoadMentorData(BYTE* pbyData, size_t uDataLen);
+    BOOL LoadMentorData(BYTE* pbyData, size_t uDataLen, int nVersion);
+    BOOL AddUsableMentorValue(int nDeltaMentorValue);
 
     BOOL IsQuestDrop(DWORD dwID, int nIndex, unsigned uProbability);
     BOOL IsVenationSuccess(DWORD dwSkillID, DWORD dwSkillLevel, unsigned uProbability);
@@ -817,10 +844,22 @@ public:
 
 // ʦͽ���
 public:
+    struct KGRADUATED_MENTOR_DATA
+    {
+        DWORD   dwPlayerID;
+        time_t  nMentorTime;
+        time_t  nGraduateTime;
+    };
+    typedef std::vector<KGRADUATED_MENTOR_DATA, KMemory::KAllocator<KGRADUATED_MENTOR_DATA> > KGRADUATED_MENTOR_DATA_LIST;
+
     int     m_nMaxApprenticeNum;
+    int     m_nUsableMentorValue;
     int     m_nAcquiredMentorValue;
     time_t  m_nLastEvokeMentorTime;
     int     m_nEvokeMentorCount;
+    DWORD   m_dwTAEquipsScore;
+    KGRADUATED_MENTOR_DATA_LIST m_GraduateMentorData;
+    KGRADUATED_MENTOR_DATA_LIST m_GraduateApprenticeData;
 
 public:
 	DECLARE_LUA_CLASS(KPlayer);
@@ -899,6 +938,7 @@ public:
 #endif
 
     DECLARE_LUA_INTEGER(MaxApprenticeNum);
+    DECLARE_LUA_INTEGER(UsableMentorValue);
     DECLARE_LUA_INTEGER(AcquiredMentorValue);
     DECLARE_LUA_TIME(LastEvokeMentorTime);
     DECLARE_LUA_INTEGER(EvokeMentorCount);
@@ -1476,6 +1516,7 @@ public:
     int LuaIsGM(Lua_State* L);
 
 // ʦͽ���
+    int LuaAddUsableMentorValue(Lua_State* L);
     int LuaAddMaxApprenticeNum(Lua_State* L);
 #endif
 

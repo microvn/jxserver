@@ -592,7 +592,17 @@ BOOL KPlayerServer::ProcessPackage(IKG_SocketStream* piSocket)
 
 			if (pPlayer->m_eGameStatus != gsPlaying)
 			{
-				if (pHeader->byProtocolID != c2s_apply_enter_scene && pHeader->byProtocolID != c2s_ping_signal)
+				if (pHeader->byProtocolID != c2s_client_confirm_ready &&
+                    pHeader->byProtocolID != c2s_apply_enter_scene &&
+                    pHeader->byProtocolID != c2s_sync_role_data_section_check_respond &&
+                    pHeader->byProtocolID != c2s_ping_signal &&
+                    pHeader->byProtocolID != c2s_apply_move_adjust &&
+                    pHeader->byProtocolID != c2s_apply_player_display_data &&
+                    pHeader->byProtocolID != c2s_apply_loot_list &&
+                    pHeader->byProtocolID != c2s_get_tong_description_request &&
+                    pHeader->byProtocolID != c2s_sync_new_player_respond &&
+                    pHeader->byProtocolID != c2s_sync_new_npc_respond &&
+                    pHeader->byProtocolID != c2s_sync_new_doodad_respond)
                 {
 					continue;
 				}

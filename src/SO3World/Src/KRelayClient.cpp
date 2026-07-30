@@ -31,6 +31,10 @@ KRelayClient::KRelayClient(void)
     m_uSyncRoleOffset       = 0;
 
     m_pbySaveRoleBuffer     = NULL;
+    m_dwSyncAccountID       = ERROR_ID;
+    m_pbySyncAccountBuffer  = NULL;
+    m_uSyncAccountOffset     = 0;
+    m_pbySaveAccountBuffer  = NULL;
 
     memset(m_ProcessProtocolFuns, 0, sizeof(m_ProcessProtocolFuns));
     memset(m_uProtocolSize, 0, sizeof(m_uProtocolSize));
@@ -95,11 +99,11 @@ KRelayClient::KRelayClient(void)
     REGISTER_INTERNAL_FUNC(r2s_set_map_copy_owner, &KRelayClient::OnSetMapCopyOwner, 14);
     REGISTER_INTERNAL_FUNC(r2s_sync_road_track_info, &KRelayClient::OnSyncRoadTrackInfo, 8);
     REGISTER_INTERNAL_FUNC(r2s_save_role_data_respond, &KRelayClient::OnSaveRoleDataRespond, 14);
-    REGISTER_INTERNAL_FUNC(r2s_v246_unused_60, &KRelayClient::OnNoOpRespond, 14);
+    REGISTER_INTERNAL_FUNC(r2s_save_account_data_respond, &KRelayClient::OnSaveAccountDataRespond, 14);
     REGISTER_INTERNAL_FUNC(r2s_sync_role_data, &KRelayClient::OnSyncRoleData, 10);
     REGISTER_INTERNAL_FUNC(r2s_load_role_data, &KRelayClient::OnLoadRoleData, 14);
-    REGISTER_INTERNAL_FUNC(r2s_v246_unused_63, &KRelayClient::OnNoOpRespond, 10);
-    REGISTER_INTERNAL_FUNC(r2s_v246_unused_64, &KRelayClient::OnNoOpRespond, 14);
+    REGISTER_INTERNAL_FUNC(r2s_sync_account_data, &KRelayClient::OnSyncAccountData, 10);
+    REGISTER_INTERNAL_FUNC(r2s_load_account_data, &KRelayClient::OnLoadAccountData, 14);
     REGISTER_INTERNAL_FUNC(r2s_gm_command, &KRelayClient::OnGmCommand, 38);
     REGISTER_INTERNAL_FUNC(r2s_join_battle_field_queue_respond, &KRelayClient::OnNoOpRespond, 50);
     REGISTER_INTERNAL_FUNC(r2s_leave_battle_field_queue_respond, &KRelayClient::OnNoOpRespond, 14);
@@ -246,6 +250,13 @@ BOOL KRelayClient::Init(IRecorderFactory* piFactory)
     m_pbySaveRoleBuffer = new BYTE[MAX_ROLE_DATA_SIZE];
     KGLOG_PROCESS_ERROR(m_pbySaveRoleBuffer);
 
+    m_pbySyncAccountBuffer = new BYTE[MAX_ACCOUNT_DATA_SIZE];
+    KGLOG_PROCESS_ERROR(m_pbySyncAccountBuffer);
+    m_pbySaveAccountBuffer = new BYTE[MAX_ACCOUNT_DATA_SIZE];
+    KGLOG_PROCESS_ERROR(m_pbySaveAccountBuffer);
+    m_uSyncAccountOffset = 0;
+    m_dwSyncAccountID = ERROR_ID;
+
     piIniFile = g_OpenIniFile(GS_SETTINGS_FILENAME);
 	KGLOG_PROCESS_ERROR(piIniFile);
 
@@ -284,6 +295,8 @@ Exit0:
         KG_COM_RELEASE(m_piSocketStream);
         KG_DELETE_ARRAY(m_pbySaveRoleBuffer);
         KG_DELETE_ARRAY(m_pbySyncRoleBuffer);
+        KG_DELETE_ARRAY(m_pbySaveAccountBuffer);
+        KG_DELETE_ARRAY(m_pbySyncAccountBuffer);
     }
 
     KGLogPrintf(
@@ -301,6 +314,8 @@ void KRelayClient::UnInit(void)
     KG_COM_RELEASE(m_piSocketStream);
     KG_DELETE_ARRAY(m_pbySaveRoleBuffer);
     KG_DELETE_ARRAY(m_pbySyncRoleBuffer);
+    KG_DELETE_ARRAY(m_pbySaveAccountBuffer);
+    KG_DELETE_ARRAY(m_pbySyncAccountBuffer);
 }
 
 struct KSearchPlayerForExitingSave
@@ -451,6 +466,18 @@ BOOL KRelayClient::SaveRoleData(KPlayer* pPlayer)
     BYTE*           pbyPos       = m_pbySaveRoleBuffer;
     BYTE*           pbyTail      = NULL;
 
+    // A client disconnect during the paced role-data load must not persist a
+    // partially initialized player back through the stock Center.
+    if (!pPlayer->m_bExtDataLoadFinish)
+    {
+        KGLogPrintf(
+            KGLOG_INFO,
+            "Skip role save before ext data load completes, ID(%u)\n",
+            pPlayer->m_dwID
+        );
+        return true;
+    }
+
     bRetCode = pPlayer->Save(&uRoleDataLen, m_pbySaveRoleBuffer, MAX_ROLE_DATA_SIZE);
     KGLOG_PROCESS_ERROR(bRetCode);
 
@@ -469,6 +496,38 @@ BOOL KRelayClient::SaveRoleData(KPlayer* pPlayer)
     bRetCode = DoSaveRoleData(pPlayer, uRoleDataLen);
     KGLOG_PROCESS_ERROR(bRetCode);
 
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
+BOOL KRelayClient::SaveAccountData(KPlayer* pPlayer)
+{
+    BOOL bResult = false;
+    BOOL bRetCode = false;
+    size_t uAccountDataLen = 0;
+    BYTE* pbyPos = m_pbySaveAccountBuffer;
+    BYTE* pbyTail = NULL;
+
+    KGLOG_PROCESS_ERROR(pPlayer);
+    KGLOG_PROCESS_ERROR(m_pbySaveAccountBuffer);
+    bRetCode = pPlayer->SaveAccount(&uAccountDataLen, m_pbySaveAccountBuffer, MAX_ACCOUNT_DATA_SIZE);
+    KGLOG_PROCESS_ERROR(bRetCode);
+
+    pbyTail = m_pbySaveAccountBuffer + uAccountDataLen;
+    while (pbyPos < pbyTail)
+    {
+        size_t uSubPakSize = min(pbyTail - pbyPos, MAX_ACCOUNT_DATA_PAK_SIZE);
+        bRetCode = DoSyncAccountData(
+            pPlayer->m_dwID, pbyPos,
+            pbyPos - m_pbySaveAccountBuffer, uSubPakSize
+        );
+        KGLOG_PROCESS_ERROR(bRetCode);
+        pbyPos += uSubPakSize;
+    }
+
+    bRetCode = DoSaveAccountData(pPlayer, uAccountDataLen);
+    KGLOG_PROCESS_ERROR(bRetCode);
     bResult = true;
 Exit0:
     return bResult;
@@ -560,7 +619,9 @@ void KRelayClient::OnCreateMapNotify(BYTE* pbyData, size_t uDataLen)
 	KGLOG_PROCESS_ERROR(bRetCode);
     bSceneInitFlag = true;
 
+    pScene->m_bCanTongWar   = pMapParams->bCanTongWar;
     pScene->m_bCanPK        = pMapParams->bCanPK;
+    pScene->m_bCanDuel      = pMapParams->bCanDuel;
     pScene->m_nCampType     = pMapParams->nCampType;
 
     pCopyScene = g_pSO3World->GetScene(pNotify->dwMapID, 0);
@@ -735,6 +796,9 @@ void KRelayClient::OnSearchMapRespond(BYTE* pbyData, size_t uDataLen)
         pPlayer->m_nBattleFieldSide             = pRespond->nBattleFieldSide;
 
 	    bRetCode = SaveRoleData(pPlayer);
+	    KGLOG_PROCESS_ERROR(bRetCode);
+
+	    bRetCode = SaveAccountData(pPlayer);
 	    KGLOG_PROCESS_ERROR(bRetCode);
 	}
     else
@@ -2403,23 +2467,78 @@ void KRelayClient::OnLoadRoleData(BYTE* pbyData, size_t uDataLen)
     bRetCode = pPlayer->Load(m_pbySyncRoleBuffer, pNotify->uRoleDataLen);
     KGLOG_PROCESS_ERROR(bRetCode);
 
-	g_PlayerServer.DoSyncRoleDataOver(pPlayer->m_nConnIndex);
-    
-    pScene->CallEnterSceneScript(pPlayer);
-
-    bRetCode = pPlayer->CallLoginScript();
-    KGLOG_PROCESS_ERROR(bRetCode);
-
-    pPlayer->m_nVirtualFrame    = g_pSO3World->m_nGameLoop;
-    pPlayer->m_nRecordCount     = 0;
-    pPlayer->m_eGameStatus      = gsPlaying;
-
     bResult = true;
 Exit0:
     m_uSyncRoleOffset = 0;
     m_dwSyncRoleID    = ERROR_ID;
 
     // 这里失败不调用detach是因为玩家可能是第二次登录,玩家状态是waitforconnect,调用detach会宕机
+    return;
+}
+
+void KRelayClient::OnSaveAccountDataRespond(BYTE* pbyData, size_t uDataLen)
+{
+    KPlayer* pPlayer = NULL;
+    R2S_SAVE_ACCOUNT_DATA_RESPOND* pRespond = (R2S_SAVE_ACCOUNT_DATA_RESPOND*)pbyData;
+    m_nNextQuitingSaveTime = 0;
+    KGLOG_PROCESS_ERROR(pRespond);
+    KGLOG_PROCESS_ERROR(uDataLen >= sizeof(R2S_SAVE_ACCOUNT_DATA_RESPOND));
+
+    pPlayer = g_pSO3World->m_PlayerSet.GetObj(pRespond->dwPlayerID);
+    if (pPlayer && pRespond->nUserValue == gsWaitForTransmissionSave && !pRespond->bSucceed)
+    {
+        KGLogPrintf(
+            KGLOG_ERR,
+            "Save account data failed, ID(%u), Name(%s)\n",
+            pPlayer->m_dwID, pPlayer->m_szName
+        );
+    }
+Exit0:
+    return;
+}
+
+void KRelayClient::OnSyncAccountData(BYTE* pbyData, size_t uDataLen)
+{
+    BOOL bResult = false;
+    R2S_SYNC_ACCOUNT_DATA* pSyncData = (R2S_SYNC_ACCOUNT_DATA*)pbyData;
+    size_t uAccountDataLen = uDataLen - sizeof(R2S_SYNC_ACCOUNT_DATA);
+
+    KGLOG_PROCESS_ERROR(uDataLen >= sizeof(R2S_SYNC_ACCOUNT_DATA));
+    KGLOG_PROCESS_ERROR(pSyncData->uOffset == m_uSyncAccountOffset);
+    KGLOG_PROCESS_ERROR(MAX_ACCOUNT_DATA_SIZE - m_uSyncAccountOffset >= uAccountDataLen);
+    KGLOG_PROCESS_ERROR(pSyncData->uOffset == 0 || pSyncData->dwRoleID == m_dwSyncAccountID);
+    memcpy(m_pbySyncAccountBuffer + m_uSyncAccountOffset, pSyncData->byData, uAccountDataLen);
+    m_uSyncAccountOffset += uAccountDataLen;
+    m_dwSyncAccountID = pSyncData->dwRoleID;
+    bResult = true;
+Exit0:
+    if (!bResult)
+    {
+        m_dwSyncAccountID = ERROR_ID;
+        m_uSyncAccountOffset = 0;
+    }
+}
+
+void KRelayClient::OnLoadAccountData(BYTE* pbyData, size_t uDataLen)
+{
+    BOOL bResult = false;
+    BOOL bRetCode = false;
+    R2S_LOAD_ACCOUNT_DATA* pNotify = (R2S_LOAD_ACCOUNT_DATA*)pbyData;
+    KPlayer* pPlayer = NULL;
+
+    KGLOG_PROCESS_ERROR(uDataLen >= sizeof(R2S_LOAD_ACCOUNT_DATA));
+    KGLOG_PROCESS_ERROR(pNotify->uAccountDataLen == m_uSyncAccountOffset);
+    KGLOG_PROCESS_ERROR(pNotify->dwRoleID == m_dwSyncAccountID || m_dwSyncAccountID == ERROR_ID);
+    pPlayer = g_pSO3World->m_PlayerSet.GetObj(pNotify->dwRoleID);
+    KGLOG_PROCESS_ERROR(pPlayer);
+    KGLOG_PROCESS_ERROR(pNotify->bSucceed);
+    KGLOG_PROCESS_ERROR(pPlayer->m_eGameStatus == gsWaitForRoleData);
+    bRetCode = pPlayer->LoadAccountData(m_pbySyncAccountBuffer, pNotify->uAccountDataLen);
+    KGLOG_PROCESS_ERROR(bRetCode);
+    bResult = true;
+Exit0:
+    m_uSyncAccountOffset = 0;
+    m_dwSyncAccountID = ERROR_ID;
     return;
 }
 
@@ -5338,6 +5457,33 @@ Exit0:
     return bResult;
 }
 
+BOOL KRelayClient::DoLoadAccountDataRequest(DWORD dwRoleID, const char* pszAccount)
+{
+    BOOL                           bResult          = false;
+    BOOL                           bRetCode         = false;
+    IKG_Buffer*                    piPackage        = NULL;
+    S2R_LOAD_ACCOUNT_DATA_REQUEST* pLoadAccountData = NULL;
+
+    piPackage = KG_MemoryCreateBuffer(sizeof(S2R_LOAD_ACCOUNT_DATA_REQUEST));
+    KGLOG_PROCESS_ERROR(piPackage);
+
+    pLoadAccountData = (S2R_LOAD_ACCOUNT_DATA_REQUEST*)piPackage->GetData();
+    pLoadAccountData->wProtocolID = s2r_load_account_data_request;
+    pLoadAccountData->dwPlayerID  = dwRoleID;
+
+    (void)pszAccount; /* The v246 wire request is keyed by player ID. */
+    m_dwSyncAccountID = dwRoleID;
+    m_uSyncAccountOffset = 0;
+
+    bRetCode = Send(piPackage);
+    KGLOG_PROCESS_ERROR(bRetCode);
+
+    bResult = true;
+Exit0:
+    KG_COM_RELEASE(piPackage);
+    return bResult;
+}
+
 BOOL KRelayClient::DoLoadRoleDataRequest(DWORD dwRoleID)
 {
     BOOL                        bResult         = false;
@@ -5391,6 +5537,28 @@ Exit0:
     return bResult;
 }
 
+BOOL KRelayClient::DoSyncAccountData(DWORD dwID, BYTE* pbyData, size_t uOffset, size_t uDataLen)
+{
+    BOOL bResult = false;
+    BOOL bRetCode = false;
+    IKG_Buffer* piPackage = NULL;
+    S2R_SYNC_ACCOUNT_DATA* pSyncAccountData = NULL;
+
+    piPackage = KG_MemoryCreateBuffer((unsigned)(sizeof(S2R_SYNC_ACCOUNT_DATA) + uDataLen));
+    KGLOG_PROCESS_ERROR(piPackage);
+    pSyncAccountData = (S2R_SYNC_ACCOUNT_DATA*)piPackage->GetData();
+    pSyncAccountData->wProtocolID = s2r_sync_account_data;
+    pSyncAccountData->dwRoleID = dwID;
+    pSyncAccountData->uOffset = uOffset;
+    memcpy(pSyncAccountData->byData, pbyData, uDataLen);
+    bRetCode = Send(piPackage);
+    KGLOG_PROCESS_ERROR(bRetCode);
+    bResult = true;
+Exit0:
+    KG_COM_RELEASE(piPackage);
+    return bResult;
+}
+
 BOOL KRelayClient::DoSaveRoleData(KPlayer* pPlayer, size_t uRoleDataLen)
 {
     BOOL                bResult       = false;
@@ -5415,6 +5583,29 @@ BOOL KRelayClient::DoSaveRoleData(KPlayer* pPlayer, size_t uRoleDataLen)
     bRetCode = Send(piPackage);
     KGLOG_PROCESS_ERROR(bRetCode);
 
+    bResult = true;
+Exit0:
+    KG_COM_RELEASE(piPackage);
+    return bResult;
+}
+
+BOOL KRelayClient::DoSaveAccountData(KPlayer* pPlayer, size_t uAccountDataLen)
+{
+    BOOL bResult = false;
+    BOOL bRetCode = false;
+    IKG_Buffer* piPackage = NULL;
+    S2R_SAVE_ACCOUNT_DATA* pSaveAccountData = NULL;
+
+    KGLOG_PROCESS_ERROR(pPlayer);
+    piPackage = KG_MemoryCreateBuffer((unsigned)sizeof(S2R_SAVE_ACCOUNT_DATA));
+    KGLOG_PROCESS_ERROR(piPackage);
+    pSaveAccountData = (S2R_SAVE_ACCOUNT_DATA*)piPackage->GetData();
+    pSaveAccountData->wProtocolID = s2r_save_account_data;
+    pSaveAccountData->dwRoleID = pPlayer->m_dwID;
+    pSaveAccountData->nUserValue = pPlayer->m_eGameStatus;
+    pSaveAccountData->uAccountDataLen = uAccountDataLen;
+    bRetCode = Send(piPackage);
+    KGLOG_PROCESS_ERROR(bRetCode);
     bResult = true;
 Exit0:
     KG_COM_RELEASE(piPackage);

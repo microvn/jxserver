@@ -495,7 +495,9 @@ public:
 
 	BOOL DoSyncNpcDialogFlag(KNpc* pNpc);
 
-	BOOL DoSyncRoleDataOver(int nConnIndex);
+    BOOL DoSyncRoleDataOver(int nConnIndex);
+    BOOL DoSyncRoleDataSectionCheckRequest(int nConnIndex, BYTE bySectionType);
+    BOOL DoSyncRegressionPlayerData(int nConnIndex, int nGradeID, int nDailyCount, BYTE* pbyItemMark);
 
 	BOOL DoSyncEnableBankPackage(int nConnIndex, int nEnabledCount);
 
@@ -630,8 +632,14 @@ public:
 private:
 	// �����������
 	void OnHandshakeRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
+	void OnClientConfirmReady(char* pData, size_t nSize, int nConnIndex, int nFrame);
+	void OnSyncRoleDataSectionCheckRespond(char* pData, size_t nSize, int nConnIndex, int nFrame);
 	// �ͻ��˼�����Դ���,������볡��
-	void OnApplyEnterScene(char* pData, size_t nSize, int nConnIndex, int nFrame);
+    void OnApplyEnterScene(char* pData, size_t nSize, int nConnIndex, int nFrame);
+	void OnSyncNewPlayerRespond(char* pData, size_t nSize, int nConnIndex, int nFrame);
+	void OnSyncNewNpcRespond(char* pData, size_t nSize, int nConnIndex, int nFrame);
+	void OnSyncNewDoodadRespond(char* pData, size_t nSize, int nConnIndex, int nFrame);
+	void OnAddRegressionRewardItem(char* pData, size_t nSize, int nConnIndex, int nFrame);
 	// ��ҵǳ�
 	void OnPlayerLogout(char* pData, size_t nSize, int nConnIndex, int nFrame);
     // ����Ping

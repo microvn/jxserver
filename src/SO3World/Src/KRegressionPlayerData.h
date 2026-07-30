@@ -5,9 +5,7 @@
 // KRegressionPlayerData -- per-player returning-player (回归) state.
 // Embedded in KPlayer; persisted as role-block rbtRegressionData.
 // Layout + DB byte-format pinned from DWARF -- docs/regression_port/WORKLOG.md.
-// PORTED: fields + persistence + read getters. DEFERRED (needs RE-4 confirm of
-// the 2010 login post-load hook + VIP/kungfu accessors): Calculate (login
-// re-grade), AddRewardItem + reward-claim script, nested-UI Lua, sync packet.
+// PORTED: fields, persistence, account-data calculation and reward dispatch.
 //////////////////////////////////////////////////////////////////////////
 
 #define REGRESSION_ITEM_MARK_COUNT  8
@@ -17,6 +15,7 @@ class KPlayer;
 class KRegressionPlayerData
 {
 public:
+    KRegressionPlayerData();
     BOOL Init(KPlayer* pPlayer);
     void UnInit();
 
@@ -26,6 +25,14 @@ public:
 
     // v246 role-data block contains only KREGRESSION_DB_DATA (46B).
     BOOL LoadPlayerData(BYTE* pbyData, size_t uDataLen);
+
+    // v246 account-data chunk: [grade:1][end:4][version:1][reserved:16].
+    BOOL LoadAccountData(BYTE* pbyData, size_t uDataLen);
+    BOOL SaveAccountData(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
+
+    void Calculate(time_t nAccLastSaveTime, time_t nPlayerLastSaveTime);
+    BOOL AddRewardItem(int nDailyIndex, int nItemIndex, DWORD dwKungFuID);
+    BOOL CallAddRewardItemScript(DWORD dwItemType, DWORD dwItemIndex, int nItemStackNum);
 
     int  GetGradeID()   { return m_nCurrentGradeID; }
     int  GetDailyCount(){ return m_nRegressionDailyCount; }

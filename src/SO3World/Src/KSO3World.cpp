@@ -77,6 +77,7 @@ BOOL KSO3World::Init(IRecorderFactory* piFactory)
     BOOL        bRelationMgrInitFlag        = false;
     BOOL        bSettingsInitFlag           = false;
     BOOL        bScriptCenterInitFlag       = false;
+    BOOL        bActivityMgrInitFlag        = false;
     BOOL        bItemManagerInitFlag        = false;
     BOOL        bShopCenterInitFlag         = false;
     BOOL        bProfessionManagerInitFlag  = false;
@@ -196,6 +197,12 @@ BOOL KSO3World::Init(IRecorderFactory* piFactory)
 	bRetCode = m_ScriptCenter.Init();
 	KGLOG_PROCESS_ERROR(bRetCode);
     bScriptCenterInitFlag = true;
+
+#ifdef _SERVER
+    bRetCode = m_ActivityMgrServer.Init();
+    KGLOG_PROCESS_ERROR(bRetCode);
+    bActivityMgrInitFlag = true;
+#endif
 
 	bRetCode = InitAttributeFunctions();
 	KGLOG_PROCESS_ERROR(bRetCode);
@@ -397,6 +404,14 @@ Exit0:
             bItemManagerInitFlag = false;
         }        
         
+#ifdef _SERVER
+        if (bActivityMgrInitFlag)
+        {
+            m_ActivityMgrServer.UnInit();
+            bActivityMgrInitFlag = false;
+        }
+#endif
+
         if (bScriptCenterInitFlag)
         {
             m_ScriptCenter.UnInit();
@@ -522,6 +537,10 @@ void KSO3World::UnInit(void)
 
     m_ItemManager.UnInit();
     
+#ifdef _SERVER
+    m_ActivityMgrServer.UnInit();
+#endif
+
     m_ScriptCenter.UnInit();
     
     m_Settings.UnInit();
@@ -863,7 +882,9 @@ KScene* KSO3World::NewClientScene(DWORD dwMapID, int nMapCopyIndex)
     strncpy(pScene->m_szFilePath, pMapParams->szResourceFilePath, sizeof(pScene->m_szFilePath));
     pScene->m_szFilePath[sizeof(pScene->m_szFilePath) - 1] = '\0';
     
+    pScene->m_bCanTongWar   = pMapParams->bCanTongWar;
     pScene->m_bCanPK        = pMapParams->bCanPK;
+    pScene->m_bCanDuel      = pMapParams->bCanDuel;
     pScene->m_nCampType     = pMapParams->nCampType;
 
     bRetCode = pScene->LoadBaseInfo();
@@ -1437,6 +1458,7 @@ BOOL KTraversePlayerFunc::operator()(DWORD dwID, KPlayer* pPlayer)
             g_pSO3World->RemovePlayer(pPlayer);
 
 	        g_RelayClient.SaveRoleData(pPlayer);
+	        g_RelayClient.SaveAccountData(pPlayer);
 
             g_pSO3World->m_FellowshipMgr.UnloadPlayerFellowship(pPlayer->m_dwID);
 
@@ -1452,6 +1474,7 @@ BOOL KTraversePlayerFunc::operator()(DWORD dwID, KPlayer* pPlayer)
             pPlayer->SavePosition();
 
             g_RelayClient.SaveRoleData(pPlayer);
+            g_RelayClient.SaveAccountData(pPlayer);
         }
 
         if ((g_pSO3World->m_nGameLoop - pPlayer->m_dwID) % (GAME_FPS * 16) == 0)
@@ -1515,4 +1538,3 @@ BOOL KTraverseSceneFunc::operator()(DWORD dwID, KScene* pScene)
 
 	return true;
 }
-

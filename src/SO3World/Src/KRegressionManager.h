@@ -26,7 +26,7 @@ struct KRewardItemInfo
 {
     BOOL    bFreeLimit;             // +0x00
     int     nRegressionDailyCount;  // +0x04
-    std::map<DWORD, KRewardItem> ItemInfoMap;   // +0x08  (key = daily index; observed 1 entry)
+    std::map<DWORD, KRewardItem> ItemInfoMap;   // +0x08  (key = KungFu ID)
 };                                  // sizeof = 0x20
 
 // Per-grade reward info (size 0x1c).
@@ -45,7 +45,7 @@ public:
     BOOL   IsWork() { return m_bWorkFlag; }
     BOOL   IsCrossDays(time_t t1, time_t t2);
     time_t GetRegressionFinishedTime(time_t nNow);
-    int    GetRewardGradeID(int nLossDays);
+    int    GetRewardGradeID(long nLossDays);
     KRewardInfo*     GetRewardInfo(int nGradeID);
     KRewardItemInfo* GetRewardItemInfo(int nGradeID, int nKungFu);
 

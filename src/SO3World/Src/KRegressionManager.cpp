@@ -151,7 +151,7 @@ BOOL KRegressionManager::LoadRegressionReward()
         KRewardItemInfo& ItemInfo = Grade.ItemMap[nKungFu];
         ItemInfo.bFreeLimit            = (nFreeLimit != 0);
         ItemInfo.nRegressionDailyCount = nRegDaily;
-        ItemInfo.ItemInfoMap[0]        = Item;   // one reward row per (grade,kungfu) -- observed
+        ItemInfo.ItemInfoMap[(DWORD)nKungFu] = Item;
     }
 
     bResult = true;
@@ -198,7 +198,7 @@ time_t KRegressionManager::GetRegressionFinishedTime(time_t nNow)
     return m_nResetCycle + (nNow - ((nNow - m_nResetOffset) % 86400)) + 86400;
 }
 
-int KRegressionManager::GetRewardGradeID(int nLossDays)
+int KRegressionManager::GetRewardGradeID(long nLossDays)
 {
     int nResult = -1;
     std::map<int, KRewardInfo>::iterator it;
@@ -207,7 +207,7 @@ int KRegressionManager::GetRewardGradeID(int nLossDays)
         return 0;
     for (it = m_RewardMap.begin(); it != m_RewardMap.end(); ++it)
     {
-        if (it->second.nLossDaily != 0 && (int)it->second.nLossDaily <= nLossDays)
+        if (it->second.nLossDaily != 0 && it->second.nLossDaily <= nLossDays)
             nResult = it->first;    // ascending scan -> highest match wins
     }
     return nResult;

@@ -19,6 +19,8 @@
 
 #define PQ_PARAM_SYNC_COUNT 8
 #define MAX_ROLE_DATA_PAK_SIZE  (1024 * 32)
+#define MAX_ACCOUNT_DATA_SIZE   (1024 * 256)
+#define MAX_ACCOUNT_DATA_PAK_SIZE (1024 * 32)
 
 // 上行协议定义
 // Target v2.5.2 KS2R IDs are explicit. Missing source routes remain named
@@ -345,11 +347,11 @@ enum KR2S_PROTOCOL
 	r2s_set_map_copy_owner,	// v246 id=57 size=14 [src]
 	r2s_sync_road_track_info,	// v246 id=58 size=8 [src]
 	r2s_save_role_data_respond,	// v246 id=59 size=14 [src]
-	r2s_v246_unused_60,	// v246 id=60 size=14 [new] noop
+	r2s_save_account_data_respond,	// v246 id=60 size=14 [target]
 	r2s_sync_role_data,	// v246 id=61 size=10 [src]
 	r2s_load_role_data,	// v246 id=62 size=14 [src]
-	r2s_v246_unused_63,	// v246 id=63 size=10 [new] noop
-	r2s_v246_unused_64,	// v246 id=64 size=14 [new] noop
+	r2s_sync_account_data,	// v246 id=63 size=10 + data [target]
+	r2s_load_account_data,	// v246 id=64 size=14 + data [target]
 	r2s_gm_command,	// v246 id=65 size=38 [src]
 	r2s_join_battle_field_queue_respond,	// v246 id=66 size=50 [src-unplaced] noop
 	r2s_leave_battle_field_queue_respond,	// v246 id=67 size=14 [src-unplaced] noop
@@ -886,6 +888,25 @@ struct S2R_PLAYER_ENTER_SCENE_NOTIFY : INTERNAL_PROTOCOL_HEADER
 struct S2R_LOAD_ROLE_DATA_REQUEST : INTERNAL_PROTOCOL_HEADER
 {
     DWORD   dwPlayerID;
+};
+
+struct S2R_LOAD_ACCOUNT_DATA_REQUEST : INTERNAL_PROTOCOL_HEADER
+{
+    DWORD   dwPlayerID;
+};
+
+struct S2R_SYNC_ACCOUNT_DATA : INTERNAL_PROTOCOL_HEADER
+{
+    DWORD   dwRoleID;
+    size_t  uOffset;
+    BYTE    byData[0];
+};
+
+struct S2R_SAVE_ACCOUNT_DATA : INTERNAL_PROTOCOL_HEADER
+{
+    DWORD   dwRoleID;
+    int     nUserValue;
+    size_t  uAccountDataLen;
 };
 
 struct S2R_CHANGE_ROLE_LEVEL_REQUEST : INTERNAL_PROTOCOL_HEADER
@@ -1927,6 +1948,13 @@ struct R2S_SAVE_ROLE_DATA_RESPOND : INTERNAL_PROTOCOL_HEADER
     int   nUserValue;
 };
 
+struct R2S_SAVE_ACCOUNT_DATA_RESPOND : INTERNAL_PROTOCOL_HEADER
+{
+    DWORD   dwPlayerID;
+    BOOL    bSucceed;
+    int     nUserValue;
+};
+
 struct R2S_GM_COMMAND : INTERNAL_PROTOCOL_HEADER
 {
     DWORD   dwPlayerID;
@@ -2254,12 +2282,27 @@ struct R2S_SYNC_ROLE_DATA : INTERNAL_PROTOCOL_HEADER
     BYTE    byData[0];
 };
 
+struct R2S_SYNC_ACCOUNT_DATA : INTERNAL_PROTOCOL_HEADER
+{
+    DWORD   dwRoleID;
+    size_t  uOffset;
+    BYTE    byData[0];
+};
+
 struct R2S_LOAD_ROLE_DATA : INTERNAL_PROTOCOL_HEADER
 {
     DWORD   dwRoleID;
     BOOL    bSucceed;
     size_t  uRoleDataLen;
     BYTE    byRoleData[0];
+};
+
+struct R2S_LOAD_ACCOUNT_DATA : INTERNAL_PROTOCOL_HEADER
+{
+    DWORD   dwRoleID;
+    BOOL    bSucceed;
+    size_t  uAccountDataLen;
+    BYTE    byAccountData[0];
 };
 
 struct R2S_QUERY_STAT_ID_RESPOND : INTERNAL_PROTOCOL_HEADER

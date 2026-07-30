@@ -19,6 +19,9 @@
 #include "KWorldSettings.h"
 #include "KFellowship.h"
 #include "KScriptCenter.h"
+#ifdef _SERVER
+#include "KActivityMgrServer.h"
+#endif
 #include "KCenterRemote.h"
 #include "KScriptServer.h"
 #include "KScriptClient.h"
@@ -159,6 +162,9 @@ public:
     KWorldSettings	                    m_Settings;
     KGFellowshipMgr                     m_FellowshipMgr;
     KScriptCenter	                    m_ScriptCenter;
+#ifdef _SERVER
+    KActivityMgrServer                  m_ActivityMgrServer;
+#endif
 
 #ifdef _CLIENT
     KApexClient                         m_ApexClient;

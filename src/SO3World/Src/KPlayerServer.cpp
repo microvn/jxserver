@@ -34,7 +34,13 @@ KPlayerServer::KPlayerServer(void)
 	memset(m_nProtocolSize, 0, sizeof(m_nProtocolSize));
 
 	REGISTER_EXTERNAL_FUNC(c2s_handshake_request, &KPlayerServer::OnHandshakeRequest, sizeof(C2S_HANDSHAKE_REQUEST));
+	REGISTER_EXTERNAL_FUNC(c2s_client_confirm_ready, &KPlayerServer::OnClientConfirmReady, sizeof(C2S_CLIENT_CONFIRM_READY));
+	REGISTER_EXTERNAL_FUNC(c2s_sync_role_data_section_check_respond, &KPlayerServer::OnSyncRoleDataSectionCheckRespond, sizeof(C2S_SYNC_ROLE_DATA_SECTION_CHECK_RESPOND));
 	REGISTER_EXTERNAL_FUNC(c2s_apply_enter_scene, &KPlayerServer::OnApplyEnterScene, sizeof(C2S_APPLY_ENTER_SCENE));
+	REGISTER_EXTERNAL_FUNC(c2s_sync_new_player_respond, &KPlayerServer::OnSyncNewPlayerRespond, sizeof(C2S_SYNC_NEW_PLAYER_RESPOND));
+	REGISTER_EXTERNAL_FUNC(c2s_sync_new_npc_respond, &KPlayerServer::OnSyncNewNpcRespond, sizeof(C2S_SYNC_NEW_NPC_RESPOND));
+	REGISTER_EXTERNAL_FUNC(c2s_sync_new_doodad_respond, &KPlayerServer::OnSyncNewDoodadRespond, sizeof(C2S_SYNC_NEW_DOODAD_RESPOND));
+	REGISTER_EXTERNAL_FUNC(c2s_add_regression_reward_item, &KPlayerServer::OnAddRegressionRewardItem, sizeof(C2S_ADD_REGRESSION_REWARD_ITEM));
 	REGISTER_EXTERNAL_FUNC(c2s_player_logout, &KPlayerServer::OnPlayerLogout, sizeof(C2S_PLAYER_LOGOUT));
     REGISTER_EXTERNAL_FUNC(c2s_ping_signal, &KPlayerServer::OnPingSignal, sizeof(C2S_PING_SIGNAL));
 
@@ -5602,6 +5608,30 @@ Exit0:
     return bResult;
 }
 
+BOOL KPlayerServer::DoSyncRoleDataSectionCheckRequest(int nConnIndex, BYTE bySectionType)
+{
+    S2C_SYNC_ROLE_DATA_SECTION_CHECK_REQUEST Notify;
+    Notify.byProtocolID = s2c_sync_role_data_section_check_request;
+    Notify.bySectionType = bySectionType;
+    return Send(nConnIndex, &Notify, sizeof(Notify));
+}
+
+BOOL KPlayerServer::DoSyncRegressionPlayerData(
+    int nConnIndex, int nGradeID, int nDailyCount, BYTE* pbyItemMark
+)
+{
+    S2C_SYNC_REGRESSION_PLAYER_DATA Notify;
+
+    KG_PROCESS_ERROR(pbyItemMark);
+    Notify.byProtocolID = s2c_sync_regression_player_data;
+    Notify.nGradeID = nGradeID;
+    Notify.nDailyCount = nDailyCount;
+    memcpy(Notify.byItemMark, pbyItemMark, sizeof(Notify.byItemMark));
+    return Send(nConnIndex, &Notify, sizeof(Notify));
+Exit0:
+    return false;
+}
+
 BOOL KPlayerServer::DoSyncEnableBankPackage(int nConnIndex, int nEnabledCount)
 {
     BOOL bResult  = false;
@@ -7660,6 +7690,68 @@ Exit0:
 	return;
 }
 
+void KPlayerServer::OnClientConfirmReady(char* pData, size_t nSize, int nConnIndex, int nFrame)
+{
+    BOOL bResult = false;
+    KPlayer* pPlayer = GetPlayerByConnection(nConnIndex);
+
+    KGLOG_PROCESS_ERROR(pPlayer);
+    KGLOG_PROCESS_ERROR(pPlayer->m_bExtDataLoadFinish);
+    KGLOG_PROCESS_ERROR(pPlayer->m_eGameStatus == gsWaitForSyncClientData);
+    KGLOG_PROCESS_ERROR(pPlayer->OnClientReady());
+
+    bResult = true;
+Exit0:
+    if (!bResult)
+    {
+        KGLogPrintf(KGLOG_INFO, "Client Confirm timeout, connection: %d\n", nConnIndex);
+        Detach(nConnIndex);
+    }
+}
+
+void KPlayerServer::OnSyncRoleDataSectionCheckRespond(char* pData, size_t nSize, int nConnIndex, int nFrame)
+{
+    BOOL bResult = false;
+    BOOL bRetCode = false;
+    KPlayer* pPlayer = GetPlayerByConnection(nConnIndex);
+    KGLogPrintf(
+        KGLOG_INFO,
+        "W1_SECTION_ACK_BEGIN conn=%d player=%p size=%u\n",
+        nConnIndex, pPlayer, (unsigned)nSize
+    );
+    KG_PROCESS_ERROR(pPlayer);
+    KGLOG_PROCESS_ERROR(pPlayer->m_eGameStatus == gsWaitForSyncClientData);
+
+    if (!pPlayer->m_bExtDataLoadFinish)
+    {
+        bRetCode = pPlayer->PartialLoadExtData();
+        KGLOG_PROCESS_ERROR(bRetCode);
+    }
+    else
+    {
+        bRetCode = pPlayer->OnExtDataLoadFinish();
+        KGLOG_PROCESS_ERROR(bRetCode);
+    }
+
+    pPlayer->m_nTimer = 0;
+    KGLogPrintf(
+        KGLOG_INFO,
+        "W1_SECTION_ACK_OK conn=%d id=%u finish=%d\n",
+        nConnIndex, pPlayer->m_dwID, pPlayer->m_bExtDataLoadFinish
+    );
+    bResult = true;
+Exit0:
+    if (!bResult)
+    {
+        KGLogPrintf(
+            KGLOG_ERR,
+            "W1_SECTION_ACK_FAIL conn=%d player=%p\n",
+            nConnIndex, pPlayer
+        );
+        Detach(nConnIndex);
+    }
+}
+
 void KPlayerServer::OnApplyEnterScene(char* pData, size_t nSize, int nConnIndex, int nFrame)
 {
     BOOL                    bResult         = false;
@@ -7695,6 +7787,8 @@ void KPlayerServer::OnApplyEnterScene(char* pData, size_t nSize, int nConnIndex,
 
     if (bLoginLoading)
     {
+	    // V246 loads account-scoped state before the role block stream.
+	    g_RelayClient.DoLoadAccountDataRequest(pPlayer->m_dwID, pPlayer->m_szAccount);
 	    g_RelayClient.DoLoadRoleDataRequest(pPlayer->m_dwID);
 
 	    pPlayer->m_nTimer           = 0;
@@ -7727,6 +7821,60 @@ Exit0:
 	    g_PlayerServer.Detach(nConnIndex);
     }
 	return;
+}
+
+void KPlayerServer::OnSyncNewPlayerRespond(char* pData, size_t nSize, int nConnIndex, int nFrame)
+{
+    C2S_SYNC_NEW_PLAYER_RESPOND* pRespond = (C2S_SYNC_NEW_PLAYER_RESPOND*)pData;
+    KPlayer* pPlayer = GetPlayerByConnection(nConnIndex);
+
+    assert(pPlayer);
+    if ((short)pPlayer->m_uSyncPlayerSN == (short)pRespond->wSyncSN)
+    {
+        ++pPlayer->m_uSyncPlayerSN;
+        for (int i = 0; i < 3; ++i)
+            pPlayer->m_nSyncPlayerCount[i] = (int)pRespond->uSyncCount[i];
+    }
+}
+
+void KPlayerServer::OnSyncNewNpcRespond(char* pData, size_t nSize, int nConnIndex, int nFrame)
+{
+    C2S_SYNC_NEW_NPC_RESPOND* pRespond = (C2S_SYNC_NEW_NPC_RESPOND*)pData;
+    KPlayer* pPlayer = GetPlayerByConnection(nConnIndex);
+
+    assert(pPlayer);
+    if ((short)pPlayer->m_uSyncNpcSN == (short)pRespond->wSyncSN)
+    {
+        ++pPlayer->m_uSyncNpcSN;
+        pPlayer->m_nSyncNpcCount = (int)pRespond->uSyncCount;
+    }
+}
+
+void KPlayerServer::OnSyncNewDoodadRespond(char* pData, size_t nSize, int nConnIndex, int nFrame)
+{
+    C2S_SYNC_NEW_DOODAD_RESPOND* pRespond = (C2S_SYNC_NEW_DOODAD_RESPOND*)pData;
+    KPlayer* pPlayer = GetPlayerByConnection(nConnIndex);
+
+    assert(pPlayer);
+    if ((short)pPlayer->m_uSyncDoodadSN == (short)pRespond->wSyncSN)
+    {
+        ++pPlayer->m_uSyncDoodadSN;
+        pPlayer->m_nSyncDoodadCount = (int)pRespond->uSyncCount;
+    }
+}
+
+void KPlayerServer::OnAddRegressionRewardItem(char* pData, size_t nSize, int nConnIndex, int nFrame)
+{
+    C2S_ADD_REGRESSION_REWARD_ITEM* pRequest = (C2S_ADD_REGRESSION_REWARD_ITEM*)pData;
+    KPlayer* pPlayer = GetPlayerByConnection(nConnIndex);
+
+    KGLOG_PROCESS_ERROR(pPlayer);
+    KGLOG_PROCESS_ERROR(pRequest);
+    pPlayer->m_RegressionData.AddRewardItem(
+        pRequest->nDailyIndex, pRequest->nItemIndex, pRequest->dwKungFuID
+    );
+Exit0:
+    return;
 }
 
 // ��ҵǳ�

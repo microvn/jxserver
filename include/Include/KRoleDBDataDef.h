@@ -291,12 +291,29 @@ struct KFORCE_DB_DATA
 struct KMENTOR_DATA_ON_PLAYER
 {
     int     nAcquiredMentorValue;
+    int     nUsableMentorValue;
     time_t  nLastEvokeMentorTime;
+    DWORD   dwTAEquipsScore;
+    BYTE    byReserved[16];
     BYTE    byEvokeMentorCount;
     BYTE    byMaxApprenticeCount;
-
-    BYTE    byReserved[22];
+    BYTE    byGraduateMentorCount;
+    BYTE    byGraduateApprenticeCount;
+    BYTE    GraduateMentorData[0];
 };
+
+typedef char KMENTOR_DATA_ON_PLAYER_TARGET_SIZE[(sizeof(KMENTOR_DATA_ON_PLAYER) == 0x24) ? 1 : -1];
+typedef char KMENTOR_DATA_ON_PLAYER_USABLE_OFFSET[(offsetof(KMENTOR_DATA_ON_PLAYER, nUsableMentorValue) == 0x04) ? 1 : -1];
+typedef char KMENTOR_DATA_ON_PLAYER_SCORE_OFFSET[(offsetof(KMENTOR_DATA_ON_PLAYER, dwTAEquipsScore) == 0x0c) ? 1 : -1];
+
+struct KGRADUATED_MENTOR_DATA_DB
+{
+    DWORD   dwPlayerID;
+    time_t  nMentorTime;
+    time_t  nGraduateTime;
+};
+
+typedef char KGRADUATED_MENTOR_DATA_DB_SIZE[(sizeof(KGRADUATED_MENTOR_DATA_DB) == 0x0c) ? 1 : -1];
 
 #pragma pack()
 

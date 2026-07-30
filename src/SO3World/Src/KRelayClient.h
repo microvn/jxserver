@@ -35,6 +35,7 @@ public:
     float GetDownTraffic() { return m_fDownTraffic; }
 
     BOOL SaveRoleData(KPlayer* pPlayer);
+    BOOL SaveAccountData(KPlayer* pPlayer);
 
     void PrepareToQuit() { m_bQuiting = true; m_nNextQuitingSaveTime = 0; }
 
@@ -64,6 +65,11 @@ private:
     size_t m_uSyncRoleOffset;
 
     BYTE*  m_pbySaveRoleBuffer;
+
+    DWORD  m_dwSyncAccountID;
+    BYTE*  m_pbySyncAccountBuffer;
+    size_t m_uSyncAccountOffset;
+    BYTE*  m_pbySaveAccountBuffer;
 
     int    m_nUpTraffic;
     int    m_nDownTraffic;
@@ -175,6 +181,7 @@ public:
     //-----------------------------------------------------------------------
 
     // ----------------------- 角色相关操作 -------------------------------------    
+    BOOL DoLoadAccountDataRequest(DWORD dwRoleID, const char* pszAccount);
     BOOL DoLoadRoleDataRequest(DWORD dwRoleID);
 
     BOOL DoChangeRoleLevelRequest(KPlayer* pPlayer);
@@ -188,6 +195,8 @@ public:
 
     BOOL DoSyncRoleData(DWORD dwID, BYTE* pbyData, size_t uOffset, size_t uDataLen);
     BOOL DoSaveRoleData(KPlayer* pPlayer, size_t uRoleDataLen);
+    BOOL DoSyncAccountData(DWORD dwID, BYTE* pbyData, size_t uOffset, size_t uDataLen);
+    BOOL DoSaveAccountData(KPlayer* pPlayer, size_t uAccountDataLen);
 
     //-----------------------------------------------------------------------
 
@@ -402,6 +411,9 @@ private:
 
     // ----------------------- 角色相关操作 -------------------------------------
     void OnSaveRoleDataRespond(BYTE* pbyData, size_t uDataLen);
+    void OnSaveAccountDataRespond(BYTE* pbyData, size_t uDataLen);
+    void OnSyncAccountData(BYTE* pbyData, size_t uDataLen);
+    void OnLoadAccountData(BYTE* pbyData, size_t uDataLen);
 
     void OnGmCommand(BYTE* pbyData, size_t uDataLen);
 
