@@ -106,6 +106,9 @@ public:
 
     // dwMapCopyIndexΪ0��ʾ����Copy,ֻҪMapID�Լ���
 	KScene* GetScene(DWORD dwMapID, int nMapCopyIndex);
+#ifdef _SERVER
+	BOOL GetAllCopyIndexByMapID(std::vector<int>* pCopyIndexList, DWORD dwMapID);
+#endif
 
 	KNpc*   NewNpc(DWORD dwNpcID = ERROR_ID);
 	BOOL    DeleteNpc(KNpc* pNpc, BOOL bKilled = false);
@@ -279,6 +282,15 @@ struct KGetSceneFunc
 	int		    m_nMapCopyIndex;
 	KScene*		m_pScene; // ����ֵ
 };
+
+#ifdef _SERVER
+struct KGetAllCopyIndexByMapIDFunc
+{
+	BOOL operator()(DWORD dwID, KScene* pScene);
+	std::vector<int>* m_pCopyIndexList;
+	DWORD m_dwMapID;
+};
+#endif
 
 struct KDeleteSceneFunc
 {

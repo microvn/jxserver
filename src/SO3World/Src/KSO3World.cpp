@@ -955,6 +955,22 @@ KScene* KSO3World::GetScene(DWORD dwMapID, int nMapCopyIndex)
 	return GetSceneFunc.m_pScene;
 }
 
+#ifdef _SERVER
+BOOL KSO3World::GetAllCopyIndexByMapID(std::vector<int>* pCopyIndexList, DWORD dwMapID)
+{
+	KGetAllCopyIndexByMapIDFunc GetCopyIndexFunc;
+
+	KGLOG_PROCESS_ERROR(pCopyIndexList);
+	GetCopyIndexFunc.m_pCopyIndexList = pCopyIndexList;
+	GetCopyIndexFunc.m_dwMapID = dwMapID;
+	g_pSO3World->m_SceneSet.Traverse(GetCopyIndexFunc);
+	return true;
+
+Exit0:
+	return false;
+}
+#endif
+
 KNpc* KSO3World::NewNpc(DWORD dwNpcID)
 {
     KNpc*           pResult         = NULL;
@@ -1396,6 +1412,21 @@ BOOL KGetSceneFunc::operator()(DWORD dwID, KScene* pScene)
 
 	return true;
 }
+
+#ifdef _SERVER
+BOOL KGetAllCopyIndexByMapIDFunc::operator()(DWORD dwID, KScene* pScene)
+{
+	KGLOG_PROCESS_ERROR(pScene);
+	if (pScene->m_dwMapID == m_dwMapID)
+	{
+		m_pCopyIndexList->push_back(pScene->m_nCopyIndex);
+	}
+	return true;
+
+Exit0:
+	return false;
+}
+#endif
 
 BOOL KDeleteSceneFunc::operator()(DWORD dwID, KScene* pScene)
 {

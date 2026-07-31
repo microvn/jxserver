@@ -36,6 +36,34 @@ namespace KScriptFuncList
 	}
 
 #ifdef _SERVER
+	int LuaGetAllCopyIndexByMapID(Lua_State* L)
+	{
+		BOOL bResult = false;
+		std::vector<int> CopyIndexList;
+		DWORD dwMapID = 0;
+
+		KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 1);
+		dwMapID = (DWORD)Lua_ValueToNumber(L, 1);
+		KGLOG_PROCESS_ERROR(g_pSO3World->GetAllCopyIndexByMapID(&CopyIndexList, dwMapID));
+		KGLOG_PROCESS_ERROR(!CopyIndexList.empty());
+
+		Lua_NewTable(L);
+		for (size_t i = 0; i < CopyIndexList.size(); ++i)
+		{
+			Lua_PushNumber(L, (int)(i + 1));
+			Lua_PushNumber(L, CopyIndexList[i]);
+			Lua_SetTable(L, -3);
+		}
+
+		bResult = true;
+	Exit0:
+		if (!bResult)
+		{
+			Lua_PushNil(L);
+		}
+		return 1;
+	}
+
     int LuaGetActivityMgrServer(Lua_State* L)
     {
         return g_pSO3World->m_ActivityMgrServer.LuaGetObj(L);
@@ -4843,6 +4871,9 @@ Exit0:
 	KLuaFunc BaseFuncList[] = 
 	{
 		{"Test",					LuaTest},
+#ifdef _SERVER
+        {"GetAllCopyIndexByMapID",   LuaGetAllCopyIndexByMapID},
+#endif
         {"GetCurrentTime",          LuaGetCurrentTime},
 #ifdef _SERVER
         {"GetActivityMgrServer",      LuaGetActivityMgrServer},

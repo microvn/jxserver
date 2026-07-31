@@ -2439,6 +2439,17 @@ KLuaConst LUA_DIAMOND_SUB_TYPE[] =
     {NULL,           0}
 };
 
+#ifdef _SERVER
+KLuaConst LUA_ACTIVITY_STATE[] =
+{
+    {"NORMAL_OFF", 0},
+    {"DELAY_OFF",  1},
+    {"NORMAL_ON",  2},
+    {"RECOVER_ON", 3},
+    {NULL,          0}
+};
+#endif
+
 KLuaConstList g_LuaConstList[] =
 {
     {"GLOBAL",                      LUA_CONST_GLOBAL},
@@ -2473,6 +2484,10 @@ KLuaConstList g_LuaConstList[] =
 	{"AI_EVENT_CONDITION",		    LUA_CONST_AI_EVENT_CONDITION},
 	{"AI_EVENT_ACTION",			    LUA_CONST_AI_EVENT_ACTION},
 #endif //_SERVER
+
+#ifdef _SERVER
+    {"ACTIVITY_STATE",               LUA_ACTIVITY_STATE},
+#endif
 
     {"ITEM_GENRE",                  LUA_CONST_ITEM_GENRE},
     {"EQUIPMENT_SUB",               LUA_CONST_EQUIPMENT_SUB},
