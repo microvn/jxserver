@@ -40,9 +40,14 @@ class SyncFrontierContractTest(unittest.TestCase):
         end = protocol.index("struct C2S_CLIENT_CONFIRM_READY", start)
         block = protocol[start:end]
         self.assertIn("#pragma pack(1)", protocol[max(0, start - 40):start])
-        self.assertIn("#pragma pack()", protocol[end:])
+        self.assertNotIn("#pragma pack()", protocol[start:end])
         self.assertIn("DWORD   dwRoleID", block)
         self.assertIn("GUID\tGuid", block)
+
+        ping_start = protocol.index("struct C2S_PING_SIGNAL")
+        ping_end = protocol.index("struct C2S_MOVE_CTRL", ping_start)
+        self.assertNotIn("#pragma pack()", protocol[ping_start:ping_end])
+        self.assertIn("DWORD dwTime", protocol[ping_start:ping_end])
 
     def test_all_target_frontier_routes_precede_role_data_over(self):
         player = (ROOT / "src/SO3World/Src/KPlayer.cpp").read_bytes().decode("gbk", errors="ignore")
