@@ -278,6 +278,7 @@ public:
 #endif
 
     BOOL                m_bChargeFlag;          // ����շ�״̬ false:��� true:�շ�
+    BOOL                m_bPrisonFlag;          // target Lua state: bPrisonFlag
     int                 m_nCoin;                // ��ҵĽ��(Ԫ��)
     BOOL                m_bFreeLimitFlag;       // ����Ƿ���Ϊ��Ѷ��յ�����
     BOOL                m_bFarmerLimit;         // �Ƿ��ܵ�����Ǯ��������
@@ -872,6 +873,7 @@ public:
 #endif
 
     DECLARE_LUA_BOOL(FreeLimitFlag);
+    DECLARE_LUA_BOOL(PrisonFlag);
     DECLARE_LUA_ENUM(Camp);
     DECLARE_LUA_BOOL(CampFlag);
     DECLARE_LUA_INTEGER(CurrentPrestige);

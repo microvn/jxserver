@@ -11537,6 +11537,7 @@ DEFINE_LUA_CLASS_BEGIN(KPlayer)
 #endif
 
     REGISTER_LUA_BOOL_READONLY(KPlayer, FreeLimitFlag)
+    REGISTER_LUA_BOOL(KPlayer, PrisonFlag)
     REGISTER_LUA_ENUM_READONLY(KPlayer, Camp)
     REGISTER_LUA_BOOL_READONLY(KPlayer, CampFlag)
     REGISTER_LUA_INTEGER(KPlayer, CloseCampFlagTime)
