@@ -247,7 +247,7 @@ def test_regression_has_v246_account_persistence_methods():
 def test_account_chunk_and_regression_payload_match_target_limits():
     protocol = read(PROTO)
     regression = read(REG_CPP)
-    assert "#define MAX_ACCOUNT_DATA_PAK_SIZE (1024 * 256)" in protocol
+    assert "#define MAX_ACCOUNT_DATA_PAK_SIZE (1024 * 32)" in protocol
     assert "KGLOG_PROCESS_ERROR(uDataLen >= REG_ACCOUNT_DATA_SIZE)" in regression
     assert "KGLOG_PROCESS_ERROR(uDataLen == REG_ACCOUNT_DATA_SIZE)" not in regression
     player = read(PLAYER_CPP)
@@ -261,8 +261,8 @@ def test_load_account_request_does_not_serialize_pointer_or_account_string():
     body = source[start:end]
     assert "pLoadAccountData->dwPlayerID" in body
     assert "pLoadAccountData->pszAccount" not in body
-    assert "m_dwSyncAccountID = dwRoleID" not in body
-    assert "m_uSyncAccountOffset = 0" not in body
+    assert "m_dwSyncAccountID = dwRoleID" in body
+    assert "m_uSyncAccountOffset = 0" in body
 
 
 def test_account_save_is_wired_at_target_save_boundaries():

@@ -20,7 +20,7 @@
 #define PQ_PARAM_SYNC_COUNT 8
 #define MAX_ROLE_DATA_PAK_SIZE  (1024 * 32)
 #define MAX_ACCOUNT_DATA_SIZE   (1024 * 256)
-#define MAX_ACCOUNT_DATA_PAK_SIZE (1024 * 256)
+#define MAX_ACCOUNT_DATA_PAK_SIZE (1024 * 32)
 
 // 上行协议定义
 // Target v2.5.2 KS2R IDs are explicit. Missing source routes remain named

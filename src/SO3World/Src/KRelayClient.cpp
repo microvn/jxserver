@@ -218,11 +218,13 @@ KRelayClient::KRelayClient(void)
     REGISTER_INTERNAL_FUNC(r2s_v246_unused_176, &KRelayClient::OnNoOpRespond, 6);
     REGISTER_INTERNAL_FUNC(r2s_v246_unused_177, &KRelayClient::OnNoOpRespond, 10);
 
-    // Target constructor: direct-mentor sync/delete/update handlers occupy the
-    // three slots immediately following the normal mentor surface.
-    REGISTER_INTERNAL_FUNC(162, &KRelayClient::OnSyncDirectMentorData, 6);
-    REGISTER_INTERNAL_FUNC(163, &KRelayClient::OnDeleteDirectMentorRecord, 10);
-    REGISTER_INTERNAL_FUNC(164, &KRelayClient::OnUpdateDirectMentorRecord, 15);
+    // Target v2.5.2 KR2S layout: mentor/direct-mentor routes occupy 162..167.
+    REGISTER_INTERNAL_FUNC(162, &KRelayClient::OnSyncMentorData, 6);
+    REGISTER_INTERNAL_FUNC(163, &KRelayClient::OnSyncDirectMentorData, 6);
+    REGISTER_INTERNAL_FUNC(164, &KRelayClient::OnDeleteMentorRecord, 10);
+    REGISTER_INTERNAL_FUNC(165, &KRelayClient::OnDeleteDirectMentorRecord, 10);
+    REGISTER_INTERNAL_FUNC(166, &KRelayClient::OnUpdateMentorRecord, 19);
+    REGISTER_INTERNAL_FUNC(167, &KRelayClient::OnUpdateDirectMentorRecord, 15);
     REGISTER_INTERNAL_FUNC(139, &KRelayClient::OnSyncNewExtPointRespond, 19);
     REGISTER_INTERNAL_FUNC(r2s_sync_battle_field_list, &KRelayClient::OnSyncBattleFieldList, sizeof(R2S_SYNC_BATTLE_FIELD_LIST));
     REGISTER_INTERNAL_FUNC(r2s_take_tong_repertory_item_to_pos_respond,  &KRelayClient::OnTakeTongRepertoryItemToPosRespond, sizeof(R2S_TAKE_TONG_REPERTORY_ITEM_TO_POS_RESPOND));
@@ -5567,6 +5569,8 @@ BOOL KRelayClient::DoLoadAccountDataRequest(DWORD dwRoleID, const char* pszAccou
     pLoadAccountData->dwPlayerID  = dwRoleID;
 
     (void)pszAccount; /* The v246 wire request is keyed by player ID. */
+    m_dwSyncAccountID = dwRoleID;
+    m_uSyncAccountOffset = 0;
 
     bRetCode = Send(piPackage);
     KGLOG_PROCESS_ERROR(bRetCode);
