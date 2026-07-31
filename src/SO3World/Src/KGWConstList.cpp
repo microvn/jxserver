@@ -23,6 +23,7 @@
 #define SECTION_ANTI_FARMER "ANTI_FARMER"
 #define SECTION_BINDONTIMELIMITATION "BINDONTIMELIMITATION"
 #define SECTION_CURRENCY    "CURRENCY"
+#define SECTION_CLIENT_REPORT "CLIENT_REPORT"
 
 BOOL KGWConstList::Init()
 {
@@ -124,6 +125,10 @@ BOOL KGWConstList::LoadData(IIniFile* piIniFile)
     {
         KGLOG_PROCESS_ERROR(nBankPackagePrice[i] >= 0);
     }
+
+    nRetCode = piIniFile->GetMultiInteger(SECTION_ITEM, "CubPackageRoomRange", nCubPackageRoomRange, 2);
+    KGLOG_PROCESS_ERROR(nRetCode == 2);
+    KGLOG_PROCESS_ERROR(nCubPackageRoomRange[0] <= nCubPackageRoomRange[1]);
 
     //////////////////////////////////////////////////////////////////////////
 
@@ -384,6 +389,16 @@ BOOL KGWConstList::LoadData(IIniFile* piIniFile)
         piIniFile->GetInteger(SECTION_CURRENCY, "RemainSpaceResetCycle", 0, &nCurrencyRemainSpaceResetCycle);
         piIniFile->GetInteger(SECTION_CURRENCY, "RemainSpaceResetOffest", 0, &nCurrencyRemainSpaceResetOffest);
     }
+
+    nRetCode = piIniFile->GetInteger(SECTION_MISC, "SprintFlagV2", 0, &nSprintFlagV2);
+    (void)nRetCode; /*[endgame] tolerant*/
+
+    nRetCode = piIniFile->GetInteger(SECTION_CLIENT_REPORT, "NetworkDelayReprotFlag", 0, &bNetworkDelayReportFlag);
+    (void)nRetCode; /*[endgame] tolerant*/
+    nRetCode = piIniFile->GetInteger(SECTION_CLIENT_REPORT, "NetworkDelayReportFrequency", 0, &nNetworkDelayReportFrequency);
+    (void)nRetCode; /*[endgame] tolerant*/
+    nRetCode = piIniFile->GetInteger(SECTION_CLIENT_REPORT, "NetworkDelayReprotThreshold", 0, &nNetworkDelayReportThreshold);
+    (void)nRetCode; /*[endgame] tolerant*/
 
     bResult = true;
 Exit0:

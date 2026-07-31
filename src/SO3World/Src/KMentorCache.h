@@ -11,8 +11,8 @@
 class KMentorCache
 {
 public:
-    BOOL AddMentorData(DWORD dwMentor, DWORD dwApprentice, const KMentorRecordBase& crMentorInfo);
-    BOOL UpdateMentorData(DWORD dwMentor, DWORD dwApprentice, const KMentorRecordBase& crMentorInfo);
+    BOOL AddMentorData(DWORD dwMentor, DWORD dwApprentice, const KMentorRecordCache& crMentorInfo);
+    BOOL UpdateMentorData(DWORD dwMentor, DWORD dwApprentice, const KMentorRecordCache& crMentorInfo);
 
     BOOL DeleteMentorRecord(uint64_t uKey);
     void Clear();
@@ -24,16 +24,18 @@ public:
     BOOL IsApprentice(DWORD dwPlayerID);
 
     BOOL AddMentorValue(DWORD dwMentorID, DWORD dwApprenticeID, int nDeltaValue);
+    int PickupTAEquipsScore(DWORD dwMentorID);
+    BOOL AddTAEquipsScore(DWORD dwMentorID, DWORD dwApprenticeID, int nDeltaScore);
 
 private:
     // Key = MAKE_INT64(dwApprenticeID, dwMentorID)
-    typedef KMemory::KAllocator<std::pair<uint64_t, KMentorRecordBase> > KCacheMTableAlloctor;
-    typedef std::map<uint64_t, KMentorRecordBase, std::less<uint64_t>, KCacheMTableAlloctor> KCacheMTable;
+    typedef KMemory::KAllocator<std::pair<uint64_t, KMentorRecordCache> > KCacheMTableAlloctor;
+    typedef std::map<uint64_t, KMentorRecordCache, std::less<uint64_t>, KCacheMTableAlloctor> KCacheMTable;
     KCacheMTable m_CacheMTable;
 
     // Key = MAKE_INT64(dwMentorID, dwApprenticeID)
-    typedef KMemory::KAllocator<std::pair<uint64_t, KMentorRecordBase*> > KCacheATableAlloctor;
-    typedef std::map<uint64_t, KMentorRecordBase*, std::less<uint64_t>, KCacheATableAlloctor> KCacheATable;
+    typedef KMemory::KAllocator<std::pair<uint64_t, KMentorRecordCache*> > KCacheATableAlloctor;
+    typedef std::map<uint64_t, KMentorRecordCache*, std::less<uint64_t>, KCacheATableAlloctor> KCacheATable;
     KCacheATable m_CacheATable;
 
 public:

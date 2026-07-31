@@ -137,6 +137,33 @@ struct KRoleBlockHeader
     DWORD   dwLen;
 };
 
+struct KACTIVITY_VARIABLES
+{
+    WORD    wPrensentCodeCounters[32][2];
+};
+
+typedef char KACTIVITY_VARIABLES_SIZE[(sizeof(KACTIVITY_VARIABLES) == 0x80) ? 1 : -1];
+
+struct KBANK_PASSWORD_DATA
+{
+    time_t  nResetEndTime;
+    char    szPassword[64];
+    char    szAnswer[32];
+    int     nQuestionID;
+    DWORD   dwEffectMask;
+    BYTE    byReserved[24];
+};
+
+typedef char KBANK_PASSWORD_DATA_SIZE[(sizeof(KBANK_PASSWORD_DATA) == 0x84) ? 1 : -1];
+
+struct KDROP_SURPRISE_DATA
+{
+    BYTE    byMask[16];
+    BYTE    byReserved[16];
+};
+
+typedef char KDROP_SURPRISE_DATA_SIZE[(sizeof(KDROP_SURPRISE_DATA) == 0x20) ? 1 : -1];
+
 // ��ɫ��������
 struct KROLE_STATE_INFO
 {
@@ -314,6 +341,18 @@ struct KGRADUATED_MENTOR_DATA_DB
 };
 
 typedef char KGRADUATED_MENTOR_DATA_DB_SIZE[(sizeof(KGRADUATED_MENTOR_DATA_DB) == 0x0c) ? 1 : -1];
+
+struct KCAMP_ACTIVE_STAT_DB
+{
+    time_t nRestTime;
+    int    nPrestige;
+    int    nBaseScore;
+    BYTE   byIsActiveBeforeWeek;
+    BYTE   byIsActive;
+    BYTE   byReserved[2];
+};
+
+typedef char KCAMP_ACTIVE_STAT_DB_SIZE[(sizeof(KCAMP_ACTIVE_STAT_DB) == 0x10) ? 1 : -1];
 
 #pragma pack()
 

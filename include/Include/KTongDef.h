@@ -589,6 +589,29 @@ struct KTONG_SYNC_HISTORY_REPERTORY_TAKE_OR_PUT_ITEM : KTONG_SYNC_HISTORY
     WORD    wStackNum;
 };
 
+enum TONG_DIPLOMACY_RELATION_TYPE
+{
+    tdrtInvalid = 0,
+    tdrtWar = 1,
+    tdrtAlliance = 2,
+    tdrtContractWar = 3,
+    tdrtTotal = 4,
+};
+
+struct KTONG_DIPLOMACY_RELATION_INFO
+{
+    DWORD   dwSrcTongID;
+    DWORD   dwDstTongID;
+    int     nType;
+    BYTE    byPlayerDeclare;
+    time_t  nStartTime;
+    time_t  nEndTime;
+    time_t  nCDEndTime;
+    WORD    wSubType;
+    WORD    wTimeSegment;
+    BYTE    byIsAdd;
+};
+
 #pragma pack()
 
 #endif

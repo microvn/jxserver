@@ -56,6 +56,112 @@ def test_account_handlers_and_buffers_are_registered():
     assert "REGISTER_INTERNAL_FUNC(r2s_load_account_data" in source
 
 
+def test_account_chunk_handler_validates_wire_size_before_subtracting_header():
+    source = read(RELAY_CPP)
+    start = source.index("void KRelayClient::OnSyncAccountData")
+    end = source.index("void KRelayClient::OnLoadAccountData", start)
+    body = source[start:end]
+
+    assert "KGLOG_PROCESS_ERROR(pbyData);" in body
+    assert body.index("uDataLen >= sizeof(R2S_SYNC_ACCOUNT_DATA)") < body.index(
+        "uAccountDataLen = uDataLen - sizeof(R2S_SYNC_ACCOUNT_DATA)"
+    )
+    assert "MAX_ACCOUNT_DATA_SIZE - m_uSyncAccountOffset >= uAccountDataLen" in body
+
+
+def test_frontier_relay_senders_match_target_wire_contracts():
+    protocol = read(PROTO)
+    header = read(RELAY_H)
+    source = read(RELAY_CPP)
+
+    for struct_name, fields in (
+        ("S2R_APPLY_SINGLE_DUNGEON_LAST_SCORE", ("DWORD dwPlayer;",)),
+        ("S2R_APPLY_COIN_OPERATING_FLAG", ("DWORD dwPlayerID;",)),
+        ("S2R_SYNC_CORPS_CHANGE_DATA_REQUEST", ("DWORD dwPlayerID;", "time_t nChangeTime;", "time_t nWeekTime;", "time_t nSeasonTime;")),
+        ("S2R_SYNC_FELLOWSHIP_PLAYER_MINI_AVATAR", ("DWORD dwPlayerID;", "WORD  wMiniAvatarID;", "WORD  wRoleType;")),
+    ):
+        assert "struct %s" % struct_name in protocol
+        for field in fields:
+            assert field in protocol
+
+    for name in (
+        "DoApplySingleDungeonLastScore",
+        "DoApplyCoinOperatingFlag",
+        "DoSyncCorpsChangeDataRequest",
+        "DoSyncFellowshipPlayerMiniAvatar",
+    ):
+        assert name in header
+        assert "KRelayClient::%s" % name in source
+
+
+def test_login_frontier_wires_mini_avatar_after_apprentice_sync():
+    source = read(PLAYER_CPP)
+    start = source.index("BOOL KPlayer::FinishRoleDataLoad")
+    body = source[start:source.index("BOOL KPlayer::OnClientReady", start)]
+    assert body.index("DoUpdateMaxApprenticeNum") < body.index(
+        "DoSyncFellowshipPlayerMiniAvatar"
+    )
+    assert "m_dwID, m_dwMiniAvatarID, (int)m_eRoleType" in body
+
+
+def test_single_dungeon_role_block_matches_target_layout():
+    header = read(PLAYER_H)
+    source = read(PLAYER_CPP)
+    assert "LoadSingleDungeonData(BYTE* pbyData, size_t uDataLen)" in header
+    assert "SaveSingleDungeonData(size_t* puUsedSize" in header
+    assert "uDataLen >= 0x424" in source
+    assert "m_dwSingleDungeonMaxLevel <= 128" in source
+    assert "memcpy(m_dwSingleDungeonScore, pbyData + 4" in source
+    assert "SaveSingleDungeonData, rbtSingleDungeonData, 0" in source
+
+
+def test_single_dungeon_frontier_matches_target_guard_and_packet():
+    source = read(PLAYER_CPP)
+    server = read(PLAYER_SERVER_CPP)
+    assert "m_dwSingleDungeonScore[0] != 0" in source
+    assert "DoApplySingleDungeonLastScore(m_dwID)" in source
+    assert "SyncSingleDungeonCurrentScore();" in source
+    assert "s2c_sync_single_dungeon_current_score" in server
+    assert "DoSyncSingleDungeonCurrentScore" in server
+
+
+def test_arena_corps_block_and_frontier_match_target():
+    header = read(PLAYER_H)
+    source = read(PLAYER_CPP)
+    server = read(PLAYER_SERVER_CPP)
+    assert "LoadArenaData(BYTE* pbyData, size_t uDataLen)" in header
+    assert "SaveArenaData(size_t* puUsedSize" in header
+    # Regression: candidate used the payload size as a field offset and wrote a
+    # 0x66-byte arena block, while target KARENA_ROLE_DATA is packed and 0x42 bytes.
+    assert "struct KARENA_ROLE_DATA" in source
+    assert "sizeof(KARENA_ROLE_DATA) == 0x42" in source
+    assert "uDataLen >= sizeof(KARENA_ROLE_DATA)" in source
+    assert "uBufferSize >= sizeof(KARENA_ROLE_DATA)" in source
+    assert "pbyData + 0x42" not in source
+    assert "pbyBuffer + 0x42" not in source
+    assert "*puUsedSize = sizeof(KARENA_ROLE_DATA)" in source
+    assert "m_dwCorpsSystemID != 0" in source
+    assert "DoSyncCorpsChangeDataRequest" in source
+    assert "DoSyncCorpsChangeValue" in server
+    assert "s2c_sync_corps_change_value" in server
+
+
+def test_ta_equips_relay_payloads_match_target_layout():
+    protocol = read(PROTO)
+    client = read(RELAY_H)
+    source = read(RELAY_CPP)
+    assert "s2r_add_ta_equips_score_request = 178" in protocol
+    assert "s2r_pickup_ta_equips_score_request = 179" in protocol
+    assert "struct S2R_ADD_TA_EQUIPS_SCORE_REQUEST" in protocol
+    assert "struct S2R_PICKUP_TA_EQUIPS_SCORE_REQUEST" in protocol
+    assert "int     nDeltaScore;" in protocol
+    assert "BYTE    byDirectMentor;" in protocol
+    assert "DoAddTAEquipsScoreRequest(int nDirectMentor" in client
+    assert "DoPickupTAEquipsScoreRequest(int nDirectMentor" in client
+    assert "pPacket->nDeltaScore = nDeltaScore;" in source
+    assert "pPacket->byDirectMentor = (BYTE)nDirectMentor;" in source
+
+
 def test_account_save_response_matches_target_failure_gate():
     source = read(RELAY_CPP)
     start = source.index("void KRelayClient::OnSaveAccountDataRespond")
@@ -69,12 +175,14 @@ def test_account_save_response_matches_target_failure_gate():
     assert "|| pRespond->bSucceed" not in body
 
 
-def test_account_payload_uses_global_crc_and_versioned_chunks():
+def test_account_save_and_load_use_target_global_wrapper():
     source = read(PLAYER_CPP)
     load = source[source.index("BOOL KPlayer::LoadAccountData"):source.index("BOOL KPlayer::Load(BYTE*", source.index("BOOL KPlayer::LoadAccountData"))]
     save = source[source.index("BOOL KPlayer::SaveAccount"):source.index("#define SAVE_ROLE_BLOCK", source.index("BOOL KPlayer::SaveAccount"))]
 
     assert "KRoleDataHeader* pGlobalHeader" in load
+    assert "pbyOffset = pbyData + sizeof(KRoleDataHeader)" in load
+    assert "uLeftSize = uDataLen - sizeof(KRoleDataHeader)" in load
     assert "pGlobalHeader->dwLen == uLeftSize" in load
     assert "CRC32(0, pbyOffset, (DWORD)uLeftSize)" in load
     assert "KRoleBlockHeader* pBlock" in load
@@ -82,6 +190,42 @@ def test_account_payload_uses_global_crc_and_versioned_chunks():
     assert "pBlock->dwVer = 0" in save
     assert "pbyTail - pbyOffset) >= sizeof(KRoleBlockHeader)" in save
     assert "pHeader->dwCRC = CRC32" not in save
+
+
+def test_account_loader_matches_target_block_failure_and_ordering():
+    source = read(PLAYER_CPP)
+    start = source.index("BOOL KPlayer::LoadAccountStateInfo")
+    end = source.index("BOOL KPlayer::Load(BYTE*", start)
+    body = source[start:end]
+
+    assert "KGLOG_PROCESS_ERROR(uDataLen >= 0x4c);" in body
+    assert "KGLOG_PROCESS_ERROR(uDataLen == 0x4c);" not in body
+    assert "(void)m_RegressionData.LoadAccountData(pbyOffset, pBlock->dwLen);" in body
+    assert "KGLOG_PROCESS_ERROR(m_RegressionData.LoadAccountData" not in body
+    assert "Unknown account data block(%d, %u)" in body
+
+    finish = source[source.index("BOOL KPlayer::FinishRoleDataLoad"):]
+    assert finish.index("m_ItemList.m_bFinishLoadData = true;") < finish.index("UpdateFreeLimitFlag();")
+    assert finish.index("UpdateFreeLimitFlag();") < finish.index("m_RegressionData.Calculate(")
+
+
+def test_finish_frontier_places_timers_after_tong_and_before_scene():
+    source = read(PLAYER_CPP)
+    start = source.index("BOOL KPlayer::OnExtDataLoadFinish")
+    end = source.index("BOOL KPlayer::PartialLoadExtData", start)
+    body = source[start:end]
+
+    tong = body.index("SyncNewClient(this)")
+    timer = body.index("m_nNextSaveFrame =")
+    scene = body.index("GetScene(")
+    assert tong < timer < scene
+    assert "m_nNextKillPointReduceTime =" in body
+
+    finish_start = source.index("BOOL KPlayer::FinishRoleDataLoad")
+    finish_end = source.index("void KPlayer::SyncSingleDungeonCurrentScore", finish_start)
+    finish = source[finish_start:finish_end]
+    assert "m_nNextSaveFrame =" not in finish
+    assert "m_nNextKillPointReduceTime =" not in finish
 
 
 def test_player_account_timestamp_is_distinct_from_role_timestamp():
@@ -100,6 +244,16 @@ def test_regression_has_v246_account_persistence_methods():
     assert "SaveAccountData(size_t* puUsedSize" in text
 
 
+def test_account_chunk_and_regression_payload_match_target_limits():
+    protocol = read(PROTO)
+    regression = read(REG_CPP)
+    assert "#define MAX_ACCOUNT_DATA_PAK_SIZE (1024 * 256)" in protocol
+    assert "KGLOG_PROCESS_ERROR(uDataLen >= REG_ACCOUNT_DATA_SIZE)" in regression
+    assert "KGLOG_PROCESS_ERROR(uDataLen == REG_ACCOUNT_DATA_SIZE)" not in regression
+    player = read(PLAYER_CPP)
+    assert "KGLOG_PROCESS_ERROR(uDataLen >= 0x4c);" in player
+
+
 def test_load_account_request_does_not_serialize_pointer_or_account_string():
     source = read(RELAY_CPP)
     start = source.index("BOOL KRelayClient::DoLoadAccountDataRequest")
@@ -107,6 +261,8 @@ def test_load_account_request_does_not_serialize_pointer_or_account_string():
     body = source[start:end]
     assert "pLoadAccountData->dwPlayerID" in body
     assert "pLoadAccountData->pszAccount" not in body
+    assert "m_dwSyncAccountID = dwRoleID" not in body
+    assert "m_uSyncAccountOffset = 0" not in body
 
 
 def test_account_save_is_wired_at_target_save_boundaries():

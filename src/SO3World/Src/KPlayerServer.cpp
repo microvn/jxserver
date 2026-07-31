@@ -3486,6 +3486,53 @@ Exit0:
     return bResult;
 }
 
+BOOL KPlayerServer::DoSyncExteriorAllSetData(int nConnIndex, KPlayer* pPlayer)
+{
+    BOOL bResult = false;
+    S2C_SYNC_EXTERIOR_ALL_SET_DATA* pPacket =
+        (S2C_SYNC_EXTERIOR_ALL_SET_DATA*)m_byTempData;
+    size_t uSetCount;
+    size_t i;
+    size_t j;
+
+    KGLOG_PROCESS_ERROR(pPlayer);
+    uSetCount = pPlayer->m_ExteriorBox.GetExteriorSetCount();
+    KGLOG_PROCESS_ERROR(uSetCount <= 0xff);
+    KGLOG_PROCESS_ERROR(sizeof(*pPacket) + uSetCount * 5 * sizeof(WORD) <= MAX_EXTERNAL_PACKAGE_SIZE);
+
+    pPacket->byProtocolID = s2c_sync_exterior_all_set_data;
+    pPacket->dwDestPlayerID = pPlayer->m_dwID;
+    pPacket->byCurrentSetID = (BYTE)pPlayer->m_ExteriorBox.GetCurrentSetID();
+    pPacket->byCount = (BYTE)uSetCount;
+    for (i = 0; i < uSetCount; ++i)
+    {
+        KEXTERIOR_SET_INFO* pSet = pPlayer->m_ExteriorBox.GetExteriorSet(i);
+        KGLOG_PROCESS_ERROR(pSet);
+        for (j = 0; j < 5; ++j)
+            pPacket->ExteriorSet[i].wExteriorSet[j] = (WORD)pSet->dwExteriorID[j];
+    }
+    pPacket->wSize = (WORD)(sizeof(*pPacket) + uSetCount * 5 * sizeof(WORD));
+    KGLOG_PROCESS_ERROR(Send(nConnIndex, pPacket, pPacket->wSize));
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
+BOOL KPlayerServer::DoSyncClientReportConfig(KPlayer* pPlayer)
+{
+    S2C_CLIENT_REPORT_CONFIG Pak;
+
+    KGLOG_PROCESS_ERROR(pPlayer);
+    Pak.byProtocolID = s2c_client_report_config;
+    Pak.byNetworkDelayReportFlag = (BYTE)g_pSO3World->m_Settings.m_ConstList.bNetworkDelayReportFlag;
+    Pak.nNetworkDelayReportFrequency = g_pSO3World->m_Settings.m_ConstList.nNetworkDelayReportFrequency;
+    Pak.nNetworkDelayReportThreshold = g_pSO3World->m_Settings.m_ConstList.nNetworkDelayReportThreshold;
+    KGLOG_PROCESS_ERROR(Send(pPlayer->m_nConnIndex, &Pak, sizeof(Pak)));
+    return true;
+Exit0:
+    return false;
+}
+
 // ͬ�����߻�õ���Ϣ
 BOOL KPlayerServer::DoAddItemNotify(KPlayer* pAddItemPlayer, DWORD dwItemID, int nCount, int nDestConnIndex)
 {
@@ -5649,6 +5696,155 @@ Exit0:
 	return bResult;
 }
 
+BOOL KPlayerServer::DoSyncDelayTradeItem(int nConnIndex, unsigned long long qwTradeID, DWORD dwItemID, long nEndTime)
+{
+    S2C_SYNC_DELAY_TRADE_ITEM Notify;
+    Notify.byProtocolID = s2c_sync_delay_trade_item;
+    Notify.qwTradeID = qwTradeID;
+    Notify.dwItemID = dwItemID;
+    Notify.nEndTime = nEndTime;
+    return Send(nConnIndex, &Notify, sizeof(Notify));
+}
+
+BOOL KPlayerServer::DoSyncTimeLimitReturnItem(int nConnIndex, DWORD dwItemID, DWORD dwShopTemplateID, int nShopItemIndex, long nEndTime)
+{
+    S2C_SYNC_TIME_LIMIT_RETURN_ITEM Notify;
+    Notify.byProtocolID = s2c_sync_time_limit_return_item;
+    Notify.dwItemID = dwItemID;
+    Notify.dwShopTemplateID = dwShopTemplateID;
+    Notify.nShopItemIndex = nShopItemIndex;
+    Notify.nEndTime = nEndTime;
+    return Send(nConnIndex, &Notify, sizeof(Notify));
+}
+
+BOOL KPlayerServer::DoSyncTimeLimitSoldListInfo(int nConnIndex, DWORD dwItemID, long nValue)
+{
+    S2C_SYNC_TIME_LIMIT_SOLD_LIST_INFO Notify;
+    Notify.byProtocolID = s2c_sync_time_limit_sold_list_info;
+    Notify.dwItemID = dwItemID;
+    Notify.nValue = nValue;
+    return Send(nConnIndex, &Notify, sizeof(Notify));
+}
+
+BOOL KPlayerServer::DoSyncSafeLockInfo(int nConnIndex, unsigned long dwSafeLockMask)
+{
+    S2C_SYNC_SAFE_LOCK_INFO Notify;
+    Notify.byProtocolID = s2c_sync_safe_lock_info;
+    Notify.dwMask = (DWORD)dwSafeLockMask;
+    return Send(nConnIndex, &Notify, sizeof(Notify));
+}
+
+BOOL KPlayerServer::DoSyncCubPackageSize(KPlayer* pPlayer)
+{
+    BOOL bResult = false;
+    S2C_SYNC_CUB_PACKAGE_SIZE Notify;
+
+    KGLOG_PROCESS_ERROR(pPlayer);
+    Notify.byProtocolID = s2c_sync_cub_package_size;
+    Notify.dwSize = pPlayer->m_dwCubPackageSize;
+    KGLOG_PROCESS_ERROR(Send(pPlayer->m_nConnIndex, &Notify, sizeof(Notify)));
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
+BOOL KPlayerServer::DoSyncSingleDungeonCurrentScore(int nConnIndex, int nMaxLevel, DWORD dwScore)
+{
+    S2C_SYNC_SINGLE_DUNGEON_CURRENT_SCORE Notify;
+
+    Notify.byProtocolID = s2c_sync_single_dungeon_current_score;
+    Notify.nMaxLevel = nMaxLevel;
+    Notify.dwScore = dwScore;
+    return Send(nConnIndex, &Notify, sizeof(Notify));
+}
+
+BOOL KPlayerServer::DoSyncSprintV2(KPlayer* pPlayer)
+{
+    S2C_SYNC_SPRINT_V2 Notify;
+
+    KGLOG_PROCESS_ERROR(pPlayer);
+    Notify.byProtocolID = s2c_sync_sprint_v2;
+    Notify.dwSprint = (DWORD)g_pSO3World->m_Settings.m_ConstList.nSprintFlagV2;
+    KGLOG_PROCESS_ERROR(Send(pPlayer->m_nConnIndex, &Notify, sizeof(Notify)));
+    return true;
+Exit0:
+    return false;
+}
+
+BOOL KPlayerServer::DoSyncFellowPetData(KPlayer* pPlayer)
+{
+    BOOL bResult = false;
+    size_t uDataLen = 0;
+    S2C_SYNC_FELLOW_PET_DATA* pPacket = (S2C_SYNC_FELLOW_PET_DATA*)m_byTempData;
+
+    KGLOG_PROCESS_ERROR(pPlayer);
+    pPacket->byProtocolID = s2c_sync_fellow_pet_data;
+    KGLOG_PROCESS_ERROR(pPlayer->m_FellowPetBox.Save(
+        &uDataLen,
+        pPacket->byFellowPetData,
+        MAX_EXTERNAL_PACKAGE_SIZE - sizeof(S2C_SYNC_FELLOW_PET_DATA)
+    ));
+    pPacket->wSize = (WORD)(sizeof(S2C_SYNC_FELLOW_PET_DATA) + uDataLen);
+    KGLOG_PROCESS_ERROR(Send(pPlayer->m_nConnIndex, pPacket, pPacket->wSize));
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
+BOOL KPlayerServer::DoSyncRewards(KPlayer* pPlayer)
+{
+    S2C_SYNC_REWARDS Notify;
+    int nRewards = 0;
+
+    KGLOG_PROCESS_ERROR(pPlayer);
+    /* Target reads new ext-point index 10; absent entries produce no packet. */
+    KGLOG_PROCESS_ERROR(pPlayer->GetExtPoint(10, nRewards));
+    Notify.byProtocolID = s2c_sync_rewards;
+    Notify.nRewards = nRewards;
+    KGLOG_PROCESS_ERROR(Send(pPlayer->m_nConnIndex, &Notify, sizeof(Notify)));
+    return true;
+Exit0:
+    return false;
+}
+
+BOOL KPlayerServer::DoSyncPendentData(KPlayer* pPlayer)
+{
+    BOOL bResult = false;
+    size_t uDataLen = 0;
+    S2C_SYNC_PENDENT_DATA* pPacket = (S2C_SYNC_PENDENT_DATA*)m_byTempData;
+
+    KGLOG_PROCESS_ERROR(pPlayer);
+    pPacket->byProtocolID = s2c_sync_pendent_data;
+    KGLOG_PROCESS_ERROR(pPlayer->SavePendentData(
+        &uDataLen,
+        pPacket->byData,
+        MAX_EXTERNAL_PACKAGE_SIZE - sizeof(S2C_SYNC_PENDENT_DATA)
+    ));
+    pPacket->uSize = uDataLen;
+    pPacket->wSize = (WORD)(sizeof(S2C_SYNC_PENDENT_DATA) + uDataLen);
+    KGLOG_PROCESS_ERROR(Send(pPlayer->m_nConnIndex, pPacket, pPacket->wSize));
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
+BOOL KPlayerServer::DoSyncCorpsChangeValue(DWORD dwPlayerID, int* pnLevel, int* pnRoleLevel)
+{
+    BOOL bResult = false;
+    S2C_SYNC_CORPS_CHANGE_VALUE Notify;
+    KPlayer* pPlayer = g_pSO3World->m_PlayerSet.GetObj(dwPlayerID);
+    KGLOG_PROCESS_ERROR(pPlayer);
+    KGLOG_PROCESS_ERROR(pnLevel);
+    KGLOG_PROCESS_ERROR(pnRoleLevel);
+    Notify.byProtocolID = s2c_sync_corps_change_value;
+    memcpy(Notify.nLevel, pnLevel, sizeof(Notify.nLevel));
+    memcpy(Notify.nRoleLevel, pnRoleLevel, sizeof(Notify.nRoleLevel));
+    KGLOG_PROCESS_ERROR(Send(pPlayer->m_nConnIndex, &Notify, sizeof(Notify)));
+	bResult = true;
+Exit0:
+	return bResult;
+}
+
 BOOL KPlayerServer::DoUpdateMapMark(int nConnIndex, int nX, int nY, int nZ, int nType, const char* pszComment)
 {
     BOOL bResult  = false;
@@ -6567,6 +6763,45 @@ BOOL KPlayerServer::DoSyncTongHistoryRespond(int nConnIndex, BYTE byType, DWORD 
     bResult = true;
 Exit0:
     return bResult;
+}
+
+BOOL KPlayerServer::DoSyncTongDiplomacyData(
+    int nConnIndex,
+    const std::vector<KTONG_DIPLOMACY_RELATION_INFO>& crRelationList
+)
+{
+    BOOL bResult = false;
+    S2C_SYNC_TONG_DIPLOMACY_DATA* pNotify =
+        (S2C_SYNC_TONG_DIPLOMACY_DATA*)m_byTempData;
+    size_t uDataSize = sizeof(S2C_SYNC_TONG_DIPLOMACY_DATA) +
+        crRelationList.size() * sizeof(KTONG_DIPLOMACY_RELATION_INFO);
+
+    KGLOG_PROCESS_ERROR(!crRelationList.empty());
+    KGLOG_PROCESS_ERROR(uDataSize <= MAX_EXTERNAL_PACKAGE_SIZE);
+    KGLOG_PROCESS_ERROR(crRelationList.size() <= 0xff);
+
+    pNotify->byProtocolID = s2c_sync_tong_diplomacy_data;
+    pNotify->byCount = (BYTE)crRelationList.size();
+    pNotify->wSize = (WORD)uDataSize;
+    memcpy(pNotify->DiplomacyInfoArray, &crRelationList[0],
+           crRelationList.size() * sizeof(KTONG_DIPLOMACY_RELATION_INFO));
+    KGLOG_PROCESS_ERROR(Send(nConnIndex, pNotify, uDataSize));
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
+BOOL KPlayerServer::DoSyncTongTotalCache(int nConnIndex, const BYTE* pbyCacheData)
+{
+    S2C_SYNC_TONG_TOTAL_CACHE Notify;
+
+    KGLOG_PROCESS_ERROR(pbyCacheData);
+    Notify.byProtocolID = s2c_sync_tong_total_cache;
+    memcpy(Notify.byCacheData, pbyCacheData, sizeof(Notify.byCacheData));
+    KGLOG_PROCESS_ERROR(Send(nConnIndex, &Notify, sizeof(Notify)));
+    return true;
+Exit0:
+    return false;
 }
 
 BOOL KPlayerServer::DoAuctionLookupRespond(DWORD dwPlayerID, BYTE byRespondID, BYTE byCode, KAUCTION_PAGE_HEAD* pPage)

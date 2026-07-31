@@ -35,6 +35,7 @@ public:
 
 	// Item
 	int nBankPackagePrice[MAX_BANK_PACKAGE_COUNT];
+	int nCubPackageRoomRange[2];
 
     // Fellowship
     int nTeamAttractiveInterval;       // ������Ӻøжȵļ��(Frame)
@@ -149,6 +150,13 @@ public:
     int nLogCurrencyThreshold[6];           // |change| >= this -> log to logserver
     int nCurrencyRemainSpaceResetCycle;     // earn-allowance reset period (sec; 604800 = 1 week)
     int nCurrencyRemainSpaceResetOffest;    // reset time offset (sec; 25200 = 7h)
+
+    int nSprintFlagV2;
+
+    // Client network-delay reporting configuration sent during role entry.
+    BOOL bNetworkDelayReportFlag;
+    int nNetworkDelayReportFrequency;
+    int nNetworkDelayReportThreshold;
 
 	BOOL Init();
 	void UnInit();

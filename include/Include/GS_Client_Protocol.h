@@ -658,6 +658,22 @@ struct S2C_SYNC_QUEST_DATA : UNDEFINED_SIZE_DOWNWARDS_HEADER
     BYTE    byData[0];
 };
 
+struct S2C_SYNC_FELLOW_PET_DATA : UNDEFINED_SIZE_DOWNWARDS_HEADER
+{
+    BYTE byFellowPetData[0];
+};
+
+struct S2C_SYNC_REWARDS : DOWNWARDS_PROTOCOL_HEADER
+{
+    int nRewards;
+};
+
+struct S2C_SYNC_PENDENT_DATA : UNDEFINED_SIZE_DOWNWARDS_HEADER
+{
+    size_t uSize;
+    BYTE byData[0];
+};
+
 struct S2C_ACCOUNT_KICKOUT : DOWNWARDS_PROTOCOL_HEADER
 {
 };
@@ -1642,6 +1658,35 @@ struct S2C_SYNC_EXTERIOR_BOX_DATA : UNDEFINED_SIZE_DOWNWARDS_HEADER
     BYTE  byData[0];        // wCount x KEXTERIOR_SYNC_ITEM (7B each)
 };
 
+#pragma pack(1)
+struct S2C_SYNC_EXTERIOR_ALL_SET_DATA : UNDEFINED_SIZE_DOWNWARDS_HEADER
+{
+    DWORD dwDestPlayerID;
+    BYTE  byCurrentSetID;
+    BYTE  byCount;
+    struct EXTERIOR_SET_DATA
+    {
+        WORD wExteriorSet[5];
+    } ExteriorSet[0];
+};
+#pragma pack()
+
+#pragma pack(1)
+struct S2C_CLIENT_REPORT_CONFIG : DOWNWARDS_PROTOCOL_HEADER
+{
+    BYTE byNetworkDelayReportFlag;
+    int  nNetworkDelayReportFrequency;
+    int  nNetworkDelayReportThreshold;
+};
+#pragma pack()
+
+typedef char S2C_EXTERIOR_ALL_SET_DATA_SIZE_CHECK[
+    (sizeof(S2C_SYNC_EXTERIOR_ALL_SET_DATA) == 10) ? 1 : -1
+];
+typedef char S2C_CLIENT_REPORT_CONFIG_SIZE_CHECK[
+    (sizeof(S2C_CLIENT_REPORT_CONFIG) == 11) ? 1 : -1
+];
+
 // Exterior apply-flag -> owning client (v246 wire = protocol 0x121).
 struct S2C_SYNC_APPLY_EXTERIOR_FLAG : DOWNWARDS_PROTOCOL_HEADER
 {
@@ -2105,6 +2150,54 @@ struct S2C_SYNC_ENABLE_BANK_PACKAGE : DOWNWARDS_PROTOCOL_HEADER
 	int nEnabledCount;
 };
 
+struct S2C_SYNC_CUB_PACKAGE_SIZE : DOWNWARDS_PROTOCOL_HEADER
+{
+    DWORD dwSize;
+};
+
+struct S2C_SYNC_SAFE_LOCK_INFO : DOWNWARDS_PROTOCOL_HEADER
+{
+    DWORD dwMask;
+};
+
+struct S2C_SYNC_SINGLE_DUNGEON_CURRENT_SCORE : DOWNWARDS_PROTOCOL_HEADER
+{
+    int   nMaxLevel;
+    DWORD dwScore;
+};
+
+struct S2C_SYNC_SPRINT_V2 : DOWNWARDS_PROTOCOL_HEADER
+{
+    DWORD dwSprint;
+};
+
+struct S2C_SYNC_CORPS_CHANGE_VALUE : DOWNWARDS_PROTOCOL_HEADER
+{
+    int nLevel[3];
+    int nRoleLevel[3];
+};
+
+struct S2C_SYNC_DELAY_TRADE_ITEM : DOWNWARDS_PROTOCOL_HEADER
+{
+    unsigned long long qwTradeID;
+    DWORD dwItemID;
+    long nEndTime;
+};
+
+struct S2C_SYNC_TIME_LIMIT_RETURN_ITEM : DOWNWARDS_PROTOCOL_HEADER
+{
+    DWORD dwItemID;
+    DWORD dwShopTemplateID;
+    int nShopItemIndex;
+    long nEndTime;
+};
+
+struct S2C_SYNC_TIME_LIMIT_SOLD_LIST_INFO : DOWNWARDS_PROTOCOL_HEADER
+{
+    DWORD dwItemID;
+    long nValue;
+};
+
 struct S2C_UPDATE_MAP_MARK : DOWNWARDS_PROTOCOL_HEADER
 {
 	int nX;
@@ -2404,6 +2497,17 @@ struct S2C_SYNC_TONG_HISTORY_RESPOND : UNDEFINED_SIZE_DOWNWARDS_HEADER
     DWORD   dwStartIndex;
     BYTE    byCount;
     BYTE    byData[0];
+};
+
+struct S2C_SYNC_TONG_DIPLOMACY_DATA : UNDEFINED_SIZE_DOWNWARDS_HEADER
+{
+    BYTE    byCount;
+    KTONG_DIPLOMACY_RELATION_INFO DiplomacyInfoArray[0];
+};
+
+struct S2C_SYNC_TONG_TOTAL_CACHE : DOWNWARDS_PROTOCOL_HEADER
+{
+    BYTE    byCacheData[7];
 };
 // --------------------------------------------------------------------------
 struct S2C_SET_CAMP : DOWNWARDS_PROTOCOL_HEADER

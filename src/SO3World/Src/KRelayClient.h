@@ -198,6 +198,11 @@ public:
     BOOL DoSyncAccountData(DWORD dwID, BYTE* pbyData, size_t uOffset, size_t uDataLen);
     BOOL DoSaveAccountData(KPlayer* pPlayer, size_t uAccountDataLen);
 
+    BOOL DoApplySingleDungeonLastScore(DWORD dwPlayerID);
+    BOOL DoApplyCoinOperatingFlag(KPlayer* pPlayer);
+    BOOL DoSyncCorpsChangeDataRequest(DWORD dwPlayerID, time_t nChangeTime, time_t nWeekTime, time_t nSeasonTime);
+    BOOL DoSyncFellowshipPlayerMiniAvatar(DWORD dwPlayerID, DWORD dwMiniAvatarID, int nRoleType);
+
     //-----------------------------------------------------------------------
 
     // ----------------------- 战场排队相关操作 --------------------------------
@@ -313,6 +318,8 @@ public:
     BOOL DoApplyMentorData(DWORD dwMentorID, DWORD dwApprenticeID);
     BOOL DoUpdateMaxApprenticeNum(DWORD dwMentorID, int nMaxApprenticeNum);
     BOOL DoAddMentorValueRequest(DWORD dwMentorID, DWORD dwApprenticeID, int nDeltaValue);
+    BOOL DoAddTAEquipsScoreRequest(int nDirectMentor, DWORD dwMentorID, DWORD dwApprenticeID, int nDeltaScore);
+    BOOL DoPickupTAEquipsScoreRequest(int nDirectMentor, DWORD dwMentorID);
 
     //AutoCode:-发送协议函数结束-
 private:
@@ -496,6 +503,9 @@ private:
     void OnSyncMentorData(BYTE* pbyData, size_t uDataLen);
     void OnDeleteMentorRecord(BYTE* pbyData, size_t uDataLen);
     void OnUpdateMentorRecord(BYTE* pbyData, size_t uDataLen);
+    void OnSyncDirectMentorData(BYTE* pbyData, size_t uDataLen);
+    void OnDeleteDirectMentorRecord(BYTE* pbyData, size_t uDataLen);
+    void OnUpdateDirectMentorRecord(BYTE* pbyData, size_t uDataLen);
     void OnSeekMentorYell(BYTE* pbyData, size_t uDataLen);
     void OnSeekApprenticeYell(BYTE* pbyData, size_t uDataLen);
 

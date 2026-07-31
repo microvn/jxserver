@@ -218,10 +218,11 @@ KRelayClient::KRelayClient(void)
     REGISTER_INTERNAL_FUNC(r2s_v246_unused_176, &KRelayClient::OnNoOpRespond, 6);
     REGISTER_INTERNAL_FUNC(r2s_v246_unused_177, &KRelayClient::OnNoOpRespond, 10);
 
-    // Target v2.5.2 KR2S constructor: protocol 162 -> OnSyncMentorData, base size 6.
-    // The legacy enum places an unrelated no-op at this slot; keep the explicit target slot
-    // last so it supplies the startup completion signal before player-login requests arrive.
-    REGISTER_INTERNAL_FUNC(162, &KRelayClient::OnSyncMentorData, 6);
+    // Target constructor: direct-mentor sync/delete/update handlers occupy the
+    // three slots immediately following the normal mentor surface.
+    REGISTER_INTERNAL_FUNC(162, &KRelayClient::OnSyncDirectMentorData, 6);
+    REGISTER_INTERNAL_FUNC(163, &KRelayClient::OnDeleteDirectMentorRecord, 10);
+    REGISTER_INTERNAL_FUNC(164, &KRelayClient::OnUpdateDirectMentorRecord, 15);
     REGISTER_INTERNAL_FUNC(139, &KRelayClient::OnSyncNewExtPointRespond, 19);
     REGISTER_INTERNAL_FUNC(r2s_sync_battle_field_list, &KRelayClient::OnSyncBattleFieldList, sizeof(R2S_SYNC_BATTLE_FIELD_LIST));
     REGISTER_INTERNAL_FUNC(r2s_take_tong_repertory_item_to_pos_respond,  &KRelayClient::OnTakeTongRepertoryItemToPosRespond, sizeof(R2S_TAKE_TONG_REPERTORY_ITEM_TO_POS_RESPOND));
@@ -1001,6 +1002,13 @@ void KRelayClient::OnSyncNewExtPointRespond(BYTE* pbyData, size_t uDataLen)
 
     for (i = 0; i < pRespond->nCount; ++i)
     {
+        bRetCode = pPlayer->m_NewExtPointManager.AddNewExtPoint(
+            pRespond->SyncNEPInfo[i].nKey,
+            pRespond->SyncNEPInfo[i].nValue,
+            0
+        );
+        KGLOG_PROCESS_ERROR(bRetCode);
+
         if (nLastKey < pRespond->SyncNEPInfo[i].nKey)
             nLastKey = pRespond->SyncNEPInfo[i].nKey;
     }
@@ -2488,10 +2496,13 @@ Exit0:
 void KRelayClient::OnSyncAccountData(BYTE* pbyData, size_t uDataLen)
 {
     BOOL bResult = false;
-    R2S_SYNC_ACCOUNT_DATA* pSyncData = (R2S_SYNC_ACCOUNT_DATA*)pbyData;
-    size_t uAccountDataLen = uDataLen - sizeof(R2S_SYNC_ACCOUNT_DATA);
+    R2S_SYNC_ACCOUNT_DATA* pSyncData = NULL;
+    size_t uAccountDataLen = 0;
 
+    KGLOG_PROCESS_ERROR(pbyData);
     KGLOG_PROCESS_ERROR(uDataLen >= sizeof(R2S_SYNC_ACCOUNT_DATA));
+    pSyncData = (R2S_SYNC_ACCOUNT_DATA*)pbyData;
+    uAccountDataLen = uDataLen - sizeof(R2S_SYNC_ACCOUNT_DATA);
     KGLOG_PROCESS_ERROR(pSyncData->uOffset == m_uSyncAccountOffset);
     KGLOG_PROCESS_ERROR(MAX_ACCOUNT_DATA_SIZE - m_uSyncAccountOffset >= uAccountDataLen);
     KGLOG_PROCESS_ERROR(pSyncData->uOffset == 0 || pSyncData->dwRoleID == m_dwSyncAccountID);
@@ -3582,11 +3593,12 @@ Exit0:
 void KRelayClient::OnSyncMentorData(BYTE* pbyData, size_t uDataLen)
 {
     R2S_SYNC_MENTOR_DATA* pRespond = (R2S_SYNC_MENTOR_DATA*)pbyData;
-    KMentorRecordBase     Record;
+    KMentorRecordCache    Record;
 
     for (int i = 0; i < pRespond->nRecordCount; i++)
     {
         Record.nMentorValue = pRespond->Data[i].nValue;
+        Record.dwTAEquipsScore = 0;
         Record.byState      = pRespond->Data[i].byState;
 
         g_pSO3World->m_MentorCache.AddMentorData(
@@ -3615,14 +3627,65 @@ void KRelayClient::OnDeleteMentorRecord(BYTE* pbyData, size_t uDataLen)
     g_pSO3World->m_MentorCache.DeleteMentorRecord(pPak->uMKey);
 }
 
+void KRelayClient::OnSyncDirectMentorData(BYTE* pbyData, size_t uDataLen)
+{
+    R2S_SYNC_DIRECT_MENTOR_DATA* pPacket = (R2S_SYNC_DIRECT_MENTOR_DATA*)pbyData;
+    int i;
+
+    KGLOG_PROCESS_ERROR(uDataLen >= sizeof(*pPacket));
+    KGLOG_PROCESS_ERROR(pPacket->nRecordCount >= 0);
+    KGLOG_PROCESS_ERROR(uDataLen >= sizeof(*pPacket) +
+        (size_t)pPacket->nRecordCount * sizeof(KDirectMentorSyncInfo));
+
+    for (i = 0; i < pPacket->nRecordCount; ++i)
+    {
+        KDirectMentorRecordCache record;
+        record.dwTAEquipsScore = pPacket->Data[i].dwTAEquipsScore;
+        record.byState = pPacket->Data[i].byState;
+        KGLOG_PROCESS_ERROR(g_pSO3World->m_DirectMentorCache.AddMentorData(
+            pPacket->Data[i].dwMentor, pPacket->Data[i].dwApprentice, record
+        ));
+    }
+    return;
+Exit0:
+    return;
+}
+
+void KRelayClient::OnDeleteDirectMentorRecord(BYTE* pbyData, size_t uDataLen)
+{
+    R2S_DELETE_DIRECT_MENTOR_RECORD* pPacket = (R2S_DELETE_DIRECT_MENTOR_RECORD*)pbyData;
+    KGLOG_PROCESS_ERROR(uDataLen >= sizeof(*pPacket));
+    g_pSO3World->m_DirectMentorCache.DeleteMentorRecord(pPacket->uMKey);
+Exit0:
+    return;
+}
+
+void KRelayClient::OnUpdateDirectMentorRecord(BYTE* pbyData, size_t uDataLen)
+{
+    R2S_UPDATE_DIRECT_MENTOR_RECORD* pPacket = (R2S_UPDATE_DIRECT_MENTOR_RECORD*)pbyData;
+    KDirectMentorRecordCache record;
+    KGLOG_PROCESS_ERROR(uDataLen >= sizeof(*pPacket));
+    record.dwTAEquipsScore = pPacket->dwTAEquipsScore;
+    record.byState = pPacket->byState;
+    g_pSO3World->m_DirectMentorCache.UpdateMentorData(
+        pPacket->dwMentor, pPacket->dwApprentice, record
+    );
+Exit0:
+    return;
+}
+
 void KRelayClient::OnUpdateMentorRecord(BYTE* pbyData, size_t uDataLen)
 {
     R2S_UPDATE_MENTOR_RECORD* pPak          = (R2S_UPDATE_MENTOR_RECORD*)pbyData;
     KPlayer*                  pPlayer       = NULL;
-    KMentorRecordBase         Record;
+    KMentorRecordCache        Record;
+    KMentorRecordBase         ClientRecord;
 
     Record.nMentorValue = pPak->nValue;
+    Record.dwTAEquipsScore = 0;
     Record.byState      = pPak->byState;
+    ClientRecord.nMentorValue = Record.nMentorValue;
+    ClientRecord.byState = Record.byState;
 
     g_pSO3World->m_MentorCache.UpdateMentorData(pPak->dwMentor, pPak->dwApprentice, Record);
 
@@ -3632,7 +3695,7 @@ void KRelayClient::OnUpdateMentorRecord(BYTE* pbyData, size_t uDataLen)
         g_PlayerServer.DoSyncMentorData(
             pPlayer->m_nConnIndex,
             pPak->dwMentor, pPak->dwApprentice,
-            Record
+            ClientRecord
         );
     }
 
@@ -3642,7 +3705,7 @@ void KRelayClient::OnUpdateMentorRecord(BYTE* pbyData, size_t uDataLen)
         g_PlayerServer.DoSyncMentorData(
             pPlayer->m_nConnIndex,
             pPak->dwMentor, pPak->dwApprentice,
-            Record
+            ClientRecord
         );
     }
 }
@@ -3664,6 +3727,50 @@ void KRelayClient::OnSeekApprenticeYell(BYTE* pbyData, size_t uDataLen)
         pPak->szRoleName, pPak->szTongName, pPak->byForceID, pPak->byRoleLevel, pPak->byRoleType
     );
 }
+BOOL KRelayClient::DoPickupTAEquipsScoreRequest(int nDirectMentor, DWORD dwMentorID)
+{
+    BOOL bResult = false;
+    IKG_Buffer* piBuffer = NULL;
+    S2R_PICKUP_TA_EQUIPS_SCORE_REQUEST* pPacket = NULL;
+
+    piBuffer = KG_MemoryCreateBuffer(sizeof(S2R_PICKUP_TA_EQUIPS_SCORE_REQUEST));
+    KGLOG_PROCESS_ERROR(piBuffer);
+    pPacket = (S2R_PICKUP_TA_EQUIPS_SCORE_REQUEST*)piBuffer->GetData();
+    KGLOG_PROCESS_ERROR(pPacket);
+    pPacket->wProtocolID = s2r_pickup_ta_equips_score_request;
+    pPacket->dwMentorID = dwMentorID;
+    pPacket->byDirectMentor = (BYTE)nDirectMentor;
+    KGLOG_PROCESS_ERROR(Send(piBuffer));
+    bResult = true;
+Exit0:
+    KG_COM_RELEASE(piBuffer);
+    return bResult;
+}
+
+BOOL KRelayClient::DoAddTAEquipsScoreRequest(
+    int nDirectMentor, DWORD dwMentorID, DWORD dwApprenticeID, int nDeltaScore
+)
+{
+    BOOL bResult = false;
+    IKG_Buffer* piBuffer = NULL;
+    S2R_ADD_TA_EQUIPS_SCORE_REQUEST* pPacket = NULL;
+
+    piBuffer = KG_MemoryCreateBuffer(sizeof(S2R_ADD_TA_EQUIPS_SCORE_REQUEST));
+    KGLOG_PROCESS_ERROR(piBuffer);
+    pPacket = (S2R_ADD_TA_EQUIPS_SCORE_REQUEST*)piBuffer->GetData();
+    KGLOG_PROCESS_ERROR(pPacket);
+    pPacket->wProtocolID = s2r_add_ta_equips_score_request;
+    pPacket->dwMentorID = dwMentorID;
+    pPacket->dwApprenticeID = dwApprenticeID;
+    pPacket->nDeltaScore = nDeltaScore;
+    pPacket->byDirectMentor = (BYTE)nDirectMentor;
+    KGLOG_PROCESS_ERROR(Send(piBuffer));
+    bResult = true;
+Exit0:
+    KG_COM_RELEASE(piBuffer);
+    return bResult;
+}
+
 //AutoCode:-处理协议函数结束-
 
 /************************************************************************/
@@ -5460,8 +5567,6 @@ BOOL KRelayClient::DoLoadAccountDataRequest(DWORD dwRoleID, const char* pszAccou
     pLoadAccountData->dwPlayerID  = dwRoleID;
 
     (void)pszAccount; /* The v246 wire request is keyed by player ID. */
-    m_dwSyncAccountID = dwRoleID;
-    m_uSyncAccountOffset = 0;
 
     bRetCode = Send(piPackage);
     KGLOG_PROCESS_ERROR(bRetCode);
@@ -5541,6 +5646,84 @@ BOOL KRelayClient::DoSyncAccountData(DWORD dwID, BYTE* pbyData, size_t uOffset, 
     memcpy(pSyncAccountData->byData, pbyData, uDataLen);
     bRetCode = Send(piPackage);
     KGLOG_PROCESS_ERROR(bRetCode);
+    bResult = true;
+Exit0:
+    KG_COM_RELEASE(piPackage);
+    return bResult;
+}
+
+BOOL KRelayClient::DoApplySingleDungeonLastScore(DWORD dwPlayerID)
+{
+    BOOL bResult = false;
+    IKG_Buffer* piPackage = NULL;
+    S2R_APPLY_SINGLE_DUNGEON_LAST_SCORE* pPacket = NULL;
+
+    piPackage = KG_MemoryCreateBuffer(sizeof(S2R_APPLY_SINGLE_DUNGEON_LAST_SCORE));
+    KGLOG_PROCESS_ERROR(piPackage);
+    pPacket = (S2R_APPLY_SINGLE_DUNGEON_LAST_SCORE*)piPackage->GetData();
+    pPacket->wProtocolID = s2r_apply_single_dungeon_last_score;
+    pPacket->dwPlayer = dwPlayerID;
+    KGLOG_PROCESS_ERROR(Send(piPackage));
+    bResult = true;
+Exit0:
+    KG_COM_RELEASE(piPackage);
+    return bResult;
+}
+
+BOOL KRelayClient::DoApplyCoinOperatingFlag(KPlayer* pPlayer)
+{
+    BOOL bResult = false;
+    IKG_Buffer* piPackage = NULL;
+    S2R_APPLY_COIN_OPERATING_FLAG* pPacket = NULL;
+
+    KGLOG_PROCESS_ERROR(pPlayer);
+    piPackage = KG_MemoryCreateBuffer(sizeof(S2R_APPLY_COIN_OPERATING_FLAG));
+    KGLOG_PROCESS_ERROR(piPackage);
+    pPacket = (S2R_APPLY_COIN_OPERATING_FLAG*)piPackage->GetData();
+    pPacket->wProtocolID = s2r_apply_coin_operating_flag;
+    pPacket->dwPlayerID = pPlayer->m_dwID;
+    KGLOG_PROCESS_ERROR(Send(piPackage));
+    bResult = true;
+Exit0:
+    KG_COM_RELEASE(piPackage);
+    return bResult;
+}
+
+BOOL KRelayClient::DoSyncCorpsChangeDataRequest(DWORD dwPlayerID, time_t nChangeTime, time_t nWeekTime, time_t nSeasonTime)
+{
+    BOOL bResult = false;
+    IKG_Buffer* piPackage = NULL;
+    S2R_SYNC_CORPS_CHANGE_DATA_REQUEST* pPacket = NULL;
+
+    piPackage = KG_MemoryCreateBuffer(sizeof(S2R_SYNC_CORPS_CHANGE_DATA_REQUEST));
+    KGLOG_PROCESS_ERROR(piPackage);
+    pPacket = (S2R_SYNC_CORPS_CHANGE_DATA_REQUEST*)piPackage->GetData();
+    pPacket->wProtocolID = s2r_sync_corps_change_data_request;
+    pPacket->dwPlayerID = dwPlayerID;
+    pPacket->nChangeTime = nChangeTime;
+    pPacket->nWeekTime = nWeekTime;
+    pPacket->nSeasonTime = nSeasonTime;
+    KGLOG_PROCESS_ERROR(Send(piPackage));
+    bResult = true;
+Exit0:
+    KG_COM_RELEASE(piPackage);
+    return bResult;
+}
+
+BOOL KRelayClient::DoSyncFellowshipPlayerMiniAvatar(DWORD dwPlayerID, DWORD dwMiniAvatarID, int nRoleType)
+{
+    BOOL bResult = false;
+    IKG_Buffer* piPackage = NULL;
+    S2R_SYNC_FELLOWSHIP_PLAYER_MINI_AVATAR* pPacket = NULL;
+
+    piPackage = KG_MemoryCreateBuffer(sizeof(S2R_SYNC_FELLOWSHIP_PLAYER_MINI_AVATAR));
+    KGLOG_PROCESS_ERROR(piPackage);
+    pPacket = (S2R_SYNC_FELLOWSHIP_PLAYER_MINI_AVATAR*)piPackage->GetData();
+    pPacket->wProtocolID = s2r_sync_fellowship_player_mini_avatar;
+    pPacket->dwPlayerID = dwPlayerID;
+    pPacket->wMiniAvatarID = (WORD)dwMiniAvatarID;
+    pPacket->wRoleType = (WORD)nRoleType;
+    KGLOG_PROCESS_ERROR(Send(piPackage));
     bResult = true;
 Exit0:
     KG_COM_RELEASE(piPackage);

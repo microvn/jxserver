@@ -346,7 +346,9 @@ public:
     BOOL DoSyncEquipRepresent(KPlayer* pPlayer, int nIndex, DWORD dwRepresentID);
     // sync exterior (wai-guan) box contents + apply-flag to the owning client
     BOOL DoSyncExteriorBoxData(KPlayer* pPlayer, size_t uCount, const KEXTERIOR_ITEM* pItems);
+    BOOL DoSyncExteriorAllSetData(int nConnIndex, KPlayer* pPlayer);
     BOOL DoSyncApplyExteriorFlag(KPlayer* pPlayer, DWORD dwApplyFlag);
+    BOOL DoSyncClientReportConfig(KPlayer* pPlayer);
 	// ͬ�����߻�õ���Ϣ
 	BOOL DoAddItemNotify(KPlayer* pAddItemPlayer, DWORD dwItemID, int nCount, int nDestConnIndex = -1);
     
@@ -500,6 +502,14 @@ public:
     BOOL DoSyncRegressionPlayerData(int nConnIndex, int nGradeID, int nDailyCount, BYTE* pbyItemMark);
 
 	BOOL DoSyncEnableBankPackage(int nConnIndex, int nEnabledCount);
+	BOOL DoSyncCubPackageSize(KPlayer* pPlayer);
+    BOOL DoSyncSafeLockInfo(int nConnIndex, unsigned long dwSafeLockMask);
+    BOOL DoSyncSingleDungeonCurrentScore(int nConnIndex, int nMaxLevel, DWORD dwScore);
+    BOOL DoSyncSprintV2(KPlayer* pPlayer);
+	BOOL DoSyncCorpsChangeValue(DWORD dwPlayerID, int* pnLevel, int* pnRoleLevel);
+	BOOL DoSyncDelayTradeItem(int nConnIndex, unsigned long long qwTradeID, DWORD dwItemID, long nEndTime);
+	BOOL DoSyncTimeLimitReturnItem(int nConnIndex, DWORD dwItemID, DWORD dwShopTemplateID, int nShopItemIndex, long nEndTime);
+	BOOL DoSyncTimeLimitSoldListInfo(int nConnIndex, DWORD dwItemID, long nValue);
 
 	BOOL DoUpdateMapMark(int nConnIndex, int nX, int nY, int nZ, int nType, const char* pszComment);
 
@@ -558,6 +568,11 @@ public:
     BOOL DoSyncTongOnlineMessage(int nConnIndex, char szOnlineMessage[], size_t uDataLen);
     BOOL DoApplyOpenTongRepertoryRespond(int nConnIndex, DWORD dwPlayerID, const char szTongName[], BYTE byRepertoryPageNum);
     BOOL DoSyncTongHistoryRespond(int nConnIndex, BYTE byType, DWORD dwStartIndex, int nCount, BYTE byData[], size_t uDataLen);
+    BOOL DoSyncTongDiplomacyData(
+        int nConnIndex,
+        const std::vector<KTONG_DIPLOMACY_RELATION_INFO>& crRelationList
+    );
+    BOOL DoSyncTongTotalCache(int nConnIndex, const BYTE* pbyCacheData);
     //-----------------------------------------------------------------
      
     // ---------------------- ��������� --------------------------------
@@ -594,6 +609,9 @@ public:
     // v2.5 NEW: sync one currency (or all 6) to the owning client (s2c_sync_currency).
     BOOL DoSyncCurrency(KPlayer* pPlayer, class KCurrency* pCurrency);
     BOOL DoSyncCurrencyList(KPlayer* pPlayer);
+    BOOL DoSyncFellowPetData(KPlayer* pPlayer);
+    BOOL DoSyncRewards(KPlayer* pPlayer);
+    BOOL DoSyncPendentData(KPlayer* pPlayer);
 
     BOOL DoSyncMaxLevel(int nConnIndex, int nMaxLevel);
 

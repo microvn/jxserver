@@ -53,7 +53,10 @@
 #include "../../Source/Common/SO3World/Src/KGameCardClient.h"
 #include "../../Source/Common/SO3World/Src/KMailClient.h"
 #include "../../Source/Common/SO3World/Src/KMentorCache.h"
+#include "../../Source/Common/SO3World/Src/KDirectMentorCache.h"
 #include "../../Source/Common/SO3World/Src/KRegressionManager.h"
+#include "../../Source/Common/SO3World/Src/KTongDiplomacyCache.h"
+#include "../../Source/Common/SO3World/Src/KTongServer.h"
 #include "../../Source/Common/SO3World/Src/KMentorClient.h"
 
 class KScene;
@@ -109,7 +112,7 @@ public:
 
 	KNpc*   NewNpc(DWORD dwNpcID = ERROR_ID);
 	BOOL    DeleteNpc(KNpc* pNpc, BOOL bKilled = false);
-	//����Ϸ����������Npc����Npc�����ݱ����Ѿ��������
+	//����Ϸ����������Npc����Npc�����ݱ����Ѿ��������
 	BOOL    AddNpc(KNpc* pNpc, KScene* pScene, int nX, int nY, int nZ);
 	BOOL    RemoveNpc(KNpc* pNpc, BOOL bKilled = false);
 
@@ -231,6 +234,8 @@ public:
     KGlobalSystemValueCache             m_GlobalSystemValueCache;
     KStatDataServer                     m_StatDataServer;
     KRankListServer                     m_RankListServer;   // v2.5 NEW: single-dungeon score leaderboard
+    KTongDiplomacyCache                 m_TongDiplomacyCache;
+    KTongServer                          m_TongServer;
 #endif
 
 #ifdef _CLIENT
@@ -241,6 +246,7 @@ public:
 
 #ifdef _SERVER
     KMentorCache                        m_MentorCache;
+    KDirectMentorCache                  m_DirectMentorCache;
     KRegressionManager                  m_RegressionManager;
 #else
     KMentorClient                       m_MentorClient;

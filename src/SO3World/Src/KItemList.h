@@ -153,6 +153,14 @@ public:
 #ifdef _SERVER
     BOOL    Load(BYTE* pbyData, size_t uDataLen);
     BOOL    Load(BYTE* pbyData, size_t uDataLen, int nVersion);
+    BOOL    LoadItemList(BYTE* pbyData, size_t uDataLen, int nVersion);
+    BOOL    LoadItemList_V0(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadItemList_V1(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadItemList_V2(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadItemList_V3(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadItemList_V4(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadItemList_V5(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadItemList_V6(BYTE* pbyData, size_t uDataLen);
     BOOL    Save(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
 	
     void    TidyUpSoldList();    
@@ -162,6 +170,18 @@ public:
     //按装备最大耐久度的百分比, 磨损一个包包中的所有装备(主要用在玩家复活时,对其的惩罚)
     BOOL    AbradeEquipment(int nBoxType, int nAbradePercent);
     void    UpdateItemID();
+    void    UpdateDelayTradeItemID();
+    void    UpdateTimeLimitReturnItemID();
+    void    UpdateTimeLimitSoldListItemID();
+    BOOL    AddTimeLimitReturnItemInfo(DWORD dwItemID, DWORD dwShopTemplateID, int nShopItemIndex, long nEndTime);
+    BOOL    AddTimeLimitSoldListInfo(DWORD dwItemID, long nValue);
+    BOOL    AdjustCubPackageSize();
+    BOOL    LoadDelayTradeInfo(BYTE* pbyData, size_t uDataLen, int nVersion);
+    BOOL    LoadTimeLimitReturnInfo(BYTE* pbyData, size_t uDataLen, int nVersion);
+    BOOL    LoadTimeLimitSoldListInfo(BYTE* pbyData, size_t uDataLen, int nVersion);
+    BOOL    SaveDelayTradeInfo(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
+    BOOL    SaveTimeLimitReturnInfo(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
+    BOOL    SaveTimeLimitSoldListInfo(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
 #endif
 
     BOOL	ApplyAttrib(KItem* pItem);

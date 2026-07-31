@@ -1,5 +1,5 @@
 /************************************************************************/
-/* ���			                                                        */
+/* ���			                                                        */
 /* Copyright : Kingsoft 2005										    */
 /* Author	 : Zhu Jianqiu												*/
 /* History	 :															*/
@@ -30,6 +30,7 @@
 #include "KBookList.h"
 #include "KSkillRecipeList.h"
 #include "KCustomData.h"
+#include "KFellowPetBox.h"
 #include "KAchievement.h"
 #include "KDesignation.h"
 #include "KExteriorBox.h"
@@ -37,6 +38,8 @@
 #include "KMiniAvatar.h"
 #include "KRegressionPlayerData.h"
 #include "KCurrencyList.h"
+#include "KCampActiveStat.h"
+#include "KNewExtPointManager.h"
 #include "KProbability.h"
 
 #ifdef _SERVER
@@ -52,6 +55,14 @@
 
 class IKG_Buffer;
 class S2C_PLAYER_DISPLAY_DATA;
+
+struct KPendent
+{
+    DWORD dwItemIndex;
+    time_t nGenTime;
+};
+
+typedef std::vector<KPendent> KPendentVec;
 
 enum GAME_STATUS
 {
@@ -250,7 +261,8 @@ public:
     char                m_szClientIP[_NAME_LEN];
 	char				m_szAccount[_NAME_LEN];
 	tagExtPointInfo		m_ExtPointInfo;         // ��չ��
-    BOOL                m_bExtPointLock;        // ��չ�������
+    BOOL                m_bExtPointLock;
+    KNewExtPointManager m_NewExtPointManager;        // ��չ�������
     int                 m_nLastExtPointIndex;   // ��һ�β�����չ������
     short               m_nLastExtPointValue;   // ��һ�β�����չ��ֵ
     time_t              m_nEndTimeOfFee;        // �շ��ܽ�ֹʱ��
@@ -324,6 +336,26 @@ public:
     DWORD               m_dwMiniAvatarID;       // currently worn mini-avatar id (0 = none)
     KRegressionPlayerData m_RegressionData;     // returning-player (hui-gui) state
     KCurrencyList       m_CurrencyList;         // v2.5 NEW: capped/periodic currencies
+    KCampActiveStat    m_CampActiveStat;
+    int                 m_nWaistPendentBoxSize;
+    int                 m_nBackPendentBoxSize;
+    int                 m_nFacePendentBoxSize;
+    KPendentVec         m_WaistPendent;
+    KPendentVec         m_BackPendent;
+    KPendentVec         m_FacePendent;
+    DWORD               m_dwWaistItemIndex;
+    DWORD               m_dwBackItemIndex;
+    DWORD               m_dwFaceItemIndex;
+    KFellowPetBox       m_FellowPetBox;
+    DWORD               m_dwSingleDungeonMaxLevel;
+    DWORD               m_dwSingleDungeonScore[128];
+    DWORD               m_dwSingleDungeonCustomData[128];
+    DWORD               m_dwCorpsSystemID;
+    time_t              m_nCorpsChangeTime;
+    time_t              m_nCorpsWeekTime;
+    time_t              m_nCorpsSeasonTime;
+    int                 m_nCorpsLevel[3];
+    int                 m_nCorpsRoleLevel[3];
     DWORD               m_dwApplyExteriorFlag;  // bit0-4 = per-slot applied; bit0x80 = master apply-on
 
     // ������������ID
@@ -338,13 +370,20 @@ public:
     int                 m_nExpPercent;          // ɱ�ֺ��þ���ֵ��ϵ��
     int                 m_nReputationPercent;   // ɱ�ֺ�������ֵ��ϵ��
 #endif
-	
 	int	                m_nExperience;			// ��ɫ����
-	
+	DWORD               m_dwCubPackageNpcID;
 	DWORD				m_dwBankNpcID;          // �����е�Npc
+    char                m_szBankPassword[64];
+    char                m_szBankPasswordAnswer[32];
+    time_t              m_nBankPasswordResetEndTime;
+    BOOL                m_bIsBankPasswordVerified;
+    BOOL                m_bBankPasswordExist;
+    int                 m_nBankPasswordQuestionID;
+    DWORD               m_dwSafeLockMask;
     DWORD               m_dwTongRepertoryNpcID; // �򿪰��ֿ��Npc
 
     KTradingBox*        m_pTradingBox;           
+    DWORD               m_dwCubPackageSize;
     DWORD               m_dwTradingInviteDst;   // ���������Ŀ�����
     DWORD               m_dwTradingInviteSrc;   // �����׵����
     
@@ -516,6 +555,7 @@ public:
     BOOL    OnExtDataLoadFinish();
     BOOL    PartialLoadExtData();
     BOOL    FinishRoleDataLoad();
+    void    SyncSingleDungeonCurrentScore();
     BOOL    LoadExtRoleData(BYTE* pbyData, size_t uDataLen);
     BOOL    LoadSkillRecipeList(BYTE* pbyData, size_t uDataLen);
     BOOL    LoadQuestData(BYTE* pbyData, size_t uDataLen, int nVersion = 0);
@@ -524,8 +564,21 @@ public:
     BOOL    LoadStateInfoV2(BYTE* pbyData, size_t uDataLen);
     BOOL    LoadRoadOpenNode(BYTE* pbyData, size_t uDataLen);
     BOOL    LoadHeroData(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadSingleDungeonData(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadArenaData(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadPendentData(BYTE* pbyData, size_t uDataLen, int nVersion);
+    BOOL    LoadActivityVariables(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadBankPasswordData(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadDropSurpriseData(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadPendentDataV0(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadPendentDataV2(BYTE* pbyData, size_t uDataLen);
+    BOOL    AddPendent(DWORD dwItemID, time_t nGenTime, int nType);
+    BOOL    LoadFellowPetData(BYTE* pbyData, size_t uDataLen, int nVersion);
     BOOL    LoadAccountStateInfo(BYTE* pbyData, size_t uDataLen);
     BOOL    LoadAccountData(BYTE* pbyData, size_t uDataLen);
+    BOOL    SaveActivityVariables(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
+    BOOL    SaveBankPasswordData(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
+    BOOL    SaveDropSurpriseData(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
 
     BOOL    CallLoginScript();
     BOOL    RefreshDailyVariable(int nDays);
@@ -536,6 +589,10 @@ public:
     BOOL    SaveStateInfo(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
     BOOL    SaveRoadOpenNode(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
     BOOL    SaveHeroData(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
+    BOOL    SavePendentData(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
+    BOOL    SaveFellowPetData(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
+    BOOL    SaveSingleDungeonData(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
+    BOOL    SaveArenaData(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
     BOOL    SaveAccountStateInfo(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
     BOOL    SaveAccount(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
     BOOL    SavePosition();
@@ -713,6 +770,8 @@ public:
     DWORD	m_dwTargetTargetBuffCRC;
     // Ŀ���ϴε���������
     DWORD   m_dwTargetDropID;
+    BYTE    m_byDropSurpriseMask[16];
+    WORD    m_wPresentCodeCounters[32][2];
 
     void DoCycleSynchronous();
     void ResetTeamLastSyncParamRecord();
@@ -800,6 +859,8 @@ public:
 // ��չ�����
 public:
 #ifdef _SERVER
+    BOOL AddTAEquipsScore(int nDeltaScore);
+    BOOL GetExtPoint(int nIndex, int& nValue);
     BOOL SetExtPoint(int nIndex, short nChangeValue);
 #endif
 

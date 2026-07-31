@@ -7,7 +7,7 @@
 #include "KMentorDef.h"
 
 #ifdef _SERVER
-BOOL KMentorCache::AddMentorData(DWORD dwMentor, DWORD dwApprentice, const KMentorRecordBase& crMentorInfo)
+BOOL KMentorCache::AddMentorData(DWORD dwMentor, DWORD dwApprentice, const KMentorRecordCache& crMentorInfo)
 {
     BOOL                    bResult  = false;
     uint64_t                uMKey    = MAKE_INT64(dwApprentice, dwMentor);
@@ -35,7 +35,7 @@ Exit0:
     return bResult;
 }
 
-BOOL KMentorCache::UpdateMentorData(DWORD dwMentor, DWORD dwApprentice, const KMentorRecordBase& crMentorInfo)
+BOOL KMentorCache::UpdateMentorData(DWORD dwMentor, DWORD dwApprentice, const KMentorRecordCache& crMentorInfo)
 {
     BOOL                    bResult  = false;
     BOOL                    bRetcode = false;
@@ -110,10 +110,13 @@ void KMentorCache::SyncPlayerMentorData(KPlayer* pPlayer)
 
     for (KCacheMTable::iterator it = ItMLower; it != ItMUpper; ++it)
     {
+        KMentorRecordBase record;
+        record.nMentorValue = it->second.nMentorValue;
+        record.byState = it->second.byState;
         g_PlayerServer.DoSyncMentorData(
             pPlayer->m_nConnIndex,
             LOW_DWORD_IN_UINT64(it->first), HIGH_DWORD_IN_UINT64(it->first),
-            it->second
+            record
         );
     }
 
@@ -122,10 +125,13 @@ void KMentorCache::SyncPlayerMentorData(KPlayer* pPlayer)
 
     for (KCacheATable::iterator it = ItALower; it != ItAUpper; ++it)
     {
+        KMentorRecordBase record;
+        record.nMentorValue = it->second->nMentorValue;
+        record.byState = it->second->byState;
         g_PlayerServer.DoSyncMentorData(
             pPlayer->m_nConnIndex,
             HIGH_DWORD_IN_UINT64(it->first), LOW_DWORD_IN_UINT64(it->first),
-            *it->second
+            record
         );
     }
 
@@ -209,6 +215,30 @@ BOOL KMentorCache::AddMentorValue(DWORD dwMentorID, DWORD dwApprenticeID, int nD
     bResult = g_RelayClient.DoAddMentorValueRequest(dwMentorID, dwApprenticeID, nDeltaValue);
 
     return bResult;
+}
+
+int KMentorCache::PickupTAEquipsScore(DWORD dwMentorID)
+{
+    int nScore = 0;
+    KCacheATable::iterator it = m_CacheATable.lower_bound(MAKE_INT64(dwMentorID, 0));
+    KCacheATable::iterator end = m_CacheATable.lower_bound(MAKE_INT64(dwMentorID + 1, 0));
+
+    for (; it != end; ++it)
+        nScore += (int)it->second->dwTAEquipsScore;
+
+    if (nScore != 0)
+        g_RelayClient.DoPickupTAEquipsScoreRequest(0, dwMentorID);
+
+    return nScore;
+}
+
+BOOL KMentorCache::AddTAEquipsScore(
+    DWORD dwMentorID, DWORD dwApprenticeID, int nDeltaScore
+)
+{
+    return g_RelayClient.DoAddTAEquipsScoreRequest(
+        0, dwMentorID, dwApprenticeID, nDeltaScore
+    );
 }
 
 #endif // _SERVER

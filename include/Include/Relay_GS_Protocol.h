@@ -20,7 +20,7 @@
 #define PQ_PARAM_SYNC_COUNT 8
 #define MAX_ROLE_DATA_PAK_SIZE  (1024 * 32)
 #define MAX_ACCOUNT_DATA_SIZE   (1024 * 256)
-#define MAX_ACCOUNT_DATA_PAK_SIZE (1024 * 32)
+#define MAX_ACCOUNT_DATA_PAK_SIZE (1024 * 256)
 
 // 上行协议定义
 // Target v2.5.2 KS2R IDs are explicit. Missing source routes remain named
@@ -1425,6 +1425,20 @@ struct S2R_ADD_MENTOR_VALUE_REQUEST : INTERNAL_PROTOCOL_HEADER
     DWORD   dwApprenticeID;
     int     nDeltaVlue;
 };
+struct S2R_ADD_TA_EQUIPS_SCORE_REQUEST : INTERNAL_PROTOCOL_HEADER
+{
+    DWORD   dwMentorID;
+    DWORD   dwApprenticeID;
+    int     nDeltaScore;
+    BYTE    byDirectMentor;
+};
+
+struct S2R_PICKUP_TA_EQUIPS_SCORE_REQUEST : INTERNAL_PROTOCOL_HEADER
+{
+    DWORD   dwMentorID;
+    BYTE    byDirectMentor;
+};
+
 // --------------------------------------------------------------------------
 
 // ---------------------- 下行协议结构定义 ---------------------------------------
@@ -2398,6 +2412,35 @@ struct R2S_UPDATE_MENTOR_RECORD : INTERNAL_PROTOCOL_HEADER
     BYTE  byState;
 };
 
+#pragma pack(1)
+struct KDirectMentorSyncInfo
+{
+    DWORD dwMentor;
+    DWORD dwApprentice;
+    DWORD dwTAEquipsScore;
+    BYTE  byState;
+};
+
+struct R2S_SYNC_DIRECT_MENTOR_DATA : INTERNAL_PROTOCOL_HEADER
+{
+    int                    nRecordCount;
+    KDirectMentorSyncInfo Data[0];
+};
+
+struct R2S_DELETE_DIRECT_MENTOR_RECORD : INTERNAL_PROTOCOL_HEADER
+{
+    uint64_t uMKey;
+};
+
+struct R2S_UPDATE_DIRECT_MENTOR_RECORD : INTERNAL_PROTOCOL_HEADER
+{
+    DWORD dwMentor;
+    DWORD dwApprentice;
+    DWORD dwTAEquipsScore;
+    BYTE  byState;
+};
+#pragma pack()
+
 struct R2S_SEEK_MENTOR_YELL : INTERNAL_PROTOCOL_HEADER
 {
     char szRoleName[_NAME_LEN];
@@ -2415,6 +2458,31 @@ struct R2S_SEEK_APPRENTICE_YELL : INTERNAL_PROTOCOL_HEADER
     BYTE byRoleLevel;
     BYTE byRoleType;
 };
+struct S2R_APPLY_SINGLE_DUNGEON_LAST_SCORE : INTERNAL_PROTOCOL_HEADER
+{
+    DWORD dwPlayer;
+};
+
+struct S2R_APPLY_COIN_OPERATING_FLAG : INTERNAL_PROTOCOL_HEADER
+{
+    DWORD dwPlayerID;
+};
+
+struct S2R_SYNC_CORPS_CHANGE_DATA_REQUEST : INTERNAL_PROTOCOL_HEADER
+{
+    DWORD dwPlayerID;
+    time_t nChangeTime;
+    time_t nWeekTime;
+    time_t nSeasonTime;
+};
+
+struct S2R_SYNC_FELLOWSHIP_PLAYER_MINI_AVATAR : INTERNAL_PROTOCOL_HEADER
+{
+    DWORD dwPlayerID;
+    WORD  wMiniAvatarID;
+    WORD  wRoleType;
+};
+
 #pragma pack()
 
 #endif	//_RELAY_GS_PROTOCOL_H

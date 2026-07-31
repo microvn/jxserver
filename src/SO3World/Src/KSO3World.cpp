@@ -260,6 +260,12 @@ BOOL KSO3World::Init(IRecorderFactory* piFactory)
 #endif
 
 #ifdef _SERVER
+    bRetCode = m_TongDiplomacyCache.Init();
+    KGLOG_PROCESS_ERROR(bRetCode);
+
+    bRetCode = m_TongServer.Init();
+    KGLOG_PROCESS_ERROR(bRetCode);
+
     bRetCode = m_TransmissionList.Init();
     KGLOG_PROCESS_ERROR(bRetCode);
     bTransListInitFlag = true;
@@ -480,6 +486,8 @@ void KSO3World::UnInit(void)
         m_nPlayerTalkLogFileDay = 0;
     }
 
+    m_TongServer.UnInit();
+    m_TongDiplomacyCache.UnInit();
     m_RankListServer.UnInit();
     m_StatDataServer.UnInit();
     m_TransmissionList.UnInit();
@@ -549,6 +557,7 @@ void KSO3World::UnInit(void)
     
 #ifdef _SERVER
     m_MentorCache.Clear();
+    m_DirectMentorCache.Clear();
     m_TeamServer.UnInit();
 #endif
 
@@ -1068,7 +1077,7 @@ Exit0:
 	return bResult;
 }
 
-BOOL KSO3World::RemoveNpc(KNpc* pNpc, BOOL bKilled /* = false    Ϊ���ʾ��ɱ��������ʬ��,��Ҫ����Ч��*/)
+BOOL KSO3World::RemoveNpc(KNpc* pNpc, BOOL bKilled /* = false    Ϊ���ʾ��ɱ��������ʬ��,��Ҫ����Ч��*/)
 {
     BOOL bResult  = false;
 	BOOL bRetCode = false;
@@ -1319,7 +1328,7 @@ BOOL KSO3World::DelPlayer(KPlayer* pPlayer)
 	return true;
 }
 
-// ����Ϸ����������һ�������
+// ����Ϸ����������һ�������
 BOOL KSO3World::AddPlayer(KPlayer* pPlayer, KScene* pScene, int nX, int nY, int nZ)
 {
     BOOL bResult  = false;
@@ -1455,7 +1464,7 @@ BOOL KTraversePlayerFunc::operator()(DWORD dwID, KPlayer* pPlayer)
 		{
             pPlayer->SavePosition();
 
-            // ����֮���Ե�RemovePlayer��Ϊ����Save֮ǰ����Trap(����еĻ�),Trap���ܻ��漰���̽�ɫ����
+            // ����֮���Ե�RemovePlayer��Ϊ����Save֮ǰ����Trap(����еĻ�),Trap���ܻ��漰���̽�ɫ����
             g_pSO3World->RemovePlayer(pPlayer);
 
 	        g_RelayClient.SaveRoleData(pPlayer);
@@ -1484,7 +1493,7 @@ BOOL KTraversePlayerFunc::operator()(DWORD dwID, KPlayer* pPlayer)
             BOOL bChargeCondition = (
                 (pPlayer->m_nLevel >= rConstList.nFreeMaxLevel) ||
                 (g_pSO3World->m_nCurrentTime >= pPlayer->m_nCreateTime + rConstList.nFreeDurationTime) ||
-                (pPlayer->m_ExtPointInfo.nExtPoint[0] > 0)  // 0����չ���ʾԤ��ֵ
+                (pPlayer->m_ExtPointInfo.nExtPoint[0] > 0)  // 0����չ���ʾԤ���
             );
 
             if (bChargeCondition)

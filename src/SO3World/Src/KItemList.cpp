@@ -145,9 +145,318 @@ void KItemList::UnInit()
 
 void KItemList::UpdateItemID()
 {
-	// The target refreshes each time-limited map before clearing the change-ID map.
-	// Their loaders are ported in the following 36/37/38 block step.
-	m_ItemChangeIDMap.clear();
+    UpdateDelayTradeItemID();
+    UpdateTimeLimitReturnItemID();
+    UpdateTimeLimitSoldListItemID();
+    m_ItemChangeIDMap.clear();
+}
+
+void KItemList::UpdateDelayTradeItemID()
+{
+    std::map<unsigned long long, KDelayTradeInfo>::iterator it = m_DelayTradeMap.begin();
+    while (it != m_DelayTradeMap.end())
+    {
+        std::map<DWORD, DWORD>::iterator change =
+            m_ItemChangeIDMap.find(it->second.dwItemID);
+        if (change == m_ItemChangeIDMap.end())
+        {
+            std::map<unsigned long long, KDelayTradeInfo>::iterator next = it;
+            ++next;
+            m_DelayTradeMap.erase(it);
+            it = next;
+            continue;
+        }
+        it->second.dwItemID = (DWORD)change->second;
+        g_PlayerServer.DoSyncDelayTradeItem(
+            m_pPlayer->m_nConnIndex, it->first, it->second.dwItemID, (long)it->second.nEndTime
+        );
+        ++it;
+    }
+}
+
+void KItemList::UpdateTimeLimitReturnItemID()
+{
+    std::map<DWORD, KTimeLimitReturnInfo> updated;
+    std::map<DWORD, KTimeLimitReturnInfo>::iterator it = m_TimeLimitReturnMap.begin();
+    for (; it != m_TimeLimitReturnMap.end(); ++it)
+    {
+        std::map<DWORD, DWORD>::iterator change =
+            m_ItemChangeIDMap.find(it->first);
+        if (change != m_ItemChangeIDMap.end())
+            updated[change->second] = it->second;
+    }
+    m_TimeLimitReturnMap.clear();
+    it = updated.begin();
+    for (; it != updated.end(); ++it)
+    {
+        AddTimeLimitReturnItemInfo(
+            it->first, it->second.dwShopTemplateID, it->second.nShopItemIndex, (long)it->second.nEndTime
+        );
+    }
+}
+
+void KItemList::UpdateTimeLimitSoldListItemID()
+{
+    std::map<DWORD, long> updated;
+    std::map<DWORD, long>::iterator it = m_TimeLimitSoldListInfoMap.begin();
+    for (; it != m_TimeLimitSoldListInfoMap.end(); ++it)
+    {
+        std::map<DWORD, DWORD>::iterator change =
+            m_ItemChangeIDMap.find(it->first);
+        if (change != m_ItemChangeIDMap.end())
+            updated[change->second] = it->second;
+    }
+    m_TimeLimitSoldListInfoMap.clear();
+    it = updated.begin();
+    for (; it != updated.end(); ++it)
+        AddTimeLimitSoldListInfo(it->first, it->second);
+}
+
+BOOL KItemList::AddTimeLimitReturnItemInfo(DWORD dwItemID, DWORD dwShopTemplateID, int nShopItemIndex, long nEndTime)
+{
+    KTimeLimitReturnInfo info;
+    info.dwShopTemplateID = dwShopTemplateID;
+    info.nShopItemIndex = nShopItemIndex;
+    info.nEndTime = nEndTime;
+    m_TimeLimitReturnMap[dwItemID] = info;
+    return g_PlayerServer.DoSyncTimeLimitReturnItem(
+        m_pPlayer->m_nConnIndex,  dwItemID, dwShopTemplateID, nShopItemIndex, nEndTime
+    );
+}
+
+BOOL KItemList::AddTimeLimitSoldListInfo(DWORD dwItemID, long nValue)
+{
+    m_TimeLimitSoldListInfoMap[dwItemID] = nValue;
+    return g_PlayerServer.DoSyncTimeLimitSoldListInfo(
+        m_pPlayer->m_nConnIndex, dwItemID, nValue
+    );
+}
+
+BOOL KItemList::SaveDelayTradeInfo(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize)
+{
+    size_t uLeftSize = uBufferSize;
+    BYTE* pbyOffset = pbyBuffer;
+    WORD wCount = 0;
+    std::map<unsigned long long, KDelayTradeInfo>::const_iterator it;
+    BYTE* pbyCount = pbyOffset;
+
+    KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD));
+    pbyOffset += sizeof(WORD);
+    uLeftSize -= sizeof(WORD);
+    for (it = m_DelayTradeMap.begin(); it != m_DelayTradeMap.end(); ++it)
+    {
+        std::map<DWORD, DWORD>::const_iterator change =
+            m_ItemChangeIDMap.find(it->second.dwItemID);
+        if (change == m_ItemChangeIDMap.end() || it->second.nEndTime <= g_pSO3World->m_nCurrentTime)
+            continue;
+        KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(unsigned long long) + sizeof(DWORD) * 2);
+        memcpy(pbyOffset, &it->first, sizeof(unsigned long long)); pbyOffset += sizeof(unsigned long long);
+        DWORD dwItemID = (DWORD)change->second;
+        memcpy(pbyOffset, &dwItemID, sizeof(DWORD)); pbyOffset += sizeof(DWORD);
+        DWORD dwEndTime = (DWORD)it->second.nEndTime;
+        memcpy(pbyOffset, &dwEndTime, sizeof(DWORD)); pbyOffset += sizeof(DWORD);
+        uLeftSize -= sizeof(unsigned long long) + sizeof(DWORD) * 2;
+        ++wCount;
+    }
+    memcpy(pbyCount, &wCount, sizeof(wCount));
+    *puUsedSize = uBufferSize - uLeftSize;
+    return true;
+Exit0:
+    return false;
+}
+
+BOOL KItemList::SaveTimeLimitReturnInfo(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize)
+{
+    size_t uLeftSize = uBufferSize;
+    BYTE* pbyOffset = pbyBuffer;
+    WORD wCount = 0;
+    std::map<DWORD, KTimeLimitReturnInfo>::const_iterator it;
+    BYTE* pbyCount = pbyOffset;
+
+    KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD));
+    pbyOffset += sizeof(WORD);
+    uLeftSize -= sizeof(WORD);
+    for (it = m_TimeLimitReturnMap.begin(); it != m_TimeLimitReturnMap.end(); ++it)
+    {
+        std::map<DWORD, DWORD>::const_iterator change =
+            m_ItemChangeIDMap.find(it->first);
+        if (change == m_ItemChangeIDMap.end() || it->second.nEndTime <= g_pSO3World->m_nCurrentTime)
+            continue;
+        KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(DWORD) * 4);
+        DWORD dwItemID = (DWORD)change->second;
+        DWORD dwShopItemIndex = (DWORD)it->second.nShopItemIndex;
+        DWORD dwEndTime = (DWORD)it->second.nEndTime;
+        memcpy(pbyOffset, &dwItemID, sizeof(DWORD)); pbyOffset += sizeof(DWORD);
+        memcpy(pbyOffset, &it->second.dwShopTemplateID, sizeof(DWORD)); pbyOffset += sizeof(DWORD);
+        memcpy(pbyOffset, &dwShopItemIndex, sizeof(DWORD)); pbyOffset += sizeof(DWORD);
+        memcpy(pbyOffset, &dwEndTime, sizeof(DWORD)); pbyOffset += sizeof(DWORD);
+        uLeftSize -= sizeof(DWORD) * 4;
+        ++wCount;
+    }
+    memcpy(pbyCount, &wCount, sizeof(wCount));
+    *puUsedSize = uBufferSize - uLeftSize;
+    return true;
+Exit0:
+    return false;
+}
+
+BOOL KItemList::SaveTimeLimitSoldListInfo(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize)
+{
+    size_t uLeftSize = uBufferSize;
+    BYTE* pbyOffset = pbyBuffer;
+    WORD wCount = 0;
+    std::map<DWORD, long>::const_iterator it;
+    BYTE* pbyCount = pbyOffset;
+
+    KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD));
+    pbyOffset += sizeof(WORD);
+    uLeftSize -= sizeof(WORD);
+    for (it = m_TimeLimitSoldListInfoMap.begin(); it != m_TimeLimitSoldListInfoMap.end(); ++it)
+    {
+        std::map<DWORD, DWORD>::const_iterator change =
+            m_ItemChangeIDMap.find(it->first);
+        if (change == m_ItemChangeIDMap.end())
+            continue;
+        KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(DWORD) * 2);
+        DWORD dwItemID = (DWORD)change->second;
+        memcpy(pbyOffset, &dwItemID, sizeof(DWORD)); pbyOffset += sizeof(DWORD);
+        memcpy(pbyOffset, &it->second, sizeof(DWORD)); pbyOffset += sizeof(DWORD);
+        uLeftSize -= sizeof(DWORD) * 2;
+        ++wCount;
+    }
+    memcpy(pbyCount, &wCount, sizeof(wCount));
+    *puUsedSize = uBufferSize - uLeftSize;
+    return true;
+Exit0:
+    return false;
+}
+
+BOOL KItemList::LoadDelayTradeInfo(BYTE* pbyData, size_t uDataLen, int nVersion)
+{
+    BOOL bResult = false;
+    size_t uLeftSize = uDataLen;
+    BYTE* pbyOffset = pbyData;
+    WORD wCount = 0;
+
+    KGLOG_PROCESS_ERROR(nVersion == 0);
+    KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD));
+    memcpy(&wCount, pbyOffset, sizeof(wCount));
+    pbyOffset += sizeof(wCount);
+    uLeftSize -= sizeof(wCount);
+    for (WORD i = 0; i < wCount; ++i)
+    {
+        unsigned long long qwKey = 0;
+        KDelayTradeInfo info;
+        KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(qwKey) + sizeof(DWORD) * 2);
+        memcpy(&qwKey, pbyOffset, sizeof(qwKey)); pbyOffset += sizeof(qwKey);
+        memcpy(&info.dwItemID, pbyOffset, sizeof(info.dwItemID)); pbyOffset += sizeof(info.dwItemID);
+        memcpy(&info.nEndTime, pbyOffset, sizeof(DWORD)); pbyOffset += sizeof(DWORD);
+        uLeftSize -= sizeof(qwKey) + sizeof(DWORD) * 2;
+        if (info.nEndTime > g_pSO3World->m_nCurrentTime)
+            m_DelayTradeMap[qwKey] = info;
+    }
+    KGLOG_PROCESS_ERROR(uLeftSize == 0);
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
+BOOL KItemList::LoadTimeLimitReturnInfo(BYTE* pbyData, size_t uDataLen, int nVersion)
+{
+    BOOL bResult = false;
+    size_t uLeftSize = uDataLen;
+    BYTE* pbyOffset = pbyData;
+    WORD wCount = 0;
+
+    KGLOG_PROCESS_ERROR(nVersion == 0);
+    KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD));
+    memcpy(&wCount, pbyOffset, sizeof(wCount));
+    pbyOffset += sizeof(wCount);
+    uLeftSize -= sizeof(wCount);
+    for (WORD i = 0; i < wCount; ++i)
+    {
+        DWORD dwItemID = 0;
+        DWORD dwShopTemplateID = 0;
+        DWORD dwShopItemIndex = 0;
+        DWORD dwEndTime = 0;
+        KTimeLimitReturnInfo info;
+        KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(DWORD) * 4);
+        memcpy(&dwItemID, pbyOffset, sizeof(DWORD)); pbyOffset += sizeof(DWORD);
+        memcpy(&dwShopTemplateID, pbyOffset, sizeof(DWORD)); pbyOffset += sizeof(DWORD);
+        memcpy(&dwShopItemIndex, pbyOffset, sizeof(DWORD)); pbyOffset += sizeof(DWORD);
+        memcpy(&dwEndTime, pbyOffset, sizeof(DWORD)); pbyOffset += sizeof(DWORD);
+        uLeftSize -= sizeof(DWORD) * 4;
+        if (dwEndTime > (DWORD)g_pSO3World->m_nCurrentTime)
+        {
+            info.dwShopTemplateID = dwShopTemplateID;
+            info.nShopItemIndex = (int)dwShopItemIndex;
+            info.nEndTime = (time_t)dwEndTime;
+            m_TimeLimitReturnMap[dwItemID] = info;
+        }
+    }
+    KGLOG_PROCESS_ERROR(uLeftSize == 0);
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
+BOOL KItemList::LoadTimeLimitSoldListInfo(BYTE* pbyData, size_t uDataLen, int nVersion)
+{
+    BOOL bResult = false;
+    size_t uLeftSize = uDataLen;
+    BYTE* pbyOffset = pbyData;
+    WORD wCount = 0;
+
+    KGLOG_PROCESS_ERROR(nVersion == 0);
+    KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD));
+    memcpy(&wCount, pbyOffset, sizeof(wCount));
+    pbyOffset += sizeof(wCount);
+    uLeftSize -= sizeof(wCount);
+    for (WORD i = 0; i < wCount; ++i)
+    {
+        DWORD dwItemID = 0;
+        long nValue = 0;
+        KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(DWORD) * 2);
+        memcpy(&dwItemID, pbyOffset, sizeof(DWORD)); pbyOffset += sizeof(DWORD);
+        memcpy(&nValue, pbyOffset, sizeof(DWORD)); pbyOffset += sizeof(DWORD);
+        uLeftSize -= sizeof(DWORD) * 2;
+        m_TimeLimitSoldListInfoMap[dwItemID] = nValue;
+    }
+    KGLOG_PROCESS_ERROR(uLeftSize == 0);
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
+BOOL KItemList::AdjustCubPackageSize()
+{
+    BOOL bResult = false;
+    DWORD dwSize = 0;
+    DWORD dwCurrentSize = 0;
+
+    KGLOG_PROCESS_ERROR(m_pPlayer);
+    dwSize = m_pPlayer->m_dwCubPackageSize;
+    KGLOG_PROCESS_ERROR(g_pSO3World->m_Settings.m_ConstList.nCubPackageRoomRange[0] <=
+                        g_pSO3World->m_Settings.m_ConstList.nCubPackageRoomRange[1]);
+    if (dwSize < (DWORD)g_pSO3World->m_Settings.m_ConstList.nCubPackageRoomRange[0])
+        dwSize = g_pSO3World->m_Settings.m_ConstList.nCubPackageRoomRange[0];
+    if (dwSize > (DWORD)g_pSO3World->m_Settings.m_ConstList.nCubPackageRoomRange[1])
+        dwSize = g_pSO3World->m_Settings.m_ConstList.nCubPackageRoomRange[1];
+
+    dwCurrentSize = m_Box[ibCubPackage].m_dwSize;
+    if (dwCurrentSize != dwSize)
+    {
+        if (dwSize < dwCurrentSize)
+        {
+            for (DWORD dwX = dwSize; dwX < dwCurrentSize; ++dwX)
+                KGLOG_PROCESS_ERROR(GetItem(ibCubPackage, dwX) == NULL);
+        }
+        m_Box[ibCubPackage].m_dwSize = dwSize;
+    }
+    m_pPlayer->m_dwCubPackageSize = dwSize;
+    bResult = true;
+Exit0:
+    return bResult;
 }
 
 #ifdef _SERVER
@@ -2292,8 +2601,31 @@ Exit0:
 #ifdef _SERVER
 BOOL KItemList::Load(BYTE* pbyData, size_t uDataLen)
 {
-    return Load(pbyData, uDataLen, 0);
+    return LoadItemList(pbyData, uDataLen, 0);
 }
+
+BOOL KItemList::LoadItemList(BYTE* pbyData, size_t uDataLen, int nVersion)
+{
+    switch (nVersion)
+    {
+    case 0: return LoadItemList_V0(pbyData, uDataLen);
+    case 1: return LoadItemList_V1(pbyData, uDataLen);
+    case 2: return LoadItemList_V2(pbyData, uDataLen);
+    case 3: return LoadItemList_V3(pbyData, uDataLen);
+    case 4: return LoadItemList_V4(pbyData, uDataLen);
+    case 5: return LoadItemList_V5(pbyData, uDataLen);
+    case 6: return LoadItemList_V6(pbyData, uDataLen);
+    default: return false;
+    }
+}
+
+BOOL KItemList::LoadItemList_V0(BYTE* pbyData, size_t uDataLen) { return Load(pbyData, uDataLen, 0); }
+BOOL KItemList::LoadItemList_V1(BYTE* pbyData, size_t uDataLen) { return Load(pbyData, uDataLen, 1); }
+BOOL KItemList::LoadItemList_V2(BYTE* pbyData, size_t uDataLen) { return Load(pbyData, uDataLen, 2); }
+BOOL KItemList::LoadItemList_V3(BYTE* pbyData, size_t uDataLen) { return Load(pbyData, uDataLen, 3); }
+BOOL KItemList::LoadItemList_V4(BYTE* pbyData, size_t uDataLen) { return Load(pbyData, uDataLen, 4); }
+BOOL KItemList::LoadItemList_V5(BYTE* pbyData, size_t uDataLen) { return Load(pbyData, uDataLen, 5); }
+BOOL KItemList::LoadItemList_V6(BYTE* pbyData, size_t uDataLen) { return Load(pbyData, uDataLen, 6); }
 
 BOOL KItemList::Load(BYTE* pbyData, size_t uDataLen, int nVersion)
 {
@@ -2304,7 +2636,9 @@ BOOL KItemList::Load(BYTE* pbyData, size_t uDataLen, int nVersion)
     int         nItemCount  = 0;
     KItem*      pItem       = NULL;
     BOOL        bVersion6  = (nVersion == 6);
-    BOOL        bV6FiveByteRecord = false;
+    BOOL        bVersion5  = (nVersion == 5);
+    BOOL        bVersion4  = (nVersion == 4);
+    BOOL        bVersion3  = (nVersion == 3);
     
     KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(DWORD));
     m_nMoney = *(int*)pbyOffset;
@@ -2313,71 +2647,57 @@ BOOL KItemList::Load(BYTE* pbyData, size_t uDataLen, int nVersion)
     
     g_PlayerServer.DoSyncMoney(m_pPlayer->m_nConnIndex, m_nMoney, false);
 
-    if (bVersion6)
+    if (bVersion6 || bVersion5)
     {
-        /* Target V6 keeps a reserved DWORD between money and bank count. */
+        /* V5/V6 prefix: money, total equip score, bank count, equip IDs,
+         * FEA flags, then the item count. */
         KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(DWORD));
         uLeftSize -= sizeof(DWORD);
         pbyOffset += sizeof(DWORD);
-        /* Then bank count, three state bytes, and item count follow. */
         KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD));
         m_nEnabledBankPackageCount = *(WORD*)pbyOffset;
         uLeftSize -= sizeof(WORD);
         pbyOffset += sizeof(WORD);
         g_PlayerServer.DoSyncEnableBankPackage(m_pPlayer->m_nConnIndex, m_nEnabledBankPackageCount);
-        KGLOG_PROCESS_ERROR(uLeftSize >= 3);
-        uLeftSize -= 3;
-        pbyOffset += 3;
+        KGLOG_PROCESS_ERROR(uLeftSize >= 6);
+        for (int nIndex = 0; nIndex < 3; ++nIndex)
+        {
+            m_nEquipIDArray[nIndex] = pbyOffset[nIndex];
+            m_bFEAActiveFlag[nIndex] = pbyOffset[nIndex + 3] != 0;
+        }
+        uLeftSize -= 6;
+        pbyOffset += 6;
         KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD));
         nItemCount = *(WORD*)pbyOffset;
         uLeftSize -= sizeof(WORD);
         pbyOffset += sizeof(WORD);
 
-        /* Some v6 role blobs contain a pad byte before the count and keep a
-         * WORD item id ahead of each normal three-byte item header. Accept
-         * that layout only when a complete dry parse consumes the payload. */
-        if (nItemCount == 0 && uLeftSize > sizeof(WORD))
+    }
+    else if (bVersion4 || bVersion3)
+    {
+        KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD));
+        m_nEnabledBankPackageCount = *(WORD*)pbyOffset;
+        uLeftSize -= sizeof(WORD);
+        pbyOffset += sizeof(WORD);
+        g_PlayerServer.DoSyncEnableBankPackage(m_pPlayer->m_nConnIndex, m_nEnabledBankPackageCount);
+
+        KGLOG_PROCESS_ERROR(uLeftSize >= 3);
+        for (int nIndex = 0; nIndex < 3; ++nIndex)
+            m_nEquipIDArray[nIndex] = pbyOffset[nIndex];
+        uLeftSize -= 3;
+        pbyOffset += 3;
+
+        if (bVersion4)
         {
-            BYTE*  pbyProbe = pbyOffset + 1;
-            size_t uProbeLeft = uLeftSize - 1;
-            WORD   wProbeCount = 0;
-            BOOL   bProbeValid = true;
-
-            KGLOG_PROCESS_ERROR(uProbeLeft >= sizeof(WORD));
-            wProbeCount = *(WORD*)pbyProbe;
-            uProbeLeft -= sizeof(WORD);
-            pbyProbe += sizeof(WORD);
-
-            for (WORD nProbe = 0; nProbe < wProbeCount; ++nProbe)
-            {
-                BYTE byProbeLen = 0;
-                if (uProbeLeft < sizeof(WORD) + 3)
-                {
-                    bProbeValid = false;
-                    break;
-                }
-                uProbeLeft -= sizeof(WORD);
-                pbyProbe += sizeof(WORD);
-                byProbeLen = pbyProbe[2];
-                uProbeLeft -= 3;
-                pbyProbe += 3;
-                if (uProbeLeft < byProbeLen)
-                {
-                    bProbeValid = false;
-                    break;
-                }
-                uProbeLeft -= byProbeLen;
-                pbyProbe += byProbeLen;
-            }
-
-            if (bProbeValid && uProbeLeft == 0)
-            {
-                uLeftSize -= 1 + sizeof(WORD);
-                pbyOffset += 1 + sizeof(WORD);
-                nItemCount = wProbeCount;
-                bV6FiveByteRecord = true;
-            }
+            KGLOG_PROCESS_ERROR(uLeftSize >= 3);
+            uLeftSize -= 3;
+            pbyOffset += 3;
         }
+
+        KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD));
+        nItemCount = *(WORD*)pbyOffset;
+        uLeftSize -= sizeof(WORD);
+        pbyOffset += sizeof(WORD);
     }
     else
     {
@@ -2398,15 +2718,20 @@ BOOL KItemList::Load(BYTE* pbyData, size_t uDataLen, int nVersion)
         DWORD               dwBoxIndex          = 0;
         DWORD               dwX                 = 0;
         BYTE                byDataLen           = 0;
+        WORD                wOldItemID         = 0;
         BYTE*               pbyItemData         = NULL;
         KENCHANT*           pEnchant            = NULL;
         time_t              nTotalLogoutTime    = 0;
 
-        if (bVersion6)
+        if (bVersion6 || bVersion5)
         {
-            KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD));
-            uLeftSize -= sizeof(WORD);
-            pbyOffset += sizeof(WORD);
+            if (bVersion6)
+            {
+                KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD));
+                wOldItemID = *(WORD*)pbyOffset;
+                uLeftSize -= sizeof(WORD);
+                pbyOffset += sizeof(WORD);
+            }
             KGLOG_PROCESS_ERROR(uLeftSize >= 3);
             dwBoxIndex = pbyOffset[0];
             dwX = pbyOffset[1];
@@ -2496,6 +2821,12 @@ BOOL KItemList::Load(BYTE* pbyData, size_t uDataLen, int nVersion)
             }
         }
 
+        if (dwBoxIndex == ibSoldList)
+            m_nNextSoldListPos = (m_nNextSoldListPos + 1) % MAX_SOLDLIST_PACKAGE_SIZE;
+
+        if (bVersion6)
+            m_ItemChangeIDMap[wOldItemID] = pItem->m_dwID;
+
         g_PlayerServer.DoSyncItemData(m_pPlayer->m_nConnIndex, m_pPlayer->m_dwID, pItem, dwBoxIndex, dwX);
         pItem = NULL;
     }
@@ -2525,16 +2856,35 @@ BOOL KItemList::Save(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize)
     size_t  uLeftSize                   = uBufferSize;
     WORD*   pwItemCount                 = NULL;
     int     nItemCount                  = 0;
+    DWORD   dwNextItemID              = (DWORD)m_ItemChangeIDMap.size() + 1;
 
     KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(int));
     *(int*)pbyOffset = m_nMoney;
     uLeftSize -= sizeof(int);
     pbyOffset += sizeof(int);
 
+    KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(DWORD));
+    *(DWORD*)pbyOffset = (DWORD)m_nTotalEquipScore;
+    uLeftSize -= sizeof(DWORD);
+    pbyOffset += sizeof(DWORD);
+
     KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD));
     *(WORD*)pbyOffset = (WORD)m_nEnabledBankPackageCount;
     uLeftSize -= sizeof(WORD);
     pbyOffset += sizeof(WORD);
+
+    KGLOG_PROCESS_ERROR(uLeftSize >= 3);
+    pbyOffset[0] = (BYTE)m_nEquipIDArray[0];
+    pbyOffset[1] = (BYTE)m_nEquipIDArray[1];
+    pbyOffset[2] = (BYTE)m_nEquipIDArray[2];
+    uLeftSize -= 3;
+    pbyOffset += 3;
+
+    KGLOG_PROCESS_ERROR(uLeftSize >= 3);
+    for (int nIndex = 0; nIndex < 3; ++nIndex)
+        pbyOffset[nIndex] = (BYTE)m_bFEAActiveFlag[nIndex];
+    uLeftSize -= 3;
+    pbyOffset += 3;
 
     KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD));
     pwItemCount = (WORD*)pbyOffset;
@@ -2543,15 +2893,9 @@ BOOL KItemList::Save(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize)
 
     for (int nBoxIndex = 0; nBoxIndex < ibTotal; nBoxIndex++)
     {
-        if (nBoxIndex == ibSoldList)
-        {
-            continue;
-        }
-
         for (int nX = 0; nX < (int)m_Box[nBoxIndex].m_dwSize; nX++)
         {
             KItem*              pItem               = m_Box[nBoxIndex].GetItem(nX);
-            KITEM_DB_HEADER*    pItemDataHeader     = NULL;
             size_t              uItemDataSize       = 0;
 
             if (pItem == NULL)
@@ -2559,23 +2903,26 @@ BOOL KItemList::Save(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize)
                 continue;
             }
 
-            KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(KITEM_DB_HEADER));
-            pItemDataHeader = (KITEM_DB_HEADER*)pbyOffset;
-            uLeftSize -= sizeof(KITEM_DB_HEADER);
-            pbyOffset += sizeof(KITEM_DB_HEADER);
+            KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD) + 3);
+            *(WORD*)pbyOffset = (WORD)dwNextItemID;
+            pbyOffset += sizeof(WORD);
+            pbyOffset[0] = (BYTE)nBoxIndex;
+            pbyOffset[1] = (BYTE)nX;
+            pbyOffset += 3;
+            uLeftSize -= sizeof(WORD) + 3;
 
-            bRetCode = pItem->GetBinaryData(&uItemDataSize, pItemDataHeader->byData, uLeftSize);
+            bRetCode = pItem->GetBinaryData(&uItemDataSize, pbyOffset, uLeftSize);
             KGLOG_PROCESS_ERROR(bRetCode);
 
             assert(uItemDataSize < UCHAR_MAX);
 
-            pItemDataHeader->byBox      = (BYTE)nBoxIndex;
-            pItemDataHeader->byPos      = (BYTE)nX;
-            pItemDataHeader->byDataLen  = (BYTE)uItemDataSize;
+            *(pbyOffset - 1) = (BYTE)uItemDataSize;
 
             uLeftSize -= uItemDataSize;
             pbyOffset += uItemDataSize;
 
+            m_ItemChangeIDMap[pItem->m_dwID] = dwNextItemID;
+            dwNextItemID++;
             nItemCount++;
         }
     }

@@ -69,6 +69,14 @@ struct KMentorRecordBase
     BYTE byState;
 };
 
+// Server-side cache record used by v246 for mentor TA-equipment scores.
+struct KMentorRecordCache
+{
+    int   nMentorValue;
+    DWORD dwTAEquipsScore;
+    BYTE  byState;
+};
+
 #pragma pack(1)
 // 用于GC向GS做初始同步的
 struct KMentorSyncInfo
@@ -81,5 +89,4 @@ struct KMentorSyncInfo
 #pragma pack()
 
 #endif // _KMENTOR_DEF_H_
-
 

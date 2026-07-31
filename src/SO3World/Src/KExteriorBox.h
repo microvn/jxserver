@@ -70,6 +70,7 @@ public:
     KEXTERIOR_SET_INFO* GetExteriorSet(size_t uSetIdx);         // NULL if idx out of range
     size_t              GetExteriorSetCount() const { return m_ExteriorSet.size(); }
     BOOL                AddExteriorSet();                        // push one empty set (no max)
+    BOOL                AddEmptyExteriorSet() { return AddExteriorSet(); }
     BOOL                SetExterior(size_t uSetIdx, int nSlot, DWORD dwID);
     BOOL                SetCurrentSetID(size_t uSetIdx);
     DWORD               GetCurrentSetID() const { return m_uCurrentSetID; }
