@@ -263,6 +263,9 @@ BOOL KSO3World::Init(IRecorderFactory* piFactory)
     bRetCode = m_TongDiplomacyCache.Init();
     KGLOG_PROCESS_ERROR(bRetCode);
 
+    bRetCode = m_TongServer.Init();
+    KGLOG_PROCESS_ERROR(bRetCode);
+
     bRetCode = m_TransmissionList.Init();
     KGLOG_PROCESS_ERROR(bRetCode);
     bTransListInitFlag = true;
@@ -483,6 +486,7 @@ void KSO3World::UnInit(void)
         m_nPlayerTalkLogFileDay = 0;
     }
 
+    m_TongServer.UnInit();
     m_TongDiplomacyCache.UnInit();
     m_RankListServer.UnInit();
     m_StatDataServer.UnInit();

@@ -28,9 +28,9 @@ def test_direct_mentor_registration_and_frontier_pickup():
     assert "BOOL KPlayer::AddTAEquipsScore(int nDeltaScore)" in player
 
 
-def test_target_world_lifecycle_excludes_unresolved_tong_server():
+def test_target_world_lifecycle_initializes_required_caches():
     world = (SRC / "KSO3World.cpp").read_text(errors="ignore")
     assert "m_TongDiplomacyCache.Init()" in world
     assert "m_TongDiplomacyCache.UnInit()" in world
-    assert "m_TongServer.Init()" not in world
-    assert "m_TongServer.UnInit()" not in world
+    assert "m_TongServer.Init()" in world
+    assert "m_TongServer.UnInit()" in world
