@@ -2100,7 +2100,7 @@ BOOL KPlayer::LoadPendentData(BYTE* pbyData, size_t uDataLen, int nVersion)
     BOOL bResult = false;
     if (nVersion == 0) bResult = LoadPendentDataV0(pbyData, uDataLen);
     else if (nVersion == 1 || nVersion == 2) bResult = LoadPendentDataV2(pbyData, uDataLen);
-    else KGLogPrintf(KGLOG_ERROR, "Unsupported pendent data version %d", nVersion);
+    else KGLogPrintf(KGLOG_WARNING, "Unsupported pendent data version %d", nVersion);
     KGLOG_PROCESS_ERROR(bResult);
     {
         long nDeltaTime = (long)(g_pSO3World->m_nCurrentTime - m_nLastSaveTime);
@@ -2149,7 +2149,7 @@ BOOL KPlayer::LoadPendentDataV0(BYTE* pbyData, size_t uDataLen)
         KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(BYTE)); \
         byDataLen = *(BYTE*)pbyOffset; pbyOffset += sizeof(BYTE); uLeftSize -= sizeof(BYTE); \
         KGLOG_PROCESS_ERROR((size_t)byDataLen <= uLeftSize); \
-        CustomData.Clear(); \
+        memset(&CustomData, 0, sizeof(CustomData)); \
         KGLOG_PROCESS_ERROR(CustomData.Load(pbyOffset, byDataLen)); \
         pbyOffset += byDataLen; uLeftSize -= byDataLen; \
         for (int i = 0; i < 256; ++i) { \
@@ -3057,7 +3057,7 @@ BOOL KPlayer::LoadExtRoleData(BYTE* pbyData, size_t uDataLen)
             break;
 
         case rbtRegressionData:
-            bRetCode = m_RegressionData.LoadPlayerData(pbyOffset, pBlock->dwLen);
+            bRetCode = m_RegressionData.Load(pbyOffset, pBlock->dwLen);
             KGLOG_PROCESS_ERROR(bRetCode);
             break;
 

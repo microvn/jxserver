@@ -27,6 +27,8 @@ void KCampActiveStat::UnInit()
 BOOL KCampActiveStat::Load(BYTE* pbyData, size_t uDataLen)
 {
     KCAMP_ACTIVE_STAT_DB* pData = NULL;
+    time_t nWeekSeconds = 0;
+    time_t nWeekRemainder = 0;
 
     KG_PROCESS_ERROR(pbyData != NULL);
     KG_PROCESS_ERROR(uDataLen == sizeof(KCAMP_ACTIVE_STAT_DB));
@@ -48,8 +50,8 @@ BOOL KCampActiveStat::Load(BYTE* pbyData, size_t uDataLen)
         m_bThisWeekActivity = false;
     }
 
-    const time_t nWeekSeconds = 7 * 24 * 60 * 60;
-    const time_t nWeekRemainder =
+    nWeekSeconds = 7 * 24 * 60 * 60;
+    nWeekRemainder =
         (g_pSO3World->m_nCurrentTime - timezone - 0x54600) % nWeekSeconds;
     m_nResetTime = g_pSO3World->m_nCurrentTime - nWeekRemainder + nWeekSeconds;
     return true;
