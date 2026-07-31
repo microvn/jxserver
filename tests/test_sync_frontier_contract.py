@@ -123,3 +123,15 @@ class SyncFrontierContractTest(unittest.TestCase):
         self.assertLess(ready.index("m_bExtDataLoadFinish"), ready.index("gsWaitForSyncClientData"))
         self.assertLess(ready.index("gsWaitForSyncClientData"), ready.index("OnClientReady"))
         self.assertIn("Detach(nConnIndex)", ready)
+
+    def test_partial_load_commits_state_before_section_request(self):
+        player = (ROOT / "src/SO3World/Src/KPlayer.cpp").read_bytes().decode("gbk", errors="ignore")
+        partial = player.split("BOOL KPlayer::PartialLoadExtData()", 1)[1].split(
+            "BOOL KPlayer::SaveActivityVariables", 1
+        )[0]
+
+        # Regression: target advances the role-data cursor before asking the
+        # client for the next section; the request must not observe stale state.
+        state_commit = partial.index("if (m_uExtDataOffset >= m_uExtDataSize)")
+        section_request = partial.index("DoSyncRoleDataSectionCheckRequest")
+        self.assertLess(state_commit, section_request)

@@ -2738,11 +2738,6 @@ BOOL KPlayer::PartialLoadExtData()
     bRetCode = LoadExtRoleData(m_pbyExtDataBuffer, m_uExtDataSize);
     KGLOG_PROCESS_ERROR(bRetCode);
 
-    bRetCode = g_PlayerServer.DoSyncRoleDataSectionCheckRequest(
-        m_nConnIndex, m_byCurrentExtDataSectionType
-    );
-    KGLOG_PROCESS_ERROR(bRetCode);
-
     if (m_uExtDataOffset >= m_uExtDataSize)
     {
         delete[] m_pbyExtDataBuffer;
@@ -2751,6 +2746,11 @@ BOOL KPlayer::PartialLoadExtData()
         m_uExtDataOffset = 0;
         m_bExtDataLoadFinish = true;
     }
+
+    bRetCode = g_PlayerServer.DoSyncRoleDataSectionCheckRequest(
+        m_nConnIndex, m_byCurrentExtDataSectionType
+    );
+    KGLOG_PROCESS_ERROR(bRetCode);
 
     KGLogPrintf(
         KGLOG_INFO,
