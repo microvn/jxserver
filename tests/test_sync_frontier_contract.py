@@ -32,6 +32,18 @@ class SyncFrontierContractTest(unittest.TestCase):
         self.assertIn("DOWNWARDS_PROTOCOL_HEADER", packet)
         self.assertEqual(packet.count("DWORD"), 1)
 
+    def test_handshake_request_is_target_packed_size(self):
+        protocol = (ROOT / "include/Include/GS_Client_Protocol.h").read_bytes().decode(
+            "gbk", errors="ignore"
+        )
+        start = protocol.index("struct C2S_HANDSHAKE_REQUEST")
+        end = protocol.index("struct C2S_CLIENT_CONFIRM_READY", start)
+        block = protocol[start:end]
+        self.assertIn("#pragma pack(1)", protocol[max(0, start - 40):start])
+        self.assertIn("#pragma pack()", protocol[end:])
+        self.assertIn("DWORD   dwRoleID", block)
+        self.assertIn("GUID\tGuid", block)
+
     def test_all_target_frontier_routes_precede_role_data_over(self):
         player = (ROOT / "src/SO3World/Src/KPlayer.cpp").read_bytes().decode("gbk", errors="ignore")
         finish = player.split("BOOL KPlayer::FinishRoleDataLoad()", 1)[1].split(

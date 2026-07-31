@@ -2807,11 +2807,13 @@ struct S2C_CHARACTER_THREAT_RANKLIST : UNDEFINED_SIZE_DOWNWARDS_HEADER
 /************************************************************************/
 //Client 2 GS Struct Begin
 
+#pragma pack(1)
 struct C2S_HANDSHAKE_REQUEST : UPWARDS_PROTOCOL_HEADER
 {
     DWORD   dwRoleID; 
     GUID	Guid;
 };
+#pragma pack()
 
 // Header-only acknowledgement sent after role data and initial scene sync.
 struct C2S_CLIENT_CONFIRM_READY : UPWARDS_PROTOCOL_HEADER
