@@ -1433,12 +1433,22 @@ BOOL KTraversePlayerFunc::operator()(DWORD dwID, KPlayer* pPlayer)
 
 	case gsWaitForPermit:
 	case gsWaitForRoleData:
-	case gsWaitForSyncClientData:
-		// �ȴ���½����ʱ
 		if (pPlayer->m_nTimer++ >= LOGIN_TIMEOUT)
 		{
             KGLogPrintf(
                 KGLOG_INFO, "Relay permission or query role data,shutdown(%s, %d)\n", 
+                pPlayer->m_szName, pPlayer->m_nConnIndex
+            );
+			g_PlayerServer.Detach(pPlayer->m_nConnIndex);
+		}
+		break;
+
+	case gsWaitForSyncClientData:
+		g_PlayerServer.DoFrameSignal(pPlayer->m_nConnIndex);
+		if (pPlayer->m_nTimer++ >= GAME_FPS * 32 - 1)
+		{
+            KGLogPrintf(
+                KGLOG_INFO, "Sync role data to client timeout,shutdown(%s, %d)\n",
                 pPlayer->m_szName, pPlayer->m_nConnIndex
             );
 			g_PlayerServer.Detach(pPlayer->m_nConnIndex);

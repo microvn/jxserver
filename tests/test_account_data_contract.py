@@ -142,10 +142,19 @@ def test_sync_data_load_state_is_cleaned_like_target():
     world = read(WORLD_CPP)
 
     detach = base[base.index("BOOL KPlayerServer::Detach"):base.index("BOOL KPlayerServer::Send", base.index("BOOL KPlayerServer::Detach"))]
-    timeout = world[world.index("case gsWaitForPermit:"):world.index("case gsWaitForLoginLoading:", world.index("case gsWaitForPermit:"))]
+    timeout_start = world.index("case gsWaitForPermit:")
+    sync_start = world.index("case gsWaitForSyncClientData:")
+    timeout = world[timeout_start:sync_start]
 
     assert "case gsWaitForSyncClientData:" in detach
-    assert "case gsWaitForSyncClientData:" in timeout
+    # Regression: state 4 was incorrectly grouped with the short relay timeout.
+    sync_end = world.index("case gsWaitForLoginLoading:", sync_start)
+    sync = world[sync_start:sync_end]
+
+    assert "case gsWaitForSyncClientData:" not in timeout
+    assert "DoFrameSignal(pPlayer->m_nConnIndex)" in sync
+    assert "GAME_FPS * 32 - 1" in sync
+    assert "Sync role data to client timeout,shutdown" in sync
 
 
 def test_role_save_has_no_candidate_only_partial_load_guard():
