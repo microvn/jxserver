@@ -178,11 +178,9 @@ KRelayClient::KRelayClient(void)
     REGISTER_INTERNAL_FUNC(r2s_designation_global_announce_respond, &KRelayClient::OnNoOpRespond, 42);
     REGISTER_INTERNAL_FUNC(r2s_sync_global_system_value, &KRelayClient::OnNoOpRespond, 18);
     REGISTER_INTERNAL_FUNC(r2s_query_stat_id_respond, &KRelayClient::OnNoOpRespond, 134);
-    REGISTER_INTERNAL_FUNC(r2s_v246_unused_139, &KRelayClient::OnNoOpRespond, 19);
+    // Protocol 139 is registered with the target handler below.
     REGISTER_INTERNAL_FUNC(r2s_change_ext_point_respond, &KRelayClient::OnChangeExtPointRespond, 18);
-    REGISTER_INTERNAL_FUNC(r2s_v246_unused_141, &KRelayClient::OnNoOpRespond, 26);
-    REGISTER_INTERNAL_FUNC(r2s_v246_unused_142, &KRelayClient::OnNoOpRespond, 14);
-    REGISTER_INTERNAL_FUNC(r2s_v246_unused_143, &KRelayClient::OnNoOpRespond, 15);
+    // Protocols 141/142/143 are registered with the target handlers below.
     REGISTER_INTERNAL_FUNC(r2s_set_charge_flag_respond, &KRelayClient::OnSetChargeFlagRespond, 14);
     REGISTER_INTERNAL_FUNC(r2s_sync_zone_charge_flag, &KRelayClient::OnNoOpRespond, 6);
     REGISTER_INTERNAL_FUNC(r2s_v246_unused_146, &KRelayClient::OnNoOpRespond, 18);
@@ -196,9 +194,9 @@ KRelayClient::KRelayClient(void)
     REGISTER_INTERNAL_FUNC(r2s_v246_unused_154, &KRelayClient::OnNoOpRespond, 11);
     REGISTER_INTERNAL_FUNC(r2s_v246_unused_155, &KRelayClient::OnNoOpRespond, 19);
     REGISTER_INTERNAL_FUNC(r2s_game_card_lookup_respond, &KRelayClient::OnGameCardLookupRespond, 12);
-    REGISTER_INTERNAL_FUNC(r2s_game_card_cancel_respond, &KRelayClient::OnGameCardCancelRespond, 13);
-    REGISTER_INTERNAL_FUNC(r2s_sync_mentor_data, &KRelayClient::OnNoOpRespond, 11);
-    REGISTER_INTERNAL_FUNC(r2s_delete_mentor_record, &KRelayClient::OnNoOpRespond, 15);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_157, &KRelayClient::OnNoOpRespond, 26);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_158, &KRelayClient::OnNoOpRespond, 14);
+    REGISTER_INTERNAL_FUNC(r2s_v246_unused_159, &KRelayClient::OnNoOpRespond, 15);
     REGISTER_INTERNAL_FUNC(r2s_update_mentor_record, &KRelayClient::OnNoOpRespond, 38);
     REGISTER_INTERNAL_FUNC(r2s_seek_mentor_yell, &KRelayClient::OnNoOpRespond, 34);
     REGISTER_INTERNAL_FUNC(r2s_seek_apprentice_yell, &KRelayClient::OnNoOpRespond, 6);
@@ -223,6 +221,9 @@ KRelayClient::KRelayClient(void)
     // last so it supplies the startup completion signal before player-login requests arrive.
     REGISTER_INTERNAL_FUNC(162, &KRelayClient::OnSyncMentorData, 6);
     REGISTER_INTERNAL_FUNC(139, &KRelayClient::OnSyncNewExtPointRespond, 19);
+    REGISTER_INTERNAL_FUNC(141, &KRelayClient::OnChangeNewExtPointRespond, 26);
+    REGISTER_INTERNAL_FUNC(142, &KRelayClient::OnApplyGSNewExtPoint, 14);
+    REGISTER_INTERNAL_FUNC(143, &KRelayClient::OnSyncGSNewExtPoint, 15);
     REGISTER_INTERNAL_FUNC(r2s_sync_battle_field_list, &KRelayClient::OnSyncBattleFieldList, sizeof(R2S_SYNC_BATTLE_FIELD_LIST));
     REGISTER_INTERNAL_FUNC(r2s_take_tong_repertory_item_to_pos_respond,  &KRelayClient::OnTakeTongRepertoryItemToPosRespond, sizeof(R2S_TAKE_TONG_REPERTORY_ITEM_TO_POS_RESPOND));
     //AutoCode:×¢²áÐ­Òé
@@ -1001,6 +1002,12 @@ void KRelayClient::OnSyncNewExtPointRespond(BYTE* pbyData, size_t uDataLen)
 
     for (i = 0; i < pRespond->nCount; ++i)
     {
+        bRetCode = pPlayer->m_NewExtPointManager.AddNewExtPoint(
+            pRespond->SyncNEPInfo[i].nKey,
+            pRespond->SyncNEPInfo[i].nValue,
+            false
+        );
+        KGLOG_PROCESS_ERROR(bRetCode);
         if (nLastKey < pRespond->SyncNEPInfo[i].nKey)
             nLastKey = pRespond->SyncNEPInfo[i].nKey;
     }
@@ -1025,6 +1032,75 @@ Exit0:
         if (pPlayer)
             g_pSO3World->DelPlayer(pPlayer);
     }
+    return;
+}
+
+void KRelayClient::OnSyncGSNewExtPoint(BYTE* pbyData, size_t uDataLen)
+{
+    R2S_SYNC_GS_NEW_EXT_POINT* pRespond = (R2S_SYNC_GS_NEW_EXT_POINT*)pbyData;
+    KPlayer* pPlayer = NULL;
+    int i = 0;
+
+    KGLOG_PROCESS_ERROR(uDataLen >= sizeof(*pRespond));
+    KGLOG_PROCESS_ERROR(pRespond->nCount >= 0);
+    KGLOG_PROCESS_ERROR(uDataLen >= sizeof(*pRespond) +
+                        (size_t)pRespond->nCount * sizeof(KSyncGSNEPInfo));
+    KGLOG_PROCESS_ERROR(pRespond->nCount > 0 || pRespond->bySyncFinish);
+    pPlayer = g_pSO3World->m_PlayerSet.GetObj(pRespond->dwPlayerID);
+    KGLOG_PROCESS_ERROR(pPlayer);
+
+    for (i = 0; i < pRespond->nCount; ++i)
+    {
+        KGLOG_PROCESS_ERROR(pPlayer->m_NewExtPointManager.AddNewExtPoint(
+            pRespond->SyncGSNEPInfo[i].nKey,
+            pRespond->SyncGSNEPInfo[i].nValue,
+            pRespond->SyncGSNEPInfo[i].byLocked
+        ));
+    }
+
+    if (!pRespond->bySyncFinish)
+    {
+        KGLOG_PROCESS_ERROR(DoSyncNewExtPointRequest(
+            pRespond->dwPlayerID, pRespond->nRespondCenterIndex,
+            pRespond->SyncGSNEPInfo[pRespond->nCount - 1].nKey
+        ));
+    }
+
+Exit0:
+    return;
+}
+
+void KRelayClient::OnApplyGSNewExtPoint(BYTE* pbyData, size_t uDataLen)
+{
+    R2S_APPLY_GS_NEW_EXT_POINT* pRespond = (R2S_APPLY_GS_NEW_EXT_POINT*)pbyData;
+    KPlayer* pPlayer = NULL;
+
+    KGLOG_PROCESS_ERROR(uDataLen >= sizeof(*pRespond));
+    pPlayer = g_pSO3World->m_PlayerSet.GetObj(pRespond->dwPlayerID);
+    KGLOG_PROCESS_ERROR(pPlayer);
+    KGLOG_PROCESS_ERROR(DoSyncGSNewExtPoint(
+        pPlayer, pRespond->nRespondCenterIndex, pRespond->nBoundKey
+    ));
+
+Exit0:
+    return;
+}
+
+void KRelayClient::OnChangeNewExtPointRespond(BYTE* pbyData, size_t uDataLen)
+{
+    R2S_CHANGE_NEW_EXT_POINT_RESPOND* pRespond =
+        (R2S_CHANGE_NEW_EXT_POINT_RESPOND*)pbyData;
+    KPlayer* pPlayer = NULL;
+
+    KGLOG_PROCESS_ERROR(uDataLen >= sizeof(*pRespond));
+    pPlayer = g_pSO3World->m_PlayerSet.GetObj(pRespond->dwPlayerID);
+    KGLOG_PROCESS_ERROR(pPlayer);
+    KGLOG_PROCESS_ERROR(pPlayer->m_NewExtPointManager.OnChangeNewExtPoint(
+        pRespond->nKey, pRespond->nOldValue, pRespond->nChangeValue,
+        pRespond->nCurrentValue, pRespond->nActionCode
+    ));
+
+Exit0:
     return;
 }
 
@@ -3766,7 +3842,7 @@ BOOL KRelayClient::DoSyncNewExtPointRequest(DWORD dwPlayerID, int nGatewayPlayer
     pRequest = (S2R_SYNC_NEW_EXT_POINT_REQUEST*)piPackage->GetData();
     KGLOG_PROCESS_ERROR(pRequest);
 
-    pRequest->wProtocolID = 155;
+    pRequest->wProtocolID = s2r_sync_new_ext_point_request;
     pRequest->dwPlayerID = dwPlayerID;
     pRequest->nGatewayPlayerIndex = nGatewayPlayerIndex;
     pRequest->nBoundKey = nBoundKey;
@@ -3776,6 +3852,106 @@ BOOL KRelayClient::DoSyncNewExtPointRequest(DWORD dwPlayerID, int nGatewayPlayer
 
     bResult = true;
 Exit0:
+    KG_COM_RELEASE(piPackage);
+    return bResult;
+}
+
+BOOL KRelayClient::DoChangeNewExtPointRequest(
+    DWORD dwPlayerID, int nKey, int nChangeValue,
+    int nOldValue, int nChangeMethod
+)
+{
+    BOOL bResult = false;
+    BOOL bRetCode = false;
+    IKG_Buffer* piPackage = NULL;
+    S2R_CHANGE_NEW_EXT_POINT_REQUEST* pRequest = NULL;
+
+    piPackage = KG_MemoryCreateBuffer(sizeof(S2R_CHANGE_NEW_EXT_POINT_REQUEST));
+    KGLOG_PROCESS_ERROR(piPackage);
+    pRequest = (S2R_CHANGE_NEW_EXT_POINT_REQUEST*)piPackage->GetData();
+    KGLOG_PROCESS_ERROR(pRequest);
+
+    pRequest->wProtocolID = s2r_change_new_ext_point_request;
+    pRequest->dwPlayerID = dwPlayerID;
+    pRequest->nKey = nKey;
+    pRequest->nChangeValue = nChangeValue;
+    pRequest->nOldValue = nOldValue;
+    pRequest->nChangeMethod = nChangeMethod;
+
+    bRetCode = Send(piPackage);
+    KGLOG_PROCESS_ERROR(bRetCode);
+    bResult = true;
+Exit0:
+    KG_COM_RELEASE(piPackage);
+    return bResult;
+}
+
+BOOL KRelayClient::DoApplyGSNewExtPoint(DWORD dwPlayerID, int nRespondCenterIndex, int nBoundKey)
+{
+    BOOL bResult = false;
+    BOOL bRetCode = false;
+    IKG_Buffer* piPackage = NULL;
+    R2S_APPLY_GS_NEW_EXT_POINT* pRequest = NULL;
+
+    piPackage = KG_MemoryCreateBuffer(sizeof(R2S_APPLY_GS_NEW_EXT_POINT));
+    KGLOG_PROCESS_ERROR(piPackage);
+    pRequest = (R2S_APPLY_GS_NEW_EXT_POINT*)piPackage->GetData();
+    KGLOG_PROCESS_ERROR(pRequest);
+
+    pRequest->wProtocolID = s2r_apply_gs_new_ext_point;
+    pRequest->dwPlayerID = dwPlayerID;
+    pRequest->nRespondCenterIndex = nRespondCenterIndex;
+    pRequest->nBoundKey = nBoundKey;
+
+    bRetCode = Send(piPackage);
+    KGLOG_PROCESS_ERROR(bRetCode);
+    bResult = true;
+Exit0:
+    KG_COM_RELEASE(piPackage);
+    return bResult;
+}
+
+BOOL KRelayClient::DoSyncGSNewExtPoint(KPlayer* pPlayer, int nRespondCenterIndex, int nBoundKey)
+{
+    const int MAX_SYNC_COUNT = 0x100;
+    BOOL bResult = false;
+    BOOL bRetCode = false;
+    HRESULT hRetCode = E_FAIL;
+    IKG_Buffer* piPackage = NULL;
+    IKG_Buffer_ReSize* piResize = NULL;
+    R2S_SYNC_GS_NEW_EXT_POINT* pRequest = NULL;
+    int nCount = 0;
+    BOOL bSyncFinish = false;
+
+    KGLOG_PROCESS_ERROR(pPlayer);
+    piPackage = KG_MemoryCreateBuffer(
+        sizeof(R2S_SYNC_GS_NEW_EXT_POINT) + sizeof(KSyncGSNEPInfo) * MAX_SYNC_COUNT
+    );
+    KGLOG_PROCESS_ERROR(piPackage);
+    pRequest = (R2S_SYNC_GS_NEW_EXT_POINT*)piPackage->GetData();
+    KGLOG_PROCESS_ERROR(pRequest);
+    KGLOG_PROCESS_ERROR(pPlayer->m_NewExtPointManager.GetGSNewExtPoint(
+        nBoundKey, pRequest->SyncGSNEPInfo, MAX_SYNC_COUNT, &nCount, &bSyncFinish
+    ));
+
+    pRequest->wProtocolID = s2r_sync_gs_new_ext_point;
+    pRequest->dwPlayerID = pPlayer->m_dwID;
+    pRequest->nRespondCenterIndex = nRespondCenterIndex;
+    pRequest->bySyncFinish = (BYTE)bSyncFinish;
+    pRequest->nCount = nCount;
+
+    hRetCode = piPackage->QueryInterface(IID_IKG_Buffer_ReSize, (void**)&piResize);
+    KGLOG_PROCESS_ERROR(hRetCode == S_OK && piResize);
+    bRetCode = piResize->SetSmallerSize(
+        (unsigned)(sizeof(R2S_SYNC_GS_NEW_EXT_POINT) + sizeof(KSyncGSNEPInfo) * nCount)
+    );
+    KGLOG_PROCESS_ERROR(bRetCode);
+    bRetCode = Send(piPackage);
+    KGLOG_PROCESS_ERROR(bRetCode);
+    bResult = true;
+Exit0:
+    if (piResize)
+        piResize->Release();
     KG_COM_RELEASE(piPackage);
     return bResult;
 }

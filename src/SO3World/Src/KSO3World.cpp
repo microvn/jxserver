@@ -80,6 +80,8 @@ BOOL KSO3World::Init(IRecorderFactory* piFactory)
     BOOL        bActivityMgrInitFlag        = false;
     BOOL        bItemManagerInitFlag        = false;
     BOOL        bShopCenterInitFlag         = false;
+#ifdef _SERVER
+#endif
     BOOL        bProfessionManagerInitFlag  = false;
     BOOL        bRoadManageInitFlag         = false;
     BOOL        bAIManageInitFlag           = false;

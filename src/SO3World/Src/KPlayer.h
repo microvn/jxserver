@@ -37,6 +37,8 @@
 #include "KMiniAvatar.h"
 #include "KRegressionPlayerData.h"
 #include "KCurrencyList.h"
+#include "KNewExtPointManager.h"
+#include "KFellowPetBox.h"
 #include "KProbability.h"
 
 #ifdef _SERVER
@@ -74,6 +76,14 @@ enum GAME_STATUS
 
 	gsTotal
 };
+
+#pragma pack(push, 1)
+struct KPendent
+{
+    DWORD  dwItemIndex;
+    time_t nGenTime;
+};
+#pragma pack(pop)
 
 enum PREEMPTIVE_ATTACK
 {
@@ -250,7 +260,8 @@ public:
     char                m_szClientIP[_NAME_LEN];
 	char				m_szAccount[_NAME_LEN];
 	tagExtPointInfo		m_ExtPointInfo;         // ��չ��
-    BOOL                m_bExtPointLock;        // ��չ�������
+    BOOL                m_bExtPointLock;
+    KNewExtPointManager m_NewExtPointManager;        // ��չ�������
     int                 m_nLastExtPointIndex;   // ��һ�β�����չ������
     short               m_nLastExtPointValue;   // ��һ�β�����չ��ֵ
     time_t              m_nEndTimeOfFee;        // �շ��ܽ�ֹʱ��
@@ -325,6 +336,13 @@ public:
     DWORD               m_dwMiniAvatarID;       // currently worn mini-avatar id (0 = none)
     KRegressionPlayerData m_RegressionData;     // returning-player (hui-gui) state
     KCurrencyList       m_CurrencyList;         // v2.5 NEW: capped/periodic currencies
+    KFellowPetBox       m_FellowPetBox;         // v2.5 fellow-pet timed data
+    KPendent            m_WaistPendent;
+    DWORD               m_dwWaistItemIndex;
+    KPendent            m_BackPendent;
+    DWORD               m_dwBackItemIndex;
+    KPendent            m_FacePendent;
+    DWORD               m_dwFaceItemIndex;
     DWORD               m_dwApplyExteriorFlag;  // bit0-4 = per-slot applied; bit0x80 = master apply-on
 
     // ������������ID
@@ -539,6 +557,7 @@ public:
     BOOL    SaveHeroData(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
     BOOL    SaveAccountStateInfo(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
     BOOL    SaveAccount(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
+    BOOL    SavePendentData(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
     BOOL    SavePosition();
     // �����������֮ǰӦ��ȷ��m_SavePosition����ȷ������(����ͨ��SavePosition)
     BOOL    SaveBaseInfo(KRoleBaseInfo* pBaseInfo);
@@ -801,7 +820,11 @@ public:
 // ��չ�����
 public:
 #ifdef _SERVER
-    BOOL SetExtPoint(int nIndex, short nChangeValue);
+    BOOL GetExtPoint(int nIndex, int& nValue);
+    BOOL SetExtPoint(int nIndex, int nChangeValue);
+    BOOL GetExtPointByBits(int nIndex, int nBitIndex, int nBitLength, int& nValue);
+    BOOL SetExtPointByBits(int nIndex, int nBitIndex, int nBitLength, int& nValue);
+    BOOL CanSetExtPoint(int nIndex);
 #endif
 
 // ��������----------------------------------->
@@ -1509,6 +1532,9 @@ public:
 #ifdef _SERVER
     int LuaGetExtPoint(Lua_State* L);
     int LuaSetExtPoint(Lua_State* L);
+    int LuaGetExtPointByBits(Lua_State* L);
+    int LuaSetExtPointByBits(Lua_State* L);
+    int LuaCanSetExtPoint(Lua_State* L);
 
 // ������Ʒ��
     int LuaActivePresentCode(Lua_State* L);

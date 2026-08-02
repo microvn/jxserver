@@ -10801,15 +10801,13 @@ int KPlayer::LuaGetExtPoint(Lua_State* L)
     int     nResult         = 0;
     int     nTopIndex       = 0;
     int     nExtPointIndex  = 0;
-    short   nExtPointValue  = 0;
+    int     nExtPointValue  = 0;
 
     nTopIndex = Lua_GetTopIndex(L);
     KGLOG_PROCESS_ERROR(nTopIndex == 1);
 
     nExtPointIndex = (int)Lua_ValueToNumber(L, 1);
-    KGLOG_PROCESS_ERROR(nExtPointIndex >= 0 && nExtPointIndex < MAX_EXT_POINT_COUNT);
-
-    nExtPointValue = m_ExtPointInfo.nExtPoint[nExtPointIndex];
+    KGLOG_PROCESS_ERROR(GetExtPoint(nExtPointIndex, nExtPointValue));
 
     Lua_PushNumber(L, nExtPointValue);
 
@@ -10823,16 +10821,62 @@ int KPlayer::LuaSetExtPoint(Lua_State* L)
     BOOL    bRetCode        = false;
     int     nTopIndex       = 0;
     int     nExtPointIndex  = 0;
-    short   nExtPointValue  = 0;
+    int     nExtPointValue  = 0;
 
     nTopIndex = Lua_GetTopIndex(L);
     KGLOG_PROCESS_ERROR(nTopIndex == 2);
 
     nExtPointIndex = (int)Lua_ValueToNumber(L, 1);
-    nExtPointValue = (short)Lua_ValueToNumber(L, 2);
+    nExtPointValue = (int)Lua_ValueToNumber(L, 2);
 
     bRetCode = SetExtPoint(nExtPointIndex, nExtPointValue);
     KGLOG_PROCESS_ERROR(bRetCode);
+
+Exit0:
+    return 0;
+}
+
+int KPlayer::LuaGetExtPointByBits(Lua_State* L)
+{
+    int nResult = 0;
+    int nValue = 0;
+
+    KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 3);
+    KGLOG_PROCESS_ERROR(GetExtPointByBits(
+        (int)Lua_ValueToNumber(L, 1),
+        (int)Lua_ValueToNumber(L, 2),
+        (int)Lua_ValueToNumber(L, 3), nValue
+    ));
+    Lua_PushNumber(L, nValue);
+    nResult = 1;
+
+Exit0:
+    return nResult;
+}
+
+int KPlayer::LuaSetExtPointByBits(Lua_State* L)
+{
+    int nValue = 0;
+
+    KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 4);
+    nValue = (int)Lua_ValueToNumber(L, 4);
+    KGLOG_PROCESS_ERROR(SetExtPointByBits(
+        (int)Lua_ValueToNumber(L, 1),
+        (int)Lua_ValueToNumber(L, 2),
+        (int)Lua_ValueToNumber(L, 3), nValue
+    ));
+    Lua_PushBoolean(L, true);
+    return 1;
+
+Exit0:
+    return 0;
+}
+
+int KPlayer::LuaCanSetExtPoint(Lua_State* L)
+{
+    KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 1);
+    Lua_PushBoolean(L, CanSetExtPoint((int)Lua_ValueToNumber(L, 1)));
+    return 1;
 
 Exit0:
     return 0;
@@ -12215,6 +12259,9 @@ DEFINE_LUA_CLASS_BEGIN(KPlayer)
 #ifdef _SERVER
     REGISTER_LUA_FUNC(KPlayer, GetExtPoint)
     REGISTER_LUA_FUNC(KPlayer, SetExtPoint)
+    REGISTER_LUA_FUNC(KPlayer, GetExtPointByBits)
+    REGISTER_LUA_FUNC(KPlayer, SetExtPointByBits)
+    REGISTER_LUA_FUNC(KPlayer, CanSetExtPoint)
     REGISTER_LUA_FUNC(KPlayer, IsGM)
     REGISTER_LUA_FUNC(KPlayer, PreemptiveAttack)
     REGISTER_LUA_FUNC(KPlayer, IsVenationSuccess)

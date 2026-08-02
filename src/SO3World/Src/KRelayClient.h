@@ -86,6 +86,9 @@ public:
 	BOOL DoPlayerLoginRespond(DWORD dwPlayerID, BOOL bPermit, GUID Guid, DWORD dwPacketIdentity);
 
 	BOOL DoSyncNewExtPointRequest(DWORD dwPlayerID, int nGatewayPlayerIndex, int nBoundKey);
+	BOOL DoChangeNewExtPointRequest(DWORD dwPlayerID, int nKey, int nChangeValue, int nOldValue, int nChangeMethod);
+	BOOL DoApplyGSNewExtPoint(DWORD dwPlayerID, int nRespondCenterIndex, int nBoundKey);
+	BOOL DoSyncGSNewExtPoint(KPlayer* pPlayer, int nRespondCenterIndex, int nBoundKey);
 
 	BOOL DoConfirmPlayerLoginRequest(DWORD dwPlayerID, DWORD dwIP);
 
@@ -333,6 +336,9 @@ private:
 
 	void OnPlayerLoginRequest(BYTE* pbyData, size_t uDataLen);
 	void OnSyncNewExtPointRespond(BYTE* pbyData, size_t uDataLen);
+	void OnChangeNewExtPointRespond(BYTE* pbyData, size_t uDataLen);
+	void OnApplyGSNewExtPoint(BYTE* pbyData, size_t uDataLen);
+	void OnSyncGSNewExtPoint(BYTE* pbyData, size_t uDataLen);
 
 	void OnConfirmPlayerLoginRespond(BYTE* pbyData, size_t uDataLen);
 

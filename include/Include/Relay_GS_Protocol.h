@@ -426,11 +426,11 @@ enum KR2S_PROTOCOL
 	r2s_designation_global_announce_respond,	// v246 id=136 size=42 [src-unplaced] noop
 	r2s_sync_global_system_value,	// v246 id=137 size=18 [src-unplaced] noop
 	r2s_query_stat_id_respond,	// v246 id=138 size=134 [src-unplaced] noop
-	r2s_v246_unused_139,	// v246 id=139 size=19 [new] noop
+	r2s_sync_new_ext_point_respond,	// v246 id=139 size=19 [target]
 	r2s_change_ext_point_respond,	// v246 id=140 size=18 [src]
-	r2s_v246_unused_141,	// v246 id=141 size=26 [new] noop
-	r2s_v246_unused_142,	// v246 id=142 size=14 [new] noop
-	r2s_v246_unused_143,	// v246 id=143 size=15 [new] noop
+	r2s_change_new_ext_point_respond,	// v246 id=141 size=26 [target]
+	r2s_apply_gs_new_ext_point,	// v246 id=142 size=14 [target]
+	r2s_sync_gs_new_ext_point,	// v246 id=143 size=15 [target]
 	r2s_set_charge_flag_respond,	// v246 id=144 size=14 [src]
 	r2s_sync_zone_charge_flag,	// v246 id=145 size=6 [src-unplaced] noop
 	r2s_v246_unused_146,	// v246 id=146 size=18 [new] noop
@@ -444,9 +444,9 @@ enum KR2S_PROTOCOL
 	r2s_v246_unused_154,	// v246 id=154 size=11 [new] noop
 	r2s_v246_unused_155,	// v246 id=155 size=19 [new] noop
 	r2s_game_card_lookup_respond,	// v246 id=156 size=12 [src]
-	r2s_game_card_cancel_respond,	// v246 id=157 size=13 [src]
-	r2s_sync_mentor_data,	// v246 id=158 size=11 [src-unplaced] noop
-	r2s_delete_mentor_record,	// v246 id=159 size=15 [src-unplaced] noop
+	r2s_v246_unused_157,	// v246 id=157 size=26 [new] noop
+	r2s_v246_unused_158,	// v246 id=158 size=14 [new] noop
+	r2s_v246_unused_159,	// v246 id=159 size=15 [new] noop
 	r2s_update_mentor_record,	// v246 id=160 size=38 [src-unplaced] noop
 	r2s_seek_mentor_yell,	// v246 id=161 size=34 [src-unplaced] noop
 	r2s_seek_apprentice_yell,	// v246 id=162 size=6 [src-unplaced] noop
@@ -1501,6 +1501,16 @@ struct __attribute__((packed)) S2R_SYNC_NEW_EXT_POINT_REQUEST
     int     nBoundKey;
 };
 
+struct __attribute__((packed)) S2R_CHANGE_NEW_EXT_POINT_REQUEST
+{
+    WORD  wProtocolID;
+    DWORD dwPlayerID;
+    int   nKey;
+    int   nChangeValue;
+    int   nOldValue;
+    int   nChangeMethod;
+};
+
 struct __attribute__((packed)) SYNC_NEP_INFO
 {
     int     nKey;
@@ -1516,6 +1526,42 @@ struct __attribute__((packed)) R2S_SYNC_NEW_EXT_POINT_RESPOND
     BYTE            bySyncFinish;
     int             nCount;
     SYNC_NEP_INFO   SyncNEPInfo[0];
+};
+
+struct __attribute__((packed)) KSyncGSNEPInfo
+{
+    int  nKey;
+    int  nValue;
+    BYTE byLocked;
+};
+
+struct __attribute__((packed)) R2S_SYNC_GS_NEW_EXT_POINT
+{
+    WORD              wProtocolID;
+    DWORD             dwPlayerID;
+    int               nRespondCenterIndex;
+    BYTE              bySyncFinish;
+    int               nCount;
+    KSyncGSNEPInfo    SyncGSNEPInfo[0];
+};
+
+struct __attribute__((packed)) R2S_APPLY_GS_NEW_EXT_POINT
+{
+    WORD  wProtocolID;
+    DWORD dwPlayerID;
+    int   nRespondCenterIndex;
+    int   nBoundKey;
+};
+
+struct __attribute__((packed)) R2S_CHANGE_NEW_EXT_POINT_RESPOND
+{
+    WORD  wProtocolID;
+    DWORD dwPlayerID;
+    int   nKey;
+    int   nOldValue;
+    int   nChangeValue;
+    int   nCurrentValue;
+    int   nActionCode;
 };
 
 struct R2S_CONFIRM_PLAYER_LOGIN_RESPOND : INTERNAL_PROTOCOL_HEADER

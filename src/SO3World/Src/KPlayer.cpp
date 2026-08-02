@@ -185,6 +185,12 @@ BOOL KPlayer::Init(void)
     KGLOG_PROCESS_ERROR(bRetCode);
     m_dwMiniAvatarID = 0;
 
+    bRetCode = m_NewExtPointManager.Init(this);
+    KGLOG_PROCESS_ERROR(bRetCode);
+
+    bRetCode = m_FellowPetBox.Init(this);
+    KGLOG_PROCESS_ERROR(bRetCode);
+
     bRetCode = m_RegressionData.Init(this);
     KGLOG_PROCESS_ERROR(bRetCode);
 
@@ -557,6 +563,8 @@ Exit0:
 
 void KPlayer::UnInit(void)
 {
+    m_NewExtPointManager.UnInit();
+    m_FellowPetBox.UnInit();
     m_GraduateMentorData.clear();
     m_GraduateApprenticeData.clear();
 
@@ -2459,6 +2467,11 @@ BOOL KPlayer::LoadExtRoleData(BYTE* pbyData, size_t uDataLen)
             KGLOG_PROCESS_ERROR(bRetCode);
             break;
 
+        case rbtFellowPetData:
+            bRetCode = m_FellowPetBox.Load(pbyOffset, pBlock->dwLen, pBlock->dwVer);
+            KGLOG_PROCESS_ERROR(bRetCode);
+            break;
+
         case rbtExteriorBoxData:
             bRetCode = m_ExteriorBox.LoadExteriorBox(pbyOffset, pBlock->dwLen);
             KGLOG_PROCESS_ERROR(bRetCode);
@@ -2558,6 +2571,35 @@ Exit0:
 #endif	// _SERVER
 
 #if defined(_SERVER)
+BOOL KPlayer::SavePendentData(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize)
+{
+    const size_t PENDENT_SIZE = sizeof(KPendent) + sizeof(DWORD);
+    BOOL bResult = false;
+    BYTE* pbyOffset = pbyBuffer;
+
+    KGLOG_PROCESS_ERROR(puUsedSize);
+    KGLOG_PROCESS_ERROR(pbyBuffer);
+    KGLOG_PROCESS_ERROR(uBufferSize >= PENDENT_SIZE * 3);
+
+    memcpy(pbyOffset, &m_WaistPendent, sizeof(m_WaistPendent));
+    pbyOffset += sizeof(m_WaistPendent);
+    memcpy(pbyOffset, &m_dwWaistItemIndex, sizeof(m_dwWaistItemIndex));
+    pbyOffset += sizeof(m_dwWaistItemIndex);
+    memcpy(pbyOffset, &m_BackPendent, sizeof(m_BackPendent));
+    pbyOffset += sizeof(m_BackPendent);
+    memcpy(pbyOffset, &m_dwBackItemIndex, sizeof(m_dwBackItemIndex));
+    pbyOffset += sizeof(m_dwBackItemIndex);
+    memcpy(pbyOffset, &m_FacePendent, sizeof(m_FacePendent));
+    pbyOffset += sizeof(m_FacePendent);
+    memcpy(pbyOffset, &m_dwFaceItemIndex, sizeof(m_dwFaceItemIndex));
+    pbyOffset += sizeof(m_dwFaceItemIndex);
+
+    *puUsedSize = (size_t)(pbyOffset - pbyBuffer);
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
 BOOL KPlayer::SaveSkillRecipeList(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize)
 {
     BOOL    bResult     = false;
@@ -2877,7 +2919,8 @@ BOOL KPlayer::Save(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize)
     SAVE_ROLE_BLOCK(m_CurrencyList.Save, rbtCurrencyData, 0);
     SAVE_ROLE_BLOCK(m_AntiFarmer.Save, rbtAntiFarmerData, 0);
     SAVE_ROLE_BLOCK(SaveMentorData, rbtMentorData, 0);
-
+    SAVE_ROLE_BLOCK(SavePendentData, rbtPendentData, 0);
+    SAVE_ROLE_BLOCK(m_FellowPetBox.Save, rbtFellowPetData, 0);
     dwExtDataLen = (DWORD)(pbyOffset - pbyBuffer - sizeof(KRoleDataHeader));
 
     pGlobalHeader->dwVer = 0;
@@ -3048,7 +3091,7 @@ BOOL KPlayer::RealSwitchMap(DWORD dwMapID, int nCopyIndex, int nX, int nY, int n
 
     m_eGameStatus = gsSearchMap;
 
-    m_nBanishTime = 0; // ����ʱ��������������ڵ���ʱ�������뿪��������ʱ���������ʱ
+    m_nBanishTime = 0; // ����ʱ��������������ڵ���ʱ��������謹��������ʱ���������ʱ
 
     bResult = true;
 Exit0:
@@ -5152,33 +5195,163 @@ Exit0:
 }
 
 #ifdef _SERVER
-BOOL KPlayer::SetExtPoint(int nIndex, short nChangeValue)
+static BOOL GetExtPointBitsValue(int nValue, int nBitIndex, int nBitLength, int* pnResult)
 {
-    BOOL bResult  = false;
-    BOOL bRetCode = false;
+    unsigned int uValue = 0;
+    unsigned int uMask = 0;
 
-    KGLOG_PROCESS_ERROR(nIndex >= 0 && nIndex < MAX_EXT_POINT_COUNT);
+    KGLOG_PROCESS_ERROR(pnResult);
+    KGLOG_PROCESS_ERROR(nBitIndex >= 0 && nBitIndex < 32);
+    KGLOG_PROCESS_ERROR(nBitLength > 0 && nBitIndex + nBitLength <= 32);
+
+    uValue = (unsigned int)nValue >> nBitIndex;
+    uMask = nBitLength == 32 ? 0xffffffffU : ((1U << nBitLength) - 1U);
+    *pnResult = (int)(uValue & uMask);
+    return true;
+
+Exit0:
+    return false;
+}
+
+static BOOL SetExtPointBitsValue(
+    int nValue, int nBitIndex, int nBitLength, int nChangeValue, int* pnResult
+)
+{
+    unsigned int uMask = 0;
+    unsigned int uValue = 0;
+
+    KGLOG_PROCESS_ERROR(pnResult);
+    KGLOG_PROCESS_ERROR(nBitIndex >= 0 && nBitIndex < 32);
+    KGLOG_PROCESS_ERROR(nBitLength > 0 && nBitIndex + nBitLength <= 32);
+    KGLOG_PROCESS_ERROR(nBitLength == 32 || nChangeValue >= 0);
+    if (nBitLength != 32)
+    {
+        KGLOG_PROCESS_ERROR((unsigned int)nChangeValue < (1U << nBitLength));
+    }
+
+    uMask = nBitLength == 32 ? 0xffffffffU : ((1U << nBitLength) - 1U);
+    uValue = (unsigned int)nValue;
+    uValue = (uValue & ~(uMask << nBitIndex)) |
+             (((unsigned int)nChangeValue & uMask) << nBitIndex);
+    *pnResult = (int)uValue;
+    return true;
+
+Exit0:
+    return false;
+}
+
+BOOL KPlayer::GetExtPoint(int nIndex, int& nValue)
+{
+    if (nIndex >= 0 && nIndex < MAX_EXT_POINT_COUNT)
+    {
+        nValue = (int)m_ExtPointInfo.nExtPoint[nIndex];
+        return true;
+    }
+
+    return m_NewExtPointManager.GetNewExtPoint(nIndex, &nValue);
+}
+
+BOOL KPlayer::SetExtPoint(int nIndex, int nChangeValue)
+{
+    BOOL bResult = false;
+    BOOL bRetCode = false;
+    int nOldValue = 0;
+
+    KGLOG_PROCESS_ERROR(nIndex >= 0);
+    if (nIndex >= MAX_EXT_POINT_COUNT)
+    {
+        bRetCode = m_NewExtPointManager.SetNewExtPoint(nIndex, nChangeValue);
+        KGLOG_PROCESS_ERROR(bRetCode);
+        return true;
+    }
+
     KGLOG_PROCESS_ERROR(m_ExtPointInfo.nExtPoint[nIndex] != nChangeValue);
     KGLOG_PROCESS_ERROR(!m_bExtPointLock);
 
-    m_bExtPointLock         = true;
-    m_nLastExtPointIndex    = nIndex;
-    m_nLastExtPointValue    = m_ExtPointInfo.nExtPoint[nIndex];
-
-    m_ExtPointInfo.nExtPoint[nIndex] = nChangeValue;
+    m_bExtPointLock = true;
+    m_nLastExtPointIndex = nIndex;
+    nOldValue = (int)m_ExtPointInfo.nExtPoint[nIndex];
+    m_nLastExtPointValue = (short)nOldValue;
+    m_ExtPointInfo.nExtPoint[nIndex] = (short)nChangeValue;
 
     KGLogPrintf(
         KGLOG_INFO, "Apply Change ExtPoint. PlayerID = %d, ExtIndex = %d, ChangeValue = %d",
         m_dwID, nIndex, nChangeValue
     );
 
-    bRetCode = g_RelayClient.DoChangeExtPointRequest(m_dwID, (WORD)nIndex, (WORD)nChangeValue);
+    bRetCode = g_RelayClient.DoChangeExtPointRequest(
+        m_dwID, (WORD)nIndex, (WORD)nChangeValue
+    );
     KGLOG_PROCESS_ERROR(bRetCode);
 
     bResult = true;
 Exit0:
     return bResult;
 }
+
+BOOL KPlayer::GetExtPointByBits(int nIndex, int nBitIndex, int nBitLength, int& nValue)
+{
+    int nExtPointValue = 0;
+
+    KGLOG_PROCESS_ERROR(nBitIndex >= 0 && nBitIndex < 32);
+    KGLOG_PROCESS_ERROR(nBitLength > 0 && nBitIndex + nBitLength <= 32);
+
+    if (nIndex >= 0 && nIndex < MAX_EXT_POINT_COUNT)
+    {
+        nExtPointValue = (int)m_ExtPointInfo.nExtPoint[nIndex];
+        KGLOG_PROCESS_ERROR(GetExtPointBitsValue(
+            nExtPointValue, nBitIndex, nBitLength, &nValue
+        ));
+    }
+    else
+    {
+        KGLOG_PROCESS_ERROR(m_NewExtPointManager.GetNewExtPointByBits(
+            nIndex, nBitIndex, nBitLength, &nValue
+        ));
+    }
+
+    return true;
+
+Exit0:
+    return false;
+}
+
+BOOL KPlayer::SetExtPointByBits(int nIndex, int nBitIndex, int nBitLength, int& nValue)
+{
+    int nExtPointValue = 0;
+
+    KGLOG_PROCESS_ERROR(nBitIndex >= 0 && nBitIndex < 32);
+    KGLOG_PROCESS_ERROR(nBitLength > 0 && nBitIndex + nBitLength <= 32);
+
+    if (nIndex >= 0 && nIndex < MAX_EXT_POINT_COUNT)
+    {
+        nExtPointValue = (int)m_ExtPointInfo.nExtPoint[nIndex];
+        KGLOG_PROCESS_ERROR(SetExtPointBitsValue(
+            nExtPointValue, nBitIndex, nBitLength, nValue, &nExtPointValue
+        ));
+        KGLOG_PROCESS_ERROR(SetExtPoint(nIndex, nExtPointValue));
+    }
+    else
+    {
+        KGLOG_PROCESS_ERROR(m_NewExtPointManager.SetExtPointByBits(
+            nIndex, nBitIndex, nBitLength, nValue
+        ));
+    }
+
+    return true;
+
+Exit0:
+    return false;
+}
+
+BOOL KPlayer::CanSetExtPoint(int nIndex)
+{
+    if (nIndex >= 0 && nIndex < MAX_EXT_POINT_COUNT)
+        return !m_bExtPointLock;
+
+    return m_NewExtPointManager.CanSetExtPoint(nIndex);
+}
+
 #endif // _SERVER
 
 #ifdef _SERVER
