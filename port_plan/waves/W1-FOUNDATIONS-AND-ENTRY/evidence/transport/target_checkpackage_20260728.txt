@@ -1,0 +1,419 @@
+
+/Volumes/ExData/game/jx3/jx3_dwarf/SO3GameServerD:	file format elf32-i386
+
+Disassembly of section .text:
+
+08052640 <_ZN13KPlayerServer12CheckPackageEPhj>:
+ 8052640: 55                           	push	ebp
+ 8052641: 89 e5                        	mov	ebp, esp
+ 8052643: 83 ec 28                     	sub	esp, 0x28
+ 8052646: c7 45 f8 00 00 00 00         	mov	dword ptr [ebp - 0x8], 0x0
+ 805264d: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 8052650: 89 45 fc                     	mov	dword ptr [ebp - 0x4], eax
+ 8052653: 83 7d 10 05                  	cmp	dword ptr [ebp + 0x10], 0x5
+ 8052657: 77 31                        	ja	0x805268a <_ZN13KPlayerServer12CheckPackageEPhj+0x4a>
+ 8052659: c7 44 24 10 60 09 3d 08      	mov	dword ptr [esp + 0x10], 0x83d0960
+ 8052661: c7 44 24 0c 9b 03 00 00      	mov	dword ptr [esp + 0xc], 0x39b
+ 8052669: c7 44 24 08 94 fd 3c 08      	mov	dword ptr [esp + 0x8], 0x83cfd94
+ 8052671: c7 44 24 04 68 fd 3c 08      	mov	dword ptr [esp + 0x4], 0x83cfd68
+ 8052679: c7 04 24 07 00 00 00         	mov	dword ptr [esp], 0x7
+ 8052680: e8 2f a7 ff ff               	call	0x804cdb4 <_Z11KGLogPrintf14KGLOG_PRIORITYPKcz@plt>
+ 8052685: e9 5e 01 00 00               	jmp	0x80527e8 <_ZN13KPlayerServer12CheckPackageEPhj+0x1a8>
+ 805268a: 8b 45 fc                     	mov	eax, dword ptr [ebp - 0x4]
+ 805268d: 0f b7 00                     	movzx	eax, word ptr [eax]
+ 8052690: 66 85 c0                     	test	ax, ax
+ 8052693: 75 31                        	jne	0x80526c6 <_ZN13KPlayerServer12CheckPackageEPhj+0x86>
+ 8052695: c7 44 24 10 60 09 3d 08      	mov	dword ptr [esp + 0x10], 0x83d0960
+ 805269d: c7 44 24 0c 9d 03 00 00      	mov	dword ptr [esp + 0xc], 0x39d
+ 80526a5: c7 44 24 08 c0 fd 3c 08      	mov	dword ptr [esp + 0x8], 0x83cfdc0
+ 80526ad: c7 44 24 04 68 fd 3c 08      	mov	dword ptr [esp + 0x4], 0x83cfd68
+ 80526b5: c7 04 24 07 00 00 00         	mov	dword ptr [esp], 0x7
+ 80526bc: e8 f3 a6 ff ff               	call	0x804cdb4 <_Z11KGLogPrintf14KGLOG_PRIORITYPKcz@plt>
+ 80526c1: e9 22 01 00 00               	jmp	0x80527e8 <_ZN13KPlayerServer12CheckPackageEPhj+0x1a8>
+ 80526c6: 8b 45 fc                     	mov	eax, dword ptr [ebp - 0x4]
+ 80526c9: 0f b7 00                     	movzx	eax, word ptr [eax]
+ 80526cc: 66 3d d0 00                  	cmp	ax, 0xd0
+ 80526d0: 76 31                        	jbe	0x8052703 <_ZN13KPlayerServer12CheckPackageEPhj+0xc3>
+ 80526d2: c7 44 24 10 60 09 3d 08      	mov	dword ptr [esp + 0x10], 0x83d0960
+ 80526da: c7 44 24 0c 9f 03 00 00      	mov	dword ptr [esp + 0xc], 0x39f
+ 80526e2: c7 44 24 08 f4 fd 3c 08      	mov	dword ptr [esp + 0x8], 0x83cfdf4
+ 80526ea: c7 44 24 04 68 fd 3c 08      	mov	dword ptr [esp + 0x4], 0x83cfd68
+ 80526f2: c7 04 24 07 00 00 00         	mov	dword ptr [esp], 0x7
+ 80526f9: e8 b6 a6 ff ff               	call	0x804cdb4 <_Z11KGLogPrintf14KGLOG_PRIORITYPKcz@plt>
+ 80526fe: e9 e5 00 00 00               	jmp	0x80527e8 <_ZN13KPlayerServer12CheckPackageEPhj+0x1a8>
+ 8052703: 8b 45 fc                     	mov	eax, dword ptr [ebp - 0x4]
+ 8052706: 0f b7 00                     	movzx	eax, word ptr [eax]
+ 8052709: 0f b7 c0                     	movzx	eax, ax
+ 805270c: 8b 55 08                     	mov	edx, dword ptr [ebp + 0x8]
+ 805270f: 05 bc 01 00 00               	add	eax, 0x1bc
+ 8052714: 8b 44 82 04                  	mov	eax, dword ptr [edx + 4*eax + 0x4]
+ 8052718: 83 f8 ff                     	cmp	eax, -0x1
+ 805271b: 75 37                        	jne	0x8052754 <_ZN13KPlayerServer12CheckPackageEPhj+0x114>
+ 805271d: 83 7d 10 05                  	cmp	dword ptr [ebp + 0x10], 0x5
+ 8052721: 77 79                        	ja	0x805279c <_ZN13KPlayerServer12CheckPackageEPhj+0x15c>
+ 8052723: c7 44 24 10 60 09 3d 08      	mov	dword ptr [esp + 0x10], 0x83d0960
+ 805272b: c7 44 24 0c a3 03 00 00      	mov	dword ptr [esp + 0xc], 0x3a3
+ 8052733: c7 44 24 08 28 fe 3c 08      	mov	dword ptr [esp + 0x8], 0x83cfe28
+ 805273b: c7 44 24 04 68 fd 3c 08      	mov	dword ptr [esp + 0x4], 0x83cfd68
+ 8052743: c7 04 24 07 00 00 00         	mov	dword ptr [esp], 0x7
+ 805274a: e8 65 a6 ff ff               	call	0x804cdb4 <_Z11KGLogPrintf14KGLOG_PRIORITYPKcz@plt>
+ 805274f: e9 94 00 00 00               	jmp	0x80527e8 <_ZN13KPlayerServer12CheckPackageEPhj+0x1a8>
+ 8052754: 8b 45 fc                     	mov	eax, dword ptr [ebp - 0x4]
+ 8052757: 0f b7 00                     	movzx	eax, word ptr [eax]
+ 805275a: 0f b7 c0                     	movzx	eax, ax
+ 805275d: 8b 55 08                     	mov	edx, dword ptr [ebp + 0x8]
+ 8052760: 05 bc 01 00 00               	add	eax, 0x1bc
+ 8052765: 8b 44 82 04                  	mov	eax, dword ptr [edx + 4*eax + 0x4]
+ 8052769: 3b 45 10                     	cmp	eax, dword ptr [ebp + 0x10]
+ 805276c: 74 2e                        	je	0x805279c <_ZN13KPlayerServer12CheckPackageEPhj+0x15c>
+ 805276e: c7 44 24 10 60 09 3d 08      	mov	dword ptr [esp + 0x10], 0x83d0960
+ 8052776: c7 44 24 0c a7 03 00 00      	mov	dword ptr [esp + 0xc], 0x3a7
+ 805277e: c7 44 24 08 5c fe 3c 08      	mov	dword ptr [esp + 0x8], 0x83cfe5c
+ 8052786: c7 44 24 04 68 fd 3c 08      	mov	dword ptr [esp + 0x4], 0x83cfd68
+ 805278e: c7 04 24 07 00 00 00         	mov	dword ptr [esp], 0x7
+ 8052795: e8 1a a6 ff ff               	call	0x804cdb4 <_Z11KGLogPrintf14KGLOG_PRIORITYPKcz@plt>
+ 805279a: eb 4c                        	jmp	0x80527e8 <_ZN13KPlayerServer12CheckPackageEPhj+0x1a8>
+ 805279c: 8b 45 fc                     	mov	eax, dword ptr [ebp - 0x4]
+ 805279f: 0f b7 00                     	movzx	eax, word ptr [eax]
+ 80527a2: 0f b7 c0                     	movzx	eax, ax
+ 80527a5: 8b 55 08                     	mov	edx, dword ptr [ebp + 0x8]
+ 80527a8: 83 c0 0c                     	add	eax, 0xc
+ 80527ab: 8b 44 c2 0c                  	mov	eax, dword ptr [edx + 8*eax + 0xc]
+ 80527af: 85 c0                        	test	eax, eax
+ 80527b1: 75 2e                        	jne	0x80527e1 <_ZN13KPlayerServer12CheckPackageEPhj+0x1a1>
+ 80527b3: c7 44 24 10 60 09 3d 08      	mov	dword ptr [esp + 0x10], 0x83d0960
+ 80527bb: c7 44 24 0c aa 03 00 00      	mov	dword ptr [esp + 0xc], 0x3aa
+ 80527c3: c7 44 24 08 98 fe 3c 08      	mov	dword ptr [esp + 0x8], 0x83cfe98
+ 80527cb: c7 44 24 04 68 fd 3c 08      	mov	dword ptr [esp + 0x4], 0x83cfd68
+ 80527d3: c7 04 24 07 00 00 00         	mov	dword ptr [esp], 0x7
+ 80527da: e8 d5 a5 ff ff               	call	0x804cdb4 <_Z11KGLogPrintf14KGLOG_PRIORITYPKcz@plt>
+ 80527df: eb 07                        	jmp	0x80527e8 <_ZN13KPlayerServer12CheckPackageEPhj+0x1a8>
+ 80527e1: c7 45 f8 01 00 00 00         	mov	dword ptr [ebp - 0x8], 0x1
+ 80527e8: 8b 45 f8                     	mov	eax, dword ptr [ebp - 0x8]
+ 80527eb: c9                           	leave
+ 80527ec: c3                           	ret
+ 80527ed: 90                           	nop
+
+080527ee <_ZN20KBroadcastTargetFuncclEP7KPlayer>:
+ 80527ee: 55                           	push	ebp
+ 80527ef: 89 e5                        	mov	ebp, esp
+ 80527f1: 83 ec 38                     	sub	esp, 0x38
+ 80527f4: c7 45 e8 00 00 00 00         	mov	dword ptr [ebp - 0x18], 0x0
+ 80527fb: c7 45 ec 00 00 00 00         	mov	dword ptr [ebp - 0x14], 0x0
+ 8052802: c7 45 f0 00 00 00 00         	mov	dword ptr [ebp - 0x10], 0x0
+ 8052809: c7 45 f4 00 00 00 00         	mov	dword ptr [ebp - 0xc], 0x0
+ 8052810: 83 7d 0c 00                  	cmp	dword ptr [ebp + 0xc], 0x0
+ 8052814: 75 24                        	jne	0x805283a <_ZN20KBroadcastTargetFuncclEP7KPlayer+0x4c>
+ 8052816: c7 44 24 0c 20 06 3d 08      	mov	dword ptr [esp + 0xc], 0x83d0620
+ 805281e: c7 44 24 08 dd 04 00 00      	mov	dword ptr [esp + 0x8], 0x4dd
+ 8052826: c7 44 24 04 05 fd 3c 08      	mov	dword ptr [esp + 0x4], 0x83cfd05
+ 805282e: c7 04 24 c5 fe 3c 08         	mov	dword ptr [esp], 0x83cfec5
+ 8052835: e8 ca b0 ff ff               	call	0x804d904 <__assert_fail@plt>
+ 805283a: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 805283d: 8b 00                        	mov	eax, dword ptr [eax]
+ 805283f: 85 c0                        	test	eax, eax
+ 8052841: 75 31                        	jne	0x8052874 <_ZN20KBroadcastTargetFuncclEP7KPlayer+0x86>
+ 8052843: c7 44 24 10 20 06 3d 08      	mov	dword ptr [esp + 0x10], 0x83d0620
+ 805284b: c7 44 24 0c de 04 00 00      	mov	dword ptr [esp + 0xc], 0x4de
+ 8052853: c7 44 24 08 cd fe 3c 08      	mov	dword ptr [esp + 0x8], 0x83cfecd
+ 805285b: c7 44 24 04 68 fd 3c 08      	mov	dword ptr [esp + 0x4], 0x83cfd68
+ 8052863: c7 04 24 07 00 00 00         	mov	dword ptr [esp], 0x7
+ 805286a: e8 45 a5 ff ff               	call	0x804cdb4 <_Z11KGLogPrintf14KGLOG_PRIORITYPKcz@plt>
+ 805286f: e9 c8 00 00 00               	jmp	0x805293c <_ZN20KBroadcastTargetFuncclEP7KPlayer+0x14e>
+ 8052874: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 8052877: 05 80 08 00 00               	add	eax, 0x880
+ 805287c: 89 04 24                     	mov	dword ptr [esp], eax
+ 805287f: e8 80 e2 14 00               	call	0x81a0b04 <_ZN7KTarget13GetTargetTypeEv>
+ 8052884: 89 45 f0                     	mov	dword ptr [ebp - 0x10], eax
+ 8052887: 83 7d f0 03                  	cmp	dword ptr [ebp - 0x10], 0x3
+ 805288b: 74 06                        	je	0x8052893 <_ZN20KBroadcastTargetFuncclEP7KPlayer+0xa5>
+ 805288d: 83 7d f0 04                  	cmp	dword ptr [ebp - 0x10], 0x4
+ 8052891: 75 13                        	jne	0x80528a6 <_ZN20KBroadcastTargetFuncclEP7KPlayer+0xb8>
+ 8052893: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 8052896: 05 80 08 00 00               	add	eax, 0x880
+ 805289b: 89 04 24                     	mov	dword ptr [esp], eax
+ 805289e: e8 6b e2 14 00               	call	0x81a0b0e <_ZN7KTarget11GetTargetIDEv>
+ 80528a3: 89 45 f4                     	mov	dword ptr [ebp - 0xc], eax
+ 80528a6: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 80528a9: 8b 00                        	mov	eax, dword ptr [eax]
+ 80528ab: 8b 40 04                     	mov	eax, dword ptr [eax + 0x4]
+ 80528ae: 25 00 00 00 40               	and	eax, 0x40000000
+ 80528b3: 85 c0                        	test	eax, eax
+ 80528b5: 74 55                        	je	0x805290c <_ZN20KBroadcastTargetFuncclEP7KPlayer+0x11e>
+ 80528b7: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 80528ba: 8b 00                        	mov	eax, dword ptr [eax]
+ 80528bc: 89 45 f8                     	mov	dword ptr [ebp - 0x8], eax
+ 80528bf: 8b 45 f8                     	mov	eax, dword ptr [ebp - 0x8]
+ 80528c2: 89 04 24                     	mov	dword ptr [esp], eax
+ 80528c5: e8 ba 8d 30 00               	call	0x835b684 <_ZN4KNpc11GetEmployerEv>
+ 80528ca: 89 45 fc                     	mov	dword ptr [ebp - 0x4], eax
+ 80528cd: 83 7d fc 00                  	cmp	dword ptr [ebp - 0x4], 0x0
+ 80528d1: 74 39                        	je	0x805290c <_ZN20KBroadcastTargetFuncclEP7KPlayer+0x11e>
+ 80528d3: 8b 45 fc                     	mov	eax, dword ptr [ebp - 0x4]
+ 80528d6: 8b 50 04                     	mov	edx, dword ptr [eax + 0x4]
+ 80528d9: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 80528dc: 8b 40 04                     	mov	eax, dword ptr [eax + 0x4]
+ 80528df: 39 c2                        	cmp	edx, eax
+ 80528e1: 75 29                        	jne	0x805290c <_ZN20KBroadcastTargetFuncclEP7KPlayer+0x11e>
+ 80528e3: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 80528e6: 8b 00                        	mov	eax, dword ptr [eax]
+ 80528e8: 8b 40 04                     	mov	eax, dword ptr [eax + 0x4]
+ 80528eb: 3b 45 f4                     	cmp	eax, dword ptr [ebp - 0xc]
+ 80528ee: 74 1c                        	je	0x805290c <_ZN20KBroadcastTargetFuncclEP7KPlayer+0x11e>
+ 80528f0: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 80528f3: 8b 00                        	mov	eax, dword ptr [eax]
+ 80528f5: 89 44 24 08                  	mov	dword ptr [esp + 0x8], eax
+ 80528f9: 8b 45 fc                     	mov	eax, dword ptr [ebp - 0x4]
+ 80528fc: 89 44 24 04                  	mov	dword ptr [esp + 0x4], eax
+ 8052900: c7 04 24 80 11 4e 08         	mov	dword ptr [esp], 0x84e1180
+ 8052907: e8 d4 f8 00 00               	call	0x80621e0 <_ZN13KPlayerServer11DoSetTargetEP7KPlayerP10KCharacter>
+ 805290c: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 805290f: 8b 00                        	mov	eax, dword ptr [eax]
+ 8052911: 8b 40 04                     	mov	eax, dword ptr [eax + 0x4]
+ 8052914: 3b 45 f4                     	cmp	eax, dword ptr [ebp - 0xc]
+ 8052917: 75 1c                        	jne	0x8052935 <_ZN20KBroadcastTargetFuncclEP7KPlayer+0x147>
+ 8052919: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 805291c: 8b 00                        	mov	eax, dword ptr [eax]
+ 805291e: 89 44 24 08                  	mov	dword ptr [esp + 0x8], eax
+ 8052922: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 8052925: 89 44 24 04                  	mov	dword ptr [esp + 0x4], eax
+ 8052929: c7 04 24 80 11 4e 08         	mov	dword ptr [esp], 0x84e1180
+ 8052930: e8 ab f8 00 00               	call	0x80621e0 <_ZN13KPlayerServer11DoSetTargetEP7KPlayerP10KCharacter>
+ 8052935: c7 45 e8 01 00 00 00         	mov	dword ptr [ebp - 0x18], 0x1
+ 805293c: 8b 45 e8                     	mov	eax, dword ptr [ebp - 0x18]
+ 805293f: c9                           	leave
+ 8052940: c3                           	ret
+ 8052941: 90                           	nop
+
+08052942 <_ZN13KPlayerServer20ProcessNewConnectionEP16IKG_SocketStream>:
+ 8052942: 55                           	push	ebp
+ 8052943: 89 e5                        	mov	ebp, esp
+ 8052945: 53                           	push	ebx
+ 8052946: 83 ec 34                     	sub	esp, 0x34
+ 8052949: c7 45 ec 00 00 00 00         	mov	dword ptr [ebp - 0x14], 0x0
+ 8052950: c7 45 f0 00 00 00 00         	mov	dword ptr [ebp - 0x10], 0x0
+ 8052957: c7 45 f4 ff ff ff ff         	mov	dword ptr [ebp - 0xc], 0xffffffff
+ 805295e: 66 c7 45 ea 00 00            	mov	word ptr [ebp - 0x16], 0x0
+ 8052964: c7 45 f8 00 00 00 00         	mov	dword ptr [ebp - 0x8], 0x0
+ 805296b: 83 7d 0c 00                  	cmp	dword ptr [ebp + 0xc], 0x0
+ 805296f: 75 24                        	jne	0x8052995 <_ZN13KPlayerServer20ProcessNewConnectionEP16IKG_SocketStream+0x53>
+ 8052971: c7 44 24 0c 20 0a 3d 08      	mov	dword ptr [esp + 0xc], 0x83d0a20
+ 8052979: c7 44 24 08 b6 02 00 00      	mov	dword ptr [esp + 0x8], 0x2b6
+ 8052981: c7 44 24 04 05 fd 3c 08      	mov	dword ptr [esp + 0x4], 0x83cfd05
+ 8052989: c7 04 24 dd fe 3c 08         	mov	dword ptr [esp], 0x83cfedd
+ 8052990: e8 6f af ff ff               	call	0x804d904 <__assert_fail@plt>
+ 8052995: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8052998: 83 c0 60                     	add	eax, 0x60
+ 805299b: 89 04 24                     	mov	dword ptr [esp], eax
+ 805299e: e8 c5 3c 00 00               	call	0x8056668 <_ZNKSt6vectorIjSaIjEE5emptyEv>
+ 80529a3: 0f b6 c0                     	movzx	eax, al
+ 80529a6: 89 45 f0                     	mov	dword ptr [ebp - 0x10], eax
+ 80529a9: 83 7d f0 00                  	cmp	dword ptr [ebp - 0x10], 0x0
+ 80529ad: 0f 85 a1 02 00 00            	jne	0x8052c54 <_ZN13KPlayerServer20ProcessNewConnectionEP16IKG_SocketStream+0x312>
+ 80529b3: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 80529b6: 8b 00                        	mov	eax, dword ptr [eax]
+ 80529b8: 83 c0 24                     	add	eax, 0x24
+ 80529bb: 8b 10                        	mov	edx, dword ptr [eax]
+ 80529bd: 8d 45 ea                     	lea	eax, [ebp - 0x16]
+ 80529c0: 89 44 24 08                  	mov	dword ptr [esp + 0x8], eax
+ 80529c4: 8d 45 e4                     	lea	eax, [ebp - 0x1c]
+ 80529c7: 89 44 24 04                  	mov	dword ptr [esp + 0x4], eax
+ 80529cb: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 80529ce: 89 04 24                     	mov	dword ptr [esp], eax
+ 80529d1: ff d2                        	call	edx
+ 80529d3: 89 45 f0                     	mov	dword ptr [ebp - 0x10], eax
+ 80529d6: 83 7d f0 00                  	cmp	dword ptr [ebp - 0x10], 0x0
+ 80529da: 75 31                        	jne	0x8052a0d <_ZN13KPlayerServer20ProcessNewConnectionEP16IKG_SocketStream+0xcb>
+ 80529dc: c7 44 24 10 20 0a 3d 08      	mov	dword ptr [esp + 0x10], 0x83d0a20
+ 80529e4: c7 44 24 0c bc 02 00 00      	mov	dword ptr [esp + 0xc], 0x2bc
+ 80529ec: c7 44 24 08 e6 fe 3c 08      	mov	dword ptr [esp + 0x8], 0x83cfee6
+ 80529f4: c7 44 24 04 68 fd 3c 08      	mov	dword ptr [esp + 0x4], 0x83cfd68
+ 80529fc: c7 04 24 07 00 00 00         	mov	dword ptr [esp], 0x7
+ 8052a03: e8 ac a3 ff ff               	call	0x804cdb4 <_Z11KGLogPrintf14KGLOG_PRIORITYPKcz@plt>
+ 8052a08: e9 47 02 00 00               	jmp	0x8052c54 <_ZN13KPlayerServer20ProcessNewConnectionEP16IKG_SocketStream+0x312>
+ 8052a0d: 8b 45 e4                     	mov	eax, dword ptr [ebp - 0x1c]
+ 8052a10: 89 04 24                     	mov	dword ptr [esp], eax
+ 8052a13: e8 4c ae ff ff               	call	0x804d864 <inet_ntoa@plt>
+ 8052a18: 89 45 f8                     	mov	dword ptr [ebp - 0x8], eax
+ 8052a1b: 83 7d f8 00                  	cmp	dword ptr [ebp - 0x8], 0x0
+ 8052a1f: 75 31                        	jne	0x8052a52 <_ZN13KPlayerServer20ProcessNewConnectionEP16IKG_SocketStream+0x110>
+ 8052a21: c7 44 24 10 20 0a 3d 08      	mov	dword ptr [esp + 0x10], 0x83d0a20
+ 8052a29: c7 44 24 0c bf 02 00 00      	mov	dword ptr [esp + 0xc], 0x2bf
+ 8052a31: c7 44 24 08 ef fe 3c 08      	mov	dword ptr [esp + 0x8], 0x83cfeef
+ 8052a39: c7 44 24 04 68 fd 3c 08      	mov	dword ptr [esp + 0x4], 0x83cfd68
+ 8052a41: c7 04 24 07 00 00 00         	mov	dword ptr [esp], 0x7
+ 8052a48: e8 67 a3 ff ff               	call	0x804cdb4 <_Z11KGLogPrintf14KGLOG_PRIORITYPKcz@plt>
+ 8052a4d: e9 02 02 00 00               	jmp	0x8052c54 <_ZN13KPlayerServer20ProcessNewConnectionEP16IKG_SocketStream+0x312>
+ 8052a52: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8052a55: 83 c0 60                     	add	eax, 0x60
+ 8052a58: 89 04 24                     	mov	dword ptr [esp], eax
+ 8052a5b: e8 20 3b 00 00               	call	0x8056580 <_ZNSt6vectorIjSaIjEE4backEv>
+ 8052a60: 8b 00                        	mov	eax, dword ptr [eax]
+ 8052a62: 89 45 f4                     	mov	dword ptr [ebp - 0xc], eax
+ 8052a65: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8052a68: 83 c0 60                     	add	eax, 0x60
+ 8052a6b: 89 04 24                     	mov	dword ptr [esp], eax
+ 8052a6e: e8 6f 39 00 00               	call	0x80563e2 <_ZNSt6vectorIjSaIjEE8pop_backEv>
+ 8052a73: 83 7d f4 00                  	cmp	dword ptr [ebp - 0xc], 0x0
+ 8052a77: 78 0b                        	js	0x8052a84 <_ZN13KPlayerServer20ProcessNewConnectionEP16IKG_SocketStream+0x142>
+ 8052a79: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8052a7c: 8b 40 40                     	mov	eax, dword ptr [eax + 0x40]
+ 8052a7f: 3b 45 f4                     	cmp	eax, dword ptr [ebp - 0xc]
+ 8052a82: 7f 24                        	jg	0x8052aa8 <_ZN13KPlayerServer20ProcessNewConnectionEP16IKG_SocketStream+0x166>
+ 8052a84: c7 44 24 0c 20 0a 3d 08      	mov	dword ptr [esp + 0xc], 0x83d0a20
+ 8052a8c: c7 44 24 08 c4 02 00 00      	mov	dword ptr [esp + 0x8], 0x2c4
+ 8052a94: c7 44 24 04 05 fd 3c 08      	mov	dword ptr [esp + 0x4], 0x83cfd05
+ 8052a9c: c7 04 24 d4 fc 3c 08         	mov	dword ptr [esp], 0x83cfcd4
+ 8052aa3: e8 5c ae ff ff               	call	0x804d904 <__assert_fail@plt>
+ 8052aa8: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 8052aab: 8b 00                        	mov	eax, dword ptr [eax]
+ 8052aad: 83 c0 28                     	add	eax, 0x28
+ 8052ab0: 8b 10                        	mov	edx, dword ptr [eax]
+ 8052ab2: 8b 45 f4                     	mov	eax, dword ptr [ebp - 0xc]
+ 8052ab5: 89 44 24 04                  	mov	dword ptr [esp + 0x4], eax
+ 8052ab9: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 8052abc: 89 04 24                     	mov	dword ptr [esp], eax
+ 8052abf: ff d2                        	call	edx
+ 8052ac1: 89 45 f0                     	mov	dword ptr [ebp - 0x10], eax
+ 8052ac4: 83 7d f0 00                  	cmp	dword ptr [ebp - 0x10], 0x0
+ 8052ac8: 75 31                        	jne	0x8052afb <_ZN13KPlayerServer20ProcessNewConnectionEP16IKG_SocketStream+0x1b9>
+ 8052aca: c7 44 24 10 20 0a 3d 08      	mov	dword ptr [esp + 0x10], 0x83d0a20
+ 8052ad2: c7 44 24 0c c7 02 00 00      	mov	dword ptr [esp + 0xc], 0x2c7
+ 8052ada: c7 44 24 08 e6 fe 3c 08      	mov	dword ptr [esp + 0x8], 0x83cfee6
+ 8052ae2: c7 44 24 04 68 fd 3c 08      	mov	dword ptr [esp + 0x4], 0x83cfd68
+ 8052aea: c7 04 24 07 00 00 00         	mov	dword ptr [esp], 0x7
+ 8052af1: e8 be a2 ff ff               	call	0x804cdb4 <_Z11KGLogPrintf14KGLOG_PRIORITYPKcz@plt>
+ 8052af6: e9 59 01 00 00               	jmp	0x8052c54 <_ZN13KPlayerServer20ProcessNewConnectionEP16IKG_SocketStream+0x312>
+ 8052afb: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8052afe: 8b 48 3c                     	mov	ecx, dword ptr [eax + 0x3c]
+ 8052b01: 8b 55 f4                     	mov	edx, dword ptr [ebp - 0xc]
+ 8052b04: 89 d0                        	mov	eax, edx
+ 8052b06: 01 c0                        	add	eax, eax
+ 8052b08: 01 d0                        	add	eax, edx
+ 8052b0a: c1 e0 04                     	shl	eax, 0x4
+ 8052b0d: 8d 14 01                     	lea	edx, [ecx + eax]
+ 8052b10: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 8052b13: 89 42 14                     	mov	dword ptr [edx + 0x14], eax
+ 8052b16: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8052b19: 8b 48 3c                     	mov	ecx, dword ptr [eax + 0x3c]
+ 8052b1c: 8b 55 f4                     	mov	edx, dword ptr [ebp - 0xc]
+ 8052b1f: 89 d0                        	mov	eax, edx
+ 8052b21: 01 c0                        	add	eax, eax
+ 8052b23: 01 d0                        	add	eax, edx
+ 8052b25: c1 e0 04                     	shl	eax, 0x4
+ 8052b28: 8d 04 01                     	lea	eax, [ecx + eax]
+ 8052b2b: 8b 40 14                     	mov	eax, dword ptr [eax + 0x14]
+ 8052b2e: 8b 00                        	mov	eax, dword ptr [eax]
+ 8052b30: 83 c0 04                     	add	eax, 0x4
+ 8052b33: 8b 18                        	mov	ebx, dword ptr [eax]
+ 8052b35: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8052b38: 8b 48 3c                     	mov	ecx, dword ptr [eax + 0x3c]
+ 8052b3b: 8b 55 f4                     	mov	edx, dword ptr [ebp - 0xc]
+ 8052b3e: 89 d0                        	mov	eax, edx
+ 8052b40: 01 c0                        	add	eax, eax
+ 8052b42: 01 d0                        	add	eax, edx
+ 8052b44: c1 e0 04                     	shl	eax, 0x4
+ 8052b47: 8d 04 01                     	lea	eax, [ecx + eax]
+ 8052b4a: 8b 40 14                     	mov	eax, dword ptr [eax + 0x14]
+ 8052b4d: 89 04 24                     	mov	dword ptr [esp], eax
+ 8052b50: ff d3                        	call	ebx
+ 8052b52: 83 ec 04                     	sub	esp, 0x4
+ 8052b55: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8052b58: 8b 48 3c                     	mov	ecx, dword ptr [eax + 0x3c]
+ 8052b5b: 8b 55 f4                     	mov	edx, dword ptr [ebp - 0xc]
+ 8052b5e: 89 d0                        	mov	eax, edx
+ 8052b60: 01 c0                        	add	eax, eax
+ 8052b62: 01 d0                        	add	eax, edx
+ 8052b64: c1 e0 04                     	shl	eax, 0x4
+ 8052b67: 8d 04 01                     	lea	eax, [ecx + eax]
+ 8052b6a: 89 04 24                     	mov	dword ptr [esp], eax
+ 8052b6d: e8 f4 25 37 00               	call	0x83c5166 <_ZN9KG_Packer5ResetEv>
+ 8052b72: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8052b75: 8b 48 3c                     	mov	ecx, dword ptr [eax + 0x3c]
+ 8052b78: 8b 55 f4                     	mov	edx, dword ptr [ebp - 0xc]
+ 8052b7b: 89 d0                        	mov	eax, edx
+ 8052b7d: 01 c0                        	add	eax, eax
+ 8052b7f: 01 d0                        	add	eax, edx
+ 8052b81: c1 e0 04                     	shl	eax, 0x4
+ 8052b84: 8d 14 01                     	lea	edx, [ecx + eax]
+ 8052b87: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8052b8a: 8b 40 50                     	mov	eax, dword ptr [eax + 0x50]
+ 8052b8d: 89 42 1c                     	mov	dword ptr [edx + 0x1c], eax
+ 8052b90: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8052b93: 8b 48 3c                     	mov	ecx, dword ptr [eax + 0x3c]
+ 8052b96: 8b 55 f4                     	mov	edx, dword ptr [ebp - 0xc]
+ 8052b99: 89 d0                        	mov	eax, edx
+ 8052b9b: 01 c0                        	add	eax, eax
+ 8052b9d: 01 d0                        	add	eax, edx
+ 8052b9f: c1 e0 04                     	shl	eax, 0x4
+ 8052ba2: 8d 04 01                     	lea	eax, [ecx + eax]
+ 8052ba5: c7 40 18 00 00 00 00         	mov	dword ptr [eax + 0x18], 0x0
+ 8052bac: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8052baf: 8b 48 3c                     	mov	ecx, dword ptr [eax + 0x3c]
+ 8052bb2: 8b 55 f4                     	mov	edx, dword ptr [ebp - 0xc]
+ 8052bb5: 89 d0                        	mov	eax, edx
+ 8052bb7: 01 c0                        	add	eax, eax
+ 8052bb9: 01 d0                        	add	eax, edx
+ 8052bbb: c1 e0 04                     	shl	eax, 0x4
+ 8052bbe: 8d 04 01                     	lea	eax, [ecx + eax]
+ 8052bc1: c7 40 20 00 00 00 00         	mov	dword ptr [eax + 0x20], 0x0
+ 8052bc8: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8052bcb: 8b 48 3c                     	mov	ecx, dword ptr [eax + 0x3c]
+ 8052bce: 8b 55 f4                     	mov	edx, dword ptr [ebp - 0xc]
+ 8052bd1: 89 d0                        	mov	eax, edx
+ 8052bd3: 01 c0                        	add	eax, eax
+ 8052bd5: 01 d0                        	add	eax, edx
+ 8052bd7: c1 e0 04                     	shl	eax, 0x4
+ 8052bda: 8d 04 01                     	lea	eax, [ecx + eax]
+ 8052bdd: c7 40 24 00 00 00 00         	mov	dword ptr [eax + 0x24], 0x0
+ 8052be4: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8052be7: 8b 48 3c                     	mov	ecx, dword ptr [eax + 0x3c]
+ 8052bea: 8b 55 f4                     	mov	edx, dword ptr [ebp - 0xc]
+ 8052bed: 89 d0                        	mov	eax, edx
+ 8052bef: 01 c0                        	add	eax, eax
+ 8052bf1: 01 d0                        	add	eax, edx
+ 8052bf3: c1 e0 04                     	shl	eax, 0x4
+ 8052bf6: 8d 14 01                     	lea	edx, [ecx + eax]
+ 8052bf9: b8 00 00 00 00               	mov	eax, 0x0
+ 8052bfe: 89 42 28                     	mov	dword ptr [edx + 0x28], eax
+ 8052c01: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8052c04: 8b 48 3c                     	mov	ecx, dword ptr [eax + 0x3c]
+ 8052c07: 8b 55 f4                     	mov	edx, dword ptr [ebp - 0xc]
+ 8052c0a: 89 d0                        	mov	eax, edx
+ 8052c0c: 01 c0                        	add	eax, eax
+ 8052c0e: 01 d0                        	add	eax, edx
+ 8052c10: c1 e0 04                     	shl	eax, 0x4
+ 8052c13: 8d 14 01                     	lea	edx, [ecx + eax]
+ 8052c16: a1 f8 67 4f 08               	mov	eax, dword ptr [0x84f67f8]
+ 8052c1b: 8b 00                        	mov	eax, dword ptr [eax]
+ 8052c1d: 89 42 2c                     	mov	dword ptr [edx + 0x2c], eax
+ 8052c20: 0f b7 45 ea                  	movzx	eax, word ptr [ebp - 0x16]
+ 8052c24: 0f b7 d0                     	movzx	edx, ax
+ 8052c27: 8b 45 f4                     	mov	eax, dword ptr [ebp - 0xc]
+ 8052c2a: 89 44 24 10                  	mov	dword ptr [esp + 0x10], eax
+ 8052c2e: 89 54 24 0c                  	mov	dword ptr [esp + 0xc], edx
+ 8052c32: 8b 45 f8                     	mov	eax, dword ptr [ebp - 0x8]
+ 8052c35: 89 44 24 08                  	mov	dword ptr [esp + 0x8], eax
+ 8052c39: c7 44 24 04 f8 fe 3c 08      	mov	dword ptr [esp + 0x4], 0x83cfef8
+ 8052c41: c7 04 24 06 00 00 00         	mov	dword ptr [esp], 0x6
+ 8052c48: e8 67 a1 ff ff               	call	0x804cdb4 <_Z11KGLogPrintf14KGLOG_PRIORITYPKcz@plt>
+ 8052c4d: c7 45 ec 01 00 00 00         	mov	dword ptr [ebp - 0x14], 0x1
+ 8052c54: 83 7d ec 00                  	cmp	dword ptr [ebp - 0x14], 0x0
+ 8052c58: 75 1a                        	jne	0x8052c74 <_ZN13KPlayerServer20ProcessNewConnectionEP16IKG_SocketStream+0x332>
+ 8052c5a: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 8052c5d: 8b 00                        	mov	eax, dword ptr [eax]
+ 8052c5f: 83 c0 28                     	add	eax, 0x28
+ 8052c62: 8b 10                        	mov	edx, dword ptr [eax]
+ 8052c64: c7 44 24 04 ff ff ff ff      	mov	dword ptr [esp + 0x4], 0xffffffff
+ 8052c6c: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 8052c6f: 89 04 24                     	mov	dword ptr [esp], eax
+ 8052c72: ff d2                        	call	edx
+ 8052c74: 8b 45 ec                     	mov	eax, dword ptr [ebp - 0x14]
+ 8052c77: 8b 5d fc                     	mov	ebx, dword ptr [ebp - 0x4]
+ 8052c7a: c9                           	leave
+ 8052c7b: c3                           	ret
+
+08052c7c <_ZN13KPlayerServer8ShutdownEi>:
+ 8052c7c: 55                           	push	ebp
+ 8052c7d: 89 e5                        	mov	ebp, esp
+ 8052c7f: 53                           	push	ebx

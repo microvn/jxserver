@@ -1,0 +1,31 @@
+{
+  "schema": "journey-candidate-overlay/v1",
+  "origin": "candidate",
+  "contracts": [
+    {
+      "contract_key": "v4:47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a:r2s_player_login_request:6:R2S_PLAYER_LOGIN_REQUEST:0x00a85fd0",
+      "process": "jx3_dwarf/SO3GameServerD",
+      "protocol": {"enum": {"name": "r2s_player_login_request", "value": 6}},
+      "payload_byte_size": 302,
+      "fields": [
+        {"name": "dwRoleID", "offset": 2, "order": 0},
+        {"name": "nGatewayPlayerIndex", "offset": 6, "order": 1},
+        {"name": "szRoleName", "offset": 10, "order": 2},
+        {"name": "szAccount", "offset": 42, "order": 3},
+        {"name": "AccInfo", "offset": 74, "order": 4},
+        {"name": "dwSystemTeamID", "offset": 122, "order": 5},
+        {"name": "dwTeamID", "offset": 126, "order": 6},
+        {"name": "BaseInfo", "offset": 130, "order": 7},
+        {"name": "nBattleSide", "offset": 292, "order": 8},
+        {"name": "dwTongID", "offset": 296, "order": 9},
+        {"name": "byFarmerLimit", "offset": 300, "order": 10},
+        {"name": "byAccountMaxLevel", "offset": 301, "order": 11}
+      ],
+      "source": {
+        "location": "synthetic://candidate/v4-v5-adapter/neutral-mirror",
+        "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      }
+    }
+  ],
+  "fixture_note": "Synthetic neutral mechanical mirror of one converted target fact; it is not candidate source or binary evidence."
+}

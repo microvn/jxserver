@@ -1,0 +1,13 @@
+# Files intentionally changed by the B1--B4 entry overlay.
+# Baseline: 1516b8b; raw patch SHA-256: c479f26a0d5c96b3d123b4fbdefdd43d058e9513c01dd092a783ef637934f23f
+include/Include/GS_Client_Protocol.h
+include/Include/KRoleDBDataDef.h
+include/Include/Relay_GS_Protocol.h
+src/SO3World/Src/KPlayer.cpp
+src/SO3World/Src/KPlayer.h
+src/SO3World/Src/KPlayerServer.cpp
+src/SO3World/Src/KPlayerServer.h
+src/SO3World/Src/KRegressionPlayerData.cpp
+src/SO3World/Src/KRegressionPlayerData.h
+src/SO3World/Src/KRelayClient.cpp
+src/SO3World/Src/KRelayClient.h

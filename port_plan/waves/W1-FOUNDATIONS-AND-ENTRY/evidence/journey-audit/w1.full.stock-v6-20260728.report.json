@@ -1,0 +1,350 @@
+{
+  "schema": "jx3-journey-audit-report/v1",
+  "journey_id": "w1.full.stock_vs_v6.20260728",
+  "journey_label": "Wave 1 full journey audit: stock vs itemv6 candidate on July 28, 2026",
+  "taxonomy": [],
+  "axes": {
+    "layer": [
+      "provenance",
+      "process-bootstrap",
+      "transport-security",
+      "protocol-serialization",
+      "abi-layout",
+      "persistence-blob",
+      "resource-script",
+      "state-machine",
+      "runtime-observability",
+      "terminal-integration"
+    ],
+    "contract_kind": [
+      "pair-distinctness",
+      "runtime-frontier",
+      "mechanical-envelope",
+      "payload-layout",
+      "dispatch-closure",
+      "completion-gate",
+      "integration-outcome"
+    ],
+    "owner_scope": [
+      "Gateway",
+      "GameCenter/GameServer relay pair",
+      "Client/Gateway/GameCenter/GameServer"
+    ],
+    "data_domain": [
+      "session_login",
+      "relay_role_login",
+      "ready_sync"
+    ],
+    "evidence_surface": [
+      "manifest",
+      "probe-ledger",
+      "boundary-capsule"
+    ]
+  },
+  "contract_path": "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-audit/w1.full.stock-v6-20260728.contract.json",
+  "contract_sha256": "f159fe298a14093b22a2df31f81128f12db7072bda049f54e717bd085c831a4a",
+  "checkpoint_order": [
+    "w1.full.provenance.distinct_pair",
+    "w1.full.runtime.mechanical_handoff_full",
+    "w1.full.runtime.gateway_center_frontier"
+  ],
+  "checkpoints": [
+    {
+      "checkpoint_id": "w1.full.provenance.distinct_pair",
+      "label": "Stock and itemv6 candidate use distinct GameServer provenance",
+      "layer": "provenance",
+      "contract_kind": "pair-distinctness",
+      "owner_scope": "Client/Gateway/GameCenter/GameServer",
+      "data_domain": "session_login",
+      "evidence_surface": "manifest",
+      "surface": null,
+      "status": "PASS",
+      "local_status": "PASS",
+      "depends_on": [],
+      "blocked_by": [],
+      "terminal": false,
+      "owner": null,
+      "summary": "The full-journey runtime comparison is valid only if stock and itemv6 candidate point at different GameServer binaries.",
+      "target_evidence": [],
+      "candidate_evidence": [],
+      "runtime_evidence": [],
+      "findings": [
+        {
+          "status": "PASS",
+          "summary": "stock/candidate runtime manifests prove distinct GameServer binaries",
+          "evidence": [
+            {
+              "path": "graphengine/staging/jx3probe/w1-full-stock-20260728-r2/stock/manifest.json",
+              "sha256": "c5d1561711156d5afd54875fd7e42fb2cf25ae361abf222d2e25fd48d47758b9",
+              "detail": "stock gameserver provenance",
+              "extra": {
+                "gameserver_sha256": "3002bf4ad08d4c0fb9d4fc10f2d66b1f6cd8f70d398ff792136a3b7d5c416f11"
+              }
+            },
+            {
+              "path": "graphengine/staging/jx3probe/w1-full-20260729/candidate/manifest.json",
+              "sha256": "9d473d947a265c92c6c549b5be67c097b6dddc027ad5f85677eac751740c7177",
+              "detail": "candidate gameserver provenance",
+              "extra": {
+                "gameserver_sha256": "6bf935a12f6db016711b077a2a162c96018504ad8784286553773515dc474357"
+              }
+            }
+          ]
+        }
+      ],
+      "missing_evidence": [],
+      "next_action": null
+    },
+    {
+      "checkpoint_id": "w1.full.runtime.mechanical_handoff_full",
+      "label": "Both arms complete the enabled full-journey mechanical ladder",
+      "layer": "runtime-observability",
+      "contract_kind": "mechanical-envelope",
+      "owner_scope": "Client/Gateway/GameCenter/GameServer",
+      "data_domain": "session_login",
+      "evidence_surface": "probe-ledger",
+      "surface": null,
+      "status": "PASS",
+      "local_status": "PASS",
+      "depends_on": [
+        "w1.full.provenance.distinct_pair"
+      ],
+      "blocked_by": [],
+      "terminal": false,
+      "owner": null,
+      "summary": "This proves both arms reached the enabled Wave 1 full-journey checkpoints up to the first GS payload on port 3113.",
+      "target_evidence": [],
+      "candidate_evidence": [],
+      "runtime_evidence": [],
+      "findings": [
+        {
+          "status": "PASS",
+          "summary": "stock and candidate both contain the expected probe ladder rows",
+          "evidence": [
+            {
+              "path": "graphengine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
+              "sha256": "84bceb4c53107d959ad88c652b1653ac60acd10cb440c68d1c90bfb4f6e596a4",
+              "detail": "stock probe ledger row",
+              "extra": {
+                "contract_key": "w1.gateway.client_5004",
+                "profile_id": "w1.full_journey.v1"
+              }
+            },
+            {
+              "path": "graphengine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
+              "sha256": "101216207791c599109c43e6cc5f416bf42f1ce75d74ebdddfe7d6f4c52d2c86",
+              "detail": "candidate probe ledger row",
+              "extra": {
+                "contract_key": "w1.gateway.client_5004",
+                "profile_id": "w1.full_journey.v1"
+              }
+            },
+            {
+              "path": "graphengine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
+              "sha256": "84bceb4c53107d959ad88c652b1653ac60acd10cb440c68d1c90bfb4f6e596a4",
+              "detail": "stock probe ledger row",
+              "extra": {
+                "contract_key": "w1.gateway.center_9001",
+                "profile_id": "w1.full_journey.v1"
+              }
+            },
+            {
+              "path": "graphengine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
+              "sha256": "101216207791c599109c43e6cc5f416bf42f1ce75d74ebdddfe7d6f4c52d2c86",
+              "detail": "candidate probe ledger row",
+              "extra": {
+                "contract_key": "w1.gateway.center_9001",
+                "profile_id": "w1.full_journey.v1"
+              }
+            },
+            {
+              "path": "graphengine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
+              "sha256": "84bceb4c53107d959ad88c652b1653ac60acd10cb440c68d1c90bfb4f6e596a4",
+              "detail": "stock probe ledger row",
+              "extra": {
+                "contract_key": "w1.center.gameserver_5003",
+                "profile_id": "w1.full_journey.v1"
+              }
+            },
+            {
+              "path": "graphengine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
+              "sha256": "101216207791c599109c43e6cc5f416bf42f1ce75d74ebdddfe7d6f4c52d2c86",
+              "detail": "candidate probe ledger row",
+              "extra": {
+                "contract_key": "w1.center.gameserver_5003",
+                "profile_id": "w1.full_journey.v1"
+              }
+            },
+            {
+              "path": "graphengine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
+              "sha256": "84bceb4c53107d959ad88c652b1653ac60acd10cb440c68d1c90bfb4f6e596a4",
+              "detail": "stock probe ledger row",
+              "extra": {
+                "contract_key": "w1.center_gameserver_role_login_request",
+                "profile_id": "w1.full_journey.v1"
+              }
+            },
+            {
+              "path": "graphengine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
+              "sha256": "101216207791c599109c43e6cc5f416bf42f1ce75d74ebdddfe7d6f4c52d2c86",
+              "detail": "candidate probe ledger row",
+              "extra": {
+                "contract_key": "w1.center_gameserver_role_login_request",
+                "profile_id": "w1.full_journey.v1"
+              }
+            },
+            {
+              "path": "graphengine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
+              "sha256": "84bceb4c53107d959ad88c652b1653ac60acd10cb440c68d1c90bfb4f6e596a4",
+              "detail": "stock probe ledger row",
+              "extra": {
+                "contract_key": "w1.gameserver_center_role_login_respond",
+                "profile_id": "w1.full_journey.v1"
+              }
+            },
+            {
+              "path": "graphengine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
+              "sha256": "101216207791c599109c43e6cc5f416bf42f1ce75d74ebdddfe7d6f4c52d2c86",
+              "detail": "candidate probe ledger row",
+              "extra": {
+                "contract_key": "w1.gameserver_center_role_login_respond",
+                "profile_id": "w1.full_journey.v1"
+              }
+            },
+            {
+              "path": "graphengine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
+              "sha256": "84bceb4c53107d959ad88c652b1653ac60acd10cb440c68d1c90bfb4f6e596a4",
+              "detail": "stock probe ledger row",
+              "extra": {
+                "contract_key": "w1.client_gameserver_syn_3113",
+                "profile_id": "w1.full_journey.v1"
+              }
+            },
+            {
+              "path": "graphengine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
+              "sha256": "101216207791c599109c43e6cc5f416bf42f1ce75d74ebdddfe7d6f4c52d2c86",
+              "detail": "candidate probe ledger row",
+              "extra": {
+                "contract_key": "w1.client_gameserver_syn_3113",
+                "profile_id": "w1.full_journey.v1"
+              }
+            },
+            {
+              "path": "graphengine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
+              "sha256": "84bceb4c53107d959ad88c652b1653ac60acd10cb440c68d1c90bfb4f6e596a4",
+              "detail": "stock probe ledger row",
+              "extra": {
+                "contract_key": "w1.gameserver_synack_3113",
+                "profile_id": "w1.full_journey.v1"
+              }
+            },
+            {
+              "path": "graphengine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
+              "sha256": "101216207791c599109c43e6cc5f416bf42f1ce75d74ebdddfe7d6f4c52d2c86",
+              "detail": "candidate probe ledger row",
+              "extra": {
+                "contract_key": "w1.gameserver_synack_3113",
+                "profile_id": "w1.full_journey.v1"
+              }
+            },
+            {
+              "path": "graphengine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
+              "sha256": "84bceb4c53107d959ad88c652b1653ac60acd10cb440c68d1c90bfb4f6e596a4",
+              "detail": "stock probe ledger row",
+              "extra": {
+                "contract_key": "w1.client_gameserver_ack_3113",
+                "profile_id": "w1.full_journey.v1"
+              }
+            },
+            {
+              "path": "graphengine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
+              "sha256": "101216207791c599109c43e6cc5f416bf42f1ce75d74ebdddfe7d6f4c52d2c86",
+              "detail": "candidate probe ledger row",
+              "extra": {
+                "contract_key": "w1.client_gameserver_ack_3113",
+                "profile_id": "w1.full_journey.v1"
+              }
+            },
+            {
+              "path": "graphengine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
+              "sha256": "84bceb4c53107d959ad88c652b1653ac60acd10cb440c68d1c90bfb4f6e596a4",
+              "detail": "stock probe ledger row",
+              "extra": {
+                "contract_key": "w1.gameserver_payload_3113",
+                "profile_id": "w1.full_journey.v1"
+              }
+            },
+            {
+              "path": "graphengine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
+              "sha256": "101216207791c599109c43e6cc5f416bf42f1ce75d74ebdddfe7d6f4c52d2c86",
+              "detail": "candidate probe ledger row",
+              "extra": {
+                "contract_key": "w1.gameserver_payload_3113",
+                "profile_id": "w1.full_journey.v1"
+              }
+            }
+          ]
+        }
+      ],
+      "missing_evidence": [],
+      "next_action": null
+    },
+    {
+      "checkpoint_id": "w1.full.runtime.gateway_center_frontier",
+      "label": "First full-journey runtime divergence is Gateway to Center handoff",
+      "layer": "runtime-observability",
+      "contract_kind": "runtime-frontier",
+      "owner_scope": "Gateway",
+      "data_domain": "session_login",
+      "evidence_surface": "boundary-capsule",
+      "surface": null,
+      "status": "FAIL",
+      "local_status": "FAIL",
+      "depends_on": [
+        "w1.full.runtime.mechanical_handoff_full"
+      ],
+      "blocked_by": [],
+      "terminal": false,
+      "owner": null,
+      "summary": "The retained full-journey pair shows the first divergence at `w1.gateway.center_9001`, before any planned semantic role-load checkpoint.",
+      "target_evidence": [],
+      "candidate_evidence": [],
+      "runtime_evidence": [],
+      "findings": [
+        {
+          "status": "FAIL",
+          "summary": "paired runtime capture diverges at this checkpoint",
+          "evidence": [
+            {
+              "path": "graphengine/staging/jx3probe/w1-full-v6-audit-20260728/boundary-capsule.json",
+              "sha256": "ce6c36bd84a6ea02a3b305c9afd783bdbb5198467f9fe72d009d5f2573c4e372",
+              "detail": "jx3probe first runtime divergence",
+              "extra": {
+                "contract_key": "w1.gateway.center_9001",
+                "difference_dimensions": [
+                  "state_fingerprint"
+                ],
+                "sequence": 1
+              }
+            }
+          ]
+        }
+      ],
+      "missing_evidence": [],
+      "next_action": "Inspect the direct owner closure for the `w1.gateway.center_9001` state-fingerprint divergence before patching relay role-load or later enter-world logic."
+    }
+  ],
+  "root_boundary": {
+    "checkpoint_id": "w1.full.runtime.gateway_center_frontier",
+    "status": "FAIL",
+    "layer": "runtime-observability",
+    "contract_kind": "runtime-frontier",
+    "owner_scope": "Gateway",
+    "data_domain": "session_login",
+    "evidence_surface": "boundary-capsule",
+    "label": "First full-journey runtime divergence is Gateway to Center handoff"
+  },
+  "downstream_blocked": [],
+  "downstream_static_drift": [],
+  "next_action": "Inspect the direct owner closure for the `w1.gateway.center_9001` state-fingerprint divergence before patching relay role-load or later enter-world logic."
+}

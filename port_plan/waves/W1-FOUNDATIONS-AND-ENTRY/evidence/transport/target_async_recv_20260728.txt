@@ -1,0 +1,318 @@
+
+/Volumes/ExData/game/jx3/jx3_dwarf/SO3GameServerD:	file format elf32-i386
+
+Disassembly of section .text:
+
+083c7b92 <_ZN20KG_AsyncSocketStream4RecvEPP10IKG_Buffer>:
+ 83c7b92: 55                           	push	ebp
+ 83c7b93: 89 e5                        	mov	ebp, esp
+ 83c7b95: 57                           	push	edi
+ 83c7b96: 56                           	push	esi
+ 83c7b97: 53                           	push	ebx
+ 83c7b98: 83 ec 2c                     	sub	esp, 0x2c
+ 83c7b9b: c7 45 e4 ff ff ff ff         	mov	dword ptr [ebp - 0x1c], 0xffffffff
+ 83c7ba2: c7 45 e8 00 00 00 00         	mov	dword ptr [ebp - 0x18], 0x0
+ 83c7ba9: c7 45 ec 00 00 00 00         	mov	dword ptr [ebp - 0x14], 0x0
+ 83c7bb0: c7 45 f0 00 00 00 00         	mov	dword ptr [ebp - 0x10], 0x0
+ 83c7bb7: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7bba: 8b 40 08                     	mov	eax, dword ptr [eax + 0x8]
+ 83c7bbd: 83 f8 ff                     	cmp	eax, -0x1
+ 83c7bc0: 0f 84 b1 02 00 00            	je	0x83c7e77 <_ZN20KG_AsyncSocketStream4RecvEPP10IKG_Buffer+0x2e5>
+ 83c7bc6: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7bc9: 8b 40 28                     	mov	eax, dword ptr [eax + 0x28]
+ 83c7bcc: 85 c0                        	test	eax, eax
+ 83c7bce: 0f 84 a3 02 00 00            	je	0x83c7e77 <_ZN20KG_AsyncSocketStream4RecvEPP10IKG_Buffer+0x2e5>
+ 83c7bd4: 83 7d 0c 00                  	cmp	dword ptr [ebp + 0xc], 0x0
+ 83c7bd8: 0f 84 99 02 00 00            	je	0x83c7e77 <_ZN20KG_AsyncSocketStream4RecvEPP10IKG_Buffer+0x2e5>
+ 83c7bde: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 83c7be1: c7 00 00 00 00 00            	mov	dword ptr [eax], 0x0
+ 83c7be7: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7bea: 8b 50 38                     	mov	edx, dword ptr [eax + 0x38]
+ 83c7bed: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7bf0: 8b 40 34                     	mov	eax, dword ptr [eax + 0x34]
+ 83c7bf3: 89 d1                        	mov	ecx, edx
+ 83c7bf5: 29 c1                        	sub	ecx, eax
+ 83c7bf7: 89 c8                        	mov	eax, ecx
+ 83c7bf9: 89 45 ec                     	mov	dword ptr [ebp - 0x14], eax
+ 83c7bfc: 83 7d ec 01                  	cmp	dword ptr [ebp - 0x14], 0x1
+ 83c7c00: 0f 86 99 00 00 00            	jbe	0x83c7c9f <_ZN20KG_AsyncSocketStream4RecvEPP10IKG_Buffer+0x10d>
+ 83c7c06: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7c09: 8b 40 30                     	mov	eax, dword ptr [eax + 0x30]
+ 83c7c0c: 89 c2                        	mov	edx, eax
+ 83c7c0e: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7c11: 8b 40 34                     	mov	eax, dword ptr [eax + 0x34]
+ 83c7c14: 8d 04 02                     	lea	eax, [edx + eax]
+ 83c7c17: 0f b7 00                     	movzx	eax, word ptr [eax]
+ 83c7c1a: 0f b7 c0                     	movzx	eax, ax
+ 83c7c1d: 89 45 f0                     	mov	dword ptr [ebp - 0x10], eax
+ 83c7c20: 83 7d f0 02                  	cmp	dword ptr [ebp - 0x10], 0x2
+ 83c7c24: 77 31                        	ja	0x83c7c57 <_ZN20KG_AsyncSocketStream4RecvEPP10IKG_Buffer+0xc5>
+ 83c7c26: c7 44 24 10 e0 fd 45 08      	mov	dword ptr [esp + 0x10], 0x845fde0
+ 83c7c2e: c7 44 24 0c 24 0a 00 00      	mov	dword ptr [esp + 0xc], 0xa24
+ 83c7c36: c7 44 24 08 a2 fc 45 08      	mov	dword ptr [esp + 0x8], 0x845fca2
+ 83c7c3e: c7 44 24 04 bc fc 45 08      	mov	dword ptr [esp + 0x4], 0x845fcbc
+ 83c7c46: c7 04 24 07 00 00 00         	mov	dword ptr [esp], 0x7
+ 83c7c4d: e8 62 51 c8 ff               	call	0x804cdb4 <_Z11KGLogPrintf14KGLOG_PRIORITYPKcz@plt>
+ 83c7c52: e9 20 02 00 00               	jmp	0x83c7e77 <_ZN20KG_AsyncSocketStream4RecvEPP10IKG_Buffer+0x2e5>
+ 83c7c57: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7c5a: 8b 40 2c                     	mov	eax, dword ptr [eax + 0x2c]
+ 83c7c5d: 3b 45 f0                     	cmp	eax, dword ptr [ebp - 0x10]
+ 83c7c60: 73 31                        	jae	0x83c7c93 <_ZN20KG_AsyncSocketStream4RecvEPP10IKG_Buffer+0x101>
+ 83c7c62: c7 44 24 10 e0 fd 45 08      	mov	dword ptr [esp + 0x10], 0x845fde0
+ 83c7c6a: c7 44 24 0c 27 0a 00 00      	mov	dword ptr [esp + 0xc], 0xa27
+ 83c7c72: c7 44 24 08 e8 fc 45 08      	mov	dword ptr [esp + 0x8], 0x845fce8
+ 83c7c7a: c7 44 24 04 bc fc 45 08      	mov	dword ptr [esp + 0x4], 0x845fcbc
+ 83c7c82: c7 04 24 07 00 00 00         	mov	dword ptr [esp], 0x7
+ 83c7c89: e8 26 51 c8 ff               	call	0x804cdb4 <_Z11KGLogPrintf14KGLOG_PRIORITYPKcz@plt>
+ 83c7c8e: e9 e4 01 00 00               	jmp	0x83c7e77 <_ZN20KG_AsyncSocketStream4RecvEPP10IKG_Buffer+0x2e5>
+ 83c7c93: 8b 45 f0                     	mov	eax, dword ptr [ebp - 0x10]
+ 83c7c96: 3b 45 ec                     	cmp	eax, dword ptr [ebp - 0x14]
+ 83c7c99: 0f 86 fa 00 00 00            	jbe	0x83c7d99 <_ZN20KG_AsyncSocketStream4RecvEPP10IKG_Buffer+0x207>
+ 83c7c9f: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7ca2: 8b 50 38                     	mov	edx, dword ptr [eax + 0x38]
+ 83c7ca5: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7ca8: 8b 40 2c                     	mov	eax, dword ptr [eax + 0x2c]
+ 83c7cab: 39 c2                        	cmp	edx, eax
+ 83c7cad: 75 57                        	jne	0x83c7d06 <_ZN20KG_AsyncSocketStream4RecvEPP10IKG_Buffer+0x174>
+ 83c7caf: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7cb2: 8b 50 38                     	mov	edx, dword ptr [eax + 0x38]
+ 83c7cb5: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7cb8: 8b 40 34                     	mov	eax, dword ptr [eax + 0x34]
+ 83c7cbb: 89 d1                        	mov	ecx, edx
+ 83c7cbd: 29 c1                        	sub	ecx, eax
+ 83c7cbf: 89 c8                        	mov	eax, ecx
+ 83c7cc1: 89 45 ec                     	mov	dword ptr [ebp - 0x14], eax
+ 83c7cc4: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7cc7: 8b 50 30                     	mov	edx, dword ptr [eax + 0x30]
+ 83c7cca: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7ccd: 8b 40 34                     	mov	eax, dword ptr [eax + 0x34]
+ 83c7cd0: 01 c2                        	add	edx, eax
+ 83c7cd2: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7cd5: 8b 48 30                     	mov	ecx, dword ptr [eax + 0x30]
+ 83c7cd8: 8b 45 ec                     	mov	eax, dword ptr [ebp - 0x14]
+ 83c7cdb: 89 44 24 08                  	mov	dword ptr [esp + 0x8], eax
+ 83c7cdf: 89 54 24 04                  	mov	dword ptr [esp + 0x4], edx
+ 83c7ce3: 89 0c 24                     	mov	dword ptr [esp], ecx
+ 83c7ce6: e8 19 5b c8 ff               	call	0x804d804 <memmove@plt>
+ 83c7ceb: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7cee: c7 40 34 00 00 00 00         	mov	dword ptr [eax + 0x34], 0x0
+ 83c7cf5: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7cf8: 8b 40 34                     	mov	eax, dword ptr [eax + 0x34]
+ 83c7cfb: 89 c2                        	mov	edx, eax
+ 83c7cfd: 03 55 ec                     	add	edx, dword ptr [ebp - 0x14]
+ 83c7d00: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7d03: 89 50 38                     	mov	dword ptr [eax + 0x38], edx
+ 83c7d06: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7d09: 8b 50 2c                     	mov	edx, dword ptr [eax + 0x2c]
+ 83c7d0c: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7d0f: 8b 40 38                     	mov	eax, dword ptr [eax + 0x38]
+ 83c7d12: 89 d1                        	mov	ecx, edx
+ 83c7d14: 29 c1                        	sub	ecx, eax
+ 83c7d16: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7d19: 8b 40 30                     	mov	eax, dword ptr [eax + 0x30]
+ 83c7d1c: 89 c2                        	mov	edx, eax
+ 83c7d1e: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7d21: 8b 40 38                     	mov	eax, dword ptr [eax + 0x38]
+ 83c7d24: 01 c2                        	add	edx, eax
+ 83c7d26: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7d29: 8b 40 08                     	mov	eax, dword ptr [eax + 0x8]
+ 83c7d2c: c7 44 24 0c 00 00 00 00      	mov	dword ptr [esp + 0xc], 0x0
+ 83c7d34: 89 4c 24 08                  	mov	dword ptr [esp + 0x8], ecx
+ 83c7d38: 89 54 24 04                  	mov	dword ptr [esp + 0x4], edx
+ 83c7d3c: 89 04 24                     	mov	dword ptr [esp], eax
+ 83c7d3f: e8 80 59 c8 ff               	call	0x804d6c4 <recv@plt>
+ 83c7d44: 89 45 e8                     	mov	dword ptr [ebp - 0x18], eax
+ 83c7d47: 83 7d e8 00                  	cmp	dword ptr [ebp - 0x18], 0x0
+ 83c7d4b: 0f 84 26 01 00 00            	je	0x83c7e77 <_ZN20KG_AsyncSocketStream4RecvEPP10IKG_Buffer+0x2e5>
+ 83c7d51: 83 7d e8 00                  	cmp	dword ptr [ebp - 0x18], 0x0
+ 83c7d55: 79 2c                        	jns	0x83c7d83 <_ZN20KG_AsyncSocketStream4RecvEPP10IKG_Buffer+0x1f1>
+ 83c7d57: e8 1b f8 ff ff               	call	0x83c7577 <_ZL19_IsSocketCanRestorev>
+ 83c7d5c: 89 45 e8                     	mov	dword ptr [ebp - 0x18], eax
+ 83c7d5f: 83 7d e8 00                  	cmp	dword ptr [ebp - 0x18], 0x0
+ 83c7d63: 75 a1                        	jne	0x83c7d06 <_ZN20KG_AsyncSocketStream4RecvEPP10IKG_Buffer+0x174>
+ 83c7d65: e8 25 f8 ff ff               	call	0x83c758f <_ZL19_IsSocketWouldBlockv>
+ 83c7d6a: 89 45 e8                     	mov	dword ptr [ebp - 0x18], eax
+ 83c7d6d: 83 7d e8 00                  	cmp	dword ptr [ebp - 0x18], 0x0
+ 83c7d71: 0f 84 00 01 00 00            	je	0x83c7e77 <_ZN20KG_AsyncSocketStream4RecvEPP10IKG_Buffer+0x2e5>
+ 83c7d77: c7 45 e4 fe ff ff ff         	mov	dword ptr [ebp - 0x1c], 0xfffffffe
+ 83c7d7e: e9 f4 00 00 00               	jmp	0x83c7e77 <_ZN20KG_AsyncSocketStream4RecvEPP10IKG_Buffer+0x2e5>
+ 83c7d83: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7d86: 8b 50 38                     	mov	edx, dword ptr [eax + 0x38]
+ 83c7d89: 8b 45 e8                     	mov	eax, dword ptr [ebp - 0x18]
+ 83c7d8c: 01 c2                        	add	edx, eax
+ 83c7d8e: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7d91: 89 50 38                     	mov	dword ptr [eax + 0x38], edx
+ 83c7d94: e9 4e fe ff ff               	jmp	0x83c7be7 <_ZN20KG_AsyncSocketStream4RecvEPP10IKG_Buffer+0x55>
+ 83c7d99: 83 6d f0 02                  	sub	dword ptr [ebp - 0x10], 0x2
+ 83c7d9d: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7da0: 8b 40 34                     	mov	eax, dword ptr [eax + 0x34]
+ 83c7da3: 8d 50 02                     	lea	edx, [eax + 0x2]
+ 83c7da6: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7da9: 89 50 34                     	mov	dword ptr [eax + 0x34], edx
+ 83c7dac: 8b 45 f0                     	mov	eax, dword ptr [ebp - 0x10]
+ 83c7daf: 89 04 24                     	mov	dword ptr [esp], eax
+ 83c7db2: e8 1e b3 ff ff               	call	0x83c30d5 <_Z21KG_MemoryCreateBufferj>
+ 83c7db7: 89 c2                        	mov	edx, eax
+ 83c7db9: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 83c7dbc: 89 10                        	mov	dword ptr [eax], edx
+ 83c7dbe: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 83c7dc1: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c7dc3: 85 c0                        	test	eax, eax
+ 83c7dc5: 0f 84 ac 00 00 00            	je	0x83c7e77 <_ZN20KG_AsyncSocketStream4RecvEPP10IKG_Buffer+0x2e5>
+ 83c7dcb: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7dce: 8b 50 30                     	mov	edx, dword ptr [eax + 0x30]
+ 83c7dd1: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7dd4: 8b 40 34                     	mov	eax, dword ptr [eax + 0x34]
+ 83c7dd7: 8d 1c 02                     	lea	ebx, [edx + eax]
+ 83c7dda: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 83c7ddd: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c7ddf: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c7de1: 83 c0 0c                     	add	eax, 0xc
+ 83c7de4: 8b 10                        	mov	edx, dword ptr [eax]
+ 83c7de6: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 83c7de9: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c7deb: 89 04 24                     	mov	dword ptr [esp], eax
+ 83c7dee: ff d2                        	call	edx
+ 83c7df0: 89 c2                        	mov	edx, eax
+ 83c7df2: 8b 45 f0                     	mov	eax, dword ptr [ebp - 0x10]
+ 83c7df5: 89 44 24 08                  	mov	dword ptr [esp + 0x8], eax
+ 83c7df9: 89 5c 24 04                  	mov	dword ptr [esp + 0x4], ebx
+ 83c7dfd: 89 14 24                     	mov	dword ptr [esp], edx
+ 83c7e00: e8 5f 51 c8 ff               	call	0x804cf64 <memcpy@plt>
+ 83c7e05: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7e08: 8b 40 34                     	mov	eax, dword ptr [eax + 0x34]
+ 83c7e0b: 89 c2                        	mov	edx, eax
+ 83c7e0d: 03 55 f0                     	add	edx, dword ptr [ebp - 0x10]
+ 83c7e10: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7e13: 89 50 34                     	mov	dword ptr [eax + 0x34], edx
+ 83c7e16: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7e19: 8b 40 48                     	mov	eax, dword ptr [eax + 0x48]
+ 83c7e1c: 85 c0                        	test	eax, eax
+ 83c7e1e: 74 50                        	je	0x83c7e70 <_ZN20KG_AsyncSocketStream4RecvEPP10IKG_Buffer+0x2de>
+ 83c7e20: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7e23: 8b 58 48                     	mov	ebx, dword ptr [eax + 0x48]
+ 83c7e26: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7e29: 8d 70 40                     	lea	esi, [eax + 0x40]
+ 83c7e2c: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 83c7e2f: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c7e31: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c7e33: 83 c0 0c                     	add	eax, 0xc
+ 83c7e36: 8b 10                        	mov	edx, dword ptr [eax]
+ 83c7e38: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 83c7e3b: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c7e3d: 89 04 24                     	mov	dword ptr [esp], eax
+ 83c7e40: ff d2                        	call	edx
+ 83c7e42: 89 c7                        	mov	edi, eax
+ 83c7e44: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 83c7e47: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c7e49: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c7e4b: 83 c0 10                     	add	eax, 0x10
+ 83c7e4e: 8b 10                        	mov	edx, dword ptr [eax]
+ 83c7e50: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 83c7e53: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c7e55: 89 04 24                     	mov	dword ptr [esp], eax
+ 83c7e58: ff d2                        	call	edx
+ 83c7e5a: 89 74 24 08                  	mov	dword ptr [esp + 0x8], esi
+ 83c7e5e: 89 7c 24 04                  	mov	dword ptr [esp + 0x4], edi
+ 83c7e62: 89 04 24                     	mov	dword ptr [esp], eax
+ 83c7e65: ff d3                        	call	ebx
+ 83c7e67: 89 45 e8                     	mov	dword ptr [ebp - 0x18], eax
+ 83c7e6a: 83 7d e8 00                  	cmp	dword ptr [ebp - 0x18], 0x0
+ 83c7e6e: 74 07                        	je	0x83c7e77 <_ZN20KG_AsyncSocketStream4RecvEPP10IKG_Buffer+0x2e5>
+ 83c7e70: c7 45 e4 01 00 00 00         	mov	dword ptr [ebp - 0x1c], 0x1
+ 83c7e77: 83 7d e4 01                  	cmp	dword ptr [ebp - 0x1c], 0x1
+ 83c7e7b: 74 31                        	je	0x83c7eae <_ZN20KG_AsyncSocketStream4RecvEPP10IKG_Buffer+0x31c>
+ 83c7e7d: 83 7d 0c 00                  	cmp	dword ptr [ebp + 0xc], 0x0
+ 83c7e81: 74 2b                        	je	0x83c7eae <_ZN20KG_AsyncSocketStream4RecvEPP10IKG_Buffer+0x31c>
+ 83c7e83: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 83c7e86: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c7e88: 85 c0                        	test	eax, eax
+ 83c7e8a: 74 22                        	je	0x83c7eae <_ZN20KG_AsyncSocketStream4RecvEPP10IKG_Buffer+0x31c>
+ 83c7e8c: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 83c7e8f: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c7e91: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c7e93: 83 c0 08                     	add	eax, 0x8
+ 83c7e96: 8b 10                        	mov	edx, dword ptr [eax]
+ 83c7e98: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 83c7e9b: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c7e9d: 89 04 24                     	mov	dword ptr [esp], eax
+ 83c7ea0: ff d2                        	call	edx
+ 83c7ea2: 83 ec 04                     	sub	esp, 0x4
+ 83c7ea5: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 83c7ea8: c7 00 00 00 00 00            	mov	dword ptr [eax], 0x0
+ 83c7eae: 8b 45 e4                     	mov	eax, dword ptr [ebp - 0x1c]
+ 83c7eb1: 8d 65 f4                     	lea	esp, [ebp - 0xc]
+ 83c7eb4: 5b                           	pop	ebx
+ 83c7eb5: 5e                           	pop	esi
+ 83c7eb6: 5f                           	pop	edi
+ 83c7eb7: c9                           	leave
+ 83c7eb8: c3                           	ret
+ 83c7eb9: 90                           	nop
+
+083c7eba <_ZN20KG_AsyncSocketStream7ReleaseEv>:
+ 83c7eba: 55                           	push	ebp
+ 83c7ebb: 89 e5                        	mov	ebp, esp
+ 83c7ebd: 83 ec 18                     	sub	esp, 0x18
+ 83c7ec0: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7ec3: 83 c0 04                     	add	eax, 0x4
+ 83c7ec6: 89 04 24                     	mov	dword ptr [esp], eax
+ 83c7ec9: e8 b3 82 cf ff               	call	0x80c0181 <_Z23KG_InterlockedDecrementPl>
+ 83c7ece: 89 45 fc                     	mov	dword ptr [ebp - 0x4], eax
+ 83c7ed1: 83 7d fc 00                  	cmp	dword ptr [ebp - 0x4], 0x0
+ 83c7ed5: 74 08                        	je	0x83c7edf <_ZN20KG_AsyncSocketStream7ReleaseEv+0x25>
+ 83c7ed7: 8b 45 fc                     	mov	eax, dword ptr [ebp - 0x4]
+ 83c7eda: 89 45 ec                     	mov	dword ptr [ebp - 0x14], eax
+ 83c7edd: eb 12                        	jmp	0x83c7ef1 <_ZN20KG_AsyncSocketStream7ReleaseEv+0x37>
+ 83c7edf: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7ee2: 89 04 24                     	mov	dword ptr [esp], eax
+ 83c7ee5: e8 e8 f7 ff ff               	call	0x83c76d2 <_ZN20KG_AsyncSocketStream7DestoryEv>
+ 83c7eea: c7 45 ec 00 00 00 00         	mov	dword ptr [ebp - 0x14], 0x0
+ 83c7ef1: 8b 45 ec                     	mov	eax, dword ptr [ebp - 0x14]
+ 83c7ef4: c9                           	leave
+ 83c7ef5: c2 04 00                     	ret	0x4
+
+083c7ef8 <_ZN23KG_SecuritySocketStream7ReleaseEv>:
+ 83c7ef8: 55                           	push	ebp
+ 83c7ef9: 89 e5                        	mov	ebp, esp
+ 83c7efb: 83 ec 18                     	sub	esp, 0x18
+ 83c7efe: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7f01: 83 c0 04                     	add	eax, 0x4
+ 83c7f04: 89 04 24                     	mov	dword ptr [esp], eax
+ 83c7f07: e8 75 82 cf ff               	call	0x80c0181 <_Z23KG_InterlockedDecrementPl>
+ 83c7f0c: 89 45 fc                     	mov	dword ptr [ebp - 0x4], eax
+ 83c7f0f: 83 7d fc 00                  	cmp	dword ptr [ebp - 0x4], 0x0
+ 83c7f13: 74 08                        	je	0x83c7f1d <_ZN23KG_SecuritySocketStream7ReleaseEv+0x25>
+ 83c7f15: 8b 45 fc                     	mov	eax, dword ptr [ebp - 0x4]
+ 83c7f18: 89 45 ec                     	mov	dword ptr [ebp - 0x14], eax
+ 83c7f1b: eb 41                        	jmp	0x83c7f5e <_ZN23KG_SecuritySocketStream7ReleaseEv+0x66>
+ 83c7f1d: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7f20: 8b 40 08                     	mov	eax, dword ptr [eax + 0x8]
+ 83c7f23: 85 c0                        	test	eax, eax
+ 83c7f25: 74 25                        	je	0x83c7f4c <_ZN23KG_SecuritySocketStream7ReleaseEv+0x54>
+ 83c7f27: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7f2a: 8b 40 08                     	mov	eax, dword ptr [eax + 0x8]
+ 83c7f2d: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c7f2f: 83 c0 08                     	add	eax, 0x8
+ 83c7f32: 8b 10                        	mov	edx, dword ptr [eax]
+ 83c7f34: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7f37: 8b 40 08                     	mov	eax, dword ptr [eax + 0x8]
+ 83c7f3a: 89 04 24                     	mov	dword ptr [esp], eax
+ 83c7f3d: ff d2                        	call	edx
+ 83c7f3f: 83 ec 04                     	sub	esp, 0x4
+ 83c7f42: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7f45: c7 40 08 00 00 00 00         	mov	dword ptr [eax + 0x8], 0x0
+ 83c7f4c: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7f4f: 89 04 24                     	mov	dword ptr [esp], eax
+ 83c7f52: e8 1d 53 c8 ff               	call	0x804d274 <_ZdlPv@plt>
+ 83c7f57: c7 45 ec 00 00 00 00         	mov	dword ptr [ebp - 0x14], 0x0
+ 83c7f5e: 8b 45 ec                     	mov	eax, dword ptr [ebp - 0x14]
+ 83c7f61: c9                           	leave
+ 83c7f62: c2 04 00                     	ret	0x4
+ 83c7f65: 90                           	nop
+
+083c7f66 <_ZN15KG_SocketStream7ReleaseEv>:
+ 83c7f66: 55                           	push	ebp
+ 83c7f67: 89 e5                        	mov	ebp, esp
+ 83c7f69: 83 ec 18                     	sub	esp, 0x18
+ 83c7f6c: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c7f6f: 83 c0 04                     	add	eax, 0x4

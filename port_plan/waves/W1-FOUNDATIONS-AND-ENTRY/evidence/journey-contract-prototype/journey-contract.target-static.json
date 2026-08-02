@@ -1,0 +1,425 @@
+{
+  "inputs": {
+    "handler": null,
+    "max_branches": 1,
+    "max_direct_calls": 8,
+    "protocol": "r2s_handshake_respond",
+    "seed": "w1-relay-entry-static"
+  },
+  "limitations": [
+    "Target-static evidence does not establish runtime behavior or packet-wire compatibility.",
+    "Payload fields are emitted only when the selected target protocol-payload observation supplies DWARF-backed fields.",
+    "Direct closure contains only materialized TARGET_STATIC_CONFIRMED direct calls and is bounded by --max-direct-calls.",
+    "Candidate outbound protocol/send is deliberately UNRESOLVED in blind mode; this tool never reads candidate origin."
+  ],
+  "mode": "blind-target-static",
+  "provenance": {
+    "excluded_origins": [
+      "source-2010",
+      "candidate",
+      "runtime"
+    ],
+    "graph_db": "/Volumes/ExData/game/jx3/linux-build/graphengine/evidence.sqlite",
+    "graph_db_sha256": "25e726bf747b3e6ecfe7c045bd7c1a1e1c22610a4ab917cbc37a93f4d45449ba",
+    "origin_filter": "target%"
+  },
+  "schema": "journey-contract-query/v1",
+  "selected_target_protocol_observations": 1,
+  "status": "TARGET_STATIC_PARTIAL",
+  "transition_chain": [
+    {
+      "claim": {
+        "seed": "w1-relay-entry-static",
+        "wire_id": 1,
+        "wire_name": "r2s_handshake_respond"
+      },
+      "evidence": [
+        {
+          "address": null,
+          "artifact_sha256": "ba33c1a34d74068a0fdd747e6aa2a281a4d342f846f7e7261f7435218a3e07d1",
+          "authority": "target-dwarf+target-decompile",
+          "binary_sha256": "47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a",
+          "detail": "wire enum and constructor/handler bridge",
+          "die": "0x00a82185",
+          "evidence_id": 30001,
+          "origin": "target-dwarf+target-decompile-v252",
+          "record": {
+            "line": 1,
+            "path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/protocol_payload/target_protocol_payload.jsonl"
+          },
+          "status": "TARGET_STATIC_CONFIRMED"
+        }
+      ],
+      "stage": "seed",
+      "status": "TARGET_STATIC_CONFIRMED"
+    },
+    {
+      "claim": {
+        "constructor_address": "080e5f50",
+        "handler_address": "080d3872",
+        "wire_id": 1,
+        "wire_name": "r2s_handshake_respond"
+      },
+      "evidence": [
+        {
+          "address": "080e5f50",
+          "artifact_sha256": "ba33c1a34d74068a0fdd747e6aa2a281a4d342f846f7e7261f7435218a3e07d1",
+          "authority": "target-dwarf+target-decompile",
+          "binary_sha256": "47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a",
+          "detail": "target dispatch constructor",
+          "die": "0x00a82185",
+          "evidence_id": 30001,
+          "origin": "target-dwarf+target-decompile-v252",
+          "record": {
+            "line": 1,
+            "path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/protocol_payload/target_protocol_payload.jsonl"
+          },
+          "status": "TARGET_STATIC_CONFIRMED"
+        }
+      ],
+      "stage": "protocol_dispatch",
+      "status": "TARGET_STATIC_CONFIRMED"
+    },
+    {
+      "claim": {
+        "address": "080d3872",
+        "demangled": "KRelayClient::OnHandshakeRespond(unsigned char*, unsigned int)",
+        "qualified_name": "KRelayClient::OnHandshakeRespond"
+      },
+      "evidence": [
+        {
+          "address": "080d3872",
+          "artifact_sha256": "7cc6f904d3f6f4127fd48a934061ccb0f195827fc4396a29c57acd71b9766306",
+          "authority": "target-nm-symbol",
+          "binary_sha256": "47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a",
+          "detail": "target symbol anchor",
+          "die": null,
+          "evidence_id": 29992,
+          "origin": "target-nm-symbol",
+          "record": null,
+          "status": "TARGET_STATIC_CONFIRMED"
+        }
+      ],
+      "stage": "handler",
+      "status": "TARGET_STATIC_CONFIRMED"
+    },
+    {
+      "claim": {
+        "fields": [
+          {
+            "decl_file": "/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/Relay_GS_Protocol.h",
+            "decl_line": "1978",
+            "die": "0x00a85ec3",
+            "name": "nWorldIndex",
+            "offset": "0x2"
+          },
+          {
+            "decl_file": "/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/Relay_GS_Protocol.h",
+            "decl_line": "1979",
+            "die": "0x00a85ed2",
+            "name": "nBaseTime",
+            "offset": "0x6"
+          },
+          {
+            "decl_file": "/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/Relay_GS_Protocol.h",
+            "decl_line": "1980",
+            "die": "0x00a85ee1",
+            "name": "nStartFrame",
+            "offset": "0xa"
+          },
+          {
+            "decl_file": "/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/Relay_GS_Protocol.h",
+            "decl_line": "1981",
+            "die": "0x00a85ef0",
+            "name": "nServerIndex",
+            "offset": "0xe"
+          }
+        ],
+        "payload_size": 18,
+        "payload_type": "R2S_HANDSHAKE_RESPOND"
+      },
+      "evidence": [
+        {
+          "address": null,
+          "artifact_sha256": "ba33c1a34d74068a0fdd747e6aa2a281a4d342f846f7e7261f7435218a3e07d1",
+          "authority": "target-dwarf+target-decompile",
+          "binary_sha256": "47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a",
+          "detail": "payload type",
+          "die": "0x00a85ead",
+          "evidence_id": 30001,
+          "origin": "target-dwarf+target-decompile-v252",
+          "record": {
+            "line": 1,
+            "path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/protocol_payload/target_protocol_payload.jsonl"
+          },
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "address": null,
+          "artifact_sha256": "ba33c1a34d74068a0fdd747e6aa2a281a4d342f846f7e7261f7435218a3e07d1",
+          "authority": "target-dwarf+target-decompile",
+          "binary_sha256": "47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a",
+          "detail": "payload field nWorldIndex",
+          "die": "0x00a85ec3",
+          "evidence_id": 30001,
+          "origin": "target-dwarf+target-decompile-v252",
+          "record": {
+            "line": 1,
+            "path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/protocol_payload/target_protocol_payload.jsonl"
+          },
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "address": null,
+          "artifact_sha256": "ba33c1a34d74068a0fdd747e6aa2a281a4d342f846f7e7261f7435218a3e07d1",
+          "authority": "target-dwarf+target-decompile",
+          "binary_sha256": "47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a",
+          "detail": "payload field nBaseTime",
+          "die": "0x00a85ed2",
+          "evidence_id": 30001,
+          "origin": "target-dwarf+target-decompile-v252",
+          "record": {
+            "line": 1,
+            "path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/protocol_payload/target_protocol_payload.jsonl"
+          },
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "address": null,
+          "artifact_sha256": "ba33c1a34d74068a0fdd747e6aa2a281a4d342f846f7e7261f7435218a3e07d1",
+          "authority": "target-dwarf+target-decompile",
+          "binary_sha256": "47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a",
+          "detail": "payload field nStartFrame",
+          "die": "0x00a85ee1",
+          "evidence_id": 30001,
+          "origin": "target-dwarf+target-decompile-v252",
+          "record": {
+            "line": 1,
+            "path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/protocol_payload/target_protocol_payload.jsonl"
+          },
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "address": null,
+          "artifact_sha256": "ba33c1a34d74068a0fdd747e6aa2a281a4d342f846f7e7261f7435218a3e07d1",
+          "authority": "target-dwarf+target-decompile",
+          "binary_sha256": "47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a",
+          "detail": "payload field nServerIndex",
+          "die": "0x00a85ef0",
+          "evidence_id": 30001,
+          "origin": "target-dwarf+target-decompile-v252",
+          "record": {
+            "line": 1,
+            "path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/protocol_payload/target_protocol_payload.jsonl"
+          },
+          "status": "TARGET_STATIC_CONFIRMED"
+        }
+      ],
+      "stage": "payload_type_fields",
+      "status": "TARGET_STATIC_CONFIRMED"
+    },
+    {
+      "claim": {
+        "callee": {
+          "address": "0804d904",
+          "qualified_name": null,
+          "symbol_evidence_ids": [],
+          "symbol_status": "UNRESOLVED_TARGET_SYMBOL"
+        },
+        "caller": {
+          "address": "080d3872",
+          "qualified_name": "KRelayClient::OnHandshakeRespond",
+          "symbol_evidence_ids": [
+            29992
+          ],
+          "symbol_status": "UNIQUE_TARGET_SYMBOL"
+        },
+        "callsite": "080d38b4"
+      },
+      "evidence": [
+        {
+          "address": "080d38b4",
+          "artifact_sha256": "518d74fa61df0205cecc794f3a300e96660b6fd9958e2e4f099bdb8641992c7a",
+          "authority": "target-control-flow",
+          "binary_sha256": "47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a",
+          "detail": "direct target callsite",
+          "die": null,
+          "evidence_id": 30016,
+          "origin": "target-decompile-v252",
+          "record": {
+            "line": 20123,
+            "path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl"
+          },
+          "status": "TARGET_STATIC_CONFIRMED"
+        }
+      ],
+      "stage": "direct_target_call_closure",
+      "status": "TARGET_STATIC_CONFIRMED"
+    },
+    {
+      "claim": {
+        "callee": {
+          "address": "080c7be6",
+          "qualified_name": "KRelayClient::DoApplyMentorData",
+          "symbol_evidence_ids": [
+            29992
+          ],
+          "symbol_status": "UNIQUE_TARGET_SYMBOL"
+        },
+        "caller": {
+          "address": "080d3872",
+          "qualified_name": "KRelayClient::OnHandshakeRespond",
+          "symbol_evidence_ids": [
+            29992
+          ],
+          "symbol_status": "UNIQUE_TARGET_SYMBOL"
+        },
+        "callsite": "080d3945"
+      },
+      "evidence": [
+        {
+          "address": "080d3945",
+          "artifact_sha256": "518d74fa61df0205cecc794f3a300e96660b6fd9958e2e4f099bdb8641992c7a",
+          "authority": "target-control-flow",
+          "binary_sha256": "47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a",
+          "detail": "direct target callsite",
+          "die": null,
+          "evidence_id": 30016,
+          "origin": "target-decompile-v252",
+          "record": {
+            "line": 20124,
+            "path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl"
+          },
+          "status": "TARGET_STATIC_CONFIRMED"
+        }
+      ],
+      "stage": "direct_target_call_closure",
+      "status": "TARGET_STATIC_CONFIRMED"
+    },
+    {
+      "claim": {
+        "callee": {
+          "address": "080c7aa4",
+          "qualified_name": "KRelayClient::DoApplyDirectMentorData",
+          "symbol_evidence_ids": [
+            29992
+          ],
+          "symbol_status": "UNIQUE_TARGET_SYMBOL"
+        },
+        "caller": {
+          "address": "080d3872",
+          "qualified_name": "KRelayClient::OnHandshakeRespond",
+          "symbol_evidence_ids": [
+            29992
+          ],
+          "symbol_status": "UNIQUE_TARGET_SYMBOL"
+        },
+        "callsite": "080d3961"
+      },
+      "evidence": [
+        {
+          "address": "080d3961",
+          "artifact_sha256": "518d74fa61df0205cecc794f3a300e96660b6fd9958e2e4f099bdb8641992c7a",
+          "authority": "target-control-flow",
+          "binary_sha256": "47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a",
+          "detail": "direct target callsite",
+          "die": null,
+          "evidence_id": 30016,
+          "origin": "target-decompile-v252",
+          "record": {
+            "line": 20125,
+            "path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl"
+          },
+          "status": "TARGET_STATIC_CONFIRMED"
+        }
+      ],
+      "stage": "direct_target_call_closure",
+      "status": "TARGET_STATIC_CONFIRMED"
+    },
+    {
+      "claim": {
+        "callee": {
+          "address": "080c72e2",
+          "qualified_name": "KRelayClient::DoApplySingleDungeonScoreRankPlayerInfo",
+          "symbol_evidence_ids": [
+            29992
+          ],
+          "symbol_status": "UNIQUE_TARGET_SYMBOL"
+        },
+        "caller": {
+          "address": "080d3872",
+          "qualified_name": "KRelayClient::OnHandshakeRespond",
+          "symbol_evidence_ids": [
+            29992
+          ],
+          "symbol_status": "UNIQUE_TARGET_SYMBOL"
+        },
+        "callsite": "080d396d"
+      },
+      "evidence": [
+        {
+          "address": "080d396d",
+          "artifact_sha256": "518d74fa61df0205cecc794f3a300e96660b6fd9958e2e4f099bdb8641992c7a",
+          "authority": "target-control-flow",
+          "binary_sha256": "47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a",
+          "detail": "direct target callsite",
+          "die": null,
+          "evidence_id": 30016,
+          "origin": "target-decompile-v252",
+          "record": {
+            "line": 20126,
+            "path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl"
+          },
+          "status": "TARGET_STATIC_CONFIRMED"
+        }
+      ],
+      "stage": "direct_target_call_closure",
+      "status": "TARGET_STATIC_CONFIRMED"
+    },
+    {
+      "claim": {
+        "callee": {
+          "address": "0804cdb4",
+          "qualified_name": null,
+          "symbol_evidence_ids": [],
+          "symbol_status": "UNRESOLVED_TARGET_SYMBOL"
+        },
+        "caller": {
+          "address": "080d3872",
+          "qualified_name": "KRelayClient::OnHandshakeRespond",
+          "symbol_evidence_ids": [
+            29992
+          ],
+          "symbol_status": "UNIQUE_TARGET_SYMBOL"
+        },
+        "callsite": "080d398b"
+      },
+      "evidence": [
+        {
+          "address": "080d398b",
+          "artifact_sha256": "518d74fa61df0205cecc794f3a300e96660b6fd9958e2e4f099bdb8641992c7a",
+          "authority": "target-control-flow",
+          "binary_sha256": "47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a",
+          "detail": "direct target callsite",
+          "die": null,
+          "evidence_id": 30016,
+          "origin": "target-decompile-v252",
+          "record": {
+            "line": 20127,
+            "path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl"
+          },
+          "status": "TARGET_STATIC_CONFIRMED"
+        }
+      ],
+      "stage": "direct_target_call_closure",
+      "status": "TARGET_STATIC_CONFIRMED"
+    },
+    {
+      "claim": null,
+      "evidence": [],
+      "reason": "Blind target-static mode intentionally reads no candidate/source origin. Candidate outbound protocol/send observations remain UNRESOLVED.",
+      "stage": "candidate_outbound_protocol_send",
+      "status": "UNRESOLVED"
+    }
+  ]
+}

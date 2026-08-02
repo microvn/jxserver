@@ -1,0 +1,268 @@
+
+/Volumes/ExData/game/jx3/jx3_dwarf/SO3GameServerD:	file format elf32-i386
+
+Disassembly of section .text:
+
+083c5bfe <_ZN11KG_Packager6PackUpEPKvRi>:
+ 83c5bfe: 55                           	push	ebp
+ 83c5bff: 89 e5                        	mov	ebp, esp
+ 83c5c01: 56                           	push	esi
+ 83c5c02: 53                           	push	ebx
+ 83c5c03: 83 ec 20                     	sub	esp, 0x20
+ 83c5c06: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 83c5c09: 89 45 f0                     	mov	dword ptr [ebp - 0x10], eax
+ 83c5c0c: 8b 45 f0                     	mov	eax, dword ptr [ebp - 0x10]
+ 83c5c0f: 0f b6 00                     	movzx	eax, byte ptr [eax]
+ 83c5c12: 88 45 f6                     	mov	byte ptr [ebp - 0xa], al
+ 83c5c15: 8b 45 f0                     	mov	eax, dword ptr [ebp - 0x10]
+ 83c5c18: 40                           	inc	eax
+ 83c5c19: 0f b6 00                     	movzx	eax, byte ptr [eax]
+ 83c5c1c: 88 45 f7                     	mov	byte ptr [ebp - 0x9], al
+ 83c5c1f: 0f b6 55 f6                  	movzx	edx, byte ptr [ebp - 0xa]
+ 83c5c23: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c5c26: 8b 04 90                     	mov	eax, dword ptr [eax + 4*edx]
+ 83c5c29: 85 c0                        	test	eax, eax
+ 83c5c2b: 75 32                        	jne	0x83c5c5f <_ZN11KG_Packager6PackUpEPKvRi+0x61>
+ 83c5c2d: 0f b6 5d f6                  	movzx	ebx, byte ptr [ebp - 0xa]
+ 83c5c31: c7 04 24 e0 ff 00 00         	mov	dword ptr [esp], 0xffe0
+ 83c5c38: e8 17 75 c8 ff               	call	0x804d154 <_Znaj@plt>
+ 83c5c3d: 89 c2                        	mov	edx, eax
+ 83c5c3f: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c5c42: 89 14 98                     	mov	dword ptr [eax + 4*ebx], edx
+ 83c5c45: 0f b6 55 f6                  	movzx	edx, byte ptr [ebp - 0xa]
+ 83c5c49: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c5c4c: 8b 04 90                     	mov	eax, dword ptr [eax + 4*edx]
+ 83c5c4f: 85 c0                        	test	eax, eax
+ 83c5c51: 75 0c                        	jne	0x83c5c5f <_ZN11KG_Packager6PackUpEPKvRi+0x61>
+ 83c5c53: c7 45 e4 00 00 00 00         	mov	dword ptr [ebp - 0x1c], 0x0
+ 83c5c5a: e9 2c 01 00 00               	jmp	0x83c5d8b <_ZN11KG_Packager6PackUpEPKvRi+0x18d>
+ 83c5c5f: 8b 45 10                     	mov	eax, dword ptr [ebp + 0x10]
+ 83c5c62: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c5c64: 83 e8 06                     	sub	eax, 0x6
+ 83c5c67: 89 c2                        	mov	edx, eax
+ 83c5c69: 8b 45 10                     	mov	eax, dword ptr [ebp + 0x10]
+ 83c5c6c: 89 10                        	mov	dword ptr [eax], edx
+ 83c5c6e: 0f b6 45 f7                  	movzx	eax, byte ptr [ebp - 0x9]
+ 83c5c72: 25 c0 00 00 00               	and	eax, 0xc0
+ 83c5c77: 85 c0                        	test	eax, eax
+ 83c5c79: 74 49                        	je	0x83c5cc4 <_ZN11KG_Packager6PackUpEPKvRi+0xc6>
+ 83c5c7b: 0f b6 5d f6                  	movzx	ebx, byte ptr [ebp - 0xa]
+ 83c5c7f: 8b 45 10                     	mov	eax, dword ptr [ebp + 0x10]
+ 83c5c82: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c5c84: 89 c1                        	mov	ecx, eax
+ 83c5c86: 8b 55 08                     	mov	edx, dword ptr [ebp + 0x8]
+ 83c5c89: 8d 83 00 01 00 00            	lea	eax, [ebx + 0x100]
+ 83c5c8f: 89 0c 82                     	mov	dword ptr [edx + 4*eax], ecx
+ 83c5c92: 8b 45 10                     	mov	eax, dword ptr [ebp + 0x10]
+ 83c5c95: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c5c97: 89 c3                        	mov	ebx, eax
+ 83c5c99: 8b 45 f0                     	mov	eax, dword ptr [ebp - 0x10]
+ 83c5c9c: 8d 48 06                     	lea	ecx, [eax + 0x6]
+ 83c5c9f: 0f b6 55 f6                  	movzx	edx, byte ptr [ebp - 0xa]
+ 83c5ca3: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c5ca6: 8b 04 90                     	mov	eax, dword ptr [eax + 4*edx]
+ 83c5ca9: 89 5c 24 08                  	mov	dword ptr [esp + 0x8], ebx
+ 83c5cad: 89 4c 24 04                  	mov	dword ptr [esp + 0x4], ecx
+ 83c5cb1: 89 04 24                     	mov	dword ptr [esp], eax
+ 83c5cb4: e8 ab 72 c8 ff               	call	0x804cf64 <memcpy@plt>
+ 83c5cb9: 8b 45 10                     	mov	eax, dword ptr [ebp + 0x10]
+ 83c5cbc: c7 00 00 00 00 00            	mov	dword ptr [eax], 0x0
+ 83c5cc2: eb 7d                        	jmp	0x83c5d41 <_ZN11KG_Packager6PackUpEPKvRi+0x143>
+ 83c5cc4: 0f b6 45 f7                  	movzx	eax, byte ptr [ebp - 0x9]
+ 83c5cc8: 83 e0 30                     	and	eax, 0x30
+ 83c5ccb: 85 c0                        	test	eax, eax
+ 83c5ccd: 74 72                        	je	0x83c5d41 <_ZN11KG_Packager6PackUpEPKvRi+0x143>
+ 83c5ccf: 8b 45 10                     	mov	eax, dword ptr [ebp + 0x10]
+ 83c5cd2: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c5cd4: 85 c0                        	test	eax, eax
+ 83c5cd6: 7e 60                        	jle	0x83c5d38 <_ZN11KG_Packager6PackUpEPKvRi+0x13a>
+ 83c5cd8: 8b 45 10                     	mov	eax, dword ptr [ebp + 0x10]
+ 83c5cdb: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c5cdd: 89 c6                        	mov	esi, eax
+ 83c5cdf: 8b 45 f0                     	mov	eax, dword ptr [ebp - 0x10]
+ 83c5ce2: 8d 58 06                     	lea	ebx, [eax + 0x6]
+ 83c5ce5: 0f b6 55 f6                  	movzx	edx, byte ptr [ebp - 0xa]
+ 83c5ce9: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c5cec: 8b 0c 90                     	mov	ecx, dword ptr [eax + 4*edx]
+ 83c5cef: 0f b6 45 f6                  	movzx	eax, byte ptr [ebp - 0xa]
+ 83c5cf3: 8b 55 08                     	mov	edx, dword ptr [ebp + 0x8]
+ 83c5cf6: 05 00 01 00 00               	add	eax, 0x100
+ 83c5cfb: 8b 04 82                     	mov	eax, dword ptr [edx + 4*eax]
+ 83c5cfe: 8d 04 01                     	lea	eax, [ecx + eax]
+ 83c5d01: 89 74 24 08                  	mov	dword ptr [esp + 0x8], esi
+ 83c5d05: 89 5c 24 04                  	mov	dword ptr [esp + 0x4], ebx
+ 83c5d09: 89 04 24                     	mov	dword ptr [esp], eax
+ 83c5d0c: e8 53 72 c8 ff               	call	0x804cf64 <memcpy@plt>
+ 83c5d11: 0f b6 5d f6                  	movzx	ebx, byte ptr [ebp - 0xa]
+ 83c5d15: 0f b6 45 f6                  	movzx	eax, byte ptr [ebp - 0xa]
+ 83c5d19: 8b 55 08                     	mov	edx, dword ptr [ebp + 0x8]
+ 83c5d1c: 05 00 01 00 00               	add	eax, 0x100
+ 83c5d21: 8b 14 82                     	mov	edx, dword ptr [edx + 4*eax]
+ 83c5d24: 8b 45 10                     	mov	eax, dword ptr [ebp + 0x10]
+ 83c5d27: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c5d29: 8d 0c 02                     	lea	ecx, [edx + eax]
+ 83c5d2c: 8b 55 08                     	mov	edx, dword ptr [ebp + 0x8]
+ 83c5d2f: 8d 83 00 01 00 00            	lea	eax, [ebx + 0x100]
+ 83c5d35: 89 0c 82                     	mov	dword ptr [edx + 4*eax], ecx
+ 83c5d38: 8b 45 10                     	mov	eax, dword ptr [ebp + 0x10]
+ 83c5d3b: c7 00 00 00 00 00            	mov	dword ptr [eax], 0x0
+ 83c5d41: 0f b6 45 f7                  	movzx	eax, byte ptr [ebp - 0x9]
+ 83c5d45: 83 e0 0c                     	and	eax, 0xc
+ 83c5d48: 85 c0                        	test	eax, eax
+ 83c5d4a: 74 38                        	je	0x83c5d84 <_ZN11KG_Packager6PackUpEPKvRi+0x186>
+ 83c5d4c: 0f b6 45 f6                  	movzx	eax, byte ptr [ebp - 0xa]
+ 83c5d50: 8b 55 08                     	mov	edx, dword ptr [ebp + 0x8]
+ 83c5d53: 05 00 01 00 00               	add	eax, 0x100
+ 83c5d58: 8b 04 82                     	mov	eax, dword ptr [edx + 4*eax]
+ 83c5d5b: 89 c2                        	mov	edx, eax
+ 83c5d5d: 8b 45 10                     	mov	eax, dword ptr [ebp + 0x10]
+ 83c5d60: 89 10                        	mov	dword ptr [eax], edx
+ 83c5d62: 0f b6 45 f6                  	movzx	eax, byte ptr [ebp - 0xa]
+ 83c5d66: 8b 55 08                     	mov	edx, dword ptr [ebp + 0x8]
+ 83c5d69: 05 00 01 00 00               	add	eax, 0x100
+ 83c5d6e: c7 04 82 00 00 00 00         	mov	dword ptr [edx + 4*eax], 0x0
+ 83c5d75: 0f b6 55 f6                  	movzx	edx, byte ptr [ebp - 0xa]
+ 83c5d79: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c5d7c: 8b 04 90                     	mov	eax, dword ptr [eax + 4*edx]
+ 83c5d7f: 89 45 e4                     	mov	dword ptr [ebp - 0x1c], eax
+ 83c5d82: eb 07                        	jmp	0x83c5d8b <_ZN11KG_Packager6PackUpEPKvRi+0x18d>
+ 83c5d84: c7 45 e4 00 00 00 00         	mov	dword ptr [ebp - 0x1c], 0x0
+ 83c5d8b: 8b 45 e4                     	mov	eax, dword ptr [ebp - 0x1c]
+ 83c5d8e: 83 c4 20                     	add	esp, 0x20
+ 83c5d91: 5b                           	pop	ebx
+ 83c5d92: 5e                           	pop	esi
+ 83c5d93: c9                           	leave
+ 83c5d94: c3                           	ret
+
+083c5d95 <_Z21KG_Package_RecvBufferP11KG_PackagerP16IKG_SocketStreamPP10IKG_Buffer>:
+ 83c5d95: 55                           	push	ebp
+ 83c5d96: 89 e5                        	mov	ebp, esp
+ 83c5d98: 53                           	push	ebx
+ 83c5d99: 83 ec 34                     	sub	esp, 0x34
+ 83c5d9c: c7 45 ec 00 00 00 00         	mov	dword ptr [ebp - 0x14], 0x0
+ 83c5da3: c7 45 f0 00 00 00 00         	mov	dword ptr [ebp - 0x10], 0x0
+ 83c5daa: c7 45 e8 00 00 00 00         	mov	dword ptr [ebp - 0x18], 0x0
+ 83c5db1: c7 45 f4 00 00 00 00         	mov	dword ptr [ebp - 0xc], 0x0
+ 83c5db8: c7 45 e0 00 00 00 00         	mov	dword ptr [ebp - 0x20], 0x0
+ 83c5dbf: c7 45 e4 00 00 00 00         	mov	dword ptr [ebp - 0x1c], 0x0
+ 83c5dc6: 83 7d 0c 00                  	cmp	dword ptr [ebp + 0xc], 0x0
+ 83c5dca: 0f 84 86 01 00 00            	je	0x83c5f56 <_Z21KG_Package_RecvBufferP11KG_PackagerP16IKG_SocketStreamPP10IKG_Buffer+0x1c1>
+ 83c5dd0: 83 7d 10 00                  	cmp	dword ptr [ebp + 0x10], 0x0
+ 83c5dd4: 0f 84 7c 01 00 00            	je	0x83c5f56 <_Z21KG_Package_RecvBufferP11KG_PackagerP16IKG_SocketStreamPP10IKG_Buffer+0x1c1>
+ 83c5dda: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 83c5ddd: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c5ddf: 83 c0 18                     	add	eax, 0x18
+ 83c5de2: 8b 10                        	mov	edx, dword ptr [eax]
+ 83c5de4: 8d 45 e0                     	lea	eax, [ebp - 0x20]
+ 83c5de7: 89 44 24 04                  	mov	dword ptr [esp + 0x4], eax
+ 83c5deb: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 83c5dee: 89 04 24                     	mov	dword ptr [esp], eax
+ 83c5df1: ff d2                        	call	edx
+ 83c5df3: 89 45 f0                     	mov	dword ptr [ebp - 0x10], eax
+ 83c5df6: 83 7d f0 00                  	cmp	dword ptr [ebp - 0x10], 0x0
+ 83c5dfa: 0f 84 4f 01 00 00            	je	0x83c5f4f <_Z21KG_Package_RecvBufferP11KG_PackagerP16IKG_SocketStreamPP10IKG_Buffer+0x1ba>
+ 83c5e00: 83 7d f0 00                  	cmp	dword ptr [ebp - 0x10], 0x0
+ 83c5e04: 0f 8e 4c 01 00 00            	jle	0x83c5f56 <_Z21KG_Package_RecvBufferP11KG_PackagerP16IKG_SocketStreamPP10IKG_Buffer+0x1c1>
+ 83c5e0a: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 83c5e0d: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c5e0f: 83 c0 1c                     	add	eax, 0x1c
+ 83c5e12: 8b 10                        	mov	edx, dword ptr [eax]
+ 83c5e14: 8d 45 e8                     	lea	eax, [ebp - 0x18]
+ 83c5e17: 89 44 24 04                  	mov	dword ptr [esp + 0x4], eax
+ 83c5e1b: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 83c5e1e: 89 04 24                     	mov	dword ptr [esp], eax
+ 83c5e21: ff d2                        	call	edx
+ 83c5e23: 89 45 f0                     	mov	dword ptr [ebp - 0x10], eax
+ 83c5e26: 83 7d f0 00                  	cmp	dword ptr [ebp - 0x10], 0x0
+ 83c5e2a: 0f 8e 26 01 00 00            	jle	0x83c5f56 <_Z21KG_Package_RecvBufferP11KG_PackagerP16IKG_SocketStreamPP10IKG_Buffer+0x1c1>
+ 83c5e30: 83 7d 08 00                  	cmp	dword ptr [ebp + 0x8], 0x0
+ 83c5e34: 0f 84 15 01 00 00            	je	0x83c5f4f <_Z21KG_Package_RecvBufferP11KG_PackagerP16IKG_SocketStreamPP10IKG_Buffer+0x1ba>
+ 83c5e3a: 8b 45 e8                     	mov	eax, dword ptr [ebp - 0x18]
+ 83c5e3d: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c5e3f: 83 c0 0c                     	add	eax, 0xc
+ 83c5e42: 8b 10                        	mov	edx, dword ptr [eax]
+ 83c5e44: 8b 45 e8                     	mov	eax, dword ptr [ebp - 0x18]
+ 83c5e47: 89 04 24                     	mov	dword ptr [esp], eax
+ 83c5e4a: ff d2                        	call	edx
+ 83c5e4c: 89 45 f4                     	mov	dword ptr [ebp - 0xc], eax
+ 83c5e4f: 83 7d f4 00                  	cmp	dword ptr [ebp - 0xc], 0x0
+ 83c5e53: 75 1c                        	jne	0x83c5e71 <_Z21KG_Package_RecvBufferP11KG_PackagerP16IKG_SocketStreamPP10IKG_Buffer+0xdc>
+ 83c5e55: c7 44 24 08 1a 01 00 00      	mov	dword ptr [esp + 0x8], 0x11a
+ 83c5e5d: c7 44 24 04 26 fb 45 08      	mov	dword ptr [esp + 0x4], 0x845fb26
+ 83c5e65: c7 04 24 35 fb 45 08         	mov	dword ptr [esp], 0x845fb35
+ 83c5e6c: e8 93 77 c8 ff               	call	0x804d604 <printf@plt>
+ 83c5e71: 8b 45 e8                     	mov	eax, dword ptr [ebp - 0x18]
+ 83c5e74: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c5e76: 83 c0 10                     	add	eax, 0x10
+ 83c5e79: 8b 10                        	mov	edx, dword ptr [eax]
+ 83c5e7b: 8b 45 e8                     	mov	eax, dword ptr [ebp - 0x18]
+ 83c5e7e: 89 04 24                     	mov	dword ptr [esp], eax
+ 83c5e81: ff d2                        	call	edx
+ 83c5e83: 89 45 dc                     	mov	dword ptr [ebp - 0x24], eax
+ 83c5e86: 8b 45 f4                     	mov	eax, dword ptr [ebp - 0xc]
+ 83c5e89: 0f b6 00                     	movzx	eax, byte ptr [eax]
+ 83c5e8c: 3c 1e                        	cmp	al, 0x1e
+ 83c5e8e: 0f 87 bb 00 00 00            	ja	0x83c5f4f <_Z21KG_Package_RecvBufferP11KG_PackagerP16IKG_SocketStreamPP10IKG_Buffer+0x1ba>
+ 83c5e94: 8d 45 dc                     	lea	eax, [ebp - 0x24]
+ 83c5e97: 89 44 24 08                  	mov	dword ptr [esp + 0x8], eax
+ 83c5e9b: 8b 45 f4                     	mov	eax, dword ptr [ebp - 0xc]
+ 83c5e9e: 89 44 24 04                  	mov	dword ptr [esp + 0x4], eax
+ 83c5ea2: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 83c5ea5: 89 04 24                     	mov	dword ptr [esp], eax
+ 83c5ea8: e8 51 fd ff ff               	call	0x83c5bfe <_ZN11KG_Packager6PackUpEPKvRi>
+ 83c5ead: 89 45 f8                     	mov	dword ptr [ebp - 0x8], eax
+ 83c5eb0: 8b 45 e8                     	mov	eax, dword ptr [ebp - 0x18]
+ 83c5eb3: 85 c0                        	test	eax, eax
+ 83c5eb5: 74 1c                        	je	0x83c5ed3 <_Z21KG_Package_RecvBufferP11KG_PackagerP16IKG_SocketStreamPP10IKG_Buffer+0x13e>
+ 83c5eb7: 8b 45 e8                     	mov	eax, dword ptr [ebp - 0x18]
+ 83c5eba: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c5ebc: 83 c0 08                     	add	eax, 0x8
+ 83c5ebf: 8b 10                        	mov	edx, dword ptr [eax]
+ 83c5ec1: 8b 45 e8                     	mov	eax, dword ptr [ebp - 0x18]
+ 83c5ec4: 89 04 24                     	mov	dword ptr [esp], eax
+ 83c5ec7: ff d2                        	call	edx
+ 83c5ec9: 83 ec 04                     	sub	esp, 0x4
+ 83c5ecc: c7 45 e8 00 00 00 00         	mov	dword ptr [ebp - 0x18], 0x0
+ 83c5ed3: c7 45 f4 00 00 00 00         	mov	dword ptr [ebp - 0xc], 0x0
+ 83c5eda: 83 7d f8 00                  	cmp	dword ptr [ebp - 0x8], 0x0
+ 83c5ede: 0f 84 f6 fe ff ff            	je	0x83c5dda <_Z21KG_Package_RecvBufferP11KG_PackagerP16IKG_SocketStreamPP10IKG_Buffer+0x45>
+ 83c5ee4: 8b 45 dc                     	mov	eax, dword ptr [ebp - 0x24]
+ 83c5ee7: 85 c0                        	test	eax, eax
+ 83c5ee9: 7f 1c                        	jg	0x83c5f07 <_Z21KG_Package_RecvBufferP11KG_PackagerP16IKG_SocketStreamPP10IKG_Buffer+0x172>
+ 83c5eeb: c7 44 24 08 2a 01 00 00      	mov	dword ptr [esp + 0x8], 0x12a
+ 83c5ef3: c7 44 24 04 26 fb 45 08      	mov	dword ptr [esp + 0x4], 0x845fb26
+ 83c5efb: c7 04 24 35 fb 45 08         	mov	dword ptr [esp], 0x845fb35
+ 83c5f02: e8 fd 76 c8 ff               	call	0x804d604 <printf@plt>
+ 83c5f07: 8b 45 dc                     	mov	eax, dword ptr [ebp - 0x24]
+ 83c5f0a: 89 04 24                     	mov	dword ptr [esp], eax
+ 83c5f0d: e8 c3 d1 ff ff               	call	0x83c30d5 <_Z21KG_MemoryCreateBufferj>
+ 83c5f12: 89 45 e8                     	mov	dword ptr [ebp - 0x18], eax
+ 83c5f15: 8b 45 e8                     	mov	eax, dword ptr [ebp - 0x18]
+ 83c5f18: 85 c0                        	test	eax, eax
+ 83c5f1a: 74 3a                        	je	0x83c5f56 <_Z21KG_Package_RecvBufferP11KG_PackagerP16IKG_SocketStreamPP10IKG_Buffer+0x1c1>
+ 83c5f1c: 8b 45 dc                     	mov	eax, dword ptr [ebp - 0x24]
+ 83c5f1f: 89 c3                        	mov	ebx, eax
+ 83c5f21: 8b 45 e8                     	mov	eax, dword ptr [ebp - 0x18]
+ 83c5f24: 8b 00                        	mov	eax, dword ptr [eax]
+ 83c5f26: 83 c0 0c                     	add	eax, 0xc
+ 83c5f29: 8b 10                        	mov	edx, dword ptr [eax]
+ 83c5f2b: 8b 45 e8                     	mov	eax, dword ptr [ebp - 0x18]
+ 83c5f2e: 89 04 24                     	mov	dword ptr [esp], eax
+ 83c5f31: ff d2                        	call	edx
+ 83c5f33: 89 c2                        	mov	edx, eax
+ 83c5f35: 89 5c 24 08                  	mov	dword ptr [esp + 0x8], ebx
+ 83c5f39: 8b 45 f8                     	mov	eax, dword ptr [ebp - 0x8]
+ 83c5f3c: 89 44 24 04                  	mov	dword ptr [esp + 0x4], eax
+ 83c5f40: 89 14 24                     	mov	dword ptr [esp], edx
+ 83c5f43: e8 1c 70 c8 ff               	call	0x804cf64 <memcpy@plt>
+ 83c5f48: c7 45 f8 00 00 00 00         	mov	dword ptr [ebp - 0x8], 0x0
+ 83c5f4f: c7 45 ec 01 00 00 00         	mov	dword ptr [ebp - 0x14], 0x1
+ 83c5f56: 83 7d 10 00                  	cmp	dword ptr [ebp + 0x10], 0x0
+ 83c5f5a: 74 08                        	je	0x83c5f64 <_Z21KG_Package_RecvBufferP11KG_PackagerP16IKG_SocketStreamPP10IKG_Buffer+0x1cf>
+ 83c5f5c: 8b 55 e8                     	mov	edx, dword ptr [ebp - 0x18]
+ 83c5f5f: 8b 45 10                     	mov	eax, dword ptr [ebp + 0x10]
+ 83c5f62: 89 10                        	mov	dword ptr [eax], edx
+ 83c5f64: 8b 45 ec                     	mov	eax, dword ptr [ebp - 0x14]
+ 83c5f67: 8b 5d fc                     	mov	ebx, dword ptr [ebp - 0x4]
+ 83c5f6a: c9                           	leave
+ 83c5f6b: c3                           	ret

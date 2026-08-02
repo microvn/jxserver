@@ -1,0 +1,48 @@
+{
+  "schema_version": "0.1-prototype",
+  "journey_id": "W1.login-role-select-enter-world",
+  "purpose": "Machine-readable, evidence-labelled projection of the player journey. It is an orientation and patch-bundling surface, never target authority by itself.",
+  "target_artifacts": {
+    "gameserver_dwarf_sha256": "47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a",
+    "gamecenter_dwarf_sha256": "655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79"
+  },
+  "status_values": ["TARGET_CONFIRMED", "TARGET_PARTIAL", "RUNTIME_OBSERVED", "CANDIDATE_DRIFT", "UNKNOWN"],
+  "nodes": [
+    {"id":"N01","label":"Authenticate account","owner":"Client -> Gateway","status":"TARGET_PARTIAL","contract":"C2G_ACCOUNT_VERIFY_REQUEST; password/hash semantics not recovered","evidence":["CLAUDE.md: Gateway authenticates account/password"],"probe":"client_gateway_connected"},
+    {"id":"N02","label":"Role list / select existing role","owner":"Client -> Gateway","status":"TARGET_PARTIAL","contract":"C2G_GAME_LOGIN_REQUEST {roleID}; G2R_GAME_LOGIN_REQUEST adds gateway player index/account/queue","evidence":["session-019f9540: GatewayClientProtocol/GatewayRelayProtocol extraction"],"probe":"role_selected"},
+    {"id":"N03","label":"Center resolves role and GS admission","owner":"Gateway -> GameCenter","status":"RUNTIME_OBSERVED","contract":"G2R_GAME_LOGIN_REQUEST; exact Center decision branches are not recovered","evidence":["session-019f9540: Gateway:9001 role-selection traffic observed"],"probe":"gateway_center_game_login"},
+    {"id":"N04","label":"Deliver selected role to GS","owner":"GameCenter -> GameServer","status":"TARGET_CONFIRMED","contract":"R2S_PLAYER_LOGIN_REQUEST, size 302 (0x12e); BaseInfo +0x82","handler":"KRelayClient::OnPlayerLoginRequest","target":"GS @ 0x080e3d78; Center DoPlayerLoginRequest @ 0x08084436","evidence":["evidence/role-load/ROLE_LOAD_DOSSIER.md","evidence/W1_STATIC_CLOSURE_MATRIX.md"],"probe":"center_gs_role_login"},
+    {"id":"N05","label":"Materialize player / resolve base scene","owner":"GameServer","status":"TARGET_CONFIRMED","contract":"OnPlayerLoginRequest -> NewPlayer/LoadBaseInfo; base scene uses CurrentPos map/copy","handler":"KPlayer::LoadBaseInfo","target":"GS @ 0x0839dce2","evidence":["evidence/role-load/ROLE_LOAD_DOSSIER.md","evidence/scene-resolution/graph-callers-KPlayer-LoadBaseInfo.json"],"probe":"gs_load_base_info"},
+    {"id":"N06","label":"Relay entry contract strip","owner":"GameServer <-> GameCenter","status":"CANDIDATE_DRIFT","contract":"Outbound entry messages must use target enum IDs, exact packed payloads, and roleID/gatewayIndex ownership","evidence":["session-019f9540 (841bbc build window): runtime packet/target DWARF investigation"],"probe":"gs_center_entry_contract"},
+    {"id":"N07","label":"Gateway receives permit / endpoint","owner":"GameCenter -> Gateway -> Client","status":"TARGET_PARTIAL","contract":"R2G_GAME_LOGIN_RESPOND carries nPlayerIndex, code, roleID, queueID, IP, port, GUID; success/failure codes branch here","evidence":["session-019f9540: GatewayRelayProtocol extraction"],"probe":"gateway_handoff_response"},
+    {"id":"N08","label":"Client reconnects to GS","owner":"Client -> GameServer","status":"RUNTIME_OBSERVED","contract":"TCP :3113 then security key / first encrypted frame; protocol body remains undecoded","evidence":["STATE.md runtime checkpoints; transport card"],"probe":"client_gs_syn"},
+    {"id":"N09","label":"GS security + first decoded C2S","owner":"GameServer","status":"TARGET_PARTIAL","contract":"AcceptSecurity/ConnectSecurity and chosen decode helper; KSG loop mismatch was rejected","evidence":["evidence/EVIDENCE_TRANSPORT.md","evidence/CLAUDE_KSG_CODEC_REVIEW_2026-07-27.md"],"probe":"client_gs_first_decoded"},
+    {"id":"N10","label":"Apply enter-scene; request account + role data","owner":"GameServer -> GameCenter","status":"TARGET_CONFIRMED","contract":"OnApplyEnterScene state 5: account request ID 58 then role-data request; moves to gsWaitForRoleData=3","handler":"KPlayerServer::OnApplyEnterScene","target":"GS @ 0x0807a300","evidence":["evidence/W1_STATIC_CLOSURE_MATRIX.md","evidence/entry/ENTRY_STATIC_DOSSIER.md"],"probe":"gs_apply_enter_scene"},
+    {"id":"N11","label":"Load account / role stream","owner":"GameCenter -> GameServer -> KPlayer","status":"TARGET_CONFIRMED","contract":"account response ID64; role header fixed 14 bytes; role blocks {type,version,length}=12 bytes","handler":"KRelayClient::OnLoadAccountData / OnLoadRoleData; KPlayer::Load","target":"GS OnLoadAccountData @0x080e0f06; OnLoadRoleData @0x080e110c","evidence":["evidence/W1_STATIC_CLOSURE_MATRIX.md","evidence/role-load/ROLE_LOAD_DOSSIER.md"],"probe":"gs_role_blocks"},
+    {"id":"N12","label":"Section ACK and ext-data completion","owner":"Client <-> GameServer","status":"TARGET_CONFIRMED","contract":"S2C section request ID153 size3; C2S response ID4 size6; final ACK sets ext-data complete","handler":"KPlayerServer::OnSyncRoleDataSectionCheckRespond","target":"GS @ 0x08079c9a","evidence":["evidence/W1_STATIC_CLOSURE_MATRIX.md","evidence/entry/ENTRY_STATIC_DOSSIER.md"],"probe":"section_ack"},
+    {"id":"N13","label":"Ready / initial sync","owner":"Client <-> GameServer","status":"TARGET_CONFIRMED","contract":"C2S confirm-ready ID2 size6; requires ext-data + gsWaitForSyncClientData then gsPlaying","handler":"KPlayerServer::OnClientConfirmReady -> KPlayer::OnClientReady","target":"GS @0x08079dfc -> 0x0839f87e","evidence":["evidence/entry/ENTRY_STATIC_DOSSIER.md"],"probe":"ready_ack"}
+  ],
+  "edges": [
+    {"from":"N01","to":"N02","status":"TARGET_PARTIAL","success":"account accepted -> role list","failure":"maintenance/version/account error","missing":"actual password/hash/validation implementation"},
+    {"from":"N02","to":"N03","status":"TARGET_PARTIAL","success":"Gateway forwards selected role to Center","failure":"queue/freeze/unknown response"},
+    {"from":"N03","to":"N04","status":"RUNTIME_OBSERVED","success":"Center sends role-login envelope to GS","failure":"no eligible GS/status refusal"},
+    {"from":"N04","to":"N05","status":"TARGET_CONFIRMED","success":"GS creates player and accepts base scene","failure":"invalid map/copy/role data"},
+    {"from":"N05","to":"N06","status":"TARGET_PARTIAL","success":"GS emits entry side effects with target Relay contracts","failure":"Center rejects malformed/wrong-ID packet"},
+    {"from":"N06","to":"N07","status":"TARGET_PARTIAL","success":"Center/Gateway issue client permit and endpoint","failure":"missing ext-point/confirm/permit response"},
+    {"from":"N07","to":"N08","status":"RUNTIME_OBSERVED","success":"client opens :3113","failure":"client remains at Gateway UI fallback"},
+    {"from":"N08","to":"N09","status":"TARGET_PARTIAL","success":"security key then valid decoded first packet","failure":"RST/close/ciphertext/out-of-range header"},
+    {"from":"N09","to":"N10","status":"UNKNOWN","success":"enter-scene request dispatched","failure":"unknown first C2S route/guard"},
+    {"from":"N10","to":"N11","status":"TARGET_CONFIRMED","success":"account and role streams arrive","failure":"offset/role/success/state guard rejects"},
+    {"from":"N11","to":"N12","status":"TARGET_CONFIRMED","success":"each role block ACKed","failure":"version/length/unknown block parser failure"},
+    {"from":"N12","to":"N13","status":"TARGET_CONFIRMED","success":"ext-data done then ready ACK -> gsPlaying","failure":"missing ACK/state guard/detach"}
+  ],
+  "patch_families_from_841bbc_session": [
+    {"id":"P1","journey_node":"N06","claim":"ChangeRoleLevel had source ID55 but target route ID59; Center reset a 7-byte packet tagged as target's different 14-byte ID55 contract.","status":"RUNTIME_OBSERVED + target-backed","scope":"entry Relay enum strip; not full enum renumber"},
+    {"id":"P2","journey_node":"N06","claim":"Confirm/login/leave prefix drift was traced to missing s2r_search_map_queue_request; confirm payload target is 10 bytes and includes dwIP, not 6 bytes.","status":"session claim; raw candidate diff not retained in this prototype","scope":"outbound entry Relay closure"},
+    {"id":"P3","journey_nodes":["N04","N06","N07"],"claim":"R2S login request and S2R login response require role/player ID at +2 and gatewayPlayerIndex at +6. Reversal prevents Gateway routing ext-point/permit to the selected client.","status":"RUNTIME_OBSERVED + DWARF-backed in session; current-source/active-binary revalidation required","scope":"selected-role identity handoff"}
+  ],
+  "probe_attachment": {
+    "rule":"A probe emits node IDs, not prose status. A run compares the last shared node and the first missing/divergent edge.",
+    "minimum_events":["N03 gateway_center_game_login","N04 center_gs_role_login","N06 gs_center_entry_contract","N07 gateway_handoff_response","N08 client_gs_syn","N09 client_gs_first_decoded","N10 gs_apply_enter_scene","N12 section_ack","N13 ready_ack"]
+  }
+}

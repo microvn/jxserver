@@ -1,0 +1,16 @@
+diff --git a/src/SO3World/Src/KRelayClient.cpp b/src/SO3World/Src/KRelayClient.cpp
+index 91bbd44..e05ebdb 100644
+--- a/src/SO3World/Src/KRelayClient.cpp
++++ b/src/SO3World/Src/KRelayClient.cpp
+@@ -213,6 +213,11 @@ KRelayClient::KRelayClient(void)
+     REGISTER_INTERNAL_FUNC(r2s_v246_unused_175, &KRelayClient::OnNoOpRespond, 22);
+     REGISTER_INTERNAL_FUNC(r2s_v246_unused_176, &KRelayClient::OnNoOpRespond, 6);
+     REGISTER_INTERNAL_FUNC(r2s_v246_unused_177, &KRelayClient::OnNoOpRespond, 10);
++
++    // Target v2.5.2 KR2S constructor: protocol 162 -> OnSyncMentorData, base size 6.
++    // The legacy enum places an unrelated no-op at this slot; keep the explicit target slot
++    // last so it supplies the startup completion signal before player-login requests arrive.
++    REGISTER_INTERNAL_FUNC(162, &KRelayClient::OnSyncMentorData, 6);
+     REGISTER_INTERNAL_FUNC(r2s_sync_battle_field_list, &KRelayClient::OnSyncBattleFieldList, sizeof(R2S_SYNC_BATTLE_FIELD_LIST));
+     REGISTER_INTERNAL_FUNC(r2s_take_tong_repertory_item_to_pos_respond,  &KRelayClient::OnTakeTongRepertoryItemToPosRespond, sizeof(R2S_TAKE_TONG_REPERTORY_ITEM_TO_POS_RESPOND));
+     //AutoCode:×¢²áÐ­Òé

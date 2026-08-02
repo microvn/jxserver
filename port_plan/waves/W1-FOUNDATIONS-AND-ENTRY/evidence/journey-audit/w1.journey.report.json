@@ -1,0 +1,459 @@
+{
+  "schema": "jx3-journey-audit-report/v1",
+  "journey_id": "w1.login_enter_world.audit",
+  "journey_label": "Wave 1 login -> enter-world Journey Audit sample",
+  "taxonomy": [
+    "provenance",
+    "process-bootstrap",
+    "transport-security",
+    "protocol-serialization",
+    "abi-layout",
+    "persistence-blob",
+    "resource-script",
+    "state-machine",
+    "runtime-observability",
+    "terminal-integration"
+  ],
+  "axes": {
+    "layer": [
+      "provenance",
+      "process-bootstrap",
+      "transport-security",
+      "protocol-serialization",
+      "abi-layout",
+      "persistence-blob",
+      "resource-script",
+      "state-machine",
+      "runtime-observability",
+      "terminal-integration"
+    ],
+    "contract_kind": [
+      "pair-distinctness",
+      "runtime-frontier",
+      "mechanical-envelope",
+      "payload-layout",
+      "dispatch-closure",
+      "persistence-request",
+      "parser-version",
+      "completion-gate",
+      "ready-ack",
+      "table-reader",
+      "script-binding",
+      "integration-outcome"
+    ],
+    "owner_scope": [
+      "Gateway",
+      "KSO3GameServer bootstrap",
+      "GameCenter/GameServer relay pair",
+      "KRelayClient",
+      "KPlayerServer",
+      "KPlayer",
+      "KScene",
+      "KScriptCenter",
+      "Client/Gateway/GameCenter/GameServer"
+    ],
+    "data_domain": [
+      "session_login",
+      "relay_role_login",
+      "role_base",
+      "role_blob",
+      "role_state",
+      "scene_attach",
+      "script_registry",
+      "map_partition",
+      "ready_sync"
+    ],
+    "evidence_surface": [
+      "manifest",
+      "probe-ledger",
+      "boundary-capsule",
+      "overlay-comparison",
+      "target-static-query",
+      "dossier",
+      "lua-script-registry",
+      "tab-reader",
+      "ini-config"
+    ]
+  },
+  "contract_path": "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-audit/w1.journey.contract.json",
+  "contract_sha256": "38ae33b5eff7983a05e3765fc85db1105be3a5992286e6754a114fdd344e41dd",
+  "checkpoint_order": [
+    "w1.provenance.connectivity_pair_distinct",
+    "w1.runtime.gateway_client_5004",
+    "w1.runtime.relay_role_login_5003",
+    "w1.static.confirm_player_login_dispatch",
+    "w1.static.role_login_payload_exactness",
+    "w1.terminal.enter_world"
+  ],
+  "checkpoints": [
+    {
+      "checkpoint_id": "w1.provenance.connectivity_pair_distinct",
+      "label": "Connectivity pair uses distinct stock/candidate GameServer binaries",
+      "layer": "provenance",
+      "contract_kind": "pair-distinctness",
+      "owner_scope": "GameServer pair",
+      "data_domain": "session_login",
+      "evidence_surface": "manifest",
+      "surface": null,
+      "status": "PASS",
+      "local_status": "PASS",
+      "depends_on": [],
+      "blocked_by": [],
+      "terminal": false,
+      "owner": {
+        "process": "GameServer"
+      },
+      "summary": "The public connectivity probe is usable only if the stock and candidate GameServer binaries are distinct.",
+      "target_evidence": [],
+      "candidate_evidence": [],
+      "runtime_evidence": [],
+      "findings": [
+        {
+          "status": "PASS",
+          "summary": "stock/candidate runtime manifests prove distinct GameServer binaries",
+          "evidence": [
+            {
+              "path": "graphengine/staging/jx3probe/w1-stock-candidate-20260728/stock-fresh/manifest.json",
+              "sha256": "5ad2ca48b361c1c8ea729692bc05db6a39bc3d7c2cdc2159f9a3f3061d7ef2c9",
+              "detail": "stock gameserver provenance",
+              "extra": {
+                "gameserver_sha256": "3002bf4ad08d4c0fb9d4fc10f2d66b1f6cd8f70d398ff792136a3b7d5c416f11"
+              }
+            },
+            {
+              "path": "graphengine/staging/jx3probe/w1-stock-candidate-20260728/candidate/manifest.json",
+              "sha256": "ec8267829e7485d33f57fabbb7b6efeb7de48323adb16c919623538968c3e1ab",
+              "detail": "candidate gameserver provenance",
+              "extra": {
+                "gameserver_sha256": "1254f92269963aaf7d73794b08e47a82fc03c91ac084eff4221b23062c9441c9"
+              }
+            }
+          ]
+        }
+      ],
+      "missing_evidence": [],
+      "next_action": null
+    },
+    {
+      "checkpoint_id": "w1.runtime.gateway_client_5004",
+      "label": "Gateway/client runtime handoff",
+      "layer": "runtime-observability",
+      "contract_kind": "runtime-frontier",
+      "owner_scope": "Gateway",
+      "data_domain": "session_login",
+      "evidence_surface": "boundary-capsule",
+      "surface": null,
+      "status": "FAIL",
+      "local_status": "FAIL",
+      "depends_on": [
+        "w1.provenance.connectivity_pair_distinct"
+      ],
+      "blocked_by": [],
+      "terminal": false,
+      "owner": {
+        "process": "Gateway",
+        "protocol": "gateway.client_5004"
+      },
+      "summary": "This is the current first-runtime-divergence boundary in the fresh public W1 pair.",
+      "target_evidence": [],
+      "candidate_evidence": [],
+      "runtime_evidence": [
+        {
+          "origin": "runtime",
+          "path": "graphengine/staging/jx3probe/w1-stock-candidate-20260728/boundary-capsule.json",
+          "note": "Fresh paired public capture"
+        }
+      ],
+      "findings": [
+        {
+          "status": "UNRESOLVED",
+          "summary": "one or more expected probe ladder rows are missing",
+          "missing_evidence": [
+            "probe ledger rows missing for w1.gateway.client_5004"
+          ],
+          "evidence": []
+        },
+        {
+          "status": "FAIL",
+          "summary": "paired runtime capture diverges at this checkpoint",
+          "evidence": [
+            {
+              "path": "graphengine/staging/jx3probe/w1-stock-candidate-20260728/boundary-capsule.json",
+              "sha256": "93f1452fc5d557dec164e80ebc3fbf57e5ef21a2dd4a5dac91d588f6c50c88ad",
+              "detail": "jx3probe first runtime divergence",
+              "extra": {
+                "contract_key": "w1.gateway.client_5004",
+                "difference_dimensions": [
+                  "state_fingerprint"
+                ],
+                "sequence": 0
+              }
+            }
+          ]
+        }
+      ],
+      "missing_evidence": [
+        "probe ledger rows missing for w1.gateway.client_5004"
+      ],
+      "next_action": "Inspect the direct owner closure for the `gateway.client_5004` state-fingerprint divergence before patching relay, role-load, or ready/state logic."
+    },
+    {
+      "checkpoint_id": "w1.runtime.relay_role_login_5003",
+      "label": "Relay role-login request/response mechanical parity",
+      "layer": "protocol-serialization",
+      "contract_kind": "mechanical-envelope",
+      "owner_scope": "GameCenter/GameServer relay pair",
+      "data_domain": "relay_role_login",
+      "evidence_surface": "probe-ledger",
+      "surface": null,
+      "status": "BLOCKED_BY_PREDECESSOR",
+      "local_status": "UNRESOLVED",
+      "depends_on": [
+        "w1.runtime.gateway_client_5004"
+      ],
+      "blocked_by": [
+        "w1.runtime.gateway_client_5004"
+      ],
+      "terminal": false,
+      "owner": {
+        "process": "GameCenter/GameServer",
+        "protocol": "r2s_player_login_request"
+      },
+      "summary": "The retained 5003 probe only proves mechanical request/response parity; it does not accept role-data parsing or enter-world semantics.",
+      "target_evidence": [],
+      "candidate_evidence": [],
+      "runtime_evidence": [],
+      "findings": [
+        {
+          "status": "PASS",
+          "summary": "stock/candidate runtime manifests prove distinct GameServer binaries",
+          "evidence": [
+            {
+              "path": "graphengine/staging/jx3probe/w1-role-login-5003-20260728/stock/manifest.json",
+              "sha256": "6d571aae33ca9f9c15a0604edb8aee8ee34ac826569894db1ea2dd804e5d8729",
+              "detail": "stock gameserver provenance",
+              "extra": {
+                "gameserver_sha256": "3002bf4ad08d4c0fb9d4fc10f2d66b1f6cd8f70d398ff792136a3b7d5c416f11"
+              }
+            },
+            {
+              "path": "graphengine/staging/jx3probe/w1-role-login-5003-20260728/candidate/manifest.json",
+              "sha256": "3ee8487dc2e5ad57afe20c5778cb5514aa428fd2f715d580fefceec6febfcd7d",
+              "detail": "candidate gameserver provenance",
+              "extra": {
+                "gameserver_sha256": "1254f92269963aaf7d73794b08e47a82fc03c91ac084eff4221b23062c9441c9"
+              }
+            }
+          ]
+        },
+        {
+          "status": "UNRESOLVED",
+          "summary": "one or more expected probe ladder rows are missing",
+          "missing_evidence": [
+            "probe ledger rows missing for w1.center_gameserver_role_login_request, w1.gameserver_center_role_login_respond"
+          ],
+          "evidence": []
+        }
+      ],
+      "missing_evidence": [
+        "probe ledger rows missing for w1.center_gameserver_role_login_request, w1.gameserver_center_role_login_respond"
+      ],
+      "next_action": null
+    },
+    {
+      "checkpoint_id": "w1.static.confirm_player_login_dispatch",
+      "label": "Confirm-player-login payload + dispatch closure",
+      "layer": "protocol-serialization",
+      "contract_kind": "dispatch-closure",
+      "owner_scope": "KRelayClient",
+      "data_domain": "session_login",
+      "evidence_surface": "target-static-query",
+      "surface": null,
+      "status": "BLOCKED_BY_PREDECESSOR",
+      "local_status": "UNRESOLVED",
+      "depends_on": [
+        "w1.runtime.relay_role_login_5003"
+      ],
+      "blocked_by": [
+        "w1.runtime.relay_role_login_5003"
+      ],
+      "terminal": false,
+      "owner": {
+        "process": "GameServer",
+        "function": "KRelayClient::DoConfirmPlayerLoginRequest",
+        "protocol": "s2r_confirm_player_login_request",
+        "type": "S2R_CONFIRM_PLAYER_LOGIN_REQUEST"
+      },
+      "summary": "Target payload type is known, but the current target-static query still lacks the fully materialized protocol-payload/dispatch lane needed for automatic reconciliation.",
+      "target_evidence": [
+        {
+          "origin": "target_dwarf",
+          "path": "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/relay/CONFIRM_PLAYER_LOGIN_REQUEST_DRIFT_2026-07-28.md",
+          "note": "10-byte envelope, dwPlayerID@2, dwIP@6"
+        }
+      ],
+      "candidate_evidence": [],
+      "runtime_evidence": [],
+      "findings": [
+        {
+          "status": "UNRESOLVED",
+          "summary": "target-static query is still missing the required closure for this checkpoint",
+          "missing_evidence": [
+            "payload types exist but dispatch/handler closure is missing from the target-static query"
+          ],
+          "evidence": [
+            {
+              "path": "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/v5-cross-audit/s2r-confirm-player-login.fresh-target-static.json",
+              "sha256": "9c025870d2ff91f98dcd9035e66cfff1d67590ecb465d9a0b4fb421ff6a791de",
+              "detail": "target-static query remains partial",
+              "extra": {
+                "selected_target_protocol_observations": 0,
+                "payload_type_count": 2
+              }
+            }
+          ]
+        }
+      ],
+      "missing_evidence": [
+        "payload types exist but dispatch/handler closure is missing from the target-static query"
+      ],
+      "next_action": null
+    },
+    {
+      "checkpoint_id": "w1.static.role_login_payload_exactness",
+      "label": "Role-login envelope exact payload contract",
+      "layer": "abi-layout",
+      "contract_kind": "payload-layout",
+      "owner_scope": "GameCenter/GameServer relay pair",
+      "data_domain": "relay_role_login",
+      "evidence_surface": "overlay-comparison",
+      "surface": null,
+      "status": "STATIC_DRIFT",
+      "local_status": "STATIC_DRIFT",
+      "depends_on": [
+        "w1.runtime.relay_role_login_5003"
+      ],
+      "blocked_by": [
+        "w1.runtime.relay_role_login_5003"
+      ],
+      "terminal": false,
+      "owner": {
+        "process": "GameCenter/GameServer",
+        "protocol": "r2s_player_login_request",
+        "type": "R2S_PLAYER_LOGIN_REQUEST"
+      },
+      "summary": "Historical overlay evidence shows a concrete payload-size drift independent of the current runtime frontier.",
+      "target_evidence": [
+        {
+          "origin": "target_dwarf",
+          "path": "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/relay/RELAY_ROLE_ENVELOPE_DOSSIER.md",
+          "note": "Center target payload size 302 bytes"
+        }
+      ],
+      "candidate_evidence": [
+        {
+          "origin": "candidate",
+          "path": "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/v5-cross-audit/historical-dossier.r2s-player-login.overlay.json",
+          "note": "Historical 306-byte overlay observation"
+        }
+      ],
+      "runtime_evidence": [],
+      "findings": [
+        {
+          "status": "STATIC_DRIFT",
+          "summary": "candidate overlay conflicts with target-static contract dimensions",
+          "evidence": [
+            {
+              "path": "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/v5-cross-audit/r2s-player-login.historical-overlay-comparison.v5.json",
+              "sha256": "ed046d26a1358e2cc6ecd93210fc0b1a70f92e56ed40fdc4c6d0df34d5885e97",
+              "detail": "overlay comparison drift",
+              "extra": {
+                "matches": [
+                  {
+                    "contract_key": "v4:47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a:r2s_player_login_request:6:R2S_PLAYER_LOGIN_REQUEST:0x00a85fd0",
+                    "differences": [
+                      {
+                        "dimension": "payload_byte_size",
+                        "status": "CONFLICTS",
+                        "candidate": 306,
+                        "target": 302
+                      }
+                    ]
+                  },
+                  {
+                    "contract_key": "v4:655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79:r2s_player_login_request:6:R2S_PLAYER_LOGIN_REQUEST:0x0017ab3e",
+                    "differences": [
+                      {
+                        "dimension": "payload_byte_size",
+                        "status": "CONFLICTS",
+                        "candidate": 306,
+                        "target": 302
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "missing_evidence": [],
+      "next_action": null
+    },
+    {
+      "checkpoint_id": "w1.terminal.enter_world",
+      "label": "Terminal enter-the-world outcome",
+      "layer": "terminal-integration",
+      "contract_kind": "integration-outcome",
+      "owner_scope": "Client/Gateway/GameCenter/GameServer",
+      "data_domain": "scene_attach",
+      "evidence_surface": "runtime_probe",
+      "surface": null,
+      "status": "BLOCKED_BY_PREDECESSOR",
+      "local_status": "NOT_APPLICABLE",
+      "depends_on": [
+        "w1.static.role_login_payload_exactness",
+        "w1.static.confirm_player_login_dispatch"
+      ],
+      "blocked_by": [
+        "w1.static.role_login_payload_exactness",
+        "w1.static.confirm_player_login_dispatch"
+      ],
+      "terminal": true,
+      "owner": {
+        "process": "Client/Gateway/GameCenter/GameServer"
+      },
+      "summary": "Terminal acceptance stays blocked until the upstream runtime frontier and the upstream static protocol contracts are both resolved.",
+      "target_evidence": [],
+      "candidate_evidence": [],
+      "runtime_evidence": [],
+      "findings": [],
+      "missing_evidence": [],
+      "next_action": null
+    }
+  ],
+  "root_boundary": {
+    "checkpoint_id": "w1.runtime.gateway_client_5004",
+    "status": "FAIL",
+    "layer": "runtime-observability",
+    "contract_kind": "runtime-frontier",
+    "owner_scope": "Gateway",
+    "data_domain": "session_login",
+    "evidence_surface": "boundary-capsule",
+    "label": "Gateway/client runtime handoff"
+  },
+  "downstream_blocked": [
+    "w1.runtime.relay_role_login_5003",
+    "w1.static.confirm_player_login_dispatch",
+    "w1.terminal.enter_world"
+  ],
+  "downstream_static_drift": [
+    {
+      "checkpoint_id": "w1.static.role_login_payload_exactness",
+      "blocked_by": [
+        "w1.runtime.relay_role_login_5003"
+      ]
+    }
+  ],
+  "next_action": "Inspect the direct owner closure for the `gateway.client_5004` state-fingerprint divergence before patching relay, role-load, or ready/state logic."
+}

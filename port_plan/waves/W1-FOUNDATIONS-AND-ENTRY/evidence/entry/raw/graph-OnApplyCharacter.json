@@ -1,0 +1,332 @@
+{
+  "query": "KPlayerServer::OnApplyCharacter",
+  "reconciliation": {
+    "rule": "source/candidate observation and target nm symbol share exact qualified Class::Method only; no semantic/control-flow equivalence claimed",
+    "status": "UNRESOLVED"
+  },
+  "runtime": {
+    "reason": "no stock/built oracle capture ingested",
+    "status": "UNRESOLVED"
+  },
+  "semantic_observations": [],
+  "source_and_candidate": [],
+  "static_semantic_claims": [],
+  "target": [
+    {
+      "address": "08061eb0",
+      "binary_path": "jx3_dwarf/SO3GameServerD",
+      "binary_sha256": "47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a",
+      "calls": [
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08056c8c\",\"qualified_name\":\"KPlayerServer::GetPlayerByConnection\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"08061ed0\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"GetPlayerByConnection\",\"schema\":\"target-call-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\"}",
+          "record_line": 2880,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"0808d9de\",\"qualified_name\":\"std::pair<std::_Rb_tree_const_iterator<unsigned long>, bool>::pair\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"08061eec\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"pair\",\"schema\":\"target-call-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\"}",
+          "record_line": 2881,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"0804d904\",\"qualified_name\":null,\"symbol_evidence_ids\":[],\"symbol_status\":\"UNRESOLVED_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"08061f16\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"__assert_fail\",\"schema\":\"target-call-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\"}",
+          "record_line": 2883,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"0804d904\",\"qualified_name\":null,\"symbol_evidence_ids\":[],\"symbol_status\":\"UNRESOLVED_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"08061f44\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"__assert_fail\",\"schema\":\"target-call-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\"}",
+          "record_line": 2885,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08056a94\",\"qualified_name\":\"KObjectIndex<KPlayer>::GetObj\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"08061f73\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"GetObj\",\"schema\":\"target-call-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\"}",
+          "record_line": 2887,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08286000\",\"qualified_name\":\"KCharacter::IsStealthToCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"08061fac\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"IsStealthToCharacter\",\"schema\":\"target-call-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\"}",
+          "record_line": 2891,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"083878ee\",\"qualified_name\":\"KPlayer::IsInViewRangeByPlayer\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"08061fce\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"IsInViewRangeByPlayer\",\"schema\":\"target-call-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\"}",
+          "record_line": 2893,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08387834\",\"qualified_name\":\"KPlayer::IsInViewRangeByViewPoint\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"08061ff3\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"IsInViewRangeByViewPoint\",\"schema\":\"target-call-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\"}",
+          "record_line": 2895,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"0809095a\",\"qualified_name\":\"std::set<unsigned long, std::less<unsigned long>, KMemory::KAllocator<unsigned long>>::insert\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"0806203e\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"insert\",\"schema\":\"target-call-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\"}",
+          "record_line": 2898,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"0804cf64\",\"qualified_name\":null,\"symbol_evidence_ids\":[],\"symbol_status\":\"UNRESOLVED_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"0806205b\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"memcpy\",\"schema\":\"target-call-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\"}",
+          "record_line": 2899,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"0808d112\",\"qualified_name\":\"KPlayer::KViewObject::KViewObject\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"0806208a\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"KViewObject\",\"schema\":\"target-call-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\"}",
+          "record_line": 2901,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08090a80\",\"qualified_name\":\"std::list<KPlayer::KViewObject, KMemory::KAllocator<KPlayer::KViewObject>>::push_back\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"080620b0\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"push_back\",\"schema\":\"target-call-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\"}",
+          "record_line": 2902,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"0808f042\",\"qualified_name\":\"KObjectIndex<KNpc>::GetObj\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"080620d1\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"GetObj\",\"schema\":\"target-call-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\"}",
+          "record_line": 2904,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08286000\",\"qualified_name\":\"KCharacter::IsStealthToCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"080620fe\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"IsStealthToCharacter\",\"schema\":\"target-call-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\"}",
+          "record_line": 2907,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"083878ee\",\"qualified_name\":\"KPlayer::IsInViewRangeByPlayer\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"08062120\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"IsInViewRangeByPlayer\",\"schema\":\"target-call-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\"}",
+          "record_line": 2909,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08387834\",\"qualified_name\":\"KPlayer::IsInViewRangeByViewPoint\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"08062145\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"IsInViewRangeByViewPoint\",\"schema\":\"target-call-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\"}",
+          "record_line": 2911,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"0809095a\",\"qualified_name\":\"std::set<unsigned long, std::less<unsigned long>, KMemory::KAllocator<unsigned long>>::insert\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"08062179\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"insert\",\"schema\":\"target-call-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\"}",
+          "record_line": 2914,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"0804cf64\",\"qualified_name\":null,\"symbol_evidence_ids\":[],\"symbol_status\":\"UNRESOLVED_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"08062196\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"memcpy\",\"schema\":\"target-call-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\"}",
+          "record_line": 2915,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"0808d112\",\"qualified_name\":\"KPlayer::KViewObject::KViewObject\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"080621c1\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"KViewObject\",\"schema\":\"target-call-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\"}",
+          "record_line": 2917,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08090a80\",\"qualified_name\":\"std::list<KPlayer::KViewObject, KMemory::KAllocator<KPlayer::KViewObject>>::push_back\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"080621d9\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"push_back\",\"schema\":\"target-call-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\"}",
+          "record_line": 2918,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08086dbc\",\"qualified_name\":\"KPlayerServer::KPlayerServer\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"080898cd\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"OnApplyCharacter\",\"schema\":\"target-call-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\"}",
+          "record_line": 8752,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08086dbc\",\"qualified_name\":\"KPlayerServer::KPlayerServer\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"080898f0\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"OnApplyCharacter\",\"schema\":\"target-call-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\"}",
+          "record_line": 8753,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08089e96\",\"qualified_name\":\"KPlayerServer::KPlayerServer\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"0808c9a7\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"OnApplyCharacter\",\"schema\":\"target-call-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\"}",
+          "record_line": 9176,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08089e96\",\"qualified_name\":\"KPlayerServer::KPlayerServer\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"0808c9ca\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"OnApplyCharacter\",\"schema\":\"target-call-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\"}",
+          "record_line": 9177,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "TARGET_STATIC_CONFIRMED"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"08061ef5\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"OnApplyCharacter\",\"schema\":\"target-call-observation/v1\",\"status\":\"RAW_SUSPECT_SELF_CALL\"}",
+          "record_line": 2882,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "RAW_SUSPECT_SELF_CALL"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"08061f23\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"OnApplyCharacter\",\"schema\":\"target-call-observation/v1\",\"status\":\"RAW_SUSPECT_SELF_CALL\"}",
+          "record_line": 2884,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "RAW_SUSPECT_SELF_CALL"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"08061f56\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"OnApplyCharacter\",\"schema\":\"target-call-observation/v1\",\"status\":\"RAW_SUSPECT_SELF_CALL\"}",
+          "record_line": 2886,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "RAW_SUSPECT_SELF_CALL"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"08061f7f\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"OnApplyCharacter\",\"schema\":\"target-call-observation/v1\",\"status\":\"RAW_SUSPECT_SELF_CALL\"}",
+          "record_line": 2888,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "RAW_SUSPECT_SELF_CALL"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"08061f8d\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"OnApplyCharacter\",\"schema\":\"target-call-observation/v1\",\"status\":\"RAW_SUSPECT_SELF_CALL\"}",
+          "record_line": 2889,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "RAW_SUSPECT_SELF_CALL"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"08061f99\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"OnApplyCharacter\",\"schema\":\"target-call-observation/v1\",\"status\":\"RAW_SUSPECT_SELF_CALL\"}",
+          "record_line": 2890,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "RAW_SUSPECT_SELF_CALL"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"08061fb8\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"OnApplyCharacter\",\"schema\":\"target-call-observation/v1\",\"status\":\"RAW_SUSPECT_SELF_CALL\"}",
+          "record_line": 2892,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "RAW_SUSPECT_SELF_CALL"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"08061fe1\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"OnApplyCharacter\",\"schema\":\"target-call-observation/v1\",\"status\":\"RAW_SUSPECT_SELF_CALL\"}",
+          "record_line": 2894,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "RAW_SUSPECT_SELF_CALL"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"08061fff\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"OnApplyCharacter\",\"schema\":\"target-call-observation/v1\",\"status\":\"RAW_SUSPECT_SELF_CALL\"}",
+          "record_line": 2896,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "RAW_SUSPECT_SELF_CALL"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"08062005\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"OnApplyCharacter\",\"schema\":\"target-call-observation/v1\",\"status\":\"RAW_SUSPECT_SELF_CALL\"}",
+          "record_line": 2897,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "RAW_SUSPECT_SELF_CALL"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"08062066\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"OnApplyCharacter\",\"schema\":\"target-call-observation/v1\",\"status\":\"RAW_SUSPECT_SELF_CALL\"}",
+          "record_line": 2900,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "RAW_SUSPECT_SELF_CALL"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"080620b5\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"OnApplyCharacter\",\"schema\":\"target-call-observation/v1\",\"status\":\"RAW_SUSPECT_SELF_CALL\"}",
+          "record_line": 2903,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "RAW_SUSPECT_SELF_CALL"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"080620dd\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"OnApplyCharacter\",\"schema\":\"target-call-observation/v1\",\"status\":\"RAW_SUSPECT_SELF_CALL\"}",
+          "record_line": 2905,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "RAW_SUSPECT_SELF_CALL"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"080620eb\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"OnApplyCharacter\",\"schema\":\"target-call-observation/v1\",\"status\":\"RAW_SUSPECT_SELF_CALL\"}",
+          "record_line": 2906,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "RAW_SUSPECT_SELF_CALL"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"0806210a\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"OnApplyCharacter\",\"schema\":\"target-call-observation/v1\",\"status\":\"RAW_SUSPECT_SELF_CALL\"}",
+          "record_line": 2908,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "RAW_SUSPECT_SELF_CALL"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"08062133\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"OnApplyCharacter\",\"schema\":\"target-call-observation/v1\",\"status\":\"RAW_SUSPECT_SELF_CALL\"}",
+          "record_line": 2910,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "RAW_SUSPECT_SELF_CALL"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"08062151\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"OnApplyCharacter\",\"schema\":\"target-call-observation/v1\",\"status\":\"RAW_SUSPECT_SELF_CALL\"}",
+          "record_line": 2912,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "RAW_SUSPECT_SELF_CALL"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"08062157\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"OnApplyCharacter\",\"schema\":\"target-call-observation/v1\",\"status\":\"RAW_SUSPECT_SELF_CALL\"}",
+          "record_line": 2913,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "RAW_SUSPECT_SELF_CALL"
+        },
+        {
+          "evidence_id": 30016,
+          "payload_json": "{\"authority\":\"target-control-flow\",\"binary_path\":\"jx3_dwarf/SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"callee\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"caller\":{\"address\":\"08061eb0\",\"qualified_name\":\"KPlayerServer::OnApplyCharacter\",\"symbol_evidence_ids\":[29992],\"symbol_status\":\"UNIQUE_TARGET_SYMBOL\"},\"callsite\":\"080621a1\",\"evidence\":{\"call_evidence_id\":14989,\"call_extract_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/pyghidra/SO3GameServerD.jsonl\"},\"kind\":\"target-call-observation\",\"origin\":\"target-decompile-v252\",\"raw_callee_name\":\"OnApplyCharacter\",\"schema\":\"target-call-observation/v1\",\"status\":\"RAW_SUSPECT_SELF_CALL\"}",
+          "record_line": 2916,
+          "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+          "status": "RAW_SUSPECT_SELF_CALL"
+        }
+      ],
+      "decompile_documents": [],
+      "demangled": "KPlayerServer::OnApplyCharacter(char*, unsigned int, int, int)",
+      "evidence_id": 29992,
+      "extract_path": "/Volumes/ExData/game/jx3/linux-build/re-index/symbols/SO3GameServerD.jsonl",
+      "protocols": [],
+      "qualified_key": "KPlayerServer::OnApplyCharacter",
+      "tab_reads": [],
+      "typed_field_accesses": []
+    }
+  ]
+}

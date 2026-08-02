@@ -1,0 +1,45 @@
+cd /Volumes/ExData/game/jx3
+python3 linux-build/graphengine/tools/query/journey_contract_query.py \
+  --seed w1-relay-entry-static \
+  --protocol r2s_handshake_respond \
+  --max-branches 1 \
+  --max-direct-calls 8 \
+  --output linux-build/port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-contract-prototype/journey-contract.target-static.json
+
+python3 -m json.tool linux-build/port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-contract-prototype/journey-contract.target-static.json >/dev/null
+
+# V2 frozen target-only outbound-contract expansion
+python3 linux-build/graphengine/tools/query/journey_contract_query.py \
+  --seed w1-relay-entry-static-v2 \
+  --protocol r2s_player_login_request \
+  --max-branches 1 \
+  --max-direct-calls 16 \
+  --max-outbound-candidates 16 \
+  --max-outbound-second-hop 4 \
+  --output linux-build/port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-contract-prototype/journey-contract-v2.target-static.json
+
+python3 -m json.tool linux-build/port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-contract-prototype/journey-contract-v2.target-static.json >/dev/null
+
+# V3 bounded target decompile/DWARF serializer lane
+python3 linux-build/graphengine/tools/query/journey_contract_query.py \
+  --seed w1-relay-entry-static-v3 \
+  --protocol r2s_player_login_request \
+  --max-branches 1 \
+  --max-direct-calls 16 \
+  --max-outbound-candidates 16 \
+  --max-outbound-second-hop 4 \
+  --output linux-build/port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-contract-prototype/journey-contract-v3.target-static.json
+
+python3 -m json.tool linux-build/port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-contract-prototype/journey-contract-v3.target-static.json >/dev/null
+
+# V4 target-static, per-binary protocol/type projection
+python3 linux-build/graphengine/tools/query/journey_contract_query.py \
+  --seed w1-relay-entry-static-v4 \
+  --protocol r2s_player_login_request \
+  --max-branches 1 \
+  --max-direct-calls 16 \
+  --max-outbound-candidates 16 \
+  --max-outbound-second-hop 4 \
+  --output linux-build/port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-contract-prototype/journey-contract-v4.target-static.json
+
+python3 -m json.tool linux-build/port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-contract-prototype/journey-contract-v4.target-static.json >/dev/null

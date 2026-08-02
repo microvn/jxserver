@@ -1,0 +1,156 @@
+
+/Volumes/ExData/game/jx3/jx3_dwarf/SO3GameServerD:	file format elf32-i386
+
+Disassembly of section .text:
+
+08086dbc <_ZN13KPlayerServerC1Ev>:
+ 8086dbc: 55                           	push	ebp
+ 8086dbd: 89 e5                        	mov	ebp, esp
+ 8086dbf: 56                           	push	esi
+ 8086dc0: 53                           	push	ebx
+ 8086dc1: 81 ec 90 06 00 00            	sub	esp, 0x690
+ 8086dc7: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8086dca: 83 c0 60                     	add	eax, 0x60
+ 8086dcd: 89 04 24                     	mov	dword ptr [esp], eax
+ 8086dd0: e8 4d 79 00 00               	call	0x808e722 <_ZNSt6vectorIjSaIjEEC1Ev>
+ 8086dd5: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8086dd8: 05 68 ab 00 00               	add	eax, 0xab68
+ 8086ddd: 89 04 24                     	mov	dword ptr [esp], eax
+ 8086de0: e8 bb e6 00 00               	call	0x80954a0 <_ZN19KG_RTProfileManagerC1Ev>
+ 8086de5: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8086de8: 89 04 24                     	mov	dword ptr [esp], eax
+ 8086deb: e8 70 b4 fc ff               	call	0x8052260 <_ZN13KPlayerServer10_ConstructEv>
+ 8086df0: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8086df3: 83 c0 6c                     	add	eax, 0x6c
+ 8086df6: c7 44 24 08 88 06 00 00      	mov	dword ptr [esp + 0x8], 0x688
+ 8086dfe: c7 44 24 04 00 00 00 00      	mov	dword ptr [esp + 0x4], 0x0
+ 8086e06: 89 04 24                     	mov	dword ptr [esp], eax
+ 8086e09: e8 86 68 fc ff               	call	0x804d694 <memset@plt>
+ 8086e0e: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8086e11: 05 f4 06 00 00               	add	eax, 0x6f4
+ 8086e16: c7 44 24 08 44 03 00 00      	mov	dword ptr [esp + 0x8], 0x344
+ 8086e1e: c7 44 24 04 00 00 00 00      	mov	dword ptr [esp + 0x4], 0x0
+ 8086e26: 89 04 24                     	mov	dword ptr [esp], eax
+ 8086e29: e8 66 68 fc ff               	call	0x804d694 <memset@plt>
+ 8086e2e: c7 85 88 f9 ff ff dc a5 07 08	mov	dword ptr [ebp - 0x678], 0x807a5dc
+ 8086e38: c7 85 8c f9 ff ff 00 00 00 00	mov	dword ptr [ebp - 0x674], 0x0
+ 8086e42: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8086e45: 8b 95 88 f9 ff ff            	mov	edx, dword ptr [ebp - 0x678]
+ 8086e4b: 8b 8d 8c f9 ff ff            	mov	ecx, dword ptr [ebp - 0x674]
+ 8086e51: 89 50 74                     	mov	dword ptr [eax + 0x74], edx
+ 8086e54: 89 48 78                     	mov	dword ptr [eax + 0x78], ecx
+ 8086e57: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8086e5a: c7 80 f8 06 00 00 1a 00 00 00	mov	dword ptr [eax + 0x6f8], 0x1a
+ 8086e64: c7 85 90 f9 ff ff 00 a3 07 08	mov	dword ptr [ebp - 0x670], 0x807a300
+ 8086e6e: c7 85 94 f9 ff ff 00 00 00 00	mov	dword ptr [ebp - 0x66c], 0x0
+ 8086e78: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8086e7b: 8b 95 90 f9 ff ff            	mov	edx, dword ptr [ebp - 0x670]
+ 8086e81: 8b 8d 94 f9 ff ff            	mov	ecx, dword ptr [ebp - 0x66c]
+ 8086e87: 89 90 84 00 00 00            	mov	dword ptr [eax + 0x84], edx
+ 8086e8d: 89 88 88 00 00 00            	mov	dword ptr [eax + 0x88], ecx
+ 8086e93: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8086e96: c7 80 00 07 00 00 0a 00 00 00	mov	dword ptr [eax + 0x700], 0xa
+ 8086ea0: c7 85 98 f9 ff ff fc 9d 07 08	mov	dword ptr [ebp - 0x668], 0x8079dfc
+ 8086eaa: c7 85 9c f9 ff ff 00 00 00 00	mov	dword ptr [ebp - 0x664], 0x0
+ 8086eb4: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8086eb7: 8b 95 98 f9 ff ff            	mov	edx, dword ptr [ebp - 0x668]
+ 8086ebd: 8b 8d 9c f9 ff ff            	mov	ecx, dword ptr [ebp - 0x664]
+ 8086ec3: 89 50 7c                     	mov	dword ptr [eax + 0x7c], edx
+ 8086ec6: 89 88 80 00 00 00            	mov	dword ptr [eax + 0x80], ecx
+ 8086ecc: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8086ecf: c7 80 fc 06 00 00 06 00 00 00	mov	dword ptr [eax + 0x6fc], 0x6
+ 8086ed9: c7 85 a0 f9 ff ff 9a 9c 07 08	mov	dword ptr [ebp - 0x660], 0x8079c9a
+ 8086ee3: c7 85 a4 f9 ff ff 00 00 00 00	mov	dword ptr [ebp - 0x65c], 0x0
+ 8086eed: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8086ef0: 8b 95 a0 f9 ff ff            	mov	edx, dword ptr [ebp - 0x660]
+ 8086ef6: 8b 8d a4 f9 ff ff            	mov	ecx, dword ptr [ebp - 0x65c]
+ 8086efc: 89 90 8c 00 00 00            	mov	dword ptr [eax + 0x8c], edx
+ 8086f02: 89 88 90 00 00 00            	mov	dword ptr [eax + 0x90], ecx
+ 8086f08: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8086f0b: c7 80 04 07 00 00 06 00 00 00	mov	dword ptr [eax + 0x704], 0x6
+ 8086f15: c7 85 a8 f9 ff ff f2 9b 07 08	mov	dword ptr [ebp - 0x658], 0x8079bf2
+ 8086f1f: c7 85 ac f9 ff ff 00 00 00 00	mov	dword ptr [ebp - 0x654], 0x0
+ 8086f29: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8086f2c: 8b 95 a8 f9 ff ff            	mov	edx, dword ptr [ebp - 0x658]
+ 8086f32: 8b 8d ac f9 ff ff            	mov	ecx, dword ptr [ebp - 0x654]
+ 8086f38: 89 90 94 00 00 00            	mov	dword ptr [eax + 0x94], edx
+ 8086f3e: 89 88 98 00 00 00            	mov	dword ptr [eax + 0x98], ecx
+ 8086f44: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8086f47: c7 80 08 07 00 00 06 00 00 00	mov	dword ptr [eax + 0x708], 0x6
+ 8086f51: c7 85 b0 f9 ff ff f0 89 05 08	mov	dword ptr [ebp - 0x650], 0x80589f0
+ 8086f5b: c7 85 b4 f9 ff ff 00 00 00 00	mov	dword ptr [ebp - 0x64c], 0x0
+ 8086f65: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8086f68: 8b 95 b0 f9 ff ff            	mov	edx, dword ptr [ebp - 0x650]
+ 8086f6e: 8b 8d b4 f9 ff ff            	mov	ecx, dword ptr [ebp - 0x64c]
+ 8086f74: 89 90 9c 00 00 00            	mov	dword ptr [eax + 0x9c], edx
+ 8086f7a: 89 88 a0 00 00 00            	mov	dword ptr [eax + 0xa0], ecx
+ 8086f80: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8086f83: c7 80 0c 07 00 00 0a 00 00 00	mov	dword ptr [eax + 0x70c], 0xa
+ 8086f8d: c7 85 b8 f9 ff ff 68 7c 07 08	mov	dword ptr [ebp - 0x648], 0x8077c68
+ 8086f97: c7 85 bc f9 ff ff 00 00 00 00	mov	dword ptr [ebp - 0x644], 0x0
+ 8086fa1: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8086fa4: 8b 95 b8 f9 ff ff            	mov	edx, dword ptr [ebp - 0x648]
+ 8086faa: 8b 8d bc f9 ff ff            	mov	ecx, dword ptr [ebp - 0x644]
+ 8086fb0: 89 90 a4 00 00 00            	mov	dword ptr [eax + 0xa4], edx
+ 8086fb6: 89 88 a8 00 00 00            	mov	dword ptr [eax + 0xa8], ecx
+ 8086fbc: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8086fbf: c7 80 10 07 00 00 27 00 00 00	mov	dword ptr [eax + 0x710], 0x27
+ 8086fc9: c7 85 c0 f9 ff ff d6 bb 06 08	mov	dword ptr [ebp - 0x640], 0x806bbd6
+ 8086fd3: c7 85 c4 f9 ff ff 00 00 00 00	mov	dword ptr [ebp - 0x63c], 0x0
+ 8086fdd: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8086fe0: 8b 95 c0 f9 ff ff            	mov	edx, dword ptr [ebp - 0x640]
+ 8086fe6: 8b 8d c4 f9 ff ff            	mov	ecx, dword ptr [ebp - 0x63c]
+ 8086fec: 89 90 ac 00 00 00            	mov	dword ptr [eax + 0xac], edx
+ 8086ff2: 89 88 b0 00 00 00            	mov	dword ptr [eax + 0xb0], ecx
+ 8086ff8: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8086ffb: c7 80 14 07 00 00 06 00 00 00	mov	dword ptr [eax + 0x714], 0x6
+ 8087005: c7 85 c8 f9 ff ff 32 9b 07 08	mov	dword ptr [ebp - 0x638], 0x8079b32
+ 808700f: c7 85 cc f9 ff ff 00 00 00 00	mov	dword ptr [ebp - 0x634], 0x0
+ 8087019: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 808701c: 8b 95 c8 f9 ff ff            	mov	edx, dword ptr [ebp - 0x638]
+ 8087022: 8b 8d cc f9 ff ff            	mov	ecx, dword ptr [ebp - 0x634]
+ 8087028: 89 90 b4 00 00 00            	mov	dword ptr [eax + 0xb4], edx
+ 808702e: 89 88 b8 00 00 00            	mov	dword ptr [eax + 0xb8], ecx
+ 8087034: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8087037: c7 80 18 07 00 00 23 00 00 00	mov	dword ptr [eax + 0x718], 0x23
+ 8087041: c7 85 d0 f9 ff ff 72 9a 07 08	mov	dword ptr [ebp - 0x630], 0x8079a72
+ 808704b: c7 85 d4 f9 ff ff 00 00 00 00	mov	dword ptr [ebp - 0x62c], 0x0
+ 8087055: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8087058: 8b 95 d0 f9 ff ff            	mov	edx, dword ptr [ebp - 0x630]
+ 808705e: 8b 8d d4 f9 ff ff            	mov	ecx, dword ptr [ebp - 0x62c]
+ 8087064: 89 90 bc 00 00 00            	mov	dword ptr [eax + 0xbc], edx
+ 808706a: 89 88 c0 00 00 00            	mov	dword ptr [eax + 0xc0], ecx
+ 8087070: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8087073: c7 80 1c 07 00 00 26 00 00 00	mov	dword ptr [eax + 0x71c], 0x26
+ 808707d: c7 85 d8 f9 ff ff 98 98 07 08	mov	dword ptr [ebp - 0x628], 0x8079898
+ 8087087: c7 85 dc f9 ff ff 00 00 00 00	mov	dword ptr [ebp - 0x624], 0x0
+ 8087091: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8087094: 8b 95 d8 f9 ff ff            	mov	edx, dword ptr [ebp - 0x628]
+ 808709a: 8b 8d dc f9 ff ff            	mov	ecx, dword ptr [ebp - 0x624]
+ 80870a0: 89 90 c4 00 00 00            	mov	dword ptr [eax + 0xc4], edx
+ 80870a6: 89 88 c8 00 00 00            	mov	dword ptr [eax + 0xc8], ecx
+ 80870ac: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 80870af: c7 80 20 07 00 00 24 00 00 00	mov	dword ptr [eax + 0x720], 0x24
+ 80870b9: c7 85 e0 f9 ff ff aa 14 06 08	mov	dword ptr [ebp - 0x620], 0x80614aa
+ 80870c3: c7 85 e4 f9 ff ff 00 00 00 00	mov	dword ptr [ebp - 0x61c], 0x0
+ 80870cd: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 80870d0: 8b 95 e0 f9 ff ff            	mov	edx, dword ptr [ebp - 0x620]
+ 80870d6: 8b 8d e4 f9 ff ff            	mov	ecx, dword ptr [ebp - 0x61c]
+ 80870dc: 89 90 cc 00 00 00            	mov	dword ptr [eax + 0xcc], edx
+ 80870e2: 89 88 d0 00 00 00            	mov	dword ptr [eax + 0xd0], ecx
+ 80870e8: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 80870eb: c7 80 24 07 00 00 0e 00 00 00	mov	dword ptr [eax + 0x724], 0xe
+ 80870f5: c7 85 e8 f9 ff ff 12 96 07 08	mov	dword ptr [ebp - 0x618], 0x8079612
+ 80870ff: c7 85 ec f9 ff ff 00 00 00 00	mov	dword ptr [ebp - 0x614], 0x0
+ 8087109: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 808710c: 8b 95 e8 f9 ff ff            	mov	edx, dword ptr [ebp - 0x618]
+ 8087112: 8b 8d ec f9 ff ff            	mov	ecx, dword ptr [ebp - 0x614]
+ 8087118: 89 90 d4 00 00 00            	mov	dword ptr [eax + 0xd4], edx
+ 808711e: 89 88 d8 00 00 00            	mov	dword ptr [eax + 0xd8], ecx
+ 8087124: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8087127: c7 80 28 07 00 00 3b 00 00 00	mov	dword ptr [eax + 0x728], 0x3b
+ 8087131: c7 85 f0 f9 ff ff 72 7f 07 08	mov	dword ptr [ebp - 0x610], 0x8077f72
+ 808713b: c7 85 f4 f9 ff ff 00 00 00 00	mov	dword ptr [ebp - 0x60c], 0x0
+ 8087145: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 8087148: 8b 95 f0 f9 ff ff            	mov	edx, dword ptr [ebp - 0x610]
+ 808714e: 8b 8d f4 f9 ff ff            	mov	ecx, dword ptr [ebp - 0x60c]

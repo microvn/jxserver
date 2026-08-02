@@ -1,0 +1,236 @@
+{
+  "inputs": {
+    "handler": null,
+    "max_branches": 1,
+    "max_direct_calls": 8,
+    "max_outbound_candidates": 8,
+    "max_outbound_second_hop": 4,
+    "protocol": "s2r_confirm_player_login_request",
+    "seed": "W1 historical dossier cross-audit / confirm player login"
+  },
+  "limitations": [
+    "Target-static evidence does not establish runtime behavior or packet-wire compatibility.",
+    "Payload fields are emitted only when the selected target protocol-payload observation supplies DWARF-backed fields.",
+    "Direct closure contains only materialized TARGET_STATIC_CONFIRMED direct calls and is bounded by --max-direct-calls.",
+    "V2 outbound expansion requires a materialized target enum/protocol or payload-DWARF link; names and call order never create that link.",
+    "A V2 second hop remains partial: no static argument-to-buffer data-flow or runtime send is claimed.",
+    "V3 requires same-function target decompile evidence for allocation, header literal and Send, plus a target enum and equal-size DWARF payload type; it remains static-only.",
+    "V4 keeps target binary evidence separate. A multi-binary identity bridge is static-partial and never claims a runtime process route.",
+    "Candidate outbound protocol/send is deliberately UNRESOLVED in blind mode; this tool never reads candidate origin."
+  ],
+  "mode": "blind-target-static",
+  "multi_binary_protocol_contract": {
+    "binaries": [
+      {
+        "binary": {
+          "artifact_sha256": "c9be1bbadd3840a63f9a38121f7f468a92aff368a03b36e607ef5f57180be68a",
+          "binary_path": "jx3_dwarf/SO3GameCenterD",
+          "binary_sha256": "655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79",
+          "evidence_id": 14983,
+          "origin_id": "target-dwarf"
+        },
+        "dispatch_handler": [],
+        "enum": [
+          {
+            "die": "0x0017681e",
+            "enum": "KS2R_PROTOCOL",
+            "evidence": {
+              "address": null,
+              "artifact_sha256": "ef9f0e682f9682654f0a0431a131152e0c9f1a5779ba3d9f8f701dc5b58a17b5",
+              "authority": "target-dwarf",
+              "binary_sha256": "655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79",
+              "detail": "target protocol enum",
+              "die": "0x0017681e",
+              "evidence_id": 29982,
+              "origin": "target-dwarf-v252",
+              "record": {
+                "line": 291,
+                "path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/contracts/target_protocol.jsonl"
+              },
+              "status": "TARGET_STATIC_CONFIRMED"
+            },
+            "name": "s2r_confirm_player_login_request",
+            "value": "10"
+          }
+        ],
+        "payload_types": [
+          {
+            "byte_size": "0x0a",
+            "die": "0x00177310",
+            "evidence": {
+              "artifact_sha256": "c9be1bbadd3840a63f9a38121f7f468a92aff368a03b36e607ef5f57180be68a",
+              "binary_sha256": "655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79",
+              "evidence_id": 14983,
+              "origin": "target-dwarf"
+            },
+            "fields": [
+              {
+                "byte_offset": 2,
+                "die": "0x00177326",
+                "evidence_id": 14983,
+                "name": "dwPlayerID",
+                "order": 0
+              },
+              {
+                "byte_offset": 6,
+                "die": "0x00177335",
+                "evidence_id": 14983,
+                "name": "dwIP",
+                "order": 1
+              }
+            ],
+            "name": "S2R_CONFIRM_PLAYER_LOGIN_REQUEST",
+            "unresolved_fields": []
+          }
+        ],
+        "status": "TARGET_STATIC_CONFIRMED"
+      },
+      {
+        "binary": {
+          "artifact_sha256": "c284d6084407c66287d0f9e00f46398b7d9fc4df6c54ea28fb0d4f37e061e1c5",
+          "binary_path": "jx3_dwarf/SO3GameServerD",
+          "binary_sha256": "47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a",
+          "evidence_id": 14984,
+          "origin_id": "target-dwarf"
+        },
+        "dispatch_handler": [],
+        "enum": [
+          {
+            "die": "0x00a81cce",
+            "enum": "KS2R_PROTOCOL",
+            "evidence": {
+              "address": null,
+              "artifact_sha256": "ef9f0e682f9682654f0a0431a131152e0c9f1a5779ba3d9f8f701dc5b58a17b5",
+              "authority": "target-dwarf",
+              "binary_sha256": "47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a",
+              "detail": "target protocol enum",
+              "die": "0x00a81cce",
+              "evidence_id": 29982,
+              "origin": "target-dwarf-v252",
+              "record": {
+                "line": 10523,
+                "path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/contracts/target_protocol.jsonl"
+              },
+              "status": "TARGET_STATIC_CONFIRMED"
+            },
+            "name": "s2r_confirm_player_login_request",
+            "value": "10"
+          }
+        ],
+        "payload_types": [
+          {
+            "byte_size": "0x0a",
+            "die": "0x00a827e6",
+            "evidence": {
+              "artifact_sha256": "c284d6084407c66287d0f9e00f46398b7d9fc4df6c54ea28fb0d4f37e061e1c5",
+              "binary_sha256": "47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a",
+              "evidence_id": 14984,
+              "origin": "target-dwarf"
+            },
+            "fields": [
+              {
+                "byte_offset": 2,
+                "die": "0x00a827fc",
+                "evidence_id": 14984,
+                "name": "dwPlayerID",
+                "order": 0
+              },
+              {
+                "byte_offset": 6,
+                "die": "0x00a8280b",
+                "evidence_id": 14984,
+                "name": "dwIP",
+                "order": 1
+              }
+            ],
+            "name": "S2R_CONFIRM_PLAYER_LOGIN_REQUEST",
+            "unresolved_fields": []
+          }
+        ],
+        "status": "TARGET_STATIC_CONFIRMED"
+      },
+      {
+        "binary": {
+          "artifact_sha256": "51723ee881f70e8bbd1e0f2b39b3ca0e6a737e61165b203a8310cec10ea0d904",
+          "binary_path": "jx3_dwarf/SO3GatewayD",
+          "binary_sha256": "c89d1b2f248af9671ad4b4448a00ce4e7f789cd1d07c04493d49c6c1beab8af8",
+          "evidence_id": 14985,
+          "origin_id": "target-dwarf"
+        },
+        "dispatch_handler": [],
+        "enum": [],
+        "payload_types": [],
+        "status": "UNRESOLVED"
+      }
+    ],
+    "bridges": [
+      {
+        "binaries": [
+          "jx3_dwarf/SO3GameCenterD",
+          "jx3_dwarf/SO3GameServerD"
+        ],
+        "identity": "s2r_confirm_player_login_request",
+        "reason": "The same target enum/type identity occurs in multiple binaries; this is not a runtime route or transport claim.",
+        "status": "TARGET_STATIC_PARTIAL"
+      }
+    ],
+    "status": "TARGET_STATIC_PARTIAL"
+  },
+  "provenance": {
+    "excluded_origins": [
+      "source-2010",
+      "candidate",
+      "runtime"
+    ],
+    "graph_db": "/Volumes/ExData/game/jx3/linux-build/graphengine/evidence.sqlite",
+    "graph_db_sha256": "25e726bf747b3e6ecfe7c045bd7c1a1e1c22610a4ab917cbc37a93f4d45449ba",
+    "origin_filter": "target%"
+  },
+  "schema": "journey-contract-query/v4",
+  "selected_target_protocol_observations": 0,
+  "status": "TARGET_STATIC_PARTIAL",
+  "transition_chain": [
+    {
+      "claim": null,
+      "evidence": [],
+      "reason": "No TARGET_STATIC_CONFIRMED protocol-payload observation matches the supplied target seed.",
+      "stage": "seed",
+      "status": "UNRESOLVED"
+    },
+    {
+      "claim": null,
+      "evidence": [],
+      "reason": "Blocked by unresolved target-static seed.",
+      "stage": "protocol_dispatch",
+      "status": "UNRESOLVED"
+    },
+    {
+      "claim": null,
+      "evidence": [],
+      "reason": "Blocked by unresolved target-static seed.",
+      "stage": "handler",
+      "status": "UNRESOLVED"
+    },
+    {
+      "claim": null,
+      "evidence": [],
+      "reason": "Blocked by unresolved target-static seed.",
+      "stage": "payload_type_fields",
+      "status": "UNRESOLVED"
+    },
+    {
+      "claim": null,
+      "evidence": [],
+      "reason": "Blocked by unresolved target-static seed.",
+      "stage": "direct_target_call_closure",
+      "status": "UNRESOLVED"
+    },
+    {
+      "claim": null,
+      "evidence": [],
+      "reason": "Blind target-static mode does not query candidate origin; no candidate outbound observation is claimed.",
+      "stage": "candidate_outbound_protocol_send",
+      "status": "UNRESOLVED"
+    }
+  ]
+}

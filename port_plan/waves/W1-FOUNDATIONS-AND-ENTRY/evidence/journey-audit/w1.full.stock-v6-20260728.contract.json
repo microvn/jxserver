@@ -1,0 +1,133 @@
+{
+  "schema": "jx3-journey-contract/v1",
+  "journey_id": "w1.full.stock_vs_v6.20260728",
+  "label": "Wave 1 full journey audit: stock vs itemv6 candidate on July 28, 2026",
+  "axes": {
+    "layer": [
+      "provenance",
+      "process-bootstrap",
+      "transport-security",
+      "protocol-serialization",
+      "abi-layout",
+      "persistence-blob",
+      "resource-script",
+      "state-machine",
+      "runtime-observability",
+      "terminal-integration"
+    ],
+    "contract_kind": [
+      "pair-distinctness",
+      "runtime-frontier",
+      "mechanical-envelope",
+      "payload-layout",
+      "dispatch-closure",
+      "completion-gate",
+      "integration-outcome"
+    ],
+    "owner_scope": [
+      "Gateway",
+      "GameCenter/GameServer relay pair",
+      "Client/Gateway/GameCenter/GameServer"
+    ],
+    "data_domain": [
+      "session_login",
+      "relay_role_login",
+      "ready_sync"
+    ],
+    "evidence_surface": [
+      "manifest",
+      "probe-ledger",
+      "boundary-capsule"
+    ]
+  },
+  "artifacts": {
+    "stock_manifest": {
+      "kind": "runtime_manifest",
+      "path": "graphengine/staging/jx3probe/w1-full-stock-20260728-r2/stock/manifest.json"
+    },
+    "candidate_manifest": {
+      "kind": "runtime_manifest",
+      "path": "graphengine/staging/jx3probe/w1-full-20260729/candidate/manifest.json"
+    },
+    "stock_ledger": {
+      "kind": "probe_ledger",
+      "path": "graphengine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl"
+    },
+    "candidate_ledger": {
+      "kind": "probe_ledger",
+      "path": "graphengine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl"
+    },
+    "full_pair_capsule": {
+      "kind": "probe_boundary_capsule",
+      "path": "graphengine/staging/jx3probe/w1-full-v6-audit-20260728/boundary-capsule.json"
+    }
+  },
+  "checkpoints": [
+    {
+      "checkpoint_id": "w1.full.provenance.distinct_pair",
+      "label": "Stock and itemv6 candidate use distinct GameServer provenance",
+      "layer": "provenance",
+      "contract_kind": "pair-distinctness",
+      "owner_scope": "Client/Gateway/GameCenter/GameServer",
+      "data_domain": "session_login",
+      "evidence_surface": "manifest",
+      "summary": "The full-journey runtime comparison is valid only if stock and itemv6 candidate point at different GameServer binaries.",
+      "runtime_matchers": [
+        {
+          "matcher": "manifest_distinct_pair",
+          "stock_artifact_id": "stock_manifest",
+          "candidate_artifact_id": "candidate_manifest"
+        }
+      ]
+    },
+    {
+      "checkpoint_id": "w1.full.runtime.mechanical_handoff_full",
+      "label": "Both arms complete the enabled full-journey mechanical ladder",
+      "layer": "runtime-observability",
+      "contract_kind": "mechanical-envelope",
+      "owner_scope": "Client/Gateway/GameCenter/GameServer",
+      "data_domain": "session_login",
+      "evidence_surface": "probe-ledger",
+      "depends_on": ["w1.full.provenance.distinct_pair"],
+      "summary": "This proves both arms reached the enabled Wave 1 full-journey checkpoints up to the first GS payload on port 3113.",
+      "runtime_matchers": [
+        {
+          "matcher": "probe_presence",
+          "stock_artifact_id": "stock_ledger",
+          "candidate_artifact_id": "candidate_ledger",
+          "profile_id": "w1.full_journey.v1",
+          "contract_keys": [
+            "w1.gateway.client_5004",
+            "w1.gateway.center_9001",
+            "w1.center.gameserver_5003",
+            "w1.center_gameserver_role_login_request",
+            "w1.gameserver_center_role_login_respond",
+            "w1.client_gameserver_syn_3113",
+            "w1.gameserver_synack_3113",
+            "w1.client_gameserver_ack_3113",
+            "w1.gameserver_payload_3113"
+          ]
+        }
+      ]
+    },
+    {
+      "checkpoint_id": "w1.full.runtime.gateway_center_frontier",
+      "label": "First full-journey runtime divergence is Gateway to Center handoff",
+      "layer": "runtime-observability",
+      "contract_kind": "runtime-frontier",
+      "owner_scope": "Gateway",
+      "data_domain": "session_login",
+      "evidence_surface": "boundary-capsule",
+      "depends_on": ["w1.full.runtime.mechanical_handoff_full"],
+      "summary": "The retained full-journey pair shows the first divergence at `w1.gateway.center_9001`, before any planned semantic role-load checkpoint.",
+      "next_action": "Inspect the direct owner closure for the `w1.gateway.center_9001` state-fingerprint divergence before patching relay role-load or later enter-world logic.",
+      "runtime_matchers": [
+        {
+          "matcher": "probe_divergence",
+          "artifact_id": "full_pair_capsule",
+          "contract_keys": ["w1.gateway.center_9001"]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+# logic-verified ledger — one Class::method per line, added when oracle/decompile-verified at port time.
+# Empty = nothing behaviorally verified yet (real correctness floor).

@@ -1,0 +1,8 @@
+checkpoint_id                            layer                  status  summary
+---------------------------------------  ---------------------  ------  ----------------------------------------
+w1.full.provenance.distinct_pair         provenance             PASS    The full-journey runtime comparison is valid only if stock and itemv6 candidate point at different GameServer binaries.
+w1.full.runtime.mechanical_handoff_full  runtime-observability  PASS    This proves both arms reached the enabled Wave 1 full-journey checkpoints up to the first GS payload on port 3113.
+w1.full.runtime.gateway_center_frontier  runtime-observability  FAIL    The retained full-journey pair shows the first divergence at `w1.gateway.center_9001`, before any planned semantic role-load checkpoint.
+
+Root boundary: w1.full.runtime.gateway_center_frontier (FAIL)
+Next action: Inspect the direct owner closure for the `w1.gateway.center_9001` state-fingerprint divergence before patching relay role-load or later enter-world logic.

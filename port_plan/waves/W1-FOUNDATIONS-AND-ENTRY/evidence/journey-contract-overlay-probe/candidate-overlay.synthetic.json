@@ -1,0 +1,17 @@
+{
+  "schema": "journey-candidate-overlay/v1",
+  "origin": "candidate",
+  "contracts": [
+    {
+      "contract_key": "neutral.alpha.ping",
+      "process": "process-alpha",
+      "protocol": {"enum": {"name": "ALPHA_PING", "value": 17}},
+      "payload_byte_size": 12,
+      "fields": [
+        {"name": "marker", "offset": 0, "order": 0},
+        {"name": "counter", "offset": 4, "order": 1}
+      ],
+      "source": {"location": "synthetic://candidate/alpha", "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}
+    }
+  ]
+}

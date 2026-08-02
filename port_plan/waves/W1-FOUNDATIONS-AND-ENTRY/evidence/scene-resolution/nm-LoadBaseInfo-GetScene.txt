@@ -1,0 +1,20 @@
+0819e5fc W void KObjectIndex<KScene>::Traverse<KGetSceneFunc>(KGetSceneFunc&)
+08355fe8 T KSceneObject::LuaGetScene(lua_State*)
+0818cc78 T KGetSceneFunc::operator()(unsigned long, KScene*)
+08255252 T KScriptFuncList::LuaGetScene(lua_State*)
+0825ab1d T KScriptFuncList::LuaGetSceneByMapIDAndIndex(lua_State*)
+080eb7d0 W KFuncGetScenePlayer::KFuncGetScenePlayer()
+080ed020 W KFuncGetScenePlayer::~KFuncGetScenePlayer()
+080ecf12 W KFuncGetScenePlayer::operator()(KPlayer*)
+081be932 T KGPQ::LuaGetScene(lua_State*)
+08106af8 T KScene::LoadBaseInfo()
+080ecfa0 W int KScene::TraversePlayer<KFuncGetScenePlayer>(KFuncGetScenePlayer&)
+0834d208 T KScene::LuaGetSceneOwner(lua_State*)
+0839dce2 T KPlayer::LoadBaseInfo(KRoleBaseInfo*)
+080ecf34 W int KRegion::TraversePlayer<KFuncGetScenePlayer>(KFuncGetScenePlayer&)
+0818d608 T KSO3World::GetScene(unsigned long, int)
+0841e780 r KScriptFuncList::LuaGetScene(lua_State*)::__PRETTY_FUNCTION__
+0841c9a0 r KScriptFuncList::LuaGetSceneByMapIDAndIndex(lua_State*)::__PRETTY_FUNCTION__
+08402e00 r KGPQ::LuaGetScene(lua_State*)::__PRETTY_FUNCTION__
+083f0b6f r KScene::LoadBaseInfo()::__PRETTY_FUNCTION__
+0845a6e0 r KPlayer::LoadBaseInfo(KRoleBaseInfo*)::__PRETTY_FUNCTION__

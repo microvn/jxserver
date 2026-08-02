@@ -1,0 +1,274 @@
+---
+feature_id: "<DOMAIN-CAPABILITY>"
+title: "<player/system-observable capability>"
+wave_id: "<WAVE-ID>"
+status: "researching" # researching | contract-ready | implementing | reviewing | building | live-verifying | complete | blocked | deferred
+priority: "<P0|P1|P2>"
+kind: "<drift|new|foundation|integration>"
+owner: "<orchestrator/producer>"
+producer_model: "<codex|claude>"
+reviewer_model: "<claude|codex>"
+planned_producer_model: "<codex|claude>"
+planned_reviewer_model: "<claude|codex>"
+graph_db_sha256: "<sha256 or pending>"
+target_artifacts: []
+evidence_package: "<saved evidence bundle path or pending>"
+harness_contract: "<path or N/A — static-only card>"
+evidence_state: "<static-pending|static-confirmed|runtime-pending|runtime-running|runtime-observed|runtime-confirmed>"
+runtime_constraint: "<none|named unavailable oracle and its effect>"
+candidate_baseline: "<git SHA + build/input manifest>"
+created_utc: "<UTC>"
+updated_utc: "<UTC>"
+next_action: "<one executable action>"
+---
+
+# Feature Card: <FEATURE-ID> — <short capability title>
+
+## 1. Outcome
+
+### Capability
+
+<Mô tả bằng hành vi người chơi/hệ thống thấy được, không mô tả bằng file cần sửa.>
+
+### Observable result
+
+- [ ] <observable transition/output 1>
+- [ ] <observable transition/output 2>
+
+### Current evidence state
+
+| Dimension | Proven now | Still required for acceptance | Constraint / next gate |
+|---|---|---|---|
+| Target static contract | <address/DIE/decompile facts> | <missing closure or N/A> | <exact query/decompile> |
+| Candidate/source comparison | <file:line/hash facts> | <semantic/build proof> | <exact diff/manifest> |
+| Runtime oracle | <capture/log/DB facts or none> | <paired named scenario> | <client/host/input availability> |
+
+`status` describes the active delivery gate. `evidence_state` describes the
+strongest evidence actually obtained. Never use a runtime constraint to
+upgrade a card to `accepted`.
+
+### Explicit non-goals
+
+- <không claim parity ngoài boundary này>
+- <feature/deferred route không thuộc card>
+
+## 2. Context and dependencies
+
+### Why this slice now
+
+<Dependency/playability/risk rationale.>
+
+### Prerequisite Feature Cards
+
+| Feature ID | Required result | Status at start |
+|---|---|---|
+| `<ID>` | <exact contract dependency> | `<accepted|partial|blocked>` |
+
+### State-machine boundary
+
+```text
+<before state> → <event/input> → <after state>
+```
+
+### Consumers and downstream features
+
+| Consumer / next feature | Relation | Impact if wrong |
+|---|---|---|
+| <script/client/manager/feature> | <calls/reads/handles/serializes> | <impact> |
+
+## 3. Target contract (v2.5 authority)
+
+### Target artifacts
+
+| Artifact | SHA-256 | Authority for | Notes |
+|---|---|---|---|
+| `<SO3GameServerD / .so / target data>` | `<sha>` | <layout/logic/wire/data> | <debug/release relation> |
+
+### Target roots
+
+| Domain | Exact identity | Required fact | Evidence ID / raw artifact |
+|---|---|---|---|
+| Function | `<artifact SHA + address + signature>` | <control flow/call closure> | <evidence> |
+| Type / field | `<DIE + type + offset>` | <size/offset/type> | <evidence> |
+| Enum | `<enum + value>` | <ordinal/value> | <evidence> |
+| Protocol | `<ID + direction + payload>` | <route/size/handler/fields> | <evidence> |
+| Lua | `<registration/call identity>` | <binding shape/call> | <evidence> |
+| Table | `<target data SHA + relative path>` | <header/reader/column use> | <evidence> |
+| Save/load | `<block/type/function>` | <byte layout/versioning> | <evidence> |
+| Transport / DSO | `<provider + symbol>` | <ABI/security/import> | <evidence> |
+
+Use `N/A — <reason>` only when the boundary is genuinely absent. Never fill a target fact from
+source 2010 or candidate.
+
+### Target behaviour / invariants
+
+1. <target-backed rule>
+2. <target-backed rule>
+
+## 4. Origin comparison and Graph dossier
+
+### Required read-only dossiers
+
+```text
+<exact evidence_query.py / graph_query.py commands>
+```
+
+### Evidence classification
+
+| Class | Claim / observation | Raw evidence location | Consumer / decision |
+|---|---|---|---|
+| Confirmed fact | <target-backed fact only> | <artifact SHA + address/DIE/file:line> | <contract or implementation decision> |
+| Inference | <bounded interpretation> | <facts it depends on> | <how it will be disproved> |
+| Unresolved / conflict | <missing or conflicting claim> | <sources checked> | <block/defer and owner> |
+
+Do not place source-2010 or candidate observations in the target-fact row.
+
+| Question | Target observation | Source-2010 observation | Candidate observation | Status |
+|---|---|---|---|---|
+| identity/location | <evidence> | <evidence/absent> | <evidence/absent> | <confirmed/provisional/unresolved> |
+| direct relation | <address+callsite> | <file:line/absent> | <file:line/absent> | <status> |
+| layout/field/route | <evidence> | <evidence/absent> | <evidence/absent> | <status> |
+| semantic difference | <explicit dimensions only> | <evidence> | <evidence> | <status> |
+
+### Unknown policy
+
+| Unknown / conflict | On required path? | Resolution evidence needed | Decision |
+|---|---:|---|---|
+| <unknown> | <yes/no> | <DWARF/decompile/capture> | <block/defer> |
+
+## 5. Boundary matrix
+
+| Boundary | Required contract | Candidate implementation point | Verification |
+|---|---|---|---|
+| C++ logic | <function/behaviour> | <file:function> | <target comparison> |
+| ABI/layout | <type/enum/offset> | <header/consumer> | <DWARF/assert/mirror> |
+| Lua | <shape/registration/call> | <file:function/script> | <actual Lua call> |
+| Table/config | <reader/header/column semantics> | <loader> | <target reader + load> |
+| Protocol/transport | <route/payload/security> | <handler/provider> | <packet capture> |
+| Persistence | <role block/byte format> | <save/load> | <roundtrip + DB diff> |
+| Build/DSO | <input/provider/link order> | <build input> | <provenance manifest> |
+
+## 6. Candidate implementation scope
+
+### Allowed writes
+
+| Path | Function / region | Why owned | Writer |
+|---|---|---|---|
+| `<path>` | `<function>` | <contract consumer> | <producer> |
+
+### Read-only evidence/source paths
+
+- `<path>` — <why>
+
+### Forbidden paths and non-negotiable constraints
+
+- <no unrelated refactor / no permissive parser / no enum shift / no re-encoding>
+- <hotspot or build input not leased>
+
+### Expected implementation closure
+
+| Target method / entity | Candidate disposition | Reason |
+|---|---|---|
+| `<target method>` | <port/reuse/fold/defer/N-A> | <target-backed reason> |
+
+### Backup and overlay
+
+```text
+BASELINE_MANIFEST: <path>
+OVERLAY_ALLOWLIST: <path>
+BACKUP_ROOT: <path>
+```
+
+## 7. Acceptance checklist
+
+### Evidence and review
+
+- [ ] Target artifact identity/SHA is recorded.
+- [ ] Required target roots and relations have reopenable evidence.
+- [ ] Required `UNRESOLVED` items are blocked or explicitly deferred off-path.
+- [ ] Raw diff stays inside allowed writes.
+- [ ] Producer and accepting reviewer are different model families.
+- [ ] Cross-model reviewer verdict is recorded against raw evidence and raw diff.
+
+### Build provenance
+
+- [ ] Baseline/overlay manifest passes before review and build.
+- [ ] Build-input manifest covers source, scripts, archives/DSOs and linker/provider order relevant to this feature.
+- [ ] Fresh native-x86 build has compile fail=0, link exit=0 and undefined refs=0.
+- [ ] Candidate binary SHA/Build ID and active process executable SHA match.
+
+### Static checks
+
+- [ ] <layout / enum / call closure / table-reader / binding-shape check>
+- [ ] <coverage-diff: ported/folded/deferred/forgotten=0 for scoped closure>
+
+### Paired runtime oracle
+
+```text
+Scenario: <same config/data/schema/DB seed and normalized input>
+Stock expected: <trace/log/packet/DB result>
+Candidate expected: <same result or named target-backed delta>
+```
+
+### Harness contract
+
+| Item | Contract |
+|---|---|
+| Scenario input / precondition | <reproducible input and DB/config seed> |
+| Stock arm | <binary + capture points + expected observation> |
+| Candidate arm | <binary + same capture points + expected observation> |
+| Normalization | <only proven nondeterminism, or N/A> |
+| Required delta / invariant | <packet/state/log/DB result> |
+| Rollback condition | <crash, divergence, missing milestone, etc.> |
+
+Use `N/A — static-only card` when no behavioral claim is made. A golden
+snapshot is optional and must come from a reproducible stock scenario.
+
+- [ ] Stock-vs-stock repeat establishes valid normalization, if scenario is nondeterministic.
+- [ ] Stock and candidate binary/config/data/schema hashes are recorded.
+- [ ] Required packet/log/DB/state transition evidence matches.
+- [ ] Must-stay-unchanged invariants remain true.
+- [ ] Rollback artifact remains available.
+
+## 8. Must-stay-unchanged invariants
+
+| Invariant | Baseline evidence | Candidate result | Verdict |
+|---|---|---|---|
+| <packet/DB/log/count/active binary> | <artifact> | <measurement> | <pass/fail> |
+
+## 9. Deferrals, risks and handoff
+
+### Explicit deferrals
+
+| Entity / route | Owning future Feature Card | Why safely outside current boundary |
+|---|---|---|
+| <item> | `<FEATURE-ID>` | <reason> |
+
+### Residual risks
+
+- <risk and detection condition>
+
+### Handoff record
+
+```text
+BASE_SHA:
+HEAD_SHA:
+GRAPH_DB_SHA256:
+TARGET_ARTIFACT_SHA256:
+CANDIDATE_BINARY_SHA256:
+BUILD_INPUT_MANIFEST:
+RAW_EVIDENCE:
+REVIEW_VERDICT:
+RUNTIME_BUNDLE:
+ROLLBACK_ARTIFACT:
+NEXT_ACTION:
+```
+
+### Worker report format
+
+```text
+UNDERSTANDING: confirmed facts / inferences / unresolved items
+PLAN: completed work and next executable action
+ARTIFACTS CHANGED: files, commits/diff, evidence or capture files
+RISKS / UNKNOWNS: impact, owner, blocking status
+```

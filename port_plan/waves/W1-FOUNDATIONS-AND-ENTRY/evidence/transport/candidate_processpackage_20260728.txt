@@ -1,0 +1,201 @@
+
+/Volumes/ExData/game/jx3/linux-build/SO3GameServer:	file format elf32-i386
+
+Disassembly of section .text:
+
+081e298a <_ZN13KPlayerServer14ProcessPackageEP16IKG_SocketStream>:
+ 81e298a: 55                           	push	ebp
+ 81e298b: 89 e5                        	mov	ebp, esp
+ 81e298d: 53                           	push	ebx
+ 81e298e: 83 ec 54                     	sub	esp, 0x54
+ 81e2991: c7 45 f4 00 00 00 00         	mov	dword ptr [ebp - 0xc], 0x0
+ 81e2998: c7 45 e8 00 00 00 00         	mov	dword ptr [ebp - 0x18], 0x0
+ 81e299f: c7 45 e4 ff ff ff ff         	mov	dword ptr [ebp - 0x1c], 0xffffffff
+ 81e29a6: c7 45 cc 00 00 00 00         	mov	dword ptr [ebp - 0x34], 0x0
+ 81e29ad: c7 45 e0 00 00 00 00         	mov	dword ptr [ebp - 0x20], 0x0
+ 81e29b4: c7 45 dc 00 00 00 00         	mov	dword ptr [ebp - 0x24], 0x0
+ 81e29bb: c7 45 f0 00 00 00 00         	mov	dword ptr [ebp - 0x10], 0x0
+ 81e29c2: c7 45 ec 00 00 00 00         	mov	dword ptr [ebp - 0x14], 0x0
+ 81e29c9: 83 7d 0c 00                  	cmp	dword ptr [ebp + 0xc], 0x0
+ 81e29cd: 75 24                        	jne	0x81e29f3 <_ZN13KPlayerServer14ProcessPackageEP16IKG_SocketStream+0x69>
+ 81e29cf: c7 44 24 0c 40 ad 2e 08      	mov	dword ptr [esp + 0xc], 0x82ead40
+ 81e29d7: c7 44 24 08 eb 01 00 00      	mov	dword ptr [esp + 0x8], 0x1eb
+ 81e29df: c7 44 24 04 04 a4 2e 08      	mov	dword ptr [esp + 0x4], 0x82ea404
+ 81e29e7: c7 04 24 65 a8 2e 08         	mov	dword ptr [esp], 0x82ea865
+ 81e29ee: e8 bd b6 e6 ff               	call	0x804e0b0 <__assert_fail@plt>
+ 81e29f3: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 81e29f6: 8b 00                        	mov	eax, dword ptr [eax]
+ 81e29f8: 83 c0 2c                     	add	eax, 0x2c
+ 81e29fb: 8b 00                        	mov	eax, dword ptr [eax]
+ 81e29fd: 8b 55 0c                     	mov	edx, dword ptr [ebp + 0xc]
+ 81e2a00: 89 14 24                     	mov	dword ptr [esp], edx
+ 81e2a03: ff d0                        	call	eax
+ 81e2a05: 89 45 e4                     	mov	dword ptr [ebp - 0x1c], eax
+ 81e2a08: 83 7d e4 00                  	cmp	dword ptr [ebp - 0x1c], 0x0
+ 81e2a0c: 78 0b                        	js	0x81e2a19 <_ZN13KPlayerServer14ProcessPackageEP16IKG_SocketStream+0x8f>
+ 81e2a0e: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 81e2a11: 8b 40 20                     	mov	eax, dword ptr [eax + 0x20]
+ 81e2a14: 3b 45 e4                     	cmp	eax, dword ptr [ebp - 0x1c]
+ 81e2a17: 7f 31                        	jg	0x81e2a4a <_ZN13KPlayerServer14ProcessPackageEP16IKG_SocketStream+0xc0>
+ 81e2a19: c7 44 24 10 76 ad 2e 08      	mov	dword ptr [esp + 0x10], 0x82ead76
+ 81e2a21: c7 44 24 0c ee 01 00 00      	mov	dword ptr [esp + 0xc], 0x1ee
+ 81e2a29: c7 44 24 08 a4 a3 2e 08      	mov	dword ptr [esp + 0x8], 0x82ea3a4
+ 81e2a31: c7 44 24 04 b0 a4 2e 08      	mov	dword ptr [esp + 0x4], 0x82ea4b0
+ 81e2a39: c7 04 24 07 00 00 00         	mov	dword ptr [esp], 0x7
+ 81e2a40: e8 9b ac e6 ff               	call	0x804d6e0 <_Z11KGLogPrintf14KGLOG_PRIORITYPKcz@plt>
+ 81e2a45: e9 6f 03 00 00               	jmp	0x81e2db9 <_ZN13KPlayerServer14ProcessPackageEP16IKG_SocketStream+0x42f>
+ 81e2a4a: 8b 45 cc                     	mov	eax, dword ptr [ebp - 0x34]
+ 81e2a4d: 85 c0                        	test	eax, eax
+ 81e2a4f: 74 1c                        	je	0x81e2a6d <_ZN13KPlayerServer14ProcessPackageEP16IKG_SocketStream+0xe3>
+ 81e2a51: 8b 45 cc                     	mov	eax, dword ptr [ebp - 0x34]
+ 81e2a54: 8b 00                        	mov	eax, dword ptr [eax]
+ 81e2a56: 83 c0 08                     	add	eax, 0x8
+ 81e2a59: 8b 00                        	mov	eax, dword ptr [eax]
+ 81e2a5b: 8b 55 cc                     	mov	edx, dword ptr [ebp - 0x34]
+ 81e2a5e: 89 14 24                     	mov	dword ptr [esp], edx
+ 81e2a61: ff d0                        	call	eax
+ 81e2a63: 83 ec 04                     	sub	esp, 0x4
+ 81e2a66: c7 45 cc 00 00 00 00         	mov	dword ptr [ebp - 0x34], 0x0
+ 81e2a6d: 8b 45 f0                     	mov	eax, dword ptr [ebp - 0x10]
+ 81e2a70: 8d 50 01                     	lea	edx, [eax + 0x1]
+ 81e2a73: 89 55 f0                     	mov	dword ptr [ebp - 0x10], edx
+ 81e2a76: 8b 55 08                     	mov	edx, dword ptr [ebp + 0x8]
+ 81e2a79: 8b 52 24                     	mov	edx, dword ptr [edx + 0x24]
+ 81e2a7c: 39 d0                        	cmp	eax, edx
+ 81e2a7e: 0f 9d c0                     	setge	al
+ 81e2a81: 84 c0                        	test	al, al
+ 81e2a83: 74 27                        	je	0x81e2aac <_ZN13KPlayerServer14ProcessPackageEP16IKG_SocketStream+0x122>
+ 81e2a85: 8b 45 e4                     	mov	eax, dword ptr [ebp - 0x1c]
+ 81e2a88: 89 44 24 08                  	mov	dword ptr [esp + 0x8], eax
+ 81e2a8c: c7 44 24 04 a0 a8 2e 08      	mov	dword ptr [esp + 0x4], 0x82ea8a0
+ 81e2a94: c7 04 24 06 00 00 00         	mov	dword ptr [esp], 0x6
+ 81e2a9b: e8 40 ac e6 ff               	call	0x804d6e0 <_Z11KGLogPrintf14KGLOG_PRIORITYPKcz@plt>
+ 81e2aa0: c7 45 ec 01 00 00 00         	mov	dword ptr [ebp - 0x14], 0x1
+ 81e2aa7: e9 06 03 00 00               	jmp	0x81e2db2 <_ZN13KPlayerServer14ProcessPackageEP16IKG_SocketStream+0x428>
+ 81e2aac: 8b 45 0c                     	mov	eax, dword ptr [ebp + 0xc]
+ 81e2aaf: 8b 00                        	mov	eax, dword ptr [eax]
+ 81e2ab1: 83 c0 1c                     	add	eax, 0x1c
+ 81e2ab4: 8b 00                        	mov	eax, dword ptr [eax]
+ 81e2ab6: 8d 55 cc                     	lea	edx, [ebp - 0x34]
+ 81e2ab9: 89 54 24 04                  	mov	dword ptr [esp + 0x4], edx
+ 81e2abd: 8b 55 0c                     	mov	edx, dword ptr [ebp + 0xc]
+ 81e2ac0: 89 14 24                     	mov	dword ptr [esp], edx
+ 81e2ac3: ff d0                        	call	eax
+ 81e2ac5: 89 45 e8                     	mov	dword ptr [ebp - 0x18], eax
+ 81e2ac8: 83 7d e8 fe                  	cmp	dword ptr [ebp - 0x18], -0x2
+ 81e2acc: 75 05                        	jne	0x81e2ad3 <_ZN13KPlayerServer14ProcessPackageEP16IKG_SocketStream+0x149>
+ 81e2ace: e9 df 02 00 00               	jmp	0x81e2db2 <_ZN13KPlayerServer14ProcessPackageEP16IKG_SocketStream+0x428>
+ 81e2ad3: 83 7d e8 ff                  	cmp	dword ptr [ebp - 0x18], -0x1
+ 81e2ad7: 75 75                        	jne	0x81e2b4e <_ZN13KPlayerServer14ProcessPackageEP16IKG_SocketStream+0x1c4>
+ 81e2ad9: 8b 45 e4                     	mov	eax, dword ptr [ebp - 0x1c]
+ 81e2adc: 89 44 24 04                  	mov	dword ptr [esp + 0x4], eax
+ 81e2ae0: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 81e2ae3: 89 04 24                     	mov	dword ptr [esp], eax
+ 81e2ae6: e8 15 b7 ff ff               	call	0x81de200 <_ZN13KPlayerServer21GetPlayerByConnectionEi>
+ 81e2aeb: 89 45 d8                     	mov	dword ptr [ebp - 0x28], eax
+ 81e2aee: 83 7d d8 00                  	cmp	dword ptr [ebp - 0x28], 0x0
+ 81e2af2: 74 33                        	je	0x81e2b27 <_ZN13KPlayerServer14ProcessPackageEP16IKG_SocketStream+0x19d>
+ 81e2af4: 8b 45 d8                     	mov	eax, dword ptr [ebp - 0x28]
+ 81e2af7: 8b 80 4c 0a 00 00            	mov	eax, dword ptr [eax + 0xa4c]
+ 81e2afd: 83 f8 06                     	cmp	eax, 0x6
+ 81e2b00: 75 25                        	jne	0x81e2b27 <_ZN13KPlayerServer14ProcessPackageEP16IKG_SocketStream+0x19d>
+ 81e2b02: a1 90 ed 3e 08               	mov	eax, dword ptr [0x83eed90]
+ 81e2b07: 05 fc 3e 06 00               	add	eax, 0x63efc
+ 81e2b0c: 89 04 24                     	mov	dword ptr [esp], eax
+ 81e2b0f: e8 cc 30 0b 00               	call	0x8295be0 <_ZN15KStatDataServer23UpdateClientErrorLogoutEv>
+ 81e2b14: 8b 45 d8                     	mov	eax, dword ptr [ebp - 0x28]
+ 81e2b17: 89 44 24 04                  	mov	dword ptr [esp + 0x4], eax
+ 81e2b1b: c7 04 24 e0 e4 3e 08         	mov	dword ptr [esp], 0x83ee4e0
+ 81e2b22: e8 83 8e 04 00               	call	0x822b9aa <_ZN12KRelayClient19DoMapCopyKeepPlayerEP7KPlayer>
+ 81e2b27: 8b 45 e4                     	mov	eax, dword ptr [ebp - 0x1c]
+ 81e2b2a: 89 44 24 08                  	mov	dword ptr [esp + 0x8], eax
+ 81e2b2e: c7 44 24 04 cc a8 2e 08      	mov	dword ptr [esp + 0x4], 0x82ea8cc
+ 81e2b36: c7 04 24 06 00 00 00         	mov	dword ptr [esp], 0x6
+ 81e2b3d: e8 9e ab e6 ff               	call	0x804d6e0 <_Z11KGLogPrintf14KGLOG_PRIORITYPKcz@plt>
+ 81e2b42: c7 45 ec 01 00 00 00         	mov	dword ptr [ebp - 0x14], 0x1
+ 81e2b49: e9 64 02 00 00               	jmp	0x81e2db2 <_ZN13KPlayerServer14ProcessPackageEP16IKG_SocketStream+0x428>
+ 81e2b4e: 8b 45 cc                     	mov	eax, dword ptr [ebp - 0x34]
+ 81e2b51: 85 c0                        	test	eax, eax
+ 81e2b53: 75 31                        	jne	0x81e2b86 <_ZN13KPlayerServer14ProcessPackageEP16IKG_SocketStream+0x1fc>
+ 81e2b55: c7 44 24 10 76 ad 2e 08      	mov	dword ptr [esp + 0x10], 0x82ead76
+ 81e2b5d: c7 44 24 0c 15 02 00 00      	mov	dword ptr [esp + 0xc], 0x215
+ 81e2b65: c7 44 24 08 e1 a8 2e 08      	mov	dword ptr [esp + 0x8], 0x82ea8e1
+ 81e2b6d: c7 44 24 04 b0 a4 2e 08      	mov	dword ptr [esp + 0x4], 0x82ea4b0
+ 81e2b75: c7 04 24 07 00 00 00         	mov	dword ptr [esp], 0x7
+ 81e2b7c: e8 5f ab e6 ff               	call	0x804d6e0 <_Z11KGLogPrintf14KGLOG_PRIORITYPKcz@plt>
+ 81e2b81: e9 33 02 00 00               	jmp	0x81e2db9 <_ZN13KPlayerServer14ProcessPackageEP16IKG_SocketStream+0x42f>
+ 81e2b86: 8b 45 cc                     	mov	eax, dword ptr [ebp - 0x34]
+ 81e2b89: 8b 00                        	mov	eax, dword ptr [eax]
+ 81e2b8b: 83 c0 0c                     	add	eax, 0xc
+ 81e2b8e: 8b 00                        	mov	eax, dword ptr [eax]
+ 81e2b90: 8b 55 cc                     	mov	edx, dword ptr [ebp - 0x34]
+ 81e2b93: 89 14 24                     	mov	dword ptr [esp], edx
+ 81e2b96: ff d0                        	call	eax
+ 81e2b98: 89 45 e0                     	mov	dword ptr [ebp - 0x20], eax
+ 81e2b9b: 8b 45 cc                     	mov	eax, dword ptr [ebp - 0x34]
+ 81e2b9e: 8b 00                        	mov	eax, dword ptr [eax]
+ 81e2ba0: 83 c0 10                     	add	eax, 0x10
+ 81e2ba3: 8b 00                        	mov	eax, dword ptr [eax]
+ 81e2ba5: 8b 55 cc                     	mov	edx, dword ptr [ebp - 0x34]
+ 81e2ba8: 89 14 24                     	mov	dword ptr [esp], edx
+ 81e2bab: ff d0                        	call	eax
+ 81e2bad: 89 45 dc                     	mov	dword ptr [ebp - 0x24], eax
+ 81e2bb0: 8b 45 dc                     	mov	eax, dword ptr [ebp - 0x24]
+ 81e2bb3: 89 44 24 08                  	mov	dword ptr [esp + 0x8], eax
+ 81e2bb7: 8b 45 e0                     	mov	eax, dword ptr [ebp - 0x20]
+ 81e2bba: 89 44 24 04                  	mov	dword ptr [esp + 0x4], eax
+ 81e2bbe: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 81e2bc1: 89 04 24                     	mov	dword ptr [esp], eax
+ 81e2bc4: e8 31 03 00 00               	call	0x81e2efa <_ZN13KPlayerServer12CheckPackageEPhj>
+ 81e2bc9: 89 45 e8                     	mov	dword ptr [ebp - 0x18], eax
+ 81e2bcc: 83 7d e8 00                  	cmp	dword ptr [ebp - 0x18], 0x0
+ 81e2bd0: 75 27                        	jne	0x81e2bf9 <_ZN13KPlayerServer14ProcessPackageEP16IKG_SocketStream+0x26f>
+ 81e2bd2: 8b 45 e4                     	mov	eax, dword ptr [ebp - 0x1c]
+ 81e2bd5: 89 44 24 08                  	mov	dword ptr [esp + 0x8], eax
+ 81e2bd9: c7 44 24 04 ea a8 2e 08      	mov	dword ptr [esp + 0x4], 0x82ea8ea
+ 81e2be1: c7 04 24 06 00 00 00         	mov	dword ptr [esp], 0x6
+ 81e2be8: e8 f3 aa e6 ff               	call	0x804d6e0 <_Z11KGLogPrintf14KGLOG_PRIORITYPKcz@plt>
+ 81e2bed: c7 45 ec 01 00 00 00         	mov	dword ptr [ebp - 0x14], 0x1
+ 81e2bf4: e9 b9 01 00 00               	jmp	0x81e2db2 <_ZN13KPlayerServer14ProcessPackageEP16IKG_SocketStream+0x428>
+ 81e2bf9: 8b 45 e4                     	mov	eax, dword ptr [ebp - 0x1c]
+ 81e2bfc: 89 44 24 04                  	mov	dword ptr [esp + 0x4], eax
+ 81e2c00: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 81e2c03: 89 04 24                     	mov	dword ptr [esp], eax
+ 81e2c06: e8 f5 b5 ff ff               	call	0x81de200 <_ZN13KPlayerServer21GetPlayerByConnectionEi>
+ 81e2c0b: 89 45 d4                     	mov	dword ptr [ebp - 0x2c], eax
+ 81e2c0e: 8b 45 e0                     	mov	eax, dword ptr [ebp - 0x20]
+ 81e2c11: 89 45 d0                     	mov	dword ptr [ebp - 0x30], eax
+ 81e2c14: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 81e2c17: 8b 48 1c                     	mov	ecx, dword ptr [eax + 0x1c]
+ 81e2c1a: 8b 55 e4                     	mov	edx, dword ptr [ebp - 0x1c]
+ 81e2c1d: 89 d0                        	mov	eax, edx
+ 81e2c1f: c1 e0 03                     	shl	eax, 0x3
+ 81e2c22: 01 d0                        	add	eax, edx
+ 81e2c24: c1 e0 02                     	shl	eax, 0x2
+ 81e2c27: 8d 14 01                     	lea	edx, [ecx + eax]
+ 81e2c2a: 8b 45 08                     	mov	eax, dword ptr [ebp + 0x8]
+ 81e2c2d: 8b 40 30                     	mov	eax, dword ptr [eax + 0x30]
+ 81e2c30: 89 42 20                     	mov	dword ptr [edx + 0x20], eax
+ 81e2c33: 83 7d d4 00                  	cmp	dword ptr [ebp - 0x2c], 0x0
+ 81e2c37: 0f 84 9b 00 00 00            	je	0x81e2cd8 <_ZN13KPlayerServer14ProcessPackageEP16IKG_SocketStream+0x34e>
+ 81e2c3d: 8b 45 d0                     	mov	eax, dword ptr [ebp - 0x30]
+ 81e2c40: 8b 50 02                     	mov	edx, dword ptr [eax + 0x2]
+ 81e2c43: 8b 45 d4                     	mov	eax, dword ptr [ebp - 0x2c]
+ 81e2c46: 8b 80 3c 09 00 00            	mov	eax, dword ptr [eax + 0x93c]
+ 81e2c4c: 39 c2                        	cmp	edx, eax
+ 81e2c4e: 7c 14                        	jl	0x81e2c64 <_ZN13KPlayerServer14ProcessPackageEP16IKG_SocketStream+0x2da>
+ 81e2c50: 8b 45 d0                     	mov	eax, dword ptr [ebp - 0x30]
+ 81e2c53: 8b 50 02                     	mov	edx, dword ptr [eax + 0x2]
+ 81e2c56: a1 90 ed 3e 08               	mov	eax, dword ptr [0x83eed90]
+ 81e2c5b: 8b 00                        	mov	eax, dword ptr [eax]
+ 81e2c5d: 83 c0 08                     	add	eax, 0x8
+ 81e2c60: 39 c2                        	cmp	edx, eax
+ 81e2c62: 7e 49                        	jle	0x81e2cad <_ZN13KPlayerServer14ProcessPackageEP16IKG_SocketStream+0x323>
+ 81e2c64: a1 90 ed 3e 08               	mov	eax, dword ptr [0x83eed90]
+ 81e2c69: 8b 08                        	mov	ecx, dword ptr [eax]
+ 81e2c6b: 8b 45 d0                     	mov	eax, dword ptr [ebp - 0x30]
+ 81e2c6e: 8b 50 02                     	mov	edx, dword ptr [eax + 0x2]
+ 81e2c71: 8b 45 d4                     	mov	eax, dword ptr [ebp - 0x2c]
+ 81e2c74: 8b 80 3c 09 00 00            	mov	eax, dword ptr [eax + 0x93c]
+ 81e2c7a: 89 4c 24 14                  	mov	dword ptr [esp + 0x14], ecx
+ 81e2c7e: 89 54 24 10                  	mov	dword ptr [esp + 0x10], edx

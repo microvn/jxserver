@@ -1,0 +1,131 @@
+{
+  "schema": "jx3-journey-graph/v1",
+  "artifact": "BLIND W1 entry-journey projection",
+  "frozen_utc": "2026-07-27T16:55:42Z",
+  "evidence_scope": "target binaries/DWARF and GraphEngine target observations only; topology labels from the user-requested journey and CLAUDE.md are context, not target call claims",
+  "provenance": {
+    "graph_db": {
+      "path": "linux-build/graphengine/evidence.sqlite",
+      "sha256": "25e726bf747b3e6ecfe7c045bd7c1a1e1c22610a4ab917cbc37a93f4d45449ba"
+    },
+    "targets": [
+      { "path": "jx3_dwarf/SO3GameServerD", "sha256": "47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a" },
+      { "path": "jx3_dwarf/SO3GameCenterD", "sha256": "655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79" },
+      { "path": "jx3_dwarf/SO3GatewayD", "sha256": "c89d1b2f248af9671ad4b4448a00ce4e7f789cd1d07c04493d49c6c1beab8af8" }
+    ],
+    "evidence": [
+      {
+        "id": "E1",
+        "kind": "GraphEngine target function identity/call observation",
+        "command": "evidence_query.py function 'KPlayerServer::OnApplyCharacter'; graph_query.py callers|callees 'KPlayerServer::OnApplyCharacter'",
+        "target": "SO3GameServerD@0x08061eb0",
+        "graph_evidence_ids": [29992, 30016],
+        "claim": "The target has a named GameServer handler and a direct target-decompile call to GetPlayerByConnection at 0x08061ed0."
+      },
+      {
+        "id": "E2",
+        "kind": "target DWARF",
+        "command": "llvm-dwarfdump --name=KPlayerServer -c jx3_dwarf/SO3GameServerD",
+        "die": "0x000bb227",
+        "claim": "KPlayerServer has listen/socket state and a protocol-function table; this does not establish a port value, wire schema, or client journey order."
+      },
+      {
+        "id": "E3",
+        "kind": "target DWARF",
+        "command": "llvm-dwarfdump --name=KRelayClient -c jx3_dwarf/SO3GameServerD",
+        "die": "0x000b6781",
+        "claim": "The GameServer target contains a Relay client with a socket stream, handler table, and protocol-size table; the selected entry contract is not identified by this observation."
+      },
+      {
+        "id": "E4",
+        "kind": "target disassembly",
+        "command": "objdump -d --start-address=0x08061eb0 --stop-address=0x080622c4 jx3_dwarf/SO3GameServerD",
+        "target": "SO3GameServerD@0x08061eb0..0x080621df",
+        "claim": "The named handler guards a connection-derived player and conditionally stages KViewObject records. It contains no proved outbound send, Relay receive, scene entry, or ready acknowledgement in this slice."
+      }
+    ]
+  },
+  "nodes": [
+    { "id": "authenticate", "label": "authenticate", "kind": "business-stage", "status": "CONTEXT_ONLY" },
+    { "id": "role_selection", "label": "role selection", "kind": "business-stage", "status": "CONTEXT_ONLY" },
+    { "id": "gateway", "label": "Gateway", "kind": "process-boundary", "status": "CONTEXT_ONLY" },
+    { "id": "center", "label": "Center", "kind": "process-boundary", "status": "CONTEXT_ONLY" },
+    { "id": "gameserver", "label": "GameServer", "kind": "process-boundary", "status": "TARGET_PARTIAL", "evidence": ["E2", "E3"] },
+    { "id": "client_handoff", "label": "client handoff", "kind": "business-stage", "status": "CONTEXT_ONLY" },
+    { "id": "client_3113", "label": "client:3113", "kind": "endpoint-stage", "status": "USER_SCOPE_UNVERIFIED" },
+    { "id": "enter_scene", "label": "enter scene", "kind": "business-stage", "status": "CONTEXT_ONLY" },
+    { "id": "ready", "label": "ready", "kind": "terminal-stage", "status": "CONTEXT_ONLY" },
+    { "id": "gs_connection_player_guard", "label": "GS connection-derived player guard", "kind": "target-local-slice", "status": "TARGET_STATIC_CONFIRMED", "evidence": ["E1", "E4"] },
+    { "id": "gs_view_staging", "label": "GS conditional view-object staging", "kind": "target-local-slice", "status": "TARGET_STATIC_CONFIRMED", "evidence": ["E1", "E4"] }
+  ],
+  "edges": [
+    {
+      "id": "J01", "from": "authenticate", "to": "role_selection", "label": "authenticated session reaches selectable roles",
+      "class": "UNKNOWN", "status": "UNRESOLVED", "provenance": "User-required business-flow ordering only.",
+      "unknowns": ["target handler", "wire format", "state ownership", "success/failure guards"]
+    },
+    {
+      "id": "J02", "from": "role_selection", "to": "gateway", "label": "selection path through Gateway",
+      "class": "EXTERNAL_BOUNDARY", "status": "UNRESOLVED", "provenance": "User-required topology; no Gateway target call/dispatch observation collected.",
+      "unknowns": ["producer", "consumer", "payload", "route", "order"]
+    },
+    {
+      "id": "J03", "from": "gateway", "to": "center", "label": "Gateway to Center entry transition",
+      "class": "EXTERNAL_BOUNDARY", "status": "UNRESOLVED", "provenance": "CLAUDE.md names the processes; this is not a target-confirmed call edge.",
+      "unknowns": ["entry message", "payload schema", "selection state", "reply/redirect semantics"]
+    },
+    {
+      "id": "J04", "from": "center", "to": "gameserver", "label": "Center to GameServer Relay entry transition",
+      "class": "EXTERNAL_BOUNDARY", "status": "UNRESOLVED", "provenance": "E3 proves only that the GameServer owns a Relay client transport/dispatch surface; no handler or payload is asserted.",
+      "unknowns": ["Relay protocol identity", "handler registration", "payload size/layout", "section sequencing", "acceptance guard"]
+    },
+    {
+      "id": "J05", "from": "gameserver", "to": "gs_connection_player_guard", "label": "connection-to-player lookup in a target handler",
+      "class": "TARGET_CONFIRMED", "status": "TARGET_STATIC_CONFIRMED", "evidence": ["E1", "E4"],
+      "claim": "0x08061eb0 directly calls GetPlayerByConnection at 0x08061ed0 and asserts non-null state."
+    },
+    {
+      "id": "J06", "from": "gs_connection_player_guard", "to": "gs_view_staging", "label": "conditional local view-object staging",
+      "class": "TARGET_CONFIRMED", "status": "TARGET_STATIC_CONFIRMED", "evidence": ["E4"],
+      "claim": "The bounded disassembly conditionally constructs and appends KPlayer::KViewObject records after target-local guards."
+    },
+    {
+      "id": "J07", "from": "gameserver", "to": "client_handoff", "label": "GameServer client handoff",
+      "class": "TARGET_PARTIAL", "status": "UNRESOLVED", "provenance": "E1/E4 prove only target-local connection/player and view staging; no send call, protocol ID, payload, or order is claimed.",
+      "unknowns": ["outbound producer", "packet schema", "handoff timing", "security stream state"]
+    },
+    {
+      "id": "J08", "from": "client_handoff", "to": "client_3113", "label": "handoff reaches client:3113",
+      "class": "UNKNOWN", "status": "UNRESOLVED", "provenance": "Endpoint label is supplied by the task; E2 proves a listen-port field but not its configured value or this edge.",
+      "unknowns": ["endpoint configuration", "redirect/connection order", "security negotiation", "first decoded packet"]
+    },
+    {
+      "id": "J09", "from": "client_3113", "to": "enter_scene", "label": "client connection reaches scene entry",
+      "class": "UNKNOWN", "status": "UNRESOLVED", "provenance": "No client-target capture, client binary observation, or GameServer protocol closure was collected.",
+      "unknowns": ["client request", "GameServer decoder", "scene ownership", "initial synchronization"]
+    },
+    {
+      "id": "J10", "from": "enter_scene", "to": "ready", "label": "scene entry reaches ready",
+      "class": "UNKNOWN", "status": "UNRESOLVED", "provenance": "Roadmap outcome only; no target evidence was used to define an acknowledgement or terminal state.",
+      "unknowns": ["ready signal", "ack producer/consumer", "required sync set", "failure exits"]
+    }
+  ],
+  "relay_localization_slice": {
+    "status": "ACTIONABLE_STATIC_SLICE_ONLY",
+    "boundary_edges": ["J03", "J04", "J05"],
+    "reason": "J04 is an explicit unresolved Center-to-GameServer boundary, while E3 establishes the target GameServer Relay transport/dispatch owner and J05 establishes an immediately adjacent target-local connection/player guard. This permits a narrow next evidence pass: identify the Relay handler that precedes the guard, then prove its protocol identity, payload layout, and registration. It does not reveal or assume any of those answers.",
+    "next_evidence_only": [
+      "Target-only Relay handler/registration closure in SO3GameServerD.",
+      "Target DWARF protocol type and size for the discovered handler only.",
+      "Target Center-side counterpart, only after the GameServer handler is identified."
+    ]
+  },
+  "gaps": [
+    "No target Gateway dispatch/handler observation.",
+    "No target Center dispatch/handler observation.",
+    "No identified Relay protocol, payload, field order, hash, or serialization claim.",
+    "No target proof of the 3113 value, redirect behavior, or security setup.",
+    "No source-independent client binary observation or runtime capture.",
+    "No target proof of scene-entry ordering or ready acknowledgement."
+  ]
+}

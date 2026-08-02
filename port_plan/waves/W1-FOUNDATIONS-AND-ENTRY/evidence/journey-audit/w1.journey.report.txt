@@ -1,0 +1,11 @@
+checkpoint_id                             layer                   status                  summary
+----------------------------------------  ----------------------  ----------------------  ----------------------------------------
+w1.provenance.connectivity_pair_distinct  provenance              PASS                    The public connectivity probe is usable only if the stock and candidate GameServer binaries are distinct.
+w1.runtime.gateway_client_5004            runtime-observability   FAIL                    This is the current first-runtime-divergence boundary in the fresh public W1 pair.
+w1.runtime.relay_role_login_5003          protocol-serialization  BLOCKED_BY_PREDECESSOR  The retained 5003 probe only proves mechanical request/response parity; it does not accept role-data parsing or enter-world semantics.
+w1.static.confirm_player_login_dispatch   protocol-serialization  BLOCKED_BY_PREDECESSOR  Target payload type is known, but the current target-static query still lacks the fully materialized protocol-payload/dispatch lane needed for automatic reconciliation.
+w1.static.role_login_payload_exactness    abi-layout              STATIC_DRIFT            Historical overlay evidence shows a concrete payload-size drift independent of the current runtime frontier.
+w1.terminal.enter_world                   terminal-integration    BLOCKED_BY_PREDECESSOR  Terminal acceptance stays blocked until the upstream runtime frontier and the upstream static protocol contracts are both resolved.
+
+Root boundary: w1.runtime.gateway_client_5004 (FAIL)
+Next action: Inspect the direct owner closure for the `gateway.client_5004` state-fingerprint divergence before patching relay, role-load, or ready/state logic.

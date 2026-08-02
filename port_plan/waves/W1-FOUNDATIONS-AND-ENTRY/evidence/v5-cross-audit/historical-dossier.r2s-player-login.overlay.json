@@ -1,0 +1,30 @@
+{
+  "schema": "journey-candidate-overlay/v1",
+  "origin": "candidate",
+  "classification": "historical-dossier",
+  "non_current_notice": "This overlay transcribes only a historical isolated-worktree observation from the authorized 2026-07-25 Codex session. It is not a claim about current source, any built binary, deployed process, or live behavior.",
+  "contracts": [
+    {
+      "contract_key": "v4:47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a:r2s_player_login_request:6:R2S_PLAYER_LOGIN_REQUEST:0x00a85fd0",
+      "process": "jx3_dwarf/SO3GameServerD",
+      "protocol": { "enum": { "name": "r2s_player_login_request", "value": 6 } },
+      "payload_byte_size": 306,
+      "fields": [],
+      "source": {
+        "location": "/Users/administrator/.codex/sessions/2026/07/25/rollout-2026-07-25T00-51-05-019f9540-95b8-7f83-aec8-1e0e96d02d99.jsonl:5414",
+        "sha256": "76ff0f7bfca7c2b80e70e8806cd19299494727ee73e69fb87e3a234d74f1da14"
+      }
+    },
+    {
+      "contract_key": "v4:655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79:r2s_player_login_request:6:R2S_PLAYER_LOGIN_REQUEST:0x0017ab3e",
+      "process": "jx3_dwarf/SO3GameCenterD",
+      "protocol": { "enum": { "name": "r2s_player_login_request", "value": 6 } },
+      "payload_byte_size": 306,
+      "fields": [],
+      "source": {
+        "location": "/Users/administrator/.codex/sessions/2026/07/25/rollout-2026-07-25T00-51-05-019f9540-95b8-7f83-aec8-1e0e96d02d99.jsonl:5414",
+        "sha256": "76ff0f7bfca7c2b80e70e8806cd19299494727ee73e69fb87e3a234d74f1da14"
+      }
+    }
+  ]
+}

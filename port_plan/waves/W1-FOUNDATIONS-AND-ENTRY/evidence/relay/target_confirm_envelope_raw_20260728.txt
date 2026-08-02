@@ -1,0 +1,28 @@
+Source: jx3_dwarf/SO3GameServerD
+SHA-256: 47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c04954e51124b94a
+
+llvm-dwarfdump --name=S2R_CONFIRM_PLAYER_LOGIN_REQUEST -c:
+DW_TAG_structure_type
+  DW_AT_name ("S2R_CONFIRM_PLAYER_LOGIN_REQUEST")
+  DW_AT_byte_size (0x0a)
+  DW_AT_member dwPlayerID: DW_OP_plus_uconst 0x2
+  DW_AT_member dwIP:       DW_OP_plus_uconst 0x6
+
+llvm-dwarfdump --name=KPlayer -c:
+  DW_AT_member m_Guid:       DW_OP_plus_uconst 0xa40
+  DW_AT_member m_nConnIndex: DW_OP_plus_uconst 0xa50
+  DW_AT_member m_dwIP:       DW_OP_plus_uconst 0xa54
+  DW_AT_member m_szClientIP: DW_OP_plus_uconst 0xa58
+
+Target disassembly, KRelayClient::DoConfirmPlayerLoginRequest(unsigned long,unsigned long)
+@ 0x080d3474:
+  0x080d3496: KG_MemoryCreateBuffer(0xa)
+  0x080d3528: packet protocol word = 0xa
+  0x080d3530: first argument -> packet + 0x2
+  0x080d3539: second argument -> packet + 0x6
+  0x080d354c: KRelayClient::Send(buffer)
+
+Target disassembly, KPlayerServer::OnHandshakeRequest(char*,unsigned,int,int)
+@ 0x0807a5dc:
+  0x0807a726: load KPlayer + 0xa54
+  0x0807a741: call DoConfirmPlayerLoginRequest(player_id, KPlayer::m_dwIP)

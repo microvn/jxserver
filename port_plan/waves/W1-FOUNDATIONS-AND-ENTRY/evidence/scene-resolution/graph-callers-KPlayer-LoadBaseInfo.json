@@ -1,0 +1,158 @@
+{
+  "origin": "target-decompile-v252",
+  "query": "KPlayer::LoadBaseInfo",
+  "results": [
+    {
+      "callee": "KPlayer::LoadBaseInfo",
+      "callee_address": "0839dce2",
+      "caller": "KRelayClient::OnTransferPlayerRequest",
+      "caller_address": "080e37d0",
+      "callsite": "080e38f9",
+      "evidence_id": 30016,
+      "record_line": 22189,
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+      "status": "TARGET_STATIC_CONFIRMED"
+    },
+    {
+      "callee": "KPlayer::LoadBaseInfo",
+      "callee_address": "0839dce2",
+      "caller": "KRelayClient::OnPlayerLoginRequest",
+      "caller_address": "080e3d78",
+      "callsite": "080e3e4b",
+      "evidence_id": 30016,
+      "record_line": 22222,
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+      "status": "TARGET_STATIC_CONFIRMED"
+    },
+    {
+      "callee": "KPlayer::LoadBaseInfo",
+      "callee_address": "0839dce2",
+      "caller": "KPlayer::LoadBaseInfo",
+      "caller_address": "0839dce2",
+      "callsite": "0839dd0f",
+      "evidence_id": 30016,
+      "record_line": 132709,
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+      "status": "RAW_SUSPECT_SELF_CALL"
+    },
+    {
+      "callee": "KPlayer::LoadBaseInfo",
+      "callee_address": "0839dce2",
+      "caller": "KPlayer::LoadBaseInfo",
+      "caller_address": "0839dce2",
+      "callsite": "0839dd5e",
+      "evidence_id": 30016,
+      "record_line": 132712,
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+      "status": "RAW_SUSPECT_SELF_CALL"
+    },
+    {
+      "callee": "KPlayer::LoadBaseInfo",
+      "callee_address": "0839dce2",
+      "caller": "KPlayer::LoadBaseInfo",
+      "caller_address": "0839dce2",
+      "callsite": "0839dd8c",
+      "evidence_id": 30016,
+      "record_line": 132714,
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+      "status": "RAW_SUSPECT_SELF_CALL"
+    },
+    {
+      "callee": "KPlayer::LoadBaseInfo",
+      "callee_address": "0839dce2",
+      "caller": "KPlayer::LoadBaseInfo",
+      "caller_address": "0839dce2",
+      "callsite": "0839ddb9",
+      "evidence_id": 30016,
+      "record_line": 132717,
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+      "status": "RAW_SUSPECT_SELF_CALL"
+    },
+    {
+      "callee": "KPlayer::LoadBaseInfo",
+      "callee_address": "0839dce2",
+      "caller": "KPlayer::LoadBaseInfo",
+      "caller_address": "0839dce2",
+      "callsite": "0839dde8",
+      "evidence_id": 30016,
+      "record_line": 132719,
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+      "status": "RAW_SUSPECT_SELF_CALL"
+    },
+    {
+      "callee": "KPlayer::LoadBaseInfo",
+      "callee_address": "0839dce2",
+      "caller": "KPlayer::LoadBaseInfo",
+      "caller_address": "0839dce2",
+      "callsite": "0839ddfb",
+      "evidence_id": 30016,
+      "record_line": 132720,
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+      "status": "RAW_SUSPECT_SELF_CALL"
+    },
+    {
+      "callee": "KPlayer::LoadBaseInfo",
+      "callee_address": "0839dce2",
+      "caller": "KPlayer::LoadBaseInfo",
+      "caller_address": "0839dce2",
+      "callsite": "0839de0b",
+      "evidence_id": 30016,
+      "record_line": 132721,
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+      "status": "RAW_SUSPECT_SELF_CALL"
+    },
+    {
+      "callee": "KPlayer::LoadBaseInfo",
+      "callee_address": "0839dce2",
+      "caller": "KPlayer::LoadBaseInfo",
+      "caller_address": "0839dce2",
+      "callsite": "0839de3a",
+      "evidence_id": 30016,
+      "record_line": 132723,
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+      "status": "RAW_SUSPECT_SELF_CALL"
+    },
+    {
+      "callee": "KPlayer::LoadBaseInfo",
+      "callee_address": "0839dce2",
+      "caller": "KPlayer::LoadBaseInfo",
+      "caller_address": "0839dce2",
+      "callsite": "0839de4d",
+      "evidence_id": 30016,
+      "record_line": 132724,
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+      "status": "RAW_SUSPECT_SELF_CALL"
+    },
+    {
+      "callee": "KPlayer::LoadBaseInfo",
+      "callee_address": "0839dce2",
+      "caller": "KPlayer::LoadBaseInfo",
+      "caller_address": "0839dce2",
+      "callsite": "0839de64",
+      "evidence_id": 30016,
+      "record_line": 132725,
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+      "status": "RAW_SUSPECT_SELF_CALL"
+    },
+    {
+      "callee": "KPlayer::LoadBaseInfo",
+      "callee_address": "0839dce2",
+      "caller": "KPlayer::LoadBaseInfo",
+      "caller_address": "0839dce2",
+      "callsite": "0839de78",
+      "evidence_id": 30016,
+      "record_line": 132726,
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/call-closure/target_calls.jsonl",
+      "status": "RAW_SUSPECT_SELF_CALL"
+    }
+  ],
+  "rule": "target identity is binary SHA plus address; self calls remain visible and no name join is used",
+  "target_observations": [
+    {
+      "address": "0839dce2",
+      "binary_sha256": "47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a",
+      "evidence_id": 29992,
+      "qualified_key": "KPlayer::LoadBaseInfo"
+    }
+  ]
+}

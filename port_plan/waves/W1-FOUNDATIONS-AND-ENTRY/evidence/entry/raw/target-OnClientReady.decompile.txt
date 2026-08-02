@@ -1,0 +1,78 @@
+/Volumes/ExData/game/jx3/linux-build/tools/ghidra_probe.py:17: DeprecationWarning: open_program() is deprecated, use open_project() and program_context() or program_loader() instead.
+  with pyghidra.open_program(so, analyze=True) as flat:
+=== SO3GameServerD: 25027 hàm ===
+hàm có TÊN THẬT (DWARF): 24620 / 25027
+--- 20 hàm mẫu ---
+  0804cc9c  _init
+  0804d9a0  _start
+  0804d9c4  call_gmon_start
+  0804d9f0  __do_global_dtors_aux
+  0804da50  frame_dummy
+  0804da74  KGameServerEyes
+  0804da94  KGameServerEyes
+  0804dab4  Ping
+  0804dae8  operator()
+  0804dc14  SendMapInfo
+  0804dcfa  OnE2LGetPid
+  0804dd30  SendPlayerCount
+  0804de00  OnG2LProtocol
+  0804de82  OnE2LStop
+  0804deaa  SendCustomInfo
+  0804e2ea  Activate
+  0804e4cc  UnInit
+  0804e517  GetSelfName
+  0804e59a  Init
+  0804e918  GetNext
+
+=== DECOMPILE: OnClientReady @ 0839f87e ===
+
+/* DWARF original prototype: BOOL OnClientReady(KPlayer * this) */
+
+BOOL __thiscall KPlayer::OnClientReady(KPlayer *this)
+
+{
+  BOOL BVar1;
+  BOOL local_c;
+  
+                    /* Unresolved local var: BOOL bResult@[???]
+                       Unresolved local var: BOOL bRetCode@[???] */
+  local_c = 0;
+  this->m_nVirtualFrame = g_pSO3World->m_nGameLoop;
+  this->m_nRecordCount = 0;
+  this->m_eGameStatus = gsPlaying;
+  if ((this->super_KCharacter).super_KSceneObject.m_pScene == (KScene *)0x0) {
+    KGLogPrintf(KGLOG_DEBUG,"KGLOG_PROCESS_ERROR(%s) at line %d in %s\n","m_pScene",0x12fd,
+                "BOOL KPlayer::OnClientReady()");
+  }
+  else {
+    BVar1 = KScene::ValidateRegions
+                      ((this->super_KCharacter).super_KSceneObject.m_pScene,
+                       ((this->super_KCharacter).super_KSceneObject.m_pRegion)->m_nRegionX,
+                       ((this->super_KCharacter).super_KSceneObject.m_pRegion)->m_nRegionY);
+    if (BVar1 == 0) {
+      KGLogPrintf(KGLOG_DEBUG,"KGLOG_PROCESS_ERROR(%s) at line %d in %s\n","bRetCode",0x1300,
+                  "BOOL KPlayer::OnClientReady()");
+    }
+    else {
+      if (((((this->super_KCharacter).super_KSceneObject.super_KBaseObject.m_dwID & 0x20000000) == 0
+           ) && (this->m_dwTongID == 0)) && (this->m_bProcessQuitTongFlag == 0)) {
+        BVar1 = DestroyTongBindItem(this);
+        if (BVar1 == 0) {
+          KGLogPrintf(KGLOG_DEBUG,"KGLOG_CHECK_ERROR(%s) at line %d in %s\n","bRetCode",0x1305,
+                      "BOOL KPlayer::OnClientReady()");
+        }
+        this->m_bProcessQuitTongFlag = 1;
+      }
+      if ((((this->super_KCharacter).super_KSceneObject.super_KBaseObject.m_dwID & 0x20000000) == 0)
+         && (this->m_dwTongID != 0)) {
+        this->m_dwBeforeTongID = this->m_dwTongID;
+      }
+      KGLogPrintf(KGLOG_INFO,"player \'%s\'(%lu) Client Ready!",(this->super_KCharacter).m_szName,
+                  (this->super_KCharacter).super_KSceneObject.super_KBaseObject.m_dwID);
+      local_c = 1;
+    }
+  }
+  return local_c;
+}
+
+

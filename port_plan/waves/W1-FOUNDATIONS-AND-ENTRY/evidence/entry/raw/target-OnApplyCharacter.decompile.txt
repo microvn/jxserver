@@ -1,0 +1,142 @@
+/Volumes/ExData/game/jx3/linux-build/tools/ghidra_probe.py:17: DeprecationWarning: open_program() is deprecated, use open_project() and program_context() or program_loader() instead.
+  with pyghidra.open_program(so, analyze=True) as flat:
+=== SO3GameServerD: 25027 hàm ===
+hàm có TÊN THẬT (DWARF): 24620 / 25027
+--- 20 hàm mẫu ---
+  0804cc9c  _init
+  0804d9a0  _start
+  0804d9c4  call_gmon_start
+  0804d9f0  __do_global_dtors_aux
+  0804da50  frame_dummy
+  0804da74  KGameServerEyes
+  0804da94  KGameServerEyes
+  0804dab4  Ping
+  0804dae8  operator()
+  0804dc14  SendMapInfo
+  0804dcfa  OnE2LGetPid
+  0804dd30  SendPlayerCount
+  0804de00  OnG2LProtocol
+  0804de82  OnE2LStop
+  0804deaa  SendCustomInfo
+  0804e2ea  Activate
+  0804e4cc  UnInit
+  0804e517  GetSelfName
+  0804e59a  Init
+  0804e918  GetNext
+
+=== DECOMPILE: OnApplyCharacter @ 08061eb0 ===
+
+/* DWARF original prototype: void OnApplyCharacter(KPlayerServer * this, char * pData, size_t nSize,
+   int nConnIndex, int nFrame) */
+
+void __thiscall
+KPlayerServer::OnApplyCharacter
+          (KPlayerServer *this,char *pData,size_t nSize,int nConnIndex,int nFrame)
+
+{
+  BOOL BVar1;
+  pair<std::_Rb_tree_const_iterator<long_unsigned_int>,_bool> local_48;
+  undefined1 local_40 [16];
+  undefined1 local_30 [16];
+  _Rb_tree_node_base *local_20;
+  char *local_1c;
+  KPlayer *local_18;
+  BOOL local_14;
+  int local_10;
+  KPlayer *local_c;
+  KNpc *local_8;
+  
+                    /* Unresolved local var: BOOL bRetCode@[???]
+                       Unresolved local var: C2S_APPLY_CHARACTER * pRequest@[???]
+                       Unresolved local var: KPlayer * pClientPlayer@[???]
+                       Unresolved local var: BOOL bInViewRange@[???]
+                       Unresolved local var: BOOL bInViewPointRange@[???]
+                       Unresolved local var:
+                       pair<std::_Rb_tree_const_iterator<long_unsigned_int>,_bool> InsRet@[???] */
+  local_20 = (_Rb_tree_node_base *)0x0;
+  local_1c = pData;
+  local_18 = GetPlayerByConnection(this,nConnIndex);
+  local_14 = 0;
+  local_10 = 0;
+  std::pair<std::_Rb_tree_const_iterator<long_unsigned_int>,_bool>::pair(&local_48);
+  if (local_18 == (KPlayer *)0x0) {
+                    /* WARNING: Subroutine does not return */
+    __assert_fail("pClientPlayer","Src/KPlayerServer.cpp",0x453e,
+                  "void KPlayerServer::OnApplyCharacter(char*, size_t, int, int)");
+  }
+  if ((local_18->super_KCharacter).super_KSceneObject.m_pRegion == (KRegion_conflict *)0x0) {
+                    /* WARNING: Subroutine does not return */
+    __assert_fail("pClientPlayer->m_pRegion","Src/KPlayerServer.cpp",0x453f,
+                  "void KPlayerServer::OnApplyCharacter(char*, size_t, int, int)");
+  }
+  if ((*(uint *)(local_1c + 6) & 0x40000000) == 0) {
+                    /* Unresolved local var: KPlayer * pApplyPlayer@[???] */
+    local_c = KObjectIndex<KPlayer>::GetObj
+                        ((KObjectIndex<KPlayer> *)&g_pSO3World->m_PlayerSet,*(ulong *)(local_1c + 6)
+                        );
+    if (((local_c != (KPlayer *)0x0) &&
+        ((local_c->super_KCharacter).super_KSceneObject.m_pRegion != (KRegion_conflict *)0x0)) &&
+       (local_c != local_18)) {
+      BVar1 = KCharacter::IsStealthToCharacter
+                        (&local_c->super_KCharacter,&local_18->super_KCharacter);
+      if (BVar1 == 0) {
+        local_14 = KPlayer::IsInViewRangeByPlayer
+                             (local_18,(local_c->super_KCharacter).super_KSceneObject.m_pRegion);
+        if ((local_18->m_ViewPoint).pRegion != (KRegion_conflict *)0x0) {
+          local_10 = KPlayer::IsInViewRangeByViewPoint
+                               (local_18,(local_c->super_KCharacter).super_KSceneObject.m_pRegion);
+        }
+        if ((local_14 != 0) || (local_10 != 0)) {
+          std::
+          set<long_unsigned_int,_std::less<long_unsigned_int>,_KMemory::KAllocator<long_unsigned_int>_>
+          ::insert((set<long_unsigned_int,_std::less<long_unsigned_int>,_KMemory::KAllocator<long_unsigned_int>_>
+                    *)local_40,(ulong *)(local_18->m_PlayerSyncTable + local_c->m_eCamp));
+          memcpy(&local_48,local_40,5);
+          if (local_48.second != false) {
+            KPlayer::KViewObject::KViewObject
+                      ((KViewObject *)(local_40 + 8),*(ulong *)(local_1c + 6),
+                       g_pSO3World->m_nGameLoop + 0x10);
+            std::list<KPlayer::KViewObject,_KMemory::KAllocator<KPlayer::KViewObject>_>::push_back
+                      (local_18->m_PlayerSyncQueue + local_c->m_eCamp,(KViewObject *)(local_40 + 8))
+            ;
+          }
+        }
+      }
+    }
+  }
+  else {
+                    /* Unresolved local var: KNpc * pApplyNpc@[???] */
+    local_8 = KObjectIndex<KNpc>::GetObj
+                        ((KObjectIndex<KNpc> *)&g_pSO3World->m_NpcSet,*(ulong *)(local_1c + 6));
+    if ((local_8 != (KNpc *)0x0) &&
+       ((local_8->super_KCharacter).super_KSceneObject.m_pRegion != (KRegion_conflict *)0x0)) {
+      BVar1 = KCharacter::IsStealthToCharacter
+                        (&local_8->super_KCharacter,&local_18->super_KCharacter);
+      if (BVar1 == 0) {
+        local_14 = KPlayer::IsInViewRangeByPlayer
+                             (local_18,(local_8->super_KCharacter).super_KSceneObject.m_pRegion);
+        if ((local_18->m_ViewPoint).pRegion != (KRegion_conflict *)0x0) {
+          local_10 = KPlayer::IsInViewRangeByViewPoint
+                               (local_18,(local_8->super_KCharacter).super_KSceneObject.m_pRegion);
+        }
+        if ((local_14 != 0) || (local_10 != 0)) {
+          std::
+          set<long_unsigned_int,_std::less<long_unsigned_int>,_KMemory::KAllocator<long_unsigned_int>_>
+          ::insert((set<long_unsigned_int,_std::less<long_unsigned_int>,_KMemory::KAllocator<long_unsigned_int>_>
+                    *)local_30,(ulong *)&local_18->m_NpcSyncTable);
+          memcpy(&local_48,local_30,5);
+          if (local_48.second != false) {
+            KPlayer::KViewObject::KViewObject
+                      ((KViewObject *)(local_30 + 8),*(ulong *)(local_1c + 6),
+                       g_pSO3World->m_nGameLoop + 0x10);
+            std::list<KPlayer::KViewObject,_KMemory::KAllocator<KPlayer::KViewObject>_>::push_back
+                      (&local_18->m_NpcSyncQueue,(KViewObject *)(local_30 + 8));
+          }
+        }
+      }
+    }
+  }
+  return;
+}
+
+

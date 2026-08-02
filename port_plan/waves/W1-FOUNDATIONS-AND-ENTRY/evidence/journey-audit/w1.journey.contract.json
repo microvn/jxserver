@@ -1,0 +1,407 @@
+{
+  "schema": "jx3-journey-contract/v1",
+  "journey_id": "w1.login_enter_world.audit",
+  "label": "Wave 1 login -> enter-world Journey Audit sample",
+  "axes": {
+    "layer": [
+      "provenance",
+      "process-bootstrap",
+      "transport-security",
+      "protocol-serialization",
+      "abi-layout",
+      "persistence-blob",
+      "resource-script",
+      "state-machine",
+      "runtime-observability",
+      "terminal-integration"
+    ],
+    "contract_kind": [
+      "pair-distinctness",
+      "runtime-frontier",
+      "mechanical-envelope",
+      "payload-layout",
+      "dispatch-closure",
+      "persistence-request",
+      "parser-version",
+      "completion-gate",
+      "ready-ack",
+      "table-reader",
+      "script-binding",
+      "integration-outcome"
+    ],
+    "owner_scope": [
+      "Gateway",
+      "KSO3GameServer bootstrap",
+      "GameCenter/GameServer relay pair",
+      "KRelayClient",
+      "KPlayerServer",
+      "KPlayer",
+      "KScene",
+      "KScriptCenter",
+      "Client/Gateway/GameCenter/GameServer"
+    ],
+    "data_domain": [
+      "session_login",
+      "relay_role_login",
+      "role_base",
+      "role_blob",
+      "role_state",
+      "scene_attach",
+      "script_registry",
+      "map_partition",
+      "ready_sync"
+    ],
+    "evidence_surface": [
+      "manifest",
+      "probe-ledger",
+      "boundary-capsule",
+      "overlay-comparison",
+      "target-static-query",
+      "dossier",
+      "lua-script-registry",
+      "tab-reader",
+      "ini-config"
+    ]
+  },
+  "taxonomy": [
+    "provenance",
+    "process-bootstrap",
+    "transport-security",
+    "protocol-serialization",
+    "abi-layout",
+    "persistence-blob",
+    "resource-script",
+    "state-machine",
+    "runtime-observability",
+    "terminal-integration"
+  ],
+  "artifacts": {
+    "w1_connectivity_capsule": {
+      "kind": "probe_boundary_capsule",
+      "path": "graphengine/staging/jx3probe/w1-stock-candidate-20260728/boundary-capsule.json"
+    },
+    "w1_connectivity_stock_manifest": {
+      "kind": "runtime_manifest",
+      "path": "graphengine/staging/jx3probe/w1-stock-candidate-20260728/stock-fresh/manifest.json"
+    },
+    "w1_connectivity_candidate_manifest": {
+      "kind": "runtime_manifest",
+      "path": "graphengine/staging/jx3probe/w1-stock-candidate-20260728/candidate/manifest.json"
+    },
+    "w1_connectivity_stock_ledger": {
+      "kind": "probe_ledger",
+      "path": "graphengine/staging/jx3probe/w1-stock-candidate-20260728/stock-fresh/probe-ledger.jsonl"
+    },
+    "w1_connectivity_candidate_ledger": {
+      "kind": "probe_ledger",
+      "path": "graphengine/staging/jx3probe/w1-stock-candidate-20260728/candidate/probe-ledger.jsonl"
+    },
+    "w1_role_login_stock_manifest": {
+      "kind": "runtime_manifest",
+      "path": "graphengine/staging/jx3probe/w1-role-login-5003-20260728/stock/manifest.json"
+    },
+    "w1_role_login_candidate_manifest": {
+      "kind": "runtime_manifest",
+      "path": "graphengine/staging/jx3probe/w1-role-login-5003-20260728/candidate/manifest.json"
+    },
+    "w1_role_login_stock_ledger": {
+      "kind": "probe_ledger",
+      "path": "graphengine/staging/jx3probe/w1-role-login-5003-20260728/stock/probe-ledger.jsonl"
+    },
+    "w1_role_login_candidate_ledger": {
+      "kind": "probe_ledger",
+      "path": "graphengine/staging/jx3probe/w1-role-login-5003-20260728/candidate/probe-ledger-final.jsonl"
+    },
+    "w1_role_login_capsule": {
+      "kind": "probe_boundary_capsule",
+      "path": "graphengine/staging/jx3probe/w1-role-login-5003-20260728/boundary-capsule.json"
+    },
+    "w1_role_login_overlay": {
+      "kind": "overlay_result",
+      "path": "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/v5-cross-audit/r2s-player-login.historical-overlay-comparison.v5.json"
+    },
+    "w1_confirm_player_login_target": {
+      "kind": "target_static_query",
+      "path": "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/v5-cross-audit/s2r-confirm-player-login.fresh-target-static.json"
+    },
+    "w1_role_load_semantic_trace": {
+      "kind": "semantic_runtime_trace",
+      "path": "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-audit/w1.role_load.semantic.trace.json"
+    }
+  },
+  "checkpoints": [
+    {
+      "checkpoint_id": "w1.provenance.connectivity_pair_distinct",
+      "label": "Connectivity pair uses distinct stock/candidate GameServer binaries",
+      "layer": "provenance",
+      "contract_kind": "pair-distinctness",
+      "owner_scope": "GameServer pair",
+      "data_domain": "session_login",
+      "evidence_surface": "manifest",
+      "owner": {
+        "process": "GameServer"
+      },
+      "summary": "The public connectivity probe is usable only if the stock and candidate GameServer binaries are distinct.",
+      "runtime_matchers": [
+        {
+          "matcher": "manifest_distinct_pair",
+          "stock_artifact_id": "w1_connectivity_stock_manifest",
+          "candidate_artifact_id": "w1_connectivity_candidate_manifest"
+        }
+      ]
+    },
+    {
+      "checkpoint_id": "w1.runtime.gateway_client_5004",
+      "label": "Gateway/client runtime handoff",
+      "layer": "runtime-observability",
+      "contract_kind": "runtime-frontier",
+      "owner_scope": "Gateway",
+      "data_domain": "session_login",
+      "evidence_surface": "boundary-capsule",
+      "depends_on": ["w1.provenance.connectivity_pair_distinct"],
+      "owner": {
+        "process": "Gateway",
+        "protocol": "gateway.client_5004"
+      },
+      "summary": "This is the current first-runtime-divergence boundary in the fresh public W1 pair.",
+      "next_action": "Inspect the direct owner closure for the `gateway.client_5004` state-fingerprint divergence before patching relay, role-load, or ready/state logic.",
+      "runtime_matchers": [
+        {
+          "matcher": "probe_presence",
+          "stock_artifact_id": "w1_connectivity_stock_ledger",
+          "candidate_artifact_id": "w1_connectivity_candidate_ledger",
+          "profile_id": "w1.enter_world.connectivity.v1",
+          "contract_keys": ["w1.gateway.client_5004"]
+        },
+        {
+          "matcher": "probe_divergence",
+          "artifact_id": "w1_connectivity_capsule",
+          "contract_keys": ["w1.gateway.client_5004"]
+        }
+      ],
+      "runtime_evidence": [
+        {
+          "origin": "runtime",
+          "path": "graphengine/staging/jx3probe/w1-stock-candidate-20260728/boundary-capsule.json",
+          "note": "Fresh paired public capture"
+        }
+      ]
+    },
+    {
+      "checkpoint_id": "w1.runtime.relay_role_login_5003",
+      "label": "Relay role-login request/response mechanical parity",
+      "layer": "protocol-serialization",
+      "contract_kind": "mechanical-envelope",
+      "owner_scope": "GameCenter/GameServer relay pair",
+      "data_domain": "relay_role_login",
+      "evidence_surface": "probe-ledger",
+      "depends_on": ["w1.runtime.gateway_client_5004"],
+      "owner": {
+        "process": "GameCenter/GameServer",
+        "protocol": "r2s_player_login_request"
+      },
+      "summary": "The retained 5003 probe only proves mechanical request/response parity; it does not accept role-data parsing or enter-world semantics.",
+      "runtime_matchers": [
+        {
+          "matcher": "manifest_distinct_pair",
+          "stock_artifact_id": "w1_role_login_stock_manifest",
+          "candidate_artifact_id": "w1_role_login_candidate_manifest"
+        },
+        {
+          "matcher": "probe_presence",
+          "stock_artifact_id": "w1_role_login_stock_ledger",
+          "candidate_artifact_id": "w1_role_login_candidate_ledger",
+          "profile_id": "w1.relay_role_login_5003.v1",
+          "contract_keys": [
+            "w1.center_gameserver_role_login_request",
+            "w1.gameserver_center_role_login_respond"
+          ]
+        }
+      ]
+    },
+    {
+      "checkpoint_id": "w1.static.role_login_payload_exactness",
+      "label": "Role-login envelope exact payload contract",
+      "layer": "abi-layout",
+      "contract_kind": "payload-layout",
+      "owner_scope": "GameCenter/GameServer relay pair",
+      "data_domain": "relay_role_login",
+      "evidence_surface": "overlay-comparison",
+      "depends_on": ["w1.runtime.relay_role_login_5003"],
+      "owner": {
+        "process": "GameCenter/GameServer",
+        "protocol": "r2s_player_login_request",
+        "type": "R2S_PLAYER_LOGIN_REQUEST"
+      },
+      "summary": "Historical overlay evidence shows a concrete payload-size drift independent of the current runtime frontier.",
+      "static_matchers": [
+        {
+          "matcher": "overlay_conflict",
+          "artifact_id": "w1_role_login_overlay",
+          "target_contract_key_contains": "r2s_player_login_request",
+          "dimension_any": ["payload_byte_size"]
+        }
+      ],
+      "target_evidence": [
+        {
+          "origin": "target_dwarf",
+          "path": "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/relay/RELAY_ROLE_ENVELOPE_DOSSIER.md",
+          "note": "Center target payload size 302 bytes"
+        }
+      ],
+      "candidate_evidence": [
+        {
+          "origin": "candidate",
+          "path": "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/v5-cross-audit/historical-dossier.r2s-player-login.overlay.json",
+          "note": "Historical 306-byte overlay observation"
+        }
+      ]
+    },
+    {
+      "checkpoint_id": "w1.static.confirm_player_login_dispatch",
+      "label": "Confirm-player-login payload + dispatch closure",
+      "layer": "protocol-serialization",
+      "contract_kind": "dispatch-closure",
+      "owner_scope": "KRelayClient",
+      "data_domain": "session_login",
+      "evidence_surface": "target-static-query",
+      "depends_on": ["w1.runtime.relay_role_login_5003"],
+      "owner": {
+        "process": "GameServer",
+        "function": "KRelayClient::DoConfirmPlayerLoginRequest",
+        "protocol": "s2r_confirm_player_login_request",
+        "type": "S2R_CONFIRM_PLAYER_LOGIN_REQUEST"
+      },
+      "summary": "Target payload type is known, but the current target-static query still lacks the fully materialized protocol-payload/dispatch lane needed for automatic reconciliation.",
+      "static_matchers": [
+        {
+          "matcher": "target_static_required",
+          "artifact_id": "w1_confirm_player_login_target",
+          "min_selected_observations": 1
+        }
+      ],
+      "target_evidence": [
+        {
+          "origin": "target_dwarf",
+          "path": "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/relay/CONFIRM_PLAYER_LOGIN_REQUEST_DRIFT_2026-07-28.md",
+          "note": "10-byte envelope, dwPlayerID@2, dwIP@6"
+        }
+      ]
+    },
+    {
+      "checkpoint_id": "w1.semantic.role_item_list_v6",
+      "label": "Role-data item-list parser version V6",
+      "layer": "persistence-blob",
+      "contract_kind": "parser-version",
+      "owner_scope": "KPlayer / KItemList",
+      "data_domain": "role_blob",
+      "evidence_surface": "dossier",
+      "depends_on": [
+        "w1.runtime.relay_role_login_5003",
+        "w1.static.confirm_player_login_dispatch"
+      ],
+      "owner": {
+        "process": "GameServer",
+        "function": "KItemList::LoadItemList",
+        "type": "KRoleBlockHeader(type=2, version=6)"
+      },
+      "summary": "Current W1 GS semantic frontier: target dispatches KItemList versioned loaders V0..V6, while the legacy candidate path still routes through the non-versioned item-list parser and fails the role blob.",
+      "next_action": "Promote the retained role-load GS failure into a machine-readable semantic probe/runtime artifact so Journey Audit can mark KItemList V6 as FAIL instead of keeping it as dossier-backed unresolved evidence.",
+      "runtime_matchers": [
+        {
+          "matcher": "semantic_event_result",
+          "artifact_id": "w1_role_load_semantic_trace",
+          "event": "role_block",
+          "match_fields": {
+            "type": 2,
+            "version": 6
+          }
+        }
+      ],
+      "target_evidence": [
+        {
+          "origin": "target_dwarf",
+          "path": "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/role-load/ROLE_LOAD_DOSSIER.md",
+          "note": "Target KItemList dispatch includes LoadItemList(data,len,version) and V0..V6 loaders."
+        },
+        {
+          "origin": "target_decompile",
+          "path": "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/role-load/DEEP_TARGET_DECOMPILE_AUDIT_2026-07-28.md",
+          "note": "Deep target audit retains the versioned role-block parser closure for item-list loading."
+        }
+      ],
+      "candidate_evidence": [
+        {
+          "origin": "candidate",
+          "path": "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/role-load/DEEP_TARGET_DECOMPILE_AUDIT_2026-07-28.md",
+          "note": "Retained candidate/runtime evidence records the live failure at item-list loading before downstream ready or scene logic."
+        }
+      ],
+      "runtime_evidence": [
+        {
+          "origin": "runtime",
+          "path": "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-audit/w1.role_load.semantic.trace.json",
+          "note": "Retained semantic runtime trace records type=2, version=6 and the ensuing item-list parser failure."
+        }
+      ]
+    },
+    {
+      "checkpoint_id": "w1.semantic.role_state_info_v2",
+      "label": "Role-data state-info parser version V2",
+      "layer": "persistence-blob",
+      "contract_kind": "parser-version",
+      "owner_scope": "KPlayer",
+      "data_domain": "role_state",
+      "evidence_surface": "dossier",
+      "depends_on": ["w1.semantic.role_item_list_v6"],
+      "owner": {
+        "process": "GameServer",
+        "function": "KPlayer::LoadStateInfo_V2",
+        "type": "KRoleBlockHeader(type=5, version=2)"
+      },
+      "summary": "Target-backed next semantic boundary after item-list: role state block type=5/version=2/len=128 requires the V2 parser, but it must stay downstream of the KItemList V6 frontier.",
+      "next_action": "Do not patch StateInfo first. Only normalize and compare the V2 state block after KItemList V6 has been crossed or intentionally isolated.",
+      "target_evidence": [
+        {
+          "origin": "target_dwarf",
+          "path": "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/role-load/ROLE_STATE_V2_AUDIT_2026-07-28.md",
+          "note": "Target has LoadStateInfo_V2 at 0x0839a01c with a fixed 0x80-byte contract."
+        }
+      ],
+      "candidate_evidence": [
+        {
+          "origin": "candidate",
+          "path": "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/role-load/ROLE_STATE_V2_AUDIT_2026-07-28.md",
+          "note": "Retained candidate evidence shows the legacy state parser is not equivalent to the target V2 closure."
+        }
+      ],
+      "runtime_evidence": [
+        {
+          "origin": "runtime",
+          "path": "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-audit/w1.role_load.semantic.trace.json",
+          "note": "Retained semantic runtime trace also records the downstream type=5, version=2 role-state boundary on the same spine."
+        }
+      ]
+    },
+    {
+      "checkpoint_id": "w1.terminal.enter_world",
+      "label": "Terminal enter-the-world outcome",
+      "layer": "terminal-integration",
+      "contract_kind": "integration-outcome",
+      "owner_scope": "Client/Gateway/GameCenter/GameServer",
+      "data_domain": "scene_attach",
+      "evidence_surface": "runtime_probe",
+      "depends_on": [
+        "w1.static.role_login_payload_exactness",
+        "w1.static.confirm_player_login_dispatch",
+        "w1.semantic.role_item_list_v6",
+        "w1.semantic.role_state_info_v2"
+      ],
+      "terminal": true,
+      "owner": {
+        "process": "Client/Gateway/GameCenter/GameServer"
+      },
+      "summary": "Terminal acceptance stays blocked until the upstream runtime frontier and the upstream static protocol contracts are both resolved."
+    }
+  ]
+}

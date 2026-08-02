@@ -1,0 +1,578 @@
+{
+  "adapter": {
+    "limitations": [
+      "The adapter reads the supplied V4 JSON plus target DWARF observations selected only by V4 artifact SHA-256 and field DIE; it does not query candidate/source, binaries, captures, or runtime.",
+      "Offsets/order are emitted only for target DWARF fields whose artifact SHA-256, DIE, and name exactly match V4 provenance; unmatched fields remain unresolved evidence.",
+      "A same-name enum/payload identity in V4 is static evidence only; process routing and runtime wire behavior remain unproven."
+    ],
+    "skipped_incomplete_records": [
+      {
+        "binary_sha256": "47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a",
+        "kind": "enum",
+        "reason": "V4 enum lacks an explicit name/value pair.",
+        "value": {
+          "die": null,
+          "enum": null,
+          "evidence": {
+            "address": null,
+            "artifact_sha256": "ef9f0e682f9682654f0a0431a131152e0c9f1a5779ba3d9f8f701dc5b58a17b5",
+            "authority": "target-dwarf+target-decompile",
+            "binary_sha256": "47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a",
+            "detail": "target protocol enum",
+            "die": null,
+            "evidence_id": 29982,
+            "origin": "target-dwarf+decompile-v252",
+            "record": {
+              "line": 11809,
+              "path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/contracts/target_protocol.jsonl"
+            },
+            "status": "TARGET_STATIC_CONFIRMED"
+          },
+          "name": "r2s_player_login_request",
+          "value": null
+        }
+      }
+    ],
+    "source_path": "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-contract-prototype/journey-contract-v4.target-static.json",
+    "source_schema": "journey-contract-query/v4",
+    "source_sha256": "d53548d3688e32f24334b4c8970e4a4868b8c13264bdf0dc974a30be23ce2a26"
+  },
+  "contracts": [
+    {
+      "contract_key": "v4:47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a:r2s_player_login_request:6:R2S_PLAYER_LOGIN_REQUEST:0x00a85fd0",
+      "evidence": {
+        "target_dwarf_field_layout": [
+          {
+            "die": "0x00a85fe7",
+            "name": "dwRoleID",
+            "offset": 2,
+            "order": 0
+          },
+          {
+            "die": "0x00a85ff6",
+            "name": "nGatewayPlayerIndex",
+            "offset": 6,
+            "order": 1
+          },
+          {
+            "die": "0x00a86005",
+            "name": "szRoleName",
+            "offset": 10,
+            "order": 2
+          },
+          {
+            "die": "0x00a86014",
+            "name": "szAccount",
+            "offset": 42,
+            "order": 3
+          },
+          {
+            "die": "0x00a86023",
+            "name": "AccInfo",
+            "offset": 74,
+            "order": 4
+          },
+          {
+            "die": "0x00a86032",
+            "name": "dwSystemTeamID",
+            "offset": 122,
+            "order": 5
+          },
+          {
+            "die": "0x00a86041",
+            "name": "dwTeamID",
+            "offset": 126,
+            "order": 6
+          },
+          {
+            "die": "0x00a86050",
+            "name": "BaseInfo",
+            "offset": 130,
+            "order": 7
+          },
+          {
+            "die": "0x00a86060",
+            "name": "nBattleSide",
+            "offset": 292,
+            "order": 8
+          },
+          {
+            "die": "0x00a86070",
+            "name": "dwTongID",
+            "offset": 296,
+            "order": 9
+          },
+          {
+            "die": "0x00a86080",
+            "name": "byFarmerLimit",
+            "offset": 300,
+            "order": 10
+          },
+          {
+            "die": "0x00a86090",
+            "name": "byAccountMaxLevel",
+            "offset": 301,
+            "order": 11
+          }
+        ],
+        "unresolved_v4_fields": [],
+        "v4_binary": {
+          "artifact_sha256": "c284d6084407c66287d0f9e00f46398b7d9fc4df6c54ea28fb0d4f37e061e1c5",
+          "binary_path": "jx3_dwarf/SO3GameServerD",
+          "binary_sha256": "47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a",
+          "evidence_id": 14984,
+          "origin_id": "target-dwarf"
+        },
+        "v4_enum": {
+          "die": "0x00a821b6",
+          "enum": "KR2S_PROTOCOL",
+          "evidence": {
+            "address": null,
+            "artifact_sha256": "ef9f0e682f9682654f0a0431a131152e0c9f1a5779ba3d9f8f701dc5b58a17b5",
+            "authority": "target-dwarf",
+            "binary_sha256": "47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a",
+            "detail": "target protocol enum",
+            "die": "0x00a821b6",
+            "evidence_id": 29982,
+            "origin": "target-dwarf-v252",
+            "record": {
+              "line": 10709,
+              "path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/contracts/target_protocol.jsonl"
+            },
+            "status": "TARGET_STATIC_CONFIRMED"
+          },
+          "name": "r2s_player_login_request",
+          "value": "6"
+        },
+        "v4_payload_type": {
+          "byte_size": "0x012e",
+          "die": "0x00a85fd0",
+          "evidence": {
+            "artifact_sha256": "c284d6084407c66287d0f9e00f46398b7d9fc4df6c54ea28fb0d4f37e061e1c5",
+            "binary_sha256": "47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a",
+            "evidence_id": 14984,
+            "origin": "target-dwarf"
+          },
+          "fields": [
+            {
+              "die": "0x00a85fe7",
+              "evidence_id": 14984,
+              "name": "dwRoleID"
+            },
+            {
+              "die": "0x00a85ff6",
+              "evidence_id": 14984,
+              "name": "nGatewayPlayerIndex"
+            },
+            {
+              "die": "0x00a86005",
+              "evidence_id": 14984,
+              "name": "szRoleName"
+            },
+            {
+              "die": "0x00a86014",
+              "evidence_id": 14984,
+              "name": "szAccount"
+            },
+            {
+              "die": "0x00a86023",
+              "evidence_id": 14984,
+              "name": "AccInfo"
+            },
+            {
+              "die": "0x00a86032",
+              "evidence_id": 14984,
+              "name": "dwSystemTeamID"
+            },
+            {
+              "die": "0x00a86041",
+              "evidence_id": 14984,
+              "name": "dwTeamID"
+            },
+            {
+              "die": "0x00a86050",
+              "evidence_id": 14984,
+              "name": "BaseInfo"
+            },
+            {
+              "die": "0x00a86060",
+              "evidence_id": 14984,
+              "name": "nBattleSide"
+            },
+            {
+              "die": "0x00a86070",
+              "evidence_id": 14984,
+              "name": "dwTongID"
+            },
+            {
+              "die": "0x00a86080",
+              "evidence_id": 14984,
+              "name": "byFarmerLimit"
+            },
+            {
+              "die": "0x00a86090",
+              "evidence_id": 14984,
+              "name": "byAccountMaxLevel"
+            }
+          ],
+          "name": "R2S_PLAYER_LOGIN_REQUEST"
+        }
+      },
+      "fields": [
+        {
+          "die": "0x00a85fe7",
+          "name": "dwRoleID",
+          "offset": 2,
+          "order": 0
+        },
+        {
+          "die": "0x00a85ff6",
+          "name": "nGatewayPlayerIndex",
+          "offset": 6,
+          "order": 1
+        },
+        {
+          "die": "0x00a86005",
+          "name": "szRoleName",
+          "offset": 10,
+          "order": 2
+        },
+        {
+          "die": "0x00a86014",
+          "name": "szAccount",
+          "offset": 42,
+          "order": 3
+        },
+        {
+          "die": "0x00a86023",
+          "name": "AccInfo",
+          "offset": 74,
+          "order": 4
+        },
+        {
+          "die": "0x00a86032",
+          "name": "dwSystemTeamID",
+          "offset": 122,
+          "order": 5
+        },
+        {
+          "die": "0x00a86041",
+          "name": "dwTeamID",
+          "offset": 126,
+          "order": 6
+        },
+        {
+          "die": "0x00a86050",
+          "name": "BaseInfo",
+          "offset": 130,
+          "order": 7
+        },
+        {
+          "die": "0x00a86060",
+          "name": "nBattleSide",
+          "offset": 292,
+          "order": 8
+        },
+        {
+          "die": "0x00a86070",
+          "name": "dwTongID",
+          "offset": 296,
+          "order": 9
+        },
+        {
+          "die": "0x00a86080",
+          "name": "byFarmerLimit",
+          "offset": 300,
+          "order": 10
+        },
+        {
+          "die": "0x00a86090",
+          "name": "byAccountMaxLevel",
+          "offset": 301,
+          "order": 11
+        }
+      ],
+      "payload_byte_size": 302,
+      "process": "jx3_dwarf/SO3GameServerD",
+      "protocol": {
+        "enum": {
+          "name": "r2s_player_login_request",
+          "value": 6
+        }
+      },
+      "source": {
+        "location": "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-contract-prototype/journey-contract-v4.target-static.json",
+        "sha256": "d53548d3688e32f24334b4c8970e4a4868b8c13264bdf0dc974a30be23ce2a26"
+      }
+    },
+    {
+      "contract_key": "v4:655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79:r2s_player_login_request:6:R2S_PLAYER_LOGIN_REQUEST:0x0017ab3e",
+      "evidence": {
+        "target_dwarf_field_layout": [
+          {
+            "die": "0x0017ab55",
+            "name": "dwRoleID",
+            "offset": 2,
+            "order": 0
+          },
+          {
+            "die": "0x0017ab64",
+            "name": "nGatewayPlayerIndex",
+            "offset": 6,
+            "order": 1
+          },
+          {
+            "die": "0x0017ab73",
+            "name": "szRoleName",
+            "offset": 10,
+            "order": 2
+          },
+          {
+            "die": "0x0017ab82",
+            "name": "szAccount",
+            "offset": 42,
+            "order": 3
+          },
+          {
+            "die": "0x0017ab91",
+            "name": "AccInfo",
+            "offset": 74,
+            "order": 4
+          },
+          {
+            "die": "0x0017aba0",
+            "name": "dwSystemTeamID",
+            "offset": 122,
+            "order": 5
+          },
+          {
+            "die": "0x0017abaf",
+            "name": "dwTeamID",
+            "offset": 126,
+            "order": 6
+          },
+          {
+            "die": "0x0017abbe",
+            "name": "BaseInfo",
+            "offset": 130,
+            "order": 7
+          },
+          {
+            "die": "0x0017abce",
+            "name": "nBattleSide",
+            "offset": 292,
+            "order": 8
+          },
+          {
+            "die": "0x0017abde",
+            "name": "dwTongID",
+            "offset": 296,
+            "order": 9
+          },
+          {
+            "die": "0x0017abee",
+            "name": "byFarmerLimit",
+            "offset": 300,
+            "order": 10
+          },
+          {
+            "die": "0x0017abfe",
+            "name": "byAccountMaxLevel",
+            "offset": 301,
+            "order": 11
+          }
+        ],
+        "unresolved_v4_fields": [],
+        "v4_binary": {
+          "artifact_sha256": "c9be1bbadd3840a63f9a38121f7f468a92aff368a03b36e607ef5f57180be68a",
+          "binary_path": "jx3_dwarf/SO3GameCenterD",
+          "binary_sha256": "655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79",
+          "evidence_id": 14983,
+          "origin_id": "target-dwarf"
+        },
+        "v4_enum": {
+          "die": "0x00176d06",
+          "enum": "KR2S_PROTOCOL",
+          "evidence": {
+            "address": null,
+            "artifact_sha256": "ef9f0e682f9682654f0a0431a131152e0c9f1a5779ba3d9f8f701dc5b58a17b5",
+            "authority": "target-dwarf",
+            "binary_sha256": "655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79",
+            "detail": "target protocol enum",
+            "die": "0x00176d06",
+            "evidence_id": 29982,
+            "origin": "target-dwarf-v252",
+            "record": {
+              "line": 477,
+              "path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/contracts/target_protocol.jsonl"
+            },
+            "status": "TARGET_STATIC_CONFIRMED"
+          },
+          "name": "r2s_player_login_request",
+          "value": "6"
+        },
+        "v4_payload_type": {
+          "byte_size": "0x012e",
+          "die": "0x0017ab3e",
+          "evidence": {
+            "artifact_sha256": "c9be1bbadd3840a63f9a38121f7f468a92aff368a03b36e607ef5f57180be68a",
+            "binary_sha256": "655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79",
+            "evidence_id": 14983,
+            "origin": "target-dwarf"
+          },
+          "fields": [
+            {
+              "die": "0x0017ab55",
+              "evidence_id": 14983,
+              "name": "dwRoleID"
+            },
+            {
+              "die": "0x0017ab64",
+              "evidence_id": 14983,
+              "name": "nGatewayPlayerIndex"
+            },
+            {
+              "die": "0x0017ab73",
+              "evidence_id": 14983,
+              "name": "szRoleName"
+            },
+            {
+              "die": "0x0017ab82",
+              "evidence_id": 14983,
+              "name": "szAccount"
+            },
+            {
+              "die": "0x0017ab91",
+              "evidence_id": 14983,
+              "name": "AccInfo"
+            },
+            {
+              "die": "0x0017aba0",
+              "evidence_id": 14983,
+              "name": "dwSystemTeamID"
+            },
+            {
+              "die": "0x0017abaf",
+              "evidence_id": 14983,
+              "name": "dwTeamID"
+            },
+            {
+              "die": "0x0017abbe",
+              "evidence_id": 14983,
+              "name": "BaseInfo"
+            },
+            {
+              "die": "0x0017abce",
+              "evidence_id": 14983,
+              "name": "nBattleSide"
+            },
+            {
+              "die": "0x0017abde",
+              "evidence_id": 14983,
+              "name": "dwTongID"
+            },
+            {
+              "die": "0x0017abee",
+              "evidence_id": 14983,
+              "name": "byFarmerLimit"
+            },
+            {
+              "die": "0x0017abfe",
+              "evidence_id": 14983,
+              "name": "byAccountMaxLevel"
+            }
+          ],
+          "name": "R2S_PLAYER_LOGIN_REQUEST"
+        }
+      },
+      "fields": [
+        {
+          "die": "0x0017ab55",
+          "name": "dwRoleID",
+          "offset": 2,
+          "order": 0
+        },
+        {
+          "die": "0x0017ab64",
+          "name": "nGatewayPlayerIndex",
+          "offset": 6,
+          "order": 1
+        },
+        {
+          "die": "0x0017ab73",
+          "name": "szRoleName",
+          "offset": 10,
+          "order": 2
+        },
+        {
+          "die": "0x0017ab82",
+          "name": "szAccount",
+          "offset": 42,
+          "order": 3
+        },
+        {
+          "die": "0x0017ab91",
+          "name": "AccInfo",
+          "offset": 74,
+          "order": 4
+        },
+        {
+          "die": "0x0017aba0",
+          "name": "dwSystemTeamID",
+          "offset": 122,
+          "order": 5
+        },
+        {
+          "die": "0x0017abaf",
+          "name": "dwTeamID",
+          "offset": 126,
+          "order": 6
+        },
+        {
+          "die": "0x0017abbe",
+          "name": "BaseInfo",
+          "offset": 130,
+          "order": 7
+        },
+        {
+          "die": "0x0017abce",
+          "name": "nBattleSide",
+          "offset": 292,
+          "order": 8
+        },
+        {
+          "die": "0x0017abde",
+          "name": "dwTongID",
+          "offset": 296,
+          "order": 9
+        },
+        {
+          "die": "0x0017abee",
+          "name": "byFarmerLimit",
+          "offset": 300,
+          "order": 10
+        },
+        {
+          "die": "0x0017abfe",
+          "name": "byAccountMaxLevel",
+          "offset": 301,
+          "order": 11
+        }
+      ],
+      "payload_byte_size": 302,
+      "process": "jx3_dwarf/SO3GameCenterD",
+      "protocol": {
+        "enum": {
+          "name": "r2s_player_login_request",
+          "value": 6
+        }
+      },
+      "source": {
+        "location": "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-contract-prototype/journey-contract-v4.target-static.json",
+        "sha256": "d53548d3688e32f24334b4c8970e4a4868b8c13264bdf0dc974a30be23ce2a26"
+      }
+    }
+  ],
+  "origin": "target",
+  "schema": "journey-target-contract-facts/v1"
+}

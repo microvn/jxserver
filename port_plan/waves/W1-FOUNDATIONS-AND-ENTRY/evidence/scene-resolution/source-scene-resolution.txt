@@ -1,0 +1,500 @@
+include/Include/KRoleDBDataDef.h-49-#pragma	pack(1)
+include/Include/KRoleDBDataDef.h-50-
+include/Include/KRoleDBDataDef.h-51-// -----ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½------
+include/Include/KRoleDBDataDef.h-52-
+include/Include/KRoleDBDataDef.h:53:struct KROLE_POSITION_DB
+include/Include/KRoleDBDataDef.h-54-{
+include/Include/KRoleDBDataDef.h-55-	int     nCenterIndex;
+include/Include/KRoleDBDataDef.h-56-    DWORD	dwMapID;
+include/Include/KRoleDBDataDef.h-57-    int	    nMapCopyIndex;
+--
+include/Include/KRoleDBDataDef.h-68-
+include/Include/KRoleDBDataDef.h-69-struct KRoleBaseInfo : KRoleBaseHeader
+include/Include/KRoleDBDataDef.h-70-{
+include/Include/KRoleDBDataDef.h-71-    char                cRoleType;
+include/Include/KRoleDBDataDef.h:72:    KROLE_POSITION_DB   CurrentPos;
+include/Include/KRoleDBDataDef.h:73:    KROLE_POSITION_DB   LastEntry;
+include/Include/KRoleDBDataDef.h-74-    BYTE	            byLevel;
+include/Include/KRoleDBDataDef.h-75-    BYTE                byCamp;
+include/Include/KRoleDBDataDef.h-76-    BYTE                byForceID;
+include/Include/KRoleDBDataDef.h-77-    WORD                wRepresentId[perRepresentCount];
+--
+include/Include/SO3World/IKGSO3WorldClient.h-108-    
+include/Include/SO3World/IKGSO3WorldClient.h-109-    virtual BOOL IsClientLootListVisible(KDoodad* pDoodad) = 0;
+include/Include/SO3World/IKGSO3WorldClient.h-110-    virtual BOOL IsClientQuestEffectVisible(KDoodad* pDoodad) = 0;
+include/Include/SO3World/IKGSO3WorldClient.h-111-    virtual void StopFollow(KCharacter* pCharacter) = 0;
+include/Include/SO3World/IKGSO3WorldClient.h:112:    virtual KScene* GetScene(DWORD dwSceneID) = 0;
+include/Include/SO3World/IKGSO3WorldClient.h-113-
+include/Include/SO3World/IKGSO3WorldClient.h-114-    virtual KSkill* GetSkill(DWORD dwSkillID, DWORD dwSkillLevel) = 0;
+include/Include/SO3World/IKGSO3WorldClient.h-115-    virtual KMapParams* GetMapParams(DWORD dwMapID) = 0;
+include/Include/SO3World/IKGSO3WorldClient.h-116-    virtual KScene* GetClientScene() = 0;
+--
+include/Include/SO3Represent/SO3RepresentHandler.h-409-	virtual HRESULT ScenePositionToGameWorldPosition(DWORD dwScene, float& fX, float& fY, float& fZ, D3DXVECTOR3 const& vPosition) = 0;
+include/Include/SO3Represent/SO3RepresentHandler.h-410-
+include/Include/SO3Represent/SO3RepresentHandler.h-411-	virtual HRESULT GetCurrentSceneID(DWORD& dwScene) const = 0; // TODO: remove
+include/Include/SO3Represent/SO3RepresentHandler.h-412-
+include/Include/SO3Represent/SO3RepresentHandler.h:413:	virtual HRESULT	GetScene(DWORD dwScene, IKG3DScene** pp3DScene) const = 0;
+include/Include/SO3Represent/SO3RepresentHandler.h-414-
+include/Include/SO3Represent/SO3RepresentHandler.h-415-	virtual HRESULT ZoomCamera(DWORD dwScene, float fScale) = 0;
+include/Include/SO3Represent/SO3RepresentHandler.h-416-
+include/Include/SO3Represent/SO3RepresentHandler.h-417-	virtual HRESULT BeginDragCamera(DWORD dwScene, int& nX, int& nY) = 0;
+--
+include/Include/SO3World/KGPQ.h-107-    int LuaSetStatistics(Lua_State* L);
+include/Include/SO3World/KGPQ.h-108-    int LuaGetStatistics(Lua_State* L);
+include/Include/SO3World/KGPQ.h-109-    int LuaGetStatisticsTable(Lua_State* L);
+include/Include/SO3World/KGPQ.h-110-
+include/Include/SO3World/KGPQ.h:111:    int LuaGetScene(Lua_State* L);
+include/Include/SO3World/KGPQ.h-112-};
+include/Include/SO3World/KGPQ.h-113-
+include/Include/SO3World/KGPQ.h-114-#pragma pack(1)
+include/Include/SO3World/KGPQ.h-115-struct KGPQ_DB_LIST 
+--
+include/Include/SO3World/KSO3World.h-101-
+include/Include/SO3World/KSO3World.h-102-	BOOL DeleteScene(KScene* pScene);
+include/Include/SO3World/KSO3World.h-103-
+include/Include/SO3World/KSO3World.h-104-    // dwMapCopyIndexÎª0ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Copy,Ö»ÒªMapIDï¿½Ô¼ï¿½ï¿½ï¿½
+include/Include/SO3World/KSO3World.h:105:	KScene* GetScene(DWORD dwMapID, int nMapCopyIndex);
+include/Include/SO3World/KSO3World.h-106-
+include/Include/SO3World/KSO3World.h-107-	KNpc*   NewNpc(DWORD dwNpcID = ERROR_ID);
+include/Include/SO3World/KSO3World.h-108-	BOOL    DeleteNpc(KNpc* pNpc, BOOL bKilled = false);
+include/Include/SO3World/KSO3World.h-109-	//ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Npcï¿½ï¿½ï¿½ï¿½Npcï¿½ï¿½ï¿½ï¿½ï¿½Ý±ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+--
+include/Include/SO3World/KScene.h-181-
+include/Include/SO3World/KScene.h-182-	BOOL Save(const char cszName[], FUNC_LOADPROGRESS);
+include/Include/SO3World/KScene.h-183-
+include/Include/SO3World/KScene.h-184-    BOOL SaveBaseInfo();
+include/Include/SO3World/KScene.h:185:    BOOL LoadBaseInfo();
+include/Include/SO3World/KScene.h-186-
+include/Include/SO3World/KScene.h-187-    BOOL LoadPartitionTable();
+include/Include/SO3World/KScene.h-188-
+include/Include/SO3World/KScene.h-189-    // Ê¹Ö¸¶¨ÇøÓòµÄRegionÓÐÐ§: Î´¼ÓÔØµÄ¾Í¼ÓÔØ,¼ÓÔØÁËµÄ¾Í¼¤»î
+--
+src/SO3World/Src/KBaseFuncList.cpp-253-    Exit0:
+src/SO3World/Src/KBaseFuncList.cpp-254-		return nResult;
+src/SO3World/Src/KBaseFuncList.cpp-255-	}
+src/SO3World/Src/KBaseFuncList.cpp-256-
+src/SO3World/Src/KBaseFuncList.cpp:257:	int LuaGetScene(Lua_State* L)
+src/SO3World/Src/KBaseFuncList.cpp-258-	{
+src/SO3World/Src/KBaseFuncList.cpp-259-        int     nResult     = 0;
+src/SO3World/Src/KBaseFuncList.cpp-260-        int     nRetCode    = 0;
+src/SO3World/Src/KBaseFuncList.cpp-261-        DWORD   dwID        = ERROR_ID;
+--
+src/SO3World/Src/KBaseFuncList.cpp-972-        KScene* pScene  = NULL;
+src/SO3World/Src/KBaseFuncList.cpp-973-
+src/SO3World/Src/KBaseFuncList.cpp-974-        assert(g_pSO3World);
+src/SO3World/Src/KBaseFuncList.cpp-975-        
+src/SO3World/Src/KBaseFuncList.cpp:976:        pScene = g_pSO3World->GetScene(
+src/SO3World/Src/KBaseFuncList.cpp-977-            g_pSO3World->m_dwClientMapID, g_pSO3World->m_nClientMapCopyIndex
+src/SO3World/Src/KBaseFuncList.cpp-978-        );
+src/SO3World/Src/KBaseFuncList.cpp-979-        KGLOG_PROCESS_ERROR(pScene);
+src/SO3World/Src/KBaseFuncList.cpp-980-
+--
+src/SO3World/Src/KBaseFuncList.cpp-4630-
+src/SO3World/Src/KBaseFuncList.cpp-4631-    dwID 		= (DWORD)Lua_ValueToNumber(L, 1);
+src/SO3World/Src/KBaseFuncList.cpp-4632-    nCopyIndex 	= (int)Lua_ValueToNumber(L, 2);
+src/SO3World/Src/KBaseFuncList.cpp-4633-
+src/SO3World/Src/KBaseFuncList.cpp:4634:    pScene = g_pSO3World->GetScene(dwID, nCopyIndex);
+src/SO3World/Src/KBaseFuncList.cpp-4635-    KG_PROCESS_ERROR(pScene);
+src/SO3World/Src/KBaseFuncList.cpp-4636-
+src/SO3World/Src/KBaseFuncList.cpp-4637-    KG_PROCESS_ERROR(pScene->m_eSceneState == ssNormal);
+src/SO3World/Src/KBaseFuncList.cpp-4638-
+--
+src/SO3World/Src/KGPQ.cpp-180-Exit0:
+src/SO3World/Src/KGPQ.cpp-181-    return 1;
+src/SO3World/Src/KGPQ.cpp-182-}
+src/SO3World/Src/KGPQ.cpp-183-
+src/SO3World/Src/KGPQ.cpp:184:int KGPQ::LuaGetScene(Lua_State* L)
+src/SO3World/Src/KGPQ.cpp-185-{
+src/SO3World/Src/KGPQ.cpp-186-    int     nLuaTopIndex    = 0;
+src/SO3World/Src/KGPQ.cpp-187-    DWORD   dwMapID         = 0;
+src/SO3World/Src/KGPQ.cpp-188-    int     nMapCopyIndex   = 0;
+--
+src/SO3World/Src/KGPQ.cpp-195-
+src/SO3World/Src/KGPQ.cpp-196-    dwMapID 	  = m_dwOwnerID1;
+src/SO3World/Src/KGPQ.cpp-197-    nMapCopyIndex = m_dwOwnerID2;
+src/SO3World/Src/KGPQ.cpp-198-
+src/SO3World/Src/KGPQ.cpp:199:    pScene = g_pSO3World->GetScene(dwMapID, nMapCopyIndex);
+src/SO3World/Src/KGPQ.cpp-200-    KG_PROCESS_ERROR(pScene);
+src/SO3World/Src/KGPQ.cpp-201-
+src/SO3World/Src/KGPQ.cpp-202-    return pScene->LuaGetObj(L);
+src/SO3World/Src/KGPQ.cpp-203-Exit0:
+--
+src/SO3World/Src/KGSO3WorldClient.h-66-
+src/SO3World/Src/KGSO3WorldClient.h-67-    virtual BOOL IsClientLootListVisible(KDoodad* pDoodad);
+src/SO3World/Src/KGSO3WorldClient.h-68-    virtual BOOL IsClientQuestEffectVisible(KDoodad* pDoodad);
+src/SO3World/Src/KGSO3WorldClient.h-69-    virtual void StopFollow(KCharacter* pCharacter);
+src/SO3World/Src/KGSO3WorldClient.h:70:    virtual KScene* GetScene(DWORD dwSceneID);
+src/SO3World/Src/KGSO3WorldClient.h-71-    virtual KSkill* GetSkill(DWORD dwSkillID, DWORD dwSkillLevel);
+src/SO3World/Src/KGSO3WorldClient.h-72-    virtual KMapParams* GetMapParams(DWORD dwMapID);
+src/SO3World/Src/KGSO3WorldClient.h-73-    virtual KScene* GetClientScene();
+src/SO3World/Src/KGSO3WorldClient.h-74-
+--
+src/SO3World/Src/KGodServer.cpp-104-    KScene*                 pScene      = NULL;
+src/SO3World/Src/KGodServer.cpp-105-    G2E_LOAD_SCENE_RESPOND  Respond;
+src/SO3World/Src/KGodServer.cpp-106-
+src/SO3World/Src/KGodServer.cpp-107-    // ÏÈÖ±½ÓÐ´ËÀ¸±±¾IDºÅÎª1ÁË,ÒÔºóÔÙ¸Ä
+src/SO3World/Src/KGodServer.cpp:108:    pScene = g_pSO3World->GetScene(pRequest->dwMapID, 1);
+src/SO3World/Src/KGodServer.cpp-109-    KGLOG_PROCESS_ERROR(pScene);
+src/SO3World/Src/KGodServer.cpp-110-
+src/SO3World/Src/KGodServer.cpp-111-    m_pGod[nConnIndex].pScene = pScene;
+src/SO3World/Src/KGodServer.cpp-112-
+--
+src/SO3World/Src/KSO3World.cpp-697-
+src/SO3World/Src/KSO3World.cpp-698-	strncpy(pScene->m_szFilePath, cszFileName, sizeof(pScene->m_szFilePath));
+src/SO3World/Src/KSO3World.cpp-699-    pScene->m_szFilePath[sizeof(pScene->m_szFilePath) - 1] = '\0';
+src/SO3World/Src/KSO3World.cpp-700-
+src/SO3World/Src/KSO3World.cpp:701:    bRetCode = pScene->LoadBaseInfo();
+src/SO3World/Src/KSO3World.cpp-702-	if (bRetCode)
+src/SO3World/Src/KSO3World.cpp-703-	{
+src/SO3World/Src/KSO3World.cpp-704-		bHaveLogicalScene = true;
+src/SO3World/Src/KSO3World.cpp-705-        bReviveInSitu     = true;
+--
+src/SO3World/Src/KSO3World.cpp-865-    
+src/SO3World/Src/KSO3World.cpp-866-    pScene->m_bCanPK        = pMapParams->bCanPK;
+src/SO3World/Src/KSO3World.cpp-867-    pScene->m_nCampType     = pMapParams->nCampType;
+src/SO3World/Src/KSO3World.cpp-868-
+src/SO3World/Src/KSO3World.cpp:869:    bRetCode = pScene->LoadBaseInfo();
+src/SO3World/Src/KSO3World.cpp-870-    KGLOG_PROCESS_ERROR(bRetCode);
+src/SO3World/Src/KSO3World.cpp-871-
+src/SO3World/Src/KSO3World.cpp-872-	pScene->m_dwMapID               = dwMapID;
+src/SO3World/Src/KSO3World.cpp-873-    pScene->m_nBroadcastRegion      = pMapParams->nBroadcast;
+--
+src/SO3World/Src/KSO3World.cpp-920-	return bResult;
+src/SO3World/Src/KSO3World.cpp-921-}
+src/SO3World/Src/KSO3World.cpp-922-
+src/SO3World/Src/KSO3World.cpp-923-
+src/SO3World/Src/KSO3World.cpp:924:KScene* KSO3World::GetScene(DWORD dwMapID, int nMapCopyIndex)
+src/SO3World/Src/KSO3World.cpp-925-{
+src/SO3World/Src/KSO3World.cpp-926-	KGetSceneFunc GetSceneFunc;
+src/SO3World/Src/KSO3World.cpp-927-
+src/SO3World/Src/KSO3World.cpp-928-	GetSceneFunc.m_dwMapID          = dwMapID;
+--
+src/SO3World/Src/KGSO3WorldClient.cpp-535-	    ((KPlayer*)pCharacter)->HostStopFollow();
+src/SO3World/Src/KGSO3WorldClient.cpp-536-    }
+src/SO3World/Src/KGSO3WorldClient.cpp-537-}
+src/SO3World/Src/KGSO3WorldClient.cpp-538-
+src/SO3World/Src/KGSO3WorldClient.cpp:539:KScene* KGSO3WorldClientInterface::GetScene(DWORD dwSceneID)
+src/SO3World/Src/KGSO3WorldClient.cpp-540-{
+src/SO3World/Src/KGSO3WorldClient.cpp-541-	return g_pSO3World->m_SceneSet.GetObj(dwSceneID);
+src/SO3World/Src/KGSO3WorldClient.cpp-542-}
+src/SO3World/Src/KGSO3WorldClient.cpp-543-
+--
+src/SO3World/Src/KGSO3WorldClient.cpp-552-}
+src/SO3World/Src/KGSO3WorldClient.cpp-553-
+src/SO3World/Src/KGSO3WorldClient.cpp-554-KScene* KGSO3WorldClientInterface::GetClientScene()
+src/SO3World/Src/KGSO3WorldClient.cpp-555-{
+src/SO3World/Src/KGSO3WorldClient.cpp:556:	return g_pSO3World->GetScene(g_pSO3World->m_dwClientMapID, g_pSO3World->m_nClientMapCopyIndex);
+src/SO3World/Src/KGSO3WorldClient.cpp-557-}
+src/SO3World/Src/KGSO3WorldClient.cpp-558-
+src/SO3World/Src/KGSO3WorldClient.cpp-559-int KGSO3WorldClientInterface::GetLogicDirection(int nX, int nY)
+src/SO3World/Src/KGSO3WorldClient.cpp-560-{
+--
+src/SO3World/Src/KPlayerServer.cpp-6156-    KScene*                                 pScene          = NULL;
+src/SO3World/Src/KPlayerServer.cpp-6157-    S2C_BATTLE_FIELD_END                    BattleFieldEnd;
+src/SO3World/Src/KPlayerServer.cpp-6158-    KFuncTraverseBattleFieldPlayerSendEnd   Func;
+src/SO3World/Src/KPlayerServer.cpp-6159-
+src/SO3World/Src/KPlayerServer.cpp:6160:    pScene = g_pSO3World->GetScene(dwMapID, nCopyIndex);
+src/SO3World/Src/KPlayerServer.cpp-6161-    KGLOG_PROCESS_ERROR(pScene);
+src/SO3World/Src/KPlayerServer.cpp-6162-
+src/SO3World/Src/KPlayerServer.cpp-6163-    BattleFieldEnd.byProtocolID = s2c_battle_field_end;
+src/SO3World/Src/KPlayerServer.cpp-6164-
+--
+src/SO3World/Src/KPlayerServer.cpp-7681-    {
+src/SO3World/Src/KPlayerServer.cpp-7682-        bLoginLoading = true;
+src/SO3World/Src/KPlayerServer.cpp-7683-    }
+src/SO3World/Src/KPlayerServer.cpp-7684-
+src/SO3World/Src/KPlayerServer.cpp:7685:    pScene = g_pSO3World->GetScene(pPlayer->m_SavePosition.dwMapID, pPlayer->m_SavePosition.nMapCopyIndex);
+src/SO3World/Src/KPlayerServer.cpp-7686-    KGLOG_PROCESS_ERROR(pScene);
+src/SO3World/Src/KPlayerServer.cpp-7687-
+src/SO3World/Src/KPlayerServer.cpp-7688-    if (pApply->nSceneTimeStamp != pScene->m_nTimeStamp)
+src/SO3World/Src/KPlayerServer.cpp-7689-    {
+--
+src/SO3World/Src/KLuaSceneObject.cpp-1-#include "stdafx.h"
+src/SO3World/Src/KLuaSceneObject.cpp-2-#include "KSceneObject.h"
+src/SO3World/Src/KLuaSceneObject.cpp-3-#include "KScene.h"
+src/SO3World/Src/KLuaSceneObject.cpp-4-
+src/SO3World/Src/KLuaSceneObject.cpp:5:int KSceneObject::LuaGetScene(Lua_State* L)
+src/SO3World/Src/KLuaSceneObject.cpp-6-{
+src/SO3World/Src/KLuaSceneObject.cpp-7-	if (m_pScene)
+src/SO3World/Src/KLuaSceneObject.cpp-8-    {
+src/SO3World/Src/KLuaSceneObject.cpp-9-	    m_pScene->LuaGetObj(L);
+--
+src/SO3World/Src/KPlayerClient.cpp-787-	BOOL                    bRetCode        = false;
+src/SO3World/Src/KPlayerClient.cpp-788-    KScene*                 pScene          = NULL;
+src/SO3World/Src/KPlayerClient.cpp-789-	C2S_APPLY_ENTER_SCENE   ApplyEnterScene;
+src/SO3World/Src/KPlayerClient.cpp-790-
+src/SO3World/Src/KPlayerClient.cpp:791:    pScene = g_pSO3World->GetScene(g_pSO3World->m_dwClientMapID, g_pSO3World->m_nClientMapCopyIndex);
+src/SO3World/Src/KPlayerClient.cpp-792-    KGLOG_PROCESS_ERROR(pScene);
+src/SO3World/Src/KPlayerClient.cpp-793-
+src/SO3World/Src/KPlayerClient.cpp-794-	ApplyEnterScene.byProtocolID    = c2s_apply_enter_scene;
+src/SO3World/Src/KPlayerClient.cpp-795-    ApplyEnterScene.nSceneTimeStamp = pScene->m_nTimeStamp;
+--
+src/SO3World/Src/KPlayerClient.cpp-4847-        g_pGameWorldUIHandler->OnPlayerKickAccount();
+src/SO3World/Src/KPlayerClient.cpp-4848-
+src/SO3World/Src/KPlayerClient.cpp-4849-	Disconnect();
+src/SO3World/Src/KPlayerClient.cpp-4850-
+src/SO3World/Src/KPlayerClient.cpp:4851:	pScene = g_pSO3World->GetScene(g_pSO3World->m_dwClientMapID, g_pSO3World->m_nClientMapCopyIndex);
+src/SO3World/Src/KPlayerClient.cpp-4852-	KGLOG_PROCESS_ERROR(pScene);
+src/SO3World/Src/KPlayerClient.cpp-4853-
+src/SO3World/Src/KPlayerClient.cpp-4854-    bRetCode = g_pSO3World->DeleteScene(pScene);
+src/SO3World/Src/KPlayerClient.cpp-4855-	KGLOG_PROCESS_ERROR(bRetCode);
+--
+src/SO3World/Src/KPlayerClient.cpp-4874-    KGLOG_PROCESS_ERROR(pszGameServerIP);
+src/SO3World/Src/KPlayerClient.cpp-4875-
+src/SO3World/Src/KPlayerClient.cpp-4876-    // ×¢Òâ: É¾³ý³¡¾°ÓÐÊ±ºò»áºÄÊ±ºÜ³¤,¿ÉÄÜÔì³É·þÎñÆ÷µÈ´ý³¬Ê±
+src/SO3World/Src/KPlayerClient.cpp-4877-    // ËùÒÔ,ÏÈDoHandshakeRequest,ÔÙÉ¾³ý¾É³¡¾°
+src/SO3World/Src/KPlayerClient.cpp:4878:	pScene = g_pSO3World->GetScene(g_pSO3World->m_dwClientMapID, g_pSO3World->m_nClientMapCopyIndex);
+src/SO3World/Src/KPlayerClient.cpp-4879-	KGLOG_PROCESS_ERROR(pScene);
+src/SO3World/Src/KPlayerClient.cpp-4880-
+src/SO3World/Src/KPlayerClient.cpp-4881-	Disconnect();
+src/SO3World/Src/KPlayerClient.cpp-4882-
+--
+src/SO3World/Src/KPlayerClient.cpp-5088-    if (pPlayer->m_nMaxLife <= 0)
+src/SO3World/Src/KPlayerClient.cpp-5089-        pPlayer->m_nMaxLife = UCHAR_MAX;
+src/SO3World/Src/KPlayerClient.cpp-5090-    pPlayer->m_nCurrentLife = pPlayer->m_nMaxLife * pPlayerData->byLifePercent / UCHAR_MAX;
+src/SO3World/Src/KPlayerClient.cpp-5091-
+src/SO3World/Src/KPlayerClient.cpp:5092:	pScene = g_pSO3World->GetScene(g_pSO3World->m_dwClientMapID, g_pSO3World->m_nClientMapCopyIndex);
+src/SO3World/Src/KPlayerClient.cpp-5093-	KGLOG_PROCESS_ERROR(pScene);
+src/SO3World/Src/KPlayerClient.cpp-5094-
+src/SO3World/Src/KPlayerClient.cpp-5095-	pRegion = pScene->GetRegionByPoint(PlayPos.nX, PlayPos.nY);
+src/SO3World/Src/KPlayerClient.cpp-5096-	KG_PROCESS_ERROR(pRegion && pRegion->IsActive());
+--
+src/SO3World/Src/KPlayerClient.cpp-5219-    if (pNpc->m_nMaxLife <= 0)
+src/SO3World/Src/KPlayerClient.cpp-5220-        pNpc->m_nMaxLife = UCHAR_MAX;
+src/SO3World/Src/KPlayerClient.cpp-5221-    pNpc->m_nCurrentLife = pNpc->m_nMaxLife * pNpcData->byLifePercent / UCHAR_MAX;
+src/SO3World/Src/KPlayerClient.cpp-5222-    
+src/SO3World/Src/KPlayerClient.cpp:5223:	pScene = g_pSO3World->GetScene(g_pSO3World->m_dwClientMapID, g_pSO3World->m_nClientMapCopyIndex);
+src/SO3World/Src/KPlayerClient.cpp-5224-	KGLOG_PROCESS_ERROR(pScene);
+src/SO3World/Src/KPlayerClient.cpp-5225-
+src/SO3World/Src/KPlayerClient.cpp-5226-	pRegion = pScene->GetRegionByPoint(NpcPos.nX, NpcPos.nY);
+src/SO3World/Src/KPlayerClient.cpp-5227-	KG_PROCESS_ERROR(pRegion && pRegion->IsActive());
+--
+src/SO3World/Src/KPlayerClient.cpp-5263-	KRegion*                                 pRegion                 = NULL;
+src/SO3World/Src/KPlayerClient.cpp-5264-    int                                      nSyncCount              = 0;
+src/SO3World/Src/KPlayerClient.cpp-5265-    int                                      nFrameDiff              = g_pSO3World->m_nGameLoop - nFrame;      
+src/SO3World/Src/KPlayerClient.cpp-5266-
+src/SO3World/Src/KPlayerClient.cpp:5267:	pScene = g_pSO3World->GetScene(g_pSO3World->m_dwClientMapID, g_pSO3World->m_nClientMapCopyIndex);
+src/SO3World/Src/KPlayerClient.cpp-5268-	KGLOG_PROCESS_ERROR(pScene);
+src/SO3World/Src/KPlayerClient.cpp-5269-
+src/SO3World/Src/KPlayerClient.cpp-5270-	pRegion   = pScene->GetRegionByPoint(pDoodadData->uPosX, pDoodadData->uPosY);
+src/SO3World/Src/KPlayerClient.cpp-5271-	KG_PROCESS_ERROR(pRegion && pRegion->IsActive());
+--
+src/SO3World/Src/KPlayerClient.cpp-6013-    KG_PROCESS_ERROR(pDoodad);
+src/SO3World/Src/KPlayerClient.cpp-6014-
+src/SO3World/Src/KPlayerClient.cpp-6015-    pDoodad->ChangeState((DOODAD_STATE)pDoodadState->cState);
+src/SO3World/Src/KPlayerClient.cpp-6016-    
+src/SO3World/Src/KPlayerClient.cpp:6017:    pScene = g_pSO3World->GetScene(g_pSO3World->m_dwClientMapID, g_pSO3World->m_nClientMapCopyIndex);
+src/SO3World/Src/KPlayerClient.cpp-6018-    KGLOG_PROCESS_ERROR(pScene);
+src/SO3World/Src/KPlayerClient.cpp-6019-
+src/SO3World/Src/KPlayerClient.cpp-6020-    pScene->SetDynamicObstacleState(pDoodad->m_nObstacleGroup, pDoodadState->bObstacleState);
+src/SO3World/Src/KPlayerClient.cpp-6021-
+--
+src/SO3World/Src/KPlayerClient.cpp-11083-
+src/SO3World/Src/KPlayerClient.cpp-11084-    pPlayer = g_pSO3World->m_PlayerSet.GetObj(g_pSO3World->m_dwClientPlayerID);
+src/SO3World/Src/KPlayerClient.cpp-11085-    KGLOG_PROCESS_ERROR(pPlayer);
+src/SO3World/Src/KPlayerClient.cpp-11086-
+src/SO3World/Src/KPlayerClient.cpp:11087:    pScene = g_pSO3World->GetScene(g_pSO3World->m_dwClientMapID, g_pSO3World->m_nClientMapCopyIndex);
+src/SO3World/Src/KPlayerClient.cpp-11088-    KGLOG_PROCESS_ERROR(pScene);
+src/SO3World/Src/KPlayerClient.cpp-11089-
+src/SO3World/Src/KPlayerClient.cpp-11090-    bRetCode = pScene->ValidateRegions(
+src/SO3World/Src/KPlayerClient.cpp-11091-        pPlayer->m_nX / CELL_LENGTH / REGION_GRID_WIDTH,
+--
+src/SO3World/Src/KPlayer.h-511-    BOOL    SaveHeroData(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
+src/SO3World/Src/KPlayer.h-512-    BOOL    SavePosition();
+src/SO3World/Src/KPlayer.h-513-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö®Ç°Ó¦ï¿½ï¿½È·ï¿½ï¿½m_SavePositionï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½SavePosition)
+src/SO3World/Src/KPlayer.h-514-    BOOL    SaveBaseInfo(KRoleBaseInfo* pBaseInfo);
+src/SO3World/Src/KPlayer.h:515:    BOOL    LoadBaseInfo(KRoleBaseInfo* pBaseInfo);
+src/SO3World/Src/KPlayer.h-516-
+src/SO3World/Src/KPlayer.h-517-    // ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½LoadÊ±,ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½Òµï¿½Î»ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½æµ½ï¿½ï¿½ï¿½ï¿½á¹¹ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+src/SO3World/Src/KPlayer.h-518-    // ï¿½ï¿½Òªï¿½ï¿½ï¿½Êµï¿½Scene,Cellï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½
+src/SO3World/Src/KPlayer.h-519-	KROLE_POSITION m_SavePosition;
+--
+src/SO3World/Src/KPlayer.cpp-2477-Exit0:
+src/SO3World/Src/KPlayer.cpp-2478-    return bResult;
+src/SO3World/Src/KPlayer.cpp-2479-}
+src/SO3World/Src/KPlayer.cpp-2480-
+src/SO3World/Src/KPlayer.cpp:2481:BOOL KPlayer::LoadBaseInfo(KRoleBaseInfo* pBaseInfo)
+src/SO3World/Src/KPlayer.cpp-2482-{
+src/SO3World/Src/KPlayer.cpp-2483-    BOOL        bResult         = false;
+src/SO3World/Src/KPlayer.cpp-2484-    BOOL        bRetCode        = false;
+src/SO3World/Src/KPlayer.cpp-2485-    int         nMaxX           = 0;
+--
+src/SO3World/Src/KPlayer.cpp-2487-    KScene*     pScene          = NULL;
+src/SO3World/Src/KPlayer.cpp-2488-    
+src/SO3World/Src/KPlayer.cpp-2489-    assert(pBaseInfo);
+src/SO3World/Src/KPlayer.cpp-2490-
+src/SO3World/Src/KPlayer.cpp:2491:    pScene = g_pSO3World->GetScene(pBaseInfo->CurrentPos.dwMapID, pBaseInfo->CurrentPos.nMapCopyIndex);
+src/SO3World/Src/KPlayer.cpp-2492-    KGLOG_PROCESS_ERROR(pScene);
+src/SO3World/Src/KPlayer.cpp-2493-
+src/SO3World/Src/KPlayer.cpp-2494-    nMaxX = pScene->GetRegionWidth() * REGION_GRID_WIDTH * CELL_LENGTH - 1;
+src/SO3World/Src/KPlayer.cpp-2495-    nMaxY = pScene->GetRegionHeight() * REGION_GRID_HEIGHT * CELL_LENGTH - 1;
+--
+src/SO3World/Src/KSceneObject.h-81-	DECLARE_LUA_INTEGER(FaceDirection);
+src/SO3World/Src/KSceneObject.h-82-    DECLARE_LUA_INTEGER(PitchDirection);
+src/SO3World/Src/KSceneObject.h-83-
+src/SO3World/Src/KSceneObject.h-84-	int LuaGetCell(Lua_State* L);
+src/SO3World/Src/KSceneObject.h:85:	int LuaGetScene(Lua_State* L);
+src/SO3World/Src/KSceneObject.h-86-    int LuaGetAbsoluteCoordinate(Lua_State* L);
+src/SO3World/Src/KSceneObject.h-87-};
+src/SO3World/Src/KSceneObject.h-88-
+src/SO3World/Src/KSceneObject.h-89-inline BOOL g_InRange(KSceneObject* pObjA, KSceneObject* pObjB, int nRange)
+--
+src/SO3World/Src/KScene.cpp-263-
+src/SO3World/Src/KScene.cpp-264-    assert(m_pTerrainScene);
+src/SO3World/Src/KScene.cpp-265-    assert(m_pPartitionTable);
+src/SO3World/Src/KScene.cpp-266-
+src/SO3World/Src/KScene.cpp:267:    bRetCode = LoadBaseInfo();
+src/SO3World/Src/KScene.cpp-268-    KGLOG_PROCESS_ERROR(bRetCode);
+src/SO3World/Src/KScene.cpp-269-
+src/SO3World/Src/KScene.cpp-270-    if (!m_pTerrainScene->m_bLoadFlag)
+src/SO3World/Src/KScene.cpp-271-    {
+--
+src/SO3World/Src/KScene.cpp-380-{
+src/SO3World/Src/KScene.cpp-381-    BOOL bResult  = false;
+src/SO3World/Src/KScene.cpp-382-	BOOL bRetCode = false;
+src/SO3World/Src/KScene.cpp-383-
+src/SO3World/Src/KScene.cpp:384:    bRetCode = LoadBaseInfo();
+src/SO3World/Src/KScene.cpp-385-    KGLOG_PROCESS_ERROR(bRetCode);
+src/SO3World/Src/KScene.cpp-386-
+src/SO3World/Src/KScene.cpp-387-	int Totalcount = m_nRegionHeight * m_nRegionWidth;
+src/SO3World/Src/KScene.cpp-388-	int count = 0;
+--
+src/SO3World/Src/KScene.cpp-497-    KG_COM_RELEASE(piFile);
+src/SO3World/Src/KScene.cpp-498-    return bResult;
+src/SO3World/Src/KScene.cpp-499-}
+src/SO3World/Src/KScene.cpp-500-
+src/SO3World/Src/KScene.cpp:501:BOOL KScene::LoadBaseInfo()
+src/SO3World/Src/KScene.cpp-502-{
+src/SO3World/Src/KScene.cpp-503-    BOOL        bResult                 = false;
+src/SO3World/Src/KScene.cpp-504-    int         nRetCode                = 0;
+src/SO3World/Src/KScene.cpp-505-    IIniFile*   piFile                  = NULL;
+--
+src/SO3World/Src/KRelayClient.cpp-558-
+src/SO3World/Src/KRelayClient.cpp-559-    pScene->m_bCanPK        = pMapParams->bCanPK;
+src/SO3World/Src/KRelayClient.cpp-560-    pScene->m_nCampType     = pMapParams->nCampType;
+src/SO3World/Src/KRelayClient.cpp-561-
+src/SO3World/Src/KRelayClient.cpp:562:    pCopyScene = g_pSO3World->GetScene(pNotify->dwMapID, 0);
+src/SO3World/Src/KRelayClient.cpp-563-    if (pCopyScene)
+src/SO3World/Src/KRelayClient.cpp-564-    {
+src/SO3World/Src/KRelayClient.cpp-565-        assert(pCopyScene->m_pTerrainScene);
+src/SO3World/Src/KRelayClient.cpp-566-        pScene->m_pTerrainScene = pCopyScene->m_pTerrainScene;
+--
+src/SO3World/Src/KRelayClient.cpp-667-    R2S_DELETE_MAP_NOTIFY* pNotify  = (R2S_DELETE_MAP_NOTIFY*)pbyData;
+src/SO3World/Src/KRelayClient.cpp-668-    KScene*                pScene   = NULL;
+src/SO3World/Src/KRelayClient.cpp-669-	BOOL				   bRetCode = false; 
+src/SO3World/Src/KRelayClient.cpp-670-
+src/SO3World/Src/KRelayClient.cpp:671:    pScene = g_pSO3World->GetScene(pNotify->dwMapID, pNotify->nMapCopyIndex);
+src/SO3World/Src/KRelayClient.cpp-672-    KGLOG_PROCESS_ERROR(pScene);
+src/SO3World/Src/KRelayClient.cpp-673-
+src/SO3World/Src/KRelayClient.cpp-674-    KGLogPrintf(KGLOG_INFO, "Delete map %s(%u, %d) !\n", pScene->m_szName, pScene->m_dwMapID, pScene->m_nCopyIndex);
+src/SO3World/Src/KRelayClient.cpp-675-    
+--
+src/SO3World/Src/KRelayClient.cpp-692-	KGLOG_PROCESS_ERROR(pPlayer->m_eGameStatus == gsSearchMap);
+src/SO3World/Src/KRelayClient.cpp-693-
+src/SO3World/Src/KRelayClient.cpp-694-    if (pRespond->nResultCode != smrcSuccess)
+src/SO3World/Src/KRelayClient.cpp-695-    {
+src/SO3World/Src/KRelayClient.cpp:696:        pScene = g_pSO3World->GetScene(pPlayer->m_SavePosition.dwMapID, pPlayer->m_SavePosition.nMapCopyIndex);
+src/SO3World/Src/KRelayClient.cpp-697-	    KGLOG_PROCESS_ERROR(pScene);
+src/SO3World/Src/KRelayClient.cpp-698-
+src/SO3World/Src/KRelayClient.cpp-699-	    bRetCode = g_pSO3World->AddPlayer(
+src/SO3World/Src/KRelayClient.cpp-700-            pPlayer, pScene, pPlayer->m_SavePosition.nX,
+--
+src/SO3World/Src/KRelayClient.cpp-737-	{
+src/SO3World/Src/KRelayClient.cpp-738-        int nMaxX = 0;
+src/SO3World/Src/KRelayClient.cpp-739-        int nMaxY = 0;
+src/SO3World/Src/KRelayClient.cpp-740-
+src/SO3World/Src/KRelayClient.cpp:741:		pScene = g_pSO3World->GetScene(pRespond->dwMapID, pRespond->nMapCopyIndex);
+src/SO3World/Src/KRelayClient.cpp-742-		KGLOG_PROCESS_ERROR(pScene);
+src/SO3World/Src/KRelayClient.cpp-743-
+src/SO3World/Src/KRelayClient.cpp-744-        nMaxX = pScene->GetRegionWidth() * REGION_GRID_WIDTH * CELL_LENGTH - 1;
+src/SO3World/Src/KRelayClient.cpp-745-        nMaxY = pScene->GetRegionHeight() * REGION_GRID_HEIGHT * CELL_LENGTH - 1;
+--
+src/SO3World/Src/KRelayClient.cpp-783-
+src/SO3World/Src/KRelayClient.cpp-784-	pPlayer = g_pSO3World->NewPlayer(pRequest->dwRoleID);
+src/SO3World/Src/KRelayClient.cpp-785-	KGLOG_PROCESS_ERROR(pPlayer);
+src/SO3World/Src/KRelayClient.cpp-786-
+src/SO3World/Src/KRelayClient.cpp:787:    bRetCode = pPlayer->LoadBaseInfo(&pRequest->BaseInfo);
+src/SO3World/Src/KRelayClient.cpp-788-    KGLOG_PROCESS_ERROR(bRetCode);
+src/SO3World/Src/KRelayClient.cpp-789-
+src/SO3World/Src/KRelayClient.cpp-790-    pPlayer->m_bChargeFlag          = pRequest->bChargeFlag;
+src/SO3World/Src/KRelayClient.cpp-791-    pPlayer->m_ExtPointInfo         = pRequest->ExtPointInfo;
+--
+src/SO3World/Src/KRelayClient.cpp-877-	
+src/SO3World/Src/KRelayClient.cpp-878-	pPlayer = g_pSO3World->NewPlayer(pRequest->dwRoleID);
+src/SO3World/Src/KRelayClient.cpp-879-	KGLOG_PROCESS_ERROR(pPlayer);
+src/SO3World/Src/KRelayClient.cpp-880-
+src/SO3World/Src/KRelayClient.cpp:881:    bRetCode = pPlayer->LoadBaseInfo(&pRequest->BaseInfo);
+src/SO3World/Src/KRelayClient.cpp-882-    KGLOG_PROCESS_ERROR(bRetCode);
+src/SO3World/Src/KRelayClient.cpp-883-
+src/SO3World/Src/KRelayClient.cpp-884-    pPlayer->m_bChargeFlag      = (BOOL)pRequest->nChargeFlag;
+src/SO3World/Src/KRelayClient.cpp-885-    pPlayer->m_ExtPointInfo     = pRequest->ExtPointInfo;
+--
+src/SO3World/Src/KRelayClient.cpp-2187-
+src/SO3World/Src/KRelayClient.cpp-2188-    Func.m_nDelayTime = pPrepareClear->nDelayTime;
+src/SO3World/Src/KRelayClient.cpp-2189-    Func.m_nType      = pPrepareClear->nType;
+src/SO3World/Src/KRelayClient.cpp-2190-
+src/SO3World/Src/KRelayClient.cpp:2191:    pScene = g_pSO3World->GetScene(pPrepareClear->dwMapID, pPrepareClear->nMapCopyIndex);
+src/SO3World/Src/KRelayClient.cpp-2192-    KGLOG_PROCESS_ERROR(pScene);
+src/SO3World/Src/KRelayClient.cpp-2193-
+src/SO3World/Src/KRelayClient.cpp-2194-    pScene->TraversePlayer(Func);
+src/SO3World/Src/KRelayClient.cpp-2195-
+--
+src/SO3World/Src/KRelayClient.cpp-2215-    KScene*			                pScene   = NULL;
+src/SO3World/Src/KRelayClient.cpp-2216-    R2S_MAP_COPY_DO_CLEAR_PLAYER*   pClear    = (R2S_MAP_COPY_DO_CLEAR_PLAYER*)pbyData;
+src/SO3World/Src/KRelayClient.cpp-2217-    KClearPlayerFunc                Func;
+src/SO3World/Src/KRelayClient.cpp-2218-    
+src/SO3World/Src/KRelayClient.cpp:2219:    pScene = g_pSO3World->GetScene(pClear->dwMapID, pClear->nMapCopyIndex);
+src/SO3World/Src/KRelayClient.cpp-2220-    KGLOG_PROCESS_ERROR(pScene);
+src/SO3World/Src/KRelayClient.cpp-2221-
+src/SO3World/Src/KRelayClient.cpp-2222-    pScene->TraversePlayer(Func);
+src/SO3World/Src/KRelayClient.cpp-2223-    pScene->DeleteAllNpc();
+--
+src/SO3World/Src/KRelayClient.cpp-2231-{
+src/SO3World/Src/KRelayClient.cpp-2232-    R2S_SET_MAP_COPY_OWNER* pSetOwner = (R2S_SET_MAP_COPY_OWNER*)pbyData;
+src/SO3World/Src/KRelayClient.cpp-2233-    KScene*                 pScene    = NULL;
+src/SO3World/Src/KRelayClient.cpp-2234-
+src/SO3World/Src/KRelayClient.cpp:2235:    pScene = g_pSO3World->GetScene(pSetOwner->dwMapID, pSetOwner->nMapCopyIndex);
+src/SO3World/Src/KRelayClient.cpp-2236-    KGLOG_PROCESS_ERROR(pScene);
+src/SO3World/Src/KRelayClient.cpp-2237-
+src/SO3World/Src/KRelayClient.cpp-2238-    pScene->m_dwOwnerID = pSetOwner->dwOwnerID;
+src/SO3World/Src/KRelayClient.cpp-2239-
+--
+src/SO3World/Src/KRelayClient.cpp-2334-
+src/SO3World/Src/KRelayClient.cpp-2335-    // ×¢Òâ: ÓÉÓÚÈ¡½ÇÉ«Êý¾ÝÊÇÒì²½µÄ,ËùÒÔ,ÓÐ¿ÉÄÜ»Ø°üµ½´ïÊ±ÒÑ¾­ÊÇÍæ¼Ò¶ÏÏßºóµÄÏÂÒ»´ÎµÇÂ½ÁË
+src/SO3World/Src/KRelayClient.cpp-2336-    KGLOG_PROCESS_ERROR(pPlayer->m_eGameStatus == gsWaitForRoleData);
+src/SO3World/Src/KRelayClient.cpp-2337-
+src/SO3World/Src/KRelayClient.cpp:2338:    pScene = g_pSO3World->GetScene(pPlayer->m_SavePosition.dwMapID, pPlayer->m_SavePosition.nMapCopyIndex);
+src/SO3World/Src/KRelayClient.cpp-2339-    KGLOG_PROCESS_ERROR(pScene);
+src/SO3World/Src/KRelayClient.cpp-2340-
+src/SO3World/Src/KRelayClient.cpp-2341-    pPlayer->m_nFaceDirection   = pPlayer->m_SavePosition.nFaceDirection;
+src/SO3World/Src/KRelayClient.cpp-2342-
+--
+src/SO3World/Src/KRelayClient.cpp-2430-        KScene* pScene          = NULL;
+src/SO3World/Src/KRelayClient.cpp-2431-        DWORD   dwMapID         = PQ.m_dwOwnerID1;
+src/SO3World/Src/KRelayClient.cpp-2432-        int     nMapCopyIndex   = PQ.m_dwOwnerID2;
+src/SO3World/Src/KRelayClient.cpp-2433-
+src/SO3World/Src/KRelayClient.cpp:2434:        pScene = g_pSO3World->GetScene(dwMapID, nMapCopyIndex);
+src/SO3World/Src/KRelayClient.cpp-2435-        if (pScene)
+src/SO3World/Src/KRelayClient.cpp-2436-            pScene->m_PQIDFlagVector.push_back(std::make_pair(pSyncPQ->dwPQID, true));
+src/SO3World/Src/KRelayClient.cpp-2437-    }
+src/SO3World/Src/KRelayClient.cpp-2438-
+--
+src/SO3World/Src/KRelayClient.cpp-2466-        KREMOVE_PQID_FALG   Remover;
+src/SO3World/Src/KRelayClient.cpp-2467-
+src/SO3World/Src/KRelayClient.cpp-2468-        Remover.PQID = pDeletePQ->dwPQID;
+src/SO3World/Src/KRelayClient.cpp-2469-
+src/SO3World/Src/KRelayClient.cpp:2470:        pScene = g_pSO3World->GetScene(dwMapID, nMapCopyIndex);
+src/SO3World/Src/KRelayClient.cpp-2471-        if (pScene)
+src/SO3World/Src/KRelayClient.cpp-2472-            pScene->m_PQIDFlagVector.erase(
+src/SO3World/Src/KRelayClient.cpp-2473-                std::remove_if(pScene->m_PQIDFlagVector.begin(), pScene->m_PQIDFlagVector.end(), Remover),
+src/SO3World/Src/KRelayClient.cpp-2474-                pScene->m_PQIDFlagVector.end()
+--
+src/SO3World/Src/KRelayClient.cpp-2529-    KGLOG_PROCESS_ERROR(bRetCode);
+src/SO3World/Src/KRelayClient.cpp-2530-
+src/SO3World/Src/KRelayClient.cpp-2531-    if (pPQ->m_eOwnerType == pqotBattleField)
+src/SO3World/Src/KRelayClient.cpp-2532-    {
+src/SO3World/Src/KRelayClient.cpp:2533:        KScene* pScene = g_pSO3World->GetScene(pPQ->m_dwOwnerID1, pPQ->m_dwOwnerID2);
+src/SO3World/Src/KRelayClient.cpp-2534-        KBROADCAST_BATTLEFIELD_OBJECTIVE BroadcastBattlefieldObjective(dwPQID, nIndex, pPQ->m_nPQValue[nIndex], pPQ->m_pPQTemplate->nPQValue[nIndex]);
+src/SO3World/Src/KRelayClient.cpp-2535-        if (pScene)
+src/SO3World/Src/KRelayClient.cpp-2536-            pScene->TraversePlayer(BroadcastBattlefieldObjective);
+src/SO3World/Src/KRelayClient.cpp-2537-    }

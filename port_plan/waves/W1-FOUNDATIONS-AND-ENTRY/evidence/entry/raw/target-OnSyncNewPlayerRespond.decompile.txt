@@ -1,0 +1,58 @@
+/Volumes/ExData/game/jx3/linux-build/tools/ghidra_probe.py:17: DeprecationWarning: open_program() is deprecated, use open_project() and program_context() or program_loader() instead.
+  with pyghidra.open_program(so, analyze=True) as flat:
+=== SO3GameServerD: 25027 hàm ===
+hàm có TÊN THẬT (DWARF): 24620 / 25027
+--- 20 hàm mẫu ---
+  0804cc9c  _init
+  0804d9a0  _start
+  0804d9c4  call_gmon_start
+  0804d9f0  __do_global_dtors_aux
+  0804da50  frame_dummy
+  0804da74  KGameServerEyes
+  0804da94  KGameServerEyes
+  0804dab4  Ping
+  0804dae8  operator()
+  0804dc14  SendMapInfo
+  0804dcfa  OnE2LGetPid
+  0804dd30  SendPlayerCount
+  0804de00  OnG2LProtocol
+  0804de82  OnE2LStop
+  0804deaa  SendCustomInfo
+  0804e2ea  Activate
+  0804e4cc  UnInit
+  0804e517  GetSelfName
+  0804e59a  Init
+  0804e918  GetNext
+
+=== DECOMPILE: OnSyncNewPlayerRespond @ 08058424 ===
+
+/* DWARF original prototype: void OnSyncNewPlayerRespond(KPlayerServer * this, char * pData, size_t
+   nSize, int nConnIndex, int nFrame) */
+
+void __thiscall
+KPlayerServer::OnSyncNewPlayerRespond
+          (KPlayerServer *this,char *pData,size_t nSize,int nConnIndex,int nFrame)
+
+{
+  KPlayer *pKVar1;
+  int local_c;
+  
+                    /* Unresolved local var: C2S_SYNC_NEW_PLAYER_RESPOND * pRespond@[???]
+                       Unresolved local var: KPlayer * pPlayer@[???] */
+  pKVar1 = GetPlayerByConnection(this,nConnIndex);
+  if (pKVar1 == (KPlayer *)0x0) {
+                    /* WARNING: Subroutine does not return */
+    __assert_fail("pPlayer","Src/KPlayerServer.cpp",0x45ac,
+                  "void KPlayerServer::OnSyncNewPlayerRespond(char*, size_t, int, int)");
+  }
+  if ((short)pKVar1->m_uSyncPlayerSN == *(short *)(pData + 6)) {
+    pKVar1->m_uSyncPlayerSN = pKVar1->m_uSyncPlayerSN + 1;
+                    /* Unresolved local var: int i@[???] */
+    for (local_c = 0; local_c < 3; local_c = local_c + 1) {
+      pKVar1->m_nSyncPlayerCount[local_c] = (uint)(byte)pData[local_c + 8];
+    }
+  }
+  return;
+}
+
+

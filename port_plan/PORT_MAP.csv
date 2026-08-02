@@ -1,0 +1,1598 @@
+cluster,kind,class,method,signature,type,confidence
+movement-sync,self-contained,KGJumpList,Init,KGJumpList::Init(),NEW,uncertain(name-elsewhere)
+movement-sync,self-contained,KGJumpList,KGJumpList,KGJumpList::KGJumpList(),NEW,hard
+movement-sync,self-contained,KGJumpList,LoadJumpPrarm,KGJumpList::LoadJumpPrarm(),NEW,hard
+movement-sync,self-contained,KGJumpList,LoadJumpPrarmFrame,KGJumpList::LoadJumpPrarmFrame(),NEW,hard
+movement-sync,self-contained,KGJumpList,UnInit,KGJumpList::UnInit(),NEW,uncertain(name-elsewhere)
+movement-sync,self-contained,KGJumpList,~KGJumpList,KGJumpList::~KGJumpList(),NEW,hard
+movement-sync,self-contained,KGMoveParam,Apply,KGMoveParam::Apply(),NEW,uncertain(name-elsewhere)
+movement-sync,self-contained,KGMoveParam,KGMoveParam,KGMoveParam::KGMoveParam(KCharacter*),NEW,hard
+movement-sync,self-contained,KGMoveProcessor,CellMoveSmart,"KGMoveProcessor::CellMoveSmart(KGMoveParam&, int)",NEW,uncertain(name-elsewhere)
+movement-sync,self-contained,KGMoveProcessor,CellMoveStupid,"KGMoveProcessor::CellMoveStupid(KGMoveParam&, int)",NEW,uncertain(name-elsewhere)
+movement-sync,self-contained,KGMoveProcessor,CheckSlip,KGMoveProcessor::CheckSlip(KGMoveParam&),NEW,uncertain(name-elsewhere)
+movement-sync,self-contained,KGMoveProcessor,GetFrictionDirection,KGMoveProcessor::GetFrictionDirection(KGMoveParam&),NEW,uncertain(name-elsewhere)
+movement-sync,self-contained,KGMoveProcessor,GetWaterline,KGMoveProcessor::GetWaterline(KGMoveParam&),NEW,uncertain(name-elsewhere)
+movement-sync,self-contained,KGMoveProcessor,IgnoreDynamicObstacle,KGMoveProcessor::IgnoreDynamicObstacle(KGMoveParam&),NEW,uncertain(name-elsewhere)
+movement-sync,self-contained,KGMoveProcessor,Init,KGMoveProcessor::Init(),NEW,uncertain(name-elsewhere)
+movement-sync,self-contained,KGMoveProcessor,IsEntrapInWater,KGMoveProcessor::IsEntrapInWater(KGMoveParam&),NEW,hard
+movement-sync,self-contained,KGMoveProcessor,PopRespond,KGMoveProcessor::PopRespond(),NEW,hard
+movement-sync,self-contained,KGMoveProcessor,ProcessAcceleration,KGMoveProcessor::ProcessAcceleration(KGMoveParam&),NEW,uncertain(name-elsewhere)
+movement-sync,self-contained,KGMoveProcessor,ProcessDropSpeed,KGMoveProcessor::ProcessDropSpeed(KGMoveParam&),NEW,uncertain(name-elsewhere)
+movement-sync,self-contained,KGMoveProcessor,ProcessDynamicObstacle,KGMoveProcessor::ProcessDynamicObstacle(KGMoveParam&),NEW,uncertain(name-elsewhere)
+movement-sync,self-contained,KGMoveProcessor,ProcessHorizontalMove,KGMoveProcessor::ProcessHorizontalMove(KGMoveParam&),NEW,uncertain(name-elsewhere)
+movement-sync,self-contained,KGMoveProcessor,ProcessHorizontalMoveSmart,KGMoveProcessor::ProcessHorizontalMoveSmart(KGMoveParam&),NEW,uncertain(name-elsewhere)
+movement-sync,self-contained,KGMoveProcessor,ProcessHorizontalMoveStupid,KGMoveProcessor::ProcessHorizontalMoveStupid(KGMoveParam&),NEW,uncertain(name-elsewhere)
+movement-sync,self-contained,KGMoveProcessor,ProcessMove,KGMoveProcessor::ProcessMove(KGMoveParam&),NEW,uncertain(name-elsewhere)
+movement-sync,self-contained,KGMoveProcessor,ProcessVerticalMove,KGMoveProcessor::ProcessVerticalMove(KGMoveParam&),NEW,uncertain(name-elsewhere)
+movement-sync,self-contained,KGMoveProcessor,PushRequest,"KGMoveProcessor::PushRequest(KGMoveParam*, int)",NEW,hard
+movement-sync,self-contained,KGMoveProcessor,ThreadFunction,KGMoveProcessor::ThreadFunction(),NEW,uncertain(name-elsewhere)
+movement-sync,self-contained,KGMoveProcessor,TryMove,"KGMoveProcessor::TryMove(KGMoveParam&, int, int, int*)",NEW,uncertain(name-elsewhere)
+movement-sync,self-contained,KGMoveProcessor,UnInit,KGMoveProcessor::UnInit(),NEW,uncertain(name-elsewhere)
+movement-sync,self-contained,KGMoveProcessor,WorkThreadFunction,KGMoveProcessor::WorkThreadFunction(void*),NEW,uncertain(name-elsewhere)
+movement-sync,self-contained,KMoveProcessTraverseFunc,operator(),KMoveProcessTraverseFunc::operator()(),NEW,hard
+movement-sync,self-contained,SYNC_MOVE_CTRL,Pack,SYNC_MOVE_CTRL::Pack(KPlayer*),NEW,hard
+movement-sync,self-contained,SYNC_MOVE_SPEED,Pack,SYNC_MOVE_SPEED::Pack(KCharacter*),NEW,hard
+movement-sync,self-contained,SYNC_MOVE_STATE,Pack,SYNC_MOVE_STATE::Pack(KCharacter*),NEW,hard
+movement-sync,self-contained,SYNC_SPRINT_FLAGS,Pack,SYNC_SPRINT_FLAGS::Pack(KCharacter*),NEW,hard
+pet-domesticate,self-contained,KDomesticate,Activate,KDomesticate::Activate(),NEW,uncertain(name-elsewhere)
+pet-domesticate,self-contained,KDomesticate,AddFullMeasure,KDomesticate::AddFullMeasure(int),NEW,hard
+pet-domesticate,self-contained,KDomesticate,AddGrowthExp,KDomesticate::AddGrowthExp(int),NEW,hard
+pet-domesticate,self-contained,KDomesticate,CallAcquireEventScript,KDomesticate::CallAcquireEventScript(),NEW,hard
+pet-domesticate,self-contained,KDomesticate,CallDealwithEventScript,KDomesticate::CallDealwithEventScript(),NEW,hard
+pet-domesticate,self-contained,KDomesticate,CallEvokeScript,KDomesticate::CallEvokeScript(),NEW,hard
+pet-domesticate,self-contained,KDomesticate,CallGrowthLevelUpScript,KDomesticate::CallGrowthLevelUpScript(),NEW,hard
+pet-domesticate,self-contained,KDomesticate,CallOnAcquireAdultScript,"KDomesticate::CallOnAcquireAdultScript(unsigned long, unsigned long)",NEW,hard
+pet-domesticate,self-contained,KDomesticate,CallOnFeedScript,KDomesticate::CallOnFeedScript(KGItemInfo*),NEW,hard
+pet-domesticate,self-contained,KDomesticate,CallOnStartScript,KDomesticate::CallOnStartScript(),NEW,hard
+pet-domesticate,self-contained,KDomesticate,CallScript,KDomesticate::CallScript(char const*),NEW,hard
+pet-domesticate,self-contained,KDomesticate,CheckPlayerCanOperate,KDomesticate::CheckPlayerCanOperate(),NEW,hard
+pet-domesticate,self-contained,KDomesticate,CheckPlayerStateCanOperate,KDomesticate::CheckPlayerStateCanOperate(),NEW,hard
+pet-domesticate,self-contained,KDomesticate,ClearData,KDomesticate::ClearData(),NEW,hard
+pet-domesticate,self-contained,KDomesticate,CostFullMeasure,KDomesticate::CostFullMeasure(int),NEW,hard
+pet-domesticate,self-contained,KDomesticate,DealwithOfflineData,KDomesticate::DealwithOfflineData(),NEW,hard
+pet-domesticate,self-contained,KDomesticate,EventOverdue,KDomesticate::EventOverdue(),NEW,hard
+pet-domesticate,self-contained,KDomesticate,Evoke,KDomesticate::Evoke(),NEW,hard
+pet-domesticate,self-contained,KDomesticate,Feed,"KDomesticate::Feed(unsigned long, unsigned long, int)",NEW,hard
+pet-domesticate,self-contained,KDomesticate,GrowthLevelUp,KDomesticate::GrowthLevelUp(),NEW,hard
+pet-domesticate,self-contained,KDomesticate,Init,KDomesticate::Init(KPlayer*),NEW,uncertain(name-elsewhere)
+pet-domesticate,self-contained,KDomesticate,KDomesticate,KDomesticate::KDomesticate(),NEW,hard
+pet-domesticate,self-contained,KDomesticate,Load,"KDomesticate::Load(unsigned char*, unsigned int, unsigned long)",NEW,uncertain(name-elsewhere)
+pet-domesticate,self-contained,KDomesticate,LuaAddFullMeasure,KDomesticate::LuaAddFullMeasure(lua_State*),NEW,hard
+pet-domesticate,self-contained,KDomesticate,LuaAddGrowthExp,KDomesticate::LuaAddGrowthExp(lua_State*),NEW,hard
+pet-domesticate,self-contained,KDomesticate,LuaCostFullMeasure,KDomesticate::LuaCostFullMeasure(lua_State*),NEW,hard
+pet-domesticate,self-contained,KDomesticate,LuaFeed,KDomesticate::LuaFeed(lua_State*),NEW,hard
+pet-domesticate,self-contained,KDomesticate,LuaGetAdultItemInfo,KDomesticate::LuaGetAdultItemInfo(lua_State*),NEW,hard
+pet-domesticate,self-contained,KDomesticate,LuaGetCubItemInfo,KDomesticate::LuaGetCubItemInfo(lua_State*),NEW,hard
+pet-domesticate,self-contained,KDomesticate,LuaGetEvokeNPCID,KDomesticate::LuaGetEvokeNPCID(lua_State*),NEW,hard
+pet-domesticate,self-contained,KDomesticate,LuaSetEvent,KDomesticate::LuaSetEvent(lua_State*),NEW,hard
+pet-domesticate,self-contained,KDomesticate,RealClearData,KDomesticate::RealClearData(),NEW,hard
+pet-domesticate,self-contained,KDomesticate,Save,"KDomesticate::Save(unsigned int*, unsigned char*, unsigned int)",NEW,uncertain(name-elsewhere)
+pet-domesticate,self-contained,KDomesticate,Start,"KDomesticate::Start(unsigned long, unsigned long)",NEW,uncertain(name-elsewhere)
+pet-domesticate,self-contained,KDomesticate,StartWithCub,"KDomesticate::StartWithCub(unsigned long, unsigned long, int, int)",NEW,hard
+pet-domesticate,self-contained,KDomesticate,Stop,"KDomesticate::Stop(unsigned long, unsigned long)",NEW,uncertain(name-elsewhere)
+pet-domesticate,self-contained,KDomesticate,UnInit,KDomesticate::UnInit(),NEW,uncertain(name-elsewhere)
+pet-domesticate,self-contained,KDomesticate,~KDomesticate,KDomesticate::~KDomesticate(),NEW,hard
+pet-domesticate,self-contained,KDomesticateCenter,GetCubInfo,KDomesticateCenter::GetCubInfo(unsigned long),NEW,hard
+pet-domesticate,self-contained,KDomesticateCenter,GetMaxFullMeasure,"KDomesticateCenter::GetMaxFullMeasure(unsigned long, int, int*)",NEW,hard
+pet-domesticate,self-contained,KDomesticateCenter,GetMaxGrowthExp,"KDomesticateCenter::GetMaxGrowthExp(unsigned long, int, int*)",NEW,hard
+pet-domesticate,self-contained,KDomesticateCenter,Init,KDomesticateCenter::Init(),NEW,uncertain(name-elsewhere)
+pet-domesticate,self-contained,KDomesticateCenter,KDomesticateCenter,KDomesticateCenter::KDomesticateCenter(),NEW,hard
+pet-domesticate,self-contained,KDomesticateCenter,LoadCubInfo,KDomesticateCenter::LoadCubInfo(char const*),NEW,hard
+pet-domesticate,self-contained,KDomesticateCenter,LoadCubInfoLine,"KDomesticateCenter::LoadCubInfoLine(ITabFile*, int, KCubInfo const&, KCubInfo*)",NEW,hard
+pet-domesticate,self-contained,KDomesticateCenter,LoadCubLevelInfo,KDomesticateCenter::LoadCubLevelInfo(char const*),NEW,hard
+pet-domesticate,self-contained,KDomesticateCenter,UnInit,KDomesticateCenter::UnInit(),NEW,uncertain(name-elsewhere)
+pet-domesticate,self-contained,KDomesticateCenter,~KDomesticateCenter,KDomesticateCenter::~KDomesticateCenter(),NEW,hard
+pet-domesticate,self-contained,KFellowPetBox,Acquire,KFellowPetBox::Acquire(IItem const*),NEW,uncertain(name-elsewhere)
+pet-domesticate,self-contained,KFellowPetBox,Activate,KFellowPetBox::Activate(),NEW,uncertain(name-elsewhere)
+pet-domesticate,self-contained,KFellowPetBox,AddTimeLimitInfo,"KFellowPetBox::AddTimeLimitInfo(int, int, long, long)",NEW,hard
+pet-domesticate,self-contained,KFellowPetBox,GetTimeLimitInfo,"KFellowPetBox::GetTimeLimitInfo(int, int*, long*, long*)",NEW,hard
+pet-domesticate,self-contained,KFellowPetBox,Init,KFellowPetBox::Init(KPlayer*),NEW,uncertain(name-elsewhere)
+pet-domesticate,self-contained,KFellowPetBox,IsAcquired,KFellowPetBox::IsAcquired(int),NEW,uncertain(name-elsewhere)
+pet-domesticate,self-contained,KFellowPetBox,IsOverdue,"KFellowPetBox::IsOverdue(KFellowPetBox::KPetTimeLimitInfo const&, long)",NEW,hard
+pet-domesticate,self-contained,KFellowPetBox,KFellowPetBox,KFellowPetBox::KFellowPetBox(),NEW,hard
+pet-domesticate,self-contained,KFellowPetBox,Load,"KFellowPetBox::Load(unsigned char*, unsigned int, unsigned long)",NEW,uncertain(name-elsewhere)
+pet-domesticate,self-contained,KFellowPetBox,LoadTimeLimitInfo,"KFellowPetBox::LoadTimeLimitInfo(KPET_TIME_LIMIT_INFO_DB const*, long, long)",NEW,hard
+pet-domesticate,self-contained,KFellowPetBox,Load_V0,"KFellowPetBox::Load_V0(unsigned char*, unsigned int)",NEW,uncertain(name-elsewhere)
+pet-domesticate,self-contained,KFellowPetBox,Load_V1,"KFellowPetBox::Load_V1(unsigned char*, unsigned int)",NEW,uncertain(name-elsewhere)
+pet-domesticate,self-contained,KFellowPetBox,Remove,KFellowPetBox::Remove(int),NEW,uncertain(name-elsewhere)
+pet-domesticate,self-contained,KFellowPetBox,Save,"KFellowPetBox::Save(unsigned int*, unsigned char*, unsigned int)",NEW,uncertain(name-elsewhere)
+pet-domesticate,self-contained,KFellowPetBox,UnInit,KFellowPetBox::UnInit(),NEW,uncertain(name-elsewhere)
+pet-domesticate,self-contained,KFellowPetBox,~KFellowPetBox,KFellowPetBox::~KFellowPetBox(),NEW,hard
+pet-domesticate,self-contained,KFellowPetMgr,GetInfo,KFellowPetMgr::GetInfo(unsigned long),NEW,uncertain(name-elsewhere)
+pet-domesticate,self-contained,KFellowPetMgr,GetPetIndexByItemInfo,"KFellowPetMgr::GetPetIndexByItemInfo(unsigned long, unsigned long)",NEW,hard
+pet-domesticate,self-contained,KFellowPetMgr,GetPetIndexByNpcTemplateID,KFellowPetMgr::GetPetIndexByNpcTemplateID(unsigned long),NEW,hard
+pet-domesticate,self-contained,KFellowPetMgr,Init,KFellowPetMgr::Init(),NEW,uncertain(name-elsewhere)
+pet-domesticate,self-contained,KFellowPetMgr,KFellowPetMgr,KFellowPetMgr::KFellowPetMgr(),NEW,hard
+pet-domesticate,self-contained,KFellowPetMgr,LoadFellowPetFile,KFellowPetMgr::LoadFellowPetFile(char const*),NEW,hard
+pet-domesticate,self-contained,KFellowPetMgr,UnInit,KFellowPetMgr::UnInit(),NEW,uncertain(name-elsewhere)
+pet-domesticate,self-contained,KFellowPetMgr,~KFellowPetMgr,KFellowPetMgr::~KFellowPetMgr(),NEW,hard
+pet-domesticate,self-contained,KPlayerRelatedPetAttrExportParam,GetParamFromPlayer,KPlayerRelatedPetAttrExportParam::GetParamFromPlayer(KPlayer*),NEW,hard
+pet-domesticate,self-contained,KPlayerRelatedPetAttrExportParam,KPlayerRelatedPetAttrExportParam,KPlayerRelatedPetAttrExportParam::KPlayerRelatedPetAttrExportParam(),NEW,hard
+pet-domesticate,self-contained,KPlayerRelatedPetAttrExportParam,~KPlayerRelatedPetAttrExportParam,KPlayerRelatedPetAttrExportParam::~KPlayerRelatedPetAttrExportParam(),NEW,hard
+pet-domesticate,self-contained,KPlayerRelatedPetAttrImportParam,ApplyToPet,KPlayerRelatedPetAttrImportParam::ApplyToPet(KNpc*),NEW,hard
+pet-domesticate,self-contained,KPlayerRelatedPetAttrImportParam,KPlayerRelatedPetAttrImportParam,KPlayerRelatedPetAttrImportParam::KPlayerRelatedPetAttrImportParam(),NEW,hard
+pet-domesticate,self-contained,KPlayerRelatedPetAttrImportParam,~KPlayerRelatedPetAttrImportParam,KPlayerRelatedPetAttrImportParam::~KPlayerRelatedPetAttrImportParam(),NEW,hard
+exterior-cosmetic,self-contained,KDesignation,LoadCurrentDesignation,KDesignation::LoadCurrentDesignation(KDesignation::KDesignationDB*),DRIFT,hard
+exterior-cosmetic,self-contained,KExterior,Buy,"KExterior::Buy(KPlayer*, unsigned int, KEXTERIOR_BUY_PARAM const*, EXTERIOR_BUY_SOURCE)",DRIFT,hard
+exterior-cosmetic,self-contained,KExterior,BuyFromItem,"KExterior::BuyFromItem(KPlayer*, unsigned int, KEXTERIOR_BUY_FROM_ITEM*)",DRIFT,hard
+exterior-cosmetic,self-contained,KExterior,BuyFromShop,"KExterior::BuyFromShop(KPlayer*, unsigned int, KEXTERIOR_BUY_PARAM const*)",DRIFT,hard
+exterior-cosmetic,self-contained,KExterior,CanBuy,"KExterior::CanBuy(KPlayer*, unsigned int, KEXTERIOR_BUY_PARAM const*, EXTERIOR_BUY_SOURCE)",DRIFT,hard
+exterior-cosmetic,self-contained,KExterior,CanBuyOne,"KExterior::CanBuyOne(KPlayer*, unsigned long, EXTERIOR_TIME_TYPE, EXTERIOR_PAY_CURRENCY_TYPE, EXTERIOR_BUY_SOURCE)",DRIFT,hard
+exterior-cosmetic,self-contained,KExterior,CanRenew,"KExterior::CanRenew(KPlayer*, unsigned int, KEXTERIOR_BUY_PARAM const*)",DRIFT,hard
+exterior-cosmetic,self-contained,KExterior,Delivery,"KExterior::Delivery(KPlayer*, unsigned long, EXTERIOR_TIME_TYPE, EXTERIOR_BUY_SOURCE)",DRIFT,hard
+exterior-cosmetic,self-contained,KExterior,GetAllCost,"KExterior::GetAllCost(KPlayer*, unsigned int, KEXTERIOR_BUY_PARAM const*, unsigned int, int*)",DRIFT,hard
+exterior-cosmetic,self-contained,KExterior,GetAllCostFromShop,"KExterior::GetAllCostFromShop(KPlayer*, unsigned int, KEXTERIOR_BUY_PARAM const*, unsigned int, int*)",DRIFT,hard
+exterior-cosmetic,self-contained,KExterior,GetExteriorBuyParams,"KExterior::GetExteriorBuyParams(KPlayer*, unsigned int, KEXTERIOR_BUY_FROM_ITEM*, unsigned int*, KEXTERIOR_BUY_PARAM*)",DRIFT,hard
+exterior-cosmetic,self-contained,KExterior,GetExteriorID,"KExterior::GetExteriorID(int, unsigned long, int, int)",DRIFT,hard
+exterior-cosmetic,self-contained,KExterior,IsMoneyEnough,"KExterior::IsMoneyEnough(KPlayer*, unsigned int, int*)",DRIFT,hard
+exterior-cosmetic,self-contained,KExterior,LuaBuyExteriorFromShop,KExterior::LuaBuyExteriorFromShop(lua_State*),DRIFT,hard
+exterior-cosmetic,self-contained,KExterior,LuaCanAchieve,KExterior::LuaCanAchieve(lua_State*),DRIFT,hard
+exterior-cosmetic,self-contained,KExterior,LuaGetExteriorIndex,KExterior::LuaGetExteriorIndex(lua_State*),DRIFT,uncertain(name-elsewhere)
+exterior-cosmetic,self-contained,KExterior,LuaGetExteriorInfo,KExterior::LuaGetExteriorInfo(lua_State*),DRIFT,uncertain(name-elsewhere)
+exterior-cosmetic,self-contained,KExterior,LuaGetExteriorShopPrice,KExterior::LuaGetExteriorShopPrice(lua_State*),DRIFT,uncertain(name-elsewhere)
+exterior-cosmetic,self-contained,KExterior,LuaGetExteriorSuitInfo,KExterior::LuaGetExteriorSuitInfo(lua_State*),DRIFT,uncertain(name-elsewhere)
+exterior-cosmetic,self-contained,KExterior,LuaGetSuitAchievementID,KExterior::LuaGetSuitAchievementID(lua_State*),DRIFT,uncertain(name-elsewhere)
+exterior-cosmetic,self-contained,KExterior,LuaRenewExterior,KExterior::LuaRenewExterior(lua_State*),DRIFT,hard
+exterior-cosmetic,self-contained,KExterior,OnBuyExteriorRespond,"KExterior::OnBuyExteriorRespond(KPlayer*, KEXTERIOR_COIN_BUY_PARAM*, int, int)",DRIFT,hard
+exterior-cosmetic,self-contained,KExterior,Pay,"KExterior::Pay(KPlayer*, unsigned int, KEXTERIOR_BUY_PARAM const*, unsigned int, int*, EXTERIOR_BUY_SOURCE)",DRIFT,hard
+exterior-cosmetic,self-contained,KExterior,PayCoin,"KExterior::PayCoin(KPlayer*, unsigned int, KEXTERIOR_BUY_PARAM const*, unsigned int, int*, EXTERIOR_BUY_SOURCE)",DRIFT,hard
+exterior-cosmetic,self-contained,KExterior,RenewExterior,"KExterior::RenewExterior(KPlayer*, unsigned int, KEXTERIOR_BUY_PARAM const*)",DRIFT,hard
+exterior-cosmetic,self-contained,KExteriorBox,AddEmptyExteriorSet,KExteriorBox::AddEmptyExteriorSet(),DRIFT,hard
+exterior-cosmetic,self-contained,KExteriorBox,AddExteriorIntoSet,"KExteriorBox::AddExteriorIntoSet(unsigned int, int, unsigned long)",DRIFT,hard
+exterior-cosmetic,self-contained,KExteriorBox,ChangeExteriorSet,"KExteriorBox::ChangeExteriorSet(unsigned int, KEXTERIOR_SET&)",DRIFT,hard
+exterior-cosmetic,self-contained,KExteriorBox,ClearExteriorSet,KExteriorBox::ClearExteriorSet(),DRIFT,hard
+exterior-cosmetic,self-contained,KExteriorBox,Find,KExteriorBox::Find(unsigned long),DRIFT,uncertain(name-elsewhere)
+exterior-cosmetic,self-contained,KExteriorBox,GetExteriorBox,KExteriorBox::GetExteriorBox(),DRIFT,hard
+exterior-cosmetic,self-contained,KExteriorBox,GetExteriorFreeCount,KExteriorBox::GetExteriorFreeCount(),DRIFT,hard
+exterior-cosmetic,self-contained,KExteriorBox,GetExteriorSetCount,KExteriorBox::GetExteriorSetCount(),DRIFT,hard
+exterior-cosmetic,self-contained,KExteriorBox,GetExteriorSetInfo,KExteriorBox::GetExteriorSetInfo(unsigned int),DRIFT,hard
+exterior-cosmetic,self-contained,KExteriorBox,GetLatestBuyExterior,KExteriorBox::GetLatestBuyExterior(),DRIFT,hard
+exterior-cosmetic,self-contained,KExteriorBox,GetLatestBuyExteriorCount,KExteriorBox::GetLatestBuyExteriorCount(),DRIFT,hard
+exterior-cosmetic,self-contained,KExteriorBox,LoadExteriorBox,"KExteriorBox::LoadExteriorBox(unsigned char*, unsigned int)",DRIFT,hard
+exterior-cosmetic,self-contained,KExteriorBox,LoadExteriorSet,"KExteriorBox::LoadExteriorSet(unsigned char*, unsigned int)",DRIFT,hard
+exterior-cosmetic,self-contained,KExteriorBox,LoadLatestBuyExterior,"KExteriorBox::LoadLatestBuyExterior(unsigned char*, unsigned int)",DRIFT,hard
+exterior-cosmetic,self-contained,KExteriorBox,SaveExteriorBox,"KExteriorBox::SaveExteriorBox(unsigned int*, unsigned char*, unsigned int, int, unsigned long)",DRIFT,hard
+exterior-cosmetic,self-contained,KExteriorBox,SaveExteriorBoxForOneBlock,"KExteriorBox::SaveExteriorBoxForOneBlock(unsigned int*, unsigned char*, unsigned int, unsigned int, unsigned int)",DRIFT,hard
+exterior-cosmetic,self-contained,KExteriorBox,SaveExteriorSet,"KExteriorBox::SaveExteriorSet(unsigned int*, unsigned char*, unsigned int)",DRIFT,hard
+exterior-cosmetic,self-contained,KExteriorBox,SaveLatestBuyExterior,"KExteriorBox::SaveLatestBuyExterior(unsigned int*, unsigned char*, unsigned int)",DRIFT,hard
+exterior-cosmetic,self-contained,KHairBox,GetHairFreeCount,KHairBox::GetHairFreeCount(),DRIFT,hard
+exterior-cosmetic,self-contained,KHairBox,LoadHairList,"KHairBox::LoadHairList(unsigned char*, unsigned int, unsigned int)",DRIFT,hard
+exterior-cosmetic,self-contained,KHairBox,SaveHairList,"KHairBox::SaveHairList(unsigned int*, unsigned char*, unsigned int, unsigned int)",DRIFT,hard
+exterior-cosmetic,self-contained,KHairShop,Buy,"KHairShop::Buy(KPlayer*, KHAIRSHOP_BUY_PARAM&)",DRIFT,hard
+exterior-cosmetic,self-contained,KHairShop,CanBuy,"KHairShop::CanBuy(KPlayer*, unsigned int, unsigned long, int)",DRIFT,hard
+exterior-cosmetic,self-contained,KHairShop,GetCost,"KHairShop::GetCost(int, unsigned int, unsigned long, int, KHAIR_PRICE_INFO*)",DRIFT,hard
+exterior-cosmetic,self-contained,KHairShop,GetTotalCost,"KHairShop::GetTotalCost(int, KHAIRSHOP_BUY_PARAM&, KHAIR_PRICE_INFO*)",DRIFT,hard
+exterior-cosmetic,self-contained,KHairShop,IsMoneyEnough,"KHairShop::IsMoneyEnough(KPlayer*, KHAIR_PRICE_INFO&)",DRIFT,hard
+exterior-cosmetic,self-contained,KHairShop,LuaBuyHair,KHairShop::LuaBuyHair(lua_State*),DRIFT,hard
+exterior-cosmetic,self-contained,KHairShop,OnHairShopBuyHairRespond,"KHairShop::OnHairShopBuyHairRespond(KPlayer*, KHAIRSHOP_COIN_BUY_PARAM*, int, int)",DRIFT,hard
+exterior-cosmetic,self-contained,KHairShop,Pay,"KHairShop::Pay(KPlayer*, KHAIR_PRICE_INFO&, KHAIRSHOP_BUY_PARAM&)",DRIFT,hard
+exterior-cosmetic,self-contained,KMiniAvatar,GetSyncMiniAvatar,"KMiniAvatar::GetSyncMiniAvatar(unsigned long*, unsigned short*, int)",DRIFT,hard
+exterior-cosmetic,self-contained,KMiniAvatar,KMiniAvatar,KMiniAvatar::KMiniAvatar(),DRIFT,hard
+exterior-cosmetic,self-contained,KMiniAvatar,~KMiniAvatar,KMiniAvatar::~KMiniAvatar(),DRIFT,hard
+exterior-cosmetic,self-contained,KMiniAvatarSettings,KMiniAvatarSettings,KMiniAvatarSettings::KMiniAvatarSettings(),DRIFT,hard
+exterior-cosmetic,self-contained,KMiniAvatarSettings,LoadMiniAvatarInfoLine,"KMiniAvatarSettings::LoadMiniAvatarInfoLine(ITabFile*, int, KMiniAvatarInfo const&, KMiniAvatarInfo*)",DRIFT,hard
+exterior-cosmetic,self-contained,KMiniAvatarSettings,~KMiniAvatarSettings,KMiniAvatarSettings::~KMiniAvatarSettings(),DRIFT,hard
+exterior-cosmetic,self-contained,KModelInfo,GetNodeInfo,"KModelInfo::GetNodeInfo(unsigned long, KModelInfoNode*)",NEW,uncertain(name-elsewhere)
+exterior-cosmetic,self-contained,KModelInfo,Init,KModelInfo::Init(),NEW,uncertain(name-elsewhere)
+exterior-cosmetic,self-contained,KModelInfo,KModelInfo,KModelInfo::KModelInfo(),NEW,hard
+exterior-cosmetic,self-contained,KModelInfo,UnInit,KModelInfo::UnInit(),NEW,uncertain(name-elsewhere)
+exterior-cosmetic,self-contained,KModelInfo,~KModelInfo,KModelInfo::~KModelInfo(),NEW,hard
+exterior-cosmetic,self-contained,KNewExtPointManager,AddNewExtPoint,"KNewExtPointManager::AddNewExtPoint(int, int, int)",NEW,hard
+exterior-cosmetic,self-contained,KNewExtPointManager,CanSetExtPoint,KNewExtPointManager::CanSetExtPoint(int),NEW,hard
+exterior-cosmetic,self-contained,KNewExtPointManager,GetGSNewExtPoint,"KNewExtPointManager::GetGSNewExtPoint(int, KSyncGSNEPInfo*, int, int*, int*)",NEW,hard
+exterior-cosmetic,self-contained,KNewExtPointManager,GetNewExtPoint,"KNewExtPointManager::GetNewExtPoint(int, int*)",NEW,hard
+exterior-cosmetic,self-contained,KNewExtPointManager,GetNewExtPointByBits,"KNewExtPointManager::GetNewExtPointByBits(int, int, int, int*)",NEW,hard
+exterior-cosmetic,self-contained,KNewExtPointManager,Init,KNewExtPointManager::Init(KPlayer*),NEW,uncertain(name-elsewhere)
+exterior-cosmetic,self-contained,KNewExtPointManager,KNewExtPointManager,KNewExtPointManager::KNewExtPointManager(),NEW,hard
+exterior-cosmetic,self-contained,KNewExtPointManager,OnChangeNewExtPoint,"KNewExtPointManager::OnChangeNewExtPoint(int, int, int, int, int)",NEW,hard
+exterior-cosmetic,self-contained,KNewExtPointManager,SetExtPointByBits,"KNewExtPointManager::SetExtPointByBits(int, int, int, int)",NEW,hard
+exterior-cosmetic,self-contained,KNewExtPointManager,SetNewExtPoint,"KNewExtPointManager::SetNewExtPoint(int, int)",NEW,hard
+exterior-cosmetic,self-contained,KNewExtPointManager,UnInit,KNewExtPointManager::UnInit(),NEW,uncertain(name-elsewhere)
+exterior-cosmetic,self-contained,KNewExtPointManager,~KNewExtPointManager,KNewExtPointManager::~KNewExtPointManager(),NEW,hard
+exterior-cosmetic,self-contained,KPendentOldDataInfoList,Init,KPendentOldDataInfoList::Init(),NEW,uncertain(name-elsewhere)
+exterior-cosmetic,self-contained,KPendentOldDataInfoList,UnInit,KPendentOldDataInfoList::UnInit(),NEW,uncertain(name-elsewhere)
+cash-shop-currency,self-contained,KDiamondManager,CanOperate,KDiamondManager::CanOperate(IItem*),NEW,hard
+cash-shop-currency,self-contained,KDiamondManager,ChangeColorDiamond,KDiamondManager::ChangeColorDiamond(),NEW,hard
+cash-shop-currency,self-contained,KDiamondManager,ChangeValueToDiamond,KDiamondManager::ChangeValueToDiamond(),NEW,hard
+cash-shop-currency,self-contained,KDiamondManager,GetActiveSlotAttribute,"KDiamondManager::GetActiveSlotAttribute(IItem*, int, KAttribute*)",NEW,hard
+cash-shop-currency,self-contained,KDiamondManager,GetDiamondCountByValue,KDiamondManager::GetDiamondCountByValue(int),NEW,hard
+cash-shop-currency,self-contained,KDiamondManager,GetDiamondUpdateCost,KDiamondManager::GetDiamondUpdateCost(),NEW,hard
+cash-shop-currency,self-contained,KDiamondManager,GetDiamondUpdateRate,KDiamondManager::GetDiamondUpdateRate(),NEW,hard
+cash-shop-currency,self-contained,KDiamondManager,GetDiamondUpdateRateSingle,"KDiamondManager::GetDiamondUpdateRateSingle(IItem*, IItem*, int)",NEW,hard
+cash-shop-currency,self-contained,KDiamondManager,GetEquipValueForBreak,"KDiamondManager::GetEquipValueForBreak(KPlayer*, IItem*)",NEW,hard
+cash-shop-currency,self-contained,KDiamondManager,GetQuickUpdateNeedMaterial,"KDiamondManager::GetQuickUpdateNeedMaterial(EDIAMOND_SUB_TYPE, int, int, int*)",NEW,hard
+cash-shop-currency,self-contained,KDiamondManager,GetQuickUpdateNeedMoney,"KDiamondManager::GetQuickUpdateNeedMoney(EDIAMOND_SUB_TYPE, int, int, int*)",NEW,hard
+cash-shop-currency,self-contained,KDiamondManager,GetQuickUpdateNeedStamina,"KDiamondManager::GetQuickUpdateNeedStamina(EDIAMOND_SUB_TYPE, int, int, int*)",NEW,hard
+cash-shop-currency,self-contained,KDiamondManager,GetStrengthEquipCost,KDiamondManager::GetStrengthEquipCost(),NEW,hard
+cash-shop-currency,self-contained,KDiamondManager,GetStrengthEquipSuccessRate,KDiamondManager::GetStrengthEquipSuccessRate(),NEW,hard
+cash-shop-currency,self-contained,KDiamondManager,GetStrengthEquipSuccessRateSingle,"KDiamondManager::GetStrengthEquipSuccessRateSingle(IItem*, IItem*)",NEW,hard
+cash-shop-currency,self-contained,KDiamondManager,GetStrengthValue,"KDiamondManager::GetStrengthValue(KPlayer*, IItem*)",NEW,hard
+cash-shop-currency,self-contained,KDiamondManager,GetStrengthValueForUnStrength,"KDiamondManager::GetStrengthValueForUnStrength(KPlayer*, IItem*)",NEW,hard
+cash-shop-currency,self-contained,KDiamondManager,GetUnStrengthEquipCost,"KDiamondManager::GetUnStrengthEquipCost(KPlayer*, IItem*)",NEW,hard
+cash-shop-currency,self-contained,KDiamondManager,GetValue2DiamondInfo,KDiamondManager::GetValue2DiamondInfo(int),NEW,hard
+cash-shop-currency,self-contained,KDiamondManager,Init,KDiamondManager::Init(),NEW,uncertain(name-elsewhere)
+cash-shop-currency,self-contained,KDiamondManager,MountColorDiamond,"KDiamondManager::MountColorDiamond(KPlayer*, unsigned long, unsigned long, unsigned long, unsigned long)",NEW,hard
+cash-shop-currency,self-contained,KDiamondManager,MountDiamond,"KDiamondManager::MountDiamond(KPlayer*, unsigned long, unsigned long, unsigned long, unsigned long, int)",NEW,hard
+cash-shop-currency,self-contained,KDiamondManager,StrengthEquip,KDiamondManager::StrengthEquip(),NEW,hard
+cash-shop-currency,self-contained,KDiamondManager,UnInit,KDiamondManager::UnInit(),NEW,uncertain(name-elsewhere)
+cash-shop-currency,self-contained,KDiamondManager,UnStrengthEquip,"KDiamondManager::UnStrengthEquip(KPlayer*, unsigned long, unsigned long)",NEW,hard
+cash-shop-currency,self-contained,KDiamondManager,UpdateColorDiamond,KDiamondManager::UpdateColorDiamond(),NEW,hard
+cash-shop-currency,self-contained,KDiamondManager,UpdateDiamond,KDiamondManager::UpdateDiamond(),NEW,hard
+cash-shop-currency,self-contained,KRewardsBox,ClearWaitPayRewardsInfo,KRewardsBox::ClearWaitPayRewardsInfo(),NEW,hard
+cash-shop-currency,self-contained,KRewardsBox,GetWaitPayRewardsInfo,KRewardsBox::GetWaitPayRewardsInfo(),NEW,hard
+cash-shop-currency,self-contained,KRewardsBox,Init,KRewardsBox::Init(KPlayer*),NEW,uncertain(name-elsewhere)
+cash-shop-currency,self-contained,KRewardsBox,KRewardsBox,KRewardsBox::KRewardsBox(),NEW,hard
+cash-shop-currency,self-contained,KRewardsBox,Load,"KRewardsBox::Load(unsigned char*, unsigned int, unsigned long)",NEW,uncertain(name-elsewhere)
+cash-shop-currency,self-contained,KRewardsBox,Save,"KRewardsBox::Save(unsigned int*, unsigned char*, unsigned int)",NEW,uncertain(name-elsewhere)
+cash-shop-currency,self-contained,KRewardsBox,SetWaitPayRewardsInfo,KRewardsBox::SetWaitPayRewardsInfo(KRewardsShopInfo const&),NEW,hard
+cash-shop-currency,self-contained,KRewardsBox,UnInit,KRewardsBox::UnInit(),NEW,uncertain(name-elsewhere)
+cash-shop-currency,self-contained,KRewardsBox,~KRewardsBox,KRewardsBox::~KRewardsBox(),NEW,hard
+cash-shop-currency,self-contained,KRewardsShop,BuyByCoin,"KRewardsShop::BuyByCoin(KPlayer*, unsigned long)",NEW,hard
+cash-shop-currency,self-contained,KRewardsShop,BuyByRewards,"KRewardsShop::BuyByRewards(KPlayer*, unsigned long)",NEW,hard
+cash-shop-currency,self-contained,KRewardsShop,CanPlayerHaveItem,"KRewardsShop::CanPlayerHaveItem(KPlayer*, unsigned long)",NEW,hard
+cash-shop-currency,self-contained,KRewardsShop,GiveItem,"KRewardsShop::GiveItem(KPlayer*, unsigned long, unsigned long, KRewardsShopBuyType)",NEW,hard
+cash-shop-currency,self-contained,KRewardsShop,Init,KRewardsShop::Init(),NEW,uncertain(name-elsewhere)
+cash-shop-currency,self-contained,KRewardsShop,KRewardsShop,KRewardsShop::KRewardsShop(),NEW,hard
+cash-shop-currency,self-contained,KRewardsShop,LuaCanPlayerHaveItem,KRewardsShop::LuaCanPlayerHaveItem(lua_State*),NEW,hard
+cash-shop-currency,self-contained,KRewardsShop,LuaGetRewardsShopInfo,KRewardsShop::LuaGetRewardsShopInfo(lua_State*),NEW,hard
+cash-shop-currency,self-contained,KRewardsShop,OnBuyByCoinRespond,"KRewardsShop::OnBuyByCoinRespond(KPlayer*, unsigned long, int, int)",NEW,hard
+cash-shop-currency,self-contained,KRewardsShop,OnBuyByRewardsRespond,"KRewardsShop::OnBuyByRewardsRespond(KPlayer*, int)",NEW,hard
+cash-shop-currency,self-contained,KRewardsShop,UnInit,KRewardsShop::UnInit(),NEW,uncertain(name-elsewhere)
+cash-shop-currency,self-contained,KRewardsShop,~KRewardsShop,KRewardsShop::~KRewardsShop(),NEW,hard
+cash-shop-currency,self-contained,KRewardsShopSettings,GetRewardsShopInfo,KRewardsShopSettings::GetRewardsShopInfo(unsigned long),NEW,hard
+cash-shop-currency,self-contained,KRewardsShopSettings,Init,KRewardsShopSettings::Init(),NEW,uncertain(name-elsewhere)
+cash-shop-currency,self-contained,KRewardsShopSettings,KRewardsShopSettings,KRewardsShopSettings::KRewardsShopSettings(),NEW,hard
+cash-shop-currency,self-contained,KRewardsShopSettings,LoadRewardsShopInfo,KRewardsShopSettings::LoadRewardsShopInfo(char const*),NEW,hard
+cash-shop-currency,self-contained,KRewardsShopSettings,LoadRewardsShopInfoLine,"KRewardsShopSettings::LoadRewardsShopInfoLine(ITabFile*, int, KRewardsShopInfo const&, KRewardsShopInfo*)",NEW,hard
+cash-shop-currency,self-contained,KRewardsShopSettings,UnInit,KRewardsShopSettings::UnInit(),NEW,uncertain(name-elsewhere)
+cash-shop-currency,self-contained,KRewardsShopSettings,~KRewardsShopSettings,KRewardsShopSettings::~KRewardsShopSettings(),NEW,hard
+cash-shop-currency,self-contained,KShop,BuyCoinShopItem,"KShop::BuyCoinShopItem(KPlayer*, KSHOP_BUY_ITEM_PARAM&)",DRIFT,hard
+cash-shop-currency,self-contained,KShop,BuyTimeLimitSoldListItem,"KShop::BuyTimeLimitSoldListItem(KPlayer*, KSHOP_BUY_TIME_LIMIT_SOLD_LIST_ITEM_PARAM&)",DRIFT,hard
+cash-shop-currency,self-contained,KShop,CallBuyItemScript,"KShop::CallBuyItemScript(KItemProperty const*, KSHOP_BUY_ITEM_PARAM&)",DRIFT,hard
+cash-shop-currency,self-contained,KShop,CanReturnItem,"KShop::CanReturnItem(KPlayer*, unsigned long, unsigned long)",DRIFT,hard
+cash-shop-currency,self-contained,KShop,GetPlayerAllRepairPrice,KShop::GetPlayerAllRepairPrice(KPlayer*),DRIFT,hard
+cash-shop-currency,self-contained,KShop,ReturnItem,"KShop::ReturnItem(KPlayer*, KSHOP_SELL_ITEM_PARAM&)",DRIFT,hard
+cash-shop-currency,self-contained,KShopCenter,CheckCoinShop,KShopCenter::CheckCoinShop(KShopCenter::KNPC_SHOP_TEMPLATE*),DRIFT,hard
+cash-shop-currency,self-contained,KShopCenter,CreateShop,KShopCenter::CreateShop(unsigned long),DRIFT,hard
+cash-shop-currency,self-contained,KShopCenter,DestroyShop,KShopCenter::DestroyShop(unsigned long),DRIFT,hard
+cash-shop-currency,self-contained,KShopCenter,GetMentorItemScore,"KShopCenter::GetMentorItemScore(unsigned long, unsigned long)",DRIFT,hard
+cash-shop-currency,self-contained,KShopCenter,LoadLine,"KShopCenter::LoadLine(ITabFile*, int)",DRIFT,uncertain(name-elsewhere)
+cash-shop-currency,self-contained,KShopCenter,OnBuyCoinShopItem,"KShopCenter::OnBuyCoinShopItem(KPlayer*, int, unsigned long, unsigned long, int, int, int)",DRIFT,hard
+cash-shop-currency,self-contained,KShopCenter,SetMentorItemScore,"KShopCenter::SetMentorItemScore(unsigned long, unsigned long, int, int)",DRIFT,hard
+cash-shop-currency,self-contained,KTradingBox,FinishTradingCheckSelfItem,KTradingBox::FinishTradingCheckSelfItem(),DRIFT,hard
+cash-shop-currency,self-contained,KTradingBox,FinishTradingCheckSelfMoney,KTradingBox::FinishTradingCheckSelfMoney(),DRIFT,hard
+cash-shop-currency,self-contained,KTradingBox,GetGridItem,KTradingBox::GetGridItem(unsigned long),DRIFT,hard
+cash-shop-currency,self-contained,KTradingBox,IsBindItemLimitTradeToOther,KTradingBox::IsBindItemLimitTradeToOther(IItem*),DRIFT,hard
+regression,self-contained,KRegressionManager,KRegressionManager,KRegressionManager::KRegressionManager(),DRIFT,hard
+regression,self-contained,KRegressionManager,~KRegressionManager,KRegressionManager::~KRegressionManager(),DRIFT,hard
+regression,self-contained,KRegressionPlayerData,AddRewardItem,"KRegressionPlayerData::AddRewardItem(int, int, unsigned long)",DRIFT,hard
+regression,self-contained,KRegressionPlayerData,Calculate,"KRegressionPlayerData::Calculate(long, long)",DRIFT,hard
+regression,self-contained,KRegressionPlayerData,CallAddRewardItemScript,"KRegressionPlayerData::CallAddRewardItemScript(unsigned long, unsigned long, int)",DRIFT,hard
+regression,self-contained,KRegressionPlayerData,KRegressionPlayerData,KRegressionPlayerData::KRegressionPlayerData(),DRIFT,hard
+regression,self-contained,KRegressionPlayerData,LoadAccountData,"KRegressionPlayerData::LoadAccountData(unsigned char*, unsigned int)",DRIFT,hard
+regression,self-contained,KRegressionPlayerData,LoadPlayerData,"KRegressionPlayerData::LoadPlayerData(unsigned char*, unsigned int)",DRIFT,hard
+regression,self-contained,KRegressionPlayerData,SaveAccountData,"KRegressionPlayerData::SaveAccountData(unsigned int*, unsigned char*, unsigned int)",DRIFT,hard
+regression,self-contained,KRegressionPlayerData,SavePlayerData,"KRegressionPlayerData::SavePlayerData(unsigned int*, unsigned char*, unsigned int)",DRIFT,hard
+regression,self-contained,KRegressionPlayerData,~KRegressionPlayerData,KRegressionPlayerData::~KRegressionPlayerData(),DRIFT,hard
+mentor,self-contained,KDirectMentorCache,AddMentorData,"KDirectMentorCache::AddMentorData(unsigned long, unsigned long, KDirectMentorRecordCache const&)",NEW,uncertain(name-elsewhere)
+mentor,self-contained,KDirectMentorCache,AddTAEquipsScore,"KDirectMentorCache::AddTAEquipsScore(unsigned long, unsigned long, int)",NEW,hard
+mentor,self-contained,KDirectMentorCache,Clear,KDirectMentorCache::Clear(),NEW,uncertain(name-elsewhere)
+mentor,self-contained,KDirectMentorCache,DeleteMentorRecord,KDirectMentorCache::DeleteMentorRecord(unsigned long long),NEW,uncertain(name-elsewhere)
+mentor,self-contained,KDirectMentorCache,GetMentorID,KDirectMentorCache::GetMentorID(unsigned long),NEW,hard
+mentor,self-contained,KDirectMentorCache,Init,KDirectMentorCache::Init(),NEW,uncertain(name-elsewhere)
+mentor,self-contained,KDirectMentorCache,IsApprentice,KDirectMentorCache::IsApprentice(unsigned long),NEW,uncertain(name-elsewhere)
+mentor,self-contained,KDirectMentorCache,IsMentor,KDirectMentorCache::IsMentor(unsigned long),NEW,uncertain(name-elsewhere)
+mentor,self-contained,KDirectMentorCache,IsMentorship,"KDirectMentorCache::IsMentorship(unsigned long, unsigned long)",NEW,uncertain(name-elsewhere)
+mentor,self-contained,KDirectMentorCache,LuaGetApprenticeCount,KDirectMentorCache::LuaGetApprenticeCount(lua_State*),NEW,hard
+mentor,self-contained,KDirectMentorCache,LuaGetApprenticeList,KDirectMentorCache::LuaGetApprenticeList(lua_State*),NEW,uncertain(name-elsewhere)
+mentor,self-contained,KDirectMentorCache,LuaGetMentorCount,KDirectMentorCache::LuaGetMentorCount(lua_State*),NEW,uncertain(name-elsewhere)
+mentor,self-contained,KDirectMentorCache,LuaGetMentorList,KDirectMentorCache::LuaGetMentorList(lua_State*),NEW,uncertain(name-elsewhere)
+mentor,self-contained,KDirectMentorCache,LuaIsMentorship,KDirectMentorCache::LuaIsMentorship(lua_State*),NEW,uncertain(name-elsewhere)
+mentor,self-contained,KDirectMentorCache,PickupTAEquipsScore,KDirectMentorCache::PickupTAEquipsScore(unsigned long),NEW,hard
+mentor,self-contained,KDirectMentorCache,SyncPlayerMentorData,KDirectMentorCache::SyncPlayerMentorData(KPlayer*),NEW,uncertain(name-elsewhere)
+mentor,self-contained,KDirectMentorCache,UnInit,KDirectMentorCache::UnInit(),NEW,uncertain(name-elsewhere)
+mentor,self-contained,KDirectMentorCache,UpdateMentorData,"KDirectMentorCache::UpdateMentorData(unsigned long, unsigned long, KDirectMentorRecordCache const&)",NEW,uncertain(name-elsewhere)
+mentor,self-contained,KMentorCache,AddTAEquipsScore,"KMentorCache::AddTAEquipsScore(unsigned long, unsigned long, int)",DRIFT,hard
+mentor,self-contained,KMentorCache,PickupTAEquipsScore,KMentorCache::PickupTAEquipsScore(unsigned long),DRIFT,hard
+anti-farmer,self-contained,KAntiFarmerServer,Activate,KAntiFarmerServer::Activate(),NEW,uncertain(name-elsewhere)
+anti-farmer,self-contained,KAntiFarmerServer,Init,KAntiFarmerServer::Init(),NEW,uncertain(name-elsewhere)
+anti-farmer,self-contained,KAntiFarmerServer,OnIPMonitorUpdate,"KAntiFarmerServer::OnIPMonitorUpdate(unsigned long, int)",NEW,hard
+anti-farmer,self-contained,KAntiFarmerServer,OnPlayerApplyFreezeFarmer,"KAntiFarmerServer::OnPlayerApplyFreezeFarmer(unsigned long, KPlayer*)",NEW,hard
+anti-farmer,self-contained,KAntiFarmerServer,OnPlayerEnterNormalScene,KAntiFarmerServer::OnPlayerEnterNormalScene(KPlayer*),NEW,hard
+anti-farmer,self-contained,KAntiFarmerServer,OnSyncMonitorIPList,"KAntiFarmerServer::OnSyncMonitorIPList(unsigned long*, int)",NEW,hard
+anti-farmer,self-contained,KAntiFarmerServer,ProcessCheckPlayer,KAntiFarmerServer::ProcessCheckPlayer(),NEW,hard
+anti-farmer,self-contained,KAntiFarmerServer,UnInit,KAntiFarmerServer::UnInit(),NEW,uncertain(name-elsewhere)
+anti-farmer,self-contained,KAntiFarmerSettings,AppendIgnoreNpcTemplateID,KAntiFarmerSettings::AppendIgnoreNpcTemplateID(unsigned long),NEW,hard
+anti-farmer,self-contained,KAntiFarmerSettings,Init,KAntiFarmerSettings::Init(),NEW,uncertain(name-elsewhere)
+anti-farmer,self-contained,KAntiFarmerSettings,KAntiFarmerSettings,KAntiFarmerSettings::KAntiFarmerSettings(),NEW,hard
+anti-farmer,self-contained,KAntiFarmerSettings,LoadNpcTemplateIDWiteList,KAntiFarmerSettings::LoadNpcTemplateIDWiteList(),NEW,hard
+anti-farmer,self-contained,KAntiFarmerSettings,UnInit,KAntiFarmerSettings::UnInit(),NEW,uncertain(name-elsewhere)
+anti-farmer,self-contained,KBandwidthOptimizeTacticsManager,GetTactics,KBandwidthOptimizeTacticsManager::GetTactics(int),NEW,hard
+anti-farmer,self-contained,KBandwidthOptimizeTacticsManager,SetTactics,"KBandwidthOptimizeTacticsManager::SetTactics(int, KBandWidthOptimizeTactics const&)",NEW,hard
+guild-tong,self-contained,KTongConstList,Init,KTongConstList::Init(),NEW,uncertain(name-elsewhere)
+guild-tong,self-contained,KTongConstList,KTongConstList,KTongConstList::KTongConstList(),NEW,hard
+guild-tong,self-contained,KTongConstList,LoadCraftTech,"KTongConstList::LoadCraftTech(IIniFile*, char const*, TongTechNodeTag)",NEW,hard
+guild-tong,self-contained,KTongConstList,UnInit,KTongConstList::UnInit(),NEW,uncertain(name-elsewhere)
+guild-tong,self-contained,KTongDiplomacyCache,AddDiplomacyRelation,"KTongDiplomacyCache::AddDiplomacyRelation(unsigned long, unsigned long, TONG_DIPLOMACY_RELATION_TYPE, int, long, long, long, unsigned short, unsigned short)",NEW,hard
+guild-tong,self-contained,KTongDiplomacyCache,DelDiplomacyRelation,"KTongDiplomacyCache::DelDiplomacyRelation(unsigned long, unsigned long, TONG_DIPLOMACY_RELATION_TYPE)",NEW,hard
+guild-tong,self-contained,KTongDiplomacyCache,GetAllianceList,KTongDiplomacyCache::GetAllianceList(),NEW,hard
+guild-tong,self-contained,KTongDiplomacyCache,GetAllianceTongID,KTongDiplomacyCache::GetAllianceTongID(unsigned long),NEW,hard
+guild-tong,self-contained,KTongDiplomacyCache,GetContractWarList,KTongDiplomacyCache::GetContractWarList(),NEW,hard
+guild-tong,self-contained,KTongDiplomacyCache,GetWarKillCount,"KTongDiplomacyCache::GetWarKillCount(unsigned long, unsigned long)",NEW,hard
+guild-tong,self-contained,KTongDiplomacyCache,GetWarList,KTongDiplomacyCache::GetWarList(),NEW,hard
+guild-tong,self-contained,KTongDiplomacyCache,Init,KTongDiplomacyCache::Init(),NEW,uncertain(name-elsewhere)
+guild-tong,self-contained,KTongDiplomacyCache,IsWar,"KTongDiplomacyCache::IsWar(unsigned long, unsigned long)",NEW,hard
+guild-tong,self-contained,KTongDiplomacyCache,RecordWarKillCount,"KTongDiplomacyCache::RecordWarKillCount(unsigned long, unsigned long)",NEW,hard
+guild-tong,self-contained,KTongDiplomacyCache,SyncNewClient,KTongDiplomacyCache::SyncNewClient(KPlayer*),NEW,hard
+guild-tong,self-contained,KTongDiplomacyCache,UnInit,KTongDiplomacyCache::UnInit(),NEW,uncertain(name-elsewhere)
+guild-tong,self-contained,KTongDiplomacyCache,UpdateTotalKillStat,"KTongDiplomacyCache::UpdateTotalKillStat(unsigned long long, int)",NEW,hard
+guild-tong,self-contained,KTongDiplomacyCache,UploadGSWarKillStat,KTongDiplomacyCache::UploadGSWarKillStat(),NEW,hard
+guild-tong,self-contained,KTongServer,GetCraftTechConsumeReduceStaminaRate,"KTongServer::GetCraftTechConsumeReduceStaminaRate(unsigned long, int)",NEW,hard
+guild-tong,self-contained,KTongServer,GetRepairDiscount,KTongServer::GetRepairDiscount(unsigned long),NEW,hard
+guild-tong,self-contained,KTongServer,InsertTongChache,"KTongServer::InsertTongChache(unsigned long, TongCacheData const&)",NEW,hard
+guild-tong,self-contained,KTongServer,KTongServer,KTongServer::KTongServer(),NEW,hard
+guild-tong,self-contained,KTongServer,OnPlayerLeave,"KTongServer::OnPlayerLeave(unsigned long, unsigned long)",NEW,hard
+guild-tong,self-contained,KTongServer,OnPlayerLogin,"KTongServer::OnPlayerLogin(unsigned long, unsigned long)",NEW,hard
+guild-tong,self-contained,KTongServer,OnPlayerTongChange,"KTongServer::OnPlayerTongChange(unsigned long, unsigned long, unsigned long)",NEW,hard
+guild-tong,self-contained,KTongServer,OnTongAlly,"KTongServer::OnTongAlly(unsigned long, unsigned long)",NEW,hard
+guild-tong,self-contained,KTongServer,OnTongStopAlliance,"KTongServer::OnTongStopAlliance(unsigned long, unsigned long)",NEW,hard
+guild-tong,self-contained,KTongServer,RegisterTongMember,"KTongServer::RegisterTongMember(unsigned long, unsigned long)",NEW,hard
+guild-tong,self-contained,KTongServer,SyncTongTotalCache,"KTongServer::SyncTongTotalCache(unsigned long, int)",NEW,hard
+guild-tong,self-contained,KTongServer,UnregisterTongMember,"KTongServer::UnregisterTongMember(unsigned long, unsigned long)",NEW,hard
+guild-tong,self-contained,KTongServer,UpdateTongChacheChange,"KTongServer::UpdateTongChacheChange(unsigned long, TongTechNodeTag, unsigned char)",NEW,hard
+talent,self-contained,KTalentSkill,CallUnApplyTalentSkillScript,"KTalentSkill::CallUnApplyTalentSkillScript(unsigned long, int)",NEW,hard
+talent,self-contained,KTalentSkill,ClearTalentSkill,KTalentSkill::ClearTalentSkill(unsigned long),NEW,hard
+talent,self-contained,KTalentSkill,GetTalentSkillLevel,"KTalentSkill::GetTalentSkillLevel(unsigned long, unsigned long)",NEW,hard
+talent,self-contained,KTalentSkill,Init,KTalentSkill::Init(KPlayer*),NEW,uncertain(name-elsewhere)
+talent,self-contained,KTalentSkill,KTalentSkill,KTalentSkill::KTalentSkill(),NEW,hard
+talent,self-contained,KTalentSkill,LoadTalentSkillData,"KTalentSkill::LoadTalentSkillData(unsigned char*, unsigned int)",NEW,hard
+talent,self-contained,KTalentSkill,OpenTalentSet,KTalentSkill::OpenTalentSet(unsigned long),NEW,hard
+talent,self-contained,KTalentSkill,ResetTalentSet,KTalentSkill::ResetTalentSet(unsigned long),NEW,hard
+talent,self-contained,KTalentSkill,SaveTalentSkill,"KTalentSkill::SaveTalentSkill(unsigned long, unsigned long, int)",NEW,hard
+talent,self-contained,KTalentSkill,SaveTalentSkillData,"KTalentSkill::SaveTalentSkillData(unsigned int*, unsigned char*, unsigned int)",NEW,hard
+talent,self-contained,KTalentSkill,SetMaxTalentSetCount,KTalentSkill::SetMaxTalentSetCount(unsigned long),NEW,hard
+talent,self-contained,KTalentSkill,UnInit,KTalentSkill::UnInit(),NEW,uncertain(name-elsewhere)
+talent,self-contained,KTalentSkill,UpdateTalentSkill,"KTalentSkill::UpdateTalentSkill(unsigned long, int)",NEW,hard
+talent,self-contained,KTalentSkill,~KTalentSkill,KTalentSkill::~KTalentSkill(),NEW,hard
+activity,self-contained,KActivityEndNotifySceneFunc,operator(),KActivityEndNotifySceneFunc::operator()(),NEW,hard
+activity,self-contained,KActivityMgrServer,CallScriptFunction,"KActivityMgrServer::CallScriptFunction(KActivityMgrServer::KActivityInfo*, char const*)",NEW,hard
+activity,self-contained,KActivityMgrServer,EndActivity,"KActivityMgrServer::EndActivity(unsigned long, long, ACTIVITY_STATE)",NEW,hard
+activity,self-contained,KActivityMgrServer,Init,KActivityMgrServer::Init(),NEW,uncertain(name-elsewhere)
+activity,self-contained,KActivityMgrServer,IsActivityOn,KActivityMgrServer::IsActivityOn(unsigned long),NEW,hard
+activity,self-contained,KActivityMgrServer,KActivityMgrServer,KActivityMgrServer::KActivityMgrServer(),NEW,hard
+activity,self-contained,KActivityMgrServer,LoadActivity,KActivityMgrServer::LoadActivity(),NEW,hard
+activity,self-contained,KActivityMgrServer,LuaGetActivityState,KActivityMgrServer::LuaGetActivityState(lua_State*),NEW,hard
+activity,self-contained,KActivityMgrServer,LuaSetActivityState,KActivityMgrServer::LuaSetActivityState(lua_State*),NEW,hard
+activity,self-contained,KActivityMgrServer,StartActivity,"KActivityMgrServer::StartActivity(unsigned long, long, ACTIVITY_STATE)",NEW,hard
+activity,self-contained,KActivityMgrServer,StoreGmAnnouncement,"KActivityMgrServer::StoreGmAnnouncement(unsigned char*, unsigned int)",NEW,hard
+activity,self-contained,KActivityMgrServer,UnInit,KActivityMgrServer::UnInit(),NEW,uncertain(name-elsewhere)
+activity,self-contained,KActivityMgrServer,~KActivityMgrServer,KActivityMgrServer::~KActivityMgrServer(),NEW,hard
+activity,self-contained,KCampActiveStat,Active,KCampActiveStat::Active(),NEW,uncertain(name-elsewhere)
+activity,self-contained,KCampActiveStat,AddBaseScore,KCampActiveStat::AddBaseScore(int),NEW,hard
+activity,self-contained,KCampActiveStat,AddPrestige,KCampActiveStat::AddPrestige(int),NEW,uncertain(name-elsewhere)
+activity,self-contained,KCampActiveStat,KCampActiveStat,KCampActiveStat::KCampActiveStat(),NEW,hard
+activity,self-contained,KCampActiveStat,Load,"KCampActiveStat::Load(unsigned char*, unsigned int)",NEW,uncertain(name-elsewhere)
+activity,self-contained,KCampActiveStat,Save,"KCampActiveStat::Save(unsigned int*, unsigned char*, unsigned int)",NEW,uncertain(name-elsewhere)
+activity,self-contained,KCampActiveStat,~KCampActiveStat,KCampActiveStat::~KCampActiveStat(),NEW,hard
+activity,self-contained,KCampInfo,Activate,KCampInfo::Activate(),DRIFT,uncertain(name-elsewhere)
+activity,self-contained,KCampInfo,AddGlobalCampNpcInfo,"KCampInfo::AddGlobalCampNpcInfo(unsigned long, int, int)",DRIFT,hard
+activity,self-contained,KCampInfo,AddNpcLifeInfo,KCampInfo::AddNpcLifeInfo(KNpc*),DRIFT,hard
+activity,self-contained,KCampInfo,CallLevelChangedScript,"KCampInfo::CallLevelChangedScript(int, int)",DRIFT,hard
+activity,self-contained,KCampInfo,GetBoosDeadCount,"KCampInfo::GetBoosDeadCount(int*, int*)",DRIFT,hard
+activity,self-contained,KCampInfo,GrantPlayerNewTitle,KCampInfo::GrantPlayerNewTitle(KPlayer*),DRIFT,hard
+activity,self-contained,KCampInfo,LoadCampNpcInfo,KCampInfo::LoadCampNpcInfo(),DRIFT,hard
+activity,self-contained,KCampInfo,LuaGetNewCampFightValue,KCampInfo::LuaGetNewCampFightValue(lua_State*),DRIFT,hard
+activity,self-contained,KCampInfo,LuaGetRealActivePlayerCount,KCampInfo::LuaGetRealActivePlayerCount(lua_State*),DRIFT,hard
+activity,self-contained,KCampInfo,OnNpcDeath,KCampInfo::OnNpcDeath(unsigned long),DRIFT,hard
+activity,self-contained,KCampInfo,OnPlayerResetTitle,"KCampInfo::OnPlayerResetTitle(KPlayer*, KCAMP)",DRIFT,hard
+achievement,self-contained,KAchievement,DelCount,"KAchievement::DelCount(int, int)",DRIFT,hard
+achievement,self-contained,KAchievement,Load_V0,"KAchievement::Load_V0(unsigned char*, unsigned int)",DRIFT,uncertain(name-elsewhere)
+achievement,self-contained,KAchievement,Load_V1,"KAchievement::Load_V1(unsigned char*, unsigned int)",DRIFT,uncertain(name-elsewhere)
+achievement,self-contained,KAchievement,OnClearAchieve,"KAchievement::OnClearAchieve(int, KACHIEVEMENT_INFO*)",DRIFT,hard
+achievement,self-contained,KAchievement,Remove,KAchievement::Remove(int),DRIFT,uncertain(name-elsewhere)
+achievement,self-contained,KAchievementInfoList,LoadAchievementLogServerTab,KAchievementInfoList::LoadAchievementLogServerTab(),DRIFT,hard
+quest,self-contained,KQuestInfoList,GetQuestGroupInfo,KQuestInfoList::GetQuestGroupInfo(unsigned long),DRIFT,hard
+quest,self-contained,KQuestInfoList,GetQuestIndexInQuestGroupInfo,"KQuestInfoList::GetQuestIndexInQuestGroupInfo(unsigned long, unsigned long)",DRIFT,hard
+quest,self-contained,KQuestInfoList,LoadQuestFile,"KQuestInfoList::LoadQuestFile(char*, int)",DRIFT,hard
+quest,self-contained,KQuestInfoList,LoadQuestListFile,KQuestInfoList::LoadQuestListFile(),DRIFT,hard
+quest,self-contained,KQuestInfoList,LoadRandomQuestGroup,KQuestInfoList::LoadRandomQuestGroup(),DRIFT,hard
+quest,self-contained,KQuestList,GetAcceptDailyQuestCount,KQuestList::GetAcceptDailyQuestCount(),DRIFT,hard
+quest,self-contained,KQuestList,GetRandomDailyQuestFinishedCount,KQuestList::GetRandomDailyQuestFinishedCount(unsigned long),DRIFT,hard
+quest,self-contained,KQuestList,LoadDailyQuest_CurrentnVersion,"KQuestList::LoadDailyQuest_CurrentnVersion(unsigned int*, unsigned char*, unsigned int)",DRIFT,hard
+quest,self-contained,KQuestList,LoadDailyQuest_V1,"KQuestList::LoadDailyQuest_V1(unsigned int*, unsigned char*, unsigned int)",DRIFT,hard
+reputation,self-contained,KReputation,AddReputation,"KReputation::AddReputation(unsigned long, int, int)",DRIFT,hard
+reputation,self-contained,KReputation,OnReputationLevelChange,"KReputation::OnReputationLevelChange(unsigned long, int)",DRIFT,hard
+pk,self-contained,KPKController,ClearDuelState,KPKController::ClearDuelState(),DRIFT,hard
+pk,self-contained,KPKController,StartDuel,KPKController::StartDuel(),DRIFT,hard
+pk,self-contained,KPKController,TerminateDuel,KPKController::TerminateDuel(),DRIFT,hard
+gm,self-contained,KGMList,CheckPermissionAccount,KGMList::CheckPermissionAccount(char const*),DRIFT,hard
+gm,self-contained,KGMList,CheckPermissionIP,KGMList::CheckPermissionIP(char const*),DRIFT,hard
+gm,self-contained,KGMList,LoadAccountTab,KGMList::LoadAccountTab(),DRIFT,hard
+gm,self-contained,KGMList,LoadIPTab,KGMList::LoadIPTab(),DRIFT,hard
+recorder-replay,self-contained,KRecorderSceneLoaderNormal,PostCleanScene,KRecorderSceneLoaderNormal::PostCleanScene(KTerrainScene*),DRIFT,hard
+recorder-replay,self-contained,KRecorderSceneLoaderRecord,PostCleanScene,KRecorderSceneLoaderRecord::PostCleanScene(KTerrainScene*),DRIFT,hard
+recorder-replay,self-contained,KRecorderSceneLoaderReplay,PostCleanScene,KRecorderSceneLoaderReplay::PostCleanScene(KTerrainScene*),DRIFT,hard
+drop-loot,self-contained,KDropCenter,AddItemToEachLooter,KDropCenter::AddItemToEachLooter(),DRIFT,hard
+drop-loot,self-contained,KDropCenter,AddItemToTeam,"KDropCenter::AddItemToTeam(KLootList*, IItem*, DROP_DATA&)",DRIFT,hard
+drop-loot,self-contained,KDropCenter,AddLevelDroplistToMap,KDropCenter::AddLevelDroplistToMap(),DRIFT,hard
+drop-loot,self-contained,KDropCenter,BoxDrop,"KDropCenter::BoxDrop(KPlayer*, unsigned long, int)",DRIFT,hard
+drop-loot,self-contained,KDropCenter,BoxDropInit,KDropCenter::BoxDropInit(),DRIFT,hard
+drop-loot,self-contained,KDropCenter,CheckNpcSurpriseBuffDrop,"KDropCenter::CheckNpcSurpriseBuffDrop(unsigned long, KNpcSurpriseBuffInfo const*)",DRIFT,hard
+drop-loot,self-contained,KDropCenter,CheckNpcSurpriseLevelDrop,"KDropCenter::CheckNpcSurpriseLevelDrop(unsigned long, KNpcSurpriseLevelInfo const*)",DRIFT,hard
+drop-loot,self-contained,KDropCenter,NpcSurpriseBuffDrop,KDropCenter::NpcSurpriseBuffDrop(),DRIFT,hard
+drop-loot,self-contained,KDropCenter,NpcSurpriseBuffDropInit,KDropCenter::NpcSurpriseBuffDropInit(),DRIFT,hard
+drop-loot,self-contained,KDropCenter,NpcSurpriseLevelDrop,KDropCenter::NpcSurpriseLevelDrop(),DRIFT,hard
+drop-loot,self-contained,KDropCenter,NpcSurpriseLevelDropInit,KDropCenter::NpcSurpriseLevelDropInit(),DRIFT,hard
+drop-loot,self-contained,KDropList,GetSpecialRandomItem,KDropList::GetSpecialRandomItem(),DRIFT,hard
+drop-loot,self-contained,KDropList,IsSpecialDropRate,KDropList::IsSpecialDropRate(),DRIFT,hard
+drop-loot,self-contained,KLevelDropList,GetAllLevels,KLevelDropList::GetAllLevels(),DRIFT,hard
+drop-loot,self-contained,KLevelDropList,GetDropDataVectorOfLevel,KLevelDropList::GetDropDataVectorOfLevel(unsigned long),DRIFT,hard
+drop-loot,self-contained,KLootList,AddDelayTradeItem,"KLootList::AddDelayTradeItem(IItem*, KPlayer*, int)",DRIFT,hard
+drop-loot,self-contained,KLootList,LogBossLoot,KLootList::LogBossLoot(KNpc*),DRIFT,hard
+drop-loot,self-contained,KLootList,NotifyPlayerAddItem,"KLootList::NotifyPlayerAddItem(KPlayer*, unsigned long, unsigned long, unsigned long, int, int)",DRIFT,hard
+drop-loot,self-contained,KManualDropList,Activate,KManualDropList::Activate(),NEW,uncertain(name-elsewhere)
+drop-loot,self-contained,KManualDropList,AddDrop,"KManualDropList::AddDrop(unsigned long, KMANUAL_DROP_INFO&)",NEW,hard
+drop-loot,self-contained,KManualDropList,CanLoot,KManualDropList::CanLoot(unsigned long),NEW,uncertain(name-elsewhere)
+drop-loot,self-contained,KManualDropList,GetInfo,KManualDropList::GetInfo(unsigned long),NEW,uncertain(name-elsewhere)
+drop-loot,self-contained,KManualDropList,Init,KManualDropList::Init(KPlayer*),NEW,uncertain(name-elsewhere)
+drop-loot,self-contained,KManualDropList,IsEmpty,KManualDropList::IsEmpty(unsigned long),NEW,uncertain(name-elsewhere)
+drop-loot,self-contained,KManualDropList,IsExist,KManualDropList::IsExist(unsigned long),NEW,hard
+drop-loot,self-contained,KManualDropList,KManualDropList,KManualDropList::KManualDropList(),NEW,hard
+drop-loot,self-contained,KManualDropList,Load,"KManualDropList::Load(unsigned char*, unsigned int, int)",NEW,uncertain(name-elsewhere)
+drop-loot,self-contained,KManualDropList,Loot,KManualDropList::Loot(unsigned long),NEW,hard
+drop-loot,self-contained,KManualDropList,Save,"KManualDropList::Save(unsigned int*, unsigned char*, unsigned int)",NEW,uncertain(name-elsewhere)
+drop-loot,self-contained,KManualDropList,UnInit,KManualDropList::UnInit(),NEW,uncertain(name-elsewhere)
+drop-loot,self-contained,KManualDropList,~KManualDropList,KManualDropList::~KManualDropList(),NEW,hard
+drop-loot,self-contained,KMoneyDropList,KMoneyDropList,KMoneyDropList::KMoneyDropList(),DRIFT,hard
+drop-loot,self-contained,KMoneyDropList,~KMoneyDropList,KMoneyDropList::~KMoneyDropList(),DRIFT,hard
+drop-loot,self-contained,KReputeLootBuffList,Init,KReputeLootBuffList::Init(),NEW,uncertain(name-elsewhere)
+drop-loot,self-contained,KReputeLootBuffList,KReputeLootBuffList,KReputeLootBuffList::KReputeLootBuffList(),NEW,hard
+drop-loot,self-contained,KReputeLootBuffList,UnInit,KReputeLootBuffList::UnInit(),NEW,uncertain(name-elsewhere)
+drop-loot,self-contained,KReputeLootBuffList,~KReputeLootBuffList,KReputeLootBuffList::~KReputeLootBuffList(),NEW,hard
+skill-script,self-contained,GetSkillRecipeTraverseFunc,operator(),GetSkillRecipeTraverseFunc::operator()(),NEW,hard
+skill-script,self-contained,KBroadcastCastSkillFunc,KBroadcastCastSkillFunc,KBroadcastCastSkillFunc::KBroadcastCastSkillFunc(),NEW,hard
+skill-script,self-contained,KBroadcastCastSkillFunc,operator(),KBroadcastCastSkillFunc::operator()(),NEW,hard
+skill-script,self-contained,KBuffList,CheckBuffBoardcast,KBuffList::CheckBuffBoardcast(),DRIFT,hard
+skill-script,self-contained,KBuffList,CheckBuffPersist,"KBuffList::CheckBuffPersist(KBUFF_LIST_NODE&, int)",DRIFT,hard
+skill-script,self-contained,KBuffList,CleanBuffWhenUseItem,KBuffList::CleanBuffWhenUseItem(),DRIFT,hard
+skill-script,self-contained,KBuffList,DelSingleBuffByID,KBuffList::DelSingleBuffByID(unsigned long),DRIFT,hard
+skill-script,self-contained,KGetAllCopyIndexByMapIDFunc,operator(),KGetAllCopyIndexByMapIDFunc::operator()(),NEW,hard
+skill-script,self-contained,KRecipeList,Load_V2,"KRecipeList::Load_V2(unsigned char*, unsigned int)",DRIFT,hard
+skill-script,self-contained,KScriptCenter,AddCmdLoop,"KScriptCenter::AddCmdLoop(unsigned long, char const*, int)",DRIFT,hard
+skill-script,self-contained,KScriptCenter,DeleteFunctionRefID,KScriptCenter::DeleteFunctionRefID(int),DRIFT,hard
+skill-script,self-contained,KScriptCenter,DumpStrt,KScriptCenter::DumpStrt(),DRIFT,hard
+skill-script,self-contained,KScriptCenter,FastCallFunction,"KScriptCenter::FastCallFunction(unsigned long, int)",DRIFT,hard
+skill-script,self-contained,KScriptCenter,KillAllCmdLoop,KScriptCenter::KillAllCmdLoop(),DRIFT,hard
+skill-script,self-contained,KScriptCenter,NewFunctionRefID,"KScriptCenter::NewFunctionRefID(unsigned long, char const*, int*)",DRIFT,hard
+skill-script,self-contained,KScriptCenter,PushFunctionBeforeParam,KScriptCenter::PushFunctionBeforeParam(int),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaAcceptJoinTongBattleField,KScriptFuncList::LuaAcceptJoinTongBattleField(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaAddNewCampFightValue,KScriptFuncList::LuaAddNewCampFightValue(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaAllGCCommand,KScriptFuncList::LuaAllGCCommand(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaAllGSCommand,KScriptFuncList::LuaAllGSCommand(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaAntiFarmerConfig,KScriptFuncList::LuaAntiFarmerConfig(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaAntiFarmerIgnoreNpcTemplateID,KScriptFuncList::LuaAntiFarmerIgnoreNpcTemplateID(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaApplyFreezeFarmer,KScriptFuncList::LuaApplyFreezeFarmer(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaArenaEnd,KScriptFuncList::LuaArenaEnd(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaArrestAllKiller,KScriptFuncList::LuaArrestAllKiller(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaCalculateNextCycleTime,KScriptFuncList::LuaCalculateNextCycleTime(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaCheckTargetCamp,KScriptFuncList::LuaCheckTargetCamp(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaCloseExterior,KScriptFuncList::LuaCloseExterior(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaDumpPlayerServerPakStat,KScriptFuncList::LuaDumpPlayerServerPakStat(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaDumpRelayClientPakStat,KScriptFuncList::LuaDumpRelayClientPakStat(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaDumpStrt,KScriptFuncList::LuaDumpStrt(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaExtendSkillCacheCapacity,KScriptFuncList::LuaExtendSkillCacheCapacity(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetActivityMgrServer,KScriptFuncList::LuaGetActivityMgrServer(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetAdultItemInfoOfCub,KScriptFuncList::LuaGetAdultItemInfoOfCub(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetAllCopyIndexByMapID,KScriptFuncList::LuaGetAllCopyIndexByMapID(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetBOT,KScriptFuncList::LuaGetBOT(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetCampNpcInfo,KScriptFuncList::LuaGetCampNpcInfo(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetColorDiamondInfoFromEnchantID,KScriptFuncList::LuaGetColorDiamondInfoFromEnchantID(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetCostFullMeasureRateBase,KScriptFuncList::LuaGetCostFullMeasureRateBase(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetCubPackageRoomPrices,KScriptFuncList::LuaGetCubPackageRoomPrices(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetCubPackageRoomRange,KScriptFuncList::LuaGetCubPackageRoomRange(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetDesignationIDByTitleAndCamp,KScriptFuncList::LuaGetDesignationIDByTitleAndCamp(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetDesignationPostfixInfo,KScriptFuncList::LuaGetDesignationPostfixInfo(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetDesignationPrefixInfo,KScriptFuncList::LuaGetDesignationPrefixInfo(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetDiamondInfo,KScriptFuncList::LuaGetDiamondInfo(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetDiamondInfoFromEnchantID,KScriptFuncList::LuaGetDiamondInfoFromEnchantID(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetDiamondUpdateRate,KScriptFuncList::LuaGetDiamondUpdateRate(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetDirectMentorCache,KScriptFuncList::LuaGetDirectMentorCache(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetDynamicSkillGroupSkills,KScriptFuncList::LuaGetDynamicSkillGroupSkills(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetEnchantRepresent,KScriptFuncList::LuaGetEnchantRepresent(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetExterior,KScriptFuncList::LuaGetExterior(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetFellowPetIndexByItemIndex,KScriptFuncList::LuaGetFellowPetIndexByItemIndex(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetFellowPetIndexByNpcTemplateID,KScriptFuncList::LuaGetFellowPetIndexByNpcTemplateID(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetFreeMaxLevel,KScriptFuncList::LuaGetFreeMaxLevel(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetFullLevelByFullMeasure,KScriptFuncList::LuaGetFullLevelByFullMeasure(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetGameVersion,KScriptFuncList::LuaGetGameVersion(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetMapRefreshInfo,KScriptFuncList::LuaGetMapRefreshInfo(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetNextTitleNeedPoint,KScriptFuncList::LuaGetNextTitleNeedPoint(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetNpcTemplateIDByFellowPetIndex,KScriptFuncList::LuaGetNpcTemplateIDByFellowPetIndex(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetRewardsShop,KScriptFuncList::LuaGetRewardsShop(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetSeansonRankRequest,KScriptFuncList::LuaGetSeansonRankRequest(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetServerIndex,KScriptFuncList::LuaGetServerIndex(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetStrengthEquipInfo,KScriptFuncList::LuaGetStrengthEquipInfo(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetTeamLootMode,KScriptFuncList::LuaGetTeamLootMode(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetTeamMemberList,KScriptFuncList::LuaGetTeamMemberList(lua_State*),DRIFT,uncertain(name-elsewhere)
+skill-script,hub,KScriptFuncList,LuaGetTongDiplomacyList,KScriptFuncList::LuaGetTongDiplomacyList(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetTongKillStatInfo,KScriptFuncList::LuaGetTongKillStatInfo(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetTongTechNodeTag,KScriptFuncList::LuaGetTongTechNodeTag(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetTypeFromAPC,KScriptFuncList::LuaGetTypeFromAPC(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetValueByBits,KScriptFuncList::LuaGetValueByBits(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetWeakCoefByFullLevel,KScriptFuncList::LuaGetWeakCoefByFullLevel(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaGetbDungeonOpenFlag,KScriptFuncList::LuaGetbDungeonOpenFlag(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaIsDelayChargeActivityOn,KScriptFuncList::LuaIsDelayChargeActivityOn(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaIsRemotePlayer,KScriptFuncList::LuaIsRemotePlayer(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaIsTongWar,KScriptFuncList::LuaIsTongWar(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaJoinArenaQueue,KScriptFuncList::LuaJoinArenaQueue(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaJoinArenaVisitorQueue,KScriptFuncList::LuaJoinArenaVisitorQueue(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaJoinTongBattleFieldQueue,KScriptFuncList::LuaJoinTongBattleFieldQueue(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaKillAllCmdLoop,KScriptFuncList::LuaKillAllCmdLoop(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaLeaveArenaVisitorQueue,KScriptFuncList::LuaLeaveArenaVisitorQueue(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaLeaveBattleField,KScriptFuncList::LuaLeaveBattleField(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaLeaveTongBattleField,KScriptFuncList::LuaLeaveTongBattleField(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaLeaveTongBattleFieldQueue,KScriptFuncList::LuaLeaveTongBattleFieldQueue(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaLoadPlayerRelatedPetAttrParam,KScriptFuncList::LuaLoadPlayerRelatedPetAttrParam(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaLogNanpinKunlunFightingResult,KScriptFuncList::LuaLogNanpinKunlunFightingResult(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaLogPlayerExamScore,KScriptFuncList::LuaLogPlayerExamScore(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaLogRecordTongActivity,KScriptFuncList::LuaLogRecordTongActivity(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaLogTongContractWarEnd,KScriptFuncList::LuaLogTongContractWarEnd(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaMD5,KScriptFuncList::LuaMD5(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaOpenExterior,KScriptFuncList::LuaOpenExterior(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaPlayerCommand,KScriptFuncList::LuaPlayerCommand(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaPrintBulletStatInfo,KScriptFuncList::LuaPrintBulletStatInfo(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaReloadJumpParam,KScriptFuncList::LuaReloadJumpParam(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaReloadOldPendentConvertInfo,KScriptFuncList::LuaReloadOldPendentConvertInfo(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaReloadScript,KScriptFuncList::LuaReloadScript(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaReloadSkillSinceScriptChanged,KScriptFuncList::LuaReloadSkillSinceScriptChanged(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaRemovePlayerLastTitleRank,KScriptFuncList::LuaRemovePlayerLastTitleRank(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaResetPlayerServerPakStat,KScriptFuncList::LuaResetPlayerServerPakStat(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaResetRelayClientPakStat,KScriptFuncList::LuaResetRelayClientPakStat(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaScriptCommand,KScriptFuncList::LuaScriptCommand(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSendGmAnnounce,KScriptFuncList::LuaSendGmAnnounce(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSendTongMessage,KScriptFuncList::LuaSendTongMessage(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetBOT,KScriptFuncList::LuaSetBOT(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetC2SRemoteLuaLogFlag,KScriptFuncList::LuaSetC2SRemoteLuaLogFlag(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetCampMinTitlePoint,KScriptFuncList::LuaSetCampMinTitlePoint(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetDomesticatePauseFlag,KScriptFuncList::LuaSetDomesticatePauseFlag(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetDungeonDelayTradeFlag,KScriptFuncList::LuaSetDungeonDelayTradeFlag(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetFollowFlag,KScriptFuncList::LuaSetFollowFlag(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetLastCampMinTitlePoint,KScriptFuncList::LuaSetLastCampMinTitlePoint(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetNetworkDelayReportConfig,KScriptFuncList::LuaSetNetworkDelayReportConfig(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetNewCampFightValue,KScriptFuncList::LuaSetNewCampFightValue(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetPlayerTitlePointRankInfo,KScriptFuncList::LuaSetPlayerTitlePointRankInfo(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetR2SRemoteLuaLogFlag,KScriptFuncList::LuaSetR2SRemoteLuaLogFlag(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetRecordBulletPerSecondStatInfoFlag,KScriptFuncList::LuaSetRecordBulletPerSecondStatInfoFlag(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetRecordSkillCalledCountFlag,KScriptFuncList::LuaSetRecordSkillCalledCountFlag(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetReturnItemFlag,KScriptFuncList::LuaSetReturnItemFlag(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetRewardsShopBuyByCoinCloseFlag,KScriptFuncList::LuaSetRewardsShopBuyByCoinCloseFlag(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetRewardsShopBuyByRewardsCloseFlag,KScriptFuncList::LuaSetRewardsShopBuyByRewardsCloseFlag(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetRewardsShopBuyCloseFlag,KScriptFuncList::LuaSetRewardsShopBuyCloseFlag(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetScriptCenterLuaGCInterval,KScriptFuncList::LuaSetScriptCenterLuaGCInterval(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetSprintV2,KScriptFuncList::LuaSetSprintV2(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetSprintV3,KScriptFuncList::LuaSetSprintV3(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetSprintV4,KScriptFuncList::LuaSetSprintV4(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetStatLogFlag,KScriptFuncList::LuaSetStatLogFlag(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetStatLogTimes,KScriptFuncList::LuaSetStatLogTimes(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetStatServerBlock,KScriptFuncList::LuaSetStatServerBlock(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetSystemGrantTitleTime,KScriptFuncList::LuaSetSystemGrantTitleTime(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetTimeLimitSoldFlag,KScriptFuncList::LuaSetTimeLimitSoldFlag(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaSetUseNewGetRelationFlag,KScriptFuncList::LuaSetUseNewGetRelationFlag(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaStatPlayerCallNpc,KScriptFuncList::LuaStatPlayerCallNpc(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaTongBattleFieldEnd,KScriptFuncList::LuaTongBattleFieldEnd(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaTongEnableFundRepair,KScriptFuncList::LuaTongEnableFundRepair(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaTongEnableRepairDiscount,KScriptFuncList::LuaTongEnableRepairDiscount(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaTongEnableStaminaDiscount,KScriptFuncList::LuaTongEnableStaminaDiscount(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaUpdateDomesticateInteractStat,KScriptFuncList::LuaUpdateDomesticateInteractStat(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaUpdateEvokeFellowPetStat,KScriptFuncList::LuaUpdateEvokeFellowPetStat(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaUpdatePKResStat,KScriptFuncList::LuaUpdatePKResStat(lua_State*),DRIFT,hard
+skill-script,hub,KScriptFuncList,LuaUseNewSceneLoadTactics,KScriptFuncList::LuaUseNewSceneLoadTactics(lua_State*),DRIFT,hard
+skill-script,hub,KSkill,ApplyOnRectangle,"KSkill::ApplyOnRectangle(KSKILL_BULLET*, int)",DRIFT,hard
+skill-script,hub,KSkill,CastOnRectangle,"KSkill::CastOnRectangle(KCharacter*, KCharacter*, int, KSKILL_RECIPE_KEY const&)",DRIFT,hard
+skill-script,hub,KSkill,CheckSelfLearntSkill,KSkill::CheckSelfLearntSkill(KCharacter*),DRIFT,hard
+skill-script,hub,KSkill,CheckSelfSelfCastBuff,KSkill::CheckSelfSelfCastBuff(KCharacter*),DRIFT,hard
+skill-script,hub,KSkill,CheckTargetSelfCastBuff,"KSkill::CheckTargetSelfCastBuff(KCharacter*, KTarget&)",DRIFT,hard
+skill-script,hub,KSkill,CheckTargetStealth,"KSkill::CheckTargetStealth(KCharacter*, KTarget&)",DRIFT,hard
+skill-script,hub,KSkill,GetCycleDecayValue,KSkill::GetCycleDecayValue(int),DRIFT,hard
+skill-script,hub,KSkill,LuaAddCheckSelfLearntSkill,KSkill::LuaAddCheckSelfLearntSkill(lua_State*),DRIFT,hard
+skill-script,self-contained,KSkillList,GetAllMountKungfuList,KSkillList::GetAllMountKungfuList(),DRIFT,hard
+skill-script,self-contained,KSkillList,LearnSkillLevel,"KSkillList::LearnSkillLevel(unsigned long, unsigned long, int)",DRIFT,hard
+skill-script,self-contained,KSkillList,MountAllRelativePassiveSkill,KSkillList::MountAllRelativePassiveSkill(unsigned long),DRIFT,hard
+skill-script,self-contained,KSkillList,NewSave,"KSkillList::NewSave(unsigned int*, unsigned char*, unsigned int, int, unsigned long)",DRIFT,hard
+skill-script,self-contained,KSkillList,UnmountAllRelativePassiveSkill,KSkillList::UnmountAllRelativePassiveSkill(unsigned long),DRIFT,hard
+skill-script,hub,KSkillManager,CanRecipeKeyAffectSkill,"KSkillManager::CanRecipeKeyAffectSkill(unsigned long, unsigned long, int, unsigned long)",DRIFT,hard
+skill-script,hub,KSkillManager,CanUserChangeDynamicGroup,KSkillManager::CanUserChangeDynamicGroup(unsigned long),DRIFT,hard
+skill-script,hub,KSkillManager,ChangeDynamicSkillGroup,"KSkillManager::ChangeDynamicSkillGroup(KPlayer*, unsigned long, unsigned long)",DRIFT,hard
+skill-script,hub,KSkillManager,CheckSkillRecipeBaseLine,"KSkillManager::CheckSkillRecipeBaseLine(unsigned long, unsigned long, KSKILL_RECIPE_BASE_INFO const&)",DRIFT,hard
+skill-script,hub,KSkillManager,ExtendCacheCapacity,KSkillManager::ExtendCacheCapacity(int),DRIFT,hard
+skill-script,hub,KSkillManager,GetDynamicSkillGroupMoveState,KSkillManager::GetDynamicSkillGroupMoveState(unsigned long),DRIFT,hard
+skill-script,hub,KSkillManager,GetDynamicSkillGroupSkills,"KSkillManager::GetDynamicSkillGroupSkills(unsigned long, KSKILL_ID_LEVEL const**, KSKILL_ID_LEVEL const**, int*, int*)",DRIFT,hard
+skill-script,hub,KSkillManager,GetMainKungFuForceID,KSkillManager::GetMainKungFuForceID(unsigned long),DRIFT,hard
+skill-script,hub,KSkillManager,GetMainKungFuIndex,KSkillManager::GetMainKungFuIndex(unsigned long),DRIFT,hard
+skill-script,hub,KSkillManager,GetSkillBaseInfo,KSkillManager::GetSkillBaseInfo(unsigned long),DRIFT,hard
+skill-script,hub,KSkillManager,IsSkillInDynamicGroup,"KSkillManager::IsSkillInDynamicGroup(unsigned long, unsigned long, unsigned long)",DRIFT,hard
+skill-script,hub,KSkillManager,IsSunMoonPower,"KSkillManager::IsSunMoonPower(unsigned long, unsigned long)",DRIFT,hard
+skill-script,hub,KSkillManager,LoadDynamicSkillGroup,KSkillManager::LoadDynamicSkillGroup(),DRIFT,hard
+skill-script,hub,KSkillManager,LoadMainKungfuInfo,KSkillManager::LoadMainKungfuInfo(),DRIFT,hard
+skill-script,hub,KSkillManager,ReloadSkillSinceScriptChanged,KSkillManager::ReloadSkillSinceScriptChanged(unsigned long),DRIFT,hard
+skill-script,self-contained,KSkillRecipeList,IsActive,KSkillRecipeList::IsActive(unsigned long),DRIFT,uncertain(name-elsewhere)
+skill-script,self-contained,KSkillRecipeList,_LoadDataV3,"KSkillRecipeList::_LoadDataV3(unsigned int*, unsigned char*, unsigned int)",DRIFT,hard
+skill-script,self-contained,KSkillRecipeList,_LoadDataV4,"KSkillRecipeList::_LoadDataV4(unsigned int*, unsigned char*, unsigned int)",DRIFT,hard
+skill-script,self-contained,KSkillRectangleTravFunc,CanApply,KSkillRectangleTravFunc::CanApply(KTarget&),NEW,uncertain(name-elsewhere)
+skill-script,self-contained,KSkillRectangleTravFunc,operator(),KSkillRectangleTravFunc::operator()(),NEW,hard
+world-scene,self-contained,KAIPatrolGroupManager,GetMemberDestPosition,"KAIPatrolGroupManager::GetMemberDestPosition(unsigned long, int, int*, int*, int*)",DRIFT,hard
+world-scene,hub,KDoodad,CallNpcDropScript,KDoodad::CallNpcDropScript(KNpc*),DRIFT,hard
+world-scene,hub,KDoodad,LuaAddExtraLootItem,KDoodad::LuaAddExtraLootItem(lua_State*),DRIFT,hard
+world-scene,hub,KDoodad,LuaGetBelongTeamID,KDoodad::LuaGetBelongTeamID(lua_State*),DRIFT,hard
+world-scene,self-contained,KDoodadReviveManager,CleanUp,KDoodadReviveManager::CleanUp(int),DRIFT,uncertain(name-elsewhere)
+world-scene,self-contained,KDoodadReviveManager,RetrieveActivityDoodad,KDoodadReviveManager::RetrieveActivityDoodad(unsigned long),DRIFT,hard
+world-scene,hub,KNpc,AdjustDropTarget,KNpc::AdjustDropTarget(),DRIFT,hard
+world-scene,hub,KNpc,GetBuffReputeForceID,KNpc::GetBuffReputeForceID(KPlayer*),DRIFT,hard
+world-scene,hub,KNpc,GetEmployer,KNpc::GetEmployer(),DRIFT,hard
+world-scene,hub,KNpc,IsDropCandidate,KNpc::IsDropCandidate(KPlayer*),DRIFT,uncertain(name-elsewhere)
+world-scene,hub,KNpc,LootMentorPresent,KNpc::LootMentorPresent(KPlayer*),DRIFT,hard
+world-scene,hub,KNpc,LootReputation,KNpc::LootReputation(KPlayer*),DRIFT,hard
+world-scene,hub,KNpc,LootSingleReputation,"KNpc::LootSingleReputation(KPlayer*, unsigned long, int, int)",DRIFT,hard
+world-scene,hub,KNpc,LootTitlePoint,KNpc::LootTitlePoint(KPlayer*),DRIFT,hard
+world-scene,hub,KNpc,LootTrain,KNpc::LootTrain(KPlayer*),DRIFT,hard
+world-scene,hub,KNpc,LuaAddItemByThreatList,KNpc::LuaAddItemByThreatList(lua_State*),DRIFT,hard
+world-scene,hub,KNpc,LuaCopyDropTarget,KNpc::LuaCopyDropTarget(lua_State*),DRIFT,hard
+world-scene,hub,KNpc,LuaGetEmployer,KNpc::LuaGetEmployer(lua_State*),DRIFT,hard
+world-scene,hub,KNpc,LuaGetStandardSkillUseFlag,KNpc::LuaGetStandardSkillUseFlag(lua_State*),DRIFT,hard
+world-scene,hub,KNpc,LuaSetCubPackage,KNpc::LuaSetCubPackage(lua_State*),DRIFT,hard
+world-scene,hub,KNpc,LuaSetStandardSkillUseFlag,KNpc::LuaSetStandardSkillUseFlag(lua_State*),DRIFT,hard
+world-scene,hub,KNpc,NewGetNpcRelation,KNpc::NewGetNpcRelation(KNpc*),DRIFT,hard
+world-scene,hub,KNpc,NewGetPlayerRelation,KNpc::NewGetPlayerRelation(KPlayer*),DRIFT,hard
+world-scene,hub,KNpc,PreDeleteBattery,KNpc::PreDeleteBattery(),DRIFT,hard
+world-scene,hub,KNpc,PreDeleteBomb,KNpc::PreDeleteBomb(),DRIFT,hard
+world-scene,hub,KNpc,PreDeleteFellowPet,KNpc::PreDeleteFellowPet(),DRIFT,hard
+world-scene,hub,KNpc,PreDeleteGas,KNpc::PreDeleteGas(),DRIFT,hard
+world-scene,hub,KNpc,PreDeletePet,KNpc::PreDeletePet(),DRIFT,hard
+world-scene,hub,KNpc,PreDeleteTrap,KNpc::PreDeleteTrap(),DRIFT,hard
+world-scene,self-contained,KNpcAdronTab,AdronNpcIntensity,"KNpcAdronTab::AdronNpcIntensity(KNpc*, KScene*)",NEW,hard
+world-scene,self-contained,KNpcAdronTab,GetAdronInfo,"KNpcAdronTab::GetAdronInfo(unsigned long, unsigned long)",NEW,hard
+world-scene,self-contained,KNpcAdronTab,Init,KNpcAdronTab::Init(),NEW,uncertain(name-elsewhere)
+world-scene,self-contained,KNpcAdronTab,KNpcAdronTab,KNpcAdronTab::KNpcAdronTab(),NEW,hard
+world-scene,self-contained,KNpcAdronTab,UnInit,KNpcAdronTab::UnInit(),NEW,uncertain(name-elsewhere)
+world-scene,self-contained,KNpcAdronTab,~KNpcAdronTab,KNpcAdronTab::~KNpcAdronTab(),NEW,hard
+world-scene,self-contained,KNpcReviveManager,CleanUp,KNpcReviveManager::CleanUp(int),DRIFT,uncertain(name-elsewhere)
+world-scene,self-contained,KNpcReviveManager,RetrieveActivityNpc,KNpcReviveManager::RetrieveActivityNpc(unsigned long),DRIFT,hard
+world-scene,self-contained,KNpcTemplate,GetShopOptionText,KNpcTemplate::GetShopOptionText(unsigned long),NEW,hard
+world-scene,self-contained,KNpcTemplateList,LoadDialogText,"KNpcTemplateList::LoadDialogText(ITabFile*, int, char const*, char const*, char**)",DRIFT,hard
+world-scene,self-contained,KNpcTemplateList,LoadNpcTemplateShopInfo,KNpcTemplateList::LoadNpcTemplateShopInfo(),DRIFT,hard
+world-scene,self-contained,KNpcTemplateList,LoadNpcTemplateTab,"KNpcTemplateList::LoadNpcTemplateTab(char*, int)",DRIFT,hard
+world-scene,self-contained,KNpcTemplateList,LoadNpcTemplateTabList,KNpcTemplateList::LoadNpcTemplateTabList(),DRIFT,hard
+world-scene,self-contained,KNpcTemplateList,LoadOptionText,"KNpcTemplateList::LoadOptionText(ITabFile*, int, char const*, char const*, char**)",DRIFT,hard
+world-scene,self-contained,KRoadManager,AddNodeWithID,KRoadManager::AddNodeWithID(int),DRIFT,hard
+world-scene,self-contained,KRoadManager,AddTrackWithID,"KRoadManager::AddTrackWithID(int, int, int)",DRIFT,hard
+world-scene,self-contained,KSO3World,GetAllCopyIndexByMapID,KSO3World::GetAllCopyIndexByMapID(),DRIFT,hard
+world-scene,self-contained,KSO3World,GetCharacter,KSO3World::GetCharacter(unsigned long),DRIFT,hard
+world-scene,self-contained,KSO3World,Init_ForEditor,KSO3World::Init_ForEditor(IRecorderFactory*),DRIFT,hard
+world-scene,self-contained,KSO3World,UnInit_ForEditor,KSO3World::UnInit_ForEditor(),DRIFT,hard
+world-scene,self-contained,KSO3World,UpdateUnderageTimeFlag,KSO3World::UpdateUnderageTimeFlag(),DRIFT,hard
+world-scene,hub,KScene,ActivityEndNotify,KScene::ActivityEndNotify(unsigned long),DRIFT,hard
+world-scene,hub,KScene,AddNewCampFightPrestige,"KScene::AddNewCampFightPrestige(int, int, KCAMP, int)",DRIFT,hard
+world-scene,hub,KScene,AddNewCampFightTitlePoint,"KScene::AddNewCampFightTitlePoint(int, int, KCAMP, int)",DRIFT,hard
+world-scene,hub,KScene,AddPlayerToFightList,KScene::AddPlayerToFightList(unsigned long),DRIFT,hard
+world-scene,hub,KScene,BroadcastCharacterChangedCounterStealth,"KScene::BroadcastCharacterChangedCounterStealth(KCharacter*, KRegion*)",DRIFT,hard
+world-scene,hub,KScene,BroadcastCharacterChangedStealth,"KScene::BroadcastCharacterChangedStealth(KCharacter*, KRegion*)",DRIFT,hard
+world-scene,hub,KScene,BroadcastPlayerChangedDisarm,"KScene::BroadcastPlayerChangedDisarm(KPlayer*, KRegion*)",DRIFT,hard
+world-scene,hub,KScene,ClearNewCampFightList,KScene::ClearNewCampFightList(int),DRIFT,hard
+world-scene,hub,KScene,CreateNpc,"KScene::CreateNpc(unsigned long, int, int, int, int, int, char const*, unsigned long, int)",DRIFT,hard
+world-scene,hub,KScene,GetMapIDByMapKey,KScene::GetMapIDByMapKey(unsigned long),DRIFT,hard
+world-scene,hub,KScene,GetMapLevelByMapKey,KScene::GetMapLevelByMapKey(unsigned long),DRIFT,hard
+world-scene,hub,KScene,GetNewCampFightAddPrestige,"KScene::GetNewCampFightAddPrestige(int, int, KCAMP)",DRIFT,hard
+world-scene,hub,KScene,GetNewCampFightAddTitlePoint,"KScene::GetNewCampFightAddTitlePoint(int, int, KCAMP)",DRIFT,hard
+world-scene,hub,KScene,GetNewCampFightFlag,KScene::GetNewCampFightFlag(),DRIFT,hard
+world-scene,hub,KScene,LuaAddNewCampFightPrestige,KScene::LuaAddNewCampFightPrestige(lua_State*),DRIFT,hard
+world-scene,hub,KScene,LuaAddNewCampFightTitlePoint,KScene::LuaAddNewCampFightTitlePoint(lua_State*),DRIFT,hard
+world-scene,hub,KScene,LuaAreanaFightStatLog,KScene::LuaAreanaFightStatLog(lua_State*),DRIFT,hard
+world-scene,hub,KScene,LuaClearNewCampFightList,KScene::LuaClearNewCampFightList(lua_State*),DRIFT,hard
+world-scene,hub,KScene,LuaCreateBattery,KScene::LuaCreateBattery(lua_State*),DRIFT,hard
+world-scene,hub,KScene,LuaCreateBomb,KScene::LuaCreateBomb(lua_State*),DRIFT,hard
+world-scene,hub,KScene,LuaCreateFellowPet,KScene::LuaCreateFellowPet(lua_State*),DRIFT,hard
+world-scene,hub,KScene,LuaCreateGas,KScene::LuaCreateGas(lua_State*),DRIFT,hard
+world-scene,hub,KScene,LuaCreatePet,KScene::LuaCreatePet(lua_State*),DRIFT,hard
+world-scene,hub,KScene,LuaCreateTrap,KScene::LuaCreateTrap(lua_State*),DRIFT,hard
+world-scene,hub,KScene,LuaDestroyDoodadByNickName,KScene::LuaDestroyDoodadByNickName(lua_State*),DRIFT,hard
+world-scene,hub,KScene,LuaDestroyNpcByNickName,KScene::LuaDestroyNpcByNickName(lua_State*),DRIFT,hard
+world-scene,hub,KScene,LuaGetCorpsStatisticsData,KScene::LuaGetCorpsStatisticsData(lua_State*),DRIFT,hard
+world-scene,hub,KScene,LuaGetPQList,KScene::LuaGetPQList(lua_State*),DRIFT,hard
+world-scene,hub,KScene,LuaGetRegionPlayerCount,KScene::LuaGetRegionPlayerCount(lua_State*),DRIFT,hard
+world-scene,hub,KScene,LuaGetSceneOwner,KScene::LuaGetSceneOwner(lua_State*),DRIFT,hard
+world-scene,hub,KScene,LuaIsPlayerCanEnterForFight,KScene::LuaIsPlayerCanEnterForFight(lua_State*),DRIFT,hard
+world-scene,hub,KScene,LuaSetBroadcastTargetFlag,KScene::LuaSetBroadcastTargetFlag(lua_State*),DRIFT,hard
+world-scene,hub,KScene,LuaSetNewCampFightFlag,KScene::LuaSetNewCampFightFlag(lua_State*),DRIFT,hard
+world-scene,hub,KScene,LuaUpdateCorpsValue,KScene::LuaUpdateCorpsValue(lua_State*),DRIFT,hard
+world-scene,hub,KScene,MakeMapKey,"KScene::MakeMapKey(unsigned long, int)",DRIFT,hard
+world-scene,hub,KScene,NewCompleteLoading,KScene::NewCompleteLoading(),DRIFT,hard
+world-scene,hub,KScene,RegisterCorpsStatisticsData,KScene::RegisterCorpsStatisticsData(KPlayer*),DRIFT,hard
+world-scene,hub,KScene,SaveMap,KScene::SaveMap(),DRIFT,hard
+world-scene,hub,KScene,SetNewCampFightFlag,KScene::SetNewCampFightFlag(int),DRIFT,hard
+world-scene,hub,KScene,TryClearFightList,KScene::TryClearFightList(),DRIFT,hard
+world-scene,hub,KScene,UnInitFinal,KScene::UnInitFinal(),DRIFT,hard
+world-scene,self-contained,KSimpThreatList,ClearThreatenWhenStealth,KSimpThreatList::ClearThreatenWhenStealth(),DRIFT,hard
+world-scene,self-contained,KSimpThreatList,_GetLastThreat,KSimpThreatList::_GetLastThreat(THREAT_TYPE),DRIFT,hard
+world-scene,self-contained,KWorldSettings,Init_ForEditor,KWorldSettings::Init_ForEditor(),DRIFT,hard
+world-scene,self-contained,KWorldSettings,KWorldSettings,KWorldSettings::KWorldSettings(),DRIFT,hard
+world-scene,self-contained,KWorldSettings,LoadVersionConfig,KWorldSettings::LoadVersionConfig(),DRIFT,hard
+world-scene,self-contained,KWorldSettings,UnInit_ForEditor,KWorldSettings::UnInit_ForEditor(),DRIFT,hard
+world-scene,self-contained,KWorldSettings,~KWorldSettings,KWorldSettings::~KWorldSettings(),DRIFT,hard
+item,hub,KItemList,AddDelayTradeItem,"KItemList::AddDelayTradeItem(unsigned long long, unsigned long, long)",DRIFT,hard
+item,hub,KItemList,AddItemScoreToTotal,"KItemList::AddItemScoreToTotal(KItemProperty const*, unsigned long)",DRIFT,hard
+item,hub,KItemList,AddTimeLimitReturnItemInfo,"KItemList::AddTimeLimitReturnItemInfo(unsigned long, unsigned long, int, long)",DRIFT,hard
+item,hub,KItemList,AddTimeLimitSoldListInfo,"KItemList::AddTimeLimitSoldListInfo(unsigned long, long)",DRIFT,hard
+item,hub,KItemList,AddTimeLimitSoldListItem,"KItemList::AddTimeLimitSoldListItem(unsigned long, unsigned long, long, int)",DRIFT,hard
+item,hub,KItemList,AdjustCubPackageSize,KItemList::AdjustCubPackageSize(),DRIFT,hard
+item,hub,KItemList,ApplyEquipRepresent,KItemList::ApplyEquipRepresent(unsigned long),DRIFT,hard
+item,hub,KItemList,CanApplyAttrib,"KItemList::CanApplyAttrib(IItem*, unsigned long)",DRIFT,hard
+item,hub,KItemList,CanDestroyItem,"KItemList::CanDestroyItem(unsigned long, unsigned long)",DRIFT,hard
+item,hub,KItemList,CanFiveElementAttribActive,"KItemList::CanFiveElementAttribActive(int, KEquipedDiamondInfo const&, int, IItem**)",DRIFT,hard
+item,hub,KItemList,CanUseEquip,"KItemList::CanUseEquip(IItem*, unsigned long)",DRIFT,hard
+item,hub,KItemList,CanUseOtherItem,"KItemList::CanUseOtherItem(IItem*, unsigned long, KUSE_ITEM*, KTarget&)",DRIFT,hard
+item,hub,KItemList,CheckAllEquipRequire,KItemList::CheckAllEquipRequire(),DRIFT,hard
+item,hub,KItemList,CheckAllEquipedDiamondAchievement,KItemList::CheckAllEquipedDiamondAchievement(KEquipedDiamondInfo const&),DRIFT,hard
+item,hub,KItemList,CheckFEAActive,KItemList::CheckFEAActive(KEquipedDiamondInfo const&),DRIFT,hard
+item,hub,KItemList,CheckFEAActiveAndDiamondAchievement,KItemList::CheckFEAActiveAndDiamondAchievement(),DRIFT,hard
+item,hub,KItemList,ConsumeBullet,"KItemList::ConsumeBullet(unsigned long, unsigned long, unsigned long)",DRIFT,hard
+item,hub,KItemList,DelTimeLimitReturnItemInfo,KItemList::DelTimeLimitReturnItemInfo(unsigned long),DRIFT,hard
+item,hub,KItemList,DelTimeLimitSoldListInfo,KItemList::DelTimeLimitSoldListInfo(unsigned long),DRIFT,hard
+item,hub,KItemList,DestroyTongBindItem,KItemList::DestroyTongBindItem(),DRIFT,hard
+item,hub,KItemList,EquipFEAEnchant,KItemList::EquipFEAEnchant(unsigned long),DRIFT,hard
+item,hub,KItemList,GetDelayTradeItemLeftTime,KItemList::GetDelayTradeItemLeftTime(unsigned long),DRIFT,hard
+item,hub,KItemList,GetDelayTradeItemTradeID,KItemList::GetDelayTradeItemTradeID(unsigned long),DRIFT,hard
+item,hub,KItemList,GetEnchantID,"KItemList::GetEnchantID(unsigned long, unsigned long, int)",DRIFT,hard
+item,hub,KItemList,GetEnchantIndex,KItemList::GetEnchantIndex(unsigned long),DRIFT,hard
+item,hub,KItemList,GetEquipPosByItemType,"KItemList::GetEquipPosByItemType(EQUIPMENT_SUB_TYPE, WEAPON_DETAIL_TYPE)",DRIFT,hard
+item,hub,KItemList,GetEquipedDiamondInfo,KItemList::GetEquipedDiamondInfo(KEquipedDiamondInfo*),DRIFT,hard
+item,hub,KItemList,GetFEAActiveFlag,KItemList::GetFEAActiveFlag(int),DRIFT,hard
+item,hub,KItemList,GetItemAmountInPackage,"KItemList::GetItemAmountInPackage(unsigned long, unsigned long, int)",DRIFT,hard
+item,hub,KItemList,GetTimeLimitReturnItemLeftTime,KItemList::GetTimeLimitReturnItemLeftTime(unsigned long),DRIFT,hard
+item,hub,KItemList,GetTimeLimitReturnItemShopItemIndex,KItemList::GetTimeLimitReturnItemShopItemIndex(unsigned long),DRIFT,hard
+item,hub,KItemList,GetTimeLimitReturnItemShopTemplateID,KItemList::GetTimeLimitReturnItemShopTemplateID(unsigned long),DRIFT,hard
+item,hub,KItemList,GetTimeLimitSoldListInfoLeftTime,KItemList::GetTimeLimitSoldListInfoLeftTime(unsigned long),DRIFT,hard
+item,hub,KItemList,GohungryHorse,"KItemList::GohungryHorse(IItem*, int)",DRIFT,hard
+item,hub,KItemList,IsDelayTradeItem,KItemList::IsDelayTradeItem(unsigned long),DRIFT,hard
+item,hub,KItemList,IsPackageRoomFree,"KItemList::IsPackageRoomFree(unsigned long, unsigned long)",DRIFT,hard
+item,hub,KItemList,IsTimeLimitReturnItem,KItemList::IsTimeLimitReturnItem(unsigned long),DRIFT,hard
+item,hub,KItemList,LoadDelayTradeInfo,"KItemList::LoadDelayTradeInfo(unsigned char*, unsigned int, int)",DRIFT,hard
+item,hub,KItemList,LoadDelayTradeInfo_V0,"KItemList::LoadDelayTradeInfo_V0(unsigned char*, unsigned int)",DRIFT,hard
+item,hub,KItemList,LoadHorseProcess,"KItemList::LoadHorseProcess(IItem*, unsigned long)",DRIFT,hard
+item,hub,KItemList,LoadItemList,"KItemList::LoadItemList(unsigned char*, unsigned int, int)",DRIFT,hard
+item,hub,KItemList,LoadItemList_V0,"KItemList::LoadItemList_V0(unsigned char*, unsigned int)",DRIFT,hard
+item,hub,KItemList,LoadItemList_V1,"KItemList::LoadItemList_V1(unsigned char*, unsigned int)",DRIFT,hard
+item,hub,KItemList,LoadItemList_V2,"KItemList::LoadItemList_V2(unsigned char*, unsigned int)",DRIFT,hard
+item,hub,KItemList,LoadItemList_V3,"KItemList::LoadItemList_V3(unsigned char*, unsigned int)",DRIFT,hard
+item,hub,KItemList,LoadItemList_V4,"KItemList::LoadItemList_V4(unsigned char*, unsigned int)",DRIFT,hard
+item,hub,KItemList,LoadItemList_V5,"KItemList::LoadItemList_V5(unsigned char*, unsigned int)",DRIFT,hard
+item,hub,KItemList,LoadItemList_V6,"KItemList::LoadItemList_V6(unsigned char*, unsigned int)",DRIFT,hard
+item,hub,KItemList,LoadTimeLimitReturnInfo,"KItemList::LoadTimeLimitReturnInfo(unsigned char*, unsigned int, int)",DRIFT,hard
+item,hub,KItemList,LoadTimeLimitReturnInfo_V0,"KItemList::LoadTimeLimitReturnInfo_V0(unsigned char*, unsigned int)",DRIFT,hard
+item,hub,KItemList,LoadTimeLimitSoldListInfo,"KItemList::LoadTimeLimitSoldListInfo(unsigned char*, unsigned int, int)",DRIFT,hard
+item,hub,KItemList,LoadTimeLimitSoldListInfo_V0,"KItemList::LoadTimeLimitSoldListInfo_V0(unsigned char*, unsigned int)",DRIFT,hard
+item,hub,KItemList,SaveDelayTradeInfo,"KItemList::SaveDelayTradeInfo(unsigned int*, unsigned char*, unsigned int)",DRIFT,hard
+item,hub,KItemList,SaveItemList,"KItemList::SaveItemList(unsigned int*, unsigned char*, unsigned int)",DRIFT,hard
+item,hub,KItemList,SaveTimeLimitReturnInfo,"KItemList::SaveTimeLimitReturnInfo(unsigned int*, unsigned char*, unsigned int)",DRIFT,hard
+item,hub,KItemList,SaveTimeLimitSoldListInfo,"KItemList::SaveTimeLimitSoldListInfo(unsigned int*, unsigned char*, unsigned int)",DRIFT,hard
+item,hub,KItemList,SetCangjianFlag,KItemList::SetCangjianFlag(int),DRIFT,hard
+item,hub,KItemList,SetDelayTradeItemID,"KItemList::SetDelayTradeItemID(unsigned long long, unsigned long)",DRIFT,hard
+item,hub,KItemList,SetEnchantRepresent,"KItemList::SetEnchantRepresent(KENCHANT*, IItem*, int)",DRIFT,hard
+item,hub,KItemList,SetTotalEquipScore,KItemList::SetTotalEquipScore(int),DRIFT,hard
+item,hub,KItemList,SubItemScoreFromTotal,"KItemList::SubItemScoreFromTotal(KItemProperty const*, unsigned long)",DRIFT,hard
+item,hub,KItemList,TidyUpTimeLimitSoldList,KItemList::TidyUpTimeLimitSoldList(),DRIFT,hard
+item,hub,KItemList,UnApplyEquipFEAEnchantAttrib,KItemList::UnApplyEquipFEAEnchantAttrib(),DRIFT,hard
+item,hub,KItemList,UnApplyEquipRepresent,KItemList::UnApplyEquipRepresent(unsigned long),DRIFT,hard
+item,hub,KItemList,UnEquipFEAEnchant,KItemList::UnEquipFEAEnchant(),DRIFT,hard
+item,hub,KItemList,UpdateDelayTradeItemID,KItemList::UpdateDelayTradeItemID(),DRIFT,hard
+item,hub,KItemList,UpdateEquipScore,KItemList::UpdateEquipScore(),DRIFT,hard
+item,hub,KItemList,UpdateItemID,KItemList::UpdateItemID(),DRIFT,hard
+item,hub,KItemList,UpdateTimeLimitReturnItemID,KItemList::UpdateTimeLimitReturnItemID(),DRIFT,hard
+item,hub,KItemList,UpdateTimeLimitSoldListItemID,KItemList::UpdateTimeLimitSoldListItemID(),DRIFT,hard
+player-hub,hub,KCharacter,AvoidTopObstacle,KCharacter::AvoidTopObstacle(int),DRIFT,hard
+player-hub,hub,KCharacter,CastSkillSunMoonPower,"KCharacter::CastSkillSunMoonPower(unsigned long, unsigned long, KTarget&)",DRIFT,hard
+player-hub,hub,KCharacter,CastSkillXYZ,"KCharacter::CastSkillXYZ(unsigned long, unsigned long, int, int, int)",DRIFT,hard
+player-hub,hub,KCharacter,CounterStealth,KCharacter::CounterStealth(int),DRIFT,hard
+player-hub,hub,KCharacter,Follow,"KCharacter::Follow(unsigned long, KFOLLOW_TYPE)",DRIFT,uncertain(name-elsewhere)
+player-hub,hub,KCharacter,FollowDownHorse,KCharacter::FollowDownHorse(),DRIFT,hard
+player-hub,hub,KCharacter,FollowStop,KCharacter::FollowStop(),DRIFT,hard
+player-hub,hub,KCharacter,GetNearByObstacle,"KCharacter::GetNearByObstacle(int, int, int, int, int)",DRIFT,hard
+player-hub,hub,KCharacter,GetThreatValueByPassiveBaseThreatCoefficient,"KCharacter::GetThreatValueByPassiveBaseThreatCoefficient(THREAT_TYPE, int)",DRIFT,hard
+player-hub,hub,KCharacter,GetThreatValueBySkillAttributeParam,"KCharacter::GetThreatValueBySkillAttributeParam(THREAT_TYPE, int)",DRIFT,hard
+player-hub,hub,KCharacter,HostSetRope,KCharacter::HostSetRope(),DRIFT,hard
+player-hub,hub,KCharacter,HostSprintDash,KCharacter::HostSprintDash(),DRIFT,hard
+player-hub,hub,KCharacter,InvalidateRepresentState,KCharacter::InvalidateRepresentState(int),DRIFT,hard
+player-hub,hub,KCharacter,IsStealthToCharacter,KCharacter::IsStealthToCharacter(KCharacter*),DRIFT,hard
+player-hub,hub,KCharacter,LuaAimAtSprintDashTarget,KCharacter::LuaAimAtSprintDashTarget(lua_State*),DRIFT,hard
+player-hub,hub,KCharacter,LuaClearAllThreatOnlyThreatList,KCharacter::LuaClearAllThreatOnlyThreatList(lua_State*),DRIFT,hard
+player-hub,hub,KCharacter,LuaCounterStealth,KCharacter::LuaCounterStealth(lua_State*),DRIFT,hard
+player-hub,hub,KCharacter,LuaFollow,KCharacter::LuaFollow(lua_State*),DRIFT,hard
+player-hub,hub,KCharacter,LuaFollowStop,KCharacter::LuaFollowStop(lua_State*),DRIFT,hard
+player-hub,hub,KCharacter,LuaGetCoordinateSkillTarget,KCharacter::LuaGetCoordinateSkillTarget(lua_State*),DRIFT,hard
+player-hub,hub,KCharacter,LuaIsExistBuffByFunctionType,KCharacter::LuaIsExistBuffByFunctionType(lua_State*),DRIFT,hard
+player-hub,hub,KCharacter,LuaOpenAIProcessLog,KCharacter::LuaOpenAIProcessLog(lua_State*),DRIFT,hard
+player-hub,hub,KCharacter,LuaPlayCharacterSound,KCharacter::LuaPlayCharacterSound(lua_State*),DRIFT,hard
+player-hub,hub,KCharacter,LuaPlaySfx,KCharacter::LuaPlaySfx(lua_State*),DRIFT,hard
+player-hub,hub,KCharacter,LuaRecoverBgMusic,KCharacter::LuaRecoverBgMusic(lua_State*),DRIFT,hard
+player-hub,hub,KCharacter,LuaReplaceBgMusic,KCharacter::LuaReplaceBgMusic(lua_State*),DRIFT,hard
+player-hub,hub,KCharacter,LuaSetBattleFieldSide,KCharacter::LuaSetBattleFieldSide(lua_State*),DRIFT,hard
+player-hub,hub,KCharacter,LuaSprint,KCharacter::LuaSprint(lua_State*),DRIFT,hard
+player-hub,hub,KCharacter,ModifyAllThreatenPercent,KCharacter::ModifyAllThreatenPercent(int),DRIFT,hard
+player-hub,hub,KCharacter,ModifyThreatPercent,"KCharacter::ModifyThreatPercent(KCharacter*, int)",DRIFT,hard
+player-hub,hub,KCharacter,ModifyThreaten,"KCharacter::ModifyThreaten(THREAT_TYPE, KCharacter*, int)",DRIFT,uncertain(name-elsewhere)
+player-hub,hub,KCharacter,NotifyCounterStealthFactorChanged,KCharacter::NotifyCounterStealthFactorChanged(KCharacter*),DRIFT,hard
+player-hub,hub,KCharacter,NotifyStateStealthFactorChanged,KCharacter::NotifyStateStealthFactorChanged(KPlayer*),DRIFT,hard
+player-hub,hub,KCharacter,NotifyTeamStealthFactorChanged,"KCharacter::NotifyTeamStealthFactorChanged(KPlayer*, int)",DRIFT,hard
+player-hub,hub,KCharacter,OnJump,KCharacter::OnJump(),DRIFT,hard
+player-hub,hub,KCharacter,OnSlowDown,KCharacter::OnSlowDown(),DRIFT,hard
+player-hub,hub,KCharacter,OnSprintDash,KCharacter::OnSprintDash(),DRIFT,hard
+player-hub,hub,KCharacter,OnSprintFlash,KCharacter::OnSprintFlash(),DRIFT,hard
+player-hub,hub,KCharacter,OnSprintKick,KCharacter::OnSprintKick(),DRIFT,hard
+player-hub,hub,KCharacter,ProcessFollow,KCharacter::ProcessFollow(),DRIFT,hard
+player-hub,hub,KCharacter,ProcessSprintDashTarget,KCharacter::ProcessSprintDashTarget(),DRIFT,hard
+player-hub,hub,KCharacter,ProcessTransferLife,KCharacter::ProcessTransferLife(int),DRIFT,hard
+player-hub,hub,KCharacter,ProcessTransferMana,KCharacter::ProcessTransferMana(int),DRIFT,hard
+player-hub,hub,KCharacter,ResetRoadTrack,KCharacter::ResetRoadTrack(int),DRIFT,hard
+player-hub,hub,KCharacter,ReviseSerrationCell,KCharacter::ReviseSerrationCell(),DRIFT,hard
+player-hub,hub,KCharacter,SetBattleFieldSide,KCharacter::SetBattleFieldSide(int),DRIFT,hard
+player-hub,hub,KCharacter,SetModelID,KCharacter::SetModelID(unsigned long),DRIFT,hard
+player-hub,hub,KCharacter,Sprint,"KCharacter::Sprint(int, int)",DRIFT,hard
+player-hub,hub,KCharacter,SprintBreak,KCharacter::SprintBreak(),DRIFT,hard
+player-hub,hub,KCharacter,SprintDash,"KCharacter::SprintDash(unsigned long, int, int, int, int)",DRIFT,hard
+player-hub,hub,KCharacter,SprintFlash,"KCharacter::SprintFlash(int, int, int, int, int, int)",DRIFT,hard
+player-hub,hub,KCharacter,UpdateAllCriticalDamagePowerValue,KCharacter::UpdateAllCriticalDamagePowerValue(),DRIFT,hard
+player-hub,hub,KCharacter,UpdateAllDodgeValue,KCharacter::UpdateAllDodgeValue(),DRIFT,hard
+player-hub,hub,KCharacter,UpdateGlobalDamageAbsorb,KCharacter::UpdateGlobalDamageAbsorb(),DRIFT,hard
+player-hub,self-contained,KCharacterCounterStealthChangedFunc,KCharacterCounterStealthChangedFunc,KCharacterCounterStealthChangedFunc::KCharacterCounterStealthChangedFunc(KCharacter*),NEW,hard
+player-hub,self-contained,KCharacterCounterStealthChangedFunc,operator(),KCharacterCounterStealthChangedFunc::operator()(),NEW,hard
+player-hub,self-contained,KCharacterDisarmChangedFunc,KCharacterDisarmChangedFunc,KCharacterDisarmChangedFunc::KCharacterDisarmChangedFunc(KPlayer*),NEW,hard
+player-hub,self-contained,KCharacterDisarmChangedFunc,operator(),KCharacterDisarmChangedFunc::operator()(),NEW,hard
+player-hub,self-contained,KCharacterStealthChangedFunc,KCharacterStealthChangedFunc,KCharacterStealthChangedFunc::KCharacterStealthChangedFunc(KCharacter*),NEW,hard
+player-hub,self-contained,KCharacterStealthChangedFunc,operator(),KCharacterStealthChangedFunc::operator()(),NEW,hard
+player-hub,hub,KPlayer,AddKillerScore,"KPlayer::AddKillerScore(unsigned long, int, int, int)",DRIFT,hard
+player-hub,hub,KPlayer,AddPendent,"KPlayer::AddPendent(unsigned long, long, int)",DRIFT,hard
+player-hub,hub,KPlayer,AddRankPoint,KPlayer::AddRankPoint(int),DRIFT,hard
+player-hub,hub,KPlayer,AddTAEquipsScore,KPlayer::AddTAEquipsScore(int),DRIFT,hard
+player-hub,hub,KPlayer,AddTitlePoint,KPlayer::AddTitlePoint(int),DRIFT,hard
+player-hub,hub,KPlayer,AddUsableMentorValue,KPlayer::AddUsableMentorValue(int),DRIFT,hard
+player-hub,hub,KPlayer,ApplyExterior,KPlayer::ApplyExterior(int),DRIFT,hard
+player-hub,hub,KPlayer,BuyCubPackageRoom,KPlayer::BuyCubPackageRoom(int),DRIFT,hard
+player-hub,hub,KPlayer,CallAutoCastFormationScript,KPlayer::CallAutoCastFormationScript(),DRIFT,hard
+player-hub,hub,KPlayer,CallCalculateArenaSeasonScript,KPlayer::CallCalculateArenaSeasonScript(KCORPS_CHANGE_DATA*),DRIFT,hard
+player-hub,hub,KPlayer,CallCalculateArenaWeekScript,KPlayer::CallCalculateArenaWeekScript(KCORPS_CHANGE_DATA*),DRIFT,hard
+player-hub,hub,KPlayer,CallFollowInviteScript,KPlayer::CallFollowInviteScript(),DRIFT,hard
+player-hub,hub,KPlayer,CallNpcHuntRedNameScript,KPlayer::CallNpcHuntRedNameScript(),DRIFT,hard
+player-hub,hub,KPlayer,CanBreakEquip,"KPlayer::CanBreakEquip(unsigned long, unsigned long)",DRIFT,hard
+player-hub,hub,KPlayer,CanCostStamina,KPlayer::CanCostStamina(),DRIFT,hard
+player-hub,hub,KPlayer,CanCostThew,KPlayer::CanCostThew(),DRIFT,hard
+player-hub,hub,KPlayer,CanExchangeItemForBankPassword,"KPlayer::CanExchangeItemForBankPassword(unsigned long, unsigned long, unsigned long, unsigned long)",DRIFT,hard
+player-hub,hub,KPlayer,CanSetExtPoint,KPlayer::CanSetExtPoint(int),DRIFT,hard
+player-hub,hub,KPlayer,CancelResetBankPassword,KPlayer::CancelResetBankPassword(),DRIFT,hard
+player-hub,hub,KPlayer,ChangeDynamicSkillGroup,KPlayer::ChangeDynamicSkillGroup(unsigned long),DRIFT,hard
+player-hub,hub,KPlayer,ChangeTargetSyncInfo,KPlayer::ChangeTargetSyncInfo(),DRIFT,hard
+player-hub,hub,KPlayer,CheckCampBuff,KPlayer::CheckCampBuff(),DRIFT,hard
+player-hub,hub,KPlayer,CheckCorpsValue,"KPlayer::CheckCorpsValue(int, unsigned long)",DRIFT,hard
+player-hub,hub,KPlayer,CheckKorUnderageLimit,KPlayer::CheckKorUnderageLimit(),DRIFT,hard
+player-hub,hub,KPlayer,CheckMoveStateEnableForFollow,KPlayer::CheckMoveStateEnableForFollow(),DRIFT,hard
+player-hub,hub,KPlayer,CheckSafeLock,KPlayer::CheckSafeLock(KSAFE_LOCK_EFFECT_TYPE),DRIFT,hard
+player-hub,hub,KPlayer,ClearFollowInviteInfo,KPlayer::ClearFollowInviteInfo(),DRIFT,hard
+player-hub,hub,KPlayer,ClearTradingInviteInfo,KPlayer::ClearTradingInviteInfo(),DRIFT,hard
+player-hub,hub,KPlayer,CloseDoodad,KPlayer::CloseDoodad(KDoodad*),DRIFT,hard
+player-hub,hub,KPlayer,DelFoe,KPlayer::DelFoe(unsigned long),DRIFT,uncertain(name-elsewhere)
+player-hub,hub,KPlayer,DeleteFailedQuestOnNpc,KPlayer::DeleteFailedQuestOnNpc(KNpc*),DRIFT,hard
+player-hub,hub,KPlayer,DestroyTongBindItem,KPlayer::DestroyTongBindItem(),DRIFT,hard
+player-hub,hub,KPlayer,Disarm,KPlayer::Disarm(int),DRIFT,hard
+player-hub,hub,KPlayer,FeedHorse,"KPlayer::FeedHorse(unsigned long, unsigned long, int)",DRIFT,hard
+player-hub,hub,KPlayer,GetBattery,KPlayer::GetBattery(),DRIFT,hard
+player-hub,hub,KPlayer,GetBomb,KPlayer::GetBomb(int),DRIFT,hard
+player-hub,hub,KPlayer,GetCurrentWeapon,KPlayer::GetCurrentWeapon(unsigned long*),DRIFT,hard
+player-hub,hub,KPlayer,GetDropSurpriseFlag,"KPlayer::GetDropSurpriseFlag(int, int&)",DRIFT,hard
+player-hub,hub,KPlayer,GetEffectForceID,KPlayer::GetEffectForceID(),DRIFT,hard
+player-hub,hub,KPlayer,GetExtPoint,"KPlayer::GetExtPoint(int, int&)",DRIFT,hard
+player-hub,hub,KPlayer,GetExtPointByBits,"KPlayer::GetExtPointByBits(int, int, int, int&)",DRIFT,hard
+player-hub,hub,KPlayer,GetExteriorRepresent,"KPlayer::GetExteriorRepresent(int, unsigned long*, unsigned long*)",DRIFT,hard
+player-hub,hub,KPlayer,GetFellowPet,KPlayer::GetFellowPet(),DRIFT,hard
+player-hub,hub,KPlayer,GetGas,KPlayer::GetGas(int),DRIFT,hard
+player-hub,hub,KPlayer,GetHorseDetailType,KPlayer::GetHorseDetailType(),DRIFT,hard
+player-hub,hub,KPlayer,GetItemRepresent,"KPlayer::GetItemRepresent(unsigned long, unsigned long, unsigned long*, unsigned long*)",DRIFT,hard
+player-hub,hub,KPlayer,GetPet,KPlayer::GetPet(),DRIFT,hard
+player-hub,hub,KPlayer,GetRankPointPercentage,KPlayer::GetRankPointPercentage(),DRIFT,hard
+player-hub,hub,KPlayer,GetTrap,KPlayer::GetTrap(),DRIFT,hard
+player-hub,hub,KPlayer,IsApplyExterior,KPlayer::IsApplyExterior(int),DRIFT,hard
+player-hub,hub,KPlayer,IsInDelayCharge,KPlayer::IsInDelayCharge(),DRIFT,hard
+player-hub,hub,KPlayer,IsInTongWarWithPlayer,KPlayer::IsInTongWarWithPlayer(unsigned long),DRIFT,hard
+player-hub,hub,KPlayer,IsIncomeLimit,KPlayer::IsIncomeLimit(),DRIFT,hard
+player-hub,hub,KPlayer,IsPendentExist,KPlayer::IsPendentExist(unsigned long),DRIFT,hard
+player-hub,hub,KPlayer,IsSaleLimit,KPlayer::IsSaleLimit(),DRIFT,hard
+player-hub,hub,KPlayer,IsTongNewMemberLimited,KPlayer::IsTongNewMemberLimited(),DRIFT,hard
+player-hub,hub,KPlayer,LoadAccountData,"KPlayer::LoadAccountData(unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayer,LoadAccountStateInfo,"KPlayer::LoadAccountStateInfo(unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayer,LoadActivityVariables,"KPlayer::LoadActivityVariables(unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayer,LoadArenaData,"KPlayer::LoadArenaData(unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayer,LoadBankPasswordData,"KPlayer::LoadBankPasswordData(unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayer,LoadDropSurpriseData,"KPlayer::LoadDropSurpriseData(unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayer,LoadDynamicPackageSize,"KPlayer::LoadDynamicPackageSize(unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayer,LoadPendentData,"KPlayer::LoadPendentData(unsigned char*, unsigned int, int)",DRIFT,hard
+player-hub,hub,KPlayer,LoadPendentDataV0,"KPlayer::LoadPendentDataV0(unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayer,LoadPendentDataV2,"KPlayer::LoadPendentDataV2(unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayer,LoadSingleDungeonData,"KPlayer::LoadSingleDungeonData(unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayer,LoadStateInfo_V0,"KPlayer::LoadStateInfo_V0(unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayer,LoadStateInfo_V1,"KPlayer::LoadStateInfo_V1(unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayer,LoadStateInfo_V2,"KPlayer::LoadStateInfo_V2(unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayer,LoadTongExtData,"KPlayer::LoadTongExtData(unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayer,LoadVisitTongInviteList,"KPlayer::LoadVisitTongInviteList(unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayer,LuaAcquireFellowPet,KPlayer::LuaAcquireFellowPet(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaAcquireFellowPetByItem,KPlayer::LuaAcquireFellowPetByItem(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaAddCampActiveScore,KPlayer::LuaAddCampActiveScore(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaAddContributionRemainSpace,KPlayer::LuaAddContributionRemainSpace(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaAddGraduatedApprentice,KPlayer::LuaAddGraduatedApprentice(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaAddGraduatedMentor,KPlayer::LuaAddGraduatedMentor(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaAddHair,KPlayer::LuaAddHair(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaAddHairFreeCount,KPlayer::LuaAddHairFreeCount(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaAddKillCount,KPlayer::LuaAddKillCount(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaAddKillerScoreByQuestInfo,KPlayer::LuaAddKillerScoreByQuestInfo(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaAddManualDropList,KPlayer::LuaAddManualDropList(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaAddPendent,KPlayer::LuaAddPendent(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaAddPrestigeRemainSpace,KPlayer::LuaAddPrestigeRemainSpace(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaAddRankPoint,KPlayer::LuaAddRankPoint(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaAddRegressionReward,KPlayer::LuaAddRegressionReward(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaAddTitlePoint,KPlayer::LuaAddTitlePoint(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaAddUsableMentorValue,KPlayer::LuaAddUsableMentorValue(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaBreakEquip,KPlayer::LuaBreakEquip(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaBreakOTSkill,KPlayer::LuaBreakOTSkill(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaBuyCubPackage,KPlayer::LuaBuyCubPackage(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaCanBreakEquip,KPlayer::LuaCanBreakEquip(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaCanCostStamina,KPlayer::LuaCanCostStamina(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaCanCostThew,KPlayer::LuaCanCostThew(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaCanSetExtPoint,KPlayer::LuaCanSetExtPoint(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaCancelResetBankPassword,KPlayer::LuaCancelResetBankPassword(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaCancelTongVisitInvite,KPlayer::LuaCancelTongVisitInvite(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaChangeColorDiamond,KPlayer::LuaChangeColorDiamond(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaChangeHair,KPlayer::LuaChangeHair(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaCheckEquipRequire,KPlayer::LuaCheckEquipRequire(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaCheckSafeLock,KPlayer::LuaCheckSafeLock(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaClearDuelState,KPlayer::LuaClearDuelState(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaClearExteriorFreeCount,KPlayer::LuaClearExteriorFreeCount(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaClearHairFreeCount,KPlayer::LuaClearHairFreeCount(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaClearPresentCodeCounter,KPlayer::LuaClearPresentCodeCounter(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaClearTalentSkill,KPlayer::LuaClearTalentSkill(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaCloseCubPackage,KPlayer::LuaCloseCubPackage(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaCostHorseFullMeasure,KPlayer::LuaCostHorseFullMeasure(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaExchangeEquipBackUp,KPlayer::LuaExchangeEquipBackUp(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaFollowInviteRequest,KPlayer::LuaFollowInviteRequest(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaForgetSingleRecipe,KPlayer::LuaForgetSingleRecipe(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetAccountLastSaveTime,KPlayer::LuaGetAccountLastSaveTime(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetAllBackPendent,KPlayer::LuaGetAllBackPendent(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetAllExterior,KPlayer::LuaGetAllExterior(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetAllFacePendent,KPlayer::LuaGetAllFacePendent(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetAllHair,KPlayer::LuaGetAllHair(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetAllMountKungfu,KPlayer::LuaGetAllMountKungfu(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetAllWaistPendent,KPlayer::LuaGetAllWaistPendent(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetBaseEquipScore,KPlayer::LuaGetBaseEquipScore(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetBattery,KPlayer::LuaGetBattery(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetBomb,KPlayer::LuaGetBomb(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetContributionRemainSpace,KPlayer::LuaGetContributionRemainSpace(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetCorpsLevel,KPlayer::LuaGetCorpsLevel(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetCorpsRoleLevel,KPlayer::LuaGetCorpsRoleLevel(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetCurrentConnSpeed,KPlayer::LuaGetCurrentConnSpeed(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetCurrentSetID,KPlayer::LuaGetCurrentSetID(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetDirectMentor,KPlayer::LuaGetDirectMentor(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetDisarm,KPlayer::LuaGetDisarm(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetDomesticate,KPlayer::LuaGetDomesticate(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetDynamicSkillGroup,KPlayer::LuaGetDynamicSkillGroup(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetEffectForceID,KPlayer::LuaGetEffectForceID(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetEnchantID,KPlayer::LuaGetEnchantID(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetEndTimeOfFee,KPlayer::LuaGetEndTimeOfFee(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetEquipIDArray,KPlayer::LuaGetEquipIDArray(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetExistFellowPetIndexs,KPlayer::LuaGetExistFellowPetIndexs(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetExtPointByBits,KPlayer::LuaGetExtPointByBits(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetFellowPet,KPlayer::LuaGetFellowPet(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetFellowPetTimeLimit,KPlayer::LuaGetFellowPetTimeLimit(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetFellowshipIDList,KPlayer::LuaGetFellowshipIDList(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetGas,KPlayer::LuaGetGas(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetHairFreeCount,KPlayer::LuaGetHairFreeCount(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetInviteVisitTongList,KPlayer::LuaGetInviteVisitTongList(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetLatestBuyExterior,KPlayer::LuaGetLatestBuyExterior(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetManualDropInfo,KPlayer::LuaGetManualDropInfo(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetMaxActivityAward,KPlayer::LuaGetMaxActivityAward(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetMaxArenaAward,KPlayer::LuaGetMaxArenaAward(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetMaxContribution,KPlayer::LuaGetMaxContribution(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetMaxDirectApprenticeNum,KPlayer::LuaGetMaxDirectApprenticeNum(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetMaxExamPrint,KPlayer::LuaGetMaxExamPrint(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetMaxJustice,KPlayer::LuaGetMaxJustice(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetMaxPrestige,KPlayer::LuaGetMaxPrestige(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetMaxTalentSetCount,KPlayer::LuaGetMaxTalentSetCount(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetMountsEquipScore,KPlayer::LuaGetMountsEquipScore(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetPartyLeaderID,KPlayer::LuaGetPartyLeaderID(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetPendentLeftExistTime,KPlayer::LuaGetPendentLeftExistTime(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetPet,KPlayer::LuaGetPet(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetPresentCodeCounter,KPlayer::LuaGetPresentCodeCounter(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetPrestigeRemainSpace,KPlayer::LuaGetPrestigeRemainSpace(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetRandomDailyQuestFinishedCount,KPlayer::LuaGetRandomDailyQuestFinishedCount(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetRankPointPercentage,KPlayer::LuaGetRankPointPercentage(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetRegressionData,KPlayer::LuaGetRegressionData(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetRewards,KPlayer::LuaGetRewards(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetSDRankListPos,KPlayer::LuaGetSDRankListPos(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetSingleDungeonCustomData,KPlayer::LuaGetSingleDungeonCustomData(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetSingleDungeonMaxLevel,KPlayer::LuaGetSingleDungeonMaxLevel(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetSingleDungeonScore,KPlayer::LuaGetSingleDungeonScore(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetSingleDungeonTotalScore,KPlayer::LuaGetSingleDungeonTotalScore(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetSingleRepresentID,KPlayer::LuaGetSingleRepresentID(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetSkillEnergyCost,KPlayer::LuaGetSkillEnergyCost(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetSkillRageCost,KPlayer::LuaGetSkillRageCost(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetSkillTrainCost,KPlayer::LuaGetSkillTrainCost(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetStaminRateByProfessionID,KPlayer::LuaGetStaminRateByProfessionID(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetStrengthEquipScore,KPlayer::LuaGetStrengthEquipScore(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetTalentSetID,KPlayer::LuaGetTalentSetID(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetTalentSkillLevel,KPlayer::LuaGetTalentSkillLevel(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetTimeLimitReturnItemLeftTime,KPlayer::LuaGetTimeLimitReturnItemLeftTime(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetTimeLimitSoldListInfoLeftTime,KPlayer::LuaGetTimeLimitSoldListInfoLeftTime(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetTongSalary,KPlayer::LuaGetTongSalary(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetTotalEquipScore,KPlayer::LuaGetTotalEquipScore(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetTradeItemLeftTime,KPlayer::LuaGetTradeItemLeftTime(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaGetTrap,KPlayer::LuaGetTrap(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaInviteVisitTong,KPlayer::LuaInviteVisitTong(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaIsBelongForceItem,KPlayer::LuaIsBelongForceItem(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaIsDirectApprentice,KPlayer::LuaIsDirectApprentice(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaIsDirectMentor,KPlayer::LuaIsDirectMentor(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaIsFellowPetAcquired,KPlayer::LuaIsFellowPetAcquired(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaIsFollowController,KPlayer::LuaIsFollowController(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaIsFollower,KPlayer::LuaIsFollower(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaIsHaveExterior,KPlayer::LuaIsHaveExterior(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaIsHaveHair,KPlayer::LuaIsHaveHair(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaIsHaveSecondRepresent,KPlayer::LuaIsHaveSecondRepresent(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaIsHorseGuestEmpty,KPlayer::LuaIsHorseGuestEmpty(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaIsInMyGroupOrTeam,KPlayer::LuaIsInMyGroupOrTeam(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaIsInMyRaid,KPlayer::LuaIsInMyRaid(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaIsInRaid,KPlayer::LuaIsInRaid(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaIsManualDropInfoExist,KPlayer::LuaIsManualDropInfoExist(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaIsMyDirectApprentice,KPlayer::LuaIsMyDirectApprentice(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaIsMyDirectMentor,KPlayer::LuaIsMyDirectMentor(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaIsPendentExist,KPlayer::LuaIsPendentExist(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaIsSecondRepresent,KPlayer::LuaIsSecondRepresent(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaIsSkillRecipeActive,KPlayer::LuaIsSkillRecipeActive(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaIsTongNewMemberLimited,KPlayer::LuaIsTongNewMemberLimited(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaLearnSkillLevel,KPlayer::LuaLearnSkillLevel(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaLootManualDrop,KPlayer::LuaLootManualDrop(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaModifySafeLockMask,KPlayer::LuaModifySafeLockMask(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaMountColorDiamond,KPlayer::LuaMountColorDiamond(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaMountDiamond,KPlayer::LuaMountDiamond(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaOpenCubPackage,KPlayer::LuaOpenCubPackage(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaOpenManualDrop,KPlayer::LuaOpenManualDrop(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaPlayCameraAnimation,KPlayer::LuaPlayCameraAnimation(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaPrepareAddFoe,KPlayer::LuaPrepareAddFoe(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaQuickUpdateDiamond,KPlayer::LuaQuickUpdateDiamond(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaRegisterItemStat,KPlayer::LuaRegisterItemStat(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaRegressionFinished,KPlayer::LuaRegressionFinished(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaRemoveAchievement,KPlayer::LuaRemoveAchievement(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaRemoveFellowPet,KPlayer::LuaRemoveFellowPet(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaRemovePendent,KPlayer::LuaRemovePendent(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaResetBankPassword,KPlayer::LuaResetBankPassword(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaResetBankPasswordNow,KPlayer::LuaResetBankPasswordNow(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaResetTalentSet,KPlayer::LuaResetTalentSet(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSaveTalentSkill,KPlayer::LuaSaveTalentSkill(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSelectBigSword,KPlayer::LuaSelectBigSword(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSelectCommonWeapon,KPlayer::LuaSelectCommonWeapon(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSelectPendent,KPlayer::LuaSelectPendent(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSetBackPendentBoxSize,KPlayer::LuaSetBackPendentBoxSize(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSetBankPassword,KPlayer::LuaSetBankPassword(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSetBankPasswordAnswer,KPlayer::LuaSetBankPasswordAnswer(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSetContinuousLoginRewardFlag,KPlayer::LuaSetContinuousLoginRewardFlag(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSetCurrentSetID,KPlayer::LuaSetCurrentSetID(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSetDisarm,KPlayer::LuaSetDisarm(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSetDynamicSkillGroup,KPlayer::LuaSetDynamicSkillGroup(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSetEquipIDArray,KPlayer::LuaSetEquipIDArray(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSetExtPointByBits,KPlayer::LuaSetExtPointByBits(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSetExterior,KPlayer::LuaSetExterior(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSetFacePendentBoxSize,KPlayer::LuaSetFacePendentBoxSize(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSetFakeNameState,KPlayer::LuaSetFakeNameState(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSetHuntingFlag,KPlayer::LuaSetHuntingFlag(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSetItemMountColorDiamond,KPlayer::LuaSetItemMountColorDiamond(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSetItemMountDiamond,KPlayer::LuaSetItemMountDiamond(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSetItemStrengthLevel,KPlayer::LuaSetItemStrengthLevel(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSetKorUnderageLimit,KPlayer::LuaSetKorUnderageLimit(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSetMaxTalentSetCount,KPlayer::LuaSetMaxTalentSetCount(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSetOptimizationNetworkFlag,KPlayer::LuaSetOptimizationNetworkFlag(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSetPresentCodeCounter,KPlayer::LuaSetPresentCodeCounter(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSetRefuseTeamInvite,KPlayer::LuaSetRefuseTeamInvite(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSetSingleDungeonCustomData,KPlayer::LuaSetSingleDungeonCustomData(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSetSingleDungeonMaxLevel,KPlayer::LuaSetSingleDungeonMaxLevel(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSetSingleDungeonScore,KPlayer::LuaSetSingleDungeonScore(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSetTitle,KPlayer::LuaSetTitle(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSetWaistPendentBoxSize,KPlayer::LuaSetWaistPendentBoxSize(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSpecialRepairItem,KPlayer::LuaSpecialRepairItem(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaStrengthEquip,KPlayer::LuaStrengthEquip(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSwitchMapQueue,KPlayer::LuaSwitchMapQueue(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSwitchRepresent,KPlayer::LuaSwitchRepresent(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSwitchToLastEntry,KPlayer::LuaSwitchToLastEntry(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaSyncEquipIDArray,KPlayer::LuaSyncEquipIDArray(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaTerminateDuel,KPlayer::LuaTerminateDuel(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaUnEquipAll,KPlayer::LuaUnEquipAll(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaUnStrengthEquip,KPlayer::LuaUnStrengthEquip(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaUpdateColorDiamond,KPlayer::LuaUpdateColorDiamond(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaUpdateDiamond,KPlayer::LuaUpdateDiamond(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaUpdateSingleDungeonScore,KPlayer::LuaUpdateSingleDungeonScore(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaUpdateTalentSkill,KPlayer::LuaUpdateTalentSkill(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaVerifyBankPassword,KPlayer::LuaVerifyBankPassword(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaVerifyBankPasswordAnswer,KPlayer::LuaVerifyBankPasswordAnswer(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,LuaVerifyMibao,KPlayer::LuaVerifyMibao(lua_State*),DRIFT,hard
+player-hub,hub,KPlayer,NewGetNpcRelation,KPlayer::NewGetNpcRelation(KNpc*),DRIFT,hard
+player-hub,hub,KPlayer,NewGetPlayerRelation,KPlayer::NewGetPlayerRelation(KPlayer*),DRIFT,hard
+player-hub,hub,KPlayer,OnAddItemStat,"KPlayer::OnAddItemStat(unsigned long, unsigned long, int)",DRIFT,hard
+player-hub,hub,KPlayer,OnClientReady,KPlayer::OnClientReady(),DRIFT,hard
+player-hub,hub,KPlayer,OnExtDataLoadFinish,KPlayer::OnExtDataLoadFinish(),DRIFT,hard
+player-hub,hub,KPlayer,OnPetCreated,KPlayer::OnPetCreated(),DRIFT,hard
+player-hub,hub,KPlayer,OnSellItemStat,"KPlayer::OnSellItemStat(unsigned long, unsigned long, int)",DRIFT,hard
+player-hub,hub,KPlayer,OpenAdvanceBox,"KPlayer::OpenAdvanceBox(unsigned long, unsigned long, int)",DRIFT,hard
+player-hub,hub,KPlayer,PartialLoadExtData,KPlayer::PartialLoadExtData(),DRIFT,hard
+player-hub,hub,KPlayer,ProcessCampKill,"KPlayer::ProcessCampKill(unsigned long, unsigned long, int, int, int)",DRIFT,hard
+player-hub,hub,KPlayer,ProcessFoeKill,KPlayer::ProcessFoeKill(),DRIFT,hard
+player-hub,hub,KPlayer,ProcessPendentExistTime,KPlayer::ProcessPendentExistTime(),DRIFT,hard
+player-hub,hub,KPlayer,ProcessUnderArrested,KPlayer::ProcessUnderArrested(),DRIFT,hard
+player-hub,hub,KPlayer,RemovePendent,KPlayer::RemovePendent(unsigned long),DRIFT,hard
+player-hub,hub,KPlayer,ResetBankPassword,KPlayer::ResetBankPassword(),DRIFT,hard
+player-hub,hub,KPlayer,ResetBankPasswordNow,KPlayer::ResetBankPasswordNow(),DRIFT,hard
+player-hub,hub,KPlayer,SaveAccount,"KPlayer::SaveAccount(unsigned int*, unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayer,SaveAccountStateInfo,"KPlayer::SaveAccountStateInfo(unsigned int*, unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayer,SaveActivityVariables,"KPlayer::SaveActivityVariables(unsigned int*, unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayer,SaveArenaData,"KPlayer::SaveArenaData(unsigned int*, unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayer,SaveBankPasswordData,"KPlayer::SaveBankPasswordData(unsigned int*, unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayer,SaveDropSurpriseData,"KPlayer::SaveDropSurpriseData(unsigned int*, unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayer,SaveDynamicPackageSize,"KPlayer::SaveDynamicPackageSize(unsigned int*, unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayer,SavePendentData,"KPlayer::SavePendentData(unsigned int*, unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayer,SaveSingleDungeonData,"KPlayer::SaveSingleDungeonData(unsigned int*, unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayer,SaveTongExtData,"KPlayer::SaveTongExtData(unsigned int*, unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayer,SaveVisitTongInviteList,"KPlayer::SaveVisitTongInviteList(unsigned int*, unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayer,SelectBigSword,KPlayer::SelectBigSword(),DRIFT,hard
+player-hub,hub,KPlayer,SelectCommonWeapon,KPlayer::SelectCommonWeapon(),DRIFT,hard
+player-hub,hub,KPlayer,SelectPendent,"KPlayer::SelectPendent(int, unsigned long)",DRIFT,hard
+player-hub,hub,KPlayer,SetBankPassword,KPlayer::SetBankPassword(char const*),DRIFT,hard
+player-hub,hub,KPlayer,SetBankPasswordAnswer,"KPlayer::SetBankPasswordAnswer(int, char const*)",DRIFT,hard
+player-hub,hub,KPlayer,SetDropSurpriseFlag,"KPlayer::SetDropSurpriseFlag(int, int)",DRIFT,hard
+player-hub,hub,KPlayer,SetExtPointByBits,"KPlayer::SetExtPointByBits(int, int, int, int&)",DRIFT,hard
+player-hub,hub,KPlayer,SetRepresentID,"KPlayer::SetRepresentID(int, unsigned short)",DRIFT,uncertain(name-elsewhere)
+player-hub,hub,KPlayer,SwitchExteriorRepresent,KPlayer::SwitchExteriorRepresent(int),DRIFT,hard
+player-hub,hub,KPlayer,SwitchItemRepresent,"KPlayer::SwitchItemRepresent(unsigned long, unsigned long)",DRIFT,hard
+player-hub,hub,KPlayer,SyncSingleDungeonCurrentScore,KPlayer::SyncSingleDungeonCurrentScore(),DRIFT,hard
+player-hub,hub,KPlayer,UnApplyExterior,KPlayer::UnApplyExterior(int),DRIFT,hard
+player-hub,hub,KPlayer,UpdateSingleDungeonScore,KPlayer::UpdateSingleDungeonScore(int),DRIFT,hard
+player-hub,hub,KPlayer,VerifyBankPassword,KPlayer::VerifyBankPassword(char const*),DRIFT,hard
+player-hub,hub,KPlayer,VerifyBankPasswordAnswer,KPlayer::VerifyBankPasswordAnswer(char const*),DRIFT,hard
+player-hub,hub,KPlayer,getActivityAward,KPlayer::getActivityAward(),DRIFT,hard
+player-hub,hub,KPlayer,getArenaAward,KPlayer::getArenaAward(),DRIFT,hard
+player-hub,hub,KPlayer,getContribution,KPlayer::getContribution(),DRIFT,hard
+player-hub,hub,KPlayer,getCurrentPrestige,KPlayer::getCurrentPrestige(),DRIFT,hard
+player-hub,hub,KPlayer,getExamPrint,KPlayer::getExamPrint(),DRIFT,hard
+player-hub,hub,KPlayer,getJustice,KPlayer::getJustice(),DRIFT,hard
+player-hub,hub,KPlayer,setActivityAward,KPlayer::setActivityAward(int),DRIFT,hard
+player-hub,hub,KPlayer,setArenaAward,KPlayer::setArenaAward(int),DRIFT,hard
+player-hub,hub,KPlayer,setContribution,KPlayer::setContribution(int),DRIFT,hard
+player-hub,hub,KPlayer,setCurrentPrestige,KPlayer::setCurrentPrestige(int),DRIFT,hard
+player-hub,hub,KPlayer,setExamPrint,KPlayer::setExamPrint(int),DRIFT,hard
+player-hub,hub,KPlayer,setJustice,KPlayer::setJustice(int),DRIFT,hard
+player-hub,hub,KPlayerServer,Activate,KPlayerServer::Activate(),DRIFT,uncertain(name-elsewhere)
+player-hub,hub,KPlayerServer,BroadcastClientReportConfig,KPlayerServer::BroadcastClientReportConfig(),DRIFT,hard
+player-hub,hub,KPlayerServer,DetachRemoteRole,KPlayerServer::DetachRemoteRole(KPlayer*),DRIFT,hard
+player-hub,hub,KPlayerServer,DoAcquireMiniAvatarNotify,"KPlayerServer::DoAcquireMiniAvatarNotify(KPlayer*, unsigned long)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoApplyTongWarKillStatRespond,KPlayerServer::DoApplyTongWarKillStatRespond(),DRIFT,hard
+player-hub,hub,KPlayerServer,DoArenaEnd,"KPlayerServer::DoArenaEnd(unsigned long, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoArenaNotify,"KPlayerServer::DoArenaNotify(unsigned long, int, unsigned long, long, long, int, unsigned long, int, int, unsigned long, ARENA_NOTIFY_TYPE)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoBMBidCancelRespond,"KPlayerServer::DoBMBidCancelRespond(unsigned long, unsigned long, unsigned char)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoBMBidRespond,"KPlayerServer::DoBMBidRespond(unsigned long, unsigned long, unsigned char)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoBMLookupRespond,"KPlayerServer::DoBMLookupRespond(unsigned long, unsigned char, long, unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoBroadcastCharacterRemove,"KPlayerServer::DoBroadcastCharacterRemove(KCharacter*, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoBroadcastSwitchBigSword,KPlayerServer::DoBroadcastSwitchBigSword(KPlayer*),DRIFT,hard
+player-hub,hub,KPlayerServer,DoBroadcastTongCacheChange,"KPlayerServer::DoBroadcastTongCacheChange(unsigned long, TongTechNodeTag, unsigned char)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoBroadcastTongTotalCache,"KPlayerServer::DoBroadcastTongTotalCache(unsigned long, unsigned char const*)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoBroadcastTransparencyValue,KPlayerServer::DoBroadcastTransparencyValue(KCharacter*),DRIFT,hard
+player-hub,hub,KPlayerServer,DoBuyCubPackageRespond,"KPlayerServer::DoBuyCubPackageRespond(int, unsigned long, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoCancelInvitationJoinCorps,"KPlayerServer::DoCancelInvitationJoinCorps(unsigned long, char const*)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoChangeDynamicSkillGroup,"KPlayerServer::DoChangeDynamicSkillGroup(int, unsigned long)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoClearDomesticateData,KPlayerServer::DoClearDomesticateData(int),DRIFT,hard
+player-hub,hub,KPlayerServer,DoClientCharacterRemove,"KPlayerServer::DoClientCharacterRemove(int, unsigned long)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoCorpsOperationRespond,"KPlayerServer::DoCorpsOperationRespond(unsigned long, unsigned long, char const*, unsigned long, char const*, unsigned long, int, char const*, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoDelayMoveParam,"KPlayerServer::DoDelayMoveParam(KCharacter*, int, DelayedMoveParam const&)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoDeleteDirectMentorData,"KPlayerServer::DoDeleteDirectMentorData(int, unsigned long, unsigned long)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoDeleteExterior,"KPlayerServer::DoDeleteExterior(int, unsigned long)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoDeleteExteriorBuyLatestData,"KPlayerServer::DoDeleteExteriorBuyLatestData(int, unsigned int, unsigned long*)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoDeleteSkillRecipe,"KPlayerServer::DoDeleteSkillRecipe(int, unsigned long)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoFollowInviteRequest,"KPlayerServer::DoFollowInviteRequest(KPlayer*, KPlayer*, KFOLLOW_TYPE, KINVITE_FOLLOW_TYPE)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoFollowStop,"KPlayerServer::DoFollowStop(int, char*, FOLLOW_STOP_TYPE)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoJoinArenaQueueRespond,"KPlayerServer::DoJoinArenaQueueRespond(unsigned long, int, unsigned long, char*)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoJoinArenaVisitorQueueRespond,KPlayerServer::DoJoinArenaVisitorQueueRespond(unsigned long),DRIFT,hard
+player-hub,hub,KPlayerServer,DoJoinTongBattleFieldRespond,"KPlayerServer::DoJoinTongBattleFieldRespond(unsigned long, int, unsigned long, char*)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoKickAccountNotify,"KPlayerServer::DoKickAccountNotify(int, int, long)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoLeaveArenaQueueRespond,KPlayerServer::DoLeaveArenaQueueRespond(unsigned long),DRIFT,hard
+player-hub,hub,KPlayerServer,DoLeaveArenaVisitorQueueRespond,KPlayerServer::DoLeaveArenaVisitorQueueRespond(unsigned long),DRIFT,hard
+player-hub,hub,KPlayerServer,DoLeaveTongBattleFieldRespond,"KPlayerServer::DoLeaveTongBattleFieldRespond(unsigned long, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoMibaoVerifyRespond,"KPlayerServer::DoMibaoVerifyRespond(int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoOpenTalentSet,"KPlayerServer::DoOpenTalentSet(KPlayer*, unsigned long)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoPlayerNameData,"KPlayerServer::DoPlayerNameData(unsigned long, unsigned long, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoRemoteTalkMessage,"KPlayerServer::DoRemoteTalkMessage(int, unsigned long, char const*, unsigned long, char const*, unsigned int, unsigned char*, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoResetTalentSet,"KPlayerServer::DoResetTalentSet(KPlayer*, unsigned long)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoRewardsShopNotify,"KPlayerServer::DoRewardsShopNotify(KPlayer*, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSetBattleFieldSide,"KPlayerServer::DoSetBattleFieldSide(KCharacter*, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSetPlayerHunterState,KPlayerServer::DoSetPlayerHunterState(KPlayer*),DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncArenaStatistics,"KPlayerServer::DoSyncArenaStatistics(unsigned long, int, KCORPS_STATISTICS_INFO, int, KCORPS_MEMBER_STATISTICS_INFO*, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncClientReportConfig,KPlayerServer::DoSyncClientReportConfig(KPlayer*),DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncContinuousLoginRewardFlag,KPlayerServer::DoSyncContinuousLoginRewardFlag(KPlayer*),DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncCorpsBaseDataRespond,"KPlayerServer::DoSyncCorpsBaseDataRespond(unsigned long, unsigned long, unsigned long, char*, KCORPS_BASE_INFO, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncCorpsChangeValue,"KPlayerServer::DoSyncCorpsChangeValue(unsigned long, int*, int*)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncCorpsListRespond,"KPlayerServer::DoSyncCorpsListRespond(unsigned long, unsigned long, unsigned long*)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncCorpsMemberDataRespond,"KPlayerServer::DoSyncCorpsMemberDataRespond(unsigned long, unsigned long, unsigned long, int, int, int, KCORPS_CLIENT_CACHE_MEMBER_INFO*)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncCorpsRankListRespond,"KPlayerServer::DoSyncCorpsRankListRespond(unsigned long, int, int, unsigned long*)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncCubPackageSize,KPlayerServer::DoSyncCubPackageSize(KPlayer*),DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncDelayTradeItem,"KPlayerServer::DoSyncDelayTradeItem(int, unsigned long long, unsigned long, long)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncDirectMentorData,"KPlayerServer::DoSyncDirectMentorData(int, unsigned long, unsigned long, KDirectMentorRecordCache const&)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncDomesticateData,"KPlayerServer::DoSyncDomesticateData(int, KPlayer*, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncDomesticateEventInfo,"KPlayerServer::DoSyncDomesticateEventInfo(int, unsigned long, long)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncDomesticateFullMeasureInfo,"KPlayerServer::DoSyncDomesticateFullMeasureInfo(int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncDomesticateGrowthExpInfo,"KPlayerServer::DoSyncDomesticateGrowthExpInfo(int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncDomesticateGrowthLevelInfo,"KPlayerServer::DoSyncDomesticateGrowthLevelInfo(int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncExteriorAllSetData,"KPlayerServer::DoSyncExteriorAllSetData(int, KPlayer*)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncExteriorApplyFlag,"KPlayerServer::DoSyncExteriorApplyFlag(int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncExteriorBuyLatestData,"KPlayerServer::DoSyncExteriorBuyLatestData(int, unsigned int, unsigned long*)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncExteriorFreeCount,"KPlayerServer::DoSyncExteriorFreeCount(int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncExteriorSetData,"KPlayerServer::DoSyncExteriorSetData(int, unsigned int, unsigned int, KEXTERIOR_SET_ITEM*)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncFakeNameState,KPlayerServer::DoSyncFakeNameState(KPlayer*),DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncFellowPetData,KPlayerServer::DoSyncFellowPetData(KPlayer*),DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncFellowPetTimeLimit,"KPlayerServer::DoSyncFellowPetTimeLimit(KPlayer*, int, int, long, long)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncFollow,"KPlayerServer::DoSyncFollow(KCharacter*, unsigned long, KFOLLOW_TYPE)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncHairData,"KPlayerServer::DoSyncHairData(int, unsigned int, unsigned int, unsigned long*)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncHairFreeCount,"KPlayerServer::DoSyncHairFreeCount(int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncManualDropInfo,"KPlayerServer::DoSyncManualDropInfo(KPlayer*, unsigned long, KMANUAL_DROP_INFO*)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncMaxTalentSetCount,"KPlayerServer::DoSyncMaxTalentSetCount(KPlayer*, unsigned long)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncMiniAvatarData,"KPlayerServer::DoSyncMiniAvatarData(KPlayer*, unsigned long)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncPendentData,KPlayerServer::DoSyncPendentData(KPlayer*),DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncPetList,"KPlayerServer::DoSyncPetList(int, KPlayer*)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncPlayerCameraAnimation,"KPlayerServer::DoSyncPlayerCameraAnimation(KPlayer*, unsigned long, int, unsigned int, unsigned long*)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncPlayerDropDeath,KPlayerServer::DoSyncPlayerDropDeath(KPlayer*),DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncPlayerFEAflag,"KPlayerServer::DoSyncPlayerFEAflag(int, unsigned long, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncPlayerPendent,"KPlayerServer::DoSyncPlayerPendent(int, KPlayer*)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncRegressionPlayerData,"KPlayerServer::DoSyncRegressionPlayerData(int, int, int, unsigned char*)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncRewards,KPlayerServer::DoSyncRewards(KPlayer*),DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncRoleDataSectionCheckRequest,"KPlayerServer::DoSyncRoleDataSectionCheckRequest(int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncSafeLockInfo,"KPlayerServer::DoSyncSafeLockInfo(int, unsigned long)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncSelfCurrentSprintPower,KPlayerServer::DoSyncSelfCurrentSprintPower(KPlayer*),DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncSingleDungeonCurrentScore,"KPlayerServer::DoSyncSingleDungeonCurrentScore(int, unsigned long, unsigned long)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncSingleDungeonLastScore,"KPlayerServer::DoSyncSingleDungeonLastScore(int, unsigned long, unsigned long, int, unsigned long)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncSingleDungeonScoreRankInfo,"KPlayerServer::DoSyncSingleDungeonScoreRankInfo(int, unsigned long, unsigned long)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncSingleFellowPetData,"KPlayerServer::DoSyncSingleFellowPetData(KPlayer*, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncSprintV2,KPlayerServer::DoSyncSprintV2(KPlayer*),DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncSunMoonPowerValue,KPlayerServer::DoSyncSunMoonPowerValue(KPlayer*),DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncTalentSkillData,"KPlayerServer::DoSyncTalentSkillData(KPlayer*, unsigned char*, unsigned int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncTargetMiniAvatarMisc,KPlayerServer::DoSyncTargetMiniAvatarMisc(KPlayer*),DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncTargetTargetMiniAvatarMisc,KPlayerServer::DoSyncTargetTargetMiniAvatarMisc(KPlayer*),DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncTimeLimitReturnItem,"KPlayerServer::DoSyncTimeLimitReturnItem(int, unsigned long, unsigned long, int, long)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncTimeLimitSoldListInfo,"KPlayerServer::DoSyncTimeLimitSoldListInfo(int, unsigned long, long)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncTongDiplomacyData,KPlayerServer::DoSyncTongDiplomacyData(),DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncTongInfo,"KPlayerServer::DoSyncTongInfo(int, int, int, int, long)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncTongPersonalData,"KPlayerServer::DoSyncTongPersonalData(int, unsigned char, unsigned long)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncTongSimpleInfoRespond,"KPlayerServer::DoSyncTongSimpleInfoRespond(unsigned long, int, KTongSimpleInfo*)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoSyncTongTotalCache,"KPlayerServer::DoSyncTongTotalCache(int, unsigned char const*)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoTongBattleFieldEnd,"KPlayerServer::DoTongBattleFieldEnd(unsigned long, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoTongBattleFieldNotify,"KPlayerServer::DoTongBattleFieldNotify(unsigned long, int, unsigned long, int, int, unsigned long, TONG_BATTLE_FIELD_NOTIFY_TYPE)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoTongEventNotify,"KPlayerServer::DoTongEventNotify(int, int, unsigned long)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoUpdateFellowPetIndex,"KPlayerServer::DoUpdateFellowPetIndex(int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DoUpdateHorseFullMeasure,"KPlayerServer::DoUpdateHorseFullMeasure(int, unsigned long, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,DumpPakStat,KPlayerServer::DumpPakStat(),DRIFT,hard
+player-hub,hub,KPlayerServer,FlushSendConn,KPlayerServer::FlushSendConn(int),DRIFT,hard
+player-hub,hub,KPlayerServer,OnAcceptJoinArena,"KPlayerServer::OnAcceptJoinArena(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnAcceptJoinTongBattleField,"KPlayerServer::OnAcceptJoinTongBattleField(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnAddRegressionRewardItem,"KPlayerServer::OnAddRegressionRewardItem(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnAimAtSprintDashTarget,"KPlayerServer::OnAimAtSprintDashTarget(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnApplyArenaStatistics,"KPlayerServer::OnApplyArenaStatistics(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnApplyCharacter,"KPlayerServer::OnApplyCharacter(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnApplyCharacterBuffList,"KPlayerServer::OnApplyCharacterBuffList(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnApplyInvitationJoinCorps,"KPlayerServer::OnApplyInvitationJoinCorps(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnApplyLootManualDrop,"KPlayerServer::OnApplyLootManualDrop(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnApplyMiniAvatarData,"KPlayerServer::OnApplyMiniAvatarData(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnApplyPlayerNameData,"KPlayerServer::OnApplyPlayerNameData(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnApplyTongWarKillStatRequest,"KPlayerServer::OnApplyTongWarKillStatRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnBMBidCancelRequest,"KPlayerServer::OnBMBidCancelRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnBMBidRequest,"KPlayerServer::OnBMBidRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnBMLookupRequest,"KPlayerServer::OnBMLookupRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnBuyCubPackageRequest,"KPlayerServer::OnBuyCubPackageRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnBuyExteriorFromItem,"KPlayerServer::OnBuyExteriorFromItem(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnCanelChangeTongMaster,"KPlayerServer::OnCanelChangeTongMaster(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnChangeDynamicSkillGroup,"KPlayerServer::OnChangeDynamicSkillGroup(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnCharacterFollow,"KPlayerServer::OnCharacterFollow(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnCharacterSetRope,"KPlayerServer::OnCharacterSetRope(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnCharacterSprint,"KPlayerServer::OnCharacterSprint(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnCheckCharactersInvalid,"KPlayerServer::OnCheckCharactersInvalid(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnClientConfirmReady,"KPlayerServer::OnClientConfirmReady(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnClientFileCheckSum,"KPlayerServer::OnClientFileCheckSum(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnCorpsChangeLeaderRequest,"KPlayerServer::OnCorpsChangeLeaderRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnCorpsCreateRequest,"KPlayerServer::OnCorpsCreateRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnCorpsDelMemberRequest,"KPlayerServer::OnCorpsDelMemberRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnCorpsDestroyRequest,"KPlayerServer::OnCorpsDestroyRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnCreateFellowPetRequest,"KPlayerServer::OnCreateFellowPetRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnDomesticateEvoke,"KPlayerServer::OnDomesticateEvoke(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnDomesticateFeed,"KPlayerServer::OnDomesticateFeed(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnDomesticateStart,"KPlayerServer::OnDomesticateStart(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnDomesticateStop,"KPlayerServer::OnDomesticateStop(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnFeedHorse,"KPlayerServer::OnFeedHorse(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnFollowInviteRespond,"KPlayerServer::OnFollowInviteRespond(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnForceEndRoadTrack,"KPlayerServer::OnForceEndRoadTrack(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnGameCardBuyCoinRequest,"KPlayerServer::OnGameCardBuyCoinRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnGameCardBuyMoneyRequest,"KPlayerServer::OnGameCardBuyMoneyRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnGameCardSellCoinRequest,"KPlayerServer::OnGameCardSellCoinRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnGameCardSellMoneyRequest,"KPlayerServer::OnGameCardSellMoneyRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnInvitationJoinCorpsRequest,"KPlayerServer::OnInvitationJoinCorpsRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnJoinArenaQueueRequest,"KPlayerServer::OnJoinArenaQueueRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnJoinTongBattleFieldQueueRequest,"KPlayerServer::OnJoinTongBattleFieldQueueRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnLeaveArena,"KPlayerServer::OnLeaveArena(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnLeaveArenaQueueRequest,"KPlayerServer::OnLeaveArenaQueueRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnLeaveTongBattleField,"KPlayerServer::OnLeaveTongBattleField(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnLeaveTongBattleFieldQueueRequest,"KPlayerServer::OnLeaveTongBattleFieldQueueRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnMPakDownloaded,"KPlayerServer::OnMPakDownloaded(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnOpenBox,"KPlayerServer::OnOpenBox(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnOpenTalentSet,"KPlayerServer::OnOpenTalentSet(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnPeekOtherPlayerExterior,"KPlayerServer::OnPeekOtherPlayerExterior(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnResetRoadTrackStartOut,"KPlayerServer::OnResetRoadTrackStartOut(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnRewardsShopBuy,"KPlayerServer::OnRewardsShopBuy(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnSelectTarget,"KPlayerServer::OnSelectTarget(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnSetCubPackageOpenedFlag,"KPlayerServer::OnSetCubPackageOpenedFlag(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnSetPlayerSyncFrameInterval,"KPlayerServer::OnSetPlayerSyncFrameInterval(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnSetTeamSkillEffectSyncOption,"KPlayerServer::OnSetTeamSkillEffectSyncOption(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnSprintDashTarget,"KPlayerServer::OnSprintDashTarget(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnStackItemInTongRepertoryRequest,"KPlayerServer::OnStackItemInTongRepertoryRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnSyncCorpsBaseDataRequest,"KPlayerServer::OnSyncCorpsBaseDataRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnSyncCorpsListRequest,"KPlayerServer::OnSyncCorpsListRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnSyncCorpsMemberDataRequest,"KPlayerServer::OnSyncCorpsMemberDataRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnSyncCorpsRankListRequest,"KPlayerServer::OnSyncCorpsRankListRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnSyncNewDoodadRespond,"KPlayerServer::OnSyncNewDoodadRespond(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnSyncNewNpcRespond,"KPlayerServer::OnSyncNewNpcRespond(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnSyncNewPlayerRespond,"KPlayerServer::OnSyncNewPlayerRespond(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnSyncRoleDataSectionCheckRespond,"KPlayerServer::OnSyncRoleDataSectionCheckRespond(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnSyncSingleDungeonScoreRankInfo,"KPlayerServer::OnSyncSingleDungeonScoreRankInfo(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnSyncTongDiplomacyDateRequest,"KPlayerServer::OnSyncTongDiplomacyDateRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnSyncTongHistoryRequest,"KPlayerServer::OnSyncTongHistoryRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnSyncTongSimpleInfoRequest,"KPlayerServer::OnSyncTongSimpleInfoRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnTimeLimitSoldListBuyRequest,"KPlayerServer::OnTimeLimitSoldListBuyRequest(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,OnVerifyTrustResult,"KPlayerServer::OnVerifyTrustResult(char*, unsigned int, int, int)",DRIFT,hard
+player-hub,hub,KPlayerServer,ProcessNetwork,KPlayerServer::ProcessNetwork(),DRIFT,hard
+player-hub,hub,KPlayerServer,ResetPakStat,KPlayerServer::ResetPakStat(),DRIFT,hard
+network-infra,network-infra,KCenterRemote,NewTable,KCenterRemote::NewTable(),DRIFT,uncertain(name-elsewhere)
+network-infra,network-infra,KCenterRemote,PushBool,KCenterRemote::PushBool(int),DRIFT,uncertain(name-elsewhere)
+network-infra,network-infra,KCenterRemote,PushNill,KCenterRemote::PushNill(),DRIFT,uncertain(name-elsewhere)
+network-infra,network-infra,KCenterRemote,PushNumber,KCenterRemote::PushNumber(double),DRIFT,uncertain(name-elsewhere)
+network-infra,network-infra,KCenterRemote,PushString,KCenterRemote::PushString(char const*),DRIFT,uncertain(name-elsewhere)
+network-infra,network-infra,KCenterRemote,Reset,KCenterRemote::Reset(),DRIFT,uncertain(name-elsewhere)
+network-infra,network-infra,KCenterRemote,SetTable,"KCenterRemote::SetTable(unsigned char*, unsigned char*)",DRIFT,uncertain(name-elsewhere)
+network-infra,network-infra,KGWConstList,IsAuctionSellLeftHoursValid,KGWConstList::IsAuctionSellLeftHoursValid(int),DRIFT,hard
+network-infra,network-infra,KGWServerConstList,Init,KGWServerConstList::Init(char const*),NEW,uncertain(name-elsewhere)
+network-infra,network-infra,KGWServerConstList,LoadData,KGWServerConstList::LoadData(IIniFile*),NEW,uncertain(name-elsewhere)
+network-infra,network-infra,KGWServerConstList,UnInit,KGWServerConstList::UnInit(),NEW,uncertain(name-elsewhere)
+network-infra,network-infra,KG_AsyncSocketStream,SyncSend,KG_AsyncSocketStream::SyncSend(IKG_Buffer*),DRIFT,hard
+network-infra,network-infra,KG_SocketServerAcceptor,SendThreadFunc,KG_SocketServerAcceptor::SendThreadFunc(),DRIFT,hard
+network-infra,network-infra,KG_SocketServerAcceptor,WorkThreadFunction,KG_SocketServerAcceptor::WorkThreadFunction(void*),DRIFT,uncertain(name-elsewhere)
+network-infra,network-infra,KLocalGSDataStat,ClearBulletCurrentStatInfo,KLocalGSDataStat::ClearBulletCurrentStatInfo(),NEW,hard
+network-infra,network-infra,KLocalGSDataStat,GetRecordBulletPerSecondStatInfoFlag,KLocalGSDataStat::GetRecordBulletPerSecondStatInfoFlag(),NEW,hard
+network-infra,network-infra,KLocalGSDataStat,GetRecordSkillCalledCountFlag,KLocalGSDataStat::GetRecordSkillCalledCountFlag(),NEW,hard
+network-infra,network-infra,KLocalGSDataStat,KLocalGSDataStat,KLocalGSDataStat::KLocalGSDataStat(),NEW,hard
+network-infra,network-infra,KLocalGSDataStat,OutPutSkillCalledCountInfo,KLocalGSDataStat::OutPutSkillCalledCountInfo(),NEW,hard
+network-infra,network-infra,KLocalGSDataStat,PrintBulletAverageStatInfo,KLocalGSDataStat::PrintBulletAverageStatInfo(),NEW,hard
+network-infra,network-infra,KLocalGSDataStat,PrintBulletCurrentStatInfo,KLocalGSDataStat::PrintBulletCurrentStatInfo(int),NEW,hard
+network-infra,network-infra,KLocalGSDataStat,RecordBulletApplied,KLocalGSDataStat::RecordBulletApplied(),NEW,hard
+network-infra,network-infra,KLocalGSDataStat,RecordBulletGenerate,KLocalGSDataStat::RecordBulletGenerate(),NEW,hard
+network-infra,network-infra,KLocalGSDataStat,RecordCalledSkill,KLocalGSDataStat::RecordCalledSkill(unsigned long),NEW,hard
+network-infra,network-infra,KLocalGSDataStat,SetRecordBulletPerSecondStatInfoFlag,KLocalGSDataStat::SetRecordBulletPerSecondStatInfoFlag(int),NEW,hard
+network-infra,network-infra,KLocalGSDataStat,SetRecordSkillCalledCountFlag,KLocalGSDataStat::SetRecordSkillCalledCountFlag(int),NEW,hard
+network-infra,network-infra,KLocalGSDataStat,~KLocalGSDataStat,KLocalGSDataStat::~KLocalGSDataStat(),NEW,hard
+network-infra,network-infra,KLogClient,LogAreanaFightStat,KLogClient::LogAreanaFightStat(),DRIFT,hard
+network-infra,network-infra,KLogClient,LogBossLoot,"KLogClient::LogBossLoot(unsigned long, int, unsigned long, char const*)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogBreakEquip,KLogClient::LogBreakEquip(),DRIFT,hard
+network-infra,network-infra,KLogClient,LogChangeExtPointRequest,"KLogClient::LogChangeExtPointRequest(KPlayer*, int, int, int)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogMPakDownloaded,"KLogClient::LogMPakDownloaded(unsigned long, unsigned long long, unsigned long long, unsigned int, unsigned int, KPlayer*)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogMailTalkDailyCount,"KLogClient::LogMailTalkDailyCount(int, KPlayer*)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogMountDiamond,"KLogClient::LogMountDiamond(KPlayer*, KEQUIP_DESC&, int, int, KDIAMOND&, KDIAMOND&)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogNanpinKunlunFightingResult,"KLogClient::LogNanpinKunlunFightingResult(int, char const*)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogPlayerAchieve,"KLogClient::LogPlayerAchieve(KPlayer*, int)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogPlayerAddExteriorRequest,"KLogClient::LogPlayerAddExteriorRequest(KPlayer*, int, int, int, unsigned int, KEXTERIOR_BUY_PARAM const*, int)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogPlayerAddExteriorRespond,"KLogClient::LogPlayerAddExteriorRespond(KPlayer*, int, int, int, unsigned int, KEXTERIOR_BUY_PARAM const*, int)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogPlayerAllAchieve,"KLogClient::LogPlayerAllAchieve(KPlayer*, int)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogPlayerCampChange,"KLogClient::LogPlayerCampChange(KPlayer*, KCAMP, KCAMP)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogPlayerCoinBuyExteriorFailed,"KLogClient::LogPlayerCoinBuyExteriorFailed(KPlayer*, int, int, int, int)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogPlayerCoinBuyHairFailed,"KLogClient::LogPlayerCoinBuyHairFailed(KPlayer*, int, int, int)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogPlayerCurrencyChange,"KLogClient::LogPlayerCurrencyChange(int, int, KPlayer*, char const*, char const*)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogPlayerEnterScene,"KLogClient::LogPlayerEnterScene(KPlayer*, KScene*)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogPlayerExamScore,"KLogClient::LogPlayerExamScore(KPlayer*, int, int)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogPlayerExteriorFreeCountChange,"KLogClient::LogPlayerExteriorFreeCountChange(int, KPlayer*, char const*)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogPlayerHairChangeRequest,"KLogClient::LogPlayerHairChangeRequest(KPlayer*, KHAIRSHOP_BUY_PARAM&, int, int, int)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogPlayerHairChangeRespond,"KLogClient::LogPlayerHairChangeRespond(KPlayer*, unsigned long, unsigned int, int)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogPlayerHairFreeCountChange,"KLogClient::LogPlayerHairFreeCountChange(int, KPlayer*, char const*)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogPlayerLeaveScene,"KLogClient::LogPlayerLeaveScene(KPlayer*, KScene*)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogPlayerRankPointChange,"KLogClient::LogPlayerRankPointChange(int, KPlayer*, char const*, char const*)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogPlayerScriptHairChange,"KLogClient::LogPlayerScriptHairChange(KPlayer*, unsigned long, unsigned int, int)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogPlayerSingleDungeonScore,KLogClient::LogPlayerSingleDungeonScore(KPlayer*),DRIFT,hard
+network-infra,network-infra,KLogClient,LogPlayerTitlePointChange,"KLogClient::LogPlayerTitlePointChange(int, KPlayer*, char const*, char const*)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogQuickUpdateDiaomnd,"KLogClient::LogQuickUpdateDiaomnd(KPlayer*, KDIAMOND&, int, KDIAMOND&, int)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogRecalculatedRemainSpace,"KLogClient::LogRecalculatedRemainSpace(int, KPlayer*)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogRemainSpaceEmpty,"KLogClient::LogRemainSpaceEmpty(int, KPlayer*)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogRewardsBuyRequest,"KLogClient::LogRewardsBuyRequest(KPlayer*, unsigned long, unsigned long, int, int, int)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogRewardsBuyRespond,"KLogClient::LogRewardsBuyRespond(KPlayer*, unsigned long, unsigned long, int, int, int, int)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogStatFishData,KLogClient::LogStatFishData(KPlayer*),DRIFT,hard
+network-infra,network-infra,KLogClient,LogStrengthEquip,KLogClient::LogStrengthEquip(),DRIFT,hard
+network-infra,network-infra,KLogClient,LogTongActivity,"KLogClient::LogTongActivity(KPlayer*, unsigned long, char const*)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogTongContractWarEnd,"KLogClient::LogTongContractWarEnd(KPlayer*, char const*)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogTryReturnTongBindItem,"KLogClient::LogTryReturnTongBindItem(unsigned long, KPlayer*, int, int, int)",DRIFT,hard
+network-infra,network-infra,KLogClient,LogUnStrengthEquip,KLogClient::LogUnStrengthEquip(),DRIFT,hard
+network-infra,network-infra,KLogClient,LogUpdateDiamond,KLogClient::LogUpdateDiamond(),DRIFT,hard
+network-infra,network-infra,KLogClient,LogUsableMentorValueChange,"KLogClient::LogUsableMentorValueChange(int, KPlayer*, char const*, char const*)",DRIFT,hard
+network-infra,network-infra,KLogClient,~KLogClient,KLogClient::~KLogClient(),DRIFT,hard
+network-infra,network-infra,KRelayClient,DoAcceptJoinArena,"KRelayClient::DoAcceptJoinArena(unsigned long, int, int, unsigned long, int, int, unsigned long, unsigned long)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoAcceptJoinTongBattleField,"KRelayClient::DoAcceptJoinTongBattleField(unsigned long, unsigned long, int, int, unsigned long)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoAddNewCampFightValue,"KRelayClient::DoAddNewCampFightValue(int, int, int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoAddTAEquipsScoreRequest,"KRelayClient::DoAddTAEquipsScoreRequest(int, unsigned long, unsigned long, int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoApplyCoinOperatingFlag,KRelayClient::DoApplyCoinOperatingFlag(KPlayer*),DRIFT,hard
+network-infra,network-infra,KRelayClient,DoApplyDirectMentorData,"KRelayClient::DoApplyDirectMentorData(unsigned long, unsigned long)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoApplyFellowshipPlayerFellowInfo,KRelayClient::DoApplyFellowshipPlayerFellowInfo(unsigned long),DRIFT,hard
+network-infra,network-infra,KRelayClient,DoApplyFreezeFarmer,"KRelayClient::DoApplyFreezeFarmer(unsigned long, unsigned long)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoApplyGSNewExtPoint,"KRelayClient::DoApplyGSNewExtPoint(unsigned long, int, int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoApplyInvitationJoinCorps,"KRelayClient::DoApplyInvitationJoinCorps(unsigned long, unsigned long, unsigned long, int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoApplySingleDungeonLastScore,KRelayClient::DoApplySingleDungeonLastScore(unsigned long),DRIFT,hard
+network-infra,network-infra,KRelayClient,DoApplySingleDungeonScoreRankPlayerInfo,KRelayClient::DoApplySingleDungeonScoreRankPlayerInfo(),DRIFT,hard
+network-infra,network-infra,KRelayClient,DoApplyTongCacheRequest,KRelayClient::DoApplyTongCacheRequest(unsigned long),DRIFT,hard
+network-infra,network-infra,KRelayClient,DoBMBidCancelRequest,"KRelayClient::DoBMBidCancelRequest(unsigned long, unsigned long)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoBMBidRequest,"KRelayClient::DoBMBidRequest(unsigned long, unsigned long, int, unsigned long, unsigned long)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoBMLookupRequest,KRelayClient::DoBMLookupRequest(unsigned long),DRIFT,hard
+network-infra,network-infra,KRelayClient,DoBMSellRespond,"KRelayClient::DoBMSellRespond(int, long, unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoBuyExteriorRequest,"KRelayClient::DoBuyExteriorRequest(KPlayer*, int, unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoCancelChangeTongMasterRequest,KRelayClient::DoCancelChangeTongMasterRequest(unsigned long),DRIFT,hard
+network-infra,network-infra,KRelayClient,DoChangeNewExtPointRequest,"KRelayClient::DoChangeNewExtPointRequest(unsigned long, int, int, int, int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoCoinShopBuyItemExRequest,"KRelayClient::DoCoinShopBuyItemExRequest(KPlayer*, unsigned long, unsigned long, int, int, int, unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoCoinShopBuyItemRequest,"KRelayClient::DoCoinShopBuyItemRequest(KPlayer*, unsigned long, unsigned long, int, int, int, unsigned long, unsigned long)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoCorpsChangeLeaderRequest,"KRelayClient::DoCorpsChangeLeaderRequest(unsigned long, unsigned long, unsigned long)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoCorpsCreateRequest,"KRelayClient::DoCorpsCreateRequest(unsigned long, int, char const*)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoCorpsDelMemberRequest,"KRelayClient::DoCorpsDelMemberRequest(unsigned long, unsigned long, unsigned long)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoCorpsDestroyRequest,"KRelayClient::DoCorpsDestroyRequest(unsigned long, unsigned long)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoDelCampNpc,"KRelayClient::DoDelCampNpc(unsigned long, int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoGameCardBuyCoinRequest,"KRelayClient::DoGameCardBuyCoinRequest(KPlayer*, unsigned long, int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoGameCardBuyMoneyRequest,"KRelayClient::DoGameCardBuyMoneyRequest(KPlayer*, unsigned long, int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoGameCardSellCoinRequest,"KRelayClient::DoGameCardSellCoinRequest(KPlayer*, int, int, unsigned char, int, int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoGameCardSellMoneyRequest,"KRelayClient::DoGameCardSellMoneyRequest(KPlayer*, int, int, unsigned char, int, int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoGetSeansonRankInfoRequest,"KRelayClient::DoGetSeansonRankInfoRequest(unsigned long, int, int, int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoHairShopBuyHairRequest,"KRelayClient::DoHairShopBuyHairRequest(KPlayer*, int, unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoInvitationJoinCorpsRequest,"KRelayClient::DoInvitationJoinCorpsRequest(unsigned long, char const*, unsigned long)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoJoinArenaQueueRequest,"KRelayClient::DoJoinArenaQueueRequest(unsigned long, int, unsigned long)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoJoinArenaVisitorQueueRequest,"KRelayClient::DoJoinArenaVisitorQueueRequest(unsigned long, int, int, unsigned long)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoJoinTongBattleFieldQueueRequest,"KRelayClient::DoJoinTongBattleFieldQueueRequest(unsigned long, int, unsigned long)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoLeaveArena,KRelayClient::DoLeaveArena(unsigned long),DRIFT,hard
+network-infra,network-infra,KRelayClient,DoLeaveArenaQueueRequest,KRelayClient::DoLeaveArenaQueueRequest(unsigned long),DRIFT,hard
+network-infra,network-infra,KRelayClient,DoLeaveArenaVisitorQueueRequest,"KRelayClient::DoLeaveArenaVisitorQueueRequest(unsigned long, int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoLeaveTongBattleFieldQueueRequest,KRelayClient::DoLeaveTongBattleFieldQueueRequest(unsigned long),DRIFT,hard
+network-infra,network-infra,KRelayClient,DoLeaveTongBattleFieldRequest,KRelayClient::DoLeaveTongBattleFieldRequest(unsigned long),DRIFT,hard
+network-infra,network-infra,KRelayClient,DoLoadAccountDataRequest,"KRelayClient::DoLoadAccountDataRequest(unsigned long, char const*)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoMibaoVerifyRequest,"KRelayClient::DoMibaoVerifyRequest(unsigned long, PasspodMode, char const*, unsigned long)",DRIFT,uncertain(name-elsewhere)
+network-infra,network-infra,KRelayClient,DoPickupTAEquipsScoreRequest,"KRelayClient::DoPickupTAEquipsScoreRequest(int, unsigned long)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoRemoteTalkMessage,"KRelayClient::DoRemoteTalkMessage(int, unsigned long, char const*, unsigned long, char const*, unsigned int, unsigned char const*)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoReportCampNpcLifePercent,"KRelayClient::DoReportCampNpcLifePercent(unsigned long, int, int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoReturnTongBindItem,"KRelayClient::DoReturnTongBindItem(unsigned long, unsigned long, int, int, int, unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoReturnTongRepairFund,"KRelayClient::DoReturnTongRepairFund(unsigned long, int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoRewardsShopBuyByCoinRequest,"KRelayClient::DoRewardsShopBuyByCoinRequest(KPlayer*, int, unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoSaveAccountData,"KRelayClient::DoSaveAccountData(KPlayer*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoSearchMapQueueRequest,"KRelayClient::DoSearchMapQueueRequest(unsigned long, unsigned long)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoSendClientCheckSum,"KRelayClient::DoSendClientCheckSum(unsigned long, unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoSendGMCommandAllGC,"KRelayClient::DoSendGMCommandAllGC(int, char const*)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoSendGMCommandAllGS,KRelayClient::DoSendGMCommandAllGS(char const*),DRIFT,hard
+network-infra,network-infra,KRelayClient,DoSendGMCommandToPlayerGS,"KRelayClient::DoSendGMCommandToPlayerGS(char const*, char const*)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoSetNewCampFightValue,"KRelayClient::DoSetNewCampFightValue(int, int, int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoStackItemInTongRepertoryRequest,"KRelayClient::DoStackItemInTongRepertoryRequest(unsigned long, unsigned long, unsigned char, unsigned char, unsigned char, unsigned short, int, unsigned char, unsigned short, unsigned short)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoSyncAccountData,"KRelayClient::DoSyncAccountData(unsigned long, unsigned char*, unsigned int, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoSyncCampActiveChange,"KRelayClient::DoSyncCampActiveChange(KCAMP, long)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoSyncCorpsBaseDataRequest,"KRelayClient::DoSyncCorpsBaseDataRequest(unsigned long, unsigned long, unsigned long, int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoSyncCorpsChangeDataRequest,"KRelayClient::DoSyncCorpsChangeDataRequest(unsigned long, long, long, long)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoSyncCorpsListRequest,"KRelayClient::DoSyncCorpsListRequest(unsigned long, unsigned long)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoSyncCorpsMemberDataRequest,"KRelayClient::DoSyncCorpsMemberDataRequest(unsigned long, unsigned long, unsigned long, int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoSyncCorpsRankListRequest,"KRelayClient::DoSyncCorpsRankListRequest(unsigned long, int, int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoSyncFellowshipPlayerMiniAvatar,"KRelayClient::DoSyncFellowshipPlayerMiniAvatar(unsigned long, unsigned long, int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoSyncGSNewExtPoint,"KRelayClient::DoSyncGSNewExtPoint(KPlayer*, int, int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoSyncNewExtPointRequest,"KRelayClient::DoSyncNewExtPointRequest(unsigned long, int, int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoSyncTongHistoryRequest,"KRelayClient::DoSyncTongHistoryRequest(unsigned long, unsigned long, unsigned char)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoSyncTongSimpleInfoRequest,"KRelayClient::DoSyncTongSimpleInfoRequest(unsigned long, int, unsigned long*)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoTongFundRepairRequest,"KRelayClient::DoTongFundRepairRequest(unsigned long, unsigned long, unsigned long, unsigned long, unsigned long, int, int, int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoTongTechTreeProduceItemRespond,"KRelayClient::DoTongTechTreeProduceItemRespond(int, unsigned long, int, int, int, int, int, unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoTransferLog,"KRelayClient::DoTransferLog(void*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoUpdateCorpsValue,"KRelayClient::DoUpdateCorpsValue(unsigned long, int, int, unsigned long*, int*, int*)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoUpdateSingleDungeonScore,"KRelayClient::DoUpdateSingleDungeonScore(unsigned long, unsigned long, unsigned long, int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoUpdateTongMemberEquipScore,"KRelayClient::DoUpdateTongMemberEquipScore(unsigned long, int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoUploadGSTongWarKillStat,"KRelayClient::DoUploadGSTongWarKillStat(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DoVerifyTrustResult,"KRelayClient::DoVerifyTrustResult(unsigned long, int, unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,DumpPakStat,KRelayClient::DumpPakStat(),DRIFT,hard
+network-infra,network-infra,KRelayClient,OnAcceptJoinArenaRespond,"KRelayClient::OnAcceptJoinArenaRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnAcceptJoinTongBattleFieldRespond,"KRelayClient::OnAcceptJoinTongBattleFieldRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnAccountEndTimeOfFee,"KRelayClient::OnAccountEndTimeOfFee(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnAddCampNpcInfo,"KRelayClient::OnAddCampNpcInfo(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnAntiFarmerIPMonitorBroadcast,"KRelayClient::OnAntiFarmerIPMonitorBroadcast(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnApplyFellowshipPlayerMiniAvatar,"KRelayClient::OnApplyFellowshipPlayerMiniAvatar(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnApplyGSNewExtPoint,"KRelayClient::OnApplyGSNewExtPoint(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnApplyTongCacheRespond,"KRelayClient::OnApplyTongCacheRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnArenaNotify,"KRelayClient::OnArenaNotify(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnBMBidCancelRespond,"KRelayClient::OnBMBidCancelRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnBMBidRespond,"KRelayClient::OnBMBidRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnBMLookupRespond,"KRelayClient::OnBMLookupRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnBMSellRequest,"KRelayClient::OnBMSellRequest(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnBroadcastTongWarTotalKill,"KRelayClient::OnBroadcastTongWarTotalKill(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnCancelInvitationJoinCorps,"KRelayClient::OnCancelInvitationJoinCorps(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnChangeNewExtPointRespond,"KRelayClient::OnChangeNewExtPointRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnCoinShopBuyItemExRespond,"KRelayClient::OnCoinShopBuyItemExRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnCoinShopBuyItemRespond,"KRelayClient::OnCoinShopBuyItemRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnCorpsOperationRespond,"KRelayClient::OnCorpsOperationRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnDelCampNpcInfo,"KRelayClient::OnDelCampNpcInfo(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnDeleteDirectMentorRecord,"KRelayClient::OnDeleteDirectMentorRecord(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnForceUpdateSingleDungeonScore,"KRelayClient::OnForceUpdateSingleDungeonScore(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnGameCardBuyCoinRespond,"KRelayClient::OnGameCardBuyCoinRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnGameCardBuyMoneyRespond,"KRelayClient::OnGameCardBuyMoneyRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnGameCardSellCoinRespond,"KRelayClient::OnGameCardSellCoinRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnGameCardSellMoneyRespond,"KRelayClient::OnGameCardSellMoneyRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnGetSeansonRankInfoRespond,"KRelayClient::OnGetSeansonRankInfoRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnJoinArenaQueueRespond,"KRelayClient::OnJoinArenaQueueRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnJoinArenaVisitorQueueRespond,"KRelayClient::OnJoinArenaVisitorQueueRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnJoinTongBattleFieldQueueRespond,"KRelayClient::OnJoinTongBattleFieldQueueRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnLeaveArenaQueueRespond,"KRelayClient::OnLeaveArenaQueueRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnLeaveArenaRespond,"KRelayClient::OnLeaveArenaRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnLeaveArenaVisitorQueueRespond,"KRelayClient::OnLeaveArenaVisitorQueueRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnLeaveTongBattleFieldQueueRespond,"KRelayClient::OnLeaveTongBattleFieldQueueRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnLeaveTongBattleFieldRespond,"KRelayClient::OnLeaveTongBattleFieldRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnLoadAccountData,"KRelayClient::OnLoadAccountData(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnMibaoVerifyRespond,"KRelayClient::OnMibaoVerifyRespond(unsigned char*, unsigned int)",DRIFT,uncertain(name-elsewhere)
+network-infra,network-infra,KRelayClient,OnPutTongRepertoryItemFailRespond,"KRelayClient::OnPutTongRepertoryItemFailRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnRemoteRoleHomeCenterDisconnectNotify,"KRelayClient::OnRemoteRoleHomeCenterDisconnectNotify(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnRemoteTalkMessage,"KRelayClient::OnRemoteTalkMessage(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSaveAccountDataRespond,"KRelayClient::OnSaveAccountDataRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSearchMapQueueRespond,"KRelayClient::OnSearchMapQueueRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnStackTongRepertoryItemFailRespond,"KRelayClient::OnStackTongRepertoryItemFailRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSwitchAntiFarmer,"KRelayClient::OnSwitchAntiFarmer(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSyncAccountData,"KRelayClient::OnSyncAccountData(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSyncArenaStatisticsDataRespond,"KRelayClient::OnSyncArenaStatisticsDataRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSyncCoinOperatingFlag,"KRelayClient::OnSyncCoinOperatingFlag(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSyncCorpsBaseDataRespond,"KRelayClient::OnSyncCorpsBaseDataRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSyncCorpsChangeDataRespond,"KRelayClient::OnSyncCorpsChangeDataRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSyncCorpsListRespond,"KRelayClient::OnSyncCorpsListRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSyncCorpsMemberDataRespond,"KRelayClient::OnSyncCorpsMemberDataRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSyncCorpsRankListRespond,"KRelayClient::OnSyncCorpsRankListRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSyncCorpsSystemID,"KRelayClient::OnSyncCorpsSystemID(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSyncDelayChargeSettings,"KRelayClient::OnSyncDelayChargeSettings(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSyncDirectMentorData,"KRelayClient::OnSyncDirectMentorData(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSyncFellowshipPlayerCamp,"KRelayClient::OnSyncFellowshipPlayerCamp(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSyncFellowshipPlayerMiniAvatar,"KRelayClient::OnSyncFellowshipPlayerMiniAvatar(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSyncGSNewExtPoint,"KRelayClient::OnSyncGSNewExtPoint(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSyncNewExtPointRespond,"KRelayClient::OnSyncNewExtPointRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSyncNewServerAntiFarmerInfo,"KRelayClient::OnSyncNewServerAntiFarmerInfo(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSyncSingleDungeonLastScore,"KRelayClient::OnSyncSingleDungeonLastScore(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSyncSingleDungeonScoreRankFinish,"KRelayClient::OnSyncSingleDungeonScoreRankFinish(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSyncSingleDungeonScoreRankPlayerInfo,"KRelayClient::OnSyncSingleDungeonScoreRankPlayerInfo(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSyncTongCacheChange,"KRelayClient::OnSyncTongCacheChange(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSyncTongDiplomacyData,"KRelayClient::OnSyncTongDiplomacyData(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSyncTongInfo,"KRelayClient::OnSyncTongInfo(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSyncTongPersonalData,"KRelayClient::OnSyncTongPersonalData(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnSyncTongSimpleInfoRespond,"KRelayClient::OnSyncTongSimpleInfoRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnTongBattleFieldNotify,"KRelayClient::OnTongBattleFieldNotify(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnTongEventNotify,"KRelayClient::OnTongEventNotify(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnTongFundRepairRespond,"KRelayClient::OnTongFundRepairRespond(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnTongTechTreeProduceItemRequest,"KRelayClient::OnTongTechTreeProduceItemRequest(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,OnUpdateDirectMentorRecord,"KRelayClient::OnUpdateDirectMentorRecord(unsigned char*, unsigned int)",DRIFT,hard
+network-infra,network-infra,KRelayClient,ResetPakStat,KRelayClient::ResetPakStat(),DRIFT,hard
+network-infra,network-infra,KRelayClient,SaveAccountData,KRelayClient::SaveAccountData(KPlayer*),DRIFT,hard
+network-infra,network-infra,KStatDataServer,UpdateActivityAwardStat,"KStatDataServer::UpdateActivityAwardStat(KPlayer*, int, char const*)",DRIFT,hard
+network-infra,network-infra,KStatDataServer,UpdateArenaAwardStat,"KStatDataServer::UpdateArenaAwardStat(KPlayer*, int, char const*)",DRIFT,hard
+network-infra,network-infra,KStatDataServer,UpdateCampLevelMaxStat,KStatDataServer::UpdateCampLevelMaxStat(),DRIFT,hard
+network-infra,network-infra,KStatDataServer,UpdateCampLevelMinStat,KStatDataServer::UpdateCampLevelMinStat(),DRIFT,hard
+network-infra,network-infra,KStatDataServer,UpdateCampReverse,"KStatDataServer::UpdateCampReverse(KCAMP, char const*)",DRIFT,hard
+network-infra,network-infra,KStatDataServer,UpdateColorDiamondGainStat,"KStatDataServer::UpdateColorDiamondGainStat(int, int, char const*)",DRIFT,hard
+network-infra,network-infra,KStatDataServer,UpdateDiamondStat,"KStatDataServer::UpdateDiamondStat(int, int, char const*)",DRIFT,hard
+network-infra,network-infra,KStatDataServer,UpdateDomesticateInteractStat,KStatDataServer::UpdateDomesticateInteractStat(),DRIFT,hard
+network-infra,network-infra,KStatDataServer,UpdateEvokeFellowPetStat,KStatDataServer::UpdateEvokeFellowPetStat(int),DRIFT,hard
+network-infra,network-infra,KStatDataServer,UpdateExamPrintStat,"KStatDataServer::UpdateExamPrintStat(KPlayer*, int, char const*)",DRIFT,hard
+network-infra,network-infra,KStatDataServer,UpdateFeedStat,"KStatDataServer::UpdateFeedStat(int, unsigned long, int)",DRIFT,hard
+network-infra,network-infra,KStatDataServer,UpdateHunterParticipateArrest,KStatDataServer::UpdateHunterParticipateArrest(),DRIFT,hard
+network-infra,network-infra,KStatDataServer,UpdateJusticeStat,"KStatDataServer::UpdateJusticeStat(KPlayer*, int, char const*)",DRIFT,hard
+network-infra,network-infra,KStatDataServer,UpdateKillerArrested,KStatDataServer::UpdateKillerArrested(),DRIFT,hard
+network-infra,network-infra,KStatDataServer,UpdateKillerHunterChange,"KStatDataServer::UpdateKillerHunterChange(int, int)",DRIFT,hard
+network-infra,network-infra,KStatDataServer,UpdateLowerCampLevelStat,KStatDataServer::UpdateLowerCampLevelStat(),DRIFT,hard
+network-infra,network-infra,KStatDataServer,UpdatePKResStat,"KStatDataServer::UpdatePKResStat(unsigned long, unsigned long)",DRIFT,hard
+network-infra,network-infra,KStatDataServer,UpdatePlayerCallNpcStat,"KStatDataServer::UpdatePlayerCallNpcStat(unsigned long, unsigned long)",DRIFT,hard
+network-infra,network-infra,KStatDataServer,UpdateStaminaStat,"KStatDataServer::UpdateStaminaStat(KPlayer*, int, char const*)",DRIFT,hard
+network-infra,network-infra,KStatDataServer,UpdateThewStat,"KStatDataServer::UpdateThewStat(KPlayer*, int, char const*)",DRIFT,hard
+network-infra,network-infra,KStatDataServer,UpdateTitlePointStat,"KStatDataServer::UpdateTitlePointStat(KPlayer*, int, char const*)",DRIFT,hard
+network-infra,network-infra,KStatDataServer,UpdateUpperCampLevelStat,KStatDataServer::UpdateUpperCampLevelStat(),DRIFT,hard

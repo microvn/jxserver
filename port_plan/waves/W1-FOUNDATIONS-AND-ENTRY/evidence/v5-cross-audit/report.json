@@ -1,0 +1,71 @@
+{
+  "schema": "w1-historical-dossier-v5-cross-audit/v1",
+  "scope": "read-only historical cross-audit: login -> enter-world",
+  "conclusion": "STATIC_ONLY_NO_ACCEPTANCE_OR_LIVE_PARITY_CLAIM",
+  "inputs": {
+    "historical_session": {
+      "path": "/Users/administrator/.codex/sessions/2026/07/25/rollout-2026-07-25T00-51-05-019f9540-95b8-7f83-aec8-1e0e96d02d99.jsonl",
+      "sha256": "76ff0f7bfca7c2b80e70e8806cd19299494727ee73e69fb87e3a234d74f1da14"
+    },
+    "graph_db_sha256": "25e726bf747b3e6ecfe7c045bd7c1a1e1c22610a4ab917cbc37a93f4d45449ba",
+    "v4_target_input_sha256": "d53548d3688e32f24334b4c8970e4a4868b8c13264bdf0dc974a30be23ce2a26"
+  },
+  "historical_claim_inventory": [
+    {
+      "id": "H01-role-login-306-byte-pre-fix",
+      "historical_observation": "An isolated historical candidate probe reported sizeof(R2S_PLAYER_LOGIN_REQUEST)=306 while the target value was 302.",
+      "citations": ["historical session:5414", "evidence/relay/RELAY_ROLE_ENVELOPE_DOSSIER.md:16-26"],
+      "v5_disposition": "INDEPENDENTLY_DISCOVERED_STATIC_CONFLICT",
+      "v5_evidence": "r2s-player-login.historical-overlay-comparison.v5.json: candidate-overlay comparisons for both GameServerD and GameCenterD report payload_byte_size CONFLICTS (306 vs 302).",
+      "non_current": true
+    },
+    {
+      "id": "H02-role-login-302-byte-historical-fix",
+      "historical_observation": "The same session subsequently reported a historical isolated-worktree 302-byte result after changing the envelope representation.",
+      "citations": ["historical session:5439-5440"],
+      "v5_disposition": "TARGET_SIZE_REOPENED_BUT_HISTORICAL_FIX_NOT_CURRENTLY_COMPARABLE",
+      "missing": "No hash-pinned candidate source/binary observation was supplied for that post-fix worktree; this audit deliberately does not recast it as a current candidate overlay.",
+      "non_current": true
+    },
+    {
+      "id": "H03-confirm-envelope-10-byte-dwIP",
+      "historical_observation": "Historical dossier/session records a target 10-byte S2R_CONFIRM_PLAYER_LOGIN_REQUEST with dwPlayerID@2 and dwIP@6; the historical candidate declaration was 6 bytes and sent only player ID.",
+      "citations": ["historical session:5447-5455", "evidence/relay/CONFIRM_PLAYER_LOGIN_REQUEST_DRIFT_2026-07-28.md:15-53"],
+      "v5_disposition": "INVISIBLE_TO_CURRENT_TARGET_STATIC_QUERY",
+      "v5_evidence": "s2r-confirm-player-login.fresh-target-static.json has selected_target_protocol_observations=0 and every required stage UNRESOLVED.",
+      "missing": "GraphEngine needs a TARGET_STATIC_CONFIRMED protocol-payload/dispatch observation for s2r_confirm_player_login_request, including the target payload DWARF bridge and sender/handler closure. Numeric-IP candidate ownership is separately absent.",
+      "non_current": true
+    },
+    {
+      "id": "H04-role-load-version-and-unknown-blocks",
+      "historical_observation": "Role-load dossier records versioned LoadStateInfo parsers, KRoleBaseInfo size 162, and rbtTotal=49/unknown-block preservation as historical implementation leads.",
+      "citations": ["evidence/role-load/ROLE_LOAD_DOSSIER.md:48-97", "historical session:5414"],
+      "v5_disposition": "INVISIBLE_TO_JOURNEY_PROTOCOL_PROJECTION",
+      "missing": "The current journey query has no type/versioned-parser/role-block bridge mode. A target function/type evidence hook linking R2S delivery to role-block headers and LoadStateInfo(version,length) is required.",
+      "non_current": true
+    },
+    {
+      "id": "H05-completion-route-and-entry-ack",
+      "historical_observation": "Prior dossier describes completion routing/m_bSyncDataOver and the client entry/ack frontier as a historical probe lead.",
+      "citations": ["evidence/relay/RELAY_ROLE_ENVELOPE_DOSSIER.md:30-45", "evidence/entry/ENTRY_STATIC_DOSSIER.md"],
+      "v5_disposition": "UNRESOLVED_NO_PROBE_LEDGER",
+      "missing": "No sufficiently paired stock/candidate event set with active binary/config identities, ordered role/process/rung, packet length/hash, and state fingerprint was found in the authorized historical material. No probe ledger was encoded and no packet fact was reconstructed.",
+      "non_current": true
+    },
+    {
+      "id": "H06-checkpackage-post-selection-boundary",
+      "historical_observation": "Historical candidate/target static comparison found CheckPackage upper-bound and KPlayerServer layout drift, but did not observe the failed predicate.",
+      "citations": ["evidence/transport/KPLAYER_CHECKPACKAGE_DRIFT_2026-07-28.md:36-123"],
+      "v5_disposition": "INVISIBLE_AND_RUNTIME_UNRESOLVED",
+      "missing": "V5 has no client-GS decoded-frame/validator-state probe hook. Required capture records decoded protocol ID, frame length, size-table entry, handler pointer, first failed predicate, plus active stock/candidate identities.",
+      "non_current": true
+    }
+  ],
+  "v5_outputs": [
+    "r2s-player-login.fresh-target-static.json",
+    "s2r-confirm-player-login.fresh-target-static.json",
+    "r2s-player-login.target-facts.v5-adapted.json",
+    "r2s-player-login.historical-overlay-comparison.v5.json"
+  ],
+  "probe_ledger": {"status": "UNRESOLVED", "encoded": false, "reason": "No adequate paired historical capture provenance; packet facts were not reconstructed."}
+}

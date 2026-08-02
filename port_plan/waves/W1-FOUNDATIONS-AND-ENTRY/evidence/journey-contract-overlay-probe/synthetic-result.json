@@ -1,0 +1,215 @@
+{
+  "candidate_overlay": {
+    "comparisons": [
+      {
+        "candidate": {
+          "contract_key": "neutral.alpha.ping",
+          "fields": [
+            {
+              "name": "marker",
+              "offset": 0,
+              "order": 0
+            },
+            {
+              "name": "counter",
+              "offset": 4,
+              "order": 1
+            }
+          ],
+          "payload_byte_size": 12,
+          "process": "process-alpha",
+          "protocol": {
+            "enum": {
+              "name": "ALPHA_PING",
+              "value": 17
+            }
+          },
+          "source": {
+            "location": "synthetic://candidate/alpha",
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        },
+        "comparisons": [
+          {
+            "candidate": "process-alpha",
+            "dimension": "process",
+            "status": "MATCHES",
+            "target": "process-alpha"
+          },
+          {
+            "candidate": "ALPHA_PING",
+            "dimension": "protocol.enum.name",
+            "status": "MATCHES",
+            "target": "ALPHA_PING"
+          },
+          {
+            "candidate": 17,
+            "dimension": "protocol.enum.value",
+            "status": "MATCHES",
+            "target": 17
+          },
+          {
+            "candidate": 12,
+            "dimension": "payload_byte_size",
+            "status": "MATCHES",
+            "target": 12
+          },
+          {
+            "candidate": 0,
+            "dimension": "fields.marker.offset",
+            "status": "MATCHES",
+            "target": 0
+          },
+          {
+            "candidate": 0,
+            "dimension": "fields.marker.order",
+            "status": "MATCHES",
+            "target": 0
+          },
+          {
+            "candidate": 4,
+            "dimension": "fields.counter.offset",
+            "status": "MATCHES",
+            "target": 4
+          },
+          {
+            "candidate": 1,
+            "dimension": "fields.counter.order",
+            "status": "MATCHES",
+            "target": 1
+          }
+        ],
+        "contract_key": "neutral.alpha.ping",
+        "status": "MATCHES",
+        "target": {
+          "contract_key": "neutral.alpha.ping",
+          "fields": [
+            {
+              "name": "marker",
+              "offset": 0,
+              "order": 0
+            },
+            {
+              "name": "counter",
+              "offset": 4,
+              "order": 1
+            }
+          ],
+          "payload_byte_size": 12,
+          "process": "process-alpha",
+          "protocol": {
+            "enum": {
+              "name": "ALPHA_PING",
+              "value": 17
+            }
+          },
+          "source": {
+            "location": "synthetic://target/alpha",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        }
+      }
+    ],
+    "limitations": [
+      "Only supplied target contract facts are compared; this result infers no source, binary, or runtime meaning.",
+      "MISSING means a supplied comparison side is absent, not that an implementation is absent."
+    ],
+    "mode": "static-fact-comparison",
+    "origin_separation": {
+      "candidate": "candidate-overlay",
+      "target": "target-contract-facts"
+    },
+    "schema": "journey-candidate-overlay-result/v1"
+  },
+  "inputs": {
+    "seed": "synthetic-neutral",
+    "target_contract_facts": "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-contract-overlay-probe/target-contract-facts.synthetic.json"
+  },
+  "limitations": [
+    "Explicit target contract facts are treated as supplied static facts; this mode does not query GraphEngine or establish runtime behavior."
+  ],
+  "mode": "explicit-target-contract-facts",
+  "probe_ledger": {
+    "first_divergence": {
+      "candidate": {
+        "active_binary_id": "candidate-neutral",
+        "active_config_id": "candidate-config-neutral",
+        "contract_key": "neutral.alpha.ping",
+        "packet_length": 12,
+        "packet_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "process": "process-alpha",
+        "role": "role-neutral",
+        "rung": "rung-two",
+        "schema": "journey-probe-ledger/v1",
+        "sequence": 2,
+        "state_fingerprint": "state-neutral-c",
+        "variant": "candidate"
+      },
+      "contract_key": "neutral.alpha.ping",
+      "differences": [
+        {
+          "candidate": "state-neutral-c",
+          "dimension": "state_fingerprint",
+          "status": "CONFLICTS",
+          "target": "state-neutral-b"
+        }
+      ],
+      "sequence": 2,
+      "stock": {
+        "active_binary_id": "stock-neutral",
+        "active_config_id": "stock-config-neutral",
+        "contract_key": "neutral.alpha.ping",
+        "packet_length": 12,
+        "packet_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "process": "process-alpha",
+        "role": "role-neutral",
+        "rung": "rung-two",
+        "schema": "journey-probe-ledger/v1",
+        "sequence": 2,
+        "state_fingerprint": "state-neutral-b",
+        "variant": "stock"
+      }
+    },
+    "limitations": [
+      "active_binary_id and active_config_id are provenance only and are not compared across variants.",
+      "The result identifies the first supplied observable mismatch, not its cause or runtime semantics."
+    ],
+    "schema": "journey-probe-ledger-result/v1",
+    "status": "CONFLICTS"
+  },
+  "schema": "journey-contract-query/v5",
+  "status": "TARGET_STATIC_PARTIAL",
+  "target_contract_facts": {
+    "contracts": [
+      {
+        "contract_key": "neutral.alpha.ping",
+        "fields": [
+          {
+            "name": "marker",
+            "offset": 0,
+            "order": 0
+          },
+          {
+            "name": "counter",
+            "offset": 4,
+            "order": 1
+          }
+        ],
+        "payload_byte_size": 12,
+        "process": "process-alpha",
+        "protocol": {
+          "enum": {
+            "name": "ALPHA_PING",
+            "value": 17
+          }
+        },
+        "source": {
+          "location": "synthetic://target/alpha",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      }
+    ],
+    "origin": "target",
+    "schema": "journey-target-contract-facts/v1"
+  }
+}

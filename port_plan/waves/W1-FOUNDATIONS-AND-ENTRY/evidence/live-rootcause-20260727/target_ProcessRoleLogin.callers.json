@@ -1,0 +1,14 @@
+{
+  "origin": "target-decompile-v252",
+  "query": "KGameServer::ProcessRoleLogin",
+  "results": [],
+  "rule": "target identity is binary SHA plus address; self calls remain visible and no name join is used",
+  "target_observations": [
+    {
+      "address": "0808478c",
+      "binary_sha256": "655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79",
+      "evidence_id": 29991,
+      "qualified_key": "KGameServer::ProcessRoleLogin"
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+../jx3_dwarf/SO3GameServerD:	file format elf32-i386
+
+0x00a7fd76: DW_TAG_structure_type
+              DW_AT_name	("KROLE_POSITION_DB")
+              DW_AT_byte_size	(0x19)
+              DW_AT_decl_file	("/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/KRoleDBDataDef.h")
+              DW_AT_decl_line	(83)
+              DW_AT_sibling	(0x00a7fde2)
+
+0x00a7fd82:   DW_TAG_member
+                DW_AT_name	("nCenterIndex")
+                DW_AT_decl_file	("/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/KRoleDBDataDef.h")
+                DW_AT_decl_line	(84)
+                DW_AT_type	(0x00a7166c "int32_t")
+                DW_AT_data_member_location	(DW_OP_plus_uconst 0x0)
+
+0x00a7fd90:   DW_TAG_member
+                DW_AT_name	("dwMapID")
+                DW_AT_decl_file	("/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/KRoleDBDataDef.h")
+                DW_AT_decl_line	(85)
+                DW_AT_type	(0x00a71b39 "uint32_t")
+                DW_AT_data_member_location	(DW_OP_plus_uconst 0x4)
+
+0x00a7fd9e:   DW_TAG_member
+                DW_AT_name	("nMapCopyIndex")
+                DW_AT_decl_file	("/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/KRoleDBDataDef.h")
+                DW_AT_decl_line	(86)
+                DW_AT_type	(0x00a7166c "int32_t")
+                DW_AT_data_member_location	(DW_OP_plus_uconst 0x8)
+
+0x00a7fdac:   DW_TAG_member
+                DW_AT_name	("nX")
+                DW_AT_decl_file	("/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/KRoleDBDataDef.h")
+                DW_AT_decl_line	(87)
+                DW_AT_type	(0x00a7166c "int32_t")
+                DW_AT_data_member_location	(DW_OP_plus_uconst 0xc)
+
+0x00a7fdb9:   DW_TAG_member
+                DW_AT_name	("nY")
+                DW_AT_decl_file	("/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/KRoleDBDataDef.h")
+                DW_AT_decl_line	(88)
+                DW_AT_type	(0x00a7166c "int32_t")
+                DW_AT_data_member_location	(DW_OP_plus_uconst 0x10)
+
+0x00a7fdc6:   DW_TAG_member
+                DW_AT_name	("nZ")
+                DW_AT_decl_file	("/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/KRoleDBDataDef.h")
+                DW_AT_decl_line	(89)
+                DW_AT_type	(0x00a7166c "int32_t")
+                DW_AT_data_member_location	(DW_OP_plus_uconst 0x14)
+
+0x00a7fdd3:   DW_TAG_member
+                DW_AT_name	("byFaceDirection")
+                DW_AT_decl_file	("/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/KRoleDBDataDef.h")
+                DW_AT_decl_line	(90)
+                DW_AT_type	(0x00a71b23 "uint8_t")
+                DW_AT_data_member_location	(DW_OP_plus_uconst 0x18)
+
+0x00a7fde1:   NULL
+
+0x059e5028: DW_TAG_structure_type
+              DW_AT_name	("KROLE_POSITION_DB")
+              DW_AT_byte_size	(0x19)
+              DW_AT_decl_file	("/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/KRoleDBDataDef.h")
+              DW_AT_decl_line	(83)
+              DW_AT_sibling	(0x059e509f)
+
+0x059e5035:   DW_TAG_member
+                DW_AT_name	("nCenterIndex")
+                DW_AT_decl_file	("/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/KRoleDBDataDef.h")
+                DW_AT_decl_line	(84)
+                DW_AT_type	(0x059a2940 "int32_t")
+                DW_AT_data_member_location	(DW_OP_plus_uconst 0x0)
+
+0x059e5044:   DW_TAG_member
+                DW_AT_name	("dwMapID")
+                DW_AT_decl_file	("/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/KRoleDBDataDef.h")
+                DW_AT_decl_line	(85)
+                DW_AT_type	(0x059a2dbe "uint32_t")
+                DW_AT_data_member_location	(DW_OP_plus_uconst 0x4)
+
+0x059e5053:   DW_TAG_member
+                DW_AT_name	("nMapCopyIndex")
+                DW_AT_decl_file	("/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/KRoleDBDataDef.h")
+                DW_AT_decl_line	(86)
+                DW_AT_type	(0x059a2940 "int32_t")
+                DW_AT_data_member_location	(DW_OP_plus_uconst 0x8)
+
+0x059e5062:   DW_TAG_member
+                DW_AT_name	("nX")
+                DW_AT_decl_file	("/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/KRoleDBDataDef.h")
+                DW_AT_decl_line	(87)
+                DW_AT_type	(0x059a2940 "int32_t")
+                DW_AT_data_member_location	(DW_OP_plus_uconst 0xc)
+
+0x059e5071:   DW_TAG_member
+                DW_AT_name	("nY")
+                DW_AT_decl_file	("/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/KRoleDBDataDef.h")
+                DW_AT_decl_line	(88)
+                DW_AT_type	(0x059a2940 "int32_t")
+                DW_AT_data_member_location	(DW_OP_plus_uconst 0x10)
+
+0x059e5080:   DW_TAG_member
+                DW_AT_name	("nZ")
+                DW_AT_decl_file	("/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/KRoleDBDataDef.h")
+                DW_AT_decl_line	(89)
+                DW_AT_type	(0x059a2940 "int32_t")
+                DW_AT_data_member_location	(DW_OP_plus_uconst 0x14)
+
+0x059e508f:   DW_TAG_member
+                DW_AT_name	("byFaceDirection")
+                DW_AT_decl_file	("/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/KRoleDBDataDef.h")
+                DW_AT_decl_line	(90)
+                DW_AT_type	(0x059a2da8 "uint8_t")
+                DW_AT_data_member_location	(DW_OP_plus_uconst 0x18)
+
+0x059e509e:   NULL

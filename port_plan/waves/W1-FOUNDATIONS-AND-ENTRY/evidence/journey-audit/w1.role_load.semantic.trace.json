@@ -1,0 +1,35 @@
+{
+  "schema": "jx3-semantic-runtime-trace/v1",
+  "journey_id": "w1.login_enter_world.audit",
+  "scenario_id": "w1-role-load-retained-2026-07-28",
+  "provenance_status": "retained-historical-runtime",
+  "source_evidence": [
+    "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/role-load/DEEP_TARGET_DECOMPILE_AUDIT_2026-07-28.md",
+    "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/role-load/ROLE_STATE_V2_AUDIT_2026-07-28.md",
+    "port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/role-load/ROLE_LOAD_DOSSIER.md"
+  ],
+  "events": [
+    {
+      "event": "role_block",
+      "order": 3,
+      "type": 2,
+      "version": 6,
+      "length": 3510,
+      "owner": "KItemList::LoadItemList",
+      "result": "FAIL",
+      "leftover_bytes": 0,
+      "message": "uLeftSize == 0; GenerateItemFromBinaryData / KItemList failed; LoadExtRoleData failed; OnLoadRoleData failed"
+    },
+    {
+      "event": "role_block",
+      "order": 4,
+      "type": 5,
+      "version": 2,
+      "length": 128,
+      "owner": "KPlayer::LoadStateInfo_V2",
+      "result": "PREDICTED_RISK",
+      "leftover_bytes": 0,
+      "message": "Target-backed next semantic boundary retained from live candidate evidence; do not treat as root before KItemList V6 is crossed."
+    }
+  ]
+}
