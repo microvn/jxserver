@@ -285,43 +285,64 @@ enum PARTY_NOTIFY_CODE
 
 enum SHOP_SYSTEM_RESPOND_CODE
 {
-    ssrcInvalid = 0,
-    ssrcSellSuccess,                    // ���۳ɹ�
-    ssrcBuySuccess,                     // ����ɹ�
-    ssrcRepairSuccess,                  // �����ɹ�
-    ssrcSellFailed,                     // ����ʧ��
-    ssrcBuyFailed,                      // ����ʧ��
-    ssrcRepairFailed,                   // �����ɹ�
-
-    ssrcTooFarAway,                     // ����̫Զ��
-    ssrcNotEnoughMoney,                 // ��Ǯ����
-    ssrcNotEnoughPrestige,              // ������������
-    ssrcNotEnoughContribution,          // ���׵�������
-    ssrcAchievementRecordError,         // ��Ϸ��ɶȲ���
-    ssrcNotEnoughAchievementPoint,      // �ɾ͵�������
-    ssrcNotEnoughRepate,                // ��������
-    ssrcNotEnoughRank,                  // �ƺŲ���Ҫ��
-    ssrcItemSoldOut,                    // �̵����Ʒ������
-    ssrcBagFull,                        // ��������
-    ssrcItemExistLimit,                 // ��Ʒӵ������
-    ssrcItemNotNeedRepair,              // ��Ʒ��������
-    ssrcNoneItemNeedRepair,             // û����Ʒ��������
-    ssrcCanNotSell,                     // ���ܳ��۸ĸ���Ʒ
-    ssrcItemHadLimit,                   // ��Ʒӵ�дﵽ����
-    ssrcItemModifiedWhileBuy,           // ���㷢��������������ʱ���ڣ�������Ʒ�����˱仯
-    ssrcYouDeath,                       // �����
-    ssrcItemBroken,                     // ����Ʒ�;ö�̫�ͣ��޷����ۡ�
-    ssrcItemNotInPackage,               // ��Ʒ���ڱ����С�
-    ssrcNotEnoughItem,                  // ��Ҫ�ĵ��߲���
-
-    // v2.5 NEW currency-payment respond codes
-    ssrcNotEnoughCoin,                  // not enough yuanbao
-    ssrcNotEnoughJustice,               // not enough Justice
-    ssrcNotEnoughExamPrint,             // not enough ExamPrint
-    ssrcNotEnoughArenaAward,            // not enough ArenaAward
-    ssrcNotEnoughActivityAward,         // not enough ActivityAward
-
-    ssrcTotal
+    // Reconciled 1:1 with target SO3GameServerD (DWARF), 54 enumerators.
+    // These values go on the wire verbatim via
+    // KPlayerServer::DoMessageNotify(nConnIndex, ectShopEventNotifyCode, <ssrc>, ...)
+    // so the numbering is a client-visible contract, not an internal detail.
+    ssrcInvalid                     = 0,
+    ssrcSellSuccess                 = 1,
+    ssrcBuySuccess                  = 2,
+    ssrcRepairSuccess               = 3,
+    ssrcTongPayRepair               = 4,
+    ssrcReturnSuccess               = 5,
+    ssrcSellFailed                  = 6,
+    ssrcBuyFailed                   = 7,
+    ssrcRepairFailed                = 8,
+    ssrcReturnFailed                = 9,
+    ssrcTooFarAway                  = 10,
+    ssrcNotEnoughMoney              = 11,
+    ssrcNotEnoughPrestige           = 12,
+    ssrcNotEnoughContribution       = 13,
+    ssrcNotEnoughJustice            = 14,
+    ssrcNotEnoughExamPrint          = 15,
+    ssrcNotEnoughArenaAward         = 16,
+    ssrcNotEnoughActivityAward      = 17,
+    ssrcAchievementRecordError      = 18,
+    ssrcNotEnoughAchievementPoint   = 19,
+    ssrcNotEnoughTongReputation     = 20,
+    ssrcNotEnoughRepate             = 21,
+    ssrcNotEnoughMentorValue        = 22,
+    ssrcNotEnoughRank               = 23,
+    ssrcItemSoldOut                 = 24,
+    ssrcBagFull                     = 25,
+    ssrcItemExistLimit              = 26,
+    ssrcItemNotNeedRepair           = 27,
+    ssrcItemNeedSpecialRepair       = 28,
+    ssrcNoneItemNeedRepair          = 29,
+    ssrcCanNotSell                  = 30,
+    ssrcItemHadLimit                = 31,
+    ssrcItemModifiedWhileBuy        = 32,
+    ssrcYouDeath                    = 33,
+    ssrcItemBroken                  = 34,
+    ssrcItemNotInPackage            = 35,
+    ssrcNotEnoughItem               = 36,
+    ssrcItemCD                      = 37,
+    ssrcOnlyOne                     = 38,
+    ssrcHaveTooMuchMoney            = 39,
+    ssrcTitleTooLow                 = 40,
+    ssrcNotEnoughCoin               = 41,
+    ssrcNotEnoughCorpsValue         = 42,
+    ssrcReturnItemOtherCannotAdd    = 43,
+    ssrcReturnItemSelfCannotDestroy = 44,
+    ssrcHaveTooMuchPrestige         = 45,
+    ssrcHaveTooMuchContribution     = 46,
+    ssrcHaveTooMuchJustice          = 47,
+    ssrcHaveTooMuchExamPrint        = 48,
+    ssrcHaveTooMuchArenaAward       = 49,
+    ssrcHaveTooMuchActivityAward    = 50,
+    ssrcHaveTooMuchAchievementPoint = 51,
+    ssrcHaveTooMuchMentorValue      = 52,
+    ssrcTotal                       = 53
 };
 
 enum TRADING_RESULT_CODE

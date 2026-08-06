@@ -182,6 +182,139 @@ Exit0:
     return;
 }
 
+// Ported 1:1 from target KStatDataServer::UpdateJusticeStat @0x081d2e08.
+void KStatDataServer::UpdateJusticeStat(KPlayer* pPlayer, int nJustice, const char* cszMethod)
+{
+    const char* pszGain = (nJustice >= 0 ? "GAIN" : "COST");
+    char        szVarName[STAT_DATA_NAME_LEN];
+
+    KGLOG_PROCESS_ERROR(pPlayer->m_pScene);
+
+    snprintf(szVarName, sizeof(szVarName), "JUSTICE|%s|%lu|%d|%s",
+        pszGain, pPlayer->m_pScene->m_dwMapID, pPlayer->m_nLevel, cszMethod);
+    szVarName[sizeof(szVarName) - 1] = '\0';
+
+    if (nJustice < 0)
+        nJustice = -nJustice;
+
+    Update(szVarName, nJustice);
+
+Exit0:
+    return;
+}
+
+// Ported 1:1 from target KStatDataServer::UpdateExamPrintStat @0x081d2d28.
+void KStatDataServer::UpdateExamPrintStat(KPlayer* pPlayer, int nExamPrint, const char* cszMethod)
+{
+    const char* pszGain = (nExamPrint >= 0 ? "GAIN" : "COST");
+    char        szVarName[STAT_DATA_NAME_LEN];
+
+    KGLOG_PROCESS_ERROR(pPlayer->m_pScene);
+
+    snprintf(szVarName, sizeof(szVarName), "ExamPrint|%s|%lu|%d|%s",
+        pszGain, pPlayer->m_pScene->m_dwMapID, pPlayer->m_nLevel, cszMethod);
+    szVarName[sizeof(szVarName) - 1] = '\0';
+
+    if (nExamPrint < 0)
+        nExamPrint = -nExamPrint;
+
+    Update(szVarName, nExamPrint);
+
+Exit0:
+    return;
+}
+
+// Ported 1:1 from target KStatDataServer::UpdateArenaAwardStat @0x081d2c48.
+void KStatDataServer::UpdateArenaAwardStat(KPlayer* pPlayer, int nArenaAward, const char* cszMethod)
+{
+    const char* pszGain = (nArenaAward >= 0 ? "GAIN" : "COST");
+    char        szVarName[STAT_DATA_NAME_LEN];
+
+    KGLOG_PROCESS_ERROR(pPlayer->m_pScene);
+
+    snprintf(szVarName, sizeof(szVarName), "ArenaAward|%s|%lu|%d|%s",
+        pszGain, pPlayer->m_pScene->m_dwMapID, pPlayer->m_nLevel, cszMethod);
+    szVarName[sizeof(szVarName) - 1] = '\0';
+
+    if (nArenaAward < 0)
+        nArenaAward = -nArenaAward;
+
+    Update(szVarName, nArenaAward);
+
+Exit0:
+    return;
+}
+
+// Ported 1:1 from target KStatDataServer::UpdateActivityAwardStat @0x081d2b68.
+void KStatDataServer::UpdateActivityAwardStat(KPlayer* pPlayer, int nActivityAward, const char* cszMethod)
+{
+    const char* pszGain = (nActivityAward >= 0 ? "GAIN" : "COST");
+    char        szVarName[STAT_DATA_NAME_LEN];
+
+    KGLOG_PROCESS_ERROR(pPlayer->m_pScene);
+
+    snprintf(szVarName, sizeof(szVarName), "ActivityAward|%s|%lu|%d|%s",
+        pszGain, pPlayer->m_pScene->m_dwMapID, pPlayer->m_nLevel, cszMethod);
+    szVarName[sizeof(szVarName) - 1] = '\0';
+
+    if (nActivityAward < 0)
+        nActivityAward = -nActivityAward;
+
+    Update(szVarName, nActivityAward);
+
+Exit0:
+    return;
+}
+
+// Ported 1:1 from target KStatDataServer::UpdateDiamondStat @0x081d1aae.
+// Target key: "DIAMOND|<GAIN|COST>|<nItemDetail>|<method>"; no scene/level component.
+void KStatDataServer::UpdateDiamondStat(int nCount, int nItemDetail, const char* cszMethod)
+{
+    const char* pszGain = (nCount >= 0 ? "GAIN" : "COST");
+    char        szVarName[STAT_DATA_NAME_LEN];
+
+    KG_PROCESS_ERROR(nCount != 0);
+
+    snprintf(szVarName, sizeof(szVarName), "DIAMOND|%s|%d|%s", pszGain, nItemDetail, cszMethod);
+    szVarName[sizeof(szVarName) - 1] = '\0';
+
+    if (nCount < 0)
+        nCount = -nCount;
+
+    Update(szVarName, nCount);
+
+Exit0:
+    return;
+}
+
+// Ported 1:1 from target KStatDataServer::UpdateMoneyStat @0x081d2fc8.
+// Overload of the 2010 (KPlayer*, int, const char[]) form; see header note.
+void KStatDataServer::UpdateMoneyStat(int nMoney, const char* cszMethod, const char* cszSubType)
+{
+    const char* pszGain = (nMoney >= 0 ? "GAIN" : "COST");
+    char        szVarName[STAT_DATA_NAME_LEN];
+
+    KG_PROCESS_ERROR(nMoney != 0);
+
+    if (cszSubType)
+    {
+        snprintf(szVarName, sizeof(szVarName), "MONEY|%s|%s|%s", pszGain, cszMethod, cszSubType);
+    }
+    else
+    {
+        snprintf(szVarName, sizeof(szVarName), "MONEY|%s|%s", pszGain, cszMethod);
+    }
+    szVarName[sizeof(szVarName) - 1] = '\0';
+
+    if (nMoney < 0)
+        nMoney = -nMoney;
+
+    Update(szVarName, nMoney);
+
+Exit0:
+    return;
+}
+
 void KStatDataServer::UpdateContributeStat(KPlayer* pPlayer, int nContribute, const char cszMethod[])
 {
     const char* pszGain = (nContribute >= 0 ? "GAIN" : "COST");

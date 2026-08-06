@@ -38,6 +38,23 @@ public:
 public:
     void UpdateMoneyStat(KPlayer* pPlayer, int nMoney, const char cszMethod[]);
     void UpdateContributeStat(KPlayer* pPlayer, int nContribute, const char cszMethod[]);
+    // --- v2.5 currency/diamond stats, ported 1:1 from target SO3GameServerD ---
+    // target KStatDataServer::UpdateJusticeStat       @0x081d2e08
+    void UpdateJusticeStat(KPlayer* pPlayer, int nJustice, const char* cszMethod);
+    // target KStatDataServer::UpdateExamPrintStat     @0x081d2d28
+    void UpdateExamPrintStat(KPlayer* pPlayer, int nExamPrint, const char* cszMethod);
+    // target KStatDataServer::UpdateArenaAwardStat    @0x081d2c48
+    void UpdateArenaAwardStat(KPlayer* pPlayer, int nArenaAward, const char* cszMethod);
+    // target KStatDataServer::UpdateActivityAwardStat @0x081d2b68
+    void UpdateActivityAwardStat(KPlayer* pPlayer, int nActivityAward, const char* cszMethod);
+    // target KStatDataServer::UpdateDiamondStat       @0x081d1aae
+    void UpdateDiamondStat(int nCount, int nItemDetail, const char* cszMethod);
+    // target KStatDataServer::UpdateMoneyStat         @0x081d2fc8 -- signature and key
+    // format differ from the 2010 overload above (no KPlayer, no map/level in the key).
+    // Added as an overload rather than replacing the 2010 one: 8 call sites outside
+    // this ticket's allowlist still use the (KPlayer*, int, const char[]) form.
+    // See compile-gate.md "UpdateMoneyStat reconciliation".
+    void UpdateMoneyStat(int nMoney, const char* cszMethod, const char* cszSubType);
     void UpdateSkillStat(DWORD dwSkillID, DWORD dwSkillLevel);
     void UpdateFormationStat(DWORD dwFormationID, DWORD dwFormationLevel);
     void UpdateAutoFlyStat(int nValue, const char cszMethod[]);

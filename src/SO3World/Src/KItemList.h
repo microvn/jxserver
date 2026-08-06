@@ -138,6 +138,8 @@ public:
 
 	ITEM_RESULT_CODE CanEquip(KItem* pItem, DWORD dwX);
     ITEM_RESULT_CODE CanUnEquip(DWORD dwX);
+    // Ported 1:1 from target KItemList::CanDestroyItem @0x082d8370 (DWARF).
+    ITEM_RESULT_CODE CanDestroyItem(DWORD dwBox, DWORD dwX);
 
     BOOL	         Equip(KItem* pItem, DWORD dwX);
     BOOL	         UnEquip(DWORD dwX);

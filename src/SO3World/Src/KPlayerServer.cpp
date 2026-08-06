@@ -9328,9 +9328,14 @@ void KPlayerServer::OnShopBuyRequest(char* pData, size_t nSize, int nConnIndex, 
         nRetCode = pShop->BuyCoinShopItem(pPlayer, Param);
         KGLOG_PROCESS_ERROR(nRetCode);
 
-        // Target SHOP_SYSTEM_RESPOND_CODE::ssrcBuyFailed is the wire value 7.
-        // The legacy SO3Result.h enum has not yet acquired the target spelling.
-        DoMessageNotify(nConnIndex, ectShopEventNotifyCode, 7, NULL, 0);
+        // PORT-TODO[TARGET_REQUIRED] branch polarity is inverted vs target.
+        // Target KPlayerServer::OnShopBuyRequest@0x08075123: BuyCoinShopItem failure
+        // sends ssrcBuyFailed(7) with no log; success sends nothing. This candidate
+        // logs+returns on failure and sends ssrcBuyFailed on SUCCESS. Literal 7 is
+        // replaced by its real spelling here (value-identical); restructuring the
+        // branch is outside this ticket's allowlist. Next evidence: none needed --
+        // target flow is already recovered at 0x08075123-0x08075167.
+        DoMessageNotify(nConnIndex, ectShopEventNotifyCode, ssrcBuyFailed, NULL, 0);
     }
     else
     {
@@ -9391,9 +9396,9 @@ void KPlayerServer::OnShopSellRequest(char* pData, size_t nSize, int nConnIndex,
         nRetCode = pShop->ReturnItem(pPlayer, Param);
         KGLOG_PROCESS_ERROR(nRetCode);
 
-        // Target SHOP_SYSTEM_RESPOND_CODE::ssrcReturnSuccess is wire value 5.
-        // The legacy SO3Result.h enum has not yet acquired the target spelling.
-        DoMessageNotify(nConnIndex, ectShopEventNotifyCode, 5, NULL, 0);
+        // Target KPlayerServer::OnShopSellRequest@0x08074e28: ReturnItem success
+        // sends ssrcReturnSuccess(5). Polarity matches.
+        DoMessageNotify(nConnIndex, ectShopEventNotifyCode, ssrcReturnSuccess, NULL, 0);
     }
     else
     {

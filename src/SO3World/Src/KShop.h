@@ -98,24 +98,24 @@ public:
     int GetPlayerSellPrice(KPlayer* pPlayer, DWORD dwBox, DWORD dwX);
     int GetPlayerRepairPrice(KPlayer* pPlayer, DWORD dwBox, DWORD dwX);
     int GetPlayerAllRepairPrice(KPlayer* pPlayer);
-    /* PORT-UNKNOWN_REQUIRED[STATE] owner=KItemList time-limit metadata; target=KShop::CanReturnItem@0x081423a6;
-       phase=GENERATOR. The target return eligibility query has no source-equivalent metadata API in this closure. */
-    SHOP_SYSTEM_RESPOND_CODE CanReturnItem(KPlayer* pPlayer, DWORD dwItemID, DWORD dwX);
+    // Ported 1:1 from target KShop::CanReturnItem @0x081423a6.
+    // NOTE: arg2 is the BOX, not an item id -- target feeds it to KItemList::GetBoxType
+    // @0x081424dc and to GetItem(dwBox, dwX) @0x0814250e. The previous declaration
+    // mis-named it dwItemID.
+    SHOP_SYSTEM_RESPOND_CODE CanReturnItem(KPlayer* pPlayer, DWORD dwBox, DWORD dwX);
 
 #ifdef _SERVER
     BOOL BuyItem(KPlayer* pPlayer, KSHOP_BUY_ITEM_PARAM& Param);
     BOOL BuyCoinShopItem(KPlayer* pPlayer, KSHOP_BUY_ITEM_PARAM& Param);
     BOOL SellItem(KPlayer* pPlayer, KSHOP_SELL_ITEM_PARAM& Param);
-    /* PORT-UNKNOWN_REQUIRED[STATE] owner=KItemList time-limit metadata; target=KShop::ReturnItem@0x08142d92;
-       phase=GENERATOR. The target consumes the same external return/sold transaction state as CanReturnItem. */
+    // Ported 1:1 from target KShop::ReturnItem @0x08142d92.
     BOOL ReturnItem(KPlayer* pPlayer, KSHOP_SELL_ITEM_PARAM& Param);
     BOOL RepairItem(KPlayer* pPlayer, KSHOP_REPAIR_ITEM_PARAM& Param);
     BOOL RepairItem(KPlayer* pPlayer, DWORD dwBox, DWORD dwX, DWORD dwItemID);
     BOOL RepairAllItems(KPlayer* pPlayer, int nCost);
     BOOL RepairAllItems(KPlayer* pPlayer);
     BOOL BuySoldListItem(KPlayer* pPlayer, KSHOP_BUY_SOLD_LIST_ITEM_PARAM& Param);
-    /* PORT-UNKNOWN_REQUIRED[STATE] owner=KItemList time-limit metadata; target=KShop::BuyTimeLimitSoldListItem@0x08140f10;
-       phase=PRE_BUILD. No substitute is permitted for the target return/sold metadata transaction. */
+    // Ported 1:1 from target KShop::BuyTimeLimitSoldListItem @0x08140f10.
     BOOL BuyTimeLimitSoldListItem(KPlayer* pPlayer, KSHOP_BUY_TIME_LIMIT_SOLD_LIST_ITEM_PARAM& Param);
     /* PORT-UNKNOWN_REQUIRED[ABI] owner=KItemProperty/IItem model; target=KShop::CallBuyItemScript@0x08140b62;
        phase=GENERATOR. The target script call consumes KItemProperty (size 0x68) which is absent from this source model. */

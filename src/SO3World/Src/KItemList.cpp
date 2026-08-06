@@ -2643,6 +2643,49 @@ Exit0:
     return bResult;
 }
 
+// Ported 1:1 from target KItemList::CanDestroyItem @0x082d8370.
+// Target reads pItem->GetProperty()->pItemInfo; the 2010 model exposes the same
+// record directly as KItem::GetItemInfo(), so one accessor replaces two.
+ITEM_RESULT_CODE KItemList::CanDestroyItem(DWORD dwBox, DWORD dwX)
+{
+    ITEM_RESULT_CODE    nResult     = ircFailed;
+    ITEM_RESULT_CODE    nRetCode    = ircFailed;
+    KItem*              pItem       = NULL;
+    KItemInfo*          pItemInfo   = NULL;
+
+    KGLOG_PROCESS_ERROR(dwBox < ibTotal && dwX < m_Box[dwBox].m_dwSize);
+
+    pItem = GetItem(dwBox, dwX);
+    if (pItem == NULL)
+    {
+        nResult = ircItemNotExist;
+        goto Exit0;
+    }
+
+    pItemInfo = pItem->GetItemInfo();
+
+    if (dwBox == ibEquip)
+    {
+        // target 0x082d842b: pItemProperty->pItemInfo->nSub == estPackage(12)
+        if (pItemInfo->nSub == estPackage)
+        {
+            nResult = ircEquipedPackageCannotDestroy;
+            goto Exit0;
+        }
+
+        nRetCode = CanUnEquip(dwX);
+        if (nRetCode != ircSuccess)
+        {
+            nResult = nRetCode;
+            goto Exit0;
+        }
+    }
+
+    nResult = ircSuccess;
+Exit0:
+    return nResult;
+}
+
 BOOL KItemList::IsTimeLimitReturnItem(DWORD dwItemID)
 {
     if (!g_pSO3World->m_bReturnItemFlag)
