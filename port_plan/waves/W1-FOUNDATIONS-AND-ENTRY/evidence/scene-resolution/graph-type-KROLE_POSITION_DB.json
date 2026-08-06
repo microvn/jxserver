@@ -11,700 +11,700 @@
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x000118ad\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2015,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x000c4ebe\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2016,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x00174c99\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2017,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x00245b55\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2018,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x0030447f\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2019,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x003d5bac\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2020,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x004a4d2e\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2021,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x00559938\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2022,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x00610058\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2023,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x006c9a99\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2024,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x0078a084\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2025,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x00844e67\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2026,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x008ee76d\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2027,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x009b6251\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2028,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x00a6a381\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2029,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x00b24b61\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2030,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x00bd51be\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2031,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x00c886a9\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2032,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x00d3e8ef\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2033,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x00dfca05\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2034,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x00eb777b\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2035,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x00f6d899\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2036,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x0102231c\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2037,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x010d4336\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2038,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x0118edfb\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2039,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x0124aa6e\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2040,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x012fc80d\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2041,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x013babc8\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2042,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x0147c6d6\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2043,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x0152e808\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2044,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x015e1c4f\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2045,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x0168edb7\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2046,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x01740d34\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2047,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x017f46d0\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2048,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x018b25ee\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2049,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x0196ec89\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2050,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x01a203b3\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2051,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x01ad1eaa\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2052,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x01b8970e\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2053,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x01c4a212\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2054,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x01cfe28f\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2055,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x01dae5b1\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2056,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x01e6640a\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2057,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x01f1b33a\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2058,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x01fcde35\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2059,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x0207fde6\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2060,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x02131ccf\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2061,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x021e47a5\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2062,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x022a4ce3\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2063,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x02361cfb\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2064,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x02411470\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2065,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x024cec1f\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2066,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x02586b68\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2067,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x0263ad47\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2068,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x026ee84f\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2069,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x027a0ca7\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2070,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x0285f03d\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2071,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x02913d1c\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2072,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x029c7ffb\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2073,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x029d71bd\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2074,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x02a88bab\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2075,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x02b45e53\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2076,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x02bfa81f\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2077,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x02ca9cc4\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2078,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x02d58b58\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2079,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"die\":\"0x00a7fd76\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2080,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"b0164573009cc5e82a501df0431e730ee017dd0c8c355589312579f5e969a063\",\"line\":48,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"source-2010\"},\"status\":\"TARGET_ADDS_OR_REORDERS_FIELDS\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"die\":\"0x059e5028\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 2081,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "TARGET_ADDS_OR_REORDERS_FIELDS"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x000118ad\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73793,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x000c4ebe\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73794,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x00174c99\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73795,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x00245b55\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73796,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x0030447f\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73797,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x003d5bac\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73798,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x004a4d2e\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73799,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x00559938\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73800,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x00610058\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73801,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x006c9a99\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73802,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x0078a084\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73803,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x00844e67\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73804,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x008ee76d\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73805,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x009b6251\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73806,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x00a6a381\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73807,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x00b24b61\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73808,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x00bd51be\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73809,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x00c886a9\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73810,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x00d3e8ef\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73811,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x00dfca05\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73812,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x00eb777b\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73813,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x00f6d899\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73814,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x0102231c\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73815,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x010d4336\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73816,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x0118edfb\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73817,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x0124aa6e\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73818,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x012fc80d\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73819,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x013babc8\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73820,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x0147c6d6\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73821,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x0152e808\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73822,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x015e1c4f\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73823,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x0168edb7\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73824,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       },
       {
         "evidence_id": 29998,
         "payload_json": "{\"authority\":\"TARGET_DWARF_FOR_ABI\",\"mapping_basis\":\"TYPE_NAME_ONLY_PROVISIONALLY_MATCHED\",\"origin\":\"reconciliation\",\"port_rule\":\"USE_TARGET_DWARF_BYTE_OFFSET_ONLY; SOURCE_DECLARATION_ORDINAL_IS_NOT_ABI\",\"schema\":\"type-layout-reconciliation-v1\",\"source_or_candidate_declaration_ref\":{\"file_sha256\":\"c4edb49e67b876505b4b8bec8c7c7a7a06dec000ad6751038b51bd178dc2a508\",\"line\":53,\"name\":\"KROLE_POSITION_DB\",\"origin\":\"candidate-include\"},\"status\":\"MATCH_FIELD_SEQUENCE\",\"target_dwarf_type_ref\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"die\":\"0x01740d34\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 73825,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/layout_reconciliations.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/layout_reconciliations.jsonl",
         "status": "MATCH_FIELD_SEQUENCE"
       }
     ],
@@ -5995,14 +5995,14 @@
         "evidence_id": 30010,
         "payload_json": "{\"authority\":\"TARGET_TYPED_FUNCTION_DECOMPILE\",\"bridge\":\"type-to-lua\",\"evidence\":{\"decompile_text_sha256\":\"f0a7453adc1c599d1285a32781626a82e616a377a70dc446c56d21cde8f8c461\",\"function_address\":\"0807f92c\",\"target_binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"type_use\":{\"address\":\"0807f92c\",\"artifact\":\"re-index/pyghidra/SO3GameCenterD_full.jsonl\",\"qualified_signature\":\"BOOL __cdecl CallMapDispatchScript(KRole * pRole, KROLE_POSITION_DB * pCurrentPos)\"}},\"function\":{\"address\":\"0807f92c\",\"binary_path\":\"/Volumes/ExData/game/jx3/jx3_dwarf/SO3GameCenterD\",\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"inventory\":\"re-index/pyghidra/SO3GameCenterD_full.jsonl\",\"qualified_name\":\"BOOL __cdecl CallMapDispatchScript(KRole * pRole, KROLE_POSITION_DB * pCurrentPos)\"},\"kind\":\"type-contract-bridge\",\"meaning\":\"The target function is a typed user and directly invokes a Lua/script API.\",\"origin\":\"target-dwarf+target-decompile-v252\",\"schema\":\"target-type-usage-contract/v1\",\"status\":\"DIRECT_TARGET_LUA_BRIDGE\",\"target_decompile_signal\":\"_ZN14KScriptManager\",\"type\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 1,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-usage-contract/target_type_usage_contracts.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-usage-contract/target_type_usage_contracts.jsonl",
         "status": "DIRECT_TARGET_LUA_BRIDGE"
       },
       {
         "evidence_id": 30012,
         "payload_json": "{\"bridge\":\"type-user-closure\",\"evidence\":{\"function_address\":\"0804f1a0\",\"target_binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"type_use\":{\"address\":\"0807f92c\",\"artifact\":\"re-index/pyghidra/SO3GameCenterD_full.jsonl\",\"qualified_signature\":\"BOOL __cdecl CallMapDispatchScript(KRole * pRole, KROLE_POSITION_DB * pCurrentPos)\"}},\"function\":{\"address\":\"0807f92c\",\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"inventory\":\"re-index/pyghidra/SO3GameCenterD_full.jsonl\",\"qualified_name\":\"BOOL __cdecl CallMapDispatchScript(KRole * pRole, KROLE_POSITION_DB * pCurrentPos)\"},\"kind\":\"type-contract-bridge\",\"missing\":[\"target-function-not-found\"],\"origin\":\"target-dwarf+target-decompile-v252\",\"schema\":\"target-type-usage-contract/v1\",\"status\":\"UNRESOLVED\",\"type\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"name\":\"KROLE_POSITION_DB\"}}",
         "record_line": 1,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-usage-contract/unresolved.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-usage-contract/unresolved.jsonl",
         "status": "UNRESOLVED"
       }
     ],
@@ -6016,7 +6016,7 @@
         "evidence_id": 30000,
         "payload_json": "{\"authority\":\"TARGET_SIGNATURE\",\"evidence\":{\"address\":\"0807f92c\",\"artifact\":\"re-index/pyghidra/SO3GameCenterD_full.jsonl\",\"qualified_signature\":\"BOOL __cdecl CallMapDispatchScript(KRole * pRole, KROLE_POSITION_DB * pCurrentPos)\"},\"function\":{\"address\":\"0807f92c\",\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"inventory\":\"re-index/pyghidra/SO3GameCenterD_full.jsonl\",\"qualified_name\":\"BOOL __cdecl CallMapDispatchScript(KRole * pRole, KROLE_POSITION_DB * pCurrentPos)\"},\"origin\":\"target_dwarf_pyghidra\",\"referenced_type\":{\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"name\":\"KROLE_POSITION_DB\"},\"resolution\":\"AMBIGUOUS_DUPLICATE_OR_MULTI_BINARY_DIE\",\"schema\":\"target-type-user-v1\",\"status\":\"DIRECT_SIGNATURE_TYPE_USE\",\"target_type_candidate_count\":65}",
         "record_line": 569,
-        "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/type-layout/target_type_users.jsonl",
+        "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/type-layout/target_type_users.jsonl",
         "status": "DIRECT_SIGNATURE_TYPE_USE"
       }
     ],

@@ -17,6 +17,11 @@
 #include "Global.h"
 #include "KCircleList.h"
 #include "KWorldSettings.h"
+// v2.5 target DWARF: KHairShop/KExterior/KMiniAvatarSettings are members of
+// KSO3World (KSO3World.h decl_line 466/479/483), not of KWorldSettings.
+#include "KHairShop.h"
+#include "KExterior.h"
+#include "KMiniAvatarSettings.h"
 #include "KFellowship.h"
 #include "KScriptCenter.h"
 #ifdef _SERVER
@@ -41,6 +46,10 @@
 #include "KRecorderFactory.h"
 #include "KGPQ.h"
 #include "../../Source/Common/SO3World/Src/KCampInfo.h"
+#ifdef _SERVER
+#include "KTongDiplomacyCache.h"
+#include "KTongServer.h"
+#endif
 #include "KTongClient.h"
 #include "KAuctionClient.h"
 #include "../../Source/Common/SO3World/Src/KLogClient.h"
@@ -218,6 +227,11 @@ public:
 #endif
     KCampInfo                           m_CampInfo;
 
+#ifdef _SERVER
+    KTongDiplomacyCache                  m_TongDiplomacyCache;
+    KTongServer                          m_TongServer;
+#endif
+
 #ifdef _CLIENT
     KTongClient                         m_TongClient;
     KAuctionClient                      m_AuctionClient;
@@ -252,10 +266,29 @@ public:
     BOOL                                m_bZoneChargeFlag;
 
 #ifdef _SERVER
+    // PORT-UNKNOWN_REQUIRED[ABI] owner=IItemHouse/IItem/KItemProperty
+    // evidence=target KSO3World+0x608d8 and KItemList::UpdateTimeLimitReturnItemID@082db115.
+    // The candidate KItemManager is not a proven substitute for this virtual property model.
+    // v2.5 target DWARF: KSO3World+0x68768/+0x6876c; initialized TRUE by Init().
+    BOOL                                m_bReturnItemFlag;
+    BOOL                                m_bTimeLimitSoldFlag;
+
 public:
     FILE*                               m_pPlayerTalkLogFile;
     int                                 m_nPlayerTalkLogFileDay;
 #endif
+
+    // v2.5 target DWARF (SO3GameServerD, KSO3World DW_TAG_class_type):
+    //   m_HairShop           KSO3World.h:466  +0x68890  KHairShop
+    //   m_Exterior           KSO3World.h:479  +0x92624  KExterior
+    //   m_MiniAvatarSettings KSO3World.h:483  +0x926b0  KMiniAvatarSettings
+    // Target declares them last, in this order; the interleaving target members
+    // (m_JumpList/m_ModelInfo/m_DomesticateCenter/m_FellowPetMgr/m_RewardsShop/
+    // m_AntiFarmerServer) are not present in the candidate, so relative target
+    // order is preserved by declaring the three here.
+    KHairShop                           m_HairShop;
+    KExterior                           m_Exterior;
+    KMiniAvatarSettings                 m_MiniAvatarSettings;
 };
 
 extern KSO3World* g_pSO3World;

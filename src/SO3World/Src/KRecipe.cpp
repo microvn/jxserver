@@ -90,6 +90,22 @@ CRAFT_RESULT_CODE KRecipeBase::CheckCast(
 	}
 
 	// 主手的武器类型是否符合
+	// PORT-UNKNOWN_REQUIRED[CALLER] owner=KPlayer/SCC-087 + KItemList/SCC-066
+	// target=0x080b6f74 KRecipeBase::CheckCast weapon branch calls
+	//   KPlayer::GetCurrentWeapon(pCaster, NULL) -> IItem*, then IItem vslot+4
+	//   GetProperty() and compares KItemProperty+0x10 against nEquipmentType.
+	// candidate below uses m_ItemList.GetItem(ibEquip, eitMeleeWeapon) and
+	//   m_Common.nDetail; neither target callee exists in this tree.
+	// POLARITY: the target chain short-circuits, so a caster with NO weapon
+	//   reaches crcSuccess; the candidate below returns crcWeaponError for a
+	//   missing weapon.  That inversion is part of this blocked edge and must
+	//   not be carried forward when the branch is restored.  It is left as-is
+	//   because fixing the polarity while the callee and the compared field are
+	//   both unresolved would produce a third, unverifiable behaviour.
+	// next_action=port KPlayer::GetCurrentWeapon and the KItemProperty accessor
+	//   in their owner tickets, then replace this branch 1:1 including polarity.
+	// PORT-UNKNOWN_REQUIRED[ABI] owner=KItemList/SCC-066; KItemProperty+0x10
+	//   identity unresolved; root_behavior_impact=YES; resolution_phase=PRE_BUILD
 	if (nEquipmentType >= 0)
 	{
         KItem* pItem = pCaster->m_ItemList.GetItem(ibEquip, eitMeleeWeapon); 
@@ -113,20 +129,47 @@ CRAFT_RESULT_CODE KCraftRecipe::CanCast(KPlayer* pCaster, KTarget& Target)
 	int	                nIndex					= 0;
 	DWORD               dwCurrentItemCount	    = 0;
 	int                 nFreeRoom				= 0;
-    int                 nCurrentStamina         = 0;
 
 	KGLOG_PROCESS_ERROR(pCaster);
 
 	nResult = CheckCast(pCaster, Target);
 	KG_PROCESS_ERROR(nResult == crcSuccess);
     
-    KG_PROCESS_ERROR_RET_CODE(pCaster->m_nCurrentStamina >= nStamina, crcNotEnoughStamina);
+    // PORT-UNKNOWN_REQUIRED[CALLER] owner=KPlayer/SCC-087 + KTongServer/SCC-066
+    // target=0x080b7a2e KCraftRecipe::CanCast gates the whole stamina block on
+    //   nStamina > 0, then calls KPlayer::CanCostStamina (fail => crcFailed),
+    //   then applies the tong craft-tech discount when
+    //   g_pSO3World->m_TongServer.m_bStaminaDiscountEnable && m_dwTongID != 0:
+    //     nRate = KTongServer::GetCraftTechConsumeReduceStaminaRate(dwTongID, dwProfessionID)
+    //     if (nRate < 100 && !KPlayer::IsTongNewMemberLimited())
+    //         nCostStamina = (int)ceil(nCostStamina * nRate / 100.0);
+    //   and only then compares m_nCurrentStamina >= nCostStamina.
+    // None of those members/callees exist in this tree, so the proven target
+    //   control flow cannot be reconstructed here without inventing them.
+    // next_action=port KPlayer::CanCostStamina/IsTongNewMemberLimited and
+    //   KTongServer::GetCraftTechConsumeReduceStaminaRate + m_bStaminaDiscountEnable,
+    //   then restore this block 1:1.  root_behavior_impact=YES
+    // The nStamina > 0 gate below is the target gate and needs no missing
+    //   callee; only CanCostStamina and the tong discount stay unported.
+    if (nStamina > 0)
+    {
+        KG_PROCESS_ERROR_RET_CODE(pCaster->m_nCurrentStamina >= nStamina, crcNotEnoughStamina);
+    }
 
 	// 周围是否有相应的Doodad
 	if (dwRequireDoodadID)
 	{ 
 		KSearchForAnyDoodad SearchDoodad;
 		SearchDoodad.m_pSelf = pCaster;
+		// PORT-TODO[TARGET_REQUIRED] owner=shared Global.h constant ticket
+		// target=0x080b7a2e/0x080b74d0 set m_nDistance = 0x180 (384) and
+		//   0x080b7186 calls g_InRange(..., 0x180); candidate
+		//   COMMON_PLAYER_OPERATION_DISTANCE = 10 * CELL_LENGTH = 320.
+		// This TU uses the macro at three sites (both SearchDoodad m_nDistance
+		// assignments and the KCraftCopy g_InRange call); one grouped marker covers
+		// all three.  34 further sites outside this TU share the macro, so
+		// KRecipe does not own it.  root_behavior_impact=YES for this TU.
+		// next_action=re-derive the target constant in a shared-constant ticket.
 		SearchDoodad.m_nDistance = COMMON_PLAYER_OPERATION_DISTANCE;
 		SearchDoodad.m_dwDoodadTemplateID = dwRequireDoodadID;
 		AISearchDoodad(SearchDoodad);
@@ -182,7 +225,19 @@ CRAFT_RESULT_CODE KCraftCollection::CanCast(KPlayer* pCaster, KTarget& Target)
     bRetCode = Target.GetTarget(&pDoodad);
     KGLOG_PROCESS_ERROR(bRetCode);
     
-    KG_PROCESS_ERROR_RET_CODE(pDoodad->m_pLootList || pCaster->m_nCurrentThew >= nThew, crcNotEnoughThew);
+    // PORT-UNKNOWN_REQUIRED[CALLER] owner=KPlayer/SCC-087
+    // target=0x080b78f2 KCraftCollection::CanCast enters the thew block only
+    //   when (pDoodad->m_pLootList == NULL && nThew > 0), then calls
+    //   KPlayer::CanCostThew (fail => crcFailed) before comparing
+    //   m_nCurrentThew < nThew => crcNotEnoughThew.
+    // KPlayer::CanCostThew does not exist in this tree.
+    // The two gates below are the target gates; only CanCostThew is missing.
+    // next_action=port KPlayer::CanCostThew, then restore this block 1:1.
+    // root_behavior_impact=YES
+    if (pDoodad->m_pLootList == NULL && nThew > 0)
+    {
+        KG_PROCESS_ERROR_RET_CODE(pCaster->m_nCurrentThew >= nThew, crcNotEnoughThew);
+    }
 
 	nResult = crcSuccess;
 Exit0:
@@ -200,7 +255,16 @@ CRAFT_RESULT_CODE KCraftRead::CanCast(KPlayer* pCaster, KTarget& Target)
 	eRetCode = CheckCast(pCaster, Target);
 	KG_PROCESS_ERROR_RET_CODE(eRetCode == crcSuccess, eRetCode);
     
-    KG_PROCESS_ERROR_RET_CODE(pCaster->m_nCurrentStamina >= nStamina, crcNotEnoughStamina);
+    // PORT-UNKNOWN_REQUIRED[CALLER] owner=KPlayer/SCC-087
+    // target=0x080b77a4 KCraftRead::CanCast gates on nStamina > 0 and calls
+    //   KPlayer::CanCostStamina (fail => crcFailed) before this comparison.
+    // The gate below is ported; only the CanCostStamina call is missing.
+    // next_action=port KPlayer::CanCostStamina, then restore this block 1:1.
+    // root_behavior_impact=YES
+    if (nStamina > 0)
+    {
+        KG_PROCESS_ERROR_RET_CODE(pCaster->m_nCurrentStamina >= nStamina, crcNotEnoughStamina);
+    }
 
     bRetCode = pCaster->m_BookList.IsBookMemorized(dwID, dwSubID); // 必须是未阅读过的
 	KG_PROCESS_ERROR_RET_CODE(!bRetCode, crcBookIsAlreadyMemorized);
@@ -224,9 +288,8 @@ const char* KCraftRead::GetName()
 CRAFT_RESULT_CODE KCraftEnchant::CanCast(KPlayer* pCaster, KTarget& Target)
 {
 	CRAFT_RESULT_CODE   nResult	            = crcFailed;
-	BOOL                bRetCode			= false;
+	int                 nRetCode			= 0;
 	int	                nIndex				= 0;
-    int                 nCurrentStamina     = 0;
 	DWORD               dwCurrentItemCount	= 0;
     KENCHANT*           pEnchant            = NULL;
     KItem*              pTargetItem         = NULL;
@@ -236,7 +299,16 @@ CRAFT_RESULT_CODE KCraftEnchant::CanCast(KPlayer* pCaster, KTarget& Target)
 	nResult = CheckCast(pCaster, Target);
 	KG_PROCESS_ERROR(nResult == crcSuccess);
 
-    KG_PROCESS_ERROR_RET_CODE(pCaster->m_nCurrentStamina >= nStamina, crcNotEnoughStamina);
+    // PORT-UNKNOWN_REQUIRED[CALLER] owner=KPlayer/SCC-087
+    // target=0x080b74d0 KCraftEnchant::CanCast gates on nStamina > 0 and calls
+    //   KPlayer::CanCostStamina (fail => crcFailed) before this comparison.
+    // The gate below is ported; only the CanCostStamina call is missing.
+    // next_action=port KPlayer::CanCostStamina, then restore this block 1:1.
+    // root_behavior_impact=YES
+    if (nStamina > 0)
+    {
+        KG_PROCESS_ERROR_RET_CODE(pCaster->m_nCurrentStamina >= nStamina, crcNotEnoughStamina);
+    }
 
 	// 周围是否有相应的Doodad
 	if (dwRequireDoodadID)
@@ -264,12 +336,25 @@ CRAFT_RESULT_CODE KCraftEnchant::CanCast(KPlayer* pCaster, KTarget& Target)
 		KG_PROCESS_ERROR_RET_CODE(dwCurrentItemCount >= dwRequireItemCount[nIndex], crcNotEnoughItem);
 	}
     
+    // PORT-UNKNOWN_REQUIRED[CALLER] owner=KItemList/SCC-066 + ItemHouse boundary
+    // target=0x080b74d0 resolves the enchant through the item-house interface:
+    //   g_pSO3World->m_piItemHouse vtable slot 0x38 (dwEnchantID), not through
+    //   m_ItemManager.m_EnchantLib.GetEnchantInfo as below.
+    // next_action=recover the IItemHouse slot-0x38 declaration and route this
+    //   lookup through it.  root_behavior_impact=YES
     pEnchant = g_pSO3World->m_ItemManager.m_EnchantLib.GetEnchantInfo(dwEnchantID);
     KGLOG_PROCESS_ERROR(pEnchant);
     
-    bRetCode = Target.GetTarget(&pTargetItem);
-    KGLOG_PROCESS_ERROR(bRetCode);
+    nRetCode = Target.GetTarget(&pTargetItem);
+    KGLOG_PROCESS_ERROR(nRetCode);
 
+    // PORT-UNKNOWN_REQUIRED[ABI] owner=KItemList/SCC-066 + ItemHouse boundary
+    // target=0x080b74d0 reads the target item through IItem vslot+4
+    //   GetProperty() and compares KItemProperty+0x8 == 0 and
+    //   KItemProperty+0xc == enchant record +0x18; the candidate below uses
+    //   m_Common.nGenre/m_Common.nSub and pEnchant->nDestItemSubType.
+    // next_action=bind KItemProperty+0x8/+0xc and enchant record +0x18 to real
+    //   declarations, then restore the comparison 1:1.  root_behavior_impact=YES
     KG_PROCESS_ERROR_RET_CODE(
         pTargetItem->m_Common.nGenre    == igEquipment && 
         pTargetItem->m_Common.nSub      == pEnchant->nDestItemSubType,
@@ -299,7 +384,16 @@ CRAFT_RESULT_CODE KCraftCopy::CanCast(KPlayer* pCaster, KTarget& Target)
     eRetCode = CheckCast(pCaster, Target, dwProfessionIDExt, dwRequireProfessionLevelExt);
 	KG_PROCESS_ERROR_RET_CODE(eRetCode == crcSuccess, eRetCode);
     
-    KG_PROCESS_ERROR_RET_CODE(pCaster->m_nCurrentThew >= nThew, crcNotEnoughThew);
+    // PORT-UNKNOWN_REQUIRED[CALLER] owner=KPlayer/SCC-087
+    // target=0x080b7186 KCraftCopy::CanCast gates on nThew > 0 and calls
+    //   KPlayer::CanCostThew (fail => crcFailed) before this comparison.
+    // The gate below is ported; only the CanCostThew call is missing.
+    // next_action=port KPlayer::CanCostThew, then restore this block 1:1.
+    // root_behavior_impact=YES
+    if (nThew > 0)
+    {
+        KG_PROCESS_ERROR_RET_CODE(pCaster->m_nCurrentThew >= nThew, crcNotEnoughThew);
+    }
     KG_PROCESS_ERROR_RET_CODE(pCaster->m_nLevel >= nRequirePlayerLevel, crcTooLowLevel);
     
     // 身上道具是否足够
@@ -418,7 +512,6 @@ BOOL KRecipe<KCraftRecipe>::LoadLine(ITabFile* piTabFile, int nLine, KCraftRecip
 {
     BOOL    bResult  = false;
 	BOOL    bRetCode = false;
-    int     nRetCode = 0;
 	int     nIndex   = 0;
 	char    szTempColName[_NAME_LEN];
     char    szScriptName[MAX_PATH];
@@ -426,47 +519,47 @@ BOOL KRecipe<KCraftRecipe>::LoadLine(ITabFile* piTabFile, int nLine, KCraftRecip
 	KGLOG_PROCESS_ERROR(piTabFile);
 	
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_STAMINA, DefaultRecipe.nStamina, (int*)&(Recipe.nStamina));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_PROFESSION_ID, DefaultRecipe.dwProfessionID, (int*)&(Recipe.dwProfessionID));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_REQUIRE_PROFESSION_LEVEL, DefaultRecipe.dwRequireProfessionLevel, (int*)&(Recipe.dwRequireProfessionLevel));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_TOOL_ITEM_TYPE, DefaultRecipe.dwToolItemType, (int*)&(Recipe.dwToolItemType));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_TOOL_ITEM_INDEX, DefaultRecipe.dwToolItemIndex, (int*)&(Recipe.dwToolItemIndex));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_EQUIPMENT_TYPE, DefaultRecipe.nEquipmentType, (int*)&(Recipe.nEquipmentType));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_EXP, DefaultRecipe.dwProfessionExp, (int*)&(Recipe.dwProfessionExp));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_PREPARE_FRAME, DefaultRecipe.nPrepareFrame, (int*)&(Recipe.nPrepareFrame));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	//以下是合成的物品需求
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_ID, DefaultRecipe.dwID, (int*)&(Recipe.dwID));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetString(nLine, RECIPE_NAME, DefaultRecipe.szName, Recipe.szName, MAX_RECIPE_NAME_LEN);
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetString(nLine, RECIPE_BELONG, DefaultRecipe.szBelong, Recipe.szBelong, MAX_BELONG_NAME_LEN);
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_RESULT_ON_LEVEL, DefaultRecipe.bResultOnLevel, (int*)&(Recipe.bResultOnLevel));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_REQUIRE_BRANCH_ID, DefaultRecipe.dwRequireBranchID, (int*)&(Recipe.dwRequireBranchID));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_REQUIRE_DOODAD, DefaultRecipe.dwRequireDoodadID, (int*)&(Recipe.dwRequireDoodadID));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	for (nIndex = 0; nIndex < MAX_MATERIAL; nIndex++)
 	{
@@ -474,19 +567,19 @@ BOOL KRecipe<KCraftRecipe>::LoadLine(ITabFile* piTabFile, int nLine, KCraftRecip
         szTempColName[sizeof(szTempColName) - 1] = '\0';
 
 		bRetCode = piTabFile->GetInteger(nLine, szTempColName, DefaultRecipe.dwRequireItemType[nIndex], (int*)&(Recipe.dwRequireItemType[nIndex]));
-		(void)bRetCode; /*[endgame] tolerant*/
+		KGLOG_PROCESS_ERROR(bRetCode);
 
 		snprintf(szTempColName, sizeof(szTempColName), "%s%d", RECIPE_REQUIRE_ITEM_INDEX, nIndex + 1);
         szTempColName[sizeof(szTempColName) - 1] = '\0';
 
 		bRetCode = piTabFile->GetInteger(nLine, szTempColName, DefaultRecipe.dwRequireItemIndex[nIndex], (int*)&(Recipe.dwRequireItemIndex[nIndex]));
-		(void)bRetCode; /*[endgame] tolerant*/
+		KGLOG_PROCESS_ERROR(bRetCode);
 
 		snprintf(szTempColName, sizeof(szTempColName), "%s%d", RECIPE_REQUIRE_ITEM_COUNT, nIndex + 1);
         szTempColName[sizeof(szTempColName) - 1] = '\0';
 
 		bRetCode = piTabFile->GetInteger(nLine, szTempColName, DefaultRecipe.dwRequireItemCount[nIndex], (int*)&(Recipe.dwRequireItemCount[nIndex]));
-		(void)bRetCode; /*[endgame] tolerant*/
+		KGLOG_PROCESS_ERROR(bRetCode);
 	}
 
 	for (nIndex = 0; nIndex < MAX_RESULTANT; nIndex++)
@@ -495,39 +588,39 @@ BOOL KRecipe<KCraftRecipe>::LoadLine(ITabFile* piTabFile, int nLine, KCraftRecip
         szTempColName[sizeof(szTempColName) - 1] = '\0';
 
 		bRetCode = piTabFile->GetInteger(nLine, szTempColName, DefaultRecipe.dwCreateItemType[nIndex], (int*)&(Recipe.dwCreateItemType[nIndex]));
-		(void)bRetCode; /*[endgame] tolerant*/
+		KGLOG_PROCESS_ERROR(bRetCode);
 
 		snprintf(szTempColName, sizeof(szTempColName), "%s%d", RECIPE_CREATE_ITEM_INDEX, nIndex + 1);
         szTempColName[sizeof(szTempColName) - 1] = '\0';
 
 		bRetCode = piTabFile->GetInteger(nLine, szTempColName, DefaultRecipe.dwCreateItemIndex[nIndex], (int*)&(Recipe.dwCreateItemIndex[nIndex]));
-		(void)bRetCode; /*[endgame] tolerant*/
+		KGLOG_PROCESS_ERROR(bRetCode);
 
 		snprintf(szTempColName, sizeof(szTempColName), "%s%d", RECIPE_CREATE_ITEM_MIN, nIndex + 1);
         szTempColName[sizeof(szTempColName) - 1] = '\0';
 
 		bRetCode = piTabFile->GetInteger(nLine, szTempColName, DefaultRecipe.dwCreateItemMinCount[nIndex], (int*)&(Recipe.dwCreateItemMinCount[nIndex]));
-		(void)bRetCode; /*[endgame] tolerant*/
+		KGLOG_PROCESS_ERROR(bRetCode);
 
 		snprintf(szTempColName, sizeof(szTempColName), "%s%d", RECIPE_CREATE_ITEM_MAX, nIndex + 1);
         szTempColName[sizeof(szTempColName) - 1] = '\0';
 
 		bRetCode = piTabFile->GetInteger(nLine, szTempColName, DefaultRecipe.dwCreateItemMaxCount[nIndex], (int*)&(Recipe.dwCreateItemMaxCount[nIndex]));
-		(void)bRetCode; /*[endgame] tolerant*/
+		KGLOG_PROCESS_ERROR(bRetCode);
 	
 		snprintf(szTempColName, sizeof(szTempColName), "%s%d", RECIPE_CREATE_ITEM_PROBABILITY, nIndex + 1);
         szTempColName[sizeof(szTempColName) - 1] = '\0';
 
 		bRetCode = piTabFile->GetInteger(nLine, szTempColName, DefaultRecipe.dwCreateItemProbability[nIndex], (int*)&(Recipe.dwCreateItemProbability[nIndex]));
-		(void)bRetCode; /*[endgame] tolerant*/
+		KGLOG_PROCESS_ERROR(bRetCode);
 	}
 	
     bRetCode = piTabFile->GetInteger(nLine, "CoolDownID", DefaultRecipe.dwCoolDownID, (int*)&(Recipe.dwCoolDownID));
-    (void)bRetCode; /*[endgame] tolerant*/
+    KGLOG_PROCESS_ERROR(bRetCode);
 
     Recipe.dwScriptID = 0;
     bRetCode = piTabFile->GetString(nLine, RECIPE_SCRIPT_NAME, "", szScriptName, sizeof(szScriptName));
-    (void)bRetCode; /*[endgame] tolerant*/
+    KGLOG_PROCESS_ERROR(bRetCode);
 
     if (szScriptName[0] != '\0')
     {
@@ -615,31 +708,31 @@ BOOL KRecipe<KCraftCollection>::LoadLine(ITabFile* piTabFile, int nLine, KCraftC
 	KGLOG_PROCESS_ERROR(piTabFile);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_THEW, DefaultRecipe.nThew, (int*)&(Recipe.nThew));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_PROFESSION_ID, DefaultRecipe.dwProfessionID, (int*)&(Recipe.dwProfessionID));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_REQUIRE_PROFESSION_LEVEL, DefaultRecipe.dwRequireProfessionLevel, (int*)&(Recipe.dwRequireProfessionLevel));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_TOOL_ITEM_TYPE, DefaultRecipe.dwToolItemType, (int*)&(Recipe.dwToolItemType));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_TOOL_ITEM_INDEX, DefaultRecipe.dwToolItemIndex, (int*)&(Recipe.dwToolItemIndex));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_EQUIPMENT_TYPE, DefaultRecipe.nEquipmentType, (int*)&(Recipe.nEquipmentType));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_EXP, DefaultRecipe.dwProfessionExp, (int*)&(Recipe.dwProfessionExp));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_PREPARE_FRAME, DefaultRecipe.nPrepareFrame, (int*)&(Recipe.nPrepareFrame));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_DOODAD_TEMPLATE_ID, DefaultRecipe.dwDoodadTemplateID, (int*)&(Recipe.dwDoodadTemplateID));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
     Recipe.dwScriptID = 0;
 
@@ -716,80 +809,79 @@ BOOL KRecipe<KCraftRead>::LoadLine(ITabFile* piTabFile, int nLine, KCraftRead& R
 {
     BOOL    bResult     = false;
 	BOOL    bRetCode    = false;
-    int     nRetCode    = 0;
     char    szScriptName[MAX_PATH];
 
 	KGLOG_PROCESS_ERROR(piTabFile);
     
     bRetCode = piTabFile->GetInteger(nLine, "ID", DefaultRecipe.dwID, (int*)&(Recipe.dwID));
-    (void)bRetCode; /*[endgame] tolerant*/
+    KGLOG_PROCESS_ERROR(bRetCode);
 
     bRetCode = piTabFile->GetInteger(nLine, "SubID", DefaultRecipe.dwSubID, (int*)&(Recipe.dwSubID));
-    (void)bRetCode; /*[endgame] tolerant*/
+    KGLOG_PROCESS_ERROR(bRetCode);
 
     bRetCode = piTabFile->GetString(nLine, "Name", DefaultRecipe.szName, Recipe.szName, MAX_RECIPE_NAME_LEN);
-    (void)bRetCode; /*[endgame] tolerant*/
+    KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, "CostStamina", DefaultRecipe.nStamina, (int*)&(Recipe.nStamina));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, "ProfessionID", DefaultRecipe.dwProfessionID, (int*)&(Recipe.dwProfessionID));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, "RequireLevel", DefaultRecipe.dwRequireProfessionLevel, (int*)&(Recipe.dwRequireProfessionLevel));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, "ToolItemType", DefaultRecipe.dwToolItemType, (int*)&(Recipe.dwToolItemType));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, "ToolItemIndex", DefaultRecipe.dwToolItemIndex, (int*)&(Recipe.dwToolItemIndex));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, "EquipmentType", DefaultRecipe.nEquipmentType, (int*)&(Recipe.nEquipmentType));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
     bRetCode = piTabFile->GetInteger(nLine, "PrepareFrame", DefaultRecipe.nPrepareFrame, (int*)&(Recipe.nPrepareFrame));
-    (void)bRetCode; /*[endgame] tolerant*/
+    KGLOG_PROCESS_ERROR(bRetCode);
     
     bRetCode = piTabFile->GetInteger(nLine, "PlayerExp", DefaultRecipe.nPlayerExp, &Recipe.nPlayerExp);
-    (void)bRetCode; /*[endgame] tolerant*/
+    KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, "ProfessionExp", DefaultRecipe.dwProfessionExp, (int*)&(Recipe.dwProfessionExp));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, "ExtendProfessionID1", DefaultRecipe.dwExtendProfessionID1, (int*)&(Recipe.dwExtendProfessionID1));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, "ExtendExp1", DefaultRecipe.dwExtendExp1, (int*)&(Recipe.dwExtendExp1));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
     bRetCode = piTabFile->GetInteger(nLine, "ExtendProfessionID2", DefaultRecipe.dwExtendProfessionID2, (int*)&(Recipe.dwExtendProfessionID2));
-    (void)bRetCode; /*[endgame] tolerant*/
+    KGLOG_PROCESS_ERROR(bRetCode);
 
     bRetCode = piTabFile->GetInteger(nLine, "ExtendExp2", DefaultRecipe.dwExtendExp2, (int*)&(Recipe.dwExtendExp2));
-    (void)bRetCode; /*[endgame] tolerant*/
+    KGLOG_PROCESS_ERROR(bRetCode);
 
     bRetCode = piTabFile->GetInteger(nLine, "CreateItemTab", DefaultRecipe.dwCreateItemTab, (int*)&(Recipe.dwCreateItemTab));
-    (void)bRetCode; /*[endgame] tolerant*/
+    KGLOG_PROCESS_ERROR(bRetCode);
 
     bRetCode = piTabFile->GetInteger(nLine, "CreateItemIndex", DefaultRecipe.dwCreateItemIndex, (int*)&(Recipe.dwCreateItemIndex));
-    (void)bRetCode; /*[endgame] tolerant*/
+    KGLOG_PROCESS_ERROR(bRetCode);
 
     bRetCode = piTabFile->GetInteger(nLine, "CreateItemStackNum", DefaultRecipe.nStackNum, &Recipe.nStackNum);
-    (void)bRetCode; /*[endgame] tolerant*/
+    KGLOG_PROCESS_ERROR(bRetCode);
     
     bRetCode = piTabFile->GetInteger(nLine, "BuffID", DefaultRecipe.dwBuffID, (int*)&(Recipe.dwBuffID));
-    (void)bRetCode; /*[endgame] tolerant*/
+    KGLOG_PROCESS_ERROR(bRetCode);
 
     bRetCode = piTabFile->GetInteger(nLine, "BuffLevel", DefaultRecipe.dwBuffLevel, (int*)&(Recipe.dwBuffLevel));
-    (void)bRetCode; /*[endgame] tolerant*/
+    KGLOG_PROCESS_ERROR(bRetCode);
 
     bRetCode = piTabFile->GetInteger(nLine, "Train", DefaultRecipe.nTrain, &Recipe.nTrain);
-    (void)bRetCode; /*[endgame] tolerant*/
+    KGLOG_PROCESS_ERROR(bRetCode);
 						
     Recipe.dwScriptID = 0;
     bRetCode = piTabFile->GetString(nLine, RECIPE_SCRIPT_NAME, "", szScriptName, sizeof(szScriptName));
-    (void)bRetCode; /*[endgame] tolerant*/
+    KGLOG_PROCESS_ERROR(bRetCode);
 
     if (szScriptName[0] != '\0')
     {
@@ -876,7 +968,6 @@ BOOL KRecipe<KCraftEnchant>::LoadLine(ITabFile* piTabFile, int nLine, KCraftEnch
 {
     BOOL        bResult     = false;
 	BOOL        bRetCode    = false;
-    int         nRetCode    = 0;
 	int         nIndex      = 0;
 	char        szTempColName[_NAME_LEN];
     char        szScriptName[MAX_PATH];
@@ -884,46 +975,46 @@ BOOL KRecipe<KCraftEnchant>::LoadLine(ITabFile* piTabFile, int nLine, KCraftEnch
 	KGLOG_PROCESS_ERROR(piTabFile);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_STAMINA, DefaultRecipe.nStamina, (int*)&(Recipe.nStamina));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_PROFESSION_ID, DefaultRecipe.dwProfessionID, (int*)&(Recipe.dwProfessionID));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_REQUIRE_PROFESSION_LEVEL, DefaultRecipe.dwRequireProfessionLevel, (int*)&(Recipe.dwRequireProfessionLevel));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_TOOL_ITEM_TYPE, DefaultRecipe.dwToolItemType, (int*)&(Recipe.dwToolItemType));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_TOOL_ITEM_INDEX, DefaultRecipe.dwToolItemIndex, (int*)&(Recipe.dwToolItemIndex));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_EQUIPMENT_TYPE, DefaultRecipe.nEquipmentType, (int*)&(Recipe.nEquipmentType));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_EXP, DefaultRecipe.dwProfessionExp, (int*)&(Recipe.dwProfessionExp));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_PREPARE_FRAME, DefaultRecipe.nPrepareFrame, (int*)&(Recipe.nPrepareFrame));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, ENCHANT_RECIPE_ID, DefaultRecipe.dwID, (int*)&(Recipe.dwID));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetString(nLine, ENCHANT_NAME, DefaultRecipe.szName, Recipe.szName, MAX_RECIPE_NAME_LEN);
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetString(nLine, RECIPE_BELONG, DefaultRecipe.szBelong, Recipe.szBelong, MAX_BELONG_NAME_LEN);
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, ENCHANT_ID, DefaultRecipe.dwEnchantID, (int*)&(Recipe.dwEnchantID));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, ENCHANT_REQUIRE_BRANCH_ID, DefaultRecipe.dwRequireBranchID, (int*)&(Recipe.dwRequireBranchID));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, ENCHANT_REQUIRE_DOODAD, DefaultRecipe.dwRequireDoodadID, (int*)&(Recipe.dwRequireDoodadID));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	for (nIndex = 0; nIndex < MAX_MATERIAL; nIndex++)
 	{
@@ -931,24 +1022,24 @@ BOOL KRecipe<KCraftEnchant>::LoadLine(ITabFile* piTabFile, int nLine, KCraftEnch
         szTempColName[sizeof(szTempColName) - 1] = '\0';
 
 		bRetCode = piTabFile->GetInteger(nLine, szTempColName, DefaultRecipe.dwRequireItemType[nIndex], (int*)&(Recipe.dwRequireItemType[nIndex]));
-		(void)bRetCode; /*[endgame] tolerant*/
+		KGLOG_PROCESS_ERROR(bRetCode);
 
 		snprintf(szTempColName, sizeof(szTempColName), "%s%d", ENCHANT_REQUIRE_ITEM_INDEX, nIndex + 1);
         szTempColName[sizeof(szTempColName) - 1] = '\0';
 
 		bRetCode = piTabFile->GetInteger(nLine, szTempColName, DefaultRecipe.dwRequireItemIndex[nIndex], (int*)&(Recipe.dwRequireItemIndex[nIndex]));
-		(void)bRetCode; /*[endgame] tolerant*/
+		KGLOG_PROCESS_ERROR(bRetCode);
 
 		snprintf(szTempColName, sizeof(szTempColName), "%s%d", ENCHANT_REQUIRE_ITEM_COUNT, nIndex + 1);
         szTempColName[sizeof(szTempColName) - 1] = '\0';
 
 		bRetCode = piTabFile->GetInteger(nLine, szTempColName, DefaultRecipe.dwRequireItemCount[nIndex], (int*)&(Recipe.dwRequireItemCount[nIndex]));
-		(void)bRetCode; /*[endgame] tolerant*/
+		KGLOG_PROCESS_ERROR(bRetCode);
 	}
 
     Recipe.dwScriptID = 0;
     bRetCode = piTabFile->GetString(nLine, RECIPE_SCRIPT_NAME, "", szScriptName, sizeof(szScriptName));
-    (void)bRetCode; /*[endgame] tolerant*/
+    KGLOG_PROCESS_ERROR(bRetCode);
 
     if (szScriptName[0] != '\0')
     {
@@ -1037,43 +1128,43 @@ BOOL KRecipe<KCraftCopy>::LoadLine(ITabFile* piTabFile, int nLine, KCraftCopy& C
     KGLOG_PROCESS_ERROR(piTabFile);
 	
     bRetCode = piTabFile->GetInteger(nLine, RECIPE_ID, DefaultCopy.dwID, (int*)&(Copy.dwID));
-    (void)bRetCode; /*[endgame] tolerant*/
+    KGLOG_PROCESS_ERROR(bRetCode);
 
     bRetCode = piTabFile->GetInteger(nLine, COPY_SUB_ID, DefaultCopy.dwSubID, (int*)&(Copy.dwSubID));
-    (void)bRetCode; /*[endgame] tolerant*/
+    KGLOG_PROCESS_ERROR(bRetCode);
 
     bRetCode = piTabFile->GetString(nLine, RECIPE_NAME, DefaultCopy.szName, Copy.szName, MAX_RECIPE_NAME_LEN);
-    (void)bRetCode; /*[endgame] tolerant*/
+    KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_THEW, DefaultCopy.nThew, (int*)&(Copy.nThew));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_PROFESSION_ID, DefaultCopy.dwProfessionID, (int*)&(Copy.dwProfessionID));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
     
     bRetCode = piTabFile->GetInteger(nLine, RECIPE_REQUIRE_PROFESSION_LEVEL, DefaultCopy.dwRequireProfessionLevel, (int*)&(Copy.dwRequireProfessionLevel));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
     
     bRetCode = piTabFile->GetInteger(nLine, RECIPE_PROFESSION_ID_EXT, DefaultCopy.dwProfessionIDExt, (int*)&(Copy.dwProfessionIDExt));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
     
     bRetCode = piTabFile->GetInteger(nLine, RECIPE_REQUIRE_PROFESSION_LEVEL_EXT, DefaultCopy.dwRequireProfessionLevelExt, (int*)&(Copy.dwRequireProfessionLevelExt));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
     bRetCode = piTabFile->GetInteger(nLine, RECIPE_TOOL_ITEM_TYPE, DefaultCopy.dwToolItemType, (int*)&(Copy.dwToolItemType));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_TOOL_ITEM_INDEX, DefaultCopy.dwToolItemIndex, (int*)&(Copy.dwToolItemIndex));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_EQUIPMENT_TYPE, DefaultCopy.nEquipmentType, (int*)&(Copy.nEquipmentType));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_EXP, DefaultCopy.dwProfessionExp, (int*)&(Copy.dwProfessionExp));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, RECIPE_PREPARE_FRAME, DefaultCopy.nPrepareFrame, (int*)&(Copy.nPrepareFrame));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	for (nIndex = 0; nIndex < MAX_COPY_MATERIAL; nIndex++)
 	{
@@ -1081,38 +1172,38 @@ BOOL KRecipe<KCraftCopy>::LoadLine(ITabFile* piTabFile, int nLine, KCraftCopy& C
         szTempColName[sizeof(szTempColName) - 1] = '\0';
 
 		bRetCode = piTabFile->GetInteger(nLine, szTempColName, DefaultCopy.dwRequireItemType[nIndex], (int*)&(Copy.dwRequireItemType[nIndex]));
-		(void)bRetCode; /*[endgame] tolerant*/
+		KGLOG_PROCESS_ERROR(bRetCode);
 
 		snprintf(szTempColName, sizeof(szTempColName), "%s%d", RECIPE_REQUIRE_ITEM_INDEX, nIndex + 1);
         szTempColName[sizeof(szTempColName) - 1] = '\0';
 
 		bRetCode = piTabFile->GetInteger(nLine, szTempColName, DefaultCopy.dwRequireItemIndex[nIndex], (int*)&(Copy.dwRequireItemIndex[nIndex]));
-		(void)bRetCode; /*[endgame] tolerant*/
+		KGLOG_PROCESS_ERROR(bRetCode);
 
 		snprintf(szTempColName, sizeof(szTempColName), "%s%d", RECIPE_REQUIRE_ITEM_COUNT, nIndex + 1);
         szTempColName[sizeof(szTempColName) - 1] = '\0';
 
 		bRetCode = piTabFile->GetInteger(nLine, szTempColName, DefaultCopy.dwRequireItemCount[nIndex], (int*)&(Copy.dwRequireItemCount[nIndex]));
-		(void)bRetCode; /*[endgame] tolerant*/
+		KGLOG_PROCESS_ERROR(bRetCode);
 	}
 
 	bRetCode = piTabFile->GetInteger(nLine, "CreateItemType", DefaultCopy.dwCreateItemType, (int*)&(Copy.dwCreateItemType));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
 	bRetCode = piTabFile->GetInteger(nLine, "CreateItemIndex", DefaultCopy.dwCreateItemIndex, (int*)&(Copy.dwCreateItemIndex));
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
 
     bRetCode = piTabFile->GetInteger(nLine, "CreateItemStackNum", DefaultCopy.nStackNum, &Copy.nStackNum);
-	(void)bRetCode; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(bRetCode);
     
     bRetCode = piTabFile->GetInteger(nLine, "CoolDownID", DefaultCopy.dwCoolDownID, (int*)&(Copy.dwCoolDownID));
-    (void)bRetCode; /*[endgame] tolerant*/
+    KGLOG_PROCESS_ERROR(bRetCode);
 
     bRetCode = piTabFile->GetInteger(nLine, "DoodadTemplateID", DefaultCopy.dwDoodadTemplateID, (int*)&(Copy.dwDoodadTemplateID));
-    (void)bRetCode; /*[endgame] tolerant*/
+    KGLOG_PROCESS_ERROR(bRetCode);
     
     bRetCode = piTabFile->GetInteger(nLine, "RequirePlayerLevel", DefaultCopy.nRequirePlayerLevel, &Copy.nRequirePlayerLevel);
-    (void)bRetCode; /*[endgame] tolerant*/
+    KGLOG_PROCESS_ERROR(bRetCode);
 
     Copy.dwScriptID = 0;
 

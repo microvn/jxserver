@@ -15,27 +15,27 @@
 
 static int GetCurrencyMaxValue(int nType)
 {
-    return g_pSO3World->m_Settings.m_ConstList.nCurrencyMaxValue[nType];
+    return g_pSO3World->m_Settings.m_ConstList.nMaxValue[nType];
 }
 static int GetCurrencyRemainDefault(int nType)
 {
-    return g_pSO3World->m_Settings.m_ConstList.nCurrencyRemainSpace[nType];
+    return g_pSO3World->m_Settings.m_ConstList.nRemainSpace[nType];
 }
 static int GetCurrencyCarryFlag(int nType)
 {
-    return g_pSO3World->m_Settings.m_ConstList.nCurrencyRemainSpaceCanAccumulate[nType];
+    return g_pSO3World->m_Settings.m_ConstList.nRemainSpaceCanAccumulate[nType];
 }
 static int GetCurrencyCarryPct(int nType)
 {
-    return g_pSO3World->m_Settings.m_ConstList.nCurrencyAccumulateRate[nType];
+    return g_pSO3World->m_Settings.m_ConstList.nRemainSpaceAccumulateRate[nType];
 }
 static int GetCurrencyResetPeriod()
 {
-    return g_pSO3World->m_Settings.m_ConstList.nCurrencyRemainSpaceResetCycle;
+    return g_pSO3World->m_Settings.m_ConstList.nRemainSpaceResetCycle;
 }
 static time_t GetCurrencyWeekBase()
 {
-    return g_pSO3World->m_Settings.m_ConstList.nCurrencyRemainSpaceResetOffest + CURRENCY_RESET_WEEK_ANCHOR;
+    return g_pSO3World->m_Settings.m_ConstList.nRemainSpaceResetOffest + CURRENCY_RESET_WEEK_ANCHOR;
 }
 
 KCurrency::KCurrency()

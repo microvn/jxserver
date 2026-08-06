@@ -9,7 +9,7 @@ file.
 - Binary SHA-256: `47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a`
 - Deep export: `raw/audit-20260728/target-role-load-deep.jsonl`
 - Export SHA-256: `5d3aca03b9e4a8735c2a553e2e590f32be0c34e0e53423e19f8d76fd1ad11949`
-- Export method: `graphengine/tools/extract/pyghidra_export.py`, no-analysis,
+- Export method: `compare-engine/tools/extract/pyghidra_export.py`, no-analysis,
   xrefs and CFG enabled, targeted decompilation.
 
 ## Confirmed target execution closure
@@ -115,7 +115,7 @@ fixed.
 ## GraphEngine reconciliation after ingest
 
 The deep export was ingested as an immutable supplement after a database backup
-at `graphengine/.local/backups/roleload-deep-20260728/evidence.sqlite.before`.
+at `compare-engine/.local/backups/roleload-deep-20260728/evidence.sqlite.before`.
 The evidence query now returns a target decompile document for
 `KPlayer::LoadStateInfo` with evidence ID `30036`; the query no longer reports
 the target decompile as absent. The raw export remains the re-openable authority

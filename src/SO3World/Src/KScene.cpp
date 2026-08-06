@@ -16,6 +16,11 @@
 #include "Engine/KMemory.h"
 #include "Engine/KG_Time.h"
 
+DWORD KScene::MakeMapKey(DWORD dwMapID, int nCopyIndex)
+{
+    return (static_cast<DWORD>(nCopyIndex) << 16) | dwMapID;
+}
+
 KScene::KScene()
 {
 #ifdef _SERVER

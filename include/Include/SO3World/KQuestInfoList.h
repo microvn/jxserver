@@ -10,7 +10,9 @@
 
 #include <map>
 #include <vector>
+#include <algorithm>
 #include "Global.h"
+#include "Engine/KMemory.h"
 #include "SO3ProtocolBasic.h"
 #include "Luna.h"
 #include "KLRUCacheMap.h"
@@ -22,6 +24,8 @@
 #define QUEST_FINISHED_DIALOGUE_LEN		1024
 #define QUEST_VALUE_STR_LEN				256
 #define QUEST_GOSSIP_LEN		        1024
+
+#define KQUEST_PRESENT_ITEM_COUNT	32		/* target KQuestInfo reward-item contract */
 
 #define MAX_QUEST_COUNT			        16384 /*[endgame] Ghidra exe2.5.2=0x4000*/
 #define QUEST_END_ITEM_COUNT            8
@@ -38,6 +42,7 @@ struct KQuestInfo
 	bool            bRepeat;									// 是否可重复
 	bool            bAssist;									// 是否可协助
 	bool            bAccept;									// 是否需要接了才能交
+	bool            bActivity;
 
     bool			bEscortQuest;                               // 是否护送任务
     bool			bPrequestLogic;								// true:and;false:or
@@ -45,6 +50,7 @@ struct KQuestInfo
     bool			bHidePresent;								// 是否隐藏奖励
 
     bool			bPresentAll[2];								// 第一组(1-4)道具是否全给或者只给一件
+    bool            bPresentAccordToForce[2];
     BYTE            byStartMapID;								// 接任务Npc所在地图的ID, 暂时废弃
     BYTE            byEndMapID;									//交任务Npc所在的地图ID, 暂时废弃
     
@@ -85,6 +91,7 @@ struct KQuestInfo
     BYTE            byRequireCampMask;                           // 阵营需求; 第0,1,2位分别对应中立、正义、邪恶
     BYTE            byTeamRequireMode;                           // 团队模式对任务的需求
     WORD            wPresentSkill;								// 奖励的技能ID
+    WORD            wPresentSkillMaxLevel;
 
     BYTE            byEndRequireItemType[QUEST_END_ITEM_COUNT];	//交任务时所需道具的类型
     WORD			wEndRequireItemIndex[QUEST_END_ITEM_COUNT];	//交任务时所需道具的类型
@@ -95,13 +102,14 @@ struct KQuestInfo
     DWORD			dwDropItemRate[QUEST_END_ITEM_COUNT];			//掉落任务道具的几率
     bool			bDropForEach[QUEST_END_ITEM_COUNT];			    //是否每人都获得一个
     bool			bIsDeleteEndRequireItem[QUEST_END_ITEM_COUNT]; //交任务或者删除任务的时候是否删除这个道具
+    bool            bCancelDeleteRequireItem[QUEST_END_ITEM_COUNT];
 #endif
 
     DWORD			dwRelationDoodadID[QUEST_PARAM_COUNT * 2];  // 任务相关联的DoodadID
 
-    BYTE			byPresentItemType[QUEST_PARAM_COUNT * 2];	// 交任务时奖励道具的类型
-    WORD			wPresentItemIndex[QUEST_PARAM_COUNT * 2];	// 交任务时奖励道具的类型
-    WORD            wPresentItemAmount[QUEST_PARAM_COUNT * 2];	// 交任务时奖励道具的数量
+    BYTE			byPresentItemType[KQUEST_PRESENT_ITEM_COUNT];	// 交任务时奖励道具的类型
+    WORD			wPresentItemIndex[KQUEST_PRESENT_ITEM_COUNT];	// 交任务时奖励道具的类型
+    WORD            wPresentItemAmount[KQUEST_PRESENT_ITEM_COUNT];	// 交任务时奖励道具的数量
 
     BYTE            byAffectForceID[QUEST_PARAM_COUNT];			// 交任务影响的势力
     int             nAffectForceValue[QUEST_PARAM_COUNT];		// 交任务影响的势力友好度
@@ -132,6 +140,7 @@ struct KQuestInfo
 
 	int				nPresentExp;								// 交任务时奖励的经验
 	int				nPresentMoney;								// 交任务时奖励的金钱数量
+    int             nPresentExp2Money;
 
     int             nPresentAssistThew;                         // 协助任务奖励体力
     int             nPresentAssistStamina;                      // 协助任务奖励精力
@@ -142,11 +151,17 @@ struct KQuestInfo
     int             nPresentPrestige;                           // 任务奖励威望
     int             nPresentContribution;                       // 任务奖励贡献值
     int             nPresentTrain;                              // 任务奖励修为
+    int             nPresentJustice;
+    int             nPresentExamPrint;
+    int             nPresentArenaAward;
+    int             nPresentActivityAward;
 #ifdef _SERVER
     int             nAchievementID;                             // 任务成就
     int             nAssistMentorValue;                         // 协助任务中有师傅协助是，给师傅加的师徒值
 #endif
-
+    int             nTitlePoint;
+    int             nAddTongDevelopmentPoint;
+    int             nAddTongFund;
 //Lua脚本接口
     DWORD getQuestClass(){return dwClassID;}
     DWORD getStartMapID() {return byStartMapID;}
@@ -344,6 +359,17 @@ struct KQuestInfo
 	int LuaGetHortation(Lua_State* L);
 };
 
+struct KQUEST_GROUP_INFO
+{
+    DWORD dwGroupID;
+    DWORD dwScriptID;
+    int nMaxCount;
+    BOOL bPlayerDiff;
+    BOOL bRandomDiff;
+    BOOL bDaily;
+    std::vector<DWORD, KMemory::KAllocator<DWORD> > QuestGroup;
+};
+
 class KQuestInfoList
 {
 public:
@@ -351,6 +377,9 @@ public:
 	void UnInit();
 
 	KQuestInfo* GetQuestInfo(DWORD dwQuestID);
+	KQUEST_GROUP_INFO* GetQuestGroupInfo(DWORD dwGroupID);
+	int GetQuestIndexInQuestGroupInfo(DWORD dwNpcTemplateID, DWORD dwQuestID);
+	KQUEST_GROUP_INFO* GetQuestGroupInfo(DWORD dwNpcTemplateID, DWORD dwQuestID);
 
 	int GetNpcQuestString(DWORD dwMapID, DWORD dwNpcTemplateID, char* pszBuffer, size_t uBufferSize);
 	BOOL GetNpcQuest(DWORD dwNpcTemplateID, std::vector<DWORD>* pvQuestID);
@@ -375,9 +404,18 @@ private:
 	MAP_RDOODAD_ID_2_QUEST_ID			m_mapRDoodadID2QuestID;					//保存关联Doodad
 
 	KQuestInfo	m_DefaultQuestInfo;		//默认设定
+
+	typedef std::vector<KQUEST_GROUP_INFO, KMemory::KAllocator<KQUEST_GROUP_INFO> > RANDOM_QUEST_GROUP_VECTOR;
+	typedef std::map<DWORD, RANDOM_QUEST_GROUP_VECTOR, std::less<DWORD>, KMemory::KAllocator<std::pair<DWORD, RANDOM_QUEST_GROUP_VECTOR> > > MAP_NPC_2_RANDOM_QUEST_GROUP;
+	typedef std::map<DWORD, KQUEST_GROUP_INFO, std::less<DWORD>, KMemory::KAllocator<std::pair<DWORD, KQUEST_GROUP_INFO> > > MAP_QUEST_GROUP;
+	MAP_NPC_2_RANDOM_QUEST_GROUP m_mapNpc2RandomQuestGroup;
+	MAP_QUEST_GROUP m_QuestGroupMap;
 	
     BOOL LoadQuestInfo(ITabFile* piTabFile, int nIndex, KQuestInfo* pQuestInfo);
     BOOL MakeQuestMap(KQuestInfo* cpQuestInfo);
+    BOOL LoadQuestFile(char* szFilePath, BOOL bIsLoadDefultInfo);
+    BOOL LoadQuestListFile();
+    BOOL LoadRandomQuestGroup();
 
 	friend class KDropCenter;
     friend class KDoodad;

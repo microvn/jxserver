@@ -1,6 +1,8 @@
 #ifndef _KTONGDEF_H_
 #define _KTONGDEF_H_
 
+#include "protocolbasic.h"  // _NAME_LEN (endgame patch)
+
 #define MAX_TONG_GROUP                          16                  // 帮会成员组上限
 #define MAX_TONG_MEMORABILIA_SIZE               10                  // 帮会大事记条目上限
 #define TONG_INIT_MAX_MEMBER_COUNT              50                  // 帮会初始人数上限
@@ -589,6 +591,52 @@ struct KTONG_SYNC_HISTORY_REPERTORY_TAKE_OR_PUT_ITEM : KTONG_SYNC_HISTORY
     WORD    wStackNum;
 };
 
+#pragma pack()
+
+/*[target 2.5.2] DWARF decl_file Include/KTongDef.h:727. Seven tech-node tags plus
+  ttntTotal = 7; TongCacheData::byTechNodeTag[ttntTotal] and
+  S2C_SYNC_TONG_TOTAL_CACHE::byCacheData[7] are both sized by it. */
+enum TongTechNodeTag
+{
+    ttntDungeonExtraIncome = 0,
+    ttntPlantingExtraIncome = 1,
+    ttntCookingConsumeReduce = 2,
+    ttntTailoringConsumeReduce = 3,
+    ttntFoundingConsumeReduce = 4,
+    ttntMedicineConsumeReduce = 5,
+    ttntRepairDiscount = 6,
+    ttntTotal
+};
+
+enum TONG_DIPLOMACY_RELATION_TYPE
+{
+    TONG_DIPLOMACY_RELATION_NONE         = 0,
+    TONG_DIPLOMACY_RELATION_WAR          = 1,
+    TONG_DIPLOMACY_RELATION_ALLIANCE     = 2,
+    TONG_DIPLOMACY_RELATION_CONTRACT_WAR = 3,
+};
+
+#pragma pack(1)
+struct KTONG_DIPLOMACY_RELATION_INFO
+{
+    DWORD                           dwSrcTongID;
+    DWORD                           dwDstTongID;
+    TONG_DIPLOMACY_RELATION_TYPE    eRelationType;
+    BYTE                            bPlayerDeclare;
+    time_t                          nStartTime;
+    time_t                          nEndTime;
+    time_t                          nCDEndTime;
+    WORD                            wSubType;
+    WORD                            wTimeSegment;
+    BYTE                            bAdd;
+
+    KTONG_DIPLOMACY_RELATION_INFO()
+        : dwSrcTongID(0), dwDstTongID(0), eRelationType(TONG_DIPLOMACY_RELATION_NONE),
+          bPlayerDeclare(0), nStartTime(0), nEndTime(0), nCDEndTime(0),
+          wSubType(0), wTimeSegment(0), bAdd(1)
+    {
+    }
+};
 #pragma pack()
 
 #endif

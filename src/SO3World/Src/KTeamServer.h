@@ -21,13 +21,21 @@ struct KTEAM_MEMBER_INFO
     int             nMaxLife; 
     int             nMaxMana; 
     int             nMaxRage;
+    int             nMaxEnergy;
+    int             nMaxSunEnergy;
+    int             nMaxMoonEnergy;
     int             nLifePercent;
     int             nManaPercent;
     int             nRagePercent;
+    int             nEnergyPercent;
+    int             nSunEnergyPercent;
+    int             nMoonEnergyPercent;
     int             nPosX;
     int             nPosY;
 	int		        nRoleType;
     BOOL            bDeathFlag;
+    DWORD           dwMiniAvatarID;
+    DWORD           dwMountKungfuID;
 };
 
 typedef KMemory::KAllocator<KTEAM_MEMBER_INFO> KALLOC_TEAM_MEMBER;

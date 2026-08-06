@@ -19,7 +19,7 @@ downstream symptom.
 ## Target contract
 
 Target DWARF enum `KS2R_PROTOCOL` in
-`graphengine/dwarf/SO3GameServerD.jsonl` (`enum_die=0x00a81c86`) proves:
+`compare-engine/dwarf/SO3GameServerD.jsonl` (`enum_die=0x00a81c86`) proves:
 
 | Route | Target ID |
 |---|---:|

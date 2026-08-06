@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "KPlayer.h"
+#include "KScriptCenter.h"
 #include "KTeamServer.h"
 
 #ifdef _SERVER
@@ -273,8 +274,11 @@ Exit0:
 
 BOOL KTeamServer::SetFormationLeader(DWORD dwTeamID, int nGroupIndex, DWORD dwTargetID)
 {
-    BOOL    bResult = false;
-    KTeam*  pTeam   = NULL;
+    BOOL        bResult         = false;
+    BOOL        bRetCode        = false;
+    int         nLuaTopIndex    = 0;
+    KTeam*      pTeam           = NULL;
+    KPlayer*    pPlayer         = NULL;
 
     pTeam = GetTeam(dwTeamID);
     KGLOG_PROCESS_ERROR(pTeam);
@@ -288,7 +292,26 @@ BOOL KTeamServer::SetFormationLeader(DWORD dwTeamID, int nGroupIndex, DWORD dwTa
     {
         if (it->dwMemberID == dwTargetID)
         {
+            pPlayer = g_pSO3World->m_PlayerSet.GetObj(dwTargetID);
             pTeam->MemberGroup[nGroupIndex].dwFormationLeader = dwTargetID;
+
+            // PORT-DEFERRED_WIRING[IMPORT] owner=KPlayer/SCC-087; evidence=SO3GameServerD:0x0837d974->0x08387d3e; next_action=port KPlayer::CallAutoCastFormationScript() in its own dirty-owner ticket.
+            // Target callee formula is fully reconstructed here because KPlayer is read-only and source-absent.
+            if (pPlayer)
+            {
+                bRetCode = g_pSO3World->m_ScriptCenter.IsScriptExist("scripts/player/PlayerAutoCastFormation.lua");
+                if (!bRetCode)
+                {
+                    KGLogPrintf(KGLOG_DEBUG, "KGLOG_PROCESS_ERROR(%s) at line %d in %s\n", "bRetCode", 0x172b, "BOOL KPlayer::CallAutoCastFormationScript()");
+                }
+                else
+                {
+                    g_pSO3World->m_ScriptCenter.SafeCallBegin(&nLuaTopIndex);
+                    g_pSO3World->m_ScriptCenter.PushValueToStack(pPlayer);
+                    g_pSO3World->m_ScriptCenter.CallFunction("scripts/player/PlayerAutoCastFormation.lua", "OnCastFormation", 0);
+                    g_pSO3World->m_ScriptCenter.SafeCallEnd(nLuaTopIndex);
+                }
+            }
 
             bResult = true;
             goto Exit0;

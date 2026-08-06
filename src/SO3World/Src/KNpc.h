@@ -42,8 +42,17 @@ public:
 public:
     int             m_nIntensity;       // ǿ��
 	DWORD			m_dwScriptID;		// �󶨽ű�ID		
-	KShop*          m_pShop;            // �󶨵��̵�
-	std::vector<KShop*> m_vShopList;
+#ifdef _SERVER
+	// v246 target: KNpc+0xa48, std::vector<DWORD, KMemory::KAllocator<DWORD> >,
+	// byte_size 0x0c (0xa54-0xa48), DWARF decl KNpc.h:63. Replaces the 2010
+	// single m_pShop; the target has no m_pShop and no m_vShopList.
+	std::vector<DWORD, KMemory::KAllocator<DWORD> > m_vecShops;
+#endif //_SERVER
+#ifdef _CLIENT
+	// PRE_EXISTING_UNCHANGED: SO3GameServerD is a _SERVER build and carries no
+	// evidence for _CLIENT layout. Retained only for KPlayerClient.cpp:8282.
+	KShop*          m_pShop;
+#endif //_CLIENT
 	DWORD			m_dwTemplateID;		// ģ����
     int             m_nReviveTime;      // ����ʱ�䣬��λ��
 	int				m_nDisappearFrames;	// ��ʧ֡��
@@ -190,9 +199,6 @@ public:
 #ifdef _SERVER
 	int LuaGetQuestString(Lua_State* L);	
 	int LuaGetAutoDialogString(Lua_State* L);
-    int LuaBindNpcShop(Lua_State* L);
-    int LuaUnbindNpcShop(Lua_State* L);
-    int LuaGetShop(Lua_State* L);
 	int	LuaSetBank(Lua_State* L);
 
 	int LuaFollowTarget(Lua_State* L);

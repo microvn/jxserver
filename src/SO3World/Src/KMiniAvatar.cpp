@@ -44,7 +44,7 @@ BOOL KMiniAvatar::CanAcquire(DWORD dwID)
     KMiniAvatarInfo* pInfo   = NULL;
 
     KGLOG_PROCESS_ERROR(m_pPlayer);
-    pInfo = g_pSO3World->m_Settings.m_MiniAvatarSettings.GetMiniAvatarInfo(dwID);
+    pInfo = g_pSO3World->m_MiniAvatarSettings.GetMiniAvatarInfo(dwID);
     KGLOG_PROCESS_ERROR(pInfo);
     // force gate: 0 = any force, else must match the player's force
     KGLOG_PROCESS_ERROR(pInfo->dwForceID == 0 || pInfo->dwForceID == m_pPlayer->m_dwForceID);

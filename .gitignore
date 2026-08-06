@@ -52,6 +52,7 @@ _deploy.log
 
 # --- private local RE graph corpus, evidence docs and generated SQLite ---
 /.local/
+/compare-engine/
 /graphengine/
 /tools/
 /docs/

@@ -25,13 +25,16 @@
 #include "KCharacterActionList.h"
 #include "KSmartDialogList.h"
 #include "KReputationLimit.h"
+#include "KReputeLootBuffList.h"
+#include "KNpcAdronTab.h"
 #include "KGWConstList.h"
+#include "KGWServerConstList.h"
+#include "KAntiFarmerSettings.h"
+#include "KPendentOldDataInfoList.h"
+#include "KTongConstList.h"
 #include "KGMList.h"
 #include "KAchievementInfoList.h"
 #include "KDesignationList.h"
-#include "KExterior.h"
-#include "KHairShop.h"
-#include "KMiniAvatarSettings.h"
 #ifdef _CLIENT
 #include "../../Source/Common/SO3World/Src/KGameCardInfoList.h"
 #else
@@ -47,8 +50,18 @@
 class KWorldSettings
 {
 public:
+	KWorldSettings(void);
+	~KWorldSettings(void);
+
 	BOOL Init(void);
 	BOOL UnInit(void);
+	BOOL Init_ForEditor(void);
+	BOOL UnInit_ForEditor(void);
+
+private:
+	BOOL LoadVersionConfig(void);
+
+public:
 
 	KGWConstList		m_ConstList;
 
@@ -90,16 +103,19 @@ public:
 
 	//�����ȼ������
 	KReputationLimit	m_ReputeLimit;
+	KReputeLootBuffList m_ReputeLootBufferList;
 
 	//����ϵͳ
 	KCharacterActionList m_CharacterActionList;
 
 	//Npc˵��
 	KSmartDialogList	m_SmartDialogList;
+	KNpcAdronTab       m_NpcAdronTab;
 
 #ifdef _SERVER
     KGMList             m_GMList;
 #endif
+	KGWServerConstList  m_ServerConstList;
 
 	KNpcOrderManager    m_OrderManager;
 	KNpcTeamList		m_NpcTeamList;
@@ -108,11 +124,13 @@ public:
 
     KDesignationList    m_DesignationList;
 
-    KExterior           m_Exterior;
-    KHairShop           m_HairShop;
-    KMiniAvatarSettings m_MiniAvatarSettings;
-
     KGameCardInfoList   m_GameCardInfoList;
+    KAntiFarmerSettings m_AntiFarmerSettings;
+    KPendentOldDataInfoList m_OldPendentDataInfoList;
+    KTongConstList      m_TongConstList;
+    char                m_szVersionLineName[32];
+    char                m_szVersionEx[32];
+
 };
 
 #endif	//_KSETTINGS_H_

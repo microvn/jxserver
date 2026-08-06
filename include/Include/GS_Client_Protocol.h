@@ -1542,6 +1542,28 @@ struct S2C_UPDATE_SHOP_ITEM : UNDEFINED_SIZE_DOWNWARDS_HEADER
 
 };
 
+// v2.5 target DWARF: 0x06 bytes, GS_Client_Protocol.h:3003.
+struct S2C_SYNC_SAFE_LOCK_INFO : DOWNWARDS_PROTOCOL_HEADER
+{
+    DWORD dwMask;
+};
+
+// v2.5 target DWARF: 0x12 bytes, GS_Client_Protocol.h:3381.
+struct S2C_SYNC_TIME_LIMIT_RETURN_ITEM : DOWNWARDS_PROTOCOL_HEADER
+{
+    DWORD   dwItemID;
+    DWORD   dwShopTemplateID;
+    int     nShopItemIndex;
+    time_t  nEndTime;
+};
+
+// v2.5 target DWARF: 0x0a bytes, GS_Client_Protocol.h:3389.
+struct S2C_SYNC_TIME_LIMIT_SOLD_LIST_INFO : DOWNWARDS_PROTOCOL_HEADER
+{
+    DWORD   dwItemID;
+    time_t  nEndTime;
+};
+
 // <------------------ shop about protocol ------------------
 
 struct S2C_TRADING_INVITE_REQUEST : DOWNWARDS_PROTOCOL_HEADER
@@ -2319,6 +2341,13 @@ struct S2C_SYNC_TONG_MEMBER_INFO : DOWNWARDS_PROTOCOL_HEADER
     KTongMemberInfo TongMemberInfo;
 };
 
+// v2.5 target DWARF: 0x1a bytes, GS_Client_Protocol.h:2761.
+struct S2C_SYNC_CORPS_CHANGE_VALUE : DOWNWARDS_PROTOCOL_HEADER
+{
+    int nCorpsLevel[3];
+    int nCorpsRoleLevel[3];
+};
+
 struct S2C_DELETE_TONG_MEMBER_NOTIFY : DOWNWARDS_PROTOCOL_HEADER 
 {
     DWORD dwMemberID;
@@ -2404,6 +2433,30 @@ struct S2C_SYNC_TONG_HISTORY_RESPOND : UNDEFINED_SIZE_DOWNWARDS_HEADER
     DWORD   dwStartIndex;
     BYTE    byCount;
     BYTE    byData[0];
+};
+
+struct S2C_SYNC_TONG_DIPLOMACY_DATA : UNDEFINED_SIZE_DOWNWARDS_HEADER
+{
+    BYTE                            byCount;
+    KTONG_DIPLOMACY_RELATION_INFO   DiplomacyInfoArray[0];
+};
+
+/*[target 2.5.2] GS_Client_Protocol.h S2C_SYNC_TONG_TOTAL_CACHE byte_size 9:
+  DOWNWARDS_PROTOCOL_HEADER@0 (2B) + BYTE byCacheData[ttntTotal]@2 (7B).
+  Senders KPlayerServer::DoSyncTongTotalCache@0805edce and
+  KPlayerServer::DoBroadcastTongTotalCache@0805ed68, wire id 227. */
+struct S2C_SYNC_TONG_TOTAL_CACHE : DOWNWARDS_PROTOCOL_HEADER
+{
+    BYTE    byCacheData[ttntTotal];
+};
+
+/*[target 2.5.2] GS_Client_Protocol.h:2932 S2C_SYNC_TONG_CACHE_CHANGE byte_size 4:
+  DOWNWARDS_PROTOCOL_HEADER@0 + BYTE byType@2 + BYTE byValue@3.
+  Sender KPlayerServer::DoBroadcastTongCacheChange@0805ae8e, wire id 228. */
+struct S2C_SYNC_TONG_CACHE_CHANGE : DOWNWARDS_PROTOCOL_HEADER
+{
+    BYTE    byType;
+    BYTE    byValue;
 };
 // --------------------------------------------------------------------------
 struct S2C_SET_CAMP : DOWNWARDS_PROTOCOL_HEADER
@@ -3012,7 +3065,7 @@ struct C2S_SHOP_BUY_REQUEST : UPWARDS_PROTOCOL_HEADER
     DWORD dwShopID;
     DWORD dwItemID;
     int   nCount;
-    int   nCost;
+    int64_t nCost;
     BYTE  byPageIndex;
     BYTE  byPosIndex; 
 };
@@ -3036,6 +3089,14 @@ struct C2S_SHOP_REPAIR_REQUEST : UPWARDS_PROTOCOL_HEADER
 };
 
 struct C2S_SOLD_LIST_BUY_REQUEST : UPWARDS_PROTOCOL_HEADER
+{
+    DWORD dwShopID;
+    DWORD dwItemID;
+    DWORD dwX;
+};
+
+// v2.5 target DWARF: 0x12 bytes, fields at 0x6/0xa/0xe.
+struct C2S_TIME_LIMIT_SOLD_LIST_BUY_REQUEST : UPWARDS_PROTOCOL_HEADER
 {
     DWORD dwShopID;
     DWORD dwItemID;

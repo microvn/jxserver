@@ -100,8 +100,8 @@ role envelope complete → base/state sections decoded/loaded → post-load role
 ### Required read-only dossiers
 
 ```text
-graphengine/tools/query/evidence_query.py function KPlayer::LoadStateInfo
-graphengine/tools/query/evidence_query.py type KROLE_POSITION_DB
+compare-engine/tools/query/evidence_query.py function KPlayer::LoadStateInfo
+compare-engine/tools/query/evidence_query.py type KROLE_POSITION_DB
 After the target load closure identifies the first post-load consumer, record
 the exact `graph_query.py callers` command.
 ```

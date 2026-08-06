@@ -33,7 +33,9 @@ BOOL KNpc::Init()
 
     m_nIntensity                = 0;
     m_dwScriptID                = 0;
+#ifdef _CLIENT
     m_pShop                     = NULL;
+#endif //_CLIENT
 	m_dwTemplateID              = 0;
     m_nReviveTime               = 100;
 	m_nDisappearFrames	        = 0; 
@@ -92,13 +94,19 @@ Exit0:
 
 void KNpc::UnInit()
 {
-    if (m_pShop)
-    {
 #ifdef _SERVER
-        g_pSO3World->m_ShopCenter.UnbindNpcShop(this);
-#endif
-        m_pShop = NULL;
+    // Target KNpc::UnInit @0x083626e2: destroy every bound shop, then clear the
+    // vector. Runs before the AI-stat block and before KCharacter::UnInit();
+    // that order is part of the contract.
+    for (size_t i = 0; i < m_vecShops.size(); ++i)
+    {
+        g_pSO3World->m_ShopCenter.DestroyShop(m_vecShops[i]);
     }
+    m_vecShops.clear();
+#endif //_SERVER
+#ifdef _CLIENT
+    m_pShop = NULL;
+#endif //_CLIENT
 
 #ifdef _SERVER
     if (g_pSO3World->m_AIManager.m_bLogAIRuntimeStat)
@@ -1390,6 +1398,11 @@ BOOL KNpc::GetAutoDialogString(KPlayer* pPlayer, char* szBuffer, size_t uBufferS
     QUEST_STATE eQuestState     = qsUnfinished;
     size_t	    uStrLen         = 0;
 	char	    szTempStr[256];
+#ifdef _SERVER
+    size_t      uShopCount      = 0;
+    KShop*      pShop           = NULL;
+    const char* pszShopName     = NULL;
+#endif //_SERVER
 
 	assert(pPlayer);
 	assert(szBuffer);
@@ -1446,17 +1459,40 @@ BOOL KNpc::GetAutoDialogString(KPlayer* pPlayer, char* szBuffer, size_t uBufferS
 	szBuffer += uStrLen;
 	uBufferSize -= uStrLen;
 	
-	// �̵�
-	if (m_pShop && m_pTemplate->szShopOptionText[0] != '\0' && nReputeLevel >= m_pTemplate->nShopRequireReputeLevel)
+	// shop -- target KNpc::GetAutoDialogString @0x0835c8d7..0x0835ca8d.
+	// v246 drives this off m_vecShops + pShopInfo; KNpcTemplate no longer has
+	// szShopOptionText / nShopRequireReputeLevel (absent from target DWARF).
+#ifdef _SERVER
+	uShopCount = m_vecShops.size();
+	if (uShopCount)
 	{
-		snprintf(szTempStr, 256, "<M %lu %s>", m_pShop->m_dwShopID, m_pTemplate->szShopOptionText);
-		uStrLen = strlen(szTempStr);
-		KGLOG_PROCESS_ERROR(uStrLen <= uBufferSize);
+		assert(m_pTemplate->pShopInfo);
+		if (m_pTemplate->pShopInfo->nShopRequireReputeLevel <= nReputeLevel)
+		{
+			for (size_t i = 0; i < uShopCount; ++i)
+			{
+				pShop = g_pSO3World->m_ShopCenter.GetShopInfo(m_vecShops[i]);
+				KGLOG_PROCESS_ERROR(pShop);
 
-		strncpy(szBuffer, szTempStr, uBufferSize);
-		szBuffer += uStrLen;
-		uBufferSize -= uStrLen;
+				pszShopName = pShop->m_szShopName;
+				/* PORT-TODO[TARGET_REQUIRED] target 0x0835c9cf-0x0835c9d8 also has
+				   `if (!pszShopName) pszShopName = <local @ebp-0x39>;`. That branch is
+				   provably dead (m_szShopName is a char[128] member, so its address is
+				   never NULL) and the fallback local's declared size/initialiser is not
+				   recoverable from the disassembly. Reachable behavior is unaffected.
+				   Next evidence: a DWARF local-variable DIE for ebp-0x39 in this frame. */
+
+				snprintf(szTempStr, 256, "<M %lu %s>", pShop->m_dwShopID, pszShopName);
+				uStrLen = strlen(szTempStr);
+				KGLOG_PROCESS_ERROR(uStrLen <= uBufferSize);
+
+				strncpy(szBuffer, szTempStr, uBufferSize);
+				szBuffer += uStrLen;
+				uBufferSize -= uStrLen;
+			}
+		}
 	}
+#endif //_SERVER
 	
 	// ����
 	if (m_pTemplate->bHasBank && m_pTemplate->szBankOptionText[0] != '\0' && nReputeLevel >= m_pTemplate->nBankRequireReputeLevel)

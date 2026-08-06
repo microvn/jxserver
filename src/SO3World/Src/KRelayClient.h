@@ -99,7 +99,7 @@ public:
 	BOOL DoSearchMapRequest(DWORD dwPlayerID, DWORD dwMapID, int nMapCopyIndex, int nX, int nY, int nZ);
 
 	BOOL DoTransferPlayerRequest(KPlayer* pPlayer);
-	BOOL DoTransferPlayerRespond(DWORD dwPlayerID, BOOL bSucceed, GUID Guid);
+	BOOL DoTransferPlayerRespond(DWORD dwPlayerID, BOOL bSucceed, GUID Guid, int nRespondCenterIndex);
 
     // --------------------- 组队相关 --------------------------------------
 
@@ -189,6 +189,7 @@ public:
 
     BOOL DoChangeRoleLevelRequest(KPlayer* pPlayer);
     BOOL DoChangeRoleForceIDRequest(KPlayer* pPlayer);
+    BOOL DoSyncCorpsChangeDataRequest(DWORD dwPlayerID, time_t nChangeTime, time_t nWeekTime, time_t nSeasonTime);
 
     BOOL DoSendGmMessage(const char cszGmName[], const char cszMessage[]);
     BOOL DoSendGmChn(const char cszAccount[], const char cszRole[], const char cszMessage[]);
@@ -221,6 +222,7 @@ public:
     BOOL DoApplySetCampRequest(DWORD dwPlayerID, KCAMP eNewCamp);
 
     // ----------------------- 帮会相关 --------------------------------
+    BOOL DoApplyTongCacheRequest(DWORD dwTongID);
     BOOL DoApplyTongRosterRequest(DWORD dwPlayerID, int nLastUpdateFrame, DWORD dwMemberList[], int nMemberCount);
     BOOL DoApplyTongInfoRequest(DWORD dwPlayerID, int nLastUpdateFrame);
     BOOL DoApplyCreateTongRequest(DWORD dwPlayerID, const char cszTongName[], int nTemplateIndex);
@@ -306,11 +308,16 @@ public:
 
     // ------------------------ 反打钱 ----------------------------------
     BOOL DoReportFarmerPlayer(DWORD dwPlayerID, time_t nPunishTime);
+    BOOL DoApplyCoinOperatingFlag(KPlayer* pPlayer);
 
     BOOL DoGameCardSellRequest(DWORD dwPlayerID, int nCoin, int nGameTime, BYTE byType, int nPrice, int nDurationTime);
     BOOL DoGameCardBuyRequest(DWORD dwPlayerID, DWORD dwID, int nBuyPrice);
     BOOL DoGameCardLookupRequest(DWORD dwPlayerID, BYTE byCardType, int nStartIndex, BYTE byOrderType, BOOL bDesc);
     BOOL DoGameCardCancelRequest(DWORD dwPlayerID, DWORD dwID);
+    BOOL DoCoinShopBuyItemRequest(
+        KPlayer* pPlayer, DWORD dwTabType, DWORD dwTabIndex, int nDurability,
+        int nCount, int nCoinPrice, DWORD dwExtParam1, DWORD dwExtParam2
+    );
 
     // ------------------------ 师徒 ------------------------------------
     BOOL DoApplyMentorData(DWORD dwMentorID, DWORD dwApprenticeID);
@@ -448,6 +455,9 @@ private:
     void OnApplySetCampRespond(BYTE* pbyData, size_t uDataLen);
 
     // ----------------------- 帮会相关 -------------------------------
+    void OnApplyTongCacheRespond(BYTE* pbyData, size_t uDataLen);
+    void OnSyncTongCacheChange(BYTE* pbyData, size_t uDataLen);
+    void OnSyncTongDiplomacyData(BYTE* pbyData, size_t uDataLen);
     void OnSyncTongMemberInfo(BYTE* pbyData, size_t uDataLen);
     void OnDeleteTongMemberNotify(BYTE* pbyData, size_t uDataLen);
     void OnApplyTongInfoRespond(BYTE* pbyData, size_t uDataLen);
@@ -497,6 +507,7 @@ private:
     void OnGameCardBuyRespond(BYTE* pbyData, size_t uDataLen);
     void OnGameCardLookupRespond(BYTE* pbyData, size_t uDataLen);
     void OnGameCardCancelRespond(BYTE* pbyData, size_t uDataLen);
+    void OnCoinShopBuyItemRespond(BYTE* pbyData, size_t uDataLen);
 
     // ----------------------- 师徒相关 --------------------------------------
     void OnSyncMentorData(BYTE* pbyData, size_t uDataLen);

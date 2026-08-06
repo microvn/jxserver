@@ -70,6 +70,7 @@ KPlayerServer::KPlayerServer(void)
     REGISTER_EXTERNAL_FUNC(c2s_shop_buy_request, &KPlayerServer::OnShopBuyRequest, sizeof(C2S_SHOP_BUY_REQUEST));
     REGISTER_EXTERNAL_FUNC(c2s_shop_sell_request, &KPlayerServer::OnShopSellRequest, sizeof(C2S_SHOP_SELL_REQUEST));
     REGISTER_EXTERNAL_FUNC(c2s_sold_list_buy_request, &KPlayerServer::OnSoldListBuyRequest, sizeof(C2S_SOLD_LIST_BUY_REQUEST));
+    REGISTER_EXTERNAL_FUNC(c2s_time_limit_sold_list_buy_request, &KPlayerServer::OnTimeLimitSoldListBuyRequest, sizeof(C2S_TIME_LIMIT_SOLD_LIST_BUY_REQUEST));
     REGISTER_EXTERNAL_FUNC(c2s_shop_repair_request, &KPlayerServer::OnShopRepairRequest, sizeof(C2S_SHOP_REPAIR_REQUEST));
 
     REGISTER_EXTERNAL_FUNC(c2s_trading_invite_request, &KPlayerServer::OnTradingInviteRequest, sizeof(C2S_TRADING_INVITE_REQUEST));
@@ -410,6 +411,15 @@ BOOL KPlayerServer::DoSyncNewPlayer(int nConnIndex, KPlayer* pPlayer)
     Pak.uPosZ                = pPlayer->m_nZ;
     Pak.uFightState          = pPlayer->m_bFightState;
     Pak.uSheathFlag          = pPlayer->m_bSheathFlag;
+    // PORT-DEFERRED_WIRING[REGISTRATION]: target S2C_SYNC_NEW_PLAYER (byte_size 0x3b)
+    // has NO uPK bitfield -- the run at +0x30 is uDestX/uDestY/uFightState/
+    // uSheathFlag/uDisarmState/uOnHorse/uRedName/uHuntingFlag/uWaterFlyAbility, and
+    // 'uPK' has 0 member hits in the whole target. Target DoSyncNewPlayer@0806bc0c
+    // does call KPKController::GetState at 0806bc2b but never reads the result back
+    // (the slot is re-zeroed at 0806c251), so the read is vestigial there too.
+    // With the slay states unreachable this is now permanently 0. Removing the field
+    // is a wire change owned by the s2c sync-new-player struct ticket, not by the
+    // slay closure that made the line dead.
     Pak.uPK                  = (ePKState == pksSlaying || ePKState == pksExitSlay);
 
     Pak.uConvergenceSpeed    = pPlayer->m_nConvergenceSpeed;
@@ -3288,6 +3298,66 @@ BOOL KPlayerServer::DoFrameSignal(int nConnIndex)
     bResult = true;
 Exit0:
 	return bResult;
+}
+
+BOOL KPlayerServer::DoSyncTimeLimitReturnItem(
+    int nConnIndex, DWORD dwItemID, DWORD dwShopTemplateID, int nShopItemIndex, time_t nEndTime
+)
+{
+    BOOL                                bResult = false;
+    BOOL                                bRetCode = false;
+    S2C_SYNC_TIME_LIMIT_RETURN_ITEM     SyncInfo;
+
+    SyncInfo.byProtocolID       = s2c_sync_time_limit_return_item;
+    SyncInfo.dwItemID           = dwItemID;
+    SyncInfo.dwShopTemplateID   = dwShopTemplateID;
+    SyncInfo.nShopItemIndex     = nShopItemIndex;
+    SyncInfo.nEndTime           = nEndTime;
+
+    bRetCode = Send(nConnIndex, &SyncInfo, sizeof(SyncInfo));
+    KG_PROCESS_ERROR(bRetCode);
+
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
+BOOL KPlayerServer::DoSyncTimeLimitSoldListInfo(int nConnIndex, DWORD dwItemID, time_t nEndTime)
+{
+    BOOL                                    bResult = false;
+    BOOL                                    bRetCode = false;
+    S2C_SYNC_TIME_LIMIT_SOLD_LIST_INFO      SyncInfo;
+
+    SyncInfo.byProtocolID = s2c_sync_time_limit_sold_list_info;
+    SyncInfo.dwItemID     = dwItemID;
+    SyncInfo.nEndTime     = nEndTime;
+
+    bRetCode = Send(nConnIndex, &SyncInfo, sizeof(SyncInfo));
+    KG_PROCESS_ERROR(bRetCode);
+
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
+BOOL KPlayerServer::DoSyncCorpsChangeValue(DWORD dwPlayerID, int* pnCorpsLevel, int* pnCorpsRoleLevel)
+{
+    BOOL                        bResult = false;
+    KPlayer*                    pPlayer = NULL;
+    S2C_SYNC_CORPS_CHANGE_VALUE SyncInfo;
+
+    pPlayer = g_pSO3World->m_PlayerSet.GetObj(dwPlayerID);
+    KGLOG_PROCESS_ERROR(pPlayer);
+
+    SyncInfo.byProtocolID = s2c_sync_corps_change_value;
+    memcpy(SyncInfo.nCorpsLevel, pnCorpsLevel, sizeof(SyncInfo.nCorpsLevel));
+    memcpy(SyncInfo.nCorpsRoleLevel, pnCorpsRoleLevel, sizeof(SyncInfo.nCorpsRoleLevel));
+
+    Send(pPlayer->m_nConnIndex, &SyncInfo, sizeof(SyncInfo));
+
+    bResult = true;
+Exit0:
+    return bResult;
 }
 
 BOOL KPlayerServer::DoSyncMoney(int nConnIndex, int nMoney, BOOL bShowMsg)
@@ -6569,6 +6639,134 @@ Exit0:
     return bResult;
 }
 
+BOOL KPlayerServer::DoSyncTongDiplomacyData(int nConnIndex, const vector<KTONG_DIPLOMACY_RELATION_INFO>& crDiplomacyInfoVector)
+{
+    BOOL                            bResult     = false;
+    BOOL                            bRetCode    = false;
+    int                             nCount      = (int)crDiplomacyInfoVector.size();
+    S2C_SYNC_TONG_DIPLOMACY_DATA*   pSyncData   = (S2C_SYNC_TONG_DIPLOMACY_DATA*)m_byTempData;
+    size_t                          uPakSize    = sizeof(S2C_SYNC_TONG_DIPLOMACY_DATA) + sizeof(KTONG_DIPLOMACY_RELATION_INFO) * nCount;
+
+    KGLOG_PROCESS_ERROR(uPakSize <= MAX_EXTERNAL_PACKAGE_SIZE);
+
+    pSyncData->byProtocolID = s2c_sync_tong_diplomacy_data;
+    pSyncData->wSize        = (WORD)uPakSize;
+    pSyncData->byCount      = (BYTE)nCount;
+
+    for (int i = 0; i < nCount; ++i)
+        pSyncData->DiplomacyInfoArray[i] = crDiplomacyInfoVector[i];
+
+    bRetCode = Send(nConnIndex, pSyncData, uPakSize);
+    KG_PROCESS_ERROR(bRetCode);
+
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
+/*[target 2.5.2] KFuncTraverseTongSend, DWARF byte_size 12:
+  DWORD m_dwExceptID@0, size_t m_uDataLen@4, void* m_pvData@8,
+  BOOL operator()(unsigned long dwMemberID)@0808fa68 (basic_blocks 6;
+  ordered calls GetObj@0808fa9b -> KGLogPrintf@0808fad0 -> Send@0808faff).
+  Consumers: KTongServer::Traverse<KFuncTraverseTongSend>@0808fb10. */
+struct KFuncTraverseTongSend
+{
+    DWORD   m_dwExceptID;
+    size_t  m_uDataLen;
+    void*   m_pvData;
+
+    BOOL operator()(DWORD dwMemberID)
+    {
+        /* 0808faa3-0808fb0b: bResult starts 0. It is set to 1 on the except-ID
+           early exit and after Send; the GetObj == NULL path falls through to the
+           epilogue returning 0.
+           That 0 does NOT stop the broadcast: KTongServer::Traverse logs it with
+           KGLOG_CHECK_ERROR and keeps iterating (see KTongServer.h). The return
+           value is still part of the contract - do not "simplify" it to true. */
+        BOOL        bResult = false;
+        KPlayer*    pPlayer = NULL;
+
+        if (dwMemberID == m_dwExceptID)
+        {
+            bResult = true;
+            goto Exit0;
+        }
+
+        pPlayer = g_pSO3World->m_PlayerSet.GetObj(dwMemberID);
+        KGLOG_PROCESS_ERROR(pPlayer);
+
+        g_PlayerServer.Send(pPlayer->m_nConnIndex, m_pvData, m_uDataLen);
+
+        bResult = true;
+Exit0:
+        return bResult;
+    }
+};
+
+/*[target 2.5.2] KPlayerServer::DoSyncTongTotalCache@0805edce, size 155, basic_blocks 4.
+  Mangled _ZN13KPlayerServer20DoSyncTongTotalCacheEiPKh -> (int, const BYTE*).
+  Ordered target calls: memcpy@0805ee00 -> Send@0805ee21 -> KGLogPrintf@0805ee56.
+  Caller KTongServer::SyncTongTotalCache@081e5994, wire s2c 227 (9 bytes). */
+BOOL KPlayerServer::DoSyncTongTotalCache(int nConnIndex, const BYTE* byCacheData)
+{
+    BOOL                        bResult     = false;
+    BOOL                        bRetCode    = false;
+    S2C_SYNC_TONG_TOTAL_CACHE   SyncCache;
+
+    SyncCache.byProtocolID = s2c_sync_tong_total_cache;
+    memcpy(SyncCache.byCacheData, byCacheData, ttntTotal);
+
+    bRetCode = Send(nConnIndex, &SyncCache, sizeof(SyncCache));
+    KGLOG_PROCESS_ERROR(bRetCode);
+
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
+/*[target 2.5.2] KPlayerServer::DoBroadcastTongTotalCache@0805ed68, size 101, basic_blocks 1.
+  Mangled _ZN13KPlayerServer25DoBroadcastTongTotalCacheEmPKh -> (DWORD, const BYTE*).
+  Ordered target calls: memcpy@0805ed8c -> Traverse<KFuncTraverseTongSend>@0805edc1.
+  No branch and no log on the target path. Caller KTongServer::InsertTongChache@081e5afc. */
+BOOL KPlayerServer::DoBroadcastTongTotalCache(DWORD dwTongID, const BYTE* byCacheData)
+{
+    S2C_SYNC_TONG_TOTAL_CACHE   SyncCache;
+    KFuncTraverseTongSend       Func;
+
+    SyncCache.byProtocolID = s2c_sync_tong_total_cache;
+    memcpy(SyncCache.byCacheData, byCacheData, ttntTotal);
+
+    Func.m_dwExceptID   = 0;
+    Func.m_uDataLen     = sizeof(SyncCache);
+    Func.m_pvData       = &SyncCache;
+
+    g_pSO3World->m_TongServer.Traverse(dwTongID, Func);
+
+    return true;
+}
+
+/*[target 2.5.2] KPlayerServer::DoBroadcastTongCacheChange@0805ae8e, size 91.
+  Mangled _ZN13KPlayerServer26DoBroadcastTongCacheChangeEm15TongTechNodeTagh.
+  Single target call: Traverse<KFuncTraverseTongSend>. No branch, no log.
+  Caller KTongServer::UpdateTongChacheChange@081e5a64, wire s2c 228 (4 bytes). */
+BOOL KPlayerServer::DoBroadcastTongCacheChange(DWORD dwTongID, TongTechNodeTag eType, BYTE byValue)
+{
+    S2C_SYNC_TONG_CACHE_CHANGE  CacheChange;
+    KFuncTraverseTongSend       Func;
+
+    CacheChange.byProtocolID    = s2c_sync_tong_cache_change;
+    CacheChange.byType          = (BYTE)eType;
+    CacheChange.byValue         = byValue;
+
+    Func.m_dwExceptID   = 0;
+    Func.m_uDataLen     = sizeof(CacheChange);
+    Func.m_pvData       = &CacheChange;
+
+    g_pSO3World->m_TongServer.Traverse(dwTongID, Func);
+
+    return true;
+}
+
 BOOL KPlayerServer::DoAuctionLookupRespond(DWORD dwPlayerID, BYTE byRespondID, BYTE byCode, KAUCTION_PAGE_HEAD* pPage)
 {
     BOOL                        bResult  = false;
@@ -6762,6 +6960,23 @@ BOOL KPlayerServer::DoSyncBattleFieldObjective(int nConnIndex, int nIndex, int n
     BattlefieldObjective.nTargetValue   = nTargetValue;
 
     Send(nConnIndex, &BattlefieldObjective, sizeof(BattlefieldObjective));
+
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
+BOOL KPlayerServer::DoSyncSafeLockInfo(int nConnIndex, DWORD dwMask)
+{
+    BOOL                    bResult = false;
+    BOOL                    bRetCode = false;
+    S2C_SYNC_SAFE_LOCK_INFO SafeLockInfo;
+
+    SafeLockInfo.byProtocolID = s2c_sync_safe_lock_info;
+    SafeLockInfo.dwMask = dwMask;
+
+    bRetCode = Send(nConnIndex, &SafeLockInfo, sizeof(SafeLockInfo));
+    KG_PROCESS_ERROR(bRetCode);
 
     bResult = true;
 Exit0:
@@ -9089,6 +9304,9 @@ void KPlayerServer::OnShopBuyRequest(char* pData, size_t nSize, int nConnIndex, 
     KGLOG_PROCESS_ERROR(pPlayer);
     KG_PROCESS_ERROR(pPlayer->m_eMoveState != cmsOnDeath);
     KG_PROCESS_ERROR(pPlayer->m_eGameStatus == gsPlaying);
+
+    nRetCode = pPlayer->CheckSafeLock(sletShop);
+    KGLOG_PROCESS_ERROR(nRetCode);
     
     pShop = g_pSO3World->m_ShopCenter.GetShopInfo(pRequest->dwShopID);
     KGLOG_PROCESS_ERROR(pShop);
@@ -9103,10 +9321,24 @@ void KPlayerServer::OnShopBuyRequest(char* pData, size_t nSize, int nConnIndex, 
     Param.nCount        = pRequest->nCount;
     Param.nCost         = pRequest->nCost;
 
-    nRetCode = pShop->BuyItem(pPlayer, Param);
-    KGLOG_PROCESS_ERROR(nRetCode);
+    if (pShop->m_bCoinShop)
+    {
+        KGLOG_PROCESS_ERROR(Param.nCount <= 16);
 
-    DoMessageNotify(nConnIndex, ectShopEventNotifyCode, ssrcBuySuccess, NULL, 0);
+        nRetCode = pShop->BuyCoinShopItem(pPlayer, Param);
+        KGLOG_PROCESS_ERROR(nRetCode);
+
+        // Target SHOP_SYSTEM_RESPOND_CODE::ssrcBuyFailed is the wire value 7.
+        // The legacy SO3Result.h enum has not yet acquired the target spelling.
+        DoMessageNotify(nConnIndex, ectShopEventNotifyCode, 7, NULL, 0);
+    }
+    else
+    {
+        nRetCode = pShop->BuyItem(pPlayer, Param);
+        KGLOG_PROCESS_ERROR(nRetCode);
+
+        DoMessageNotify(nConnIndex, ectShopEventNotifyCode, ssrcBuySuccess, NULL, 0);
+    }
 
 Exit0:
     return;
@@ -9129,6 +9361,9 @@ void KPlayerServer::OnShopSellRequest(char* pData, size_t nSize, int nConnIndex,
     KG_PROCESS_ERROR(pPlayer->m_eMoveState != cmsOnDeath);
     KG_PROCESS_ERROR(pPlayer->m_eGameStatus == gsPlaying);
 
+    nRetCode = pPlayer->CheckSafeLock(sletShop);
+    KGLOG_PROCESS_ERROR(nRetCode);
+
     pShop = g_pSO3World->m_ShopCenter.GetShopInfo(pRequest->dwShopID);
     KGLOG_PROCESS_ERROR(pShop);
     
@@ -9145,18 +9380,28 @@ void KPlayerServer::OnShopSellRequest(char* pData, size_t nSize, int nConnIndex,
     nRelation = pPlayer->GetNpcRelation(pNpc);
     KGLOG_PROCESS_ERROR(!(nRelation & sortEnemy));
   
-    {
-        KSHOP_SELL_ITEM_PARAM Param;
-        Param.dwBox = pRequest->dwBoxIndex;
-        Param.dwX = pRequest->dwPosIndex;
-        Param.dwItemID = pRequest->dwItemID;
-        Param.nCost = pRequest->nCost;
+    KSHOP_SELL_ITEM_PARAM Param;
+    Param.dwBox = pRequest->dwBoxIndex;
+    Param.dwX = pRequest->dwPosIndex;
+    Param.dwItemID = pRequest->dwItemID;
+    Param.nCost = pRequest->nCost;
 
+    if (pPlayer->m_ItemList.IsTimeLimitReturnItem(pRequest->dwItemID))
+    {
+        nRetCode = pShop->ReturnItem(pPlayer, Param);
+        KGLOG_PROCESS_ERROR(nRetCode);
+
+        // Target SHOP_SYSTEM_RESPOND_CODE::ssrcReturnSuccess is wire value 5.
+        // The legacy SO3Result.h enum has not yet acquired the target spelling.
+        DoMessageNotify(nConnIndex, ectShopEventNotifyCode, 5, NULL, 0);
+    }
+    else
+    {
         nRetCode = pShop->SellItem(pPlayer, Param);
         KGLOG_PROCESS_ERROR(nRetCode);
-    }
 
-    DoMessageNotify(nConnIndex, ectShopEventNotifyCode, ssrcSellSuccess, NULL, 0);
+        DoMessageNotify(nConnIndex, ectShopEventNotifyCode, ssrcSellSuccess, NULL, 0);
+    }
 
 Exit0:
 
@@ -9165,6 +9410,10 @@ Exit0:
 
 void KPlayerServer::OnShopRepairRequest(char* pData, size_t nSize, int nConnIndex, int nFrame)
 {
+    // PORT-UNKNOWN_REQUIRED[CALLER] owner=KPlayer/KTongServer/KRelayClient;
+    // target=OnShopRepairRequest@080744c4. Target-only item identity, tong discount/fund,
+    // and relay accounting closure is not frozen; next=dedicated target-backed repair bundle.
+    // Preserve the legacy body until that owner closure is reconstructed; do not fake a partial path.
     int                         nRetCode        = 0;
     C2S_SHOP_REPAIR_REQUEST*    pRequest        = (C2S_SHOP_REPAIR_REQUEST *)pData;
     KShop*                      pShop           = NULL;
@@ -9218,6 +9467,45 @@ void KPlayerServer::OnShopRepairRequest(char* pData, size_t nSize, int nConnInde
     nRepairMoney = nOldMoney - pPlayer->m_ItemList.m_nMoney;
 
     DoMessageNotify(nConnIndex, ectShopEventNotifyCode, ssrcRepairSuccess, &nRepairMoney, sizeof(nRepairMoney));
+
+Exit0:
+    return;
+}
+
+void KPlayerServer::OnTimeLimitSoldListBuyRequest(char* pData, size_t nSize, int nConnIndex, int nFrame)
+{
+    int                                         nRetCode    = false;
+    C2S_TIME_LIMIT_SOLD_LIST_BUY_REQUEST*      pRequest    = (C2S_TIME_LIMIT_SOLD_LIST_BUY_REQUEST*)pData;
+    KPlayer*                                    pPlayer     = NULL;
+    KShop*                                      pShop       = NULL;
+    KNpc*                                       pNpc        = NULL;
+    int                                         nRelation   = 0;
+    KSHOP_BUY_TIME_LIMIT_SOLD_LIST_ITEM_PARAM  Param;
+
+    pPlayer = GetPlayerByConnection(nConnIndex);
+    KGLOG_PROCESS_ERROR(pPlayer);
+    KG_PROCESS_ERROR(pPlayer->m_eMoveState != cmsOnDeath);
+    KG_PROCESS_ERROR(pPlayer->m_eGameStatus == gsPlaying);
+
+    pShop = g_pSO3World->m_ShopCenter.GetShopInfo(pRequest->dwShopID);
+    KGLOG_PROCESS_ERROR(pShop);
+
+    pNpc = pShop->m_pNpc;
+    KGLOG_PROCESS_ERROR(pNpc);
+    KGLOG_PROCESS_ERROR(pPlayer->m_pScene == pNpc->m_pScene);
+
+    nRetCode = g_InRange(pPlayer, pNpc, COMMON_PLAYER_OPERATION_DISTANCE);
+    KG_PROCESS_ERROR(nRetCode);
+
+    nRelation = pPlayer->GetNpcRelation(pNpc);
+    KGLOG_PROCESS_ERROR(!(nRelation & sortEnemy));
+    KG_PROCESS_ERROR(g_pSO3World->m_bTimeLimitSoldFlag);
+
+    Param.dwItemID = pRequest->dwItemID;
+    Param.dwX      = pRequest->dwX;
+
+    nRetCode = pShop->BuyTimeLimitSoldListItem(pPlayer, Param);
+    KGLOG_PROCESS_ERROR(nRetCode);
 
 Exit0:
     return;
@@ -11419,14 +11707,6 @@ void KPlayerServer::OnApplyPKOperate(char* pData, size_t nSize, int nConnIndex, 
 	case pkoLossDuel:
 		nPKRespond = pPlayer->m_PK.LossDuel();
 	    break;
-
-	case pkoApplySlay:
-		nPKRespond = pPlayer->m_PK.ApplySlay();
-		break;
-
-	case pkoCloseSlay:
-		nPKRespond = pPlayer->m_PK.CloseSlay();
-        break;
 
 	default:
         break;

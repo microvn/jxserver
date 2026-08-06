@@ -14,7 +14,7 @@
       "origin_id": "candidate",
       "payload_json": "{\"authority\":\"candidate-implementation\",\"evidence\":{\"evidence_id\":22032},\"facts\":{\"body_bytes\":8453,\"body_sha256\":\"f8308f6a2d13125629a40f2fa04312307436aa2c293b11072e766f36c26c9c42\",\"call_token_count\":0,\"control_keywords\":{\"else\":1,\"goto\":10,\"if\":20,\"return\":1},\"extractor\":\"lexical-fact-v1\",\"memory_offsets\":[],\"qualified_or_decompile_calls\":[],\"string_literals\":[\"\\\"Incorrect QueueID : Player QID(%lu), MapCopy QID(%lu)\\\"\",\"\\\"Invalid map ID %u, Role: %s\\\\n\\\"\",\"\\\"New QueueID = %lu, MapCopyIndex = %d\\\"\",\"\\\"\\u00c9\\u00cf\\u00d2\\u00bb\\u00b8\\u00f6\\u00c8\\u00eb\\u00bf\\u00da\\u00b5\\u00e3\\\"\"]},\"identity\":{\"file_path\":\"/Volumes/ExData/game/jx3/linux-build/src/SO3World/Test/TestProject/KRoleSLTest/SO3GameCenter/KGameServer.cpp\",\"file_sha256\":\"3b9dcbdc2262dc1fd142d42afacd1287a735fb365035509ca6fe01902ff0a038\",\"line\":257,\"qualified_name\":\"KGameServer::ProcessRoleLogin\"},\"kind\":\"function-comparison\",\"origin\":\"candidate\",\"qualified_name\":\"KGameServer::ProcessRoleLogin\",\"record_kind\":\"function-observation\",\"signature_text\":\"KGameServer::ProcessRoleLogin(KACCOUNT_LOGIN_INFO* pAccInfo, DWORD dwRoleID, KRoleBaseInfo* pBaseInfo, DWORD dwQueueID)\",\"status\":\"OBSERVED\"}",
       "record_line": 6101,
-      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/semantic/function_semantic_comparison.jsonl",
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/semantic/function_semantic_comparison.jsonl",
       "status": "OBSERVED"
     },
     {
@@ -22,7 +22,7 @@
       "origin_id": "source-2010",
       "payload_json": "{\"authority\":\"historical-baseline\",\"evidence\":{\"evidence_id\":16014},\"facts\":{\"body_bytes\":8687,\"body_sha256\":\"fd0ebf97b4123da0bd063cd8034f1a4612ef0d1f07a971f129c8d1b154d31cfe\",\"call_token_count\":0,\"control_keywords\":{\"else\":1,\"goto\":10,\"if\":20,\"return\":1},\"extractor\":\"lexical-fact-v1\",\"memory_offsets\":[],\"qualified_or_decompile_calls\":[],\"string_literals\":[\"\\\"Incorrect QueueID : Player QID(%lu), MapCopy QID(%lu)\\\"\",\"\\\"Invalid map ID %u, Role: %s\\\\n\\\"\",\"\\\"New QueueID = %lu, MapCopyIndex = %d\\\"\",\"\\\"\\u00c9\\u00cf\\u00d2\\u00bb\\u00b8\\u00f6\\u00c8\\u00eb\\u00bf\\u00da\\u00b5\\u00e3\\\"\"]},\"identity\":{\"file_path\":\"/Volumes/ExData/game/jx3/source/Sword3-FullSource-master/Jx3Full/Source/Source/Common/SO3World/Test/TestProject/KRoleSLTest/SO3GameCenter/KGameServer.cpp\",\"file_sha256\":\"3a3e632aabb156ca9a14b07c4c28ea363ac040a1c8f68f01bee0ba551090f52a\",\"line\":257,\"qualified_name\":\"KGameServer::ProcessRoleLogin\"},\"kind\":\"function-comparison\",\"origin\":\"source-2010\",\"qualified_name\":\"KGameServer::ProcessRoleLogin\",\"record_kind\":\"function-observation\",\"signature_text\":\"KGameServer::ProcessRoleLogin(KACCOUNT_LOGIN_INFO* pAccInfo, DWORD dwRoleID, KRoleBaseInfo* pBaseInfo, DWORD dwQueueID)\",\"status\":\"OBSERVED\"}",
       "record_line": 6102,
-      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/semantic/function_semantic_comparison.jsonl",
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/semantic/function_semantic_comparison.jsonl",
       "status": "OBSERVED"
     },
     {
@@ -30,7 +30,7 @@
       "origin_id": "source-2010",
       "payload_json": "{\"authority\":\"historical-baseline\",\"evidence\":{\"evidence_id\":17600},\"facts\":{\"body_bytes\":9274,\"body_sha256\":\"62778bd7b341ff211ae2dd0657cd856987b4a57c6a2487156414c0ac1ecc4249\",\"call_token_count\":0,\"control_keywords\":{\"else\":1,\"for\":1,\"goto\":8,\"if\":24,\"return\":1},\"extractor\":\"lexical-fact-v1\",\"memory_offsets\":[],\"qualified_or_decompile_calls\":[],\"string_literals\":[\"\\\"Incorrect QueueID : Player QID(%u), MapCopy QID(%u)\\\"\",\"\\\"Invalid map ID %u, Role: %s\\\\n\\\"\",\"\\\"New QueueID = %u, MapID(%u), MapCopyID(%d)\\\"\",\"\\\"\\u00c8\\u00cb\\u00c6\\u00f8\\u00bd\\u00cf\\u00cd\\u00fa\\u00ca\\u00a2\\\"\"]},\"identity\":{\"file_path\":\"/Volumes/ExData/game/jx3/source/Sword3-FullSource-master/Jx3Full/Source/Source/Server/SO3GameCenter/KGameServer.cpp\",\"file_sha256\":\"dbe4416bcec5b3766f46e7c91d4586c72248a105d202a9342adf0ea11fb5e5be\",\"line\":344,\"qualified_name\":\"KGameServer::ProcessRoleLogin\"},\"kind\":\"function-comparison\",\"origin\":\"source-2010\",\"qualified_name\":\"KGameServer::ProcessRoleLogin\",\"record_kind\":\"function-observation\",\"signature_text\":\"KGameServer::ProcessRoleLogin(KACCOUNT_LOGIN_INFO* pAccInfo, DWORD dwRoleID, KRoleBaseInfo* pBaseInfo, DWORD dwQueueID)\",\"status\":\"OBSERVED\"}",
       "record_line": 6103,
-      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/semantic/function_semantic_comparison.jsonl",
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/semantic/function_semantic_comparison.jsonl",
       "status": "OBSERVED"
     },
     {
@@ -38,7 +38,7 @@
       "origin_id": "target-decompile",
       "payload_json": "{\"authority\":\"target-control-flow\",\"decompile_link\":{\"rule\":\"target decompile export and nm export retain separate artifact hashes; they are associated only by the recorded target binary path and exact address\",\"status\":\"OBSERVED_SAME_BINARY_PATH_AND_ADDRESS\"},\"evidence\":{\"decompile_artifact\":null,\"decompile_evidence_id\":null,\"symbol_artifact\":\"/Volumes/ExData/game/jx3/linux-build/re-index/symbols/SO3GameCenterD.jsonl\",\"symbol_evidence_id\":29991},\"facts\":{\"reason\":\"no decompile document\"},\"identity\":{\"address\":\"0808478c\",\"artifact_sha256\":\"4943647cdd42aaf6bcde465777ef31dc012eeca67af37f5777f1ca2b04e0e3a3\",\"binary_path\":\"jx3_dwarf/SO3GameCenterD\",\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"decompile_artifact_sha256\":null,\"demangled\":\"KGameServer::ProcessRoleLogin(int, KACCOUNT_LOGIN_INFO const&, KJX3_CLIENT_INFO const&, unsigned long, KRoleBaseInfo*, unsigned long)\"},\"kind\":\"function-comparison\",\"origin\":\"target-decompile\",\"qualified_name\":\"KGameServer::ProcessRoleLogin\",\"record_kind\":\"function-observation\",\"status\":\"DECOMPILE_UNRESOLVED\",\"target_direct_calls\":[]}",
       "record_line": 6104,
-      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/semantic/function_semantic_comparison.jsonl",
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/semantic/function_semantic_comparison.jsonl",
       "status": "DECOMPILE_UNRESOLVED"
     },
     {
@@ -46,7 +46,7 @@
       "origin_id": null,
       "payload_json": "{\"candidate_observation\":{\"evidence_id\":22032,\"file_path\":\"/Volumes/ExData/game/jx3/linux-build/src/SO3World/Test/TestProject/KRoleSLTest/SO3GameCenter/KGameServer.cpp\",\"file_sha256\":\"3b9dcbdc2262dc1fd142d42afacd1287a735fb365035509ca6fe01902ff0a038\",\"line\":257},\"dimension\":\"source-candidate-body\",\"kind\":\"function-comparison\",\"qualified_name\":\"KGameServer::ProcessRoleLogin\",\"reason\":\"recovered source-body SHA-256 differs; no target behaviour conclusion\",\"record_kind\":\"comparison-claim\",\"result\":\"DIFFERS\",\"source_observation\":{\"evidence_id\":16014,\"file_path\":\"/Volumes/ExData/game/jx3/source/Sword3-FullSource-master/Jx3Full/Source/Source/Common/SO3World/Test/TestProject/KRoleSLTest/SO3GameCenter/KGameServer.cpp\",\"file_sha256\":\"3a3e632aabb156ca9a14b07c4c28ea363ac040a1c8f68f01bee0ba551090f52a\",\"line\":257}}",
       "record_line": 6105,
-      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/semantic/function_semantic_comparison.jsonl",
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/semantic/function_semantic_comparison.jsonl",
       "status": null
     },
     {
@@ -54,7 +54,7 @@
       "origin_id": null,
       "payload_json": "{\"candidate_observation\":{\"evidence_id\":22032,\"file_path\":\"/Volumes/ExData/game/jx3/linux-build/src/SO3World/Test/TestProject/KRoleSLTest/SO3GameCenter/KGameServer.cpp\",\"file_sha256\":\"3b9dcbdc2262dc1fd142d42afacd1287a735fb365035509ca6fe01902ff0a038\",\"line\":257},\"dimension\":\"source-candidate-body\",\"kind\":\"function-comparison\",\"qualified_name\":\"KGameServer::ProcessRoleLogin\",\"reason\":\"recovered source-body SHA-256 differs; no target behaviour conclusion\",\"record_kind\":\"comparison-claim\",\"result\":\"DIFFERS\",\"source_observation\":{\"evidence_id\":17600,\"file_path\":\"/Volumes/ExData/game/jx3/source/Sword3-FullSource-master/Jx3Full/Source/Source/Server/SO3GameCenter/KGameServer.cpp\",\"file_sha256\":\"dbe4416bcec5b3766f46e7c91d4586c72248a105d202a9342adf0ea11fb5e5be\",\"line\":344}}",
       "record_line": 6106,
-      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/semantic/function_semantic_comparison.jsonl",
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/semantic/function_semantic_comparison.jsonl",
       "status": null
     },
     {
@@ -62,7 +62,7 @@
       "origin_id": null,
       "payload_json": "{\"dimension\":\"target-semantic-equivalence\",\"kind\":\"function-comparison\",\"qualified_name\":\"KGameServer::ProcessRoleLogin\",\"reason\":\"exact qualified-name identity and decompile facts do not independently prove source/candidate control-flow equivalence; retain target facts separately\",\"record_kind\":\"comparison-claim\",\"result\":\"UNRESOLVED\",\"source_candidate_identity\":\"PROVISIONAL_EXACT_QUALIFIED_NAME\",\"target_observation\":{\"address\":\"0808478c\",\"binary_sha256\":\"655b28126b972d1b3e1b3c02b827356c4d2ad6cf421b258152b130ec3c214d79\",\"decompile_evidence_id\":null,\"symbol_evidence_id\":29991}}",
       "record_line": 6107,
-      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/semantic/function_semantic_comparison.jsonl",
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/semantic/function_semantic_comparison.jsonl",
       "status": null
     }
   ],

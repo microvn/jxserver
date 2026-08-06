@@ -417,7 +417,7 @@ int KPlayer::LuaAddExterior(Lua_State* L)
     nPayType   = (int)Lua_ValueToNumber(L, 3);
     nBuySource = (int)Lua_ValueToNumber(L, 4);
 
-    bResult = g_pSO3World->m_Settings.m_Exterior.AddExterior(this, dwID, nTimeType, nPayType, nBuySource);
+    bResult = g_pSO3World->m_Exterior.AddExterior(this, dwID, nTimeType, nPayType, nBuySource);
 Exit0:
     Lua_PushBoolean(L, bResult);
     return 1;
@@ -534,7 +534,7 @@ int KPlayer::LuaGetExteriorInfo(Lua_State* L)
 
     KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 1);
     dwID = (DWORD)Lua_ValueToNumber(L, 1);
-    pInfo = g_pSO3World->m_Settings.m_Exterior.GetExteriorInfo(dwID);
+    pInfo = g_pSO3World->m_Exterior.GetExteriorInfo(dwID);
     KGLOG_PROCESS_ERROR(pInfo);
 
     lua_newtable(L);
@@ -569,7 +569,7 @@ int KPlayer::LuaGetExteriorSuitInfo(Lua_State* L)
 
     KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 1);
     dwSuitID = (DWORD)Lua_ValueToNumber(L, 1);
-    pSuit = g_pSO3World->m_Settings.m_Exterior.GetExteriorSuitInfo(dwSuitID);
+    pSuit = g_pSO3World->m_Exterior.GetExteriorSuitInfo(dwSuitID);
     KGLOG_PROCESS_ERROR(pSuit);
 
     lua_newtable(L);
@@ -596,7 +596,7 @@ int KPlayer::LuaGetExteriorShopPrice(Lua_State* L)
 
     KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 1);
     dwID = (DWORD)Lua_ValueToNumber(L, 1);
-    pPrice = g_pSO3World->m_Settings.m_Exterior.GetExteriorShopPrice(dwID);
+    pPrice = g_pSO3World->m_Exterior.GetExteriorShopPrice(dwID);
     KGLOG_PROCESS_ERROR(pPrice);
 
     lua_newtable(L);
@@ -624,7 +624,7 @@ int KPlayer::LuaGetExteriorIndex(Lua_State* L)
     nRepresentID = (DWORD)Lua_ValueToNumber(L, 2);
     nColorID     = (DWORD)Lua_ValueToNumber(L, 3);
     nForceID     = (DWORD)Lua_ValueToNumber(L, 4);
-    dwID = g_pSO3World->m_Settings.m_Exterior.GetExteriorIndex(nSubType, nRepresentID, nColorID, nForceID);
+    dwID = g_pSO3World->m_Exterior.GetExteriorIndex(nSubType, nRepresentID, nColorID, nForceID);
 Exit0:
     Lua_PushNumber(L, dwID);
     return 1;
@@ -638,7 +638,7 @@ int KPlayer::LuaGetSuitAchievementID(Lua_State* L)
 
     KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 1);
     dwSuitID = (DWORD)Lua_ValueToNumber(L, 1);
-    pSuit = g_pSO3World->m_Settings.m_Exterior.GetExteriorSuitInfo(dwSuitID);
+    pSuit = g_pSO3World->m_Exterior.GetExteriorSuitInfo(dwSuitID);
     KGLOG_PROCESS_ERROR(pSuit);
     nAchievementID = pSuit->nAchievementID;
 Exit0:
@@ -656,7 +656,7 @@ int KPlayer::LuaCanAchieveExterior(Lua_State* L)
 
     KGLOG_PROCESS_ERROR(Lua_GetTopIndex(L) == 1);
     dwSuitID = (DWORD)Lua_ValueToNumber(L, 1);
-    pSuit = g_pSO3World->m_Settings.m_Exterior.GetExteriorSuitInfo(dwSuitID);
+    pSuit = g_pSO3World->m_Exterior.GetExteriorSuitInfo(dwSuitID);
     KGLOG_PROCESS_ERROR(pSuit);
 
     pieces[0] = pSuit->nChest; pieces[1] = pSuit->nHelm; pieces[2] = pSuit->nWaist;
@@ -8800,20 +8800,6 @@ Exit0:
     return 1;
 }
 
-int KPlayer::LuaCanApplySlay(Lua_State* L)
-{
-    BOOL            bResult         = false;
-    PK_RESULT_CODE  eRetCode        = pkrcFailed;
-	
-	eRetCode = m_PK.CanApplySlay();
-	KG_PROCESS_ERROR(eRetCode == pkrcSuccess);
-
-    bResult = true;
-Exit0:
-    Lua_PushBoolean(L, bResult);
-    return 1;
-}
-
 int KPlayer::LuaApplyDuel(Lua_State* L)
 {
     BOOL            bResult         = false;
@@ -8895,59 +8881,6 @@ int KPlayer::LuaLossDuel(Lua_State* L)
 
 #ifdef _CLIENT
 	g_PlayerClient.DoApplyPKOperate(pkoLossDuel, 0, 0);
-#endif
-
-    bResult = true;
-Exit0:
-    Lua_PushBoolean(L, bResult);
-    return 1;
-}
-
-int KPlayer::LuaApplySlay(Lua_State* L)
-{
-    BOOL            bResult         = false;
-    PK_RESULT_CODE  eRetCode        = pkrcApplySlayFailed;
-
-#ifdef _SERVER
-	eRetCode = m_PK.ApplySlay();
-	KGLOG_PROCESS_ERROR(eRetCode == pkrcSuccess);
-#endif
-
-#ifdef _CLIENT
-	g_PlayerClient.DoApplyPKOperate(pkoApplySlay, 0, 0);
-#endif
-
-    bResult = true;
-Exit0:
-    Lua_PushBoolean(L, bResult);
-    return 1;
-}
-
-int KPlayer::LuaCanCloseSlay(Lua_State* L)
-{
-    BOOL            bResult         = false;
-    PK_STATE        ePKState        = m_PK.GetState();
-
-    KG_PROCESS_ERROR(ePKState == pksSlaying);
-
-    bResult = true;
-Exit0:
-    Lua_PushBoolean(L, bResult);
-    return 1;
-}
-
-int KPlayer::LuaCloseSlay(Lua_State* L)
-{
-    BOOL            bResult         = false;
-    PK_RESULT_CODE  eRetCode        = pkrcFailed;
-
-#ifdef _SERVER
-    eRetCode = m_PK.CloseSlay();
-    KGLOG_PROCESS_ERROR(eRetCode == pkrcSuccess);
-#endif
-
-#ifdef _CLIENT
-    g_PlayerClient.DoApplyPKOperate(pkoCloseSlay, 0, 0);
 #endif
 
     bResult = true;
@@ -9549,19 +9482,15 @@ Exit0:
 
 int KPlayer::LuaIsOnSlay(Lua_State* L)
 {
+    /* target KPlayer::LuaIsOnSlay@0830d802 is the whole body: it never touches
+       this/m_PK/m_eState. It sets the local to 0, calls lua_pushboolean and
+       returns 1 - no lua_gettop guard and no error path. The 2.5.2 slay system
+       is gone; the Lua name survives for script compatibility only. */
     BOOL    bIsSlay     = false;
-    int     nTopIndex   = 0;
-
-    nTopIndex = Lua_GetTopIndex(L);
-    KGLOG_PROCESS_ERROR(nTopIndex == 0);
-
-    bIsSlay = m_PK.IsOnSlay();
 
     Lua_PushBoolean(L, bIsSlay);
 
     return 1;
-Exit0:
-    return 0;
 }
 
 int KPlayer::LuaSetMapVisitFlag(Lua_State* L)
@@ -12065,15 +11994,11 @@ DEFINE_LUA_CLASS_BEGIN(KPlayer)
 #endif
 
 	REGISTER_LUA_FUNC(KPlayer, CanApplyDuel)
-	REGISTER_LUA_FUNC(KPlayer, CanApplySlay)
 	
 	REGISTER_LUA_FUNC(KPlayer, ApplyDuel)
 	REGISTER_LUA_FUNC(KPlayer, RefuseDuel)
 	REGISTER_LUA_FUNC(KPlayer, AcceptDuel)
 	REGISTER_LUA_FUNC(KPlayer, LossDuel)
-	REGISTER_LUA_FUNC(KPlayer, ApplySlay)
-    REGISTER_LUA_FUNC(KPlayer, CanCloseSlay)
-	REGISTER_LUA_FUNC(KPlayer, CloseSlay)
 
 	REGISTER_LUA_FUNC(KPlayer, GetPKState)
 

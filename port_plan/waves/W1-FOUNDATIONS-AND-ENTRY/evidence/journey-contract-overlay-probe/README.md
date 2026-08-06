@@ -7,7 +7,7 @@ code, Graph DB input, or target-specific value.
 Run from `linux-build/`:
 
 ```bash
-python3 graphengine/tools/query/journey_contract_query.py \
+python3 compare-engine/tools/query/journey_contract_query.py \
   --seed synthetic-neutral \
   --target-contract-facts port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-contract-overlay-probe/target-contract-facts.synthetic.json \
   --candidate-overlay port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-contract-overlay-probe/candidate-overlay.synthetic.json \

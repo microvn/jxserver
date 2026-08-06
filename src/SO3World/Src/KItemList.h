@@ -153,6 +153,25 @@ public:
 #ifdef _SERVER
     BOOL    Load(BYTE* pbyData, size_t uDataLen);
     BOOL    Load(BYTE* pbyData, size_t uDataLen, int nVersion);
+    BOOL    LoadItemList(BYTE* pbyData, size_t uDataLen, int nVersion);
+    BOOL    LoadItemList_V0(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadItemList_V1(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadItemList_V2(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadItemList_V3(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadItemList_V4(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadItemList_V5(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadItemList_V6(BYTE* pbyData, size_t uDataLen);
+    BOOL    IsTimeLimitReturnItem(DWORD dwItemID);
+    DWORD   GetTimeLimitReturnItemShopTemplateID(DWORD dwItemID);
+    int     GetTimeLimitReturnItemShopItemIndex(DWORD dwItemID);
+    BOOL    AddTimeLimitReturnItemInfo(
+        DWORD dwItemID, DWORD dwShopTemplateID, int nShopItemIndex, time_t nEndTime
+    );
+    BOOL    DelTimeLimitReturnItemInfo(DWORD dwItemID);
+    BOOL    DelTimeLimitSoldListInfo(DWORD dwItemID);
+    void    TidyUpTimeLimitSoldList();
+    BOOL    LoadTimeLimitReturnInfo_V0(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadTimeLimitReturnInfo(BYTE* pbyData, size_t uDataLen, int nVersion);
     BOOL    Save(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
 	
     void    TidyUpSoldList();    

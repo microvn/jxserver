@@ -102,8 +102,8 @@ process not started → configured GameServer start → required initialization 
 ### Required read-only dossiers
 
 ```text
-graphengine/tools/query/evidence_query.py function KSO3World::Init
-graphengine/tools/query/evidence_query.py function KWorldSettings::Load
+compare-engine/tools/query/evidence_query.py function KSO3World::Init
+compare-engine/tools/query/evidence_query.py function KWorldSettings::Load
 After the boot closure identifies one table reader, record and run the exact
 `evidence_query.py tab` command here. No target table is asserted yet.
 ```

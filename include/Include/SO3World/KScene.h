@@ -90,6 +90,7 @@ public:
 	int Activate();
 
     BOOL ActivityEndNotify(DWORD dwActivityID);
+	static DWORD MakeMapKey(DWORD dwMapID, int nCopyIndex);
 
 public:
 	// 设定地表格子信息

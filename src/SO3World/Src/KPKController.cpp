@@ -138,28 +138,6 @@ Exit0:
 	return nResult;
 }
 
-PK_RESULT_CODE KPKController::CanApplySlay()
-{
-	PK_RESULT_CODE nResult          = pkrcFailed;
-    int            nRetCode         = false;
-    int            nMinSlayLevel    = g_pSO3World->m_Settings.m_ConstList.nMinSlayLevel;
-
-    assert(m_pPlayer);
-    
-    KG_PROCESS_ERROR(m_pPlayer->m_pScene && m_pPlayer->m_pScene->m_bCanPK);
-
-	KG_PROCESS_ERROR_RET_CODE(m_pPlayer->m_eMoveState != cmsOnDeath, pkrcApplySlayFailed);
-	KG_PROCESS_ERROR_RET_CODE(m_eState == pksIdle, pkrcApplySlayFailed);
-	KG_PROCESS_ERROR_RET_CODE(m_pPlayer->m_nLevel >= nMinSlayLevel, pkrcLevelTooLow);
-    
-    nRetCode = m_pPlayer->m_TimerList.CheckTimer(g_pSO3World->m_Settings.m_ConstList.nSlayCDIndex);
-    KG_PROCESS_ERROR_RET_CODE(nRetCode, pkrcPKNotReady);
-
-	nResult = pkrcSuccess;
-Exit0:
-	return nResult;
-}
-
 void KPKController::SetState(
     PK_STATE    eState, 
     int         nEndFrame/* = 0 */, 
@@ -326,6 +304,10 @@ void KPKController::SetState(
     {
         KUIEventSlayInfo UIParam;
         UIParam.dwPlayerID = m_pPlayer->m_dwID;
+        // PORT-TODO[TARGET_REQUIRED]: nWaitSlayTime/nCloseSlayTime below were removed
+        // from KGWConstList because they are absent from the server target. This
+        // #ifdef _CLIENT block is not compiled in the _SERVER build and there is no
+        // client oracle in this bundle, so it is left as-is rather than guessed.
         UIParam.nSeconds   = g_pSO3World->m_Settings.m_ConstList.nWaitSlayTime;
         g_pGameWorldUIHandler->OnApplySlay(UIParam);
     }
@@ -375,17 +357,33 @@ BOOL KPKController::IsDuel()
     );
 }
 
-BOOL KPKController::IsOnSlay()
-{
-    return (m_eState == pksSlaying || m_eState == pksExitSlay);
-}
-
 PK_STATE KPKController::GetPKState()
 {
     return m_eState;
 }
 
 #ifdef _SERVER
+/* PORT-DEFERRED_WIRING[CALLER]: GetCloseSlayLeftTime has 0 target symbols and 0
+   target registration strings, so it is target-absent like the rest of the slay
+   closure. It survives only because deleting it would strand its single caller,
+   KPlayer::SaveStateInfo:3074.
+
+   Target evidence (corrected -- an earlier revision of this marker misread the
+   store at 08389274 as covering a slay field; it does not):
+     KROLE_STATE_INFO_V0  byte_size 0x75, HAS wCloseSlayLeftTime as WORD @+0x2e
+     KROLE_STATE_INFO_V1  byte_size 0x80, field ABSENT
+     KROLE_STATE_INFO_V2  byte_size 0x80, field ABSENT -- +0x2c is dwKillerID and
+                          +0x30 is wCurrentKillPoint
+   The 4-byte store at 08389274 in KPlayer::SaveStateInfo@08389088 is dwKillerID.
+   So 2.5.2 dropped the field when it moved from V0 to the version it actually
+   saves; our KRoleDBDataDef.h is still V0-shaped, which is the role-state root's
+   problem, not this one.
+
+   With the slay state machine removed m_eState can never be pksExitSlay, so this
+   returns a constant -1 and KPlayer.cpp:3074 stores 0xFFFF into a field the
+   target no longer emits. Harmless only for as long as the V0 struct is not on a
+   live wire. Whoever ports KROLE_STATE_INFO_V2 must delete this function and its
+   caller together. */
 int KPKController::GetCloseSlayLeftTime()
 {
     int nResult = -1;
@@ -422,18 +420,6 @@ void KPKController::Activate()
 	case pksDuelOutOfRange:
 		OnDuelOutOfRange();
 		break;
-
-	case pksStartSlay:
-		OnStartSlay();
-		break;
-
-	case pksSlaying:
-		OnSlaying();
-		break;
-
-    case pksExitSlay:
-        OnExitSlay();
-        break;
 
 	default:
 		break;
@@ -567,38 +553,6 @@ PK_RESULT_CODE KPKController::LossDuel()
     nResult = pkrcSuccess;
 Exit0:
     return nResult;
-}
-
-PK_RESULT_CODE KPKController::ApplySlay()
-{
-	PK_RESULT_CODE  nResult     = pkrcFailed;
-    PK_RESULT_CODE  nRetCode    = pkrcFailed;
-
-	nRetCode = CanApplySlay();
-	KG_PROCESS_ERROR_RET_CODE(nRetCode == pkrcSuccess, nRetCode);
-
-	SetState(pksStartSlay, g_pSO3World->m_nGameLoop + g_pSO3World->m_Settings.m_ConstList.nWaitSlayTime * GAME_FPS);
-
-    g_PlayerServer.DoBroadcastPKState(m_pPlayer);
-    
-	nResult = pkrcSuccess;
-Exit0:
-	return nResult;
-}
-
-PK_RESULT_CODE KPKController::CloseSlay()
-{
-	PK_RESULT_CODE  nResult = pkrcFailed;
-
-    KGLOG_PROCESS_ERROR(m_eState == pksSlaying);
-
-	SetState(pksExitSlay, g_pSO3World->m_nGameLoop + g_pSO3World->m_Settings.m_ConstList.nCloseSlayTime * GAME_FPS);
-    
-    g_PlayerServer.DoBroadcastPKState(m_pPlayer);
-
-	nResult = pkrcSuccess;
-Exit0:
-	return nResult;
 }
 
 BOOL KPKController::CheckDuelDistance(int nDistance)
@@ -967,36 +921,6 @@ Exit0:
         CancelDuel();
     }
 	return;
-}
-
-void KPKController::OnStartSlay()
-{
-    if (g_pSO3World->m_nGameLoop >= m_nTimer)
-    {
-        int nCDInterval = g_pSO3World->m_Settings.m_CoolDownList.GetCoolDownValue(g_pSO3World->m_Settings.m_ConstList.nSlayCDIndex);
-
-        m_pPlayer->m_TimerList.ResetTimer(g_pSO3World->m_Settings.m_ConstList.nSlayCDIndex, nCDInterval);
-
-        SetState(pksSlaying);
-        g_PlayerServer.DoBroadcastPKState(m_pPlayer);
-    }
-    return;
-}
-
-void KPKController::OnSlaying()
-{
-    return;
-}
-
-void KPKController::OnExitSlay()
-{
-    assert(m_pPlayer);
-    if (g_pSO3World->m_nGameLoop >= m_nTimer)
-    {
-        SetState(pksIdle, g_pSO3World->m_nGameLoop);
-        g_PlayerServer.DoBroadcastPKState(m_pPlayer);
-    }
-    return;
 }
 
 BOOL KPKController::CallDuelAcceptScript()

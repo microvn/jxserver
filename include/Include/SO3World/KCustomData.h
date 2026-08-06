@@ -20,6 +20,13 @@ public:
         memset(m_byByffer, 0, sizeof(m_byByffer));
     }
 
+    // target: KCustomData<32>::Clear DIE 0x003e88f9, decl_line 23, returns void;
+    // body _ZN11KCustomDataILi32EE5ClearEv @0x083ae7d2 == memset(this, 0, nSize).
+    void Clear()
+    {
+        memset(m_byByffer, 0, sizeof(m_byByffer));
+    }
+
     BOOL Load(BYTE* pbyData, size_t uDataLen)
     {
         BOOL bResult = false;

@@ -88,7 +88,7 @@ BOOL KHairBox::Add(int nType, DWORD dwID)
     KGLOG_PROCESS_ERROR(m_pPlayer);
 
     // validate the hair exists in the shop table for this role (v246 Add path)
-    pPrice = g_pSO3World->m_Settings.m_HairShop.GetPriceInfo((int)m_pPlayer->m_eRoleType, nType, dwID);
+    pPrice = g_pSO3World->m_HairShop.GetPriceInfo((int)m_pPlayer->m_eRoleType, nType, dwID);
     KGLOG_PROCESS_ERROR(pPrice);
 
     bResult = _Add(nType, dwID);
@@ -277,7 +277,7 @@ BOOL KHairBox::Load(BYTE* pbyData, size_t uDataLen)
             KHAIR_DB_DATA::KHAIR_INFO* pItem = (KHAIR_DB_DATA::KHAIR_INFO*)pbyOffset;
             KGLOG_PROCESS_ERROR((size_t)(pbyBlockEnd - pbyOffset) >= sizeof(*pItem));
             // only re-add hair still present in the shop table (mirror v246 LoadHairList)
-            if (g_pSO3World->m_Settings.m_HairShop.GetPriceInfo(nRoleType, nType, pItem->wID))
+            if (g_pSO3World->m_HairShop.GetPriceInfo(nRoleType, nType, pItem->wID))
             {
                 KGLOG_PROCESS_ERROR(_Add(nType, pItem->wID));
             }

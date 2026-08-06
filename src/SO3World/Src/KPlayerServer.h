@@ -318,6 +318,10 @@ public:
 
     BOOL DoOpenShopNotify(int nConnectIndex, DWORD dwShopID);
     BOOL DoSyncShopItem(int nConnIndex, const KShop *pcShop, DWORD dwPageIndex, DWORD dwPosIndex, BOOL bIDChanged);
+    BOOL DoSyncTimeLimitReturnItem(
+        int nConnIndex, DWORD dwItemID, DWORD dwShopTemplateID, int nShopItemIndex, time_t nEndTime
+    );
+    BOOL DoSyncTimeLimitSoldListInfo(int nConnIndex, DWORD dwItemID, time_t nEndTime);
 
     // ------------------ Trading about ---------------------------
     BOOL DoTradingInviteRequest(KPlayer* pTradingInviteSrc, KPlayer *pTradingInviteDst);
@@ -543,6 +547,7 @@ public:
     
     // ---------------------- ������ --------------------------------
     BOOL DoSyncTongMemberInfo(DWORD dwPlayerID, const KTongMemberInfo& crTongMember);
+    BOOL DoSyncCorpsChangeValue(DWORD dwPlayerID, int* pnCorpsLevel, int* pnCorpsRoleLevel);
     BOOL DoTongDeleteMemberNotify(DWORD dwPlayerID, DWORD dwMemberID);
     BOOL DoApplyTongInfoRespond(DWORD dwPlayerID, BYTE byRespondType, BYTE* pbyRespondData, size_t uDataLen);
     BOOL DoUpdateTongClientDataVersion(DWORD dwPlayerID, KTONG_UPDATE_FLAG eFrameType, int nUpdateFrame);    
@@ -558,6 +563,13 @@ public:
     BOOL DoSyncTongOnlineMessage(int nConnIndex, char szOnlineMessage[], size_t uDataLen);
     BOOL DoApplyOpenTongRepertoryRespond(int nConnIndex, DWORD dwPlayerID, const char szTongName[], BYTE byRepertoryPageNum);
     BOOL DoSyncTongHistoryRespond(int nConnIndex, BYTE byType, DWORD dwStartIndex, int nCount, BYTE byData[], size_t uDataLen);
+    BOOL DoSyncTongDiplomacyData(int nConnIndex, const vector<KTONG_DIPLOMACY_RELATION_INFO>& crDiplomacyInfoVector);
+    // target: _ZN13KPlayerServer20DoSyncTongTotalCacheEiPKh@0805edce
+    BOOL DoSyncTongTotalCache(int nConnIndex, const BYTE* byCacheData);
+    // target: _ZN13KPlayerServer25DoBroadcastTongTotalCacheEmPKh@0805ed68
+    BOOL DoBroadcastTongTotalCache(DWORD dwTongID, const BYTE* byCacheData);
+    // target: _ZN13KPlayerServer26DoBroadcastTongCacheChangeEm15TongTechNodeTagh@0805ae8e
+    BOOL DoBroadcastTongCacheChange(DWORD dwTongID, TongTechNodeTag eType, BYTE byValue);
     //-----------------------------------------------------------------
      
     // ---------------------- ��������� --------------------------------
@@ -572,6 +584,7 @@ public:
     BOOL DoSyncBattleFieldStatistics(int nConnIndex, KPlayer* pPlayer, const KPQ_STATISTICS_DATA& crStatisticsData);
     BOOL DoSyncBattleFieldObjective(int nConnIndex, int nIndex, int nCurrentValue, int nTargetValue);
     BOOL DoSyncBattleFieldPQInfo(int nConnIndex, DWORD dwPQID, DWORD dwPQTemplateID, int nLapseTime, int nLeftTime);
+    BOOL DoSyncSafeLockInfo(int nConnIndex, DWORD dwMask);
 
     BOOL DoSyncHeroFlag(KPlayer* pPlayer);
     BOOL DoRemoteLuaCall(int nConnIndex, const char cszFunction[], BYTE* pbyData, size_t uDataLen);
@@ -734,6 +747,7 @@ private:
     void OnShopBuyRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
     void OnShopSellRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
     void OnShopRepairRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
+    void OnTimeLimitSoldListBuyRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
     // ���󹺻ػع��б����һ����Ʒ
     void OnSoldListBuyRequest(char* pData, size_t nSize, int nConnIndex, int nFrame);
     // <---------------------- shop about ----------------------

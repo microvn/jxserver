@@ -2292,8 +2292,31 @@ Exit0:
 #ifdef _SERVER
 BOOL KItemList::Load(BYTE* pbyData, size_t uDataLen)
 {
-    return Load(pbyData, uDataLen, 0);
+    return LoadItemList(pbyData, uDataLen, 0);
 }
+
+BOOL KItemList::LoadItemList(BYTE* pbyData, size_t uDataLen, int nVersion)
+{
+    switch (nVersion)
+    {
+    case 0: return LoadItemList_V0(pbyData, uDataLen);
+    case 1: return LoadItemList_V1(pbyData, uDataLen);
+    case 2: return LoadItemList_V2(pbyData, uDataLen);
+    case 3: return LoadItemList_V3(pbyData, uDataLen);
+    case 4: return LoadItemList_V4(pbyData, uDataLen);
+    case 5: return LoadItemList_V5(pbyData, uDataLen);
+    case 6: return LoadItemList_V6(pbyData, uDataLen);
+    default: return false;
+    }
+}
+
+BOOL KItemList::LoadItemList_V0(BYTE* pbyData, size_t uDataLen) { return Load(pbyData, uDataLen, 0); }
+BOOL KItemList::LoadItemList_V1(BYTE* pbyData, size_t uDataLen) { return Load(pbyData, uDataLen, 1); }
+BOOL KItemList::LoadItemList_V2(BYTE* pbyData, size_t uDataLen) { return Load(pbyData, uDataLen, 2); }
+BOOL KItemList::LoadItemList_V3(BYTE* pbyData, size_t uDataLen) { return Load(pbyData, uDataLen, 3); }
+BOOL KItemList::LoadItemList_V4(BYTE* pbyData, size_t uDataLen) { return Load(pbyData, uDataLen, 4); }
+BOOL KItemList::LoadItemList_V5(BYTE* pbyData, size_t uDataLen) { return Load(pbyData, uDataLen, 5); }
+BOOL KItemList::LoadItemList_V6(BYTE* pbyData, size_t uDataLen) { return Load(pbyData, uDataLen, 6); }
 
 BOOL KItemList::Load(BYTE* pbyData, size_t uDataLen, int nVersion)
 {
@@ -2464,6 +2487,37 @@ BOOL KItemList::Load(BYTE* pbyData, size_t uDataLen, int nVersion)
             pItem->m_GenParam.nGenTime += nTotalLogoutTime;
         }
 
+        if (dwBoxIndex == ibEquip)
+        {
+            const BOOL bLegacyPendent =
+                (nVersion == 0 && (dwX == 0x0c || dwX == 0x17)) ||
+                (nVersion == 1 && (dwX == 0x0d || dwX == 0x18));
+            if (bLegacyPendent)
+            {
+                m_pPlayer->AddPendent(pItem->m_GenParam.dwIndex, 0, false);
+                /* Target consumes legacy pendent records here; it does not
+                 * place the same item into the equipment box.  The pending
+                 * item is released by the next iteration/final cleanup. */
+                continue;
+            }
+
+            /* Target V0/V1 use different historical equipment numbering. */
+            if (nVersion == 0)
+            {
+                if (dwX >= 1 && dwX <= 0x0b)
+                    ++dwX;
+                else if (dwX > 0x17)
+                    --dwX;
+            }
+            else if (nVersion == 1)
+            {
+                if (dwX >= 0x0d && dwX <= 0x17)
+                    --dwX;
+                else if (dwX > 0x18)
+                    dwX -= 2;
+            }
+        }
+
         bRetCode = m_Box[dwBoxIndex].PlaceItem(pItem, dwX);
         if (!bRetCode)
         {
@@ -2585,6 +2639,209 @@ BOOL KItemList::Save(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize)
     *puUsedSize = uBufferSize - uLeftSize;
 
     bResult = true;
+Exit0:
+    return bResult;
+}
+
+BOOL KItemList::IsTimeLimitReturnItem(DWORD dwItemID)
+{
+    if (!g_pSO3World->m_bReturnItemFlag)
+    {
+        return false;
+    }
+
+    return m_TimeLimitReturnMap.find(dwItemID) != m_TimeLimitReturnMap.end();
+}
+
+DWORD KItemList::GetTimeLimitReturnItemShopTemplateID(DWORD dwItemID)
+{
+    std::map<DWORD, KTimeLimitReturnInfo>::iterator itFind = m_TimeLimitReturnMap.find(dwItemID);
+
+    if (itFind == m_TimeLimitReturnMap.end())
+    {
+        return 0;
+    }
+
+    return itFind->second.dwShopTemplateID;
+}
+
+int KItemList::GetTimeLimitReturnItemShopItemIndex(DWORD dwItemID)
+{
+    std::map<DWORD, KTimeLimitReturnInfo>::iterator itFind = m_TimeLimitReturnMap.find(dwItemID);
+
+    if (itFind == m_TimeLimitReturnMap.end())
+    {
+        return 0;
+    }
+
+    return itFind->second.nShopItemIndex;
+}
+
+BOOL KItemList::AddTimeLimitReturnItemInfo(
+    DWORD dwItemID, DWORD dwShopTemplateID, int nShopItemIndex, time_t nEndTime
+)
+{
+    KTimeLimitReturnInfo                      AddInfo;
+    std::map<DWORD, KTimeLimitReturnInfo>::iterator itFind;
+
+    if (g_pSO3World->m_bReturnItemFlag)
+    {
+        itFind = m_TimeLimitReturnMap.find(dwItemID);
+        if (itFind != m_TimeLimitReturnMap.end())
+        {
+            return false;
+        }
+
+        AddInfo.dwShopTemplateID = dwShopTemplateID;
+        AddInfo.nShopItemIndex   = nShopItemIndex;
+        AddInfo.nEndTime         = nEndTime;
+        m_TimeLimitReturnMap.insert(std::make_pair(dwItemID, AddInfo));
+
+        g_PlayerServer.DoSyncTimeLimitReturnItem(
+            m_pPlayer->m_nConnIndex, dwItemID, dwShopTemplateID, nShopItemIndex, nEndTime
+        );
+    }
+
+    return true;
+}
+
+BOOL KItemList::DelTimeLimitReturnItemInfo(DWORD dwItemID)
+{
+    std::map<DWORD, KTimeLimitReturnInfo>::iterator itFind = m_TimeLimitReturnMap.find(dwItemID);
+
+    if (itFind == m_TimeLimitReturnMap.end())
+    {
+        return false;
+    }
+
+    m_TimeLimitReturnMap.erase(itFind);
+    g_PlayerServer.DoSyncTimeLimitReturnItem(m_pPlayer->m_nConnIndex, dwItemID, 0, 0, 0);
+    return true;
+}
+
+BOOL KItemList::DelTimeLimitSoldListInfo(DWORD dwItemID)
+{
+    std::map<DWORD, long>::iterator itFind = m_TimeLimitSoldListInfoMap.find(dwItemID);
+
+    if (itFind == m_TimeLimitSoldListInfoMap.end())
+    {
+        return false;
+    }
+
+    m_TimeLimitSoldListInfoMap.erase(itFind);
+    g_PlayerServer.DoSyncTimeLimitSoldListInfo(m_pPlayer->m_nConnIndex, dwItemID, 0);
+    return true;
+}
+
+void KItemList::TidyUpTimeLimitSoldList()
+{
+    int     nFreePos = 0;
+    int     nDstPos  = 0;
+    KItem*  pItem    = NULL;
+
+    while (nDstPos < MAX_SOLDLIST_PACKAGE_SIZE)
+    {
+        pItem = m_Box[ibSoldList].GetItem(nDstPos);
+        if (pItem == NULL)
+        {
+            break;
+        }
+        ++nDstPos;
+    }
+
+    nFreePos = nDstPos;
+    for (int i = nDstPos + 1; i < MAX_SOLDLIST_PACKAGE_SIZE; ++i)
+    {
+        pItem = m_Box[ibSoldList].GetItem(i);
+        if (pItem)
+        {
+            TItemPos SrcPos;
+            TItemPos DstPos;
+
+            SrcPos.dwBox = ibSoldList;
+            SrcPos.dwX   = i;
+            DstPos.dwBox = ibSoldList;
+            DstPos.dwX   = nFreePos;
+            ExchangeItem(SrcPos, DstPos);
+            ++nFreePos;
+        }
+    }
+}
+
+BOOL KItemList::LoadTimeLimitReturnInfo_V0(BYTE* pbyData, size_t uDataLen)
+{
+    BOOL                    bResult     = false;
+    BYTE*                   pbyOffset   = pbyData;
+    size_t                  uLeftSize   = uDataLen;
+    WORD                    wItemCount  = 0;
+
+    KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD));
+    wItemCount = *(WORD*)pbyOffset;
+    uLeftSize -= sizeof(WORD);
+    pbyOffset += sizeof(WORD);
+
+    for (int nIndex = 0; nIndex < (int)wItemCount; ++nIndex)
+    {
+        DWORD               dwItemID           = 0;
+        KTimeLimitReturnInfo ReturnInfo;
+
+        KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(DWORD));
+        dwItemID = *(DWORD*)pbyOffset;
+        uLeftSize -= sizeof(DWORD);
+        pbyOffset += sizeof(DWORD);
+
+        KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(DWORD));
+        ReturnInfo.dwShopTemplateID = *(DWORD*)pbyOffset;
+        uLeftSize -= sizeof(DWORD);
+        pbyOffset += sizeof(DWORD);
+
+        KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(int));
+        ReturnInfo.nShopItemIndex = *(int*)pbyOffset;
+        uLeftSize -= sizeof(int);
+        pbyOffset += sizeof(int);
+
+        KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(time_t));
+        ReturnInfo.nEndTime = *(time_t*)pbyOffset;
+        uLeftSize -= sizeof(time_t);
+        pbyOffset += sizeof(time_t);
+
+        if (g_pSO3World->m_nCurrentTime < ReturnInfo.nEndTime && g_pSO3World->m_bReturnItemFlag)
+        {
+            m_TimeLimitReturnMap.insert(std::make_pair(dwItemID, ReturnInfo));
+        }
+    }
+
+    KGLOG_PROCESS_ERROR(uLeftSize == 0);
+    bResult = true;
+Exit0:
+    if (!bResult)
+    {
+        KGLogPrintf(
+            KGLOG_ERR, "[ITEM] Load time limit return item failed, Acc: %s, Role: %s<%u>. \n",
+            m_pPlayer->m_szAccount, m_pPlayer->m_szName, m_pPlayer->m_dwID
+        );
+    }
+    return bResult;
+}
+
+BOOL KItemList::LoadTimeLimitReturnInfo(BYTE* pbyData, size_t uDataLen, int nVersion)
+{
+    BOOL    bResult     = false;
+    BOOL    bRetCode    = false;
+
+    if (nVersion == 0)
+    {
+        bRetCode = LoadTimeLimitReturnInfo_V0(pbyData, uDataLen);
+        KGLOG_PROCESS_ERROR(bRetCode);
+
+        bResult = true;
+    }
+    else
+    {
+        KGLogPrintf(
+            KGLOG_ERR, "[item] Load time limit return item data but error data version: %d.", nVersion
+        );
+    }
 Exit0:
     return bResult;
 }

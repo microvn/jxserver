@@ -1,0 +1,282 @@
+{
+ "skill-script": {
+  "truly": 168,
+  "nel": 3,
+  "new_cls": 4,
+  "drift_cls": 8,
+  "classes": [
+   "GetSkillRecipeTraverseFunc",
+   "KBroadcastCastSkillFunc",
+   "KBuffList",
+   "KGetAllCopyIndexByMapIDFunc",
+   "KRecipeList",
+   "KScriptCenter",
+   "KScriptFuncList",
+   "KSkill",
+   "KSkillList",
+   "KSkillManager",
+   "KSkillRecipeList",
+   "KSkillRectangleTravFunc"
+  ]
+ },
+ "world-scene": {
+  "truly": 93,
+  "nel": 5,
+  "new_cls": 2,
+  "drift_cls": 11,
+  "classes": [
+   "KAIPatrolGroupManager",
+   "KDoodad",
+   "KDoodadReviveManager",
+   "KNpc",
+   "KNpcAdronTab",
+   "KNpcReviveManager",
+   "KNpcTemplate",
+   "KNpcTemplateList",
+   "KRoadManager",
+   "KSO3World",
+   "KScene",
+   "KSimpThreatList",
+   "KWorldSettings"
+  ]
+ },
+ "achievement": {
+  "truly": 3,
+  "nel": 3,
+  "new_cls": 0,
+  "drift_cls": 2,
+  "classes": [
+   "KAchievement",
+   "KAchievementInfoList"
+  ]
+ },
+ "activity": {
+  "truly": 24,
+  "nel": 7,
+  "new_cls": 3,
+  "drift_cls": 1,
+  "classes": [
+   "KActivityEndNotifySceneFunc",
+   "KActivityMgrServer",
+   "KCampActiveStat",
+   "KCampInfo"
+  ]
+ },
+ "anti-farmer": {
+  "truly": 10,
+  "nel": 5,
+  "new_cls": 3,
+  "drift_cls": 0,
+  "classes": [
+   "KAntiFarmerServer",
+   "KAntiFarmerSettings",
+   "KBandwidthOptimizeTacticsManager"
+  ]
+ },
+ "network-infra": {
+  "truly": 231,
+  "nel": 13,
+  "new_cls": 2,
+  "drift_cls": 7,
+  "classes": [
+   "KCenterRemote",
+   "KGWConstList",
+   "KGWServerConstList",
+   "KG_AsyncSocketStream",
+   "KG_SocketServerAcceptor",
+   "KLocalGSDataStat",
+   "KLogClient",
+   "KRelayClient",
+   "KStatDataServer"
+  ]
+ },
+ "player-hub": {
+  "truly": 559,
+  "nel": 5,
+  "new_cls": 3,
+  "drift_cls": 3,
+  "classes": [
+   "KCharacter",
+   "KCharacterCounterStealthChangedFunc",
+   "KCharacterDisarmChangedFunc",
+   "KCharacterStealthChangedFunc",
+   "KPlayer",
+   "KPlayerServer"
+  ]
+ },
+ "exterior-cosmetic": {
+  "truly": 66,
+  "nel": 13,
+  "new_cls": 3,
+  "drift_cls": 7,
+  "classes": [
+   "KDesignation",
+   "KExterior",
+   "KExteriorBox",
+   "KHairBox",
+   "KHairShop",
+   "KMiniAvatar",
+   "KMiniAvatarSettings",
+   "KModelInfo",
+   "KNewExtPointManager",
+   "KPendentOldDataInfoList"
+  ]
+ },
+ "cash-shop-currency": {
+  "truly": 61,
+  "nel": 11,
+  "new_cls": 4,
+  "drift_cls": 3,
+  "classes": [
+   "KDiamondManager",
+   "KRewardsBox",
+   "KRewardsShop",
+   "KRewardsShopSettings",
+   "KShop",
+   "KShopCenter",
+   "KTradingBox"
+  ]
+ },
+ "mentor": {
+  "truly": 6,
+  "nel": 14,
+  "new_cls": 1,
+  "drift_cls": 1,
+  "classes": [
+   "KDirectMentorCache",
+   "KMentorCache"
+  ]
+ },
+ "pet-domesticate": {
+  "truly": 56,
+  "nel": 22,
+  "new_cls": 6,
+  "drift_cls": 0,
+  "classes": [
+   "KDomesticate",
+   "KDomesticateCenter",
+   "KFellowPetBox",
+   "KFellowPetMgr",
+   "KPlayerRelatedPetAttrExportParam",
+   "KPlayerRelatedPetAttrImportParam"
+  ]
+ },
+ "drop-loot": {
+  "truly": 27,
+  "nel": 10,
+  "new_cls": 2,
+  "drift_cls": 5,
+  "classes": [
+   "KDropCenter",
+   "KDropList",
+   "KLevelDropList",
+   "KLootList",
+   "KManualDropList",
+   "KMoneyDropList",
+   "KReputeLootBuffList"
+  ]
+ },
+ "movement-sync": {
+  "truly": 13,
+  "nel": 22,
+  "new_cls": 8,
+  "drift_cls": 0,
+  "classes": [
+   "KGJumpList",
+   "KGMoveParam",
+   "KGMoveProcessor",
+   "KMoveProcessTraverseFunc",
+   "SYNC_MOVE_CTRL",
+   "SYNC_MOVE_SPEED",
+   "SYNC_MOVE_STATE",
+   "SYNC_SPRINT_FLAGS"
+  ]
+ },
+ "gm": {
+  "truly": 4,
+  "nel": 0,
+  "new_cls": 0,
+  "drift_cls": 1,
+  "classes": [
+   "KGMList"
+  ]
+ },
+ "item": {
+  "truly": 70,
+  "nel": 0,
+  "new_cls": 0,
+  "drift_cls": 1,
+  "classes": [
+   "KItemList"
+  ]
+ },
+ "pk": {
+  "truly": 3,
+  "nel": 0,
+  "new_cls": 0,
+  "drift_cls": 1,
+  "classes": [
+   "KPKController"
+  ]
+ },
+ "quest": {
+  "truly": 9,
+  "nel": 0,
+  "new_cls": 0,
+  "drift_cls": 2,
+  "classes": [
+   "KQuestInfoList",
+   "KQuestList"
+  ]
+ },
+ "recorder-replay": {
+  "truly": 3,
+  "nel": 0,
+  "new_cls": 0,
+  "drift_cls": 3,
+  "classes": [
+   "KRecorderSceneLoaderNormal",
+   "KRecorderSceneLoaderRecord",
+   "KRecorderSceneLoaderReplay"
+  ]
+ },
+ "regression": {
+  "truly": 11,
+  "nel": 0,
+  "new_cls": 0,
+  "drift_cls": 2,
+  "classes": [
+   "KRegressionManager",
+   "KRegressionPlayerData"
+  ]
+ },
+ "reputation": {
+  "truly": 2,
+  "nel": 0,
+  "new_cls": 0,
+  "drift_cls": 1,
+  "classes": [
+   "KReputation"
+  ]
+ },
+ "talent": {
+  "truly": 12,
+  "nel": 2,
+  "new_cls": 1,
+  "drift_cls": 0,
+  "classes": [
+   "KTalentSkill"
+  ]
+ },
+ "guild-tong": {
+  "truly": 27,
+  "nel": 4,
+  "new_cls": 3,
+  "drift_cls": 0,
+  "classes": [
+   "KTongConstList",
+   "KTongDiplomacyCache",
+   "KTongServer"
+  ]
+ }
+}

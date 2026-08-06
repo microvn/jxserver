@@ -10,13 +10,13 @@
 #include "KSO3World.h"
 #include "KShop.h"
 #include "KItemLib.h"
+#include "KPlayer.h"
+#include "KPlayerServer.h"
 
 using namespace std;
 
 #define NPC_SHOP_CONFIG_FILE          "NpcShopList.tab"
 #define REPUTATION_REBATE_CONFIG_FILE "ReputationRebate.tab"
-
-#define NPC_SHOP_REFRESH_CYCLE    (10 * 60 * 60 * GAME_FPS)
 
 BOOL KShopCenter::Init()
 {
@@ -27,7 +27,8 @@ BOOL KShopCenter::Init()
     nRetCode = LoadNpcShopTemplates();
     KGLOG_PROCESS_ERROR(nRetCode);
 
-    m_nNextRefreshTime  = g_pSO3World->m_nGameLoop + NPC_SHOP_REFRESH_CYCLE;
+    m_nNextRefreshTime = g_pSO3World->m_nGameLoop +
+        (g_pSO3World->m_Settings.m_ConstList.nRefreshCycle << 4);
     m_dwShopID          = 0;
 #endif
 
@@ -67,7 +68,7 @@ KShop* KShopCenter::GetShopInfo(DWORD dwShopID)
     it = m_ShopList.find(dwShopID);
     KG_PROCESS_ERROR(it != m_ShopList.end());
 
-    pShop = &it->second;
+    pShop = it->second;
 Exit0:
     return pShop;
 }
@@ -78,13 +79,14 @@ void KShopCenter::Activate()
     if (g_pSO3World->m_nGameLoop >= m_nNextRefreshTime) 
     {
         DoRefresh();
-        m_nNextRefreshTime = g_pSO3World->m_nGameLoop + NPC_SHOP_REFRESH_CYCLE;
+        m_nNextRefreshTime = g_pSO3World->m_nGameLoop +
+            (g_pSO3World->m_Settings.m_ConstList.nRefreshCycle << 4);
     }
 }
 
-BOOL KShopCenter::BindNpcShop(KNpc* pNpc, DWORD dwTemplateID)
+KShop* KShopCenter::CreateShop(DWORD dwTemplateID)
 {
-    BOOL                bResult         = false;
+    KShop*              pResult         = NULL;
     BOOL                bRetCode        = false;
     KNPC_SHOP_TEMPLATE* pShopTemplate   = NULL;
     int                 nPageIndex      = 0;
@@ -94,26 +96,18 @@ BOOL KShopCenter::BindNpcShop(KNpc* pNpc, DWORD dwTemplateID)
     KNPC_SHOP_TEMPLATE_TABLE::iterator it;
     pair<KSHOP_LIST::iterator, bool>   InsRet;
 
-    assert(pNpc);
     it = m_NpcShopTemplateTable.find(dwTemplateID);
-    if (it == m_NpcShopTemplateTable.end())
-    {
-        KGLogPrintf(KGLOG_ERR, "[Shop] Invalid shop template %u, NPC: %s\n", dwTemplateID, pNpc->m_szName);
-        goto Exit0;
-    }
+    KGLOG_PROCESS_ERROR(it != m_NpcShopTemplateTable.end());
 
     pShopTemplate = &it->second;
     KGLOG_PROCESS_ERROR(pShopTemplate);
-    
-    InsRet = m_ShopList.insert(make_pair(++m_dwShopID, KShop()));
-    KGLOG_PROCESS_ERROR(InsRet.second);
 
-    pNewShop = &(InsRet.first->second);
-    
+    pNewShop = KMemory::New<KShop>();
+    KGLOG_PROCESS_ERROR(pNewShop);
     bRetCode = pNewShop->Init();
     KGLOG_PROCESS_ERROR(bRetCode);
 
-    pNewShop->m_dwShopID = InsRet.first->first;
+    pNewShop->m_dwShopID = m_dwShopID++;
 
     for (size_t i = 0; i < pShopTemplate->vecTemplateItems.size(); ++i)
     {
@@ -174,56 +168,39 @@ BOOL KShopCenter::BindNpcShop(KNpc* pNpc, DWORD dwTemplateID)
     pNewShop->m_dwTemplateID      = dwTemplateID;
     pNewShop->m_nShopType         = eShopType_NPC;
     pNewShop->m_dwValidPage       = nPageIndex + 1;
-    pNewShop->m_dwNpcID           = pNpc->m_dwID;
-    pNewShop->m_pNpc              = pNpc;
     pNewShop->m_bCanRepair        = pShopTemplate->bCanRepair;
+    pNewShop->m_bCoinShop         = pShopTemplate->bCoinShop;
+    pNewShop->m_dwScriptID        = pShopTemplate->dwShopScriptID;
+    pNewShop->m_dwRequireForceID  = pShopTemplate->dwRequireForceID;
 
-    pNpc->m_vShopList.push_back(pNewShop);
-    if (!pNpc->m_pShop)
-        pNpc->m_pShop = pNewShop;
-    
-    bResult = true;
+    InsRet = m_ShopList.insert(make_pair(pNewShop->m_dwShopID, pNewShop));
+    KGLOG_PROCESS_ERROR(InsRet.second);
+    pResult = pNewShop;
+    pNewShop = NULL;
 Exit0:
-    if (!bResult)
+    if (pItem)
     {
-        if (pItem)
-        {
-            g_pSO3World->m_ItemManager.FreeItem(pItem);
-            pItem = NULL;
-        }
-
-        if (pNewShop)
-        {
-            pNewShop->UnInit();
-            m_ShopList.erase(pNewShop->m_dwShopID);
-            pNewShop = NULL;
-        }
+        g_pSO3World->m_ItemManager.FreeItem(pItem);
+        pItem = NULL;
     }
-    return bResult;
+    if (pNewShop)
+    {
+        pNewShop->UnInit();
+        KMemory::Delete(pNewShop);
+    }
+    return pResult;
 }
 
-BOOL KShopCenter::UnbindNpcShop(KNpc* pNpc)
+void KShopCenter::DestroyShop(DWORD dwShopID)
 {
-    BOOL                    bResult     = false;
-    std::vector<KShop*>     shops;
-    
-    KGLOG_PROCESS_ERROR(pNpc);
+    KSHOP_LIST::iterator it = m_ShopList.find(dwShopID);
+    if (it == m_ShopList.end())
+        return;
 
-    shops.swap(pNpc->m_vShopList);
-    for (size_t i = 0; i < shops.size(); ++i)
-    {
-        if (shops[i])
-        {
-            DWORD dwShopID = shops[i]->m_dwShopID;
-            shops[i]->UnInit();
-            m_ShopList.erase(dwShopID);
-        }
-    }
-    pNpc->m_pShop = NULL;
-
-    bResult = true;
-Exit0:
-    return bResult;
+    KShop* pShop = it->second;
+    m_ShopList.erase(pShop->m_dwShopID);
+    pShop->UnInit();
+    KMemory::Delete(pShop);
 }
 
 void KShopCenter::DoRefresh()
@@ -235,7 +212,7 @@ void KShopCenter::DoRefresh()
     for (it = m_ShopList.begin(); it != m_ShopList.end(); ++it) 
     {
         dwShopID = it->first;
-        pShop = &it->second;
+        pShop = it->second;
         assert(pShop);
 
         if (pShop->m_nShopType != eShopType_NPC)
@@ -254,9 +231,6 @@ int KShopCenter::LoadNpcShopTemplates()
     int         nHeight                     = 0;
     ITabFile*   piTabFile                   = NULL;
     char        szNpcShopConfigFile[MAX_PATH];
-    char        szTemplateFileName[MAX_PATH];
-    char        szConfigFilePath[MAX_PATH];
-    KNPC_SHOP_TEMPLATE_TABLE::iterator it;
 
     snprintf(szNpcShopConfigFile, sizeof(szNpcShopConfigFile), "%s/shop/%s", SETTING_DIR, NPC_SHOP_CONFIG_FILE);
     szNpcShopConfigFile[sizeof(szNpcShopConfigFile) - 1] = '\0';
@@ -268,38 +242,8 @@ int KShopCenter::LoadNpcShopTemplates()
 
     for (int nLine = 2; nLine <= nHeight; ++nLine) 
     {
-        int                                     nTemplateID         = 0;
-        KNPC_SHOP_TEMPLATE*                     pNpcShopTemplate    = NULL;
-        pair<KNPC_SHOP_TEMPLATE_TABLE::iterator, bool>    InsRet;
-        
-        nRetCode = piTabFile->GetInteger(nLine, "ShopTemplateID", 0, &nTemplateID);
-        (void)nRetCode; /*[endgame] tolerant*/
-        
-        InsRet = m_NpcShopTemplateTable.insert(make_pair(nTemplateID, KNPC_SHOP_TEMPLATE()));
-        KGLOG_PROCESS_ERROR(InsRet.second);
-        
-        pNpcShopTemplate = &(InsRet.first->second);
-
-        nRetCode = piTabFile->GetString(nLine, "ShopName", "", pNpcShopTemplate->szShopName, sizeof(pNpcShopTemplate->szShopName));
-        (void)nRetCode; /*[endgame] tolerant*/
-        pNpcShopTemplate->szShopName[sizeof(pNpcShopTemplate->szShopName) - 1] = '\0';
-
-        nRetCode = piTabFile->GetInteger(nLine, "CanRepair", 0, (int*)&pNpcShopTemplate->bCanRepair);    
-        (void)nRetCode; /*[endgame] tolerant*/
-
-        nRetCode = piTabFile->GetString(nLine, "ConfigFile", "", szTemplateFileName, sizeof(szTemplateFileName));
-        (void)nRetCode; /*[endgame] tolerant*/
-        szTemplateFileName[sizeof(szTemplateFileName) - 1] = '\0';
-
-        snprintf(szConfigFilePath, sizeof(szConfigFilePath), "%s/shop/%s", SETTING_DIR, szTemplateFileName);
-        szConfigFilePath[sizeof(szConfigFilePath) - 1] = '\0';
-
-        nRetCode = LoadNpcShopTemplateItems(pNpcShopTemplate, szConfigFilePath);
-        if (!nRetCode)
-        {
-            KGLogPrintf(KGLOG_ERR, "Load shop %s failed!", szTemplateFileName);
-            goto Exit0;
-        }
+        nRetCode = LoadLine(piTabFile, nLine);
+        KGLOG_PROCESS_ERROR(nRetCode);
     }
 
     bResult = true;
@@ -312,6 +256,54 @@ Exit0:
     KG_COM_RELEASE(piTabFile);
     return bResult;
 }
+
+BOOL KShopCenter::LoadLine(ITabFile* pTabFile, int nLine)
+{
+    BOOL                                bResult = false;
+    int                                 nRetCode = false;
+    int                                 nTemplateID = 0;
+    char                                szConfigFileName[MAX_PATH];
+    char                                szConfigFilePath[MAX_PATH];
+    char                                szScriptName[MAX_PATH];
+    KNPC_SHOP_TEMPLATE_TABLE::iterator  it;
+    pair<KNPC_SHOP_TEMPLATE_TABLE::iterator, bool> InsRet;
+    KNPC_SHOP_TEMPLATE*                 pShopTemplate = NULL;
+
+    KGLOG_PROCESS_ERROR(pTabFile);
+    nRetCode = pTabFile->GetInteger(nLine, "ShopTemplateID", 0, &nTemplateID);
+    KGLOG_PROCESS_ERROR(nRetCode);
+
+    InsRet = m_NpcShopTemplateTable.insert(make_pair(nTemplateID, KNPC_SHOP_TEMPLATE()));
+    KGLOG_PROCESS_ERROR(InsRet.second);
+    it = InsRet.first;
+    pShopTemplate = &it->second;
+
+    nRetCode = pTabFile->GetString(nLine, "ShopName", "", pShopTemplate->szShopName, sizeof(pShopTemplate->szShopName));
+    (void)nRetCode; /* target-tolerant field read */
+    pShopTemplate->szShopName[sizeof(pShopTemplate->szShopName) - 1] = '\0';
+
+    nRetCode = pTabFile->GetInteger(nLine, "CanRepair", 0, (int*)&pShopTemplate->bCanRepair);
+    (void)nRetCode; /* target-tolerant field read */
+    nRetCode = pTabFile->GetInteger(nLine, "RequireForceID", 0, (int*)&pShopTemplate->dwRequireForceID);
+    (void)nRetCode; /* target-tolerant field read */
+
+    nRetCode = pTabFile->GetString(nLine, "ScriptName", "", szScriptName, sizeof(szScriptName));
+    szScriptName[sizeof(szScriptName) - 1] = '\0';
+    if (nRetCode)
+        pShopTemplate->dwShopScriptID = g_FileNameHash(szScriptName);
+
+    nRetCode = pTabFile->GetString(nLine, "ConfigFile", "", szConfigFileName, sizeof(szConfigFileName));
+    (void)nRetCode; /* target-tolerant field read */
+    szConfigFileName[sizeof(szConfigFileName) - 1] = '\0';
+    snprintf(szConfigFilePath, sizeof(szConfigFilePath), "%s/shop/%s", SETTING_DIR, szConfigFileName);
+    szConfigFilePath[sizeof(szConfigFilePath) - 1] = '\0';
+
+    KGLOG_PROCESS_ERROR(LoadNpcShopTemplateItems(pShopTemplate, szConfigFilePath));
+    KGLOG_PROCESS_ERROR(CheckCoinShop(pShopTemplate));
+    bResult = true;
+Exit0:
+    return bResult;
+}
 #endif
 
 BOOL KShopCenter::LoadNpcShopTemplateItems(KNPC_SHOP_TEMPLATE* pShopTemplate, const char cszFileName[])
@@ -320,6 +312,7 @@ BOOL KShopCenter::LoadNpcShopTemplateItems(KNPC_SHOP_TEMPLATE* pShopTemplate, co
     int          nRetCode           = false;
     ITabFile*    pNPCShopConfigFile = NULL;
     int          nShopItemCount     = 0;
+    BOOL         bCoinShop          = false;
 
     DECLARE_STRING_MAP_BEGIN(ITEM_TABLE_TYPE)
         REGISTER_STR_TO_VALUE("Other",          ittOther)
@@ -376,24 +369,12 @@ BOOL KShopCenter::LoadNpcShopTemplateItems(KNPC_SHOP_TEMPLATE* pShopTemplate, co
         nRetCode = pNPCShopConfigFile->GetInteger(nLine, "Price", -1, &pShopItem->nPrice);
         (void)nRetCode; /*[endgame] tolerant*/
 
-        // Target v2.5.2 stores the yuanbao amount in KNPC_SHOP_TEMPLATE_ITEM::nCoin
-        // (DWARF offset 0x1c), and its loader names the canonical column "Coin".
-        // The deployed v2.5.2 shop tables use the older exported header
-        // CoinType1/CoinAmount1.  CoinType1 has no target field or target use in
-        // LoadLine; only CoinAmount1 is the amount-compatible alias.
-        int nCoinColumn = pNPCShopConfigFile->FindColumn("Coin");
-        if (nCoinColumn <= 0)
-        {
-            nCoinColumn = pNPCShopConfigFile->FindColumn("CoinAmount1");
-        }
-        if (nCoinColumn > 0)
-        {
-            nRetCode = pNPCShopConfigFile->GetInteger(nLine, nCoinColumn, 0, &pShopItem->nCoin);
-            (void)nRetCode; /*[endgame] tolerant*/
-        }
+        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "Coin", 0, &pShopItem->nCoin);
+        KGLOG_PROCESS_ERROR(nRetCode);
 
-        // v2.5 relaxed: an item must have a money OR a yuanbao price (currency-only still needs one).
         KGLOG_PROCESS_ERROR(pShopItem->nPrice > 0 || pShopItem->nCoin > 0);
+        if (pShopItem->nCoin > 0)
+            bCoinShop = true;
 
         nRetCode = pNPCShopConfigFile->GetInteger(nLine, "Prestige", -1, &pShopItem->nPrestige);
         (void)nRetCode; /*[endgame] tolerant*/
@@ -417,6 +398,9 @@ BOOL KShopCenter::LoadNpcShopTemplateItems(KNPC_SHOP_TEMPLATE* pShopTemplate, co
         nRetCode = pNPCShopConfigFile->GetInteger(nLine, "AchievementPoint", -1, &pShopItem->nAchievementPoint);     
         (void)nRetCode; /*[endgame] tolerant*/
 
+        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "TongReputation", 0, &pShopItem->nTongReputation);
+        (void)nRetCode;
+
         nRetCode = pNPCShopConfigFile->GetInteger(nLine, "ItemType1", 0, (int*)&pShopItem->dwTabType);     
         (void)nRetCode; /*[endgame] tolerant*/
         
@@ -425,8 +409,26 @@ BOOL KShopCenter::LoadNpcShopTemplateItems(KNPC_SHOP_TEMPLATE* pShopTemplate, co
 
         nRetCode = pNPCShopConfigFile->GetInteger(nLine, "ItemCount1", 0, &pShopItem->nRequireAmount);     
         (void)nRetCode; /*[endgame] tolerant*/
+
+        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "MentorValue", 0, &pShopItem->nMentorValue);
+        (void)nRetCode;
+        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "RequireTitle", 0, &pShopItem->nRequireTitle);
+        (void)nRetCode;
+        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "RequireCorpsValue", 0, &pShopItem->nRequireCorpsValue);
+        (void)nRetCode;
+        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "MaskCorpsNeedToCheck", 0, (int*)&pShopItem->dwMaskCorpsNeedToCheck);
+        (void)nRetCode;
+        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "CanReturn", 0, (int*)&pShopItem->bCanReturn);
+        (void)nRetCode;
+
+        if (pShopItem->nContribution > 0 || pShopItem->nExamPrint > 0)
+            SetMentorItemScore(pShopItem->dwTabType, pShopItem->dwIndex,
+                pShopItem->nContribution, pShopItem->nExamPrint);
+
+        KGLOG_PROCESS_ERROR(pShopItem->nRequireCorpsValue == 0 || pShopItem->dwMaskCorpsNeedToCheck != 0);
     }
 
+    pShopTemplate->bCoinShop = bCoinShop;
     bResult = true;
 Exit0:
     KG_COM_RELEASE(pNPCShopConfigFile);
@@ -453,6 +455,112 @@ Exit0:
     return pResult;
 }
 
+int KShopCenter::GetMentorItemScore(DWORD dwTabType, DWORD dwIndex)
+{
+    int nResult = 0;
+    int64_t llKey = MAKE_INT64(dwTabType, dwIndex);
+    ITEM_CONTRIBUTION_MAP::iterator it = m_ItemContributionMap.find(llKey);
+
+    if (it != m_ItemContributionMap.end())
+        nResult = it->second;
+
+    return nResult;
+}
+
+void KShopCenter::SetMentorItemScore(DWORD dwTabType, DWORD dwIndex, int nContribution, int nExamPrint)
+{
+    int nScore = nContribution / 100 + nExamPrint;
+    int64_t llKey = MAKE_INT64(dwTabType, dwIndex);
+    pair<ITEM_CONTRIBUTION_MAP::iterator, bool> InsertResult;
+
+    if (nScore == 0)
+        return;
+
+    InsertResult = m_ItemContributionMap.insert(ITEM_CONTRIBUTION_MAP::value_type(llKey, nScore));
+    if (!InsertResult.second && InsertResult.first->second < nScore)
+        InsertResult.first->second = nScore;
+}
+
+BOOL KShopCenter::CheckCoinShop(KNPC_SHOP_TEMPLATE* pShopTemplate)
+{
+    KGLOG_PROCESS_ERROR(pShopTemplate);
+
+    if (pShopTemplate->bCoinShop)
+    {
+        for (size_t i = 0; i < pShopTemplate->vecTemplateItems.size(); ++i)
+        {
+            KNPC_SHOP_TEMPLATE_ITEM* pItem = &pShopTemplate->vecTemplateItems[i];
+
+            KGLOG_PROCESS_ERROR(pItem->nCoin >= 1);
+            KGLOG_PROCESS_ERROR(pItem->nPrice == 0);
+            KGLOG_PROCESS_ERROR(pItem->nContribution == 0);
+            KGLOG_PROCESS_ERROR(pItem->nPrestige == 0);
+            KGLOG_PROCESS_ERROR(pItem->nRequireAchievementRecord == 0);
+            KGLOG_PROCESS_ERROR(pItem->nAchievementPoint == 0);
+            KGLOG_PROCESS_ERROR(pItem->dwTabType == 0);
+            KGLOG_PROCESS_ERROR(pItem->nRequireAmount == 0);
+            KGLOG_PROCESS_ERROR(pItem->nMentorValue == 0);
+        }
+    }
+
+    return true;
+Exit0:
+    return false;
+}
+
+BOOL KShopCenter::OnBuyCoinShopItem(KPlayer* pPlayer, int nResult, DWORD dwTabType, DWORD dwIndex,
+    int nRandomSeed, int nCount, int nCoinCost)
+{
+    BOOL    bResult = false;
+    BOOL    bRetCode = false;
+    KItem*  pItem = NULL;
+    int     nNotifyCode = 7;
+    int     nRefundCoin = 0;
+
+    KGLOG_PROCESS_ERROR(pPlayer);
+
+    if (nResult == 0)
+    {
+        nRefundCoin = (int)((uint32_t)nCoinCost * (uint32_t)nCount);
+        KGLOG_PROCESS_ERROR(nRefundCoin >= 0);
+
+        bRetCode = pPlayer->AddCoin(nRefundCoin);
+        KGLOG_PROCESS_ERROR(bRetCode);
+    }
+    else
+    {
+        pItem = g_pSO3World->m_ItemManager.GenerateItem(
+            dwTabType, dwIndex, g_pSO3World->m_nCurrentTime, ERROR_ID, nRandomSeed
+        );
+        KGLOG_PROCESS_ERROR(pItem);
+
+        if (pItem->IsStackable())
+        {
+            bRetCode = pItem->SetStackNum(nCount);
+            KGLOG_PROCESS_ERROR(bRetCode);
+            KGLOG_PROCESS_ERROR(nRandomSeed == 0);
+        }
+        else
+        {
+            KGLOG_PROCESS_ERROR(nCount == 1);
+            pItem->m_GenParam.dwRandSeed = (DWORD)nRandomSeed;
+        }
+
+        bRetCode = pPlayer->m_ItemList.AddItem(pItem);
+        KGLOG_PROCESS_ERROR(bRetCode == aircSuccess);
+        pItem = NULL;
+        nNotifyCode = 2;
+    }
+
+    bResult = true;
+Exit0:
+    if (pItem)
+        g_pSO3World->m_ItemManager.FreeItem(pItem);
+
+    g_PlayerServer.DoMessageNotify(pPlayer->m_nConnIndex, 15, nNotifyCode);
+    return bResult;
+}
+
 #ifdef _CLIENT
 BOOL KShopCenter::UpDateShopInfo(DWORD dwShopTemplateID, DWORD dwShopID, int nShopType, DWORD dwValidPage, BOOL bCanRepair)
 {
@@ -465,26 +573,28 @@ BOOL KShopCenter::UpDateShopInfo(DWORD dwShopTemplateID, DWORD dwShopID, int nSh
     it = m_ShopList.find(dwShopID);
     if (it != m_ShopList.end())
     {
-        pShop = &it->second;
+        pShop = it->second;
         pShop->m_nShopType    = nShopType;
         pShop->m_dwValidPage  = dwValidPage;        
         pShop->m_bCanRepair   = bCanRepair;
     }
     else
     {
-        KShop Shop;
+        KShop* pNewShop = NULL;
         pair<KSHOP_LIST::iterator, bool> IntResult;
 
-        memset(&Shop, 0, sizeof(Shop));
-        Shop.m_dwShopID       = dwShopID;
-        Shop.m_nShopType      = nShopType;
-        Shop.m_dwValidPage    = dwValidPage;
-        Shop.m_bCanRepair     = bCanRepair;
-        Shop.m_dwTemplateID   = dwShopTemplateID;
+        pNewShop = KMemory::New<KShop>();
+        KGLOG_PROCESS_ERROR(pNewShop);
+        KGLOG_PROCESS_ERROR(pNewShop->Init());
+        pNewShop->m_dwShopID       = dwShopID;
+        pNewShop->m_nShopType      = nShopType;
+        pNewShop->m_dwValidPage    = dwValidPage;
+        pNewShop->m_bCanRepair     = bCanRepair;
+        pNewShop->m_dwTemplateID   = dwShopTemplateID;
 
-        IntResult = m_ShopList.insert(KSHOP_LIST::value_type(dwShopID, Shop));
+        IntResult = m_ShopList.insert(KSHOP_LIST::value_type(dwShopID, pNewShop));
         KGLOG_PROCESS_ERROR(IntResult.second);
-        pShop = &IntResult.first->second;   
+        pShop = IntResult.first->second;
     }
     
     itTemplate = m_NpcShopTemplateTable.find(dwShopTemplateID);
@@ -671,9 +781,10 @@ void KShopCenter::ClearShop()
 {
     for (KSHOP_LIST::iterator ShopIterator = m_ShopList.begin(); ShopIterator != m_ShopList.end(); ++ShopIterator)
     {
-        KShop* pShop = &ShopIterator->second;
+        KShop* pShop = ShopIterator->second;
         pShop->UnInit();
+        KMemory::Delete(pShop);
     }
-    
+
     m_ShopList.clear();
 }

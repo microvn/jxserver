@@ -15,6 +15,7 @@
 #include "KItem.h"
 #include "GS_Client_Protocol.h"
 #include "SO3Result.h"
+#include <stdint.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -46,7 +47,7 @@ struct KSHOP_BUY_ITEM_PARAM
     DWORD dwPosIndex;
     DWORD dwItemID;
     int   nCount;
-    int   nCost;
+    int64_t nCost;
 };
 
 struct KSHOP_SELL_ITEM_PARAM
@@ -71,9 +72,16 @@ struct KSHOP_BUY_SOLD_LIST_ITEM_PARAM
     DWORD dwX;
 };
 
-struct KNPC_SHOP_TEMPLATE_ITEM;
+struct KSHOP_BUY_TIME_LIMIT_SOLD_LIST_ITEM_PARAM
+{
+    DWORD dwItemID;
+    DWORD dwX;
+};
 
-// 该结构作为商店的数据容器
+struct KNPC_SHOP_TEMPLATE_ITEM;
+struct KItemProperty;
+
+// 璇ョ粨鏋勪綔涓哄晢搴楃殑鏁版嵁瀹瑰櫒
 class KShop
 {
 public:
@@ -86,16 +94,32 @@ public:
     
     SHOP_SYSTEM_RESPOND_CODE CanBuyItem(KPlayer* pBuyer, KNpc* pSeller, KSHOP_BUY_ITEM_PARAM& rParam);
 
-    int GetPlayerBuyCost(KPlayer* pPlayer, int nTemplateItemPrice, int nCount);
+    int64_t GetPlayerBuyCost(KPlayer* pPlayer, int nTemplateItemPrice, int nCount);
     int GetPlayerSellPrice(KPlayer* pPlayer, DWORD dwBox, DWORD dwX);
     int GetPlayerRepairPrice(KPlayer* pPlayer, DWORD dwBox, DWORD dwX);
+    int GetPlayerAllRepairPrice(KPlayer* pPlayer);
+    /* PORT-UNKNOWN_REQUIRED[STATE] owner=KItemList time-limit metadata; target=KShop::CanReturnItem@0x081423a6;
+       phase=GENERATOR. The target return eligibility query has no source-equivalent metadata API in this closure. */
+    SHOP_SYSTEM_RESPOND_CODE CanReturnItem(KPlayer* pPlayer, DWORD dwItemID, DWORD dwX);
 
 #ifdef _SERVER
     BOOL BuyItem(KPlayer* pPlayer, KSHOP_BUY_ITEM_PARAM& Param);
+    BOOL BuyCoinShopItem(KPlayer* pPlayer, KSHOP_BUY_ITEM_PARAM& Param);
     BOOL SellItem(KPlayer* pPlayer, KSHOP_SELL_ITEM_PARAM& Param);
+    /* PORT-UNKNOWN_REQUIRED[STATE] owner=KItemList time-limit metadata; target=KShop::ReturnItem@0x08142d92;
+       phase=GENERATOR. The target consumes the same external return/sold transaction state as CanReturnItem. */
+    BOOL ReturnItem(KPlayer* pPlayer, KSHOP_SELL_ITEM_PARAM& Param);
     BOOL RepairItem(KPlayer* pPlayer, KSHOP_REPAIR_ITEM_PARAM& Param);
+    BOOL RepairItem(KPlayer* pPlayer, DWORD dwBox, DWORD dwX, DWORD dwItemID);
     BOOL RepairAllItems(KPlayer* pPlayer, int nCost);
+    BOOL RepairAllItems(KPlayer* pPlayer);
     BOOL BuySoldListItem(KPlayer* pPlayer, KSHOP_BUY_SOLD_LIST_ITEM_PARAM& Param);
+    /* PORT-UNKNOWN_REQUIRED[STATE] owner=KItemList time-limit metadata; target=KShop::BuyTimeLimitSoldListItem@0x08140f10;
+       phase=PRE_BUILD. No substitute is permitted for the target return/sold metadata transaction. */
+    BOOL BuyTimeLimitSoldListItem(KPlayer* pPlayer, KSHOP_BUY_TIME_LIMIT_SOLD_LIST_ITEM_PARAM& Param);
+    /* PORT-UNKNOWN_REQUIRED[ABI] owner=KItemProperty/IItem model; target=KShop::CallBuyItemScript@0x08140b62;
+       phase=GENERATOR. The target script call consumes KItemProperty (size 0x68) which is absent from this source model. */
+    BOOL CallBuyItemScript(const KItemProperty* pItemProperty, KSHOP_BUY_ITEM_PARAM& rParam);
 
     void Refresh();
 #endif
@@ -107,8 +131,11 @@ public:
     int       m_nShopType;
     DWORD     m_dwValidPage;    
     BOOL      m_bCanRepair;
+    BOOL      m_bCoinShop;
     DWORD     m_dwNpcID;
     KNpc*     m_pNpc;
+    DWORD     m_dwScriptID;
+    DWORD     m_dwRequireForceID;
 
     KSHOP_PAGE m_ShopPages[MAX_SHOP_PAGES];
     

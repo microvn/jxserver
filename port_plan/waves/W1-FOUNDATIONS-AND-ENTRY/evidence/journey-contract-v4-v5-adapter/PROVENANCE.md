@@ -1,7 +1,7 @@
 # Provenance
 
 - V4 input: `../journey-contract-prototype/journey-contract-v4.target-static.json`.
-- The adapter consumes that JSON plus `graphengine/evidence.sqlite` in
+- The adapter consumes that JSON plus `compare-engine/evidence.sqlite` in
   read-only mode. It selects target DWARF fields only by the V4-recorded
   artifact SHA-256 and field DIE. It does not read candidate/source, binaries,
   captures, or runtime state.

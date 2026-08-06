@@ -110,10 +110,10 @@ existing role selected → role-entry/ready transitions → scene-ready → boun
 ### Required read-only dossiers
 
 ```text
-graphengine/tools/query/evidence_query.py function KPlayerServer::OnApplyCharacter
-graphengine/tools/query/evidence_query.py function KPlayerServer::OnClientConfirmReady
-graphengine/tools/query/evidence_query.py protocol c2s_client_confirm_ready
-graphengine/tools/query/graph_query.py callees KPlayer::OnClientReady
+compare-engine/tools/query/evidence_query.py function KPlayerServer::OnApplyCharacter
+compare-engine/tools/query/evidence_query.py function KPlayerServer::OnClientConfirmReady
+compare-engine/tools/query/evidence_query.py protocol c2s_client_confirm_ready
+compare-engine/tools/query/graph_query.py callees KPlayer::OnClientReady
 ```
 
 ### Evidence classification

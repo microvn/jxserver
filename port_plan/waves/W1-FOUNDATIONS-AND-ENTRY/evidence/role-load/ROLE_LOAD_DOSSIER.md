@@ -31,7 +31,7 @@ decode after that envelope reaches it.
 | Target `ROLE_DATA_BLOCK_TYPE` | DWARF DIE `0x059e4ec8`, `rbtTotal = 49` |
 | Target decompile export | `raw/target-role-load-pyghidra.jsonl`, SHA-256 `2a71efcceb0f9cd95ea04c04fbc93a3ad8d446cbc2d4d73c8e53e8a6465e3db7` |
 | Deep target closure export | `raw/audit-20260728/target-role-load-deep.jsonl`, SHA-256 `5d3aca03b9e4a8735c2a553e2e590f32be0c34e0e53423e19f8d76fd1ad11949` |
-| Graph snapshot | `graphengine/evidence.sqlite`, SHA-256 `25e726bf747b3e6ecfe7c045bd7c1a1e1c22610a4ab917cbc37a93f4d45449ba` |
+| Graph snapshot | `compare-engine/evidence.sqlite`, SHA-256 `25e726bf747b3e6ecfe7c045bd7c1a1e1c22610a4ab917cbc37a93f4d45449ba` |
 
 Reproduce the static extraction without relying on the graph's reconciliation
 layer:
@@ -41,7 +41,7 @@ DD=/opt/homebrew/opt/llvm/bin/llvm-dwarfdump
 "$DD" --name='KRoleBaseInfo' -c jx3_dwarf/SO3GameServerD
 "$DD" --name='ROLE_DATA_BLOCK_TYPE' -c jx3_dwarf/SO3GameServerD
 nm jx3_dwarf/SO3GameServerD | c++filt -n | rg 'KPlayer::(LoadStateInfo|LoadBaseInfo)\\('
-python3 graphengine/tools/extract/pyghidra_export.py jx3_dwarf/SO3GameServerD \
+python3 compare-engine/tools/extract/pyghidra_export.py jx3_dwarf/SO3GameServerD \
   --out <out>.jsonl --no-analysis --with-xrefs \
   --decompile LoadBaseInfo --decompile LoadStateInfo
 ```

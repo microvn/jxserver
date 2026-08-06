@@ -12,6 +12,8 @@ BOOL KInventory::Init(DWORD dwSize)
 	m_dwSize                 = dwSize;
     m_nContainItemGenerType  = INVALID_CONTAIN_ITEM_TYPE;
     m_nContainItemSubType    = INVALID_CONTAIN_ITEM_TYPE;
+    m_nContainItemGenerTypeExtra = INVALID_CONTAIN_ITEM_TYPE;
+    m_nContainItemSubTypeExtra   = INVALID_CONTAIN_ITEM_TYPE;
 
 	ZeroMemory(m_pItemArray, sizeof(m_pItemArray));
 
@@ -26,7 +28,9 @@ void KInventory::UnInit()
     {
         if (m_pItemArray[i])
         {
-            g_pSO3World->m_ItemManager.FreeItem(m_pItemArray[i]);
+            g_pSO3World->m_ItemSet.Unregister(m_pItemArray[i]);
+            m_pItemArray[i]->UnInit();
+            KMemory::Delete(m_pItemArray[i]);
             m_pItemArray[i] = NULL;
         }
     }
@@ -81,6 +85,8 @@ void KInventory::SetContainItemType(int nContainItemGenerType, int nContainItemS
 {
     m_nContainItemGenerType = nContainItemGenerType;
     m_nContainItemSubType   = nContainItemSubType;
+    m_nContainItemGenerTypeExtra = INVALID_CONTAIN_ITEM_TYPE;
+    m_nContainItemSubTypeExtra   = INVALID_CONTAIN_ITEM_TYPE;
 }
 
 void KInventory::GetContainItemType(int* pnContainItemGenerType, int* pnContainItemSubType)
@@ -94,21 +100,45 @@ void KInventory::GetContainItemType(int* pnContainItemGenerType, int* pnContainI
 
 BOOL KInventory::CheckContainItemType(int nItemGenerType, int nItemSubType)
 {
-    BOOL bResult = false;
+    BOOL bPrimaryMatch = false;
+    BOOL bExtraMatch   = false;
 
-    if (m_nContainItemGenerType != INVALID_CONTAIN_ITEM_TYPE)
+    if (m_nContainItemGenerType != INVALID_CONTAIN_ITEM_TYPE ||
+        m_nContainItemGenerTypeExtra != INVALID_CONTAIN_ITEM_TYPE)
     {
-        KG_PROCESS_ERROR(m_nContainItemGenerType == nItemGenerType);
-
-        if (m_nContainItemSubType != INVALID_CONTAIN_ITEM_TYPE)
+        if (m_nContainItemGenerType != INVALID_CONTAIN_ITEM_TYPE)
         {
-            KG_PROCESS_ERROR(m_nContainItemSubType == nItemSubType);
+            if (m_nContainItemSubType == INVALID_CONTAIN_ITEM_TYPE)
+            {
+                if (m_nContainItemGenerType == nItemGenerType)
+                    bPrimaryMatch = true;
+            }
+            else if (m_nContainItemGenerType == nItemGenerType &&
+                     m_nContainItemSubType == nItemSubType)
+            {
+                bPrimaryMatch = true;
+            }
         }
+
+        if (m_nContainItemGenerTypeExtra != INVALID_CONTAIN_ITEM_TYPE)
+        {
+            if (m_nContainItemSubTypeExtra == INVALID_CONTAIN_ITEM_TYPE)
+            {
+                if (m_nContainItemGenerTypeExtra == nItemGenerType)
+                    bExtraMatch = true;
+            }
+            else if (m_nContainItemGenerTypeExtra == nItemGenerType &&
+                     m_nContainItemSubTypeExtra == nItemSubType)
+            {
+                bExtraMatch = true;
+            }
+        }
+
+        if (!bPrimaryMatch && !bExtraMatch)
+            return false;
     }
-    
-    bResult = true;
-Exit0:
-    return bResult;
+
+    return true;
 }
 
 BOOL KInventory::CheckContainItemType(KItem* pItem)

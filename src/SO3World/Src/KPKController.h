@@ -48,8 +48,6 @@ enum PK_OPERATE
 	pkoRefuseDuel,
 	pkoAcceptDuel,
 	pkoLossDuel,
-	pkoApplySlay,
-	pkoCloseSlay,
 
 	pkoTotal
 };
@@ -69,7 +67,6 @@ public:
     void            SetLoserID(DWORD dwID) { m_dwDuelLoser = dwID; }
 
     PK_RESULT_CODE	CanApplyDuel(KPlayer* pTarget);
-    PK_RESULT_CODE	CanApplySlay();
 
 	void			SetState(
         PK_STATE    eState, 
@@ -80,7 +77,6 @@ public:
 	PK_STATE		GetState()	{ return m_eState; }
     
     BOOL            IsDuel();
-    BOOL            IsOnSlay();
     PK_STATE        GetPKState();
 
 #ifdef _SERVER
@@ -92,8 +88,6 @@ public:
     PK_RESULT_CODE	RefuseDuel();                   // æ‹æ¯«–¥Ë
     PK_RESULT_CODE	AcceptDuel();                   // Ω” ‹«–¥Ë
     PK_RESULT_CODE  LossDuel();        	            // «–¥Ë ß∞‹
-	PK_RESULT_CODE	ApplySlay();                    // …Í«ÎÕ¿…±
-	PK_RESULT_CODE	CloseSlay();                    // πÿ±’Õ¿…±
 #endif
 
 private:
@@ -109,9 +103,6 @@ private:
 	void			OnPrepareDuel();
 	void			OnDueling();
 	void			OnDuelOutOfRange();
-    void            OnStartSlay();
-	void			OnSlaying();
-	void			OnExitSlay();
 
 public:
     BOOL            CallDuelAcceptScript();

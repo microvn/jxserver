@@ -101,7 +101,7 @@ Center role section emitted → Relay envelope received → section consumers co
 ### Required read-only dossiers
 
 ```text
-graphengine/tools/query/evidence_query.py function KRelayClient::OnPlayerLoginRequest
+compare-engine/tools/query/evidence_query.py function KRelayClient::OnPlayerLoginRequest
 After the handler closure identifies the actual envelope type and route, record
 the exact `evidence_query.py type` and `evidence_query.py protocol` commands.
 ```

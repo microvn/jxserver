@@ -14,7 +14,7 @@
       "origin_id": "target-dwarf-v252",
       "payload_json": "{\"authority\":\"target-dwarf\",\"binary\":\"SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"claim\":\"enum_value\",\"die\":\"0x00254490\",\"enum\":\"CLIENT_GS_PROTOCOL\",\"enum_decl\":{\"file\":\"/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/GS_Client_Protocol.h\",\"line\":\"462\"},\"enum_die\":\"0x002543e1\",\"evidence\":{\"artifact\":\"re-index/dwarf/SO3GameServerD.jsonl\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"dwarf_die\":\"0x00254490\"},\"kind\":\"protocol\",\"name\":\"c2s_apply_character_bufflist\",\"origin\":\"target-dwarf-v252\",\"schema\":\"contract-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\",\"value\":\"27\"}",
       "record_line": 10007,
-      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/contracts/target_protocol.jsonl",
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/contracts/target_protocol.jsonl",
       "source_line": null,
       "status": "TARGET_STATIC_CONFIRMED"
     },
@@ -27,7 +27,7 @@
       "origin_id": "target-dwarf-v252",
       "payload_json": "{\"authority\":\"target-dwarf\",\"binary\":\"SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"claim\":\"enum_value\",\"die\":\"0x002548a8\",\"enum\":\"CLIENT_GS_PROTOCOL\",\"enum_decl\":{\"file\":\"/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/GS_Client_Protocol.h\",\"line\":\"462\"},\"enum_die\":\"0x002543e1\",\"evidence\":{\"artifact\":\"re-index/dwarf/SO3GameServerD.jsonl\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"dwarf_die\":\"0x002548a8\"},\"kind\":\"protocol\",\"name\":\"c2s_apply_character_threat_ranklist\",\"origin\":\"target-dwarf-v252\",\"schema\":\"contract-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\",\"value\":\"182\"}",
       "record_line": 10162,
-      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/contracts/target_protocol.jsonl",
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/contracts/target_protocol.jsonl",
       "source_line": null,
       "status": "TARGET_STATIC_CONFIRMED"
     },
@@ -40,7 +40,7 @@
       "origin_id": "target-dwarf-v252",
       "payload_json": "{\"authority\":\"target-dwarf\",\"binary\":\"SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"claim\":\"enum_value\",\"die\":\"0x002548af\",\"enum\":\"CLIENT_GS_PROTOCOL\",\"enum_decl\":{\"file\":\"/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/GS_Client_Protocol.h\",\"line\":\"462\"},\"enum_die\":\"0x002543e1\",\"evidence\":{\"artifact\":\"re-index/dwarf/SO3GameServerD.jsonl\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"dwarf_die\":\"0x002548af\"},\"kind\":\"protocol\",\"name\":\"c2s_apply_character\",\"origin\":\"target-dwarf-v252\",\"schema\":\"contract-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\",\"value\":\"183\"}",
       "record_line": 10163,
-      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/contracts/target_protocol.jsonl",
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/contracts/target_protocol.jsonl",
       "source_line": null,
       "status": "TARGET_STATIC_CONFIRMED"
     },
@@ -53,7 +53,7 @@
       "origin_id": "candidate",
       "payload_json": "{\"authority\":\"candidate-source\",\"claim\":\"source_text_observation\",\"evidence\":{\"artifact\":\"linux-build/src/SO3World/Src/KPlayerServer.cpp\",\"file_sha256\":\"576a5f5a2b071d3f34b6a54315acab5d1c26e0761541ad27e704742639480ffc\",\"line\":214},\"file\":\"linux-build/src/SO3World/Src/KPlayerServer.cpp\",\"file_sha256\":\"576a5f5a2b071d3f34b6a54315acab5d1c26e0761541ad27e704742639480ffc\",\"kind\":\"protocol\",\"line\":214,\"origin\":\"candidate\",\"schema\":\"contract-observation/v1\",\"status\":\"HISTORICAL_OR_CANDIDATE_ONLY\",\"text\":\"REGISTER_EXTERNAL_FUNC(c2s_apply_character_threat_ranklist, &KPlayerServer::OnApplyCharacterThreatRankList, sizeof(C2S_APPLY_CHARACTER_THREAT_RANKLIST));\"}",
       "record_line": 463,
-      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/contracts/candidate_protocol.jsonl",
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/contracts/candidate_protocol.jsonl",
       "source_line": 214,
       "status": "HISTORICAL_OR_CANDIDATE_ONLY"
     },
@@ -66,7 +66,7 @@
       "origin_id": "source-2010",
       "payload_json": "{\"authority\":\"historical-baseline\",\"claim\":\"source_text_observation\",\"evidence\":{\"artifact\":\"source/Sword3-FullSource-master/Jx3Full/Source/Source/Common/SO3World/Src/KPlayerServer.cpp\",\"file_sha256\":\"84f156df47f1802045ef5d46274c878b7a4594fd55f71dbcd1161aa92a5f62a8\",\"line\":214},\"file\":\"source/Sword3-FullSource-master/Jx3Full/Source/Source/Common/SO3World/Src/KPlayerServer.cpp\",\"file_sha256\":\"84f156df47f1802045ef5d46274c878b7a4594fd55f71dbcd1161aa92a5f62a8\",\"kind\":\"protocol\",\"line\":214,\"origin\":\"source-2010\",\"schema\":\"contract-observation/v1\",\"status\":\"HISTORICAL_OR_CANDIDATE_ONLY\",\"text\":\"REGISTER_EXTERNAL_FUNC(c2s_apply_character_threat_ranklist, &KPlayerServer::OnApplyCharacterThreatRankList, sizeof(C2S_APPLY_CHARACTER_THREAT_RANKLIST));\"}",
       "record_line": 328,
-      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/contracts/source_2010_protocol.jsonl",
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/contracts/source_2010_protocol.jsonl",
       "source_line": 214,
       "status": "HISTORICAL_OR_CANDIDATE_ONLY"
     }
@@ -105,7 +105,7 @@
       "origin_id": "target-dwarf-v252",
       "payload_json": "{\"authority\":\"target-dwarf\",\"binary\":\"SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"claim\":\"enum_value\",\"die\":\"0x00254490\",\"enum\":\"CLIENT_GS_PROTOCOL\",\"enum_decl\":{\"file\":\"/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/GS_Client_Protocol.h\",\"line\":\"462\"},\"enum_die\":\"0x002543e1\",\"evidence\":{\"artifact\":\"re-index/dwarf/SO3GameServerD.jsonl\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"dwarf_die\":\"0x00254490\"},\"kind\":\"protocol\",\"name\":\"c2s_apply_character_bufflist\",\"origin\":\"target-dwarf-v252\",\"schema\":\"contract-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\",\"value\":\"27\"}",
       "record_line": 10007,
-      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/contracts/target_protocol.jsonl",
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/contracts/target_protocol.jsonl",
       "source_line": null,
       "status": "TARGET_STATIC_CONFIRMED"
     },
@@ -118,7 +118,7 @@
       "origin_id": "target-dwarf-v252",
       "payload_json": "{\"authority\":\"target-dwarf\",\"binary\":\"SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"claim\":\"enum_value\",\"die\":\"0x002548a8\",\"enum\":\"CLIENT_GS_PROTOCOL\",\"enum_decl\":{\"file\":\"/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/GS_Client_Protocol.h\",\"line\":\"462\"},\"enum_die\":\"0x002543e1\",\"evidence\":{\"artifact\":\"re-index/dwarf/SO3GameServerD.jsonl\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"dwarf_die\":\"0x002548a8\"},\"kind\":\"protocol\",\"name\":\"c2s_apply_character_threat_ranklist\",\"origin\":\"target-dwarf-v252\",\"schema\":\"contract-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\",\"value\":\"182\"}",
       "record_line": 10162,
-      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/contracts/target_protocol.jsonl",
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/contracts/target_protocol.jsonl",
       "source_line": null,
       "status": "TARGET_STATIC_CONFIRMED"
     },
@@ -131,7 +131,7 @@
       "origin_id": "target-dwarf-v252",
       "payload_json": "{\"authority\":\"target-dwarf\",\"binary\":\"SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"claim\":\"enum_value\",\"die\":\"0x002548af\",\"enum\":\"CLIENT_GS_PROTOCOL\",\"enum_decl\":{\"file\":\"/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/GS_Client_Protocol.h\",\"line\":\"462\"},\"enum_die\":\"0x002543e1\",\"evidence\":{\"artifact\":\"re-index/dwarf/SO3GameServerD.jsonl\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"dwarf_die\":\"0x002548af\"},\"kind\":\"protocol\",\"name\":\"c2s_apply_character\",\"origin\":\"target-dwarf-v252\",\"schema\":\"contract-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\",\"value\":\"183\"}",
       "record_line": 10163,
-      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/contracts/target_protocol.jsonl",
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/contracts/target_protocol.jsonl",
       "source_line": null,
       "status": "TARGET_STATIC_CONFIRMED"
     }

@@ -3,11 +3,11 @@ Working directory: /Volumes/ExData/game/jx3/linux-build
 Read-only inputs:
 - /Users/administrator/.codex/sessions/2026/07/25/rollout-2026-07-25T00-51-05-019f9540-95b8-7f83-aec8-1e0e96d02d99.jsonl
 - port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-contract-prototype/journey-contract-v4.target-static.json
-- graphengine/evidence.sqlite (opened by the query with SQLite mode=ro)
+- compare-engine/evidence.sqlite (opened by the query with SQLite mode=ro)
 
 Executed:
-python3 graphengine/tools/query/journey_contract_query.py --seed 'W1 historical dossier cross-audit / role-login envelope' --protocol r2s_player_login_request --output port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/v5-cross-audit/r2s-player-login.fresh-target-static.json
-python3 graphengine/tools/query/journey_contract_query.py --seed 'W1 historical dossier cross-audit / confirm player login' --protocol s2r_confirm_player_login_request --output port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/v5-cross-audit/s2r-confirm-player-login.fresh-target-static.json
-python3 graphengine/tools/query/journey_contract_query.py --seed 'W1 historical dossier cross-audit / historical 306-byte role-login observation' --target-v4 port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-contract-prototype/journey-contract-v4.target-static.json --converted-target-facts-output port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/v5-cross-audit/r2s-player-login.target-facts.v5-adapted.json --candidate-overlay port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/v5-cross-audit/historical-dossier.r2s-player-login.overlay.json --output port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/v5-cross-audit/r2s-player-login.historical-overlay-comparison.v5.json
+python3 compare-engine/tools/query/journey_contract_query.py --seed 'W1 historical dossier cross-audit / role-login envelope' --protocol r2s_player_login_request --output port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/v5-cross-audit/r2s-player-login.fresh-target-static.json
+python3 compare-engine/tools/query/journey_contract_query.py --seed 'W1 historical dossier cross-audit / confirm player login' --protocol s2r_confirm_player_login_request --output port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/v5-cross-audit/s2r-confirm-player-login.fresh-target-static.json
+python3 compare-engine/tools/query/journey_contract_query.py --seed 'W1 historical dossier cross-audit / historical 306-byte role-login observation' --target-v4 port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-contract-prototype/journey-contract-v4.target-static.json --converted-target-facts-output port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/v5-cross-audit/r2s-player-login.target-facts.v5-adapted.json --candidate-overlay port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/v5-cross-audit/historical-dossier.r2s-player-login.overlay.json --output port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/v5-cross-audit/r2s-player-login.historical-overlay-comparison.v5.json
 jq empty port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/v5-cross-audit/*.json
 shasum -a 256 -c SHA256SUMS

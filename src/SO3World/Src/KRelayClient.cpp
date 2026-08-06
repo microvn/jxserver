@@ -157,14 +157,14 @@ KRelayClient::KRelayClient(void)
     REGISTER_INTERNAL_FUNC(r2s_v246_unused_115, &KRelayClient::OnNoOpRespond, 15);
     REGISTER_INTERNAL_FUNC(r2s_get_tong_salary_respond, &KRelayClient::OnGetTongSalaryRespond, 10);
     REGISTER_INTERNAL_FUNC(r2s_sync_tong_history_respond, &KRelayClient::OnSyncTongHistoryRespond, 12);
-    REGISTER_INTERNAL_FUNC(r2s_auction_lookup_respond, &KRelayClient::OnNoOpRespond, 6);
+    REGISTER_INTERNAL_FUNC(r2s_sync_tong_diplomacy_data, &KRelayClient::OnSyncTongDiplomacyData, 6);
     REGISTER_INTERNAL_FUNC(r2s_v246_unused_119, &KRelayClient::OnNoOpRespond, 2);
     REGISTER_INTERNAL_FUNC(r2s_v246_unused_120, &KRelayClient::OnNoOpRespond, 30);
     REGISTER_INTERNAL_FUNC(r2s_v246_unused_121, &KRelayClient::OnNoOpRespond, 15);
     REGISTER_INTERNAL_FUNC(r2s_v246_unused_122, &KRelayClient::OnNoOpRespond, 11);
-    REGISTER_INTERNAL_FUNC(r2s_v246_unused_123, &KRelayClient::OnNoOpRespond, 6);
-    REGISTER_INTERNAL_FUNC(r2s_v246_unused_124, &KRelayClient::OnNoOpRespond, 8);
-    REGISTER_INTERNAL_FUNC(r2s_v246_unused_125, &KRelayClient::OnNoOpRespond, 16);
+    REGISTER_INTERNAL_FUNC(r2s_apply_tong_cachce_data_respond, &KRelayClient::OnApplyTongCacheRespond, 6);
+    REGISTER_INTERNAL_FUNC(r2s_sync_tong_cache_change, &KRelayClient::OnSyncTongCacheChange, 8);
+    REGISTER_INTERNAL_FUNC(r2s_auction_lookup_respond, &KRelayClient::OnNoOpRespond, 16);
     REGISTER_INTERNAL_FUNC(r2s_auction_bid_respond, &KRelayClient::OnAuctionBidRespond, 19);
     REGISTER_INTERNAL_FUNC(r2s_auction_sell_respond, &KRelayClient::OnAuctionSellRespond, 23);
     REGISTER_INTERNAL_FUNC(r2s_auction_cancel_respond, &KRelayClient::OnNoOpRespond, 7);
@@ -197,7 +197,7 @@ KRelayClient::KRelayClient(void)
     REGISTER_INTERNAL_FUNC(r2s_v246_unused_157, &KRelayClient::OnNoOpRespond, 26);
     REGISTER_INTERNAL_FUNC(r2s_v246_unused_158, &KRelayClient::OnNoOpRespond, 14);
     REGISTER_INTERNAL_FUNC(r2s_v246_unused_159, &KRelayClient::OnNoOpRespond, 15);
-    REGISTER_INTERNAL_FUNC(r2s_update_mentor_record, &KRelayClient::OnNoOpRespond, 38);
+    REGISTER_INTERNAL_FUNC(r2s_coin_shop_buy_item_respond, &KRelayClient::OnCoinShopBuyItemRespond, 38);
     REGISTER_INTERNAL_FUNC(r2s_seek_mentor_yell, &KRelayClient::OnNoOpRespond, 34);
     REGISTER_INTERNAL_FUNC(r2s_seek_apprentice_yell, &KRelayClient::OnNoOpRespond, 6);
     REGISTER_INTERNAL_FUNC(r2s_v246_unused_163, &KRelayClient::OnNoOpRespond, 6);
@@ -841,16 +841,20 @@ void KRelayClient::OnTransferPlayerRequest(BYTE* pbyData, size_t uDataLen)
 	pPlayer = g_pSO3World->NewPlayer(pRequest->dwRoleID);
 	KGLOG_PROCESS_ERROR(pPlayer);
 
+    pPlayer->m_nAccountMaxLevel     = pRequest->byAccountMaxLevel;
     bRetCode = pPlayer->LoadBaseInfo(&pRequest->BaseInfo);
     KGLOG_PROCESS_ERROR(bRetCode);
 
-    pPlayer->m_bChargeFlag          = pRequest->bChargeFlag;
-    pPlayer->m_ExtPointInfo         = pRequest->ExtPointInfo;
+    pPlayer->m_bChargeFlag          = (BOOL)pRequest->AccInfo.byChargeFlag;
+    pPlayer->m_bFreeIP              = (BOOL)pRequest->AccInfo.byFreeIP;
+    pPlayer->m_ExtPointInfo         = pRequest->AccInfo.ExtPointInfo;
+    pPlayer->m_nEndTimeOfFee        = pRequest->AccInfo.dwEndTimeOfFee;
+    pPlayer->m_nCoin                = pRequest->AccInfo.dwCoin;
+    pPlayer->m_eMibaoMode           = (PasspodMode)pRequest->AccInfo.byMibaoMode;
+    pPlayer->m_nAccLastLoginTime    = pRequest->AccInfo.nLastLoginTime;
     pPlayer->m_bExtPointLock        = pRequest->bExtPointLock;
     pPlayer->m_nLastExtPointIndex   = pRequest->nLastExtPointIndex;
     pPlayer->m_nLastExtPointValue   = pRequest->nLastExtPointValue;
-    pPlayer->m_nEndTimeOfFee        = pRequest->nEndTimeOfFee;
-    pPlayer->m_nCoin                = pRequest->nCoin;
     pPlayer->m_dwSystemTeamID       = pRequest->dwSystemTeamID;
     pPlayer->m_dwTeamID             = pRequest->dwTeamID;
 	pPlayer->m_nTimer               = 0;
@@ -858,6 +862,8 @@ void KRelayClient::OnTransferPlayerRequest(BYTE* pbyData, size_t uDataLen)
     pPlayer->m_nBattleFieldSide     = pRequest->nBattleFieldSide;
     pPlayer->m_dwTongID             = pRequest->dwTongID;
     pPlayer->m_bFarmerLimit         = pRequest->byFarmerLimit;
+    pPlayer->m_bIsBankPasswordVerified = (BOOL)pRequest->byIsBankPasswordVerified;
+    pPlayer->m_nCurrentLoginTime    = pRequest->nCurrentLoginTime;
     
     strncpy(pPlayer->m_szAccount, pRequest->szAccount, sizeof(pPlayer->m_szAccount));
     pPlayer->m_szAccount[sizeof(pPlayer->m_szAccount) - 1] = '\0';
@@ -872,12 +878,36 @@ void KRelayClient::OnTransferPlayerRequest(BYTE* pbyData, size_t uDataLen)
 
     pPlayer->m_Guid = Guid;
 
+    /*[target 2.5.2] OnTransferPlayerRequest@080e3bca -> KTongServer::OnPlayerLogin
+      (parameter order dwPlayerID, dwTongID), @080e3bf6 -> GetAllianceTongID.
+      080e3bd2 mov eax,[pPlayer+0x99f4]; test; je -> the alliance lookup is GUARDED by
+      m_dwTongID and takes the player field, not the request field. */
+    g_pSO3World->m_TongServer.OnPlayerLogin(pRequest->dwRoleID, pRequest->dwTongID);
+
+    if (pPlayer->m_dwTongID)
+    {
+        pPlayer->m_dwAllianceTongID = g_pSO3World->m_TongDiplomacyCache.GetAllianceTongID(
+            pPlayer->m_dwTongID
+        );
+    }
+
+    if (pRequest->nGatewayIdentity != -1)
+    {
+        bRetCode = DoSyncNewExtPointRequest(pRequest->dwRoleID, pRequest->nGatewayIdentity, -1);
+    }
+    else
+    {
+        bRetCode = DoApplyGSNewExtPoint(pRequest->dwRoleID, pRequest->nRespondCenterIndex, -1);
+    }
+    KGLOG_PROCESS_ERROR(bRetCode);
+
     bResult = true;
 Exit0:
-	DoTransferPlayerRespond(pRequest->dwRoleID, bResult, Guid);
-
     if (!bResult)
     {
+		DoTransferPlayerRespond(
+            pRequest->dwRoleID, bResult, Guid, pRequest->nRespondCenterIndex
+        );
         if (pPlayer)
         {
             g_pSO3World->DelPlayer(pPlayer);
@@ -932,19 +962,24 @@ void KRelayClient::OnPlayerLoginRequest(BYTE* pbyData, size_t uDataLen)
 	pPlayer = g_pSO3World->NewPlayer(pRequest->dwRoleID);
 	KGLOG_PROCESS_ERROR(pPlayer);
 
+    pPlayer->m_nAccountMaxLevel     = pRequest->byAccountMaxLevel;
     bRetCode = pPlayer->LoadBaseInfo(&pRequest->BaseInfo);
     KGLOG_PROCESS_ERROR(bRetCode);
 
-    pPlayer->m_bChargeFlag      = (BOOL)pRequest->nChargeFlag;
-    pPlayer->m_ExtPointInfo     = pRequest->ExtPointInfo;
-    pPlayer->m_nEndTimeOfFee    = pRequest->nEndTimeOfFee;
-    pPlayer->m_nCoin            = pRequest->nCoin;
+    pPlayer->m_bChargeFlag      = (BOOL)pRequest->AccInfo.byChargeFlag;
+    pPlayer->m_bFreeIP          = (BOOL)pRequest->AccInfo.byFreeIP;
+    pPlayer->m_ExtPointInfo     = pRequest->AccInfo.ExtPointInfo;
+    pPlayer->m_nEndTimeOfFee    = pRequest->AccInfo.dwEndTimeOfFee;
+    pPlayer->m_nCoin            = pRequest->AccInfo.dwCoin;
+    pPlayer->m_eMibaoMode       = (PasspodMode)pRequest->AccInfo.byMibaoMode;
+    pPlayer->m_nAccLastLoginTime = pRequest->AccInfo.nLastLoginTime;
     pPlayer->m_dwSystemTeamID   = pRequest->dwSystemTeamID;
     pPlayer->m_dwTeamID         = pRequest->dwTeamID;
     pPlayer->m_dwTongID         = pRequest->dwTongID;
     pPlayer->m_bFarmerLimit     = pRequest->byFarmerLimit;
-    pPlayer->m_nTimer           = 0;
-    pPlayer->m_nBattleFieldSide = pRequest->nBattleSide;
+	pPlayer->m_nTimer           = 0;
+	pPlayer->m_nBattleFieldSide = pRequest->nBattleSide;
+	pPlayer->m_nCurrentLoginTime = g_pSO3World->m_nCurrentTime;
 	pPlayer->m_eGameStatus      = gsWaitForConnect;
 
     strncpy(pPlayer->m_szAccount, pRequest->szAccount, sizeof(pPlayer->m_szAccount));
@@ -959,6 +994,20 @@ void KRelayClient::OnPlayerLoginRequest(BYTE* pbyData, size_t uDataLen)
     KGLOG_PROCESS_ERROR(bRetCode);
 
     pPlayer->m_Guid = guid;
+
+    /*[target 2.5.2] OnPlayerLoginRequest@080e40f9 -> KTongServer::OnPlayerLogin
+      (parameter order dwPlayerID, dwTongID), @080e4125 -> GetAllianceTongID.
+      080e4101-080e4109 mov eax,[pPlayer+0x99f4]; test eax,eax; je 080e4135 -> the
+      alliance lookup is GUARDED by m_dwTongID and is passed the player field. */
+    g_pSO3World->m_TongServer.OnPlayerLogin(pRequest->dwRoleID, pRequest->dwTongID);
+
+    if (pPlayer->m_dwTongID)
+    {
+        pPlayer->m_dwAllianceTongID = g_pSO3World->m_TongDiplomacyCache.GetAllianceTongID(
+            pPlayer->m_dwTongID
+        );
+    }
+
 
     g_pSO3World->m_StatDataServer.UpdateClientLoginPermit();
 
@@ -3655,6 +3704,26 @@ Exit0:
     return;
 }
 
+void KRelayClient::OnCoinShopBuyItemRespond(BYTE* pbyData, size_t uDataLen)
+{
+    R2S_COIN_SHOP_BUY_ITEM_RESPOND* pRespond = (R2S_COIN_SHOP_BUY_ITEM_RESPOND*)pbyData;
+    KPlayer*                        pPlayer = NULL;
+
+    pPlayer = g_pSO3World->m_PlayerSet.GetObj(pRespond->dwPlayerID);
+    KGLOG_PROCESS_ERROR(pPlayer);
+
+    KGLOG_PROCESS_ERROR(pRespond->dwTabType != 0);
+
+    g_pSO3World->m_ShopCenter.OnBuyCoinShopItem(
+        pPlayer, pRespond->bSucceed, pRespond->dwTabType, pRespond->dwTabIndex,
+        pRespond->nDurability, pRespond->nCount, pRespond->nCoinPrice
+    );
+
+    pPlayer->m_nCoinOperatingRef--;
+Exit0:
+    return;
+}
+
 void KRelayClient::OnSyncMentorData(BYTE* pbyData, size_t uDataLen)
 {
     R2S_SYNC_MENTOR_DATA* pRespond = (R2S_SYNC_MENTOR_DATA*)pbyData;
@@ -4128,18 +4197,24 @@ BOOL KRelayClient::DoTransferPlayerRequest(KPlayer* pPlayer)
 	KGLOG_PROCESS_ERROR(piPackage);
 
 	pRequest = (S2R_TRANSFER_PLAYER_REQUEST*)piPackage->GetData();
-	(void)pRequest; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(pRequest);
     
     pRequest->wProtocolID           = s2r_transfer_player_request;
     pRequest->dwRoleID              = pPlayer->m_dwID;
-    pRequest->bChargeFlag           = pPlayer->m_bChargeFlag;
-    pRequest->ExtPointInfo          = pPlayer->m_ExtPointInfo;
+    pRequest->AccInfo.byChargeFlag  = (BYTE)pPlayer->m_bChargeFlag;
+    pRequest->AccInfo.byFreeIP      = (BYTE)pPlayer->m_bFreeIP;
+    pRequest->AccInfo.ExtPointInfo  = pPlayer->m_ExtPointInfo;
+    pRequest->AccInfo.dwEndTimeOfFee = pPlayer->m_nEndTimeOfFee;
+    pRequest->AccInfo.dwCoin        = pPlayer->m_nCoin;
+    pRequest->AccInfo.byMibaoMode   = (BYTE)pPlayer->m_eMibaoMode;
+    pRequest->AccInfo.nLastLoginTime = pPlayer->m_nAccLastLoginTime;
     pRequest->bExtPointLock         = pPlayer->m_bExtPointLock;
     pRequest->nLastExtPointIndex    = pPlayer->m_nLastExtPointIndex;
     pRequest->nLastExtPointValue    = pPlayer->m_nLastExtPointValue;
-    pRequest->nEndTimeOfFee         = pPlayer->m_nEndTimeOfFee;
-    pRequest->nCoin                 = pPlayer->m_nCoin;
     pRequest->nBattleFieldSide      = pPlayer->m_nBattleFieldSide;
+    pRequest->nCurrentLoginTime     = pPlayer->m_nCurrentLoginTime;
+    pRequest->byAccountMaxLevel = (BYTE)pPlayer->m_nAccountMaxLevel;
+    pRequest->byIsBankPasswordVerified = (BYTE)pPlayer->m_bIsBankPasswordVerified;
 
     bRetCode  = pPlayer->SaveBaseInfo(&pRequest->RoleBaseInfo);
     KGLOG_PROCESS_ERROR(bRetCode);
@@ -4153,7 +4228,9 @@ Exit0:
 	return bResult;
 }
 
-BOOL KRelayClient::DoTransferPlayerRespond(DWORD dwPlayerID , BOOL bSucceed, GUID Guid)
+BOOL KRelayClient::DoTransferPlayerRespond(
+    DWORD dwPlayerID, BOOL bSucceed, GUID Guid, int nRespondCenterIndex
+)
 {
     BOOL                            bResult     = false;
 	BOOL                            bRetCode    = false;
@@ -4164,7 +4241,7 @@ BOOL KRelayClient::DoTransferPlayerRespond(DWORD dwPlayerID , BOOL bSucceed, GUI
 	KGLOG_PROCESS_ERROR(piPackage);
 
 	pRespond = (S2R_TRANSFER_PLAYER_RESPOND*)piPackage->GetData();
-	(void)pRespond; /*[endgame] tolerant*/
+	KGLOG_PROCESS_ERROR(pRespond);
 
 	pRespond->wProtocolID       = s2r_transfer_player_respond;
 	pRespond->dwPlayerID        = dwPlayerID;
@@ -4172,6 +4249,7 @@ BOOL KRelayClient::DoTransferPlayerRespond(DWORD dwPlayerID , BOOL bSucceed, GUI
 	pRespond->Guid              = Guid;
 	pRespond->dwAddress         = g_PlayerServer.m_dwInternetAddr;
 	pRespond->wPort             = (WORD)g_PlayerServer.m_nListenPort;
+	pRespond->nRespondCenterIndex = nRespondCenterIndex;
 
 	bRetCode = Send(piPackage);
 	KGLOG_PROCESS_ERROR(bRetCode);
@@ -7596,6 +7674,31 @@ Exit0:
     return bResult;
 }
 
+BOOL KRelayClient::DoApplyCoinOperatingFlag(KPlayer* pPlayer)
+{
+    BOOL                            bResult  = false;
+    BOOL                            bRetCode = false;
+    IKG_Buffer*                     piBuffer = NULL;
+    S2R_APPLY_COIN_OPERATING_FLAG*  pRequest = NULL;
+
+    piBuffer = KG_MemoryCreateBuffer((unsigned)sizeof(S2R_APPLY_COIN_OPERATING_FLAG));
+    KGLOG_PROCESS_ERROR(piBuffer);
+
+    pRequest = (S2R_APPLY_COIN_OPERATING_FLAG*)piBuffer->GetData();
+    KGLOG_PROCESS_ERROR(pRequest);
+
+    pRequest->wProtocolID = s2r_apply_coin_operating_flag;
+    pRequest->dwPlayerID = pPlayer->m_dwID;
+
+    bRetCode = Send(piBuffer);
+    KGLOG_PROCESS_ERROR(bRetCode);
+
+    bResult = true;
+Exit0:
+    KG_COM_RELEASE(piBuffer);
+    return bResult;
+}
+
 BOOL KRelayClient::DoGameCardSellRequest(
     DWORD dwPlayerID, int nCoin, int nGameTime, BYTE byType, int nPrice, int nDurationTime
 )
@@ -7710,6 +7813,70 @@ Exit0:
     return bResult;
 }
 
+BOOL KRelayClient::DoSyncCorpsChangeDataRequest(DWORD dwPlayerID, time_t nChangeTime, time_t nWeekTime, time_t nSeasonTime)
+{
+    BOOL                                bResult  = false;
+    BOOL                                bRetCode = false;
+    IKG_Buffer*                         piPackage = NULL;
+    S2R_SYNC_CORPS_CHANGE_DATA_REQUEST* pRequest = NULL;
+
+    piPackage = KG_MemoryCreateBuffer((unsigned)sizeof(S2R_SYNC_CORPS_CHANGE_DATA_REQUEST));
+    KGLOG_PROCESS_ERROR(piPackage);
+
+    pRequest = (S2R_SYNC_CORPS_CHANGE_DATA_REQUEST*)piPackage->GetData();
+    KGLOG_PROCESS_ERROR(pRequest);
+
+    pRequest->wProtocolID = s2r_sync_corps_change_data_request;
+    pRequest->dwPlayerID = dwPlayerID;
+    pRequest->nChangeTime = nChangeTime;
+    pRequest->nWeekTime = nWeekTime;
+    pRequest->nSeasonTime = nSeasonTime;
+
+    bRetCode = Send(piPackage);
+    KGLOG_PROCESS_ERROR(bRetCode);
+
+    bResult = true;
+Exit0:
+    KG_COM_RELEASE(piPackage);
+    return bResult;
+}
+
+BOOL KRelayClient::DoCoinShopBuyItemRequest(
+    KPlayer* pPlayer, DWORD dwTabType, DWORD dwTabIndex, int nDurability,
+    int nCount, int nCoinPrice, DWORD dwExtParam1, DWORD dwExtParam2
+)
+{
+    BOOL                            bResult  = false;
+    BOOL                            bRetCode = false;
+    IKG_Buffer*                     piBuffer = NULL;
+    S2R_COIN_SHOP_BUY_ITEM_REQUEST* pRequest = NULL;
+
+    piBuffer = KG_MemoryCreateBuffer((unsigned)sizeof(S2R_COIN_SHOP_BUY_ITEM_REQUEST));
+    KGLOG_PROCESS_ERROR(piBuffer);
+
+    pRequest = (S2R_COIN_SHOP_BUY_ITEM_REQUEST*)piBuffer->GetData();
+    KGLOG_PROCESS_ERROR(pRequest);
+
+    pRequest->wProtocolID = s2r_coin_shop_buy_item_request;
+    pRequest->dwPlayerID = pPlayer->m_dwID;
+    pRequest->dwTabType = dwTabType;
+    pRequest->dwTabIndex = dwTabIndex;
+    pRequest->nDurability = nDurability;
+    pRequest->nCount = nCount;
+    pRequest->nCoinPrice = nCoinPrice;
+    pRequest->dwExtParam1 = dwExtParam1;
+    pRequest->dwExtParam2 = dwExtParam2;
+
+    bRetCode = Send(piBuffer);
+    KGLOG_PROCESS_ERROR(bRetCode);
+
+    pPlayer->m_nCoinOperatingRef++;
+    bResult = true;
+Exit0:
+    KG_COM_RELEASE(piBuffer);
+    return bResult;
+}
+
 BOOL KRelayClient::DoApplyMentorData(DWORD dwMentorID, DWORD dwApprenticeID)
 {
     BOOL                            bResult     = false;
@@ -7788,5 +7955,179 @@ Exit0:
     KG_COM_RELEASE(piBuffer);
     return bResult;
 }
+/*[target 2.5.2] KFuncSyncTongDiplomacyData, ctor@080ebb94, dtor@080ec566,
+  operator()@080ee0f8 (size 252). Disassembly facts: `this` is passed to
+  std::vector::size() at 080ee106, so the vector is the first member at offset 0.
+  operator() builds a per-player filtered vector and sends it when non-empty;
+  it always returns 1 (ebx = 1 at 080ee1db) so the traversal never stops early. */
+struct KFuncSyncTongDiplomacyData
+{
+    std::vector<KTONG_DIPLOMACY_RELATION_INFO>  m_DiplomacyInfoVector;
+
+    BOOL operator()(DWORD dwPlayerID, KPlayer* pPlayer)
+    {
+        BOOL                                        bSkip           = false;
+        int                                         nCount          = 0;
+        std::vector<KTONG_DIPLOMACY_RELATION_INFO>  PlayerInfoVector;
+
+        nCount = (int)m_DiplomacyInfoVector.size();
+
+        for (int i = 0; i < nCount; i++)
+        {
+            /* 080ee134-080ee169: skip when neither side of the relation is this
+               player's tong; the target keeps the result in a byte flag. */
+            bSkip = (
+                m_DiplomacyInfoVector[i].dwSrcTongID != pPlayer->m_dwTongID &&
+                m_DiplomacyInfoVector[i].dwDstTongID != pPlayer->m_dwTongID
+            );
+            if (bSkip)
+                continue;
+
+            PlayerInfoVector.push_back(m_DiplomacyInfoVector[i]);
+        }
+
+        if (PlayerInfoVector.size() != 0)
+        {
+            g_PlayerServer.DoSyncTongDiplomacyData(pPlayer->m_nConnIndex, PlayerInfoVector);
+        }
+
+        return true;
+    }
+};
+
+/*[target 2.5.2] KRelayClient::OnSyncTongDiplomacyData@080dda80, size 605.
+  Disassembly facts:
+    080ddaa0-080ddab1 nCount = (uDataLen - 6) / 30
+    080ddac0          per record: if (bNeedFastSync) push_back into the functor vector
+    080ddaff          selector is KTONG_DIPLOMACY_RELATION_INFO::byIsAdd at record offset 0x1d
+    080ddc34          byIsAdd != 0 -> AddDiplomacyRelation(src,dst,type,declare,
+                                        start,end,cdEnd,subType,timeSegment)
+    080ddc92          byIsAdd == 0 -> DelDiplomacyRelation(src,dst,type)
+    080ddca6-080ddcc5 after the loop, if (bNeedFastSync) traverse m_PlayerSet with the functor
+  No size guard and no KGLogPrintf on the target path. */
+void KRelayClient::OnSyncTongDiplomacyData(BYTE* pbyData, size_t uDataLen)
+{
+    R2S_SYNC_TONG_DIPLOMACY_DATA*   pData   = (R2S_SYNC_TONG_DIPLOMACY_DATA*)pbyData;
+    KFuncSyncTongDiplomacyData      Func;
+    int                             nCount  = 0;
+
+    nCount = (int)(
+        (uDataLen - sizeof(R2S_SYNC_TONG_DIPLOMACY_DATA)) /
+        sizeof(KTONG_DIPLOMACY_RELATION_INFO)
+    );
+
+    for (int i = 0; i < nCount; i++)
+    {
+        const KTONG_DIPLOMACY_RELATION_INFO& crInfo = pData->DiplomacyInfoArray[i];
+
+        if (pData->bNeedFastSync)
+        {
+            Func.m_DiplomacyInfoVector.push_back(crInfo);
+        }
+
+        if (crInfo.bAdd)
+        {
+            g_pSO3World->m_TongDiplomacyCache.AddDiplomacyRelation(
+                crInfo.dwSrcTongID,
+                crInfo.dwDstTongID,
+                crInfo.eRelationType,
+                crInfo.bPlayerDeclare,
+                crInfo.nStartTime,
+                crInfo.nEndTime,
+                crInfo.nCDEndTime,
+                crInfo.wSubType,
+                crInfo.wTimeSegment
+            );
+        }
+        else
+        {
+            g_pSO3World->m_TongDiplomacyCache.DelDiplomacyRelation(
+                crInfo.dwSrcTongID,
+                crInfo.dwDstTongID,
+                crInfo.eRelationType
+            );
+        }
+    }
+
+    if (pData->bNeedFastSync)
+    {
+        g_pSO3World->m_PlayerSet.Traverse(Func);
+    }
+}
+
+/*[target 2.5.2] KRelayClient::DoApplyTongCacheRequest@080caa74, size 313, basic_blocks 10.
+  DWARF locals: bResult, bRetCode, pRequest, piBuffer. Target has three
+  KGLOG_PROCESS_ERROR blocks: on KG_MemoryCreateBuffer@080caad2, on the
+  GetData() result@080cab1e, and on Send@080cab78.
+  Wire s2r 129 (0x81), S2R_APPLY_TONG_CACHE_REQUEST 6 bytes.
+  Caller KTongServer::RegisterTongMember@081e587b. */
+BOOL KRelayClient::DoApplyTongCacheRequest(DWORD dwTongID)
+{
+    BOOL                            bResult     = false;
+    BOOL                            bRetCode    = false;
+    IKG_Buffer*                     piBuffer    = NULL;
+    S2R_APPLY_TONG_CACHE_REQUEST*   pRequest    = NULL;
+
+    piBuffer = KG_MemoryCreateBuffer(sizeof(S2R_APPLY_TONG_CACHE_REQUEST));
+    KGLOG_PROCESS_ERROR(piBuffer);
+
+    pRequest = (S2R_APPLY_TONG_CACHE_REQUEST*)piBuffer->GetData();
+    KGLOG_PROCESS_ERROR(pRequest);
+
+    pRequest->wProtocolID   = s2r_apply_tong_cache_request;
+    pRequest->dwTongID      = dwTongID;
+
+    bRetCode = Send(piBuffer);
+    KGLOG_PROCESS_ERROR(bRetCode);
+
+    bResult = true;
+Exit0:
+    KG_COM_RELEASE(piBuffer);
+    return bResult;
+}
+
+/*[target 2.5.2] KRelayClient::OnApplyTongCacheRespond@080dcda8, size 106, basic_blocks 4.
+  DWARF local: pRespond (R2S_APPLY_TONG_CACHCE_DATA_RESPOND*) plus __PRETTY_FUNCTION__[67]
+  emitted by the single KGLOG_PROCESS_ERROR. Ordered target calls:
+  KGLogPrintf@080dcde1 (out-of-line failure block) -> InsertTongChache@080dce0b. */
+void KRelayClient::OnApplyTongCacheRespond(BYTE* pbyData, size_t uDataLen)
+{
+    R2S_APPLY_TONG_CACHCE_DATA_RESPOND* pRespond = (R2S_APPLY_TONG_CACHCE_DATA_RESPOND*)pbyData;
+
+    KGLOG_PROCESS_ERROR(
+        uDataLen == sizeof(R2S_APPLY_TONG_CACHCE_DATA_RESPOND) + sizeof(TongCacheData)
+    );
+
+    g_pSO3World->m_TongServer.InsertTongChache(
+        pRespond->dwTongID, *(const TongCacheData*)pRespond->byData
+    );
+
+Exit0:
+    return;
+}
+
+/*[target 2.5.2] KRelayClient::OnSyncTongCacheChange@080dcd24, size 132, basic_blocks 4.
+  DWARF local: pBroadcast plus __PRETTY_FUNCTION__[65] from the single
+  KGLOG_PROCESS_ERROR. Disassembly 080dcd31-080dcd3a:
+    movzx eax, byte ptr [pbyData + 6]   ; byType
+    cmp al, 6 / jbe                     ; guard is byType < ttntTotal
+  uDataLen (ebp+0x10) is never read by the target, so no length check exists here.
+  The bound matters: UpdateTongChacheChange indexes byTechNodeTag[eType] on a
+  7-byte array inside a std::map node. Ordered target calls:
+  KGLogPrintf@080dcd63 (out-of-line failure block) -> UpdateTongChacheChange@080dcd9d. */
+void KRelayClient::OnSyncTongCacheChange(BYTE* pbyData, size_t uDataLen)
+{
+    R2S_SYNC_TONG_CACHE_CHANGE* pBroadcast = (R2S_SYNC_TONG_CACHE_CHANGE*)pbyData;
+
+    KGLOG_PROCESS_ERROR(pBroadcast->byType < ttntTotal);
+
+    g_pSO3World->m_TongServer.UpdateTongChacheChange(
+        pBroadcast->dwTongID, (TongTechNodeTag)pBroadcast->byType, pBroadcast->byValue
+    );
+
+Exit0:
+    return;
+}
+
 //AutoCode:-发送协议函数结束-
 #endif	//_SERVER

@@ -78,43 +78,43 @@
   "artifacts": {
     "w1_connectivity_capsule": {
       "kind": "probe_boundary_capsule",
-      "path": "graphengine/staging/jx3probe/w1-stock-candidate-20260728/boundary-capsule.json"
+      "path": "compare-engine/staging/jx3probe/w1-stock-candidate-20260728/boundary-capsule.json"
     },
     "w1_connectivity_stock_manifest": {
       "kind": "runtime_manifest",
-      "path": "graphengine/staging/jx3probe/w1-stock-candidate-20260728/stock-fresh/manifest.json"
+      "path": "compare-engine/staging/jx3probe/w1-stock-candidate-20260728/stock-fresh/manifest.json"
     },
     "w1_connectivity_candidate_manifest": {
       "kind": "runtime_manifest",
-      "path": "graphengine/staging/jx3probe/w1-stock-candidate-20260728/candidate/manifest.json"
+      "path": "compare-engine/staging/jx3probe/w1-stock-candidate-20260728/candidate/manifest.json"
     },
     "w1_connectivity_stock_ledger": {
       "kind": "probe_ledger",
-      "path": "graphengine/staging/jx3probe/w1-stock-candidate-20260728/stock-fresh/probe-ledger.jsonl"
+      "path": "compare-engine/staging/jx3probe/w1-stock-candidate-20260728/stock-fresh/probe-ledger.jsonl"
     },
     "w1_connectivity_candidate_ledger": {
       "kind": "probe_ledger",
-      "path": "graphengine/staging/jx3probe/w1-stock-candidate-20260728/candidate/probe-ledger.jsonl"
+      "path": "compare-engine/staging/jx3probe/w1-stock-candidate-20260728/candidate/probe-ledger.jsonl"
     },
     "w1_role_login_stock_manifest": {
       "kind": "runtime_manifest",
-      "path": "graphengine/staging/jx3probe/w1-role-login-5003-20260728/stock/manifest.json"
+      "path": "compare-engine/staging/jx3probe/w1-role-login-5003-20260728/stock/manifest.json"
     },
     "w1_role_login_candidate_manifest": {
       "kind": "runtime_manifest",
-      "path": "graphengine/staging/jx3probe/w1-role-login-5003-20260728/candidate/manifest.json"
+      "path": "compare-engine/staging/jx3probe/w1-role-login-5003-20260728/candidate/manifest.json"
     },
     "w1_role_login_stock_ledger": {
       "kind": "probe_ledger",
-      "path": "graphengine/staging/jx3probe/w1-role-login-5003-20260728/stock/probe-ledger.jsonl"
+      "path": "compare-engine/staging/jx3probe/w1-role-login-5003-20260728/stock/probe-ledger.jsonl"
     },
     "w1_role_login_candidate_ledger": {
       "kind": "probe_ledger",
-      "path": "graphengine/staging/jx3probe/w1-role-login-5003-20260728/candidate/probe-ledger-final.jsonl"
+      "path": "compare-engine/staging/jx3probe/w1-role-login-5003-20260728/candidate/probe-ledger-final.jsonl"
     },
     "w1_role_login_capsule": {
       "kind": "probe_boundary_capsule",
-      "path": "graphengine/staging/jx3probe/w1-role-login-5003-20260728/boundary-capsule.json"
+      "path": "compare-engine/staging/jx3probe/w1-role-login-5003-20260728/boundary-capsule.json"
     },
     "w1_role_login_overlay": {
       "kind": "overlay_result",
@@ -182,7 +182,7 @@
       "runtime_evidence": [
         {
           "origin": "runtime",
-          "path": "graphengine/staging/jx3probe/w1-stock-candidate-20260728/boundary-capsule.json",
+          "path": "compare-engine/staging/jx3probe/w1-stock-candidate-20260728/boundary-capsule.json",
           "note": "Fresh paired public capture"
         }
       ]

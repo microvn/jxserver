@@ -123,7 +123,7 @@ BOOL KExteriorBox::Add(DWORD dwID, int nTimeType, time_t nExpireTime)
     if (dwID == 0)
         return true;    // v246: id==0 is a no-op success
 
-    pInfo = g_pSO3World->m_Settings.m_Exterior.GetExteriorInfo(dwID);
+    pInfo = g_pSO3World->m_Exterior.GetExteriorInfo(dwID);
     KGLOG_PROCESS_ERROR(pInfo);
 
     pItem = _Add(dwID, nTimeType, nExpireTime);
@@ -221,7 +221,7 @@ BOOL KExteriorBox::ApplyExteriorRepresent(int nSlot)
     bRetCode = GetEquipSubType(nSlot, &nSubType);
     KGLOG_PROCESS_ERROR(bRetCode);
 
-    pInfo = g_pSO3World->m_Settings.m_Exterior.GetExteriorInfo(dwID);
+    pInfo = g_pSO3World->m_Exterior.GetExteriorInfo(dwID);
     KGLOG_PROCESS_ERROR(pInfo);
 
     pItem = GetExteriorItem(dwID);
@@ -354,7 +354,7 @@ BOOL KExteriorBox::SetExterior(size_t uSetIdx, int nSlot, DWORD dwID)
     if (dwID != 0)
     {
         // must be a real exterior of the right subtype AND owned
-        KEXTERIOR_INFO* pInfo    = g_pSO3World->m_Settings.m_Exterior.GetExteriorInfo(dwID);
+        KEXTERIOR_INFO* pInfo    = g_pSO3World->m_Exterior.GetExteriorInfo(dwID);
         int             nSubType = 0;
 
         KGLOG_PROCESS_ERROR(pInfo);
@@ -558,7 +558,7 @@ BOOL KExteriorBox::LoadExteriorBox(BYTE* pbyData, size_t uDataLen)
         KEXTERIOR_DB_DATA::KEXTERIOR_INFO* pItem = (KEXTERIOR_DB_DATA::KEXTERIOR_INFO*)pbyOffset;
         KGLOG_PROCESS_ERROR((size_t)(pbyTail - pbyOffset) >= sizeof(*pItem));
         // only add exteriors that still exist in config (mirror LoadExteriorBox)
-        if (g_pSO3World->m_Settings.m_Exterior.GetExteriorInfo(pItem->wID))
+        if (g_pSO3World->m_Exterior.GetExteriorInfo(pItem->wID))
         {
             KGLOG_PROCESS_ERROR(_Add(pItem->wID, (int)pItem->byFlag, (time_t)pItem->dwExpireTime));
         }
@@ -598,7 +598,7 @@ BOOL KExteriorBox::Load(BYTE* pbyData, size_t uDataLen)
     {
         KEXTERIOR_BUY_LATEST_DB_DATA::KEXTERIOR_INFO* pItem =
             (KEXTERIOR_BUY_LATEST_DB_DATA::KEXTERIOR_INFO*)pbyOffset;
-        if (g_pSO3World->m_Settings.m_Exterior.GetExteriorInfo(pItem->wID))
+        if (g_pSO3World->m_Exterior.GetExteriorInfo(pItem->wID))
             m_LatestBuy.push_back(pItem->wID);
         pbyOffset += sizeof(*pItem);
     }
@@ -714,7 +714,7 @@ void KExteriorBox::_AddLatestBuy(DWORD dwID)
 BOOL KExteriorBox::AddLatestBuy(DWORD dwID)
 {
     BOOL bResult = false;
-    KGLOG_PROCESS_ERROR(g_pSO3World->m_Settings.m_Exterior.GetExteriorInfo(dwID));
+    KGLOG_PROCESS_ERROR(g_pSO3World->m_Exterior.GetExteriorInfo(dwID));
     _AddLatestBuy(dwID);
     // [PORT-10] DoSyncExteriorBuyLatestData(m_pPlayer, 1, &dwID)
     bResult = true;
@@ -727,7 +727,7 @@ BOOL KExteriorBox::DeleteExteriorInLatestBuy(DWORD dwID)
     BOOL bResult = false;
     std::vector<DWORD>::iterator it;
 
-    KGLOG_PROCESS_ERROR(g_pSO3World->m_Settings.m_Exterior.GetExteriorInfo(dwID));
+    KGLOG_PROCESS_ERROR(g_pSO3World->m_Exterior.GetExteriorInfo(dwID));
 
     for (it = m_LatestBuy.begin(); it != m_LatestBuy.end(); ++it)
     {
@@ -750,7 +750,7 @@ BOOL KExteriorBox::DeleteExteriorInSet(DWORD dwID)
     int             nSlot   = 0;
     size_t          i       = 0;
 
-    pInfo = g_pSO3World->m_Settings.m_Exterior.GetExteriorInfo(dwID);
+    pInfo = g_pSO3World->m_Exterior.GetExteriorInfo(dwID);
     KGLOG_PROCESS_ERROR(pInfo);
     KGLOG_PROCESS_ERROR(GetEquipPosBySubType((int)pInfo->nSubType, &nSlot));
 

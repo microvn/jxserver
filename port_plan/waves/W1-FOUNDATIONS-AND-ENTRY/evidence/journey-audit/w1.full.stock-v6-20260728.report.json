@@ -74,7 +74,7 @@
           "summary": "stock/candidate runtime manifests prove distinct GameServer binaries",
           "evidence": [
             {
-              "path": "graphengine/staging/jx3probe/w1-full-stock-20260728-r2/stock/manifest.json",
+              "path": "compare-engine/staging/jx3probe/w1-full-stock-20260728-r2/stock/manifest.json",
               "sha256": "c5d1561711156d5afd54875fd7e42fb2cf25ae361abf222d2e25fd48d47758b9",
               "detail": "stock gameserver provenance",
               "extra": {
@@ -82,7 +82,7 @@
               }
             },
             {
-              "path": "graphengine/staging/jx3probe/w1-full-20260729/candidate/manifest.json",
+              "path": "compare-engine/staging/jx3probe/w1-full-20260729/candidate/manifest.json",
               "sha256": "9d473d947a265c92c6c549b5be67c097b6dddc027ad5f85677eac751740c7177",
               "detail": "candidate gameserver provenance",
               "extra": {
@@ -122,7 +122,7 @@
           "summary": "stock and candidate both contain the expected probe ladder rows",
           "evidence": [
             {
-              "path": "graphengine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
+              "path": "compare-engine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
               "sha256": "84bceb4c53107d959ad88c652b1653ac60acd10cb440c68d1c90bfb4f6e596a4",
               "detail": "stock probe ledger row",
               "extra": {
@@ -131,7 +131,7 @@
               }
             },
             {
-              "path": "graphengine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
+              "path": "compare-engine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
               "sha256": "101216207791c599109c43e6cc5f416bf42f1ce75d74ebdddfe7d6f4c52d2c86",
               "detail": "candidate probe ledger row",
               "extra": {
@@ -140,7 +140,7 @@
               }
             },
             {
-              "path": "graphengine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
+              "path": "compare-engine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
               "sha256": "84bceb4c53107d959ad88c652b1653ac60acd10cb440c68d1c90bfb4f6e596a4",
               "detail": "stock probe ledger row",
               "extra": {
@@ -149,7 +149,7 @@
               }
             },
             {
-              "path": "graphengine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
+              "path": "compare-engine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
               "sha256": "101216207791c599109c43e6cc5f416bf42f1ce75d74ebdddfe7d6f4c52d2c86",
               "detail": "candidate probe ledger row",
               "extra": {
@@ -158,7 +158,7 @@
               }
             },
             {
-              "path": "graphengine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
+              "path": "compare-engine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
               "sha256": "84bceb4c53107d959ad88c652b1653ac60acd10cb440c68d1c90bfb4f6e596a4",
               "detail": "stock probe ledger row",
               "extra": {
@@ -167,7 +167,7 @@
               }
             },
             {
-              "path": "graphengine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
+              "path": "compare-engine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
               "sha256": "101216207791c599109c43e6cc5f416bf42f1ce75d74ebdddfe7d6f4c52d2c86",
               "detail": "candidate probe ledger row",
               "extra": {
@@ -176,7 +176,7 @@
               }
             },
             {
-              "path": "graphengine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
+              "path": "compare-engine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
               "sha256": "84bceb4c53107d959ad88c652b1653ac60acd10cb440c68d1c90bfb4f6e596a4",
               "detail": "stock probe ledger row",
               "extra": {
@@ -185,7 +185,7 @@
               }
             },
             {
-              "path": "graphengine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
+              "path": "compare-engine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
               "sha256": "101216207791c599109c43e6cc5f416bf42f1ce75d74ebdddfe7d6f4c52d2c86",
               "detail": "candidate probe ledger row",
               "extra": {
@@ -194,7 +194,7 @@
               }
             },
             {
-              "path": "graphengine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
+              "path": "compare-engine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
               "sha256": "84bceb4c53107d959ad88c652b1653ac60acd10cb440c68d1c90bfb4f6e596a4",
               "detail": "stock probe ledger row",
               "extra": {
@@ -203,7 +203,7 @@
               }
             },
             {
-              "path": "graphengine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
+              "path": "compare-engine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
               "sha256": "101216207791c599109c43e6cc5f416bf42f1ce75d74ebdddfe7d6f4c52d2c86",
               "detail": "candidate probe ledger row",
               "extra": {
@@ -212,7 +212,7 @@
               }
             },
             {
-              "path": "graphengine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
+              "path": "compare-engine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
               "sha256": "84bceb4c53107d959ad88c652b1653ac60acd10cb440c68d1c90bfb4f6e596a4",
               "detail": "stock probe ledger row",
               "extra": {
@@ -221,7 +221,7 @@
               }
             },
             {
-              "path": "graphengine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
+              "path": "compare-engine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
               "sha256": "101216207791c599109c43e6cc5f416bf42f1ce75d74ebdddfe7d6f4c52d2c86",
               "detail": "candidate probe ledger row",
               "extra": {
@@ -230,7 +230,7 @@
               }
             },
             {
-              "path": "graphengine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
+              "path": "compare-engine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
               "sha256": "84bceb4c53107d959ad88c652b1653ac60acd10cb440c68d1c90bfb4f6e596a4",
               "detail": "stock probe ledger row",
               "extra": {
@@ -239,7 +239,7 @@
               }
             },
             {
-              "path": "graphengine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
+              "path": "compare-engine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
               "sha256": "101216207791c599109c43e6cc5f416bf42f1ce75d74ebdddfe7d6f4c52d2c86",
               "detail": "candidate probe ledger row",
               "extra": {
@@ -248,7 +248,7 @@
               }
             },
             {
-              "path": "graphengine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
+              "path": "compare-engine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
               "sha256": "84bceb4c53107d959ad88c652b1653ac60acd10cb440c68d1c90bfb4f6e596a4",
               "detail": "stock probe ledger row",
               "extra": {
@@ -257,7 +257,7 @@
               }
             },
             {
-              "path": "graphengine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
+              "path": "compare-engine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
               "sha256": "101216207791c599109c43e6cc5f416bf42f1ce75d74ebdddfe7d6f4c52d2c86",
               "detail": "candidate probe ledger row",
               "extra": {
@@ -266,7 +266,7 @@
               }
             },
             {
-              "path": "graphengine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
+              "path": "compare-engine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl",
               "sha256": "84bceb4c53107d959ad88c652b1653ac60acd10cb440c68d1c90bfb4f6e596a4",
               "detail": "stock probe ledger row",
               "extra": {
@@ -275,7 +275,7 @@
               }
             },
             {
-              "path": "graphengine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
+              "path": "compare-engine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl",
               "sha256": "101216207791c599109c43e6cc5f416bf42f1ce75d74ebdddfe7d6f4c52d2c86",
               "detail": "candidate probe ledger row",
               "extra": {
@@ -316,7 +316,7 @@
           "summary": "paired runtime capture diverges at this checkpoint",
           "evidence": [
             {
-              "path": "graphengine/staging/jx3probe/w1-full-v6-audit-20260728/boundary-capsule.json",
+              "path": "compare-engine/staging/jx3probe/w1-full-v6-audit-20260728/boundary-capsule.json",
               "sha256": "ce6c36bd84a6ea02a3b305c9afd783bdbb5198467f9fe72d009d5f2573c4e372",
               "detail": "jx3probe first runtime divergence",
               "extra": {

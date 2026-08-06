@@ -216,7 +216,8 @@ enum PasspodMode
 {
     PASSPODMODE_UNBIND   = 0,
     PASSPODMODE_ZPTOKEN  = 1, //жпемаНеф
-	PASSPODMODE_ZPMATRIX = 2  //жпем╬ьуС©╗
+	PASSPODMODE_ZPMATRIX = 2, //жпем╬ьуС©╗
+    PASSPODMODE_PHONE    = 3
 };
 
 #pragma pack()

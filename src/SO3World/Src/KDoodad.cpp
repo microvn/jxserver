@@ -850,7 +850,7 @@ KLootList* KDoodad::GenerateLootListFromNpc(KPlayer* pDropTarget, KNpc* pNpc)
     if (pDropTarget->m_bFarmerLimit && pScene->m_nType != emtDungeon)
     {
         DWORD dwRandom = g_Random(MILLION_NUM);
-        DWORD dwLimit  = (DWORD)(MILLION_NUM * g_pSO3World->m_Settings.m_ConstList.fAntiFarmerPunishRate);               
+        DWORD dwLimit  = (DWORD)(MILLION_NUM * g_pSO3World->m_Settings.m_AntiFarmerSettings.m_fPunishRate);               
 
         if (dwRandom < dwLimit)
         {

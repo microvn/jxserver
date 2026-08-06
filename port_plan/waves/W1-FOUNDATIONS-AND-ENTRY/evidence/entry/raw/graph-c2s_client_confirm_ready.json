@@ -14,7 +14,7 @@
       "origin_id": "target-dwarf-v252",
       "payload_json": "{\"authority\":\"target-dwarf\",\"binary\":\"SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"claim\":\"enum_value\",\"die\":\"0x002543fa\",\"enum\":\"CLIENT_GS_PROTOCOL\",\"enum_decl\":{\"file\":\"/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/GS_Client_Protocol.h\",\"line\":\"462\"},\"enum_die\":\"0x002543e1\",\"evidence\":{\"artifact\":\"re-index/dwarf/SO3GameServerD.jsonl\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"dwarf_die\":\"0x002543fa\"},\"kind\":\"protocol\",\"name\":\"c2s_client_confirm_ready\",\"origin\":\"target-dwarf-v252\",\"schema\":\"contract-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\",\"value\":\"2\"}",
       "record_line": 9982,
-      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/contracts/target_protocol.jsonl",
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/contracts/target_protocol.jsonl",
       "source_line": null,
       "status": "TARGET_STATIC_CONFIRMED"
     }
@@ -53,7 +53,7 @@
       "origin_id": "target-dwarf-v252",
       "payload_json": "{\"authority\":\"target-dwarf\",\"binary\":\"SO3GameServerD\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"claim\":\"enum_value\",\"die\":\"0x002543fa\",\"enum\":\"CLIENT_GS_PROTOCOL\",\"enum_decl\":{\"file\":\"/home/BuildFarm/datastores_zhcn_bvt/Sword3/Source/Common/SO3World/../../../Include/GS_Client_Protocol.h\",\"line\":\"462\"},\"enum_die\":\"0x002543e1\",\"evidence\":{\"artifact\":\"re-index/dwarf/SO3GameServerD.jsonl\",\"binary_sha256\":\"47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a\",\"dwarf_die\":\"0x002543fa\"},\"kind\":\"protocol\",\"name\":\"c2s_client_confirm_ready\",\"origin\":\"target-dwarf-v252\",\"schema\":\"contract-observation/v1\",\"status\":\"TARGET_STATIC_CONFIRMED\",\"value\":\"2\"}",
       "record_line": 9982,
-      "record_path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/contracts/target_protocol.jsonl",
+      "record_path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/contracts/target_protocol.jsonl",
       "source_line": null,
       "status": "TARGET_STATIC_CONFIRMED"
     }

@@ -17,13 +17,13 @@ observed V4 `binary_path`, not a process-route claim.
 Run from `linux-build/`:
 
 ```bash
-python3 graphengine/tools/query/journey_contract_query.py \
+python3 compare-engine/tools/query/journey_contract_query.py \
   --seed v4-derived-field-layout-fixture \
   --protocol r2s_player_login_request \
   --max-direct-calls 16 --max-outbound-candidates 16 --max-outbound-second-hop 4 \
   --output port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-contract-v4-v5-adapter/v4-derived-with-field-layout.json
 
-python3 graphengine/tools/query/journey_contract_query.py \
+python3 compare-engine/tools/query/journey_contract_query.py \
   --seed v4-v5-adapter-fixture \
   --target-v4 port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-contract-prototype/journey-contract-v4.target-static.json \
   --converted-target-facts-output port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-contract-v4-v5-adapter/target-contract-facts.v4-converted.json \
@@ -34,7 +34,7 @@ python3 graphengine/tools/query/journey_contract_query.py \
 python3 -m json.tool port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-contract-v4-v5-adapter/target-contract-facts.v4-converted.json >/dev/null
 python3 -m json.tool port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-contract-v4-v5-adapter/v4-derived-with-field-layout.json >/dev/null
 python3 -m json.tool port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-contract-v4-v5-adapter/v5-overlay-probe-result.json >/dev/null
-python3 -m py_compile graphengine/tools/query/journey_contract_query.py
+python3 -m py_compile compare-engine/tools/query/journey_contract_query.py
 (cd port_plan/waves/W1-FOUNDATIONS-AND-ENTRY/evidence/journey-contract-v4-v5-adapter && sha256sum -c SHA256SUMS)
 ```
 

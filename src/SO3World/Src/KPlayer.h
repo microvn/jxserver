@@ -77,12 +77,33 @@ enum GAME_STATUS
 	gsTotal
 };
 
+// Target Global.h:499.  Kept here while the KPlayer SafeLock closure owns the
+// only source consumers; moving the shared declaration to Global.h is outside
+// this slave's frozen write allowlist.
+enum KSAFE_LOCK_EFFECT_TYPE
+{
+    sletTrade = 0,
+    sletAuction,
+    sletShop,
+    sletMail,
+    sletTongDonate,
+    sletTongPaySalary,
+    sletTongRepertory,
+    sletEquip,
+    sletBank,
+    sletCoin,
+    sletOperateDiamond,
+    sletTotal,
+};
+
 #pragma pack(push, 1)
 struct KPendent
 {
     DWORD  dwItemIndex;
     time_t nGenTime;
 };
+
+typedef std::vector<KPendent> KPendentVec;
 #pragma pack(pop)
 
 enum PREEMPTIVE_ATTACK
@@ -263,7 +284,7 @@ public:
     BOOL                m_bExtPointLock;
     KNewExtPointManager m_NewExtPointManager;        // ��չ�������
     int                 m_nLastExtPointIndex;   // ��һ�β�����չ������
-    short               m_nLastExtPointValue;   // ��һ�β�����չ��ֵ
+    int                 m_nLastExtPointValue;   // ��һ�β�����չ��ֵ
     time_t              m_nEndTimeOfFee;        // �շ��ܽ�ֹʱ��
     time_t              m_nNoFeeTime;           // ������������ʱ��
     int                 m_nLastClientFrame;
@@ -275,6 +296,7 @@ public:
     time_t              m_nCurrentLoginTime;
     int64_t             m_nTotalGameFrame; // ������֡��
     time_t              m_nCreateTime;
+    time_t              m_nAccLastLoginTime;
     time_t              m_nAccountLastSaveTime;
     int                 m_nAccContinuousLoginCount;
     BOOL                m_bContinuousLoginRewardFlag;
@@ -289,10 +311,19 @@ public:
 #endif
 
     BOOL                m_bChargeFlag;          // ����շ�״̬ false:��� true:�շ�
+    BOOL                m_bFreeIP;              // Relay account-login byFreeIP; distinct from FreeLimitFlag
     BOOL                m_bPrisonFlag;          // target Lua state: bPrisonFlag
+    char                m_szBankPassword[64];
+    char                m_szBankPasswordAnswer[32];
+    time_t              m_nBankPasswordResetEndTime;
+    BOOL                m_bIsBankPasswordVerified;
+    BOOL                m_bBankPasswordExist;
+    int                 m_nBankPasswordQuestionID;
+    DWORD               m_dwSafeLockMask;
     int                 m_nCoin;                // ��ҵĽ��(Ԫ��)
     BOOL                m_bFreeLimitFlag;       // ����Ƿ���Ϊ��Ѷ��յ�����
     BOOL                m_bFarmerLimit;         // �Ƿ��ܵ�����Ǯ��������
+    PasspodMode         m_eMibaoMode;
 
 #if defined(_CLIENT)
     char                m_szTongName[_NAME_LEN];
@@ -337,11 +368,14 @@ public:
     KRegressionPlayerData m_RegressionData;     // returning-player (hui-gui) state
     KCurrencyList       m_CurrencyList;         // v2.5 NEW: capped/periodic currencies
     KFellowPetBox       m_FellowPetBox;         // v2.5 fellow-pet timed data
-    KPendent            m_WaistPendent;
+    int                 m_nWaistPendentBoxSize;
+    int                 m_nBackPendentBoxSize;
+    int                 m_nFacePendentBoxSize;
+    KPendentVec         m_WaistPendent;
+    KPendentVec         m_BackPendent;
+    KPendentVec         m_FacePendent;
     DWORD               m_dwWaistItemIndex;
-    KPendent            m_BackPendent;
     DWORD               m_dwBackItemIndex;
-    KPendent            m_FacePendent;
     DWORD               m_dwFaceItemIndex;
     DWORD               m_dwApplyExteriorFlag;  // bit0-4 = per-slot applied; bit0x80 = master apply-on
 
@@ -371,6 +405,14 @@ public:
 	// ����װ������
     WORD				m_wRepresentId[perRepresentCount];
     DWORD               m_dwRepresentIdLock;    // ��perRepresentCountλ���������������
+
+    DWORD               m_dwSelectKungfuIndex;
+    DWORD               m_dwCorpsSystemID;
+    time_t              m_nCorpsChangeTime;
+    time_t              m_nCorpsWeekTime;
+    time_t              m_nCorpsSeasonTime;
+    int                 m_nCorpsLevel[3];
+    int                 m_nCorpsRoleLevel[3];
 
     DWORD               m_dwSchoolID;           // ���ڴ洢װ���ڹ������ɣ�����һϵ�еı����ж�
     
@@ -428,9 +470,11 @@ public:
     BOOL    m_bRedName;                 // ����
     //  ------------------------------------------------------------>
     DWORD   m_dwTongID;
+    DWORD   m_dwAllianceTongID;
     int     m_nContribution;
 
     int     m_nMaxLevel;
+    int     m_nAccountMaxLevel;
     BOOL    m_bHideHat;
 
 #ifdef _SERVER
@@ -545,6 +589,7 @@ public:
     BOOL    LoadHeroData(BYTE* pbyData, size_t uDataLen);
     BOOL    LoadAccountStateInfo(BYTE* pbyData, size_t uDataLen);
     BOOL    LoadAccountData(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadBankPasswordData(BYTE* pbyData, size_t uDataLen);
 
     BOOL    CallLoginScript();
     BOOL    RefreshDailyVariable(int nDays);
@@ -557,6 +602,14 @@ public:
     BOOL    SaveHeroData(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
     BOOL    SaveAccountStateInfo(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
     BOOL    SaveAccount(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
+    BOOL    SaveBankPasswordData(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
+    BOOL    SaveArenaData(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
+    BOOL    LoadArenaData(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadPendentData(BYTE* pbyData, size_t uDataLen, int nVersion);
+    BOOL    LoadPendentDataV0(BYTE* pbyData, size_t uDataLen);
+    BOOL    LoadPendentDataV2(BYTE* pbyData, size_t uDataLen);
+    BOOL    AddPendent(DWORD dwItemIndex, time_t nGenTime, BOOL bSync);
+    BOOL    IsPendentExist(DWORD dwItemIndex);
     BOOL    SavePendentData(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize);
     BOOL    SavePosition();
     // �����������֮ǰӦ��ȷ��m_SavePosition����ȷ������(����ͨ��SavePosition)
@@ -569,6 +622,9 @@ public:
 
     // Ϊ�ӳٵ��� SwitchMap �������
     KROLE_POSITION m_DelayedSwitchMapParam;
+
+    BOOL CheckCorpsValue(int nCheckValue, DWORD dwMaskCorpsNeedToCheck);
+    BOOL CheckSafeLock(KSAFE_LOCK_EFFECT_TYPE eEffectType);
 
     void    SwitchMap(DWORD dwMapID, int nCopyIndex, int nX, int nY, int nZ);
     BOOL    RealSwitchMap(DWORD dwMapID, int nCopyIndex, int nX, int nY, int nZ);
@@ -857,6 +913,12 @@ public:
 
     void ProcessAntiFarmer();
 
+    // target: DWARF member DIE 0x059b76db, int, KPlayer +0xb670, decl KPlayer.h:1196,
+    // i.e. the member immediately preceding m_AntiFarmer (+0xb674, decl_line 1210).
+    // Outstanding coin-shop relay operations: ++ in KRelayClient::DoCoinShopBuyItemRequest
+    // (target @0x080c7d28), -- in KRelayClient::OnCoinShopBuyItemRespond (target @0x080da2e8).
+    int m_nCoinOperatingRef;
+
     KAntiFarmer m_AntiFarmer;
 
     void OpenBox(TItemPos& Pos);
@@ -884,6 +946,14 @@ public:
     DWORD   m_dwTAEquipsScore;
     KGRADUATED_MENTOR_DATA_LIST m_GraduateMentorData;
     KGRADUATED_MENTOR_DATA_LIST m_GraduateApprenticeData;
+
+    int     m_nTitle;
+    int     m_nTitlePoint;
+    int     m_nRankPoint;
+    BYTE    m_nRankPointVersion;
+    BOOL    m_bNeedUpdateGCTitlePointRank;
+    BYTE    m_byDisableTitlePointProduceFlag;
+    time_t  m_nLastGainTitleTime;
 
 public:
 	DECLARE_LUA_CLASS(KPlayer);
@@ -1359,16 +1429,12 @@ public:
 
 	//------------- PK ----------------------->
 	int LuaCanApplyDuel(Lua_State* L);
-	int LuaCanApplySlay(Lua_State* L);
 
 	int LuaApplyDuel(Lua_State* L);
 	int LuaRefuseDuel(Lua_State* L);
 	int LuaAcceptDuel(Lua_State* L);
 	int LuaLossDuel(Lua_State* L);
 	
-	int LuaApplySlay(Lua_State* L);
-    int LuaCanCloseSlay(Lua_State* L);
-	int LuaCloseSlay(Lua_State* L);
 
 	int LuaGetPKState(Lua_State* L);
 	//<----------------------------------------

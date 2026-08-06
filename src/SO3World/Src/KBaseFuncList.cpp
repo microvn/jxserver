@@ -4226,7 +4226,7 @@ int LuaGetHairShop(Lua_State* L)
     nTopIndex = Lua_GetTopIndex(L);
     KGLOG_PROCESS_ERROR(nTopIndex == 0);
 
-    nResult = g_pSO3World->m_Settings.m_HairShop.LuaGetObj(L);
+    nResult = g_pSO3World->m_HairShop.LuaGetObj(L);
 Exit0:
     return nResult;
 }

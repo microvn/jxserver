@@ -113,7 +113,7 @@
           "summary": "stock/candidate runtime manifests prove distinct GameServer binaries",
           "evidence": [
             {
-              "path": "graphengine/staging/jx3probe/w1-stock-candidate-20260728/stock-fresh/manifest.json",
+              "path": "compare-engine/staging/jx3probe/w1-stock-candidate-20260728/stock-fresh/manifest.json",
               "sha256": "5ad2ca48b361c1c8ea729692bc05db6a39bc3d7c2cdc2159f9a3f3061d7ef2c9",
               "detail": "stock gameserver provenance",
               "extra": {
@@ -121,7 +121,7 @@
               }
             },
             {
-              "path": "graphengine/staging/jx3probe/w1-stock-candidate-20260728/candidate/manifest.json",
+              "path": "compare-engine/staging/jx3probe/w1-stock-candidate-20260728/candidate/manifest.json",
               "sha256": "ec8267829e7485d33f57fabbb7b6efeb7de48323adb16c919623538968c3e1ab",
               "detail": "candidate gameserver provenance",
               "extra": {
@@ -160,7 +160,7 @@
       "runtime_evidence": [
         {
           "origin": "runtime",
-          "path": "graphengine/staging/jx3probe/w1-stock-candidate-20260728/boundary-capsule.json",
+          "path": "compare-engine/staging/jx3probe/w1-stock-candidate-20260728/boundary-capsule.json",
           "note": "Fresh paired public capture"
         }
       ],
@@ -178,7 +178,7 @@
           "summary": "paired runtime capture diverges at this checkpoint",
           "evidence": [
             {
-              "path": "graphengine/staging/jx3probe/w1-stock-candidate-20260728/boundary-capsule.json",
+              "path": "compare-engine/staging/jx3probe/w1-stock-candidate-20260728/boundary-capsule.json",
               "sha256": "93f1452fc5d557dec164e80ebc3fbf57e5ef21a2dd4a5dac91d588f6c50c88ad",
               "detail": "jx3probe first runtime divergence",
               "extra": {
@@ -229,7 +229,7 @@
           "summary": "stock/candidate runtime manifests prove distinct GameServer binaries",
           "evidence": [
             {
-              "path": "graphengine/staging/jx3probe/w1-role-login-5003-20260728/stock/manifest.json",
+              "path": "compare-engine/staging/jx3probe/w1-role-login-5003-20260728/stock/manifest.json",
               "sha256": "6d571aae33ca9f9c15a0604edb8aee8ee34ac826569894db1ea2dd804e5d8729",
               "detail": "stock gameserver provenance",
               "extra": {
@@ -237,7 +237,7 @@
               }
             },
             {
-              "path": "graphengine/staging/jx3probe/w1-role-login-5003-20260728/candidate/manifest.json",
+              "path": "compare-engine/staging/jx3probe/w1-role-login-5003-20260728/candidate/manifest.json",
               "sha256": "3ee8487dc2e5ad57afe20c5778cb5514aa428fd2f715d580fefceec6febfcd7d",
               "detail": "candidate gameserver provenance",
               "extra": {

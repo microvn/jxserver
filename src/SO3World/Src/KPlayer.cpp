@@ -74,9 +74,11 @@ KPlayer::KPlayer()
 {
     m_dwTeamID              = ERROR_ID;
     m_dwTongID              = ERROR_ID;
+    m_dwAllianceTongID      = 0;
     m_nContribution         = 0;
     m_pTradingBox           = NULL;
     m_nMaxLevel             = 0;
+    m_nAccountMaxLevel      = 0;
     m_bHideHat              = false;
     m_nCoin                 = 0;
     m_nMaxApprenticeNum     = MIN_APPRENTICE_NUM;
@@ -85,6 +87,7 @@ KPlayer::KPlayer()
     m_nLastEvokeMentorTime  = 0;
     m_nEvokeMentorCount     = 0;
     m_dwTAEquipsScore       = 0;
+    m_eMibaoMode            = PASSPODMODE_UNBIND;
 }
 
 KPlayer::~KPlayer()
@@ -229,6 +232,7 @@ BOOL KPlayer::Init(void)
     m_nLastLoginTime        = 0;
     m_nCurrentLoginTime     = 0;
     m_nCreateTime           = 0;
+    m_nAccLastLoginTime     = 0;
     m_nAccountLastSaveTime  = 0;
     m_nAccContinuousLoginCount = 0;
     m_bContinuousLoginRewardFlag = false;
@@ -247,6 +251,12 @@ BOOL KPlayer::Init(void)
     m_bChargeFlag           = false;
     m_bFreeLimitFlag        = false;
     m_bFarmerLimit          = false;
+    // target: KPlayer::Init @0x083a4082 writes 0 at 0x083a5703 (mov [eax+0xb670], 0).
+    m_nCoinOperatingRef     = 0;
+    m_nBankPasswordResetEndTime = 0;
+    m_bIsBankPasswordVerified = false;
+    m_bBankPasswordExist = false;
+    m_nBankPasswordQuestionID = 0;
 
 	m_eCamp                 = cNeutral;
     m_bCampFlag             = false;
@@ -316,6 +326,24 @@ BOOL KPlayer::Init(void)
 	memset(m_wRepresentId, 0, sizeof(m_wRepresentId));
     m_dwRepresentIdLock = 0;
     m_dwApplyExteriorFlag = 0;
+
+    m_dwSelectKungfuIndex = 0;
+    m_dwCorpsSystemID = 0;
+    m_nCorpsChangeTime = 0;
+    m_nCorpsWeekTime = 0;
+    m_nCorpsSeasonTime = 0;
+    memset(m_nCorpsLevel, 0, sizeof(m_nCorpsLevel));
+    memset(m_nCorpsRoleLevel, 0, sizeof(m_nCorpsRoleLevel));
+
+    m_nWaistPendentBoxSize = 0;
+    m_nBackPendentBoxSize = 0;
+    m_nFacePendentBoxSize = 0;
+    m_WaistPendent.clear();
+    m_BackPendent.clear();
+    m_FacePendent.clear();
+    m_dwWaistItemIndex = 0;
+    m_dwBackItemIndex = 0;
+    m_dwFaceItemIndex = 0;
 
     m_dwSchoolID = 0;
 
@@ -461,6 +489,14 @@ BOOL KPlayer::Init(void)
     bVenationRandInitFlag = true;
 #endif
 
+    m_nRankPoint = 0;
+    m_nRankPointVersion = g_pSO3World->m_Settings.m_ConstList.nRankPointVersion;
+    m_nLastGainTitleTime = 0;
+    m_byDisableTitlePointProduceFlag = 0;
+    m_nTitle = 0;
+    m_nTitlePoint = 0;
+    m_bNeedUpdateGCTitlePointRank = true;
+
 	bResult = true;
 Exit0:
     if (!bResult)
@@ -601,7 +637,7 @@ void KPlayer::UnInit(void)
 
 	m_ScriptTimerList.UnInit();
 
-    if (m_ViewPoint.pRegion != NULL)    // �۲���Ƴ�
+    if (m_ViewPoint.pRegion != NULL)    // �۲���Ƴ�
     {
         m_ViewPoint.Remove();
         m_ViewPoint.pPlayer = NULL;
@@ -709,7 +745,7 @@ BOOL KPlayer::Activate(void)
     }
 #endif
 
-	// ����״̬�ļ��
+	// ����״̬�ļ��
 	if (m_dwBankNpcID && m_pCell)
 	{
 		KNpc* pNpc = g_pSO3World->m_NpcSet.GetObj(m_dwBankNpcID);
@@ -731,7 +767,7 @@ BOOL KPlayer::Activate(void)
 	}
 
 #ifdef _SERVER
-	// ������ѭ���������ʱ����
+	// ������ѭ���������ʱ����
 	m_QuestList.Activate();
 
 	// ��ʱ��ѭ��
@@ -924,7 +960,7 @@ BOOL KPlayer::Activate(void)
 #ifdef _SERVER
      ProcessAntiFarmer();
      
-     // ����������12���ӻظ�0.2%����&������ÿСʱ�ظ�1%��
+     // ����������12���ӻظ�0.2%����&������ÿСʱ�ظ�1%��
      if ((g_pSO3World->m_nGameLoop - m_dwID) % (GAME_FPS * 12 * 60) == 0)
      {
         AddStaminaAndThew();
@@ -1236,7 +1272,7 @@ Exit0:
 
 void KPlayer::SyncObjectView()
 {
-    int nCount = 0;     // ��ÿ��ѭ��ͬ���Ķ������������
+    int nCount = 0;     // ��ÿ��ѭ��ͬ���Ķ������������
 
     assert(m_pScene);
     assert(m_pRegion);
@@ -1802,23 +1838,14 @@ BOOL KPlayer::LoadStateInfo(BYTE* pbyData, size_t uDataLen)
         break;
     }
 
-    if (pRoleStateInfo->byPKState == pksSlaying)
-    {
-        m_PK.SetState(pksSlaying);
-        g_PlayerServer.DoSyncPKState(m_nConnIndex, this);
-    }
-    else if (pRoleStateInfo->byPKState == pksExitSlay)
-    {
-        int nEndFrame = 0;
-        int nCloseSlayLeftTime = pRoleStateInfo->wCloseSlayLeftTime;
-        MAKE_IN_RANGE(nCloseSlayLeftTime, 0, g_pSO3World->m_Settings.m_ConstList.nCloseSlayTime);
-        
-        nEndFrame = g_pSO3World->m_nGameLoop + nCloseSlayLeftTime * GAME_FPS;
+    // The 2010 pksSlaying / pksExitSlay restore block is TARGET_ABSENT in v2.5.2.
+    // Target KPlayer::LoadStateInfo_V0 @0x0839ab6a (and _V1 @0x0839a5b0, _V2 @0x0839a01c)
+    // contain no KPKController::SetState and no DoSyncPKState; KPKController::SetState
+    // @0x083835d2 has exactly six callers and all six are duel paths (StartDuel, ApplyDuel,
+    // AcceptDuel, CancelDuel, OnDueling, OnDuelOutOfRange). The clamp constant this block
+    // used (KGWConstList::nCloseSlayTime) does not exist anywhere in the target binary:
+    // 0 hits in the DWARF inventory and 0 raw-string hits. Removed rather than re-sourced.
 
-        m_PK.SetState(pksExitSlay, nEndFrame);
-        g_PlayerServer.DoSyncPKState(m_nConnIndex, this, nEndFrame);
-    }
-    
     m_nCurrentKillPoint         = pRoleStateInfo->wCurrentKillPoint;
     m_nCurrentPrestige          = pRoleStateInfo->nCurrentPrestige;
     m_nBanTime                  = pRoleStateInfo->nBanTime > g_pSO3World->m_nCurrentTime ? pRoleStateInfo->nBanTime : 0;
@@ -1876,6 +1903,11 @@ BOOL KPlayer::LoadStateInfoV2(BYTE* pbyData, size_t uDataLen)
     m_nAddTrainTimeInToday = pRoleStateInfo->nAddTrainTimeInToday;
     m_nCurrentTrainValue   = pRoleStateInfo->nCurrentTrainValue;
     m_nUsedTrainValue      = pRoleStateInfo->nUsedTrainValue;
+    m_nTitle               = pRoleStateInfo->byTitle;
+    m_nTitlePoint          = pRoleStateInfo->nTitlePoint;
+    m_nRankPoint           = pRoleStateInfo->nRankPoint;
+    m_nRankPointVersion    = pRoleStateInfo->byRankPointVersion;
+    m_nLastGainTitleTime   = pRoleStateInfo->nLastGainTitleTime;
 
     nReviveFrame = pRoleStateInfo->wLeftReviveFrame -
         (int)(g_pSO3World->m_nCurrentTime - m_nLastSaveTime) * GAME_FPS;
@@ -2143,7 +2175,19 @@ BOOL KPlayer::FinishRoleDataLoad()
         KGLOG_CHECK_ERROR(bRetCode);
     }
 
-    // ��Center���� ���ͽ����
+    // ��Center���� ���ͽ����
+    g_RelayClient.DoApplyCoinOperatingFlag(this);
+
+    if (m_dwCorpsSystemID)
+    {
+        g_RelayClient.DoSyncCorpsChangeDataRequest(
+            m_dwID, m_nCorpsChangeTime, m_nCorpsWeekTime, m_nCorpsSeasonTime
+        );
+        g_PlayerServer.DoSyncCorpsChangeValue(
+            m_dwID, m_nCorpsLevel, m_nCorpsRoleLevel
+        );
+    }
+
     g_RelayClient.DoUpdateMaxApprenticeNum(m_dwID, m_nMaxApprenticeNum);
 
     // ͬ��ChargeFlag
@@ -2156,7 +2200,7 @@ BOOL KPlayer::FinishRoleDataLoad()
 
     g_pSO3World->m_FellowshipMgr.LoadFellowshipData(m_dwID);
 
-    // ��ͻ���ͬ����������������
+    // ��ͻ���ͬ����������������
     g_PlayerServer.DoLoginTeamSync(this);
 
     // Buffͬ��:
@@ -2221,6 +2265,15 @@ BOOL KPlayer::OnExtDataLoadFinish()
     KGLOG_PROCESS_ERROR(m_eGameStatus == gsWaitForSyncClientData);
     KGLOG_PROCESS_ERROR(m_bExtDataLoadFinish);
     KGLOG_PROCESS_ERROR(FinishRoleDataLoad());
+    /*[target 2.5.2] OnExtDataLoadFinish@0839fb50: guarded call at 083a00ca, ahead of
+      DoSyncRoleDataOver@083a0183. Disassembly at 083a0095-083a00ca:
+        mov eax,[this+0x99f4]  (m_dwTongID); test eax,eax; je skip
+        arg1 = m_dwTongID, arg2 = [this+0xa50] (m_nConnIndex).
+      Only this one edge is ported here; the remaining target calls in
+      OnExtDataLoadFinish belong to their own roots and stay out of this bundle. */
+    if (m_dwTongID != 0)
+        g_pSO3World->m_TongServer.SyncTongTotalCache(m_dwTongID, m_nConnIndex);
+
     bRetCode = g_PlayerServer.DoSyncRoleDataOver(m_nConnIndex);
     KGLOG_PROCESS_ERROR(bRetCode);
     if (m_pScene)
@@ -2352,9 +2405,19 @@ BOOL KPlayer::LoadExtRoleData(BYTE* pbyData, size_t uDataLen)
                 "W1_ITEM_BLOCK player=%u type=%d ver=%u len=%u remaining=%u\n",
                 m_dwID, pBlock->nType, pBlock->dwVer, pBlock->dwLen,
                 (unsigned)uLeftSize);
-            bRetCode = m_ItemList.Load(pbyOffset, pBlock->dwLen, (int)pBlock->dwVer);
+            bRetCode = m_ItemList.LoadItemList(pbyOffset, pBlock->dwLen, (int)pBlock->dwVer);
 		    KGLOG_PROCESS_ERROR(bRetCode);
 			break;
+
+        case rbtPendentData:
+            bRetCode = LoadPendentData(pbyOffset, pBlock->dwLen, (int)pBlock->dwVer);
+            KGLOG_PROCESS_ERROR(bRetCode);
+            break;
+
+        case rbtArenaData:
+            bRetCode = LoadArenaData(pbyOffset, pBlock->dwLen);
+            KGLOG_PROCESS_ERROR(bRetCode);
+            break;
 
         case rbtQuestList:
             bRetCode = LoadQuestData(pbyOffset, pBlock->dwLen, pBlock->dwVer);
@@ -2452,6 +2515,11 @@ BOOL KPlayer::LoadExtRoleData(BYTE* pbyData, size_t uDataLen)
             KGLOG_PROCESS_ERROR(bRetCode);
             break;
 
+        case rbtBankPasswordData:
+            bRetCode = LoadBankPasswordData(pbyOffset, pBlock->dwLen);
+            KGLOG_PROCESS_ERROR(bRetCode);
+            break;
+
         case rbtRandData:
             bRetCode = LoadRandData(pbyOffset, pBlock->dwLen);
             KGLOG_PROCESS_ERROR(bRetCode);
@@ -2526,6 +2594,72 @@ Exit0:
     return bResult;
 }
 
+BOOL KPlayer::LoadBankPasswordData(BYTE* pbyData, size_t uDataLen)
+{
+    BOOL bResult = false;
+
+    KGLOG_PROCESS_ERROR(uDataLen > 0x83);
+
+    m_nBankPasswordResetEndTime = *(time_t*)(pbyData + 0x00);
+    m_dwSafeLockMask = *(DWORD*)(pbyData + 0x68);
+    m_dwSafeLockMask |= 0x001;
+    m_dwSafeLockMask |= 0x002;
+    m_dwSafeLockMask |= 0x004;
+    m_dwSafeLockMask |= 0x008;
+    m_dwSafeLockMask |= 0x010;
+    m_dwSafeLockMask |= 0x020;
+    m_dwSafeLockMask |= 0x040;
+    m_dwSafeLockMask |= 0x080;
+    m_dwSafeLockMask |= 0x100;
+    m_dwSafeLockMask |= 0x200;
+    m_dwSafeLockMask |= 0x400;
+
+    strncpy(m_szBankPassword, (char*)(pbyData + 0x04), sizeof(m_szBankPassword));
+    m_szBankPassword[sizeof(m_szBankPassword) - 1] = '\0';
+    if (m_szBankPassword[0])
+        m_bBankPasswordExist = true;
+
+    strncpy(m_szBankPasswordAnswer, (char*)(pbyData + 0x44), sizeof(m_szBankPasswordAnswer));
+    m_szBankPasswordAnswer[sizeof(m_szBankPasswordAnswer) - 1] = '\0';
+    m_nBankPasswordQuestionID = *(int*)(pbyData + 0x64);
+
+    g_PlayerServer.DoSyncSafeLockInfo(m_nConnIndex, m_dwSafeLockMask);
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
+BOOL KPlayer::SaveBankPasswordData(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize)
+{
+    BOOL bResult = false;
+
+    KGLOG_PROCESS_ERROR(uBufferSize > 0x83);
+
+    *(time_t*)(pbyBuffer + 0x00) = m_nBankPasswordResetEndTime;
+    *(DWORD*)(pbyBuffer + 0x68) = m_dwSafeLockMask;
+    strncpy((char*)(pbyBuffer + 0x04), m_szBankPassword, 0x40);
+    pbyBuffer[0x43] = '\0';
+    strncpy((char*)(pbyBuffer + 0x44), m_szBankPasswordAnswer, 0x20);
+    pbyBuffer[0x63] = '\0';
+    *(int*)(pbyBuffer + 0x64) = m_nBankPasswordQuestionID;
+    memset(pbyBuffer + 0x6c, 0, 0x18);
+
+    *puUsedSize = 0x84;
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
+BOOL KPlayer::CheckSafeLock(KSAFE_LOCK_EFFECT_TYPE eEffectType)
+{
+    if (m_bBankPasswordExist || m_eMibaoMode == 1 || m_eMibaoMode == 3)
+    {
+        if (!m_bIsBankPasswordVerified && (m_dwSafeLockMask & (1 << eEffectType)))
+            return false;
+    }
+    return true;
+}
+
 BOOL KPlayer::CallLoginScript()
 {
     BOOL    bResult         = false;
@@ -2571,30 +2705,274 @@ Exit0:
 #endif	// _SERVER
 
 #if defined(_SERVER)
+
+static BOOL ProcessTimeLimitPendent(KPendentVec& rPendentList, long nDeltaTime)
+{
+    for (KPendentVec::iterator it = rPendentList.begin(); it != rPendentList.end();)
+    {
+        KItemInfo* pItemInfo = g_pSO3World->m_ItemManager.GetItemInfo(ittOther, it->dwItemIndex);
+        KGLOG_PROCESS_ERROR(pItemInfo);
+        if ((pItemInfo->nExistType == ketOffLine && pItemInfo->nMaxExistTime != 0 && pItemInfo->nMaxExistTime < nDeltaTime) ||
+            (pItemInfo->nExistType == ketTimeStamp && pItemInfo->nMaxExistTime < g_pSO3World->m_nCurrentTime))
+        {
+            it = rPendentList.erase(it);
+        }
+        else
+        {
+            if (pItemInfo->nExistType == ketOnLine)
+                it->nGenTime += nDeltaTime;
+            ++it;
+        }
+    }
+    return true;
+Exit0:
+    return false;
+}
+
+BOOL KPlayer::IsPendentExist(DWORD dwItemIndex)
+{
+    const KPendentVec* lists[] = { &m_WaistPendent, &m_BackPendent, &m_FacePendent };
+    for (size_t i = 0; i < sizeof(lists) / sizeof(lists[0]); ++i)
+    {
+        for (KPendentVec::const_iterator it = lists[i]->begin(); it != lists[i]->end(); ++it)
+        {
+            if (it->dwItemIndex == dwItemIndex)
+                return true;
+        }
+    }
+    return false;
+}
+
+BOOL KPlayer::AddPendent(DWORD dwItemIndex, time_t nGenTime, BOOL bSync)
+{
+    BOOL bResult = false;
+    KItemInfo* pItemInfo = NULL;
+    DWORD dwDuplicateItemIndex = 0;
+    KPendent pendent;
+
+    KGLOG_PROCESS_ERROR(!IsPendentExist(dwItemIndex));
+    pItemInfo = g_pSO3World->m_ItemManager.GetItemInfo(ittOther, dwItemIndex);
+    KGLOG_PROCESS_ERROR(pItemInfo);
+    KGLOG_PROCESS_ERROR(pItemInfo->nDetail == 0x0b || pItemInfo->nDetail == 0x0e || pItemInfo->nDetail == 0x11);
+
+    dwDuplicateItemIndex = g_pSO3World->m_Settings.m_OldPendentDataInfoList.GetDuplicateItemID(dwItemIndex);
+    if (dwDuplicateItemIndex != 0)
+        dwItemIndex = dwDuplicateItemIndex;
+
+    pendent.dwItemIndex = dwItemIndex;
+    pendent.nGenTime = nGenTime;
+    if (pItemInfo->nDetail == 0x0b)
+    {
+        KGLOG_PROCESS_ERROR((int)m_WaistPendent.size() < m_nWaistPendentBoxSize);
+        m_WaistPendent.push_back(pendent);
+    }
+    else if (pItemInfo->nDetail == 0x0e)
+    {
+        KGLOG_PROCESS_ERROR((int)m_BackPendent.size() < m_nBackPendentBoxSize);
+        m_BackPendent.push_back(pendent);
+    }
+    else if (pItemInfo->nDetail == 0x11)
+    {
+        KGLOG_PROCESS_ERROR((int)m_FacePendent.size() < m_nFacePendentBoxSize);
+        m_FacePendent.push_back(pendent);
+    }
+    else
+    {
+        assert(false);
+    }
+
+    if (bSync)
+    {
+        g_pSO3World->m_ScriptServer.Reset();
+        g_pSO3World->m_ScriptServer.PushNumber((double)nGenTime);
+        g_pSO3World->m_ScriptServer.PushNumber((double)dwItemIndex);
+        KGLOG_PROCESS_ERROR(g_pSO3World->m_ScriptServer.Call(m_nConnIndex, "OnAddPendent"));
+    }
+
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
+BOOL KPlayer::LoadPendentDataV2(BYTE* pbyData, size_t uDataLen)
+{
+    BOOL bResult = false;
+    BYTE* pbyOffset = pbyData;
+    size_t uLeftSize = uDataLen;
+    WORD wCount = 0;
+
+    KGLOG_PROCESS_ERROR(pbyData);
+#define LOAD_PENDENT_VECTOR(BoxSize, Vector, EquippedIndex) \
+    do { \
+        KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD)); \
+        BoxSize = *(WORD*)pbyOffset; pbyOffset += sizeof(WORD); uLeftSize -= sizeof(WORD); \
+        KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD)); \
+        wCount = *(WORD*)pbyOffset; pbyOffset += sizeof(WORD); uLeftSize -= sizeof(WORD); \
+        KGLOG_PROCESS_ERROR((size_t)wCount * sizeof(KPendent) <= uLeftSize); \
+        Vector.resize(wCount); \
+        if (wCount > 0) { memcpy(&Vector[0], pbyOffset, (size_t)wCount * sizeof(KPendent)); pbyOffset += (size_t)wCount * sizeof(KPendent); uLeftSize -= (size_t)wCount * sizeof(KPendent); } \
+        KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(DWORD)); \
+        EquippedIndex = *(DWORD*)pbyOffset; pbyOffset += sizeof(DWORD); uLeftSize -= sizeof(DWORD); \
+    } while (false)
+    LOAD_PENDENT_VECTOR(m_nWaistPendentBoxSize, m_WaistPendent, m_dwWaistItemIndex);
+    LOAD_PENDENT_VECTOR(m_nBackPendentBoxSize, m_BackPendent, m_dwBackItemIndex);
+    LOAD_PENDENT_VECTOR(m_nFacePendentBoxSize, m_FacePendent, m_dwFaceItemIndex);
+#undef LOAD_PENDENT_VECTOR
+    KGLOG_PROCESS_ERROR(uLeftSize == 0);
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
+BOOL KPlayer::LoadPendentDataV0(BYTE* pbyData, size_t uDataLen)
+{
+    BOOL bResult = false;
+    BYTE* pbyOffset = pbyData;
+    size_t uLeftSize = uDataLen;
+    WORD wBoxSize = 0;
+    BYTE byDataLen = 0;
+    KCustomData<32> customData;
+
+    KGLOG_PROCESS_ERROR(pbyData);
+    m_WaistPendent.clear();
+    m_BackPendent.clear();
+    m_FacePendent.clear();
+#define LOAD_OLD_PENDENT(BoxSize, Vector, EquippedIndex, RepresentIndex, Lookup) \
+    do { \
+        KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD)); \
+        BoxSize = *(WORD*)pbyOffset; pbyOffset += sizeof(WORD); uLeftSize -= sizeof(WORD); \
+        KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(BYTE)); \
+        byDataLen = *(BYTE*)pbyOffset; pbyOffset += sizeof(BYTE); uLeftSize -= sizeof(BYTE); \
+        KGLOG_PROCESS_ERROR((size_t)byDataLen <= uLeftSize); \
+        customData.Clear(); \
+        KGLOG_PROCESS_ERROR(customData.Load(pbyOffset, byDataLen)); \
+        pbyOffset += byDataLen; uLeftSize -= byDataLen; \
+        for (int i = 0; i < 256; ++i) { \
+            BOOL bSet = false; \
+            KGLOG_PROCESS_ERROR(customData.GetBit(i, &bSet)); \
+            if (bSet) { \
+                DWORD dwItemIndex = Lookup(i + 2); \
+                KGLOG_PROCESS_ERROR(dwItemIndex); \
+                KGLOG_PROCESS_ERROR(AddPendent(dwItemIndex, 0, false)); \
+                if (m_wRepresentId[RepresentIndex] == i + 2) EquippedIndex = dwItemIndex; \
+            } \
+        } \
+    } while (false)
+    LOAD_OLD_PENDENT(m_nWaistPendentBoxSize, m_WaistPendent, m_dwWaistItemIndex, perWaistStyle, g_pSO3World->m_Settings.m_OldPendentDataInfoList.GetOldWaistPendentItemID);
+    LOAD_OLD_PENDENT(m_nBackPendentBoxSize, m_BackPendent, m_dwBackItemIndex, perBackExtend, g_pSO3World->m_Settings.m_OldPendentDataInfoList.GetOldBackPendentItemID);
+    LOAD_OLD_PENDENT(m_nFacePendentBoxSize, m_FacePendent, m_dwFaceItemIndex, perFaceStyle, g_pSO3World->m_Settings.m_OldPendentDataInfoList.GetOldFacePendentItemID);
+#undef LOAD_OLD_PENDENT
+    KGLOG_PROCESS_ERROR(uLeftSize == 0);
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
+BOOL KPlayer::LoadPendentData(BYTE* pbyData, size_t uDataLen, int nVersion)
+{
+    BOOL bResult = false;
+    if (nVersion == 0)
+        bResult = LoadPendentDataV0(pbyData, uDataLen);
+    else if (nVersion == 1 || nVersion == 2)
+        bResult = LoadPendentDataV2(pbyData, uDataLen);
+    else
+        KGLogPrintf(KGLOG_ERR, "Unexpected pendent data version = %d", nVersion);
+    KGLOG_PROCESS_ERROR(bResult);
+    KGLOG_PROCESS_ERROR(ProcessTimeLimitPendent(m_WaistPendent, (long)(g_pSO3World->m_nCurrentTime - m_nLastSaveTime)));
+    KGLOG_PROCESS_ERROR(ProcessTimeLimitPendent(m_BackPendent, (long)(g_pSO3World->m_nCurrentTime - m_nLastSaveTime)));
+    KGLOG_PROCESS_ERROR(ProcessTimeLimitPendent(m_FacePendent, (long)(g_pSO3World->m_nCurrentTime - m_nLastSaveTime)));
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
+BOOL KPlayer::CheckCorpsValue(int nCheckValue, DWORD dwMaskCorpsNeedToCheck)
+{
+    for (int i = 0; i <= 2; ++i)
+    {
+        if ((dwMaskCorpsNeedToCheck & (1 << i)) &&
+            nCheckValue <= m_nCorpsLevel[i] &&
+            nCheckValue <= m_nCorpsRoleLevel[i])
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+BOOL KPlayer::SaveArenaData(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize)
+{
+    BOOL bResult = false;
+
+    KGLOG_PROCESS_ERROR(uBufferSize >= 0x42);
+
+    *(time_t*)(pbyBuffer + 0x00) = m_nCorpsChangeTime;
+    *(time_t*)(pbyBuffer + 0x04) = m_nCorpsWeekTime;
+    *(time_t*)(pbyBuffer + 0x08) = m_nCorpsSeasonTime;
+    memcpy(pbyBuffer + 0x0c, m_nCorpsLevel, sizeof(m_nCorpsLevel));
+    memcpy(pbyBuffer + 0x18, m_nCorpsRoleLevel, sizeof(m_nCorpsRoleLevel));
+    memset(pbyBuffer + 0x24, 0, 0x1e);
+    *puUsedSize = 0x42;
+
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
+BOOL KPlayer::LoadArenaData(BYTE* pbyData, size_t uDataLen)
+{
+    BOOL bResult = false;
+
+    KGLOG_PROCESS_ERROR(uDataLen >= 0x42);
+
+    if (m_dwCorpsSystemID == 0)
+    {
+        m_nCorpsChangeTime = 0;
+        m_nCorpsWeekTime = 0;
+        m_nCorpsSeasonTime = 0;
+        memset(m_nCorpsLevel, 0, sizeof(m_nCorpsLevel));
+        memset(m_nCorpsRoleLevel, 0, sizeof(m_nCorpsRoleLevel));
+    }
+    else
+    {
+        m_nCorpsChangeTime = *(time_t*)(pbyData + 0x00);
+        m_nCorpsWeekTime = *(time_t*)(pbyData + 0x04);
+        m_nCorpsSeasonTime = *(time_t*)(pbyData + 0x08);
+        memcpy(m_nCorpsLevel, pbyData + 0x0c, sizeof(m_nCorpsLevel));
+        memcpy(m_nCorpsRoleLevel, pbyData + 0x18, sizeof(m_nCorpsRoleLevel));
+    }
+
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
 BOOL KPlayer::SavePendentData(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize)
 {
-    const size_t PENDENT_SIZE = sizeof(KPendent) + sizeof(DWORD);
     BOOL bResult = false;
     BYTE* pbyOffset = pbyBuffer;
+    size_t uLeftSize = uBufferSize;
+    size_t uCount = 0;
 
     KGLOG_PROCESS_ERROR(puUsedSize);
     KGLOG_PROCESS_ERROR(pbyBuffer);
-    KGLOG_PROCESS_ERROR(uBufferSize >= PENDENT_SIZE * 3);
-
-    memcpy(pbyOffset, &m_WaistPendent, sizeof(m_WaistPendent));
-    pbyOffset += sizeof(m_WaistPendent);
-    memcpy(pbyOffset, &m_dwWaistItemIndex, sizeof(m_dwWaistItemIndex));
-    pbyOffset += sizeof(m_dwWaistItemIndex);
-    memcpy(pbyOffset, &m_BackPendent, sizeof(m_BackPendent));
-    pbyOffset += sizeof(m_BackPendent);
-    memcpy(pbyOffset, &m_dwBackItemIndex, sizeof(m_dwBackItemIndex));
-    pbyOffset += sizeof(m_dwBackItemIndex);
-    memcpy(pbyOffset, &m_FacePendent, sizeof(m_FacePendent));
-    pbyOffset += sizeof(m_FacePendent);
-    memcpy(pbyOffset, &m_dwFaceItemIndex, sizeof(m_dwFaceItemIndex));
-    pbyOffset += sizeof(m_dwFaceItemIndex);
-
-    *puUsedSize = (size_t)(pbyOffset - pbyBuffer);
+#define SAVE_PENDENT_VECTOR(BoxSize, Vector, EquippedIndex) \
+    do { \
+        KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD)); \
+        *(WORD*)pbyOffset = (WORD)(BoxSize); pbyOffset += sizeof(WORD); uLeftSize -= sizeof(WORD); \
+        uCount = (Vector).size(); KGLOG_PROCESS_ERROR(uCount <= 0xffff); \
+        KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(WORD)); \
+        *(WORD*)pbyOffset = (WORD)uCount; pbyOffset += sizeof(WORD); uLeftSize -= sizeof(WORD); \
+        KGLOG_PROCESS_ERROR(uLeftSize >= uCount * sizeof(KPendent)); \
+        if (uCount > 0) { memcpy(pbyOffset, &(Vector)[0], uCount * sizeof(KPendent)); pbyOffset += uCount * sizeof(KPendent); uLeftSize -= uCount * sizeof(KPendent); } \
+        KGLOG_PROCESS_ERROR(uLeftSize >= sizeof(DWORD)); \
+        *(DWORD*)pbyOffset = (EquippedIndex); pbyOffset += sizeof(DWORD); uLeftSize -= sizeof(DWORD); \
+    } while (false)
+    SAVE_PENDENT_VECTOR(m_nWaistPendentBoxSize, m_WaistPendent, m_dwWaistItemIndex);
+    SAVE_PENDENT_VECTOR(m_nBackPendentBoxSize, m_BackPendent, m_dwBackItemIndex);
+    SAVE_PENDENT_VECTOR(m_nFacePendentBoxSize, m_FacePendent, m_dwFaceItemIndex);
+#undef SAVE_PENDENT_VECTOR
+    *puUsedSize = uBufferSize - uLeftSize;
     bResult = true;
 Exit0:
     return bResult;
@@ -2893,7 +3271,7 @@ BOOL KPlayer::Save(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize)
     pbyOffset += sizeof(KRoleDataHeader);
 
     SAVE_ROLE_BLOCK(SaveStateInfo, rbtStateInfo, 0);
-    SAVE_ROLE_BLOCK(m_ItemList.Save, rbtItemList, 0);
+    SAVE_ROLE_BLOCK(m_ItemList.Save, rbtItemList, 6);
     SAVE_ROLE_BLOCK(m_ProfessionList.Save, rbtProfessionList, 0);
     SAVE_ROLE_BLOCK(m_RecipeList.Save, rbtRecipeList, CURRENT_RECIPE_LIST_VERSION);
     SAVE_ROLE_BLOCK(m_SkillList.Save, rbtSkillList, 0);
@@ -2917,9 +3295,11 @@ BOOL KPlayer::Save(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize)
     SAVE_ROLE_BLOCK(m_MiniAvatar.Save, rbtMiniAvatarData, 0);
     SAVE_ROLE_BLOCK(m_RegressionData.Save, rbtRegressionData, 0);
     SAVE_ROLE_BLOCK(m_CurrencyList.Save, rbtCurrencyData, 0);
+    SAVE_ROLE_BLOCK(SaveBankPasswordData, rbtBankPasswordData, 0);
+    SAVE_ROLE_BLOCK(SaveArenaData, rbtArenaData, 0);
     SAVE_ROLE_BLOCK(m_AntiFarmer.Save, rbtAntiFarmerData, 0);
     SAVE_ROLE_BLOCK(SaveMentorData, rbtMentorData, 0);
-    SAVE_ROLE_BLOCK(SavePendentData, rbtPendentData, 0);
+    SAVE_ROLE_BLOCK(SavePendentData, rbtPendentData, 2);
     SAVE_ROLE_BLOCK(m_FellowPetBox.Save, rbtFellowPetData, 0);
     dwExtDataLen = (DWORD)(pbyOffset - pbyBuffer - sizeof(KRoleDataHeader));
 
@@ -3014,7 +3394,7 @@ BOOL KPlayer::LoadBaseInfo(KRoleBaseInfo* pBaseInfo)
     MAKE_IN_RANGE(pBaseInfo->CurrentPos.nY, 0, nMaxY);
     MAKE_IN_RANGE(pBaseInfo->CurrentPos.nZ, 0, MAX_Z_POINT);
 
-    // ��ҵ�¼������,Load��ʱ��,��û�������İ�������ӵ��������,���ͻ���AckData��ʱ��Ż���������
+    // ��ҵ�¼������,Load��ʱ��,��û�������İ�������ӵ��������,���ͻ���AckData��ʱ��Ż���������
     m_SavePosition.dwMapID          = pBaseInfo->CurrentPos.dwMapID;
     m_SavePosition.nMapCopyIndex    = pBaseInfo->CurrentPos.nMapCopyIndex;
     m_SavePosition.nX               = pBaseInfo->CurrentPos.nX;
@@ -3067,11 +3447,11 @@ BOOL KPlayer::RealSwitchMap(DWORD dwMapID, int nCopyIndex, int nX, int nY, int n
 
     KGLOG_PROCESS_ERROR(m_eGameStatus == gsPlaying);
 
-    // ���ｫԭ����λ�ü�¼����,Search mapʧ�ܵĻ���Ҫ�������¼���ָ�ԭ����λ��
+    // ���ｫԭ����λ�ü�¼����,Search mapʧ�ܵĻ���Ҫ�������¼���ָ�ԭ����λ��
     bRetCode = SavePosition();
     KGLOG_PROCESS_ERROR(bRetCode);
 
-    // ֹͣ�ƶ�������ᵼ�¿ͻ��˺ͷ�����״̬��һ�¡�
+    // ֹͣ�ƶ�������ᵼ�¿ͻ��˺ͷ�����״̬��һ�¡�
     if (m_eMoveState != cmsOnDeath && m_eMoveState != cmsOnAutoFly)
     {
         m_nConvergenceSpeed = 0;
@@ -3091,7 +3471,7 @@ BOOL KPlayer::RealSwitchMap(DWORD dwMapID, int nCopyIndex, int nX, int nY, int n
 
     m_eGameStatus = gsSearchMap;
 
-    m_nBanishTime = 0; // ����ʱ��������������ڵ���ʱ��������謹��������ʱ���������ʱ
+    m_nBanishTime = 0; // ����ʱ��������������ڵ���ʱ��������謹��������ʱ���������ʱ
 
     bResult = true;
 Exit0:
@@ -3580,7 +3960,7 @@ int KPlayer::GetCDValue(DWORD dwCooldownID)
     nResult = g_pSO3World->m_Settings.m_CoolDownList.GetCoolDownValue(dwCooldownID);
     //KG_ASSERT_EXIT(nDuration > 0);
 
-    // TODO: �������,ĳЩ�츳���Լ���ĳЩCool downʱ��
+    // TODO: �������,ĳЩ�츳���Լ���ĳЩCool downʱ��
     // ... ...
     
     return nResult;
@@ -3839,7 +4219,7 @@ BOOL KPlayer::CopyTalkData(DWORD dwTalkerID, size_t uSize, BYTE* pbyData)
 
     s_bFilterTalkText = false;
     if (dwTalkerID)
-        s_bFilterTalkText = IS_PLAYER(dwTalkerID); // ֻ����ҵ�������Ͽ��Ҫ����
+        s_bFilterTalkText = IS_PLAYER(dwTalkerID); // ֻ����ҵ�������Ͽ��Ҫ����
 
     bResult = true;
 Exit0:
@@ -3925,7 +4305,6 @@ int KPlayer::GetPlayerRelation(KPlayer* pTarget)
 {
 	int     nRelation           = 0;
     BOOL    bRetCode            = false;
-    int     nMinBeSlayedLevel   = g_pSO3World->m_Settings.m_ConstList.nMinBeSlayedLevel;
     int     nValue              = 0;
     DWORD   dwTeamID            = GetCurrentTeamID();
     KCell*  pSelfCell           = NULL;
@@ -4006,15 +4385,13 @@ int KPlayer::GetPlayerRelation(KPlayer* pTarget)
             nRelation &= ~sortNeutrality;
         }
 
-	    if (
-            ((m_PK.GetState() == pksSlaying || m_PK.GetState() == pksExitSlay) && pTarget->m_nLevel >= nMinBeSlayedLevel) ||
-            ((pTarget->m_PK.GetState() == pksSlaying || pTarget->m_PK.GetState() == pksExitSlay) && m_nLevel >= nMinBeSlayedLevel)
-        )
-	    {
-		    nRelation |= sortEnemy;
-		    nRelation &= ~sortAlly;
-		    nRelation &= ~sortNeutrality;
-	    }
+        // The 2010 slay relation test is TARGET_ABSENT in v2.5.2. Target
+        // KPlayer::GetPlayerRelation @0x08394282: inside the m_pScene->m_bCanPK branch the
+        // flow goes straight from KGFellowshipMgr::GetFoe (call @0x08394592) to the duel
+        // test (0x083945d4 -> 0x083945da). There is exactly one KPKController::GetState
+        // call (@0x083945e5) and its result is compared only against 5 (pksDueling) and
+        // 6 (pksDuelOutOfRange) — never 8/9 (pksSlaying/pksExitSlay), and there is no level
+        // comparison. KGWConstList::nMinBeSlayedLevel does not exist in the target binary.
 
 	    if (
             (m_PK.GetTargetPlayer() == pTarget && ((m_PK.GetState() == pksDueling) || (m_PK.GetState() == pksDuelOutOfRange))) ||
@@ -4165,7 +4542,7 @@ void KPlayer::DoCycleSynchronous()
 {
     int nFrame = g_pSO3World->m_nGameLoop - (int)m_dwID;
 
-    // ���Լ�ͬ�����Ѫ��
+    // ���Լ�ͬ�����Ѫ��
     if (nFrame % 5 == 0)
     {
         g_PlayerServer.DoSyncSelfMaxLMRS(this);
@@ -4189,13 +4566,13 @@ void KPlayer::DoCycleSynchronous()
         g_PlayerServer.DoSyncTargetMaxLMR(this);
     }
 
-    // ���Լ�ͬ��Ŀ��ĵ�ǰѪ��
+    // ���Լ�ͬ��Ŀ��ĵ�ǰѪ��
     if (nFrame % 4 == 0)
     {
         g_PlayerServer.DoSyncTargetCurrentLMR(this);
     }
 
-    // ���Լ�ͬ��Ŀ��ĵ�ǰ����
+    // ���Լ�ͬ��Ŀ��ĵ�ǰ����
     if (nFrame % 4 == 0)
     {
         g_PlayerServer.DoSyncTargetWeakInfo(this);
@@ -4213,7 +4590,7 @@ void KPlayer::DoCycleSynchronous()
         g_PlayerServer.DoSyncTargetDropID(this);
     }
 
-    // ͬ�����ѡ���Ŀ���Ŀ������Ѫ��
+    // ͬ�����ѡ���Ŀ���Ŀ������Ѫ��
     if (nFrame % GAME_FPS == 0)
     {
         g_PlayerServer.DoSyncTargetTargetMaxLMR(this);
@@ -4231,13 +4608,13 @@ void KPlayer::DoCycleSynchronous()
         g_PlayerServer.DoSyncTargetTargetBuffList(this);
     }
 
-    // ȫ��ͬ���������Ѫ����
+    // ȫ��ͬ���������Ѫ����
     if (nFrame % GAME_FPS == 0)
     {
 	    g_RelayClient.DoTeamSyncMemberMaxLMR(this);
     }
 
-    // ���ͬ�����ѵ�ǰѪ����
+    // ���ͬ�����ѵ�ǰѪ����
     if (nFrame % GAME_FPS == 0)
     {
 	    g_RelayClient.DoTeamSyncMemberCurrentLMR(this);
@@ -4249,7 +4626,7 @@ void KPlayer::DoCycleSynchronous()
 	    g_PlayerServer.DoSyncTeamMemberCurrentLMRLocal(this);
     }
 
-    // ���ͬ�����ѵ�ǰλ��
+    // ���ͬ�����ѵ�ǰλ��
     if (nFrame % (GAME_FPS * 2) == 0)
     {
 	    g_RelayClient.DoSyncTeamMemberPosition(this);
@@ -4261,7 +4638,7 @@ void KPlayer::DoCycleSynchronous()
 	    g_PlayerServer.DoSyncTeamMemberPositionLocal(this);
     }
 
-    // ȫ��ͬ�������������
+    // ȫ��ͬ�������������
     if (nFrame % (2 * GAME_FPS) == 0)
     {
 	    g_RelayClient.DoTeamSyncMemberMisc(this);
@@ -4374,7 +4751,7 @@ BOOL KPlayer::AddTrain(int nTrain)
         m_nCurrentTrainValue = min(m_nMaxTrainValue, m_nCurrentTrainValue); // �Ƿ񳬹�����
         m_nCurrentTrainValue = max(m_nCurrentTrainValue, nOldTrainValue);   // �Ѿ��������޵ģ�ֻ�ǲ�����
     }
-    // else �����������������
+    // else �����������������
 
     g_LogClient.LogTrainvalueChange(m_nCurrentTrainValue - nOldTrainValue, m_szAccount, m_szName);
 
@@ -4543,7 +4920,7 @@ BOOL KPlayer::SyncFormationCoefficient()
     KTeam*  pTeam    = NULL;
     DWORD   dwTeamID = GetCurrentTeamID();
 
-    KG_PROCESS_SUCCESS(dwTeamID == ERROR_ID); // û�ж���Ͳ���ͬ����
+    KG_PROCESS_SUCCESS(dwTeamID == ERROR_ID); // û�ж���Ͳ���ͬ����
 
     pTeam = g_pSO3World->m_TeamServer.GetTeam(dwTeamID);
     if (!pTeam)
@@ -4871,12 +5248,27 @@ BOOL KPlayer::AddPrestige(int nAddPrestige)
         llPrestigePercent = g_pSO3World->m_CampInfo.GetPrestigePercent(m_eCamp, nCampLevel);
         nAddPrestige = (int)(nAddPrestige * llPrestigePercent / KILO_NUM);
 
-        KG_PROCESS_SUCCESS(m_nCurrentPrestige >= g_pSO3World->m_Settings.m_ConstList.nMaxPrestige);
+        // PORT-TODO[TARGET_REQUIRED]: target KPlayer::AddPrestige @0x0838fb1a no longer holds
+        // prestige as a plain int and has no cap of its own. It resolves the prestige
+        // currency (KCurrencyList::GetCurrency(cbtPrestige) @0x0838fb57, enum DIE 0x0031a546
+        // -> cbtPrestige == 1), applies m_nPrestigePercentForAll (+0x957c) and
+        // KCampInfo::GetPrestigePercent, records m_CampActivityStat.AddPrestige (+0xb508),
+        // and finally delegates to KCurrency::AddCurrency @0x081e846c, which is where the cap
+        // lives: KCurrency::m_nMaxValue (+0xc), seeded from KGWConstList::nMaxValue[nType].
+        // The candidate still uses the 2010 int model because m_nPrestigePercentForAll,
+        // KCampActiveStat and KCampInfo::GetPrestigePercent are absent from this tree — that
+        // full port is a separate ticket (stopped edge SE-1). What is fixed here is only the
+        // cap CONSTANT: KGWConstList::nMaxPrestige does not exist in the target (0 DWARF hits,
+        // 0 raw-string hits); the value the target actually enforces for prestige is
+        // KGWConstList::nMaxValue[cbtPrestige] (target field @0x248, DIE 0x0002a4bb).
+        const int nMaxPrestige = g_pSO3World->m_Settings.m_ConstList.nMaxValue[1]; // cbtPrestige
+
+        KG_PROCESS_SUCCESS(m_nCurrentPrestige >= nMaxPrestige);
         KGLOG_PROCESS_ERROR(m_nCurrentPrestige < (m_nCurrentPrestige + nAddPrestige)); // ��ֹ����
 
-        if (m_nCurrentPrestige + nAddPrestige > g_pSO3World->m_Settings.m_ConstList.nMaxPrestige)
+        if (m_nCurrentPrestige + nAddPrestige > nMaxPrestige)
         {
-            m_nCurrentPrestige = g_pSO3World->m_Settings.m_ConstList.nMaxPrestige;
+            m_nCurrentPrestige = nMaxPrestige;
             nAddPrestige = 0;
         }
     }
@@ -5271,7 +5663,7 @@ BOOL KPlayer::SetExtPoint(int nIndex, int nChangeValue)
     m_bExtPointLock = true;
     m_nLastExtPointIndex = nIndex;
     nOldValue = (int)m_ExtPointInfo.nExtPoint[nIndex];
-    m_nLastExtPointValue = (short)nOldValue;
+    m_nLastExtPointValue = nOldValue;
     m_ExtPointInfo.nExtPoint[nIndex] = (short)nChangeValue;
 
     KGLogPrintf(
@@ -5599,7 +5991,18 @@ void KPlayer::ProcessAntiFarmer()
 
         if (bFamerFlag)
         {
-            g_RelayClient.DoReportFarmerPlayer(m_dwID,  g_pSO3World->m_Settings.m_ConstList.nAntiFarmerPunishTime);
+            // target: KPlayer::ProcessAntiFarmer @0x0838ad10 loads the second argument of
+            // KRelayClient::DoReportFarmerPlayer (@0x080d3dc6, arg 2 is named m_nEffectiveTime
+            // in the target DWARF prototype) from g_pSO3World + 0x2744 at 0x0838ae36.
+            // 0x2744 = 0x74 (KSO3World::m_Settings) + 0x26cc (KWorldSettings::m_AntiFarmerSettings)
+            //        + 0x04 (KAntiFarmerSettings::m_nEffectiveTime).
+            // Cross-check on the same base: 0x2774 = 0x2740 + 0x34 = m_bEnableIPRule (read at
+            // 0x0838adcc). KGWConstList::nAntiFarmerPunishTime does not exist in the target.
+            // PORT-TODO[TARGET_REQUIRED]: the surrounding target body also has an early-out on
+            // (m_dwID & 0x20000000), an m_bNonFarmerFlag (+0xcac) gate, an m_bEnableIPRule ->
+            // KAntiFarmerServer::IsIPInMonitorList(m_dwIP) gate and a CallFarmerMarkScript call
+            // before the report. Those need members absent from this tree — stopped edge SE-2.
+            g_RelayClient.DoReportFarmerPlayer(m_dwID,  g_pSO3World->m_Settings.m_AntiFarmerSettings.m_nEffectiveTime);
         }
     }
 }

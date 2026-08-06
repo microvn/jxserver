@@ -30,5 +30,7 @@ private:
 	KItem*	m_pItemArray[MAX_ITEM_PACKAGE_SIZE];
 	int		m_nContainItemGenerType;				// 限制容纳的物品大类
     int		m_nContainItemSubType;                  // 限制容纳的物品小类
+    int     m_nContainItemGenerTypeExtra;
+    int     m_nContainItemSubTypeExtra;
 };
 #endif

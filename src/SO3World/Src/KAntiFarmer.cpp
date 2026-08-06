@@ -5,7 +5,7 @@
 KAntiFarmer::KAntiFarmer()
 {
     m_nNextKillNpcRecordPos = 0;
-    m_KilledNpcRecords.resize(g_pSO3World->m_Settings.m_ConstList.nAntiFarmerRecordKillNpcNum, 0);
+    m_KilledNpcRecords.resize(g_pSO3World->m_Settings.m_AntiFarmerSettings.m_nRecordKillNpcNum, 0);
 }
 
 BOOL KAntiFarmer::Save(size_t* puUsedSize, BYTE* pbyBuffer, size_t uBufferSize)
@@ -132,7 +132,7 @@ void KAntiFarmer::RecordOnlineTime()
     {
         KOnlineRecord& rNode = m_OnlineRecordList.front();
      
-        if (rNode.nLogoutTime > nTimeNow - g_pSO3World->m_Settings.m_ConstList.nAntiFarmerCheckOnlineTimeRange)
+        if (rNode.nLogoutTime > nTimeNow - g_pSO3World->m_Settings.m_AntiFarmerSettings.m_nCheckOnlineTimeRange)
             break;
 
         m_OnlineRecordList.pop_front();
@@ -183,8 +183,8 @@ BOOL KAntiFarmer::Judge()
 {
     BOOL                bResult             = false;
     DWORD               dwNpcTemplateID     = 0;
-    int                 nMaxRecordNpcCount  = g_pSO3World->m_Settings.m_ConstList.nAntiFarmerRecordKillNpcNum;
-    int                 nStatKillNpcTypeNum = g_pSO3World->m_Settings.m_ConstList.nAntiFarmerKillNpcTypeNum;
+    int                 nMaxRecordNpcCount  = g_pSO3World->m_Settings.m_AntiFarmerSettings.m_nRecordKillNpcNum;
+    int                 nStatKillNpcTypeNum = g_pSO3World->m_Settings.m_AntiFarmerSettings.m_nKillNpcTypeNum;
     int                 nKillNpcRecordNum   = (int)m_KilledNpcRecords.size();
     int                 nMaxCount           = 0;
     int                 nKilledNpcCount     = 0;
@@ -255,9 +255,9 @@ BOOL KAntiFarmer::Judge()
     }
 
     fKillNpcRate = (float)nKilledNpcCount / (float)nMaxRecordNpcCount;
-    KG_PROCESS_ERROR(fKillNpcRate >= g_pSO3World->m_Settings.m_ConstList.fAntiFarmerKillNpcRate);
+    KG_PROCESS_ERROR(fKillNpcRate >= g_pSO3World->m_Settings.m_AntiFarmerSettings.m_fKillNpcRate);
 
-    nTimeSectionBegin = g_pSO3World->m_nCurrentTime - g_pSO3World->m_Settings.m_ConstList.nAntiFarmerCheckOnlineTimeRange;
+    nTimeSectionBegin = g_pSO3World->m_nCurrentTime - g_pSO3World->m_Settings.m_AntiFarmerSettings.m_nCheckOnlineTimeRange;
 
     for (KONLINE_RECORD_LIST::iterator it = m_OnlineRecordList.begin(); it != m_OnlineRecordList.end(); ++it)
     {
@@ -269,8 +269,8 @@ BOOL KAntiFarmer::Judge()
         nOnlineTotal += (int)(it->nLogoutTime - nLoginTime);
     }
 
-    fOnlineRate = (float)nOnlineTotal / (float)g_pSO3World->m_Settings.m_ConstList.nAntiFarmerCheckOnlineTimeRange;
-    KG_PROCESS_ERROR(fOnlineRate >= g_pSO3World->m_Settings.m_ConstList.fAntiFarmerOnlineRate);
+    fOnlineRate = (float)nOnlineTotal / (float)g_pSO3World->m_Settings.m_AntiFarmerSettings.m_nCheckOnlineTimeRange;
+    KG_PROCESS_ERROR(fOnlineRate >= g_pSO3World->m_Settings.m_AntiFarmerSettings.m_fOnlineRate);
     
 Exit1:
     bResult = true;

@@ -53,45 +53,6 @@ Exit0:
 	return 1;
 }
 
-int KNpc::LuaBindNpcShop(Lua_State* L)
-{
-    int     nRetCode  = 0;
-    DWORD   dwShopTemplateID = 0;
-
-    nRetCode = Lua_GetTopIndex(L);
-    KGLOG_PROCESS_ERROR(nRetCode == 1);
-
-    dwShopTemplateID = (DWORD)Lua_ValueToNumber(L, 1);
-    nRetCode = g_pSO3World->m_ShopCenter.BindNpcShop(this, dwShopTemplateID);
-    KGLOG_PROCESS_ERROR(nRetCode);
-
-Exit0:
-    return 0;
-}
-
-int KNpc::LuaUnbindNpcShop(Lua_State* L)
-{
-    BOOL    bRetCode    = false;
-
-    bRetCode = g_pSO3World->m_ShopCenter.UnbindNpcShop(this);
-    KGLOG_PROCESS_ERROR(bRetCode);
-
-Exit0:
-    return 0;
-}
-
-int KNpc::LuaGetShop(Lua_State *L)
-{
-    if (m_pShop)
-    {
-        return m_pShop->LuaGetObj(L);
-    }
-    else
-    {
-        Lua_PushNil(L);
-        return 1;
-    }
-}
 
 int	KNpc::LuaSetBank(Lua_State* L)
 {
@@ -1039,9 +1000,6 @@ DEFINE_LUA_CLASS_BEGIN(KNpc)
 #if defined(_SERVER)
     REGISTER_LUA_FUNC(KNpc, GetQuestString)
 	REGISTER_LUA_FUNC(KNpc, GetAutoDialogString)
-    REGISTER_LUA_FUNC(KNpc, BindNpcShop)
-    REGISTER_LUA_FUNC(KNpc, UnbindNpcShop)
-    REGISTER_LUA_FUNC(KNpc, GetShop)
 	REGISTER_LUA_FUNC(KNpc, FollowTarget)
 	REGISTER_LUA_FUNC(KNpc, ModifyThreat)
     REGISTER_LUA_FUNC(KNpc, CopyThreatList)

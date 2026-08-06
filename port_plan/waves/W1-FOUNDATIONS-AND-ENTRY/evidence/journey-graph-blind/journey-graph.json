@@ -5,7 +5,7 @@
   "evidence_scope": "target binaries/DWARF and GraphEngine target observations only; topology labels from the user-requested journey and CLAUDE.md are context, not target call claims",
   "provenance": {
     "graph_db": {
-      "path": "linux-build/graphengine/evidence.sqlite",
+      "path": "linux-build/compare-engine/evidence.sqlite",
       "sha256": "25e726bf747b3e6ecfe7c045bd7c1a1e1c22610a4ab917cbc37a93f4d45449ba"
     },
     "targets": [

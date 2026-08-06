@@ -10,7 +10,7 @@ no candidate runtime-parity claim.
 | target DWARF/control-flow | `jx3_dwarf/SO3GameServerD` | `47716c73e8de281c95759cdc4a478e70e7c61322fb46e8c4e04954e51124b94a` |
 | target runtime | `镜像端/extracted/root/SO3GameServer` | `3002bf4ad08d4c0fb9d4fc10f2d66b1f6cd8f70d398ff792136a3b7d5c416f11` |
 | observed local candidate | `linux-build/SO3GameServer` | `f16725f5296ecb840612e85a240de43147a71c6dd1f9ece4b3a4b8b68c225259` |
-| current Graph DB | `graphengine/evidence.sqlite` | `25e726bf747b3e6ecfe7c045bd7c1a1e1c22610a4ab917cbc37a93f4d45449ba` |
+| current Graph DB | `compare-engine/evidence.sqlite` | `25e726bf747b3e6ecfe7c045bd7c1a1e1c22610a4ab917cbc37a93f4d45449ba` |
 
 The observed local candidate is not tied to a fresh compiler-input/build
 manifest. Its relation to the active source tree is therefore
@@ -64,11 +64,11 @@ opposite-model review remain required before accepting the feature card.
 ## Reopenable static evidence
 
 ```text
-python3 graphengine/tools/query/evidence_query.py function 'KSO3World::Init' --limit 8
-python3 graphengine/tools/query/graph_query.py callers 'KSO3World::Init' --limit 40
-python3 graphengine/tools/query/graph_query.py callees 'KSO3World::Init' --limit 80
-python3 graphengine/tools/query/evidence_query.py function 'KWorldSettings::Init' --limit 8
-python3 graphengine/tools/query/evidence_query.py function 'KNpcTemplateList::Init' --limit 8
+python3 compare-engine/tools/query/evidence_query.py function 'KSO3World::Init' --limit 8
+python3 compare-engine/tools/query/graph_query.py callers 'KSO3World::Init' --limit 40
+python3 compare-engine/tools/query/graph_query.py callees 'KSO3World::Init' --limit 80
+python3 compare-engine/tools/query/evidence_query.py function 'KWorldSettings::Init' --limit 8
+python3 compare-engine/tools/query/evidence_query.py function 'KNpcTemplateList::Init' --limit 8
 ```
 
 Confirmed target observations:
@@ -95,7 +95,7 @@ Confirmed target observations:
 ## Documentation discrepancy
 
 The older skill paths under `linux-build/.local/port-graph/docs/` no longer
-exist. The current operational documents are under `graphengine/docs/`; their
+exist. The current operational documents are under `compare-engine/docs/`; their
 build-history file names a V3 probe report that currently exists only in the
 archive. This packet does not use the archived report as an active gate. Direct
 Graph query results above remain valid only as static evidence.

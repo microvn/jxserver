@@ -13,19 +13,23 @@
 #include "KNpc.h"
 #include "KPlayerServer.h"
 #include "KSO3World.h"
+// target KShop::BuyCoinShopItem @0x081455cc calls KRelayClient::DoCoinShopBuyItemRequest
+// @0x080c7d28; g_RelayClient is declared as `extern KRelayClient g_RelayClient;` at the end
+// of KRelayClient.h inside #ifdef _SERVER.
+#include "KRelayClient.h"
 
 BOOL KShop::Init()
 {
-#ifdef _SERVER
     m_dwTemplateID    = 0;
-#endif
-
+    m_dwRequireForceID = 0;
     m_dwShopID        = 0;
     m_nShopType       = eShopType_Invalid;
     m_dwValidPage     = 0;
+    m_bCanRepair      = false;
+    m_bCoinShop       = false;
     m_dwNpcID         = 0;
     m_pNpc            = NULL;
-    m_bCanRepair      = false;
+    m_dwScriptID      = 0;
     memset(m_ShopPages, 0, sizeof(m_ShopPages));
 
     return true;
@@ -51,7 +55,6 @@ void KShop::UnInit()
 
     if (m_pNpc)
     {
-        m_pNpc->m_pShop = NULL;
         m_pNpc = NULL;
         m_dwNpcID = 0;
     }
@@ -81,6 +84,7 @@ SHOP_SYSTEM_RESPOND_CODE KShop::CanBuyItem(KPlayer* pBuyer, KNpc* pSeller, KSHOP
     int                         nRetCode        = 0;
     KSHOP_ITEM*                 pShopItem       = NULL;
     int                         nPlayerMoney    = 0;
+    int64_t                     llBuyCost       = 0;
     KNPC_SHOP_TEMPLATE_ITEM*    pItemTemplate   = NULL;
 
     KGLOG_PROCESS_ERROR(pBuyer);
@@ -107,15 +111,19 @@ SHOP_SYSTEM_RESPOND_CODE KShop::CanBuyItem(KPlayer* pBuyer, KNpc* pSeller, KSHOP
 
     nRetCode = pBuyer->m_ReputeList.GetReputeLevel(pSeller->m_dwForceID);
     KG_PROCESS_ERROR_RET_CODE(nRetCode >= pItemTemplate->nReputeLevel, ssrcNotEnoughRepate);
+
+    /* PORT-UNKNOWN_REQUIRED[CALLER] owner=KPlayer Corps/Arena; target=0x08144898 -> KPlayer::CheckCorpsValue@0x08385642; phase=PRE_BUILD.
+       Target rejects failed CheckCorpsValue(nRequireCorpsValue, dwMaskCorpsNeedToCheck) with response 42.
+       The current KPlayer owner lacks this declared callee, so this standalone root cannot emulate or bypass it. */
     
     nRetCode = pShopItem->pItem->GetMaxStackNum();
     KG_PROCESS_ERROR_RET_CODE(rParam.nCount <= nRetCode, ssrcBuyFailed);
 
-    nRetCode = GetPlayerBuyCost(pBuyer, pItemTemplate->nPrice, rParam.nCount);
-    KGLOG_PROCESS_ERROR(nRetCode == rParam.nCost);
+    llBuyCost = GetPlayerBuyCost(pBuyer, pItemTemplate->nPrice, rParam.nCount);
+    KGLOG_PROCESS_ERROR(llBuyCost == rParam.nCost);
 
     nPlayerMoney = pBuyer->m_ItemList.GetMoney();
-    KG_PROCESS_ERROR_RET_CODE(nPlayerMoney >= nRetCode, ssrcNotEnoughMoney);
+    KG_PROCESS_ERROR_RET_CODE(nPlayerMoney >= llBuyCost, ssrcNotEnoughMoney);
     
     if (pItemTemplate->nPrestige > 0)
     {
@@ -167,9 +175,22 @@ SHOP_SYSTEM_RESPOND_CODE KShop::CanBuyItem(KPlayer* pBuyer, KNpc* pSeller, KSHOP
         KG_PROCESS_ERROR_RET_CODE(pBuyer->m_Achievement.m_nPoint >= pItemTemplate->nAchievementPoint * rParam.nCount, ssrcNotEnoughAchievementPoint);
     }
 
+    if (pItemTemplate->nMentorValue > 0)
+    {
+        KG_PROCESS_ERROR_RET_CODE(
+            pBuyer->m_nUsableMentorValue >= pItemTemplate->nMentorValue * rParam.nCount,
+            (SHOP_SYSTEM_RESPOND_CODE)40
+        );
+    }
+
+    /* PORT-UNKNOWN_REQUIRED[STATE] owner=KPlayer title state; target=0x08144898 field player+0xb6d0;
+       phase=PRE_BUILD. Target rejects nRequireTitle with response 40; no target-backed title-state accessor exists in this closure. */
+
     if (pItemTemplate->nLimit != -1)
     {
         KGLOG_PROCESS_ERROR(pShopItem->nCount >= rParam.nCount);
+        /* PORT-UNKNOWN_REQUIRED[STATE] owner=KPlayer timer state; target=0x08144898 -> KCDTimerList::CheckTimer;
+           phase=PRE_BUILD. The target additionally enforces the item time-limit timer and template nLimit threshold. */
     }
     
     if (pItemTemplate->dwTabType > 0 && pItemTemplate->dwIndex > 0 && pItemTemplate->nRequireAmount > 0)
@@ -199,9 +220,9 @@ Exit0:
     return nResult;
 }
 
-int KShop::GetPlayerBuyCost(KPlayer* pPlayer, int nTemplateItemPrice, int nCount)
+int64_t KShop::GetPlayerBuyCost(KPlayer* pPlayer, int nTemplateItemPrice, int nCount)
 {
-    int         nResult     = -1;
+    int64_t     nResult     = -1;
     int         nPrice      = 0;
     KSHOP_ITEM* pShopItem   = NULL;
     
@@ -234,7 +255,7 @@ int KShop::GetPlayerBuyCost(KPlayer* pPlayer, int nTemplateItemPrice, int nCount
         break;
     }
 
-    nResult = nPrice * nCount;
+    nResult = (int64_t)nPrice * nCount;
 Exit0:
     return nResult;
 }
@@ -339,7 +360,102 @@ Exit0:
     return nResult;
 }
 
+int KShop::GetPlayerAllRepairPrice(KPlayer* pPlayer)
+{
+    int nResult = 0;
+
+    KGLOG_PROCESS_ERROR(pPlayer);
+
+    for (DWORD dwBox = 0; dwBox < ibTotal; ++dwBox)
+    {
+        int nBoxType = pPlayer->m_ItemList.GetBoxType(dwBox);
+        if (nBoxType != ivtEquipment && nBoxType != ivtPackage)
+            continue;
+
+        DWORD dwBoxSize = pPlayer->m_ItemList.GetBoxSize(dwBox);
+        for (DWORD dwX = 0; dwX < dwBoxSize; ++dwX)
+        {
+            KItem* pItem = pPlayer->m_ItemList.GetItem(dwBox, dwX);
+            if (!pItem || !pItem->IsRepairable())
+                continue;
+
+            int nPrice = GetPlayerRepairPrice(pPlayer, dwBox, dwX);
+            KGLOG_PROCESS_ERROR(nPrice >= 0);
+            KGLOG_PROCESS_ERROR(nResult <= INT_MAX - nPrice);
+            nResult += nPrice;
+        }
+    }
+
+    return nResult;
+Exit0:
+    return -1;
+}
+
 #ifdef _SERVER
+BOOL KShop::RepairItem(KPlayer* pPlayer, DWORD dwBox, DWORD dwX, DWORD dwItemID)
+{
+    BOOL    bResult = false;
+    BOOL    bRetCode = false;
+    KItem*  pItem = NULL;
+    int     nBoxType = 0;
+    int     nCost = 0;
+
+    KGLOG_PROCESS_ERROR(pPlayer);
+    KGLOG_PROCESS_ERROR(m_pNpc);
+    KGLOG_PROCESS_ERROR(m_pNpc->m_dwID == m_dwNpcID);
+    KGLOG_PROCESS_ERROR(m_nShopType == eShopType_NPC);
+    KGLOG_PROCESS_ERROR(m_bCanRepair);
+
+    nBoxType = pPlayer->m_ItemList.GetBoxType(dwBox);
+    KGLOG_PROCESS_ERROR(nBoxType == ivtEquipment || nBoxType == ivtPackage);
+
+    pItem = pPlayer->m_ItemList.GetItem(dwBox, dwX);
+    KGLOG_PROCESS_ERROR(pItem);
+    KGLOG_PROCESS_ERROR(pItem->m_dwID == dwItemID);
+    KGLOG_PROCESS_ERROR(pItem->IsRepairable());
+
+    nCost = GetPlayerRepairPrice(pPlayer, dwBox, dwX);
+    KGLOG_PROCESS_ERROR(nCost >= 0);
+
+    bRetCode = pPlayer->m_ItemList.Repair(dwBox, dwX);
+    KGLOG_PROCESS_ERROR(bRetCode);
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
+BOOL KShop::RepairAllItems(KPlayer* pPlayer)
+{
+    BOOL bResult = false;
+
+    KGLOG_PROCESS_ERROR(pPlayer);
+    KGLOG_PROCESS_ERROR(m_pNpc);
+    KGLOG_PROCESS_ERROR(m_pNpc->m_dwID == m_dwNpcID);
+    KGLOG_PROCESS_ERROR(m_nShopType == eShopType_NPC);
+    KGLOG_PROCESS_ERROR(m_bCanRepair);
+
+    for (DWORD dwBox = 0; dwBox < ibTotal; ++dwBox)
+    {
+        int nBoxType = pPlayer->m_ItemList.GetBoxType(dwBox);
+        if (nBoxType != ivtEquipment && nBoxType != ivtPackage)
+            continue;
+
+        DWORD dwBoxSize = pPlayer->m_ItemList.GetBoxSize(dwBox);
+        for (DWORD dwX = 0; dwX < dwBoxSize; ++dwX)
+        {
+            KItem* pItem = pPlayer->m_ItemList.GetItem(dwBox, dwX);
+            if (!pItem || !pItem->IsRepairable())
+                continue;
+
+            KGLOG_PROCESS_ERROR(RepairItem(pPlayer, dwBox, dwX, pItem->m_dwID));
+        }
+    }
+
+    bResult = true;
+Exit0:
+    return bResult;
+}
+
 BOOL KShop::BuyItem(KPlayer* pPlayer, KSHOP_BUY_ITEM_PARAM& rParam)
 {
     BOOL                        bResult             = false;
@@ -498,6 +614,66 @@ Exit0:
             pItemBuy = NULL;
         }
     }
+    return bResult;
+}
+
+BOOL KShop::BuyCoinShopItem(KPlayer* pPlayer, KSHOP_BUY_ITEM_PARAM& rParam)
+{
+    BOOL                    bResult = false;
+    // target SHOP_SYSTEM_RESPOND_CODE has no ssrcInvalidParam (0 DWARF hits); index 0 of the
+    // target enum is ssrcInvalid, which is what the candidate enum also defines (SO3Result.h).
+    SHOP_SYSTEM_RESPOND_CODE eResult = ssrcInvalid;
+    KSHOP_ITEM*             pShopItem = NULL;
+    KNPC_SHOP_TEMPLATE_ITEM* pTemplateItem = NULL;
+    int                     nRandomSeed = 0;
+    int                     nCoinCost = 0;
+
+    KGLOG_PROCESS_ERROR(m_bCoinShop);
+    KGLOG_PROCESS_ERROR(pPlayer);
+    KGLOG_PROCESS_ERROR(rParam.dwPageIndex < m_dwValidPage);
+    KGLOG_PROCESS_ERROR(rParam.dwPosIndex < MAX_SHOP_PAGE_ITEM_COUNT);
+    KGLOG_PROCESS_ERROR(rParam.nCount < 17);
+    KGLOG_PROCESS_ERROR(m_pNpc);
+    KGLOG_PROCESS_ERROR(m_pNpc->m_dwID == m_dwNpcID);
+
+    eResult = CanBuyItem(pPlayer, m_pNpc, rParam);
+    if (eResult != ssrcBuySuccess)
+    {
+        g_PlayerServer.DoSyncShopItem(
+            pPlayer->m_nConnIndex, this, rParam.dwPageIndex, rParam.dwPosIndex, true
+        );
+        goto Exit0;
+    }
+
+    pShopItem = &m_ShopPages[rParam.dwPageIndex].ShopItems[rParam.dwPosIndex];
+    KGLOG_PROCESS_ERROR(pShopItem->pItem);
+
+    pTemplateItem = g_pSO3World->m_ShopCenter.GetShopTemplateItem(
+        m_dwTemplateID, pShopItem->nItemTemplateIndex
+    );
+    KGLOG_PROCESS_ERROR(pTemplateItem);
+
+    if (!pShopItem->pItem->IsStackable())
+        nRandomSeed = (int)pShopItem->pItem->m_GenParam.dwRandSeed;
+
+    nCoinCost = pTemplateItem->nCoin * rParam.nCount;
+    KGLOG_PROCESS_ERROR(nCoinCost >= 0);
+    KGLOG_PROCESS_ERROR(pPlayer->m_nCoin >= nCoinCost);
+    KGLOG_PROCESS_ERROR(pPlayer->AddCoin(-nCoinCost));
+
+    KGLOG_PROCESS_ERROR(g_RelayClient.DoCoinShopBuyItemRequest(
+        pPlayer,
+        pShopItem->pItem->m_GenParam.dwTabType,
+        pShopItem->pItem->m_GenParam.dwIndex,
+        nRandomSeed,
+        rParam.nCount,
+        pTemplateItem->nCoin,
+        0,
+        0
+    ));
+
+    bResult = true;
+Exit0:
     return bResult;
 }
 

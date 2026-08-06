@@ -1080,12 +1080,11 @@ void KSimpThreatList::OnPlayerEnterPlayerThreatList(KPlayer* pTarget)
     KG_PROCESS_ERROR(pSelf->m_bCampFlag); // 我没有开开关，他就不用开
     KG_PROCESS_ERROR(!pTarget->m_bCampFlag); // 他的开关已经开了就不处理了
     
-    bRetCode = pSelf->m_PK.IsOnSlay();
-    KG_PROCESS_ERROR(!bRetCode); // 我开了屠杀，他就不用开开关
-
-    bRetCode = pSelf->IsFoe(pTarget->m_dwID);
-    KG_PROCESS_ERROR(!bRetCode); // 他是我的仇人
-
+    /* target KSimpThreatList::OnPlayerEnterPlayerThreatList@081a5870 has no
+       IsOnSlay guard (KPKController::IsOnSlay is absent from the target), and it
+       runs IsFoe AFTER the duel and red-name guards: IsDuel@081a5950 ->
+       GetTargetID@081a5969 -> m_bRedName@081a597f -> IsFoe@081a5999 ->
+       SetCampFlag@081a59b5. */
     bRetCode = pSelf->m_PK.IsDuel();
     if (bRetCode)
     {
@@ -1094,7 +1093,10 @@ void KSimpThreatList::OnPlayerEnterPlayerThreatList(KPlayer* pTarget)
     }
     
     KG_PROCESS_ERROR(!pSelf->m_bRedName); // 我是红名，他不用开
-    
+
+    bRetCode = pSelf->IsFoe(pTarget->m_dwID);
+    KG_PROCESS_ERROR(!bRetCode); // 他是我的仇人
+
     pTarget->SetCampFlag(true);
 
 Exit0:

@@ -187,6 +187,11 @@ enum KS2R_PROTOCOL
     s2r_get_tong_salary_fail_respond = 124,
     s2r_change_tong_camp_request = 125,
 
+    /*[target 2.5.2] KS2R_PROTOCOL const_value 129 (0x81); producer
+      KRelayClient::DoApplyTongCacheRequest@080caa74, struct S2R_APPLY_TONG_CACHE_REQUEST (6B).
+      Fills the reserved 126-129 hole; no later member shifts. */
+    s2r_apply_tong_cache_request = 129,
+
     s2r_apply_open_tong_repertory_request = 130,
 
     s2r_take_tong_repertory_item_request = 131,
@@ -405,14 +410,14 @@ enum KR2S_PROTOCOL
 	r2s_v246_unused_115,	// v246 id=115 size=15 [new] noop
 	r2s_get_tong_salary_respond,	// v246 id=116 size=10 [src]
 	r2s_sync_tong_history_respond,	// v246 id=117 size=12 [src]
-	r2s_auction_lookup_respond,	// v246 id=118 size=6 [src-unplaced] noop
+	r2s_sync_tong_diplomacy_data,	// v246 id=118 size=6 [target] R2S_SYNC_TONG_DIPLOMACY_DATA
 	r2s_v246_unused_119,	// v246 id=119 size=2 [new] noop
 	r2s_v246_unused_120,	// v246 id=120 size=30 [new] noop
 	r2s_v246_unused_121,	// v246 id=121 size=15 [new] noop
 	r2s_v246_unused_122,	// v246 id=122 size=11 [new] noop
-	r2s_v246_unused_123,	// v246 id=123 size=6 [new] noop
-	r2s_v246_unused_124,	// v246 id=124 size=8 [new] noop
-	r2s_v246_unused_125,	// v246 id=125 size=16 [new] noop
+	r2s_apply_tong_cachce_data_respond,	// v246 id=123 size=6 [target] R2S_APPLY_TONG_CACHCE_DATA_RESPOND
+	r2s_sync_tong_cache_change,	// v246 id=124 size=8 [target] R2S_SYNC_TONG_CACHE_CHANGE
+	r2s_auction_lookup_respond,	// v246 id=125 size=16 [target] moved from the size-collision slot 118
 	r2s_auction_bid_respond,	// v246 id=126 size=19 [src]
 	r2s_auction_sell_respond,	// v246 id=127 size=23 [src]
 	r2s_auction_cancel_respond,	// v246 id=128 size=7 [src-unplaced] noop
@@ -468,6 +473,14 @@ enum KR2S_PROTOCOL
 	r2s_sync_battle_field_list,	// orphan (2010, no v246 slot) id=178
 	r2s_take_tong_repertory_item_to_pos_respond,	// orphan (2010, no v246 slot) id=179
 	r2s_protocol_end
+};
+
+// Target v2.5.2 names for occupied legacy numeric slots. Keep these aliases
+// separate so the legacy enum later numeric values remain stable.
+enum KR2S_TARGET_COIN_SHOP_PROTOCOL
+{
+    r2s_coin_shop_buy_item_respond = 160,
+    r2s_coin_shop_buy_item_ex_respond = 161,
 };
 
 
@@ -547,18 +560,30 @@ struct S2R_SEARCH_MAP_REQUEST : INTERNAL_PROTOCOL_HEADER
 };
 
 // 玩家跨服务器,源服务器发出跨服请求(附带角色基本数据)
+struct KACCOUNT_LOGIN_INFO
+{
+    tagExtPointInfo ExtPointInfo;
+    DWORD           dwEndTimeOfFee;
+    DWORD           dwCoin;
+    int             nLastLoginTime;
+    BYTE            byChargeFlag;
+    BYTE            byMibaoMode;
+    BYTE            byFreeIP;
+    BYTE            byReserved;
+};
+
 struct S2R_TRANSFER_PLAYER_REQUEST : INTERNAL_PROTOCOL_HEADER
 {
-    DWORD           dwRoleID;
-    BOOL            bChargeFlag;
-	tagExtPointInfo	ExtPointInfo;			// 可用的附送点
-    BOOL            bExtPointLock;
-    int             nLastExtPointIndex;
-    short           nLastExtPointValue;
-    time_t          nEndTimeOfFee;
-    int             nCoin;
-    KRoleBaseInfo   RoleBaseInfo;
-    int             nBattleFieldSide;
+    DWORD               dwRoleID;
+    KACCOUNT_LOGIN_INFO AccInfo;
+    BOOL                bExtPointLock;
+    int                 nLastExtPointIndex;
+    int                 nLastExtPointValue;
+    KRoleBaseInfo       RoleBaseInfo;
+    int                 nBattleFieldSide;
+    int                 nCurrentLoginTime;
+    BYTE                byAccountMaxLevel;
+    BYTE                byIsBankPasswordVerified;
 };
 
 // 玩家跨服时,目标服务器的响应消息
@@ -569,6 +594,7 @@ struct S2R_TRANSFER_PLAYER_RESPOND : INTERNAL_PROTOCOL_HEADER
 	DWORD	    dwAddress;
 	WORD		wPort;
 	GUID		Guid;
+    int         nRespondCenterIndex;
 };
 
 // ------------------ 组队相关协议结构定义 ---------------------------
@@ -1015,6 +1041,14 @@ struct S2R_APPLY_SET_CAMP_REQUEST : INTERNAL_PROTOCOL_HEADER
     BYTE  byNewCamp;
 };
 
+struct S2R_SYNC_CORPS_CHANGE_DATA_REQUEST : INTERNAL_PROTOCOL_HEADER
+{
+    DWORD  dwPlayerID;
+    time_t nChangeTime;
+    time_t nWeekTime;
+    time_t nSeasonTime;
+};
+
 // ---------------------- 帮会相关 ------------------------------------------
 struct S2R_APPLY_TONG_ROSTER_REQUEST : INTERNAL_PROTOCOL_HEADER 
 {
@@ -1028,6 +1062,42 @@ struct S2R_APPLY_TONG_INFO_REQUEST : INTERNAL_PROTOCOL_HEADER
 {
     DWORD   dwPlayerID;
     int     nLastUpdateFrame;
+};
+
+/*[target 2.5.2] Relay_GS_Protocol.h:1446 S2R_APPLY_TONG_CACHE_REQUEST byte_size 6
+  header@0 (_INTERNAL_PROTOCOL_HEADER, 2B) + DWORD dwTongID@2.
+  Producer KRelayClient::DoApplyTongCacheRequest@080caa74, wire id 129 (0x81). */
+struct S2R_APPLY_TONG_CACHE_REQUEST : INTERNAL_PROTOCOL_HEADER
+{
+    DWORD   dwTongID;
+};
+
+/*[target 2.5.2] Relay_GS_Protocol.h:2984 R2S_APPLY_TONG_CACHCE_DATA_RESPOND byte_size 6
+  header@0 + DWORD dwTongID@2 + BYTE byData[]@6 (flexible tail, one TongCacheData).
+  Target keeps the CACHCE spelling. Consumer KRelayClient::OnApplyTongCacheRespond@080dcda8. */
+struct R2S_APPLY_TONG_CACHCE_DATA_RESPOND : INTERNAL_PROTOCOL_HEADER
+{
+    DWORD   dwTongID;
+    BYTE    byData[0];
+};
+
+/*[target 2.5.2] Relay_GS_Protocol.h:2990 R2S_SYNC_TONG_CACHE_CHANGE byte_size 8
+  header@0 + DWORD dwTongID@2 + BYTE byType@6 + BYTE byValue@7.
+  Consumer KRelayClient::OnSyncTongCacheChange@080dcd24. */
+struct R2S_SYNC_TONG_CACHE_CHANGE : INTERNAL_PROTOCOL_HEADER
+{
+    DWORD   dwTongID;
+    BYTE    byType;
+    BYTE    byValue;
+};
+
+/*[target 2.5.2] Relay_GS_Protocol.h:2947 R2S_SYNC_TONG_DIPLOMACY_DATA byte_size 6
+  header@0 + BOOL bNeedFastSync@2 + KTONG_DIPLOMACY_RELATION_INFO DiplomacyInfoArray[]@6.
+  Consumer KRelayClient::OnSyncTongDiplomacyData@080dda80. */
+struct R2S_SYNC_TONG_DIPLOMACY_DATA : INTERNAL_PROTOCOL_HEADER
+{
+    BOOL                            bNeedFastSync;
+    KTONG_DIPLOMACY_RELATION_INFO   DiplomacyInfoArray[0];
 };
 
 struct S2R_APPLY_TONG_REPERTORY_PAGE_REQUEST : INTERNAL_PROTOCOL_HEADER
@@ -1374,6 +1444,11 @@ struct S2R_REPORT_FARMER_PLAYER_REQUEST : INTERNAL_PROTOCOL_HEADER
     time_t  nPunishTime;
 };
 
+struct S2R_APPLY_COIN_OPERATING_FLAG : INTERNAL_PROTOCOL_HEADER
+{
+    DWORD dwPlayerID;
+};
+
 struct S2R_GAME_CARD_SELL_REQUEST : INTERNAL_PROTOCOL_HEADER 
 {
     DWORD   dwPlayerID;
@@ -1404,6 +1479,18 @@ struct S2R_GAME_CARD_CANCEL_REQUEST : INTERNAL_PROTOCOL_HEADER
 {
     DWORD   dwPlayerID;
     DWORD   dwID;
+};
+
+struct S2R_COIN_SHOP_BUY_ITEM_REQUEST : INTERNAL_PROTOCOL_HEADER
+{
+    DWORD dwPlayerID;
+    DWORD dwTabType;
+    DWORD dwTabIndex;
+    int   nDurability;
+    int   nCount;
+    int   nCoinPrice;
+    DWORD dwExtParam1;
+    DWORD dwExtParam2;
 };
 
 // ---------------------- 师徒相关 --------------------------------------------
@@ -1473,16 +1560,9 @@ struct R2S_PLAYER_LOGIN_REQUEST : INTERNAL_PROTOCOL_HEADER
         int             nGatewayPlayerIndex;
         DWORD           dwPacketIdentity;
     };
-    char            szRoleName[_NAME_LEN];
-    char            szAccount[_NAME_LEN];
-    tagExtPointInfo ExtPointInfo;
-    DWORD           nEndTimeOfFee;
-    DWORD           nCoin;
-    int             nLastLoginTime;
-    BYTE            nChargeFlag;
-    BYTE            byMibaoMode;
-    BYTE            byFreeIP;
-    BYTE            byReserved;
+    char                szRoleName[_NAME_LEN];
+    char                szAccount[_NAME_LEN];
+    KACCOUNT_LOGIN_INFO AccInfo;
     DWORD           dwSystemTeamID;
     DWORD           dwTeamID;
     KRoleBaseInfo   BaseInfo;
@@ -1586,22 +1666,24 @@ struct R2S_SEARCH_MAP_RESPOND : INTERNAL_PROTOCOL_HEADER
 // 玩家跨服务器,GameCenter转发源服务器发出的跨服请求(附带角色基本数据)
 struct R2S_TRANSFER_PLAYER_REQUEST : INTERNAL_PROTOCOL_HEADER
 {
-    DWORD           dwRoleID;
-    char            szRoleName[_NAME_LEN];
-    char            szAccount[_NAME_LEN];
-    BOOL            bChargeFlag;
-	tagExtPointInfo	ExtPointInfo;
-    BOOL            bExtPointLock;
-    int             nLastExtPointIndex;
-    short           nLastExtPointValue;
-    time_t          nEndTimeOfFee;
-    int             nCoin;
-    DWORD           dwSystemTeamID;
-    DWORD           dwTeamID;
-    KRoleBaseInfo   BaseInfo;
-    int             nBattleFieldSide;
-    DWORD           dwTongID;
-    BYTE            byFarmerLimit;
+    DWORD               dwRoleID;
+    char                szRoleName[_NAME_LEN];
+    char                szAccount[_NAME_LEN];
+    KACCOUNT_LOGIN_INFO AccInfo;
+    BOOL                bExtPointLock;
+    int                 nLastExtPointIndex;
+    int                 nLastExtPointValue;
+    DWORD               dwSystemTeamID;
+    DWORD               dwTeamID;
+    KRoleBaseInfo       BaseInfo;
+    int                 nBattleFieldSide;
+    DWORD               dwTongID;
+    BYTE                byFarmerLimit;
+    BYTE                byAccountMaxLevel;
+    BYTE                byIsBankPasswordVerified;
+    int                 nGatewayIdentity;
+    int                 nRespondCenterIndex;
+    int                 nCurrentLoginTime;
 };
 
 // 玩家跨服时,GameCenter转发目标服务器的响应消息
@@ -2423,6 +2505,19 @@ struct R2S_GAME_CARD_CANCEL_RESPOND : INTERNAL_PROTOCOL_HEADER
 {
     DWORD   dwPlayerID;
     BYTE    byCode;
+};
+
+struct R2S_COIN_SHOP_BUY_ITEM_RESPOND : INTERNAL_PROTOCOL_HEADER
+{
+    DWORD dwPlayerID;
+    BOOL  bSucceed;
+    DWORD dwTabType;
+    DWORD dwTabIndex;
+    int   nDurability;
+    int   nCount;
+    int   nCoinPrice;
+    DWORD dwExtParam1;
+    DWORD dwExtParam2;
 };
 
 struct R2S_SYNC_MENTOR_DATA : INTERNAL_PROTOCOL_HEADER 

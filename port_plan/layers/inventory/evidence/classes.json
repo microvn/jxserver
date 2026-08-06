@@ -1,0 +1,1042 @@
+{
+ "GetSkillRecipeTraverseFunc": {
+  "v25": 1,
+  "ours": 0,
+  "truly": 1,
+  "nel": 0,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "skill-script",
+  "kind": "self-contained"
+ },
+ "KAIPatrolGroupManager": {
+  "v25": 14,
+  "ours": 14,
+  "truly": 1,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "world-scene",
+  "kind": "self-contained"
+ },
+ "KAchievement": {
+  "v25": 17,
+  "ours": 12,
+  "truly": 2,
+  "nel": 3,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "achievement",
+  "kind": "self-contained"
+ },
+ "KAchievementInfoList": {
+  "v25": 6,
+  "ours": 5,
+  "truly": 1,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "achievement",
+  "kind": "self-contained"
+ },
+ "KActivityEndNotifySceneFunc": {
+  "v25": 1,
+  "ours": 0,
+  "truly": 1,
+  "nel": 0,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "activity",
+  "kind": "self-contained"
+ },
+ "KActivityMgrServer": {
+  "v25": 12,
+  "ours": 0,
+  "truly": 10,
+  "nel": 2,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "activity",
+  "kind": "self-contained"
+ },
+ "KAntiFarmerServer": {
+  "v25": 8,
+  "ours": 0,
+  "truly": 5,
+  "nel": 3,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "anti-farmer",
+  "kind": "self-contained"
+ },
+ "KAntiFarmerSettings": {
+  "v25": 5,
+  "ours": 0,
+  "truly": 3,
+  "nel": 2,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "anti-farmer",
+  "kind": "self-contained"
+ },
+ "KBandwidthOptimizeTacticsManager": {
+  "v25": 2,
+  "ours": 0,
+  "truly": 2,
+  "nel": 0,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "anti-farmer",
+  "kind": "self-contained"
+ },
+ "KBroadcastCastSkillFunc": {
+  "v25": 2,
+  "ours": 0,
+  "truly": 2,
+  "nel": 0,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "skill-script",
+  "kind": "self-contained"
+ },
+ "KBuffList": {
+  "v25": 40,
+  "ours": 36,
+  "truly": 4,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "skill-script",
+  "kind": "self-contained"
+ },
+ "KCampActiveStat": {
+  "v25": 7,
+  "ours": 0,
+  "truly": 3,
+  "nel": 4,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "activity",
+  "kind": "self-contained"
+ },
+ "KCampInfo": {
+  "v25": 27,
+  "ours": 17,
+  "truly": 10,
+  "nel": 1,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "activity",
+  "kind": "self-contained"
+ },
+ "KCenterRemote": {
+  "v25": 11,
+  "ours": 4,
+  "truly": 0,
+  "nel": 7,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "network-infra",
+  "kind": "network-infra"
+ },
+ "KCharacter": {
+  "v25": 263,
+  "ours": 210,
+  "truly": 52,
+  "nel": 2,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "player-hub",
+  "kind": "hub"
+ },
+ "KCharacterCounterStealthChangedFunc": {
+  "v25": 2,
+  "ours": 0,
+  "truly": 2,
+  "nel": 0,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "player-hub",
+  "kind": "self-contained"
+ },
+ "KCharacterDisarmChangedFunc": {
+  "v25": 2,
+  "ours": 0,
+  "truly": 2,
+  "nel": 0,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "player-hub",
+  "kind": "self-contained"
+ },
+ "KCharacterStealthChangedFunc": {
+  "v25": 2,
+  "ours": 0,
+  "truly": 2,
+  "nel": 0,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "player-hub",
+  "kind": "self-contained"
+ },
+ "KDesignation": {
+  "v25": 31,
+  "ours": 31,
+  "truly": 1,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "exterior-cosmetic",
+  "kind": "self-contained"
+ },
+ "KDiamondManager": {
+  "v25": 27,
+  "ours": 0,
+  "truly": 25,
+  "nel": 2,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "cash-shop-currency",
+  "kind": "self-contained"
+ },
+ "KDirectMentorCache": {
+  "v25": 18,
+  "ours": 0,
+  "truly": 4,
+  "nel": 14,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "mentor",
+  "kind": "self-contained"
+ },
+ "KDomesticate": {
+  "v25": 38,
+  "ours": 0,
+  "truly": 31,
+  "nel": 7,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "pet-domesticate",
+  "kind": "self-contained"
+ },
+ "KDomesticateCenter": {
+  "v25": 10,
+  "ours": 0,
+  "truly": 8,
+  "nel": 2,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "pet-domesticate",
+  "kind": "self-contained"
+ },
+ "KDoodad": {
+  "v25": 61,
+  "ours": 57,
+  "truly": 3,
+  "nel": 0,
+  "pe": 1,
+  "tag": "DRIFT",
+  "cluster": "world-scene",
+  "kind": "hub"
+ },
+ "KDoodadReviveManager": {
+  "v25": 16,
+  "ours": 14,
+  "truly": 1,
+  "nel": 1,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "world-scene",
+  "kind": "self-contained"
+ },
+ "KDropCenter": {
+  "v25": 33,
+  "ours": 22,
+  "truly": 11,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "drop-loot",
+  "kind": "self-contained"
+ },
+ "KDropList": {
+  "v25": 8,
+  "ours": 6,
+  "truly": 2,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "drop-loot",
+  "kind": "self-contained"
+ },
+ "KExterior": {
+  "v25": 34,
+  "ours": 11,
+  "truly": 19,
+  "nel": 5,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "exterior-cosmetic",
+  "kind": "self-contained"
+ },
+ "KExteriorBox": {
+  "v25": 42,
+  "ours": 33,
+  "truly": 17,
+  "nel": 1,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "exterior-cosmetic",
+  "kind": "self-contained"
+ },
+ "KFellowPetBox": {
+  "v25": 16,
+  "ours": 0,
+  "truly": 6,
+  "nel": 10,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "pet-domesticate",
+  "kind": "self-contained"
+ },
+ "KFellowPetMgr": {
+  "v25": 8,
+  "ours": 0,
+  "truly": 5,
+  "nel": 3,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "pet-domesticate",
+  "kind": "self-contained"
+ },
+ "KGJumpList": {
+  "v25": 6,
+  "ours": 0,
+  "truly": 4,
+  "nel": 2,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "movement-sync",
+  "kind": "self-contained"
+ },
+ "KGMList": {
+  "v25": 6,
+  "ours": 3,
+  "truly": 4,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "gm",
+  "kind": "self-contained"
+ },
+ "KGMoveParam": {
+  "v25": 2,
+  "ours": 0,
+  "truly": 1,
+  "nel": 1,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "movement-sync",
+  "kind": "self-contained"
+ },
+ "KGMoveProcessor": {
+  "v25": 22,
+  "ours": 0,
+  "truly": 3,
+  "nel": 19,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "movement-sync",
+  "kind": "self-contained"
+ },
+ "KGWConstList": {
+  "v25": 4,
+  "ours": 3,
+  "truly": 1,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "network-infra",
+  "kind": "network-infra"
+ },
+ "KGWServerConstList": {
+  "v25": 3,
+  "ours": 0,
+  "truly": 0,
+  "nel": 3,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "network-infra",
+  "kind": "network-infra"
+ },
+ "KG_AsyncSocketStream": {
+  "v25": 12,
+  "ours": 11,
+  "truly": 1,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "network-infra",
+  "kind": "network-infra"
+ },
+ "KG_SocketServerAcceptor": {
+  "v25": 7,
+  "ours": 5,
+  "truly": 1,
+  "nel": 1,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "network-infra",
+  "kind": "network-infra"
+ },
+ "KGetAllCopyIndexByMapIDFunc": {
+  "v25": 1,
+  "ours": 0,
+  "truly": 1,
+  "nel": 0,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "skill-script",
+  "kind": "self-contained"
+ },
+ "KHairBox": {
+  "v25": 14,
+  "ours": 14,
+  "truly": 3,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "exterior-cosmetic",
+  "kind": "self-contained"
+ },
+ "KHairShop": {
+  "v25": 21,
+  "ours": 13,
+  "truly": 8,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "exterior-cosmetic",
+  "kind": "self-contained"
+ },
+ "KItemList": {
+  "v25": 161,
+  "ours": 94,
+  "truly": 70,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "item",
+  "kind": "hub"
+ },
+ "KLevelDropList": {
+  "v25": 6,
+  "ours": 7,
+  "truly": 2,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "drop-loot",
+  "kind": "self-contained"
+ },
+ "KLocalGSDataStat": {
+  "v25": 13,
+  "ours": 0,
+  "truly": 13,
+  "nel": 0,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "network-infra",
+  "kind": "network-infra"
+ },
+ "KLogClient": {
+  "v25": 59,
+  "ours": 24,
+  "truly": 41,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "network-infra",
+  "kind": "network-infra"
+ },
+ "KLootList": {
+  "v25": 34,
+  "ours": 32,
+  "truly": 3,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "drop-loot",
+  "kind": "self-contained"
+ },
+ "KManualDropList": {
+  "v25": 13,
+  "ours": 0,
+  "truly": 5,
+  "nel": 8,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "drop-loot",
+  "kind": "self-contained"
+ },
+ "KMentorCache": {
+  "v25": 16,
+  "ours": 14,
+  "truly": 2,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "mentor",
+  "kind": "self-contained"
+ },
+ "KMiniAvatar": {
+  "v25": 14,
+  "ours": 12,
+  "truly": 3,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "exterior-cosmetic",
+  "kind": "self-contained"
+ },
+ "KMiniAvatarSettings": {
+  "v25": 8,
+  "ours": 5,
+  "truly": 3,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "exterior-cosmetic",
+  "kind": "self-contained"
+ },
+ "KModelInfo": {
+  "v25": 5,
+  "ours": 0,
+  "truly": 2,
+  "nel": 3,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "exterior-cosmetic",
+  "kind": "self-contained"
+ },
+ "KMoneyDropList": {
+  "v25": 7,
+  "ours": 5,
+  "truly": 2,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "drop-loot",
+  "kind": "self-contained"
+ },
+ "KMoveProcessTraverseFunc": {
+  "v25": 1,
+  "ours": 0,
+  "truly": 1,
+  "nel": 0,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "movement-sync",
+  "kind": "self-contained"
+ },
+ "KNewExtPointManager": {
+  "v25": 12,
+  "ours": 0,
+  "truly": 10,
+  "nel": 2,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "exterior-cosmetic",
+  "kind": "self-contained"
+ },
+ "KNpc": {
+  "v25": 86,
+  "ours": 67,
+  "truly": 22,
+  "nel": 1,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "world-scene",
+  "kind": "hub"
+ },
+ "KNpcAdronTab": {
+  "v25": 6,
+  "ours": 0,
+  "truly": 4,
+  "nel": 2,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "world-scene",
+  "kind": "self-contained"
+ },
+ "KNpcReviveManager": {
+  "v25": 22,
+  "ours": 20,
+  "truly": 1,
+  "nel": 1,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "world-scene",
+  "kind": "self-contained"
+ },
+ "KNpcTemplate": {
+  "v25": 1,
+  "ours": 0,
+  "truly": 1,
+  "nel": 0,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "world-scene",
+  "kind": "self-contained"
+ },
+ "KNpcTemplateList": {
+  "v25": 14,
+  "ours": 9,
+  "truly": 5,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "world-scene",
+  "kind": "self-contained"
+ },
+ "KPKController": {
+  "v25": 29,
+  "ours": 34,
+  "truly": 3,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "pk",
+  "kind": "self-contained"
+ },
+ "KPendentOldDataInfoList": {
+  "v25": 2,
+  "ours": 0,
+  "truly": 0,
+  "nel": 2,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "exterior-cosmetic",
+  "kind": "self-contained"
+ },
+ "KPlayer": {
+  "v25": 720,
+  "ours": 420,
+  "truly": 319,
+  "nel": 2,
+  "pe": 1,
+  "tag": "DRIFT",
+  "cluster": "player-hub",
+  "kind": "hub"
+ },
+ "KPlayerRelatedPetAttrExportParam": {
+  "v25": 3,
+  "ours": 0,
+  "truly": 3,
+  "nel": 0,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "pet-domesticate",
+  "kind": "self-contained"
+ },
+ "KPlayerRelatedPetAttrImportParam": {
+  "v25": 3,
+  "ours": 0,
+  "truly": 3,
+  "nel": 0,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "pet-domesticate",
+  "kind": "self-contained"
+ },
+ "KPlayerServer": {
+  "v25": 560,
+  "ours": 400,
+  "truly": 182,
+  "nel": 1,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "player-hub",
+  "kind": "hub"
+ },
+ "KQuestInfoList": {
+  "v25": 13,
+  "ours": 8,
+  "truly": 5,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "quest",
+  "kind": "self-contained"
+ },
+ "KQuestList": {
+  "v25": 62,
+  "ours": 58,
+  "truly": 4,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "quest",
+  "kind": "self-contained"
+ },
+ "KRecipeList": {
+  "v25": 13,
+  "ours": 12,
+  "truly": 1,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "skill-script",
+  "kind": "self-contained"
+ },
+ "KRecorderSceneLoaderNormal": {
+  "v25": 10,
+  "ours": 9,
+  "truly": 1,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "recorder-replay",
+  "kind": "self-contained"
+ },
+ "KRecorderSceneLoaderRecord": {
+  "v25": 10,
+  "ours": 9,
+  "truly": 1,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "recorder-replay",
+  "kind": "self-contained"
+ },
+ "KRecorderSceneLoaderReplay": {
+  "v25": 6,
+  "ours": 5,
+  "truly": 1,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "recorder-replay",
+  "kind": "self-contained"
+ },
+ "KRegressionManager": {
+  "v25": 12,
+  "ours": 10,
+  "truly": 2,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "regression",
+  "kind": "self-contained"
+ },
+ "KRegressionPlayerData": {
+  "v25": 12,
+  "ours": 5,
+  "truly": 9,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "regression",
+  "kind": "self-contained"
+ },
+ "KRelayClient": {
+  "v25": 374,
+  "ours": 240,
+  "truly": 152,
+  "nel": 2,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "network-infra",
+  "kind": "network-infra"
+ },
+ "KReputation": {
+  "v25": 13,
+  "ours": 13,
+  "truly": 2,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "reputation",
+  "kind": "self-contained"
+ },
+ "KReputeLootBuffList": {
+  "v25": 4,
+  "ours": 0,
+  "truly": 2,
+  "nel": 2,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "drop-loot",
+  "kind": "self-contained"
+ },
+ "KRewardsBox": {
+  "v25": 9,
+  "ours": 0,
+  "truly": 5,
+  "nel": 4,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "cash-shop-currency",
+  "kind": "self-contained"
+ },
+ "KRewardsShop": {
+  "v25": 12,
+  "ours": 0,
+  "truly": 10,
+  "nel": 2,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "cash-shop-currency",
+  "kind": "self-contained"
+ },
+ "KRewardsShopSettings": {
+  "v25": 7,
+  "ours": 0,
+  "truly": 5,
+  "nel": 2,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "cash-shop-currency",
+  "kind": "self-contained"
+ },
+ "KRoadManager": {
+  "v25": 30,
+  "ours": 28,
+  "truly": 2,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "world-scene",
+  "kind": "self-contained"
+ },
+ "KSO3World": {
+  "v25": 26,
+  "ours": 21,
+  "truly": 5,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "world-scene",
+  "kind": "self-contained"
+ },
+ "KScene": {
+  "v25": 148,
+  "ours": 108,
+  "truly": 41,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "world-scene",
+  "kind": "hub"
+ },
+ "KScriptCenter": {
+  "v25": 34,
+  "ours": 27,
+  "truly": 7,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "skill-script",
+  "kind": "self-contained"
+ },
+ "KScriptFuncList": {
+  "v25": 217,
+  "ours": 96,
+  "truly": 121,
+  "nel": 1,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "skill-script",
+  "kind": "hub"
+ },
+ "KShop": {
+  "v25": 20,
+  "ours": 14,
+  "truly": 6,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "cash-shop-currency",
+  "kind": "self-contained"
+ },
+ "KShopCenter": {
+  "v25": 19,
+  "ours": 14,
+  "truly": 6,
+  "nel": 1,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "cash-shop-currency",
+  "kind": "self-contained"
+ },
+ "KSimpThreatList": {
+  "v25": 32,
+  "ours": 32,
+  "truly": 2,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "world-scene",
+  "kind": "self-contained"
+ },
+ "KSkill": {
+  "v25": 71,
+  "ours": 63,
+  "truly": 8,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "skill-script",
+  "kind": "hub"
+ },
+ "KSkillList": {
+  "v25": 25,
+  "ours": 20,
+  "truly": 5,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "skill-script",
+  "kind": "self-contained"
+ },
+ "KSkillManager": {
+  "v25": 54,
+  "ours": 43,
+  "truly": 15,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "skill-script",
+  "kind": "hub"
+ },
+ "KSkillRecipeList": {
+  "v25": 20,
+  "ours": 17,
+  "truly": 2,
+  "nel": 1,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "skill-script",
+  "kind": "self-contained"
+ },
+ "KSkillRectangleTravFunc": {
+  "v25": 2,
+  "ours": 0,
+  "truly": 1,
+  "nel": 1,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "skill-script",
+  "kind": "self-contained"
+ },
+ "KStatDataServer": {
+  "v25": 58,
+  "ours": 36,
+  "truly": 22,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "network-infra",
+  "kind": "network-infra"
+ },
+ "KTalentSkill": {
+  "v25": 14,
+  "ours": 0,
+  "truly": 12,
+  "nel": 2,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "talent",
+  "kind": "self-contained"
+ },
+ "KTongConstList": {
+  "v25": 4,
+  "ours": 0,
+  "truly": 2,
+  "nel": 2,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "guild-tong",
+  "kind": "self-contained"
+ },
+ "KTongDiplomacyCache": {
+  "v25": 14,
+  "ours": 0,
+  "truly": 12,
+  "nel": 2,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "guild-tong",
+  "kind": "self-contained"
+ },
+ "KTongServer": {
+  "v25": 13,
+  "ours": 0,
+  "truly": 13,
+  "nel": 0,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "guild-tong",
+  "kind": "self-contained"
+ },
+ "KTradingBox": {
+  "v25": 24,
+  "ours": 20,
+  "truly": 4,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "cash-shop-currency",
+  "kind": "self-contained"
+ },
+ "KWorldSettings": {
+  "v25": 7,
+  "ours": 2,
+  "truly": 5,
+  "nel": 0,
+  "pe": 0,
+  "tag": "DRIFT",
+  "cluster": "world-scene",
+  "kind": "self-contained"
+ },
+ "SYNC_MOVE_CTRL": {
+  "v25": 1,
+  "ours": 0,
+  "truly": 1,
+  "nel": 0,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "movement-sync",
+  "kind": "self-contained"
+ },
+ "SYNC_MOVE_SPEED": {
+  "v25": 1,
+  "ours": 0,
+  "truly": 1,
+  "nel": 0,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "movement-sync",
+  "kind": "self-contained"
+ },
+ "SYNC_MOVE_STATE": {
+  "v25": 1,
+  "ours": 0,
+  "truly": 1,
+  "nel": 0,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "movement-sync",
+  "kind": "self-contained"
+ },
+ "SYNC_SPRINT_FLAGS": {
+  "v25": 1,
+  "ours": 0,
+  "truly": 1,
+  "nel": 0,
+  "pe": 0,
+  "tag": "NEW",
+  "cluster": "movement-sync",
+  "kind": "self-contained"
+ }
+}

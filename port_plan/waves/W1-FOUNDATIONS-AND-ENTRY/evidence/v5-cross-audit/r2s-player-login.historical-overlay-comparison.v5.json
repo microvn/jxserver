@@ -277,7 +277,7 @@
                 "origin": "target-dwarf-v252",
                 "record": {
                   "line": 10709,
-                  "path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/contracts/target_protocol.jsonl"
+                  "path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/contracts/target_protocol.jsonl"
                 },
                 "status": "TARGET_STATIC_CONFIRMED"
               },
@@ -722,7 +722,7 @@
                 "origin": "target-dwarf-v252",
                 "record": {
                   "line": 477,
-                  "path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/contracts/target_protocol.jsonl"
+                  "path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/contracts/target_protocol.jsonl"
                 },
                 "status": "TARGET_STATIC_CONFIRMED"
               },
@@ -940,7 +940,7 @@
               "origin": "target-dwarf+decompile-v252",
               "record": {
                 "line": 11809,
-                "path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/contracts/target_protocol.jsonl"
+                "path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/contracts/target_protocol.jsonl"
               },
               "status": "TARGET_STATIC_CONFIRMED"
             },
@@ -1053,7 +1053,7 @@
               "origin": "target-dwarf-v252",
               "record": {
                 "line": 10709,
-                "path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/contracts/target_protocol.jsonl"
+                "path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/contracts/target_protocol.jsonl"
               },
               "status": "TARGET_STATIC_CONFIRMED"
             },
@@ -1320,7 +1320,7 @@
               "origin": "target-dwarf-v252",
               "record": {
                 "line": 477,
-                "path": "/Volumes/ExData/game/jx3/linux-build/graphengine/staging/contracts/target_protocol.jsonl"
+                "path": "/Volumes/ExData/game/jx3/linux-build/compare-engine/staging/contracts/target_protocol.jsonl"
               },
               "status": "TARGET_STATIC_CONFIRMED"
             },

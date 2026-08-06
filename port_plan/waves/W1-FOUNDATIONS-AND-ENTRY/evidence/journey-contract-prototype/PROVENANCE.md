@@ -2,7 +2,7 @@
 
 - Frozen UTC: `2026-07-27T17:17:05Z`
 - Query mode: `blind-target-static`
-- Graph DB: `linux-build/graphengine/evidence.sqlite`
+- Graph DB: `linux-build/compare-engine/evidence.sqlite`
 - DB SHA-256: `25e726bf747b3e6ecfe7c045bd7c1a1e1c22610a4ab917cbc37a93f4d45449ba`
 - Target origin filter: `target%`
 - Explicitly excluded origins: `source-2010`, `candidate`, `runtime`

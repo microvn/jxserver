@@ -43,23 +43,23 @@
   "artifacts": {
     "stock_manifest": {
       "kind": "runtime_manifest",
-      "path": "graphengine/staging/jx3probe/w1-full-stock-20260728-r2/stock/manifest.json"
+      "path": "compare-engine/staging/jx3probe/w1-full-stock-20260728-r2/stock/manifest.json"
     },
     "candidate_manifest": {
       "kind": "runtime_manifest",
-      "path": "graphengine/staging/jx3probe/w1-full-20260729/candidate/manifest.json"
+      "path": "compare-engine/staging/jx3probe/w1-full-20260729/candidate/manifest.json"
     },
     "stock_ledger": {
       "kind": "probe_ledger",
-      "path": "graphengine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl"
+      "path": "compare-engine/staging/jx3probe/w1-full-stock-20260728-r2/stock/probe-ledger.jsonl"
     },
     "candidate_ledger": {
       "kind": "probe_ledger",
-      "path": "graphengine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl"
+      "path": "compare-engine/staging/jx3probe/w1-full-20260729/candidate/probe-ledger.jsonl"
     },
     "full_pair_capsule": {
       "kind": "probe_boundary_capsule",
-      "path": "graphengine/staging/jx3probe/w1-full-v6-audit-20260728/boundary-capsule.json"
+      "path": "compare-engine/staging/jx3probe/w1-full-v6-audit-20260728/boundary-capsule.json"
     }
   },
   "checkpoints": [

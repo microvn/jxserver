@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "KMapListFile.h"
 #include "KSO3World.h"
+#include "KScene.h"
 
 BOOL KMapListFile::Init(void)
 {
@@ -18,63 +19,80 @@ BOOL KMapListFile::Init(void)
 	for (int nRowIndex = 2; nRowIndex <= piTabFile->GetHeight(); nRowIndex++)
 	{
         KMapParams  MapParam;
+        DWORD       dwMapID = 0;
+        int         nMaxMapLevel = 0;
+        int         nCopyIndex = 0;
         memset(&MapParam, 0, sizeof(MapParam));
 
-		bRetCode = piTabFile->GetInteger(nRowIndex, "ID", 0, (int*)&MapParam.dwMapID);
-		KGLOG_PROCESS_ERROR(bRetCode && MapParam.dwMapID <= MAX_MAP_ID);
+		bRetCode = piTabFile->GetInteger(nRowIndex, "ID", 0, (int*)&dwMapID);
+		KGLOG_PROCESS_ERROR(dwMapID <= MAX_MAP_ID);
 
 		bRetCode = piTabFile->GetString(nRowIndex, "Name", "", MapParam.szMapName, sizeof(MapParam.szMapName));
-		KGLOG_PROCESS_ERROR(bRetCode && MapParam.szMapName[0] != '\0');
+		KGLOG_PROCESS_ERROR(MapParam.szMapName[0] != '\0');
+
+		bRetCode = piTabFile->GetString(nRowIndex, "DisplayName", MapParam.szMapName, MapParam.szDisplayName, sizeof(MapParam.szDisplayName));
+		KGLOG_PROCESS_ERROR(MapParam.szDisplayName[0] != '\0');
 
         bRetCode = piTabFile->GetInteger(nRowIndex, "Type", 1, &MapParam.nType);
-        (void)bRetCode; /*[endgame] tolerant*/
 
         bRetCode = piTabFile->GetInteger(nRowIndex, "AllScenePlayerInFight", 0, &MapParam.bAllScenePlayerInFight);
-        (void)bRetCode; /*[endgame] tolerant*/
 
 		bRetCode = piTabFile->GetInteger(nRowIndex, "Broadcast", 1, &MapParam.nBroadcast);
-		(void)bRetCode; /*[endgame] tolerant*/
+
+        bRetCode = piTabFile->GetInteger(nRowIndex, "bCanTongWar", 0, &MapParam.bCanTongWar);
 
         bRetCode = piTabFile->GetInteger(nRowIndex, "bCanPK", 1, &MapParam.bCanPK);
-		(void)bRetCode; /*[endgame] tolerant*/
+
+        bRetCode = piTabFile->GetInteger(nRowIndex, "bCanDuel", 1, &MapParam.bCanDuel);
 
         bRetCode = piTabFile->GetInteger(nRowIndex, "CampType", emctAllProtect, &MapParam.nCampType);
-        (void)bRetCode; /*[endgame] tolerant*/
+
+        bRetCode = piTabFile->GetInteger(nRowIndex, "NeedCampBuff", 0, &MapParam.bNeedCampBuff);
         KGLOG_PROCESS_ERROR(MapParam.nCampType > emctInvalid && MapParam.nCampType < emctTotal);
 
 		bRetCode = piTabFile->GetInteger(nRowIndex, "MapDrop", 0, (int*)&MapParam.dwMapDropID);
-		(void)bRetCode; /*[target] MapDrop is the master-row ID */
 
 		bRetCode = piTabFile->GetString(nRowIndex, "ResourcePath", "", MapParam.szResourceFilePath, sizeof(MapParam.szResourceFilePath));
-		(void)bRetCode; /*[endgame] tolerant*/
 
         bRetCode = piTabFile->GetInteger(nRowIndex, "ReviveInSitu", 0, (int*)&MapParam.bReviveInSitu);
-        (void)bRetCode; /*[endgame] tolerant*/
 
         bRetCode = piTabFile->GetInteger(nRowIndex, "MaxPlayerCount", 0, (int*)&MapParam.nMaxPlayerCount);
-        (void)bRetCode; /*[endgame] tolerant*/
 
         bRetCode = piTabFile->GetInteger(nRowIndex, "BanSkillMask", 0, (int*)&MapParam.dwBanSkillMask);
-        (void)bRetCode; /*[endgame] tolerant*/
+
+        bRetCode = piTabFile->GetInteger(nRowIndex, "BanUseItemMask", 0, (int*)&MapParam.dwBanUseItemMask);
 
         bRetCode = piTabFile->GetInteger(nRowIndex, "BattleRelationMask", 0, (int*)&MapParam.dwBattleRelationMask);
-        (void)bRetCode; /*[endgame] tolerant*/
 
         bRetCode = piTabFile->GetInteger(nRowIndex, "DoNotGoThroughRoof", 0, (int*)&MapParam.bDoNotGoThroughRoof);
-        (void)bRetCode; /*[endgame] tolerant*/
         
         bRetCode = piTabFile->GetInteger(nRowIndex, "RefreshCycle", 0, (int*)&MapParam.nRefreshCycle);
-        (void)bRetCode; /*[endgame] tolerant*/
+
+        bRetCode = piTabFile->GetInteger(nRowIndex, "RefreshOffset", 0, &MapParam.nRefreshOffset);
 
         bRetCode = piTabFile->GetInteger(nRowIndex, "QuestCountAchID", -1, &MapParam.nQuestCountAchID);
-        (void)bRetCode; /*[endgame] tolerant*/
         
         bRetCode = piTabFile->GetInteger(nRowIndex, "LimitTimes", 0, &MapParam.nLimitTimes);
-        (void)bRetCode; /*[endgame] tolerant*/
+
+        bRetCode = piTabFile->GetInteger(nRowIndex, "FightList", 0, &MapParam.bFightList);
+
+        bRetCode = piTabFile->GetInteger(nRowIndex, "MaxMapLevel", 0, &nMaxMapLevel);
+
+        bRetCode = piTabFile->GetInteger(nRowIndex, "MaxLootRange", 1, &MapParam.nMaxLootRange);
+
+        bRetCode = piTabFile->GetInteger(nRowIndex, "IsArenaMap", 0, &MapParam.bIsArenaMap);
+
+        bRetCode = piTabFile->GetInteger(nRowIndex, "NewCampFight", 0, &MapParam.bNewCampFight);
         
         MapParam.nRefreshCycle *= 60;
+        MapParam.nRefreshOffset *= 60;
+        MapParam.nRefreshOffset += timezone;
 
-        m_MapParamTable[MapParam.dwMapID] = MapParam;
+		for (nCopyIndex = 0; nCopyIndex <= nMaxMapLevel; ++nCopyIndex)
+		{
+			MapParam.dwMapID = KScene::MakeMapKey(dwMapID, nCopyIndex);
+			m_MapParamTable[MapParam.dwMapID] = MapParam;
+		}
 	}
 
     bResult = true;
@@ -112,4 +130,3 @@ KMapParams*	KMapListFile::GetMapParamByName(const char cszName[])
 
     return NULL;
 }
-

@@ -434,11 +434,12 @@ BOOL _IsMalefactor(KCharacter* pCharacter)
     {
         KPlayer* pPlayer = (KPlayer*)pCharacter;
 
-        if (pPlayer->m_PK.IsOnSlay())
-            bResult = true;
-        
-        if (pPlayer->m_nCurrentKillPoint > 300)
-            bResult = true;
+        /* target _IsMalefactor@08235f2a is the whole body: assert(pCharacter),
+           IS_PLAYER on m_dwID & 0x40000000, then a single read
+           bResult = *(int*)(pPlayer + 0x99e0) == KPlayer::m_bAttackByGuard
+           (DWARF). Neither IsOnSlay nor the m_nCurrentKillPoint > 300 branch
+           exists in the target. */
+        bResult = pPlayer->m_bAttackByGuard;
     }
 
     return bResult;

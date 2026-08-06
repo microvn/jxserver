@@ -504,6 +504,10 @@ BOOL KNpcTemplateList::LoadFromTemplate(DWORD dwNpcTemplateID, KNpc* pNpc)
 {
 	BOOL			    bRetCode		= false;
 	KNpcTemplate*	    pNpcTemplate	= NULL;
+	BOOL			    bResult			= false;
+#if defined(_SERVER)
+	KShop*			    pNewShop		= NULL;
+#endif //_SERVER
 
     assert(pNpc);
     assert(pNpc->m_pTemplate == NULL);
@@ -608,6 +612,14 @@ BOOL KNpcTemplateList::LoadFromTemplate(DWORD dwNpcTemplateID, KNpc* pNpc)
 
 	if (pNpcTemplate->pShopInfo)
 	{
+		/* PORT-TODO[TARGET_REQUIRED] the v246 KNpcTemplate has NEITHER nShopTemplateID
+		   NOR szShopOptionText (0 hits in SO3GameServerD DWARF), and v246
+		   LoadFromTemplate @0x0837afbf writes neither. Removing these writes is
+		   blocked here: the fields live in include/Include/SO3World/KNpcTemplateList.h
+		   (owner, outside this allowlist) and szShopOptionText is still read by
+		   KNpc::InitDialogFlag. Retained PRE_EXISTING_UNCHANGED; the owner must drop
+		   the fields and port InitDialogFlag onto pShopInfo. resolution_phase=PRE_BUILD,
+		   root_behavior_impact=NO. */
 		pNpcTemplate->nShopTemplateID = pNpcTemplate->pShopInfo->dwShopTemplateID[0];
 		if (pNpcTemplate->pShopInfo->pszShopOptionText[0])
 		{
@@ -618,10 +630,35 @@ BOOL KNpcTemplateList::LoadFromTemplate(DWORD dwNpcTemplateID, KNpc* pNpc)
 		{
 			pNpcTemplate->szShopOptionText[0] = '\0';
 		}
-		for (int i = 0; i < 16; ++i)
+		// Target 0x0837afe8..0x0837b13d. NOTE: the target BREAKS OUT of the whole
+		// shop block on the first zero ID (0x837aff4 -> 0x837b13e); it does not
+		// skip-and-continue the way the 2010 loop did.
+		for (int i = 0; i <= 15; ++i)
 		{
-			if (pNpcTemplate->pShopInfo->dwShopTemplateID[i] != 0)
-				g_pSO3World->m_ShopCenter.BindNpcShop(pNpc, pNpcTemplate->pShopInfo->dwShopTemplateID[i]);
+			if (pNpcTemplate->pShopInfo->dwShopTemplateID[i] == 0)
+				break;
+
+			pNewShop = g_pSO3World->m_ShopCenter.CreateShop(pNpcTemplate->pShopInfo->dwShopTemplateID[i]);
+			KGLOG_PROCESS_ERROR(pNewShop);
+
+			if (pNewShop->m_dwRequireForceID != 0 &&
+				pNewShop->m_dwRequireForceID != pNpc->m_dwForceID)
+			{
+				// Target 0x837b09e logs here via KGLOG_CHECK_ERROR (logs, NO goto).
+				// Its re-test makes the log itself unreachable inside this branch;
+				// preserved verbatim as a target quirk.
+				KGLOG_CHECK_ERROR(pNewShop->m_dwRequireForceID != 0 &&
+					pNewShop->m_dwRequireForceID != pNpc->m_dwForceID);
+				g_pSO3World->m_ShopCenter.DestroyShop(pNewShop->m_dwShopID);
+				pNewShop = NULL;
+			}
+			else
+			{
+				pNewShop->m_pNpc    = pNpc;
+				pNewShop->m_dwNpcID = pNpc->m_dwID;
+				pNpc->m_vecShops.push_back(pNewShop->m_dwShopID);
+				pNewShop = NULL;
+			}
 		}
 	}
 	
@@ -641,11 +678,21 @@ BOOL KNpcTemplateList::LoadFromTemplate(DWORD dwNpcTemplateID, KNpc* pNpc)
     pNpc->m_nRepulsedRate = pNpcTemplate->nRepulsedRate;
     pNpc->m_nPullRate = pNpcTemplate->nPullRate;
 
-	return true;
+	bResult = true;
 
 Exit0:
-	KGLogPrintf(KGLOG_ERR, "KNpcTemplateList::LoadFromTemplate(%d)\n", dwNpcTemplateID);
-	return false;
+	// v246 Exit0 tail @0x0837b1f2..0x0837b222: destroy a dangling pNewShop, then
+	// return bResult. v246 emits no log here (each KGLOG_PROCESS_ERROR already
+	// logs at its own site), so the 2010 unconditional error log is dropped.
+#if defined(_SERVER)
+	if (pNewShop)
+	{
+		g_pSO3World->m_ShopCenter.DestroyShop(pNewShop->m_dwShopID);
+		pNewShop = NULL;
+	}
+#endif //_SERVER
+
+	return bResult;
 }
 
 int KNpcTemplateList::GetNpcTemplateCount()

@@ -81,6 +81,7 @@ BOOL KSO3World::Init(IRecorderFactory* piFactory)
     BOOL        bItemManagerInitFlag        = false;
     BOOL        bShopCenterInitFlag         = false;
 #ifdef _SERVER
+    BOOL        bTongDiplomacyCacheInitFlag = false;
 #endif
     BOOL        bProfessionManagerInitFlag  = false;
     BOOL        bRoadManageInitFlag         = false;
@@ -120,6 +121,10 @@ BOOL KSO3World::Init(IRecorderFactory* piFactory)
     m_bTalkRecWorld         = 0;
     m_bTalkRecForce         = 0;
     m_bTalkRecCamp          = 0;
+
+    // v2.5 target KSO3World::Init@08190bd1/@08190bde.
+    m_bReturnItemFlag       = true;
+    m_bTimeLimitSoldFlag    = true;
 #endif
 
     assert(piFactory);
@@ -247,6 +252,12 @@ BOOL KSO3World::Init(IRecorderFactory* piFactory)
     KGLOG_PROCESS_ERROR(bRetCode);
     bCampInfoInitFlag = true;
 
+#ifdef _SERVER
+    bRetCode = m_TongDiplomacyCache.Init();
+    KGLOG_PROCESS_ERROR(bRetCode);
+    bTongDiplomacyCacheInitFlag = true;
+#endif
+
     bRetCode = m_PQManager.Init();
     KGLOG_PROCESS_ERROR(bRetCode);
     bPQInitFlag = true;
@@ -351,6 +362,14 @@ Exit0:
             m_PQManager.UnInit();
             bPQInitFlag = false;
         }
+
+#ifdef _SERVER
+        if (bTongDiplomacyCacheInitFlag)
+        {
+            m_TongDiplomacyCache.UnInit();
+            bTongDiplomacyCacheInitFlag = false;
+        }
+#endif
 
         if (bCampInfoInitFlag)
         {
@@ -527,6 +546,9 @@ void KSO3World::UnInit(void)
     m_BuffManager.UnInit();
 
     m_CampInfo.UnInit();
+#ifdef _SERVER
+    m_TongDiplomacyCache.UnInit();
+#endif
 #ifdef _SERVER
     m_DropCenter.UnInit();
 #endif
