@@ -366,11 +366,19 @@ BOOL KShopCenter::LoadNpcShopTemplateItems(KNPC_SHOP_TEMPLATE* pShopTemplate, co
         nRetCode = pNPCShopConfigFile->GetInteger(nLine, "ReputeLevel", 0, &pShopItem->nReputeLevel);     
         (void)nRetCode; /*[endgame] tolerant*/
         
-        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "Price", -1, &pShopItem->nPrice);
+        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "Price", 0, &pShopItem->nPrice);  /* target default $0x0 @0813a614, not -1 */
         (void)nRetCode; /*[endgame] tolerant*/
 
         nRetCode = pNPCShopConfigFile->GetInteger(nLine, "Coin", 0, &pShopItem->nCoin);
-        KGLOG_PROCESS_ERROR(nRetCode);
+        /* Target LoadNpcShopTemplateItems reads "Coin" at 0813a66c with default 0 and
+           does NOT test the return: 0813a66e goes straight to the pShopItem guard
+           (nPrice @+0x18 jg, nCoin @+0x1c jg, else KGLogPrintf line 0x19d and jmp out).
+           Many shipped shop tabs have no Coin column at all - settings/shop/Arena/
+           Lv255_ER_CJ.tab carries CoinType1/CoinAmount1 instead - so a fatal wrapper
+           here kills the whole shop load. Note this is NOT a blanket policy for the
+           file: LoadLine's "ShopTemplateID" read at 0813ab85 IS tested by the target
+           (cmpl/jne, log at line 0x12c) and must stay fatal. */
+        (void)nRetCode; /*[endgame] tolerant - target 0813a66c ignores the retcode*/
 
         KGLOG_PROCESS_ERROR(pShopItem->nPrice > 0 || pShopItem->nCoin > 0);
         if (pShopItem->nCoin > 0)
