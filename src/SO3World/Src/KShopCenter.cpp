@@ -384,26 +384,26 @@ BOOL KShopCenter::LoadNpcShopTemplateItems(KNPC_SHOP_TEMPLATE* pShopTemplate, co
         if (pShopItem->nCoin > 0)
             bCoinShop = true;
 
-        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "Prestige", -1, &pShopItem->nPrestige);
+        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "Prestige", 0, &pShopItem->nPrestige);
         (void)nRetCode; /*[endgame] tolerant*/
 
-        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "Contribution", -1, &pShopItem->nContribution);
+        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "Contribution", 0, &pShopItem->nContribution);
         (void)nRetCode; /*[endgame] tolerant*/
 
         // v2.5 NEW currency prices (KCurrency types 2..5)
-        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "Justice", 0, &pShopItem->nJustice);
+        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "Justice", -1, &pShopItem->nJustice);
         (void)nRetCode; /*[endgame] tolerant*/
-        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "ExamPrint", 0, &pShopItem->nExamPrint);
+        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "ExamPrint", -1, &pShopItem->nExamPrint);
         (void)nRetCode; /*[endgame] tolerant*/
         nRetCode = pNPCShopConfigFile->GetInteger(nLine, "ArenaAward", 0, &pShopItem->nArenaAward);
         (void)nRetCode; /*[endgame] tolerant*/
         nRetCode = pNPCShopConfigFile->GetInteger(nLine, "ActivityAward", 0, &pShopItem->nActivityAward);
         (void)nRetCode; /*[endgame] tolerant*/
 
-        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "RequireAchievementRecord", -1, &pShopItem->nRequireAchievementRecord);     
+        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "RequireAchievementRecord", 0, &pShopItem->nRequireAchievementRecord);     
         (void)nRetCode; /*[endgame] tolerant*/
 
-        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "AchievementPoint", -1, &pShopItem->nAchievementPoint);     
+        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "AchievementPoint", 0, &pShopItem->nAchievementPoint);     
         (void)nRetCode; /*[endgame] tolerant*/
 
         nRetCode = pNPCShopConfigFile->GetInteger(nLine, "TongReputation", 0, &pShopItem->nTongReputation);
@@ -424,7 +424,7 @@ BOOL KShopCenter::LoadNpcShopTemplateItems(KNPC_SHOP_TEMPLATE* pShopTemplate, co
         (void)nRetCode;
         nRetCode = pNPCShopConfigFile->GetInteger(nLine, "RequireCorpsValue", 0, &pShopItem->nRequireCorpsValue);
         (void)nRetCode;
-        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "MaskCorpsNeedToCheck", 0, (int*)&pShopItem->dwMaskCorpsNeedToCheck);
+        nRetCode = pNPCShopConfigFile->GetInteger(nLine, "MaskCorpsNeedToCheck", -1, (int*)&pShopItem->dwMaskCorpsNeedToCheck);
         (void)nRetCode;
         nRetCode = pNPCShopConfigFile->GetInteger(nLine, "CanReturn", 0, (int*)&pShopItem->bCanReturn);
         (void)nRetCode;
