@@ -67,3 +67,6 @@ _deploy.log
 BUILD-TECHNICAL.md
 DECISION.md
 __pycache__/
+/SO3GameServer_*
+/*.build.log
+/*.manifest

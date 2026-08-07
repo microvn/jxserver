@@ -36,19 +36,38 @@ RUN="$SD/vps-conf/.run"
 
 gen_conf(){
   mkdir -p "$RUN"
-  cp "$CONF/gateway.ini" "$CONF/gs_settings.ini" "$CONF/relay_settings.ini" "$RUN/"
+  cp "$CONF/gateway.ini" "$CONF/gs_settings.ini" "$CONF/relay_settings.ini" \
+     "$CONF/zoneserver.ini" "$CONF/arena_server.ini" "$CONF/battlefield_server.ini" "$RUN/"
   sed -i "s/__PUBIP__/$PUBIP/g" "$RUN/gs_settings.ini"
   esc_mysql_password=$(printf '%s' "$MYSQL_ROOT_PASSWORD" | sed 's/[\\/&]/\\\\&/g')
-  sed -i "s/__MYSQL_ROOT_PASSWORD__/$esc_mysql_password/g" "$RUN/relay_settings.ini"
+  sed -i "s/__MYSQL_ROOT_PASSWORD__/$esc_mysql_password/g" "$RUN/relay_settings.ini" "$RUN/arena_server.ini"
 }
 ensure_dbroot(){
   mkdir -p "$DBROOT"
 }
-MNT(){ echo "-v $RUN/gateway.ini:/deploy/gateway.ini -v $RUN/gs_settings.ini:/deploy/gs_settings.ini -v $RUN/relay_settings.ini:/deploy/relay_settings.ini"; }
+MNT(){ echo "-v $RUN/gateway.ini:/deploy/gateway.ini -v $RUN/gs_settings.ini:/deploy/gs_settings.ini -v $RUN/relay_settings.ini:/deploy/relay_settings.ini -v $RUN/zoneserver.ini:/deploy/zoneserver.ini -v $RUN/arena_server.ini:/deploy/arena_server.ini -v $RUN/battlefield_server.ini:/deploy/battlefield_server.ini"; }
 
-fw_on(){  # chặn cổng nội bộ 5003 (center bind 0.0.0.0) khỏi internet, chừa loopback cho GS↔center
-  iptables -C INPUT -p tcp --dport 5003 ! -i lo -j DROP 2>/dev/null || iptables -I INPUT -p tcp --dport 5003 ! -i lo -j DROP; }
-fw_off(){ iptables -D INPUT -p tcp --dport 5003 ! -i lo -j DROP 2>/dev/null; }
+# PVP tier (opt out with PVP=0). Zone is a hub: center/arena/battlefield all dial OUT
+# to it on 9111, so 9111 is the only new listener. Zone ships debug-only in the 2012
+# package, hence ZoneServerD.
+PVP=${PVP:-1}
+PVP_BINS="ZoneServerD SO3ArenaServer SO3BattlefieldServer"
+pvp_ready(){
+  [ "$PVP" = 1 ] || return 1
+  for b in $PVP_BINS; do [ -x "$DEPLOY/$b" ] || return 1; done
+  return 0
+}
+pvp_warn(){
+  echo "PVP tier SKIPPED: missing $(for b in $PVP_BINS; do [ -x "$DEPLOY/$b" ] || printf '%s ' "$b"; done)in $DEPLOY"
+  echo "  fix: run deploy/pvp-install.sh on the machine holding download/PVPServer, then sync the deploy tree"
+}
+
+# 5003 = center<->GS, 9111 = zone hub. Both bind wide; keep them off the internet.
+fw_on(){
+  for p in 5003 9111; do
+    iptables -C INPUT -p tcp --dport $p ! -i lo -j DROP 2>/dev/null || iptables -I INPUT -p tcp --dport $p ! -i lo -j DROP
+  done; }
+fw_off(){ for p in 5003 9111; do iptables -D INPUT -p tcp --dport $p ! -i lo -j DROP 2>/dev/null; done; }
 
 run(){ # $1=container name  $2=binary
   # Binary TỰ daemon-hoá: launcher fork ra daemon rồi parent exit 0 sau 0-2s.
@@ -74,14 +93,21 @@ up_mysql(){
 }
 up_app(){
   gen_conf
-  docker rm -f jx3center jx3gw jx3gs 2>/dev/null
+  docker rm -f jx3zone jx3arena jx3bf jx3center jx3gw jx3gs 2>/dev/null
+  if pvp_ready; then
+    run jx3zone ZoneServerD; echo "zone up"; sleep 4     # hub must precede its clients
+  elif [ "$PVP" = 1 ]; then pvp_warn; fi
   run jx3center SO3GameCenter; echo "center up"; sleep 16
   run jx3gw SO3Gateway;        echo "gateway up"; sleep 8
   run jx3gs "$GSBIN";          echo "gameserver up ($GSBIN)"
-  fw_on; echo "firewall: 5003 blocked from public (5004+3113 open)"
+  if pvp_ready; then
+    run jx3arena SO3ArenaServer;       echo "arena up (db jx3_tf self-provisions)"
+    run jx3bf    SO3BattlefieldServer; echo "battlefield up"
+  fi
+  fw_on; echo "firewall: 5003+9111 blocked from public (5004+3113 open)"
 }
 down_app(){
-  docker rm -f jx3center jx3gw jx3gs 2>/dev/null
+  docker rm -f jx3zone jx3arena jx3bf jx3center jx3gw jx3gs 2>/dev/null
   fw_off
   echo down-app
 }
@@ -109,7 +135,18 @@ case "${1:-}" in
  restart-gs)
   restart_gs
   ;;
- status) docker ps --filter name=jx3 --format "{{.Names}}: {{.Status}}"; for c in jx3center jx3gw jx3gs; do echo -n "$c procs="; docker exec "$c" pgrep -c "SO3" 2>/dev/null||echo 0; done;;
- logs) cd "$DEPLOY"; for d in SO3GameCenter SO3Gateway SO3GameServer; do echo "=== $d ==="; L=$(ls -t logs/$d/*/*.log 2>/dev/null|head -1); grep -avE "]:Get" "$L" 2>/dev/null|tail -8; done;;
- *) echo "usage: [PUBIP=1.2.3.4] [MYSQL_ROOT_PASSWORD=...] [GSBIN=SO3GameServer_STOCK_DONTREMOVE] $0 up|up-app|down|down-app|restart-gs|status|logs";;
+ status)
+  docker ps --filter name=jx3 --format "{{.Names}}: {{.Status}}"
+  for c in jx3center jx3gw jx3gs jx3zone jx3arena jx3bf; do
+    docker inspect "$c" >/dev/null 2>&1 || continue
+    echo -n "$c procs="; docker exec "$c" pgrep -c "SO3|ZoneServer" 2>/dev/null||echo 0
+  done
+  if [ "$PVP" = 1 ] && ! pvp_ready; then pvp_warn; fi
+  ;;
+ logs) cd "$DEPLOY"; for d in SO3GameCenter SO3Gateway SO3GameServer; do echo "=== $d ==="; L=$(ls -t logs/$d/*/*.log 2>/dev/null|head -1); grep -avE "]:Get" "$L" 2>/dev/null|tail -8; done
+  for c in jx3zone jx3arena jx3bf; do docker inspect "$c" >/dev/null 2>&1 || continue; echo "=== $c ==="; docker exec "$c" tail -8 "/tmp/$c.log" 2>/dev/null; done;;
+ pvp-logs)  # the bind handshake lives here: "[ModuleN] '<name>' bind!" vs "Name Conflict"
+  for c in jx3zone jx3arena jx3bf; do echo "=== $c ==="; docker exec "$c" grep -aE "bind|Conflict|Protocol mismatch|Connect to Zone|Module" "/tmp/$c.log" 2>/dev/null | tail -15; done
+  echo "=== center ZoneClient ==="; cd "$DEPLOY"; L=$(ls -t logs/SO3GameCenter/*/*.log 2>/dev/null|head -1); grep -aE "ZoneClient|\[Zone\]" "$L" 2>/dev/null|tail -15;;
+ *) echo "usage: [PUBIP=1.2.3.4] [MYSQL_ROOT_PASSWORD=...] [GSBIN=SO3GameServer_STOCK_DONTREMOVE] [PVP=0] $0 up|up-app|down|down-app|restart-gs|status|logs|pvp-logs";;
 esac
